@@ -1,0 +1,237 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="IoTCoreHeader.Text" xml:space="preserve">
+    <value>Windows 10 IoT Core Insider Preview</value>
+    <comment>The Operating System Name</comment>
+  </data>
+  <data name="GenericBoardName" xml:space="preserve">
+    <value>IoTCore Board</value>
+    <comment>A generic board name</comment>
+  </data>
+  <data name="MainPageDeviceName.Text" xml:space="preserve">
+    <value>Device name</value>
+  </data>
+  <data name="MainPageNetwork.Text" xml:space="preserve">
+    <value>Network</value>
+  </data>
+  <data name="MBMName" xml:space="preserve">
+    <value>MinnowBoard Max</value>
+    <comment>The Minnowboard Max board name</comment>
+  </data>
+  <data name="RestartText.Text" xml:space="preserve">
+    <value>Restart</value>
+  </data>
+  <data name="ShutdownText.Text" xml:space="preserve">
+    <value>Shutdown</value>
+  </data>
+  <data name="LegalText1.Text" xml:space="preserve">
+    <value>By using this software you agree to Microsoft license terms.</value>
+  </data>
+  <data name="LegalText2.Text" xml:space="preserve">
+    <value>You can review linked terms by pasting the forward link into your browser window once the software is running.</value>
+  </data>
+  <data name="LegalText3.Text" xml:space="preserve">
+    <value>The privacy statement for this prerelease version of the Windows operating system can be viewed here: http://go.microsoft.com/fwlink/?LinkId=506737.</value>
+  </data>
+  <data name="BackButton.Content" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="CancelButton.Content" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ConnectAutomatically.Text" xml:space="preserve">
+    <value>Connect automatically</value>
+  </data>
+  <data name="ConnectButton.Content" xml:space="preserve">
+    <value>Connect</value>
+  </data>
+  <data name="DirectConnections.Text" xml:space="preserve">
+    <value>Direct connections</value>
+  </data>
+  <data name="Ethernet.Text" xml:space="preserve">
+    <value>Ethernet</value>
+  </data>
+  <data name="NetworkConnectingMessage.Text" xml:space="preserve">
+    <value>Checking network requirements</value>
+  </data>
+  <data name="NetworkPasswordPrompt.Text" xml:space="preserve">
+    <value>Enter the network security key</value>
+  </data>
+  <data name="NextButton.Content" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="NoNetworks.Text" xml:space="preserve">
+    <value>None found</value>
+  </data>
+  <data name="OOBEIntro.Text" xml:space="preserve">
+    <value>Let's get some basic stuff out of the way.</value>
+  </data>
+  <data name="OOBELanguageSelect.Text" xml:space="preserve">
+    <value>Choose your language</value>
+  </data>
+  <data name="OOBENetworkTitle.Text" xml:space="preserve">
+    <value>Let's get connected</value>
+  </data>
+  <data name="OOBEWelcomeTitle.Text" xml:space="preserve">
+    <value>Hi there, welcome to the Windows IoT Core Insider Preview</value>
+  </data>
+  <data name="Rpi2Name" xml:space="preserve">
+    <value>Raspberry Pi II</value>
+  </data>
+  <data name="SkipStep.Text" xml:space="preserve">
+    <value>Skip this step</value>
+  </data>
+  <data name="Wifi.Text" xml:space="preserve">
+    <value>Wi-Fi</value>
+  </data>
+  <data name="StartDeveloping.Text" xml:space="preserve">
+    <value> to start developing</value>
+    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
+  </data>
+  <data name="Visit.Text" xml:space="preserve">
+    <value>Visit</value>
+    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
+  </data>
+  <data name="WindowsOnDevicesUrl.Text" xml:space="preserve">
+    <value> windowsondevices.com</value>
+    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
+  </data>
+  <data name="KeyboardTitle.Text" xml:space="preserve">
+    <value>Keyboard layout</value>
+  </data>
+  <data name="LanguageTitle.Text" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="NetworkConnected.Text" xml:space="preserve">
+    <value>Connected</value>
+  </data>
+  <data name="NetworkPreferences.Content" xml:space="preserve">
+    <value>Network &amp; Wi-Fi</value>
+  </data>
+  <data name="SettingsPreferences.Content" xml:space="preserve">
+    <value>Basic preferences</value>
+  </data>
+  <data name="SettingsTitle.Text" xml:space="preserve">
+    <value>Device settings</value>
+  </data>
+  <data name="TimeZoneTitle.Text" xml:space="preserve">
+    <value>Time zone</value>
+  </data>
+</root>

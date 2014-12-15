@@ -1,0 +1,59 @@
+;
+; gpiokmdfdemo.inf
+;
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=System
+ClassGuid={4d36e97d-e325-11ce-bfc1-08002be10318}
+Provider=%MSFT%
+CatalogFile=gpiokmdfdemo.cat
+DriverVer= ; TODO: set DriverVer in stampinf property pages
+
+[DestinationDirs]
+DefaultDestDir = 12
+
+; ================= Class section =====================
+
+[SourceDisksNames]
+1 = %DiskId1%,,,""
+
+[SourceDisksFiles]
+gpiokmdfdemo.sys  = 1,,
+
+;*****************************************
+; Install Section
+;*****************************************
+
+[Manufacturer]
+%StdMfg%=Standard,NT$ARCH$
+
+[Standard.NT$ARCH$]
+%gpiokmdfdemo.DeviceDesc%=gpiokmdfdemo_Device, ACPI\GPOT0001 
+
+[gpiokmdfdemo_Device.NT]
+CopyFiles=Drivers_Dir
+
+[Drivers_Dir]
+gpiokmdfdemo.sys
+
+;-------------- Service installation
+[gpiokmdfdemo_Device.NT.Services]
+AddService = gpiokmdfdemo,%SPSVCINST_ASSOCSERVICE%, gpiokmdfdemo_Service_Inst
+
+; -------------- gpiokmdfdemo driver install sections
+[gpiokmdfdemo_Service_Inst]
+DisplayName    = %gpiokmdfdemo.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\gpiokmdfdemo.sys
+
+[Strings]
+SPSVCINST_ASSOCSERVICE= 0x00000002
+MSFT = "Microsoft"
+StdMfg = "(Standard system devices)"
+ClassName = "System"
+DiskId1 = "gpiokmdfdemo Installation Disk"
+gpiokmdfdemo.DeviceDesc = "GPIO KMDF Demo Device"
+gpiokmdfdemo.SVCDESC = "GPIO KMDF Demo Driver"
