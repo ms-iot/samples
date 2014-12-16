@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Package
+  xmlns="http://schemas.microsoft.com/appx/2010/manifest"
+  xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest"
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  xmlns:foundation="http://schemas.microsoft.com/appx/manifest/foundation/thresholdpreview"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/thresholdpreview"
+  IgnorableNamespaces="foundation uap">
+
+  <Identity
+    Name="Blinky"
+    Publisher="CN=AleUser"
+    Version="1.0.0.0" />
+
+  <mp:PhoneIdentity PhoneProductId="d57ab936-9c60-4857-af7f-911f928e38ab" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+
+  <Properties>
+    <DisplayName>Blinky</DisplayName>
+    <PublisherDisplayName>AleUser</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+
+  <Prerequisites>
+    <OSMinVersion>6.3.0</OSMinVersion>
+    <OSMaxVersionTested>10.0.0</OSMaxVersionTested>
+  </Prerequisites>
+
+  <Resources>
+    <Resource Language="x-generate"/>
+  </Resources>
+
+  <Applications>
+    <Application Id="App"
+      Executable="$targetnametoken$.exe"
+      EntryPoint="Blinky.App">
+      <m2:VisualElements
+        DisplayName="Blinky"
+        Square150x150Logo="Assets\Logo.png"
+        Square30x30Logo="Assets\SmallLogo.png"
+        Description="Blinky"
+        ForegroundText="light"
+        BackgroundColor="#464646">
+        <m2:DefaultTile 
+          Wide310x150Logo="Assets\WideLogo.png"
+          DefaultSize="square150x150Logo"/>
+        <m2:SplashScreen
+          Image="Assets\SplashScreen.png" />
+      </m2:VisualElements>
+
+    </Application>
+  </Applications>
+
+  <Capabilities>
+    <Capability Name="internetClient" />
+    <!-- Uncomment the capability below to enable GPIO -->
+    <DeviceCapability Name="916EF1CB-8426-468D-A6F7-9AE8076881B3"/>
+  </Capabilities>
+</Package>
