@@ -1,0 +1,232 @@
+﻿<!-- © Copyright (C) Microsoft. All rights reserved. -->
+
+<Page
+    x:Class="bertha.Settings"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:bertha"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="64"/>
+            <ColumnDefinition x:Name="primaryColumn" Width="208"/>
+            <ColumnDefinition x:Name="secondaryColumn" Width="*"/>
+            <ColumnDefinition Width="64"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Back button and page title -->
+        <Grid x:Name="titlePanel" Grid.Column="1" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="42"/>
+                <RowDefinition Height="32"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Height="42">
+                <Button x:Name="BackButton" Margin="0,0,16,0"
+                        Tapped="BackButton_Tapped"
+                        Style="{StaticResource NavigationBackButtonNormalStyle}"
+                        VerticalAlignment="Top"
+                        AutomationProperties.Name="Back"
+                        AutomationProperties.AutomationId="BackButton"
+                        AutomationProperties.ItemType="Navigation Button"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock x:Name="pageTitle" Text="Settings" Style="{StaticResource BerthaHeaderTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                </Grid>
+            </StackPanel>
+
+            <ListView
+                x:Name="itemListView"
+                AutomationProperties.AutomationId="ItemsListView"
+                AutomationProperties.Name="Items"
+                TabIndex="1"
+                Grid.Row="2"
+                IsSwipeEnabled="False"
+                SelectionMode="Single"
+                FontFamily="Global User Interface" ItemContainerStyle="{StaticResource BerthaSettingsListViewItemStyle}"
+                SelectedIndex="0"
+            >
+                <ListViewItem x:Name="DeviceInfo" Height="40" Width="208" FontFamily="Global User Interface" Tapped="DeviceInfo_Tapped">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="56"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="1" Text="Device Info" Style="{StaticResource BerthaBodyTextBlockStyle}" FontFamily="Global User Interface" VerticalAlignment="Center"/>
+                    </Grid>
+                </ListViewItem>
+                <ListViewItem x:Name="DefaultApp" Height="40" Width="208" FontFamily="Global User Interface" Tapped="DefaultApp_Tapped">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="56"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="1" Text="Default App" Style="{StaticResource BerthaBodyTextBlockStyle}" FontFamily="Global User Interface" VerticalAlignment="Center"/>
+                    </Grid>
+                </ListViewItem>
+                <ListViewItem x:Name="Network" Height="40" Width="208" FontFamily="Global User Interface" Tapped="Network_Tapped">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="56"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="1" Text="Network" Style="{StaticResource BerthaBodyTextBlockStyle}" FontFamily="Global User Interface" VerticalAlignment="Center"/>
+                    </Grid>
+                </ListViewItem>
+                <ListViewItem x:Name="Accounts" Height="40" Width="208" FontFamily="Global User Interface" Tapped="Accounts_Tapped">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="56"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="1" Text="Accounts" Style="{StaticResource BerthaBodyTextBlockStyle}" FontFamily="Global User Interface" VerticalAlignment="Center"/>
+                    </Grid>
+                </ListViewItem>
+                <ListViewItem x:Name="About" Height="40" Width="208" FontFamily="Global User Interface" Tapped="About_Tapped">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="56"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="1" Text="About" Style="{StaticResource BerthaBodyTextBlockStyle}" FontFamily="Global User Interface" VerticalAlignment="Center"/>
+                    </Grid>
+                </ListViewItem>
+            </ListView>
+        </Grid>
+        <Grid x:Name="DeviceInfoContent" Grid.Row="1" Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="36"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="64"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="1" Text="Device" Style="{StaticResource BerthaTitleTextBlockStyle}" VerticalAlignment="Bottom"/>
+            <ScrollViewer Grid.Row="1" Grid.Column="1" HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="280"/>
+                        <ColumnDefinition Width="64"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Vertical" Grid.Column="0" VerticalAlignment="Top">
+                        <Border Height="40">
+                            <TextBlock Text="Device name" Style="{StaticResource BerthaBodyTextBlockStyle}" VerticalAlignment="Bottom"/>
+                        </Border>
+                        <Border Height="24">
+                            <TextBlock x:Name="DeviceName" Style="{StaticResource BerthaDataTextBlockStyle}" VerticalAlignment="Bottom"/>
+                        </Border>
+                        <Border Height="40">
+                            <TextBlock x:Name="IPAddressCaption" Text="IP address" Style="{StaticResource BerthaBodyTextBlockStyle}" VerticalAlignment="Bottom"/>
+                        </Border>
+                        <Border Height="24">
+                            <TextBlock x:Name="IPAddress1" Style="{StaticResource BerthaDataTextBlockStyle}" VerticalAlignment="Bottom"/>
+                        </Border>
+                        <Border Height="40">
+                            <TextBlock x:Name="Processor" Text="Processor" Style="{StaticResource BerthaBodyTextBlockStyle}" VerticalAlignment="Bottom"/>
+                        </Border>
+                        <Border Height="24">
+                            <TextBlock x:Name="Processor1" Style="{StaticResource BerthaDataTextBlockStyle}" VerticalAlignment="Bottom"/>
+                        </Border>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" Grid.Column="2">
+                        <Border Height="40">
+                            <TextBlock x:Name="NetworkNameCaption" Text="Network" Style="{StaticResource BerthaBodyTextBlockStyle}" VerticalAlignment="Bottom"/>
+                        </Border>
+                        <Border Height="24">
+                            <TextBlock x:Name="NetworkName1" Style="{StaticResource BerthaDataTextBlockStyle}" VerticalAlignment="Bottom"/>
+                        </Border>
+                        <Border Height="40">
+                            <TextBlock x:Name="MACAddressCaption" Text="MAC address" Style="{StaticResource BerthaBodyTextBlockStyle}" VerticalAlignment="Bottom"/>
+                        </Border>
+                        <Border Height="24">
+                            <TextBlock x:Name="MACAddress1" Style="{StaticResource BerthaDataTextBlockStyle}" VerticalAlignment="Bottom"/>
+                        </Border>
+                        <Border Height="40">
+                            <TextBlock x:Name="RAM" Text="RAM" Style="{StaticResource BerthaBodyTextBlockStyle}" VerticalAlignment="Bottom"/>
+                        </Border>
+                        <Border Height="24">
+                            <TextBlock x:Name="RAM1" Style="{StaticResource BerthaDataTextBlockStyle}" VerticalAlignment="Bottom"/>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+            </ScrollViewer>
+            <TextBlock Grid.Column="1" Grid.Row="3" Text="Windows" Style="{StaticResource BerthaTitleTextBlockStyle}" VerticalAlignment="Bottom"/>
+            <ScrollViewer Grid.Row="4" Grid.Column="1" HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="280"/>
+                        <ColumnDefinition Width="64"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Vertical" Grid.Column="0">
+                        <Border Height="40">
+                            <TextBlock Text="Edition" Style="{StaticResource BerthaBodyTextBlockStyle}" VerticalAlignment="Bottom"/>
+                        </Border>
+                        <Border Height="24">
+                            <TextBlock x:Name="Edition" Style="{StaticResource BerthaDataTextBlockStyle}" VerticalAlignment="Bottom"/>
+                        </Border>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" Grid.Column="2">
+                        <Border Height="40">
+                            <TextBlock x:Name="Activation" Text="Activation" Style="{StaticResource BerthaBodyTextBlockStyle}" VerticalAlignment="Bottom"/>
+                        </Border>
+                        <Border Height="24">
+                            <TextBlock x:Name="Activation1" Style="{StaticResource BerthaDataTextBlockStyle}" VerticalAlignment="Bottom"/>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+            </ScrollViewer>
+        </Grid>
+        <Grid x:Name="DefaultAppContent" Grid.Row="1" Grid.Column="2" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="36"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="24"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="64"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="1" Text="Default app" Style="{StaticResource BerthaAthensTextBlockStyle}" VerticalAlignment="Bottom"/>
+            <TextBlock Grid.Column="1" Grid.Row="1" Text="Choose the default app to run when starting your device" Style="{StaticResource BerthaBodyTextBlockStyle}" VerticalAlignment="Bottom"/>
+            <ListView Grid.Column="1" Grid.Row="3">
+            </ListView>
+        </Grid>
+        <Grid x:Name="AboutContent" Grid.Row="1" Grid.Column="2" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="36"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="48"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="64"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="1" Text="About" Style="{StaticResource BerthaAthensTextBlockStyle}" VerticalAlignment="Bottom"/>
+            <WebView Grid.Row="1" Grid.Column="1" x:Name="AboutPage"/>
+        </Grid>
+    </Grid>
+</Page>
