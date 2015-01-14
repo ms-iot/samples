@@ -1,4 +1,11 @@
-﻿#include "pch.h"
+ /********************************************************
+*                                                        *
+*   © Copyright (C) Microsoft. All rights reserved.      *
+*                                                        *
+*********************************************************/
+
+
+#include "pch.h"
 #include "BackgroundTask.h"
 
 using namespace Windows::Foundation;

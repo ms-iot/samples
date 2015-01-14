@@ -1,4 +1,11 @@
-﻿//
+ /********************************************************
+*                                                        *
+*   © Copyright (C) Microsoft. All rights reserved.      *
+*                                                        *
+*********************************************************/
+
+
+//
 // MainPage.xaml.h
 // Declaration of the MainPage class.
 //

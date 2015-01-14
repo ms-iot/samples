@@ -1,3 +1,10 @@
+ /********************************************************
+*                                                        *
+*   © Copyright (C) Microsoft. All rights reserved.      *
+*                                                        *
+*********************************************************/
+
+
 // ConsoleApplication.cpp : Defines the entry point for the console application.
 //
 
