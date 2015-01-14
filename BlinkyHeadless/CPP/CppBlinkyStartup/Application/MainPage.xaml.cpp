@@ -1,4 +1,11 @@
-﻿//
+ /********************************************************
+*                                                        *
+*   © Copyright (C) Microsoft. All rights reserved.      *
+*                                                        *
+*********************************************************/
+
+
+//
 // MainPage.xaml.cpp
 // Implementation of the MainPage class.
 //
