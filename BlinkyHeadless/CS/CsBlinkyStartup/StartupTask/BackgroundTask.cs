@@ -27,12 +27,19 @@ namespace StartupTask
 
         private async void InitGPIO()
         {
-            var deviceId = GpioController.GetDeviceSelector("GPIO_S5");
-            var deviceInfos = await DeviceInformation.FindAllAsync(deviceId, null);
-            var controller = await GpioController.FromIdAsync(deviceInfos[0].Id);
-            GpioPinInfo pinInfo;
-            controller.Pins.TryGetValue(0, out pinInfo);
-            pinInfo.TryOpenOutput(GpioPinValue.Low, GpioSharingMode.Exclusive, out outPin);
+            try
+            {
+                var deviceId = GpioController.GetDeviceSelector("GPIO_S5");
+                var deviceInfos = await DeviceInformation.FindAllAsync(deviceId, null);
+                var controller = await GpioController.FromIdAsync(deviceInfos[0].Id);
+                GpioPinInfo pinInfo;
+                controller.Pins.TryGetValue(0, out pinInfo);
+                pinInfo.TryOpenOutput(GpioPinValue.Low, GpioSharingMode.Exclusive, out outPin);
+            } 
+            catch (Exception)
+            {
+
+            }
         }
 
         private void Timer_Tick(ThreadPoolTimer timer)
