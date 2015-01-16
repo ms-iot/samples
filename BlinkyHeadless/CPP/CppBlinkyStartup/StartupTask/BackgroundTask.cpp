@@ -51,32 +51,39 @@ void BackgroundTask::Run(IBackgroundTaskInstance^ taskInstance)
 
 void BackgroundTask::InitGpio()
 {
-    auto deviceId = GpioController::GetDeviceSelector("GPIO_S5");
-    create_task(DeviceInformation::FindAllAsync(deviceId, nullptr)).then(
-        [this](task<DeviceInformationCollection ^> collectionOp) 
-        {
-            try 
+    try
+    {
+        auto deviceId = GpioController::GetDeviceSelector("GPIO_S5");
+        create_task(DeviceInformation::FindAllAsync(deviceId, nullptr)).then(
+            [this](task<DeviceInformationCollection ^> collectionOp) 
             {
-                auto deviceInfos = collectionOp.get();
-                auto firstDeviceId = deviceInfos->GetAt(0)->Id;
-                create_task(GpioController::FromIdAsync(firstDeviceId)).then(
-                    [this](task<GpioController^> controllerOp) 
-                    {
-                        try
+                try 
+                {
+                    auto deviceInfos = collectionOp.get();
+                    auto firstDeviceId = deviceInfos->GetAt(0)->Id;
+                    create_task(GpioController::FromIdAsync(firstDeviceId)).then(
+                        [this](task<GpioController^> controllerOp) 
                         {
-                            auto controller = controllerOp.get();
-                            auto pinInfo = controller->Pins->Lookup(0);
-                            pinInfo->TryOpenOutput(GpioPinValue::Low, GpioSharingMode::Exclusive, &outPin);
-                        }
-                        catch (Exception ^)
-                        {
-                            // TODO (alecont): we need to marshal this back...
-                        }
-                    });
-            }
-            catch (Exception ^)
-            {
-                // TODO (alecont): we need to marshal this back...
-            }
-        });
+                            try
+                            {
+                                auto controller = controllerOp.get();
+                                auto pinInfo = controller->Pins->Lookup(0);
+                                pinInfo->TryOpenOutput(GpioPinValue::Low, GpioSharingMode::Exclusive, &outPin);
+                            }
+                            catch (Exception ^)
+                            {
+                                // TODO: we need to marshal this back...
+                            }
+                        });
+                }
+                catch (Exception ^)
+                {
+                    // TODO: we need to marshal this back...
+                }
+            });
+    }
+    catch (Exception ^)
+    {
+        // TODO: we need to marshal this back...
+    }
 }

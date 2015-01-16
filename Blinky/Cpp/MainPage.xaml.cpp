@@ -46,35 +46,43 @@ MainPage::MainPage()
 
 void MainPage::InitGPIO()
 {
-    auto selector = GpioController::GetDeviceSelector("GPIO_S5");
-    create_task(DeviceInformation::FindAllAsync(selector, nullptr)).then([this](task<DeviceInformationCollection ^> collectionOp) {
-        try
-        {
-            auto deviceInfos = collectionOp.get();
-            auto deviceId = deviceInfos->GetAt(0)->Id;
+    try
+    {
+        auto selector = GpioController::GetDeviceSelector("GPIO_S5");
+        create_task(DeviceInformation::FindAllAsync(selector, nullptr)).then([this](task<DeviceInformationCollection ^> collectionOp) {
+            try
+            {
+                auto deviceInfos = collectionOp.get();
+                auto deviceId = deviceInfos->GetAt(0)->Id;
 
-            create_task(GpioController::FromIdAsync(deviceId)).then([this](task<GpioController^> controllerOp) {
-                try
-                {
-                    auto controller = controllerOp.get();
-                    auto pinInfo = controller->Pins->Lookup(0);
-                    pinInfo->TryOpenOutput(GpioPinValue::Low, GpioSharingMode::Exclusive, &outPin_);
-                    GpioStatus->Text = "GPIO pin initialized correctly.";
-                }
-                catch (Exception ^)
-                {
-                    // TODO (alecont): we need to marshal this back...
-                    GpioStatus->Text = "There were problems initializing the GPIO pin.";
-                }
-            });
+                create_task(GpioController::FromIdAsync(deviceId)).then([this](task<GpioController^> controllerOp) {
+                    try
+                    {
+                        auto controller = controllerOp.get();
+                        auto pinInfo = controller->Pins->Lookup(0);
+                        pinInfo->TryOpenOutput(GpioPinValue::Low, GpioSharingMode::Exclusive, &outPin_);
+                        GpioStatus->Text = "GPIO pin initialized correctly.";
+                    }
+                    catch (Exception ^)
+                    {
+                        // TODO: we need to marshal this back...
+                        GpioStatus->Text = "There were problems initializing the GPIO pin.";
+                    }
+                });
 
-        }
-        catch (Exception ^)
-        {
-            // TODO (alecont): we need to marshal this back...
-            GpioStatus->Text = "There were problems initializing the GPIO pin.";
-        }
-    });
+            }
+            catch (Exception ^)
+            {
+                // TODO: we need to marshal this back...
+                GpioStatus->Text = "There were problems initializing the GPIO pin.";
+            }
+        });
+    }
+    catch (Exception ^)
+    {
+        // TODO: we need to marshal this back...
+        GpioStatus->Text = "There were problems initializing the GPIO pin.";
+    }
 }
 
 void MainPage::FlipLED()
