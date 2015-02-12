@@ -9,21 +9,22 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="144"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="64"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="16"/>
-            <ColumnDefinition Width="16"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="64"/>
-        </Grid.ColumnDefinitions>
+	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="144"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="48"/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="64"/>
+			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="16"/>
+			<ColumnDefinition Width="16"/>
+			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="64"/>
+		</Grid.ColumnDefinitions>
 
-        <!-- Header row -->
+		<!-- Header row -->
 		<Grid Margin="0,48" Grid.Column="1" Grid.ColumnSpan="4">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*"/>
@@ -51,233 +52,238 @@
 						<Glyphs x:Name="ShutdownGlyph" UnicodeString="{StaticResource ResourceKey=IconShutdown}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="24" Fill="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 					</Button>
 				</StackPanel>
-                <Popup Grid.ColumnSpan="2" Name="ShutdownDropdown" HorizontalAlignment="Left" IsLightDismissEnabled="True">
-                    <ListView Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" ItemContainerStyle="{StaticResource BerthaSettingsListViewItemStyle}" BorderThickness="1.0" BorderBrush="White" Width="120">
-                        <ListViewItem x:Name="ShutdownOption" HorizontalAlignment="Stretch" Tapped="ShutdownOption_Tapped" HorizontalContentAlignment="Stretch" Height="30">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="20"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
+				<Popup Grid.ColumnSpan="2" Name="ShutdownDropdown" HorizontalAlignment="Left" IsLightDismissEnabled="True">
+					<ListView Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" ItemContainerStyle="{StaticResource BerthaSettingsListViewItemStyle}" BorderThickness="1.0" BorderBrush="White" Width="120">
+						<ListViewItem x:Name="ShutdownOption" HorizontalAlignment="Stretch" Tapped="ShutdownOption_Tapped" HorizontalContentAlignment="Stretch" Height="30">
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="20"/>
+									<ColumnDefinition Width="*"/>
+								</Grid.ColumnDefinitions>
 
-                                <TextBlock x:Uid="ShutdownText" Grid.Column="1" Text="Shut down" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BerthaBodyTextBlockStyle}"/>
-                            </Grid>
-                        </ListViewItem>
-                        <ListViewItem x:Name="RestartOption" HorizontalAlignment="Stretch" Tapped="RestartOption_Tapped" HorizontalContentAlignment="Stretch" Height="30">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="20"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
+								<TextBlock x:Uid="ShutdownText" Grid.Column="1" Text="Shut down" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BerthaBodyTextBlockStyle}"/>
+							</Grid>
+						</ListViewItem>
+						<ListViewItem x:Name="RestartOption" HorizontalAlignment="Stretch" Tapped="RestartOption_Tapped" HorizontalContentAlignment="Stretch" Height="30">
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="20"/>
+									<ColumnDefinition Width="*"/>
+								</Grid.ColumnDefinitions>
 
-                                <TextBlock x:Uid="RestartText" Grid.Column="1" Text="Restart" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BerthaBodyTextBlockStyle}"/>
-                            </Grid>
-                        </ListViewItem>
-                    </ListView>
-                </Popup>
-            </StackPanel>
+								<TextBlock x:Uid="RestartText" Grid.Column="1" Text="Restart" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BerthaBodyTextBlockStyle}"/>
+							</Grid>
+						</ListViewItem>
+					</ListView>
+				</Popup>
+			</StackPanel>
 		</Grid>
 
 		<!-- Left panel -->
-        <Grid Grid.Column="1" Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="256"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Ellipse Margin="24,16,0,0" Width="240" Height="240" HorizontalAlignment="Left" VerticalAlignment="Bottom" Fill="{StaticResource AccentBrush}"/>
-            <Image x:Name="BoardImage"  VerticalAlignment="Bottom" Source="Assets/GenericBoard.png" Stretch="None" HorizontalAlignment="Left"/>
-            <TextBlock x:Name="BoardName" Style="{StaticResource BerthaSubheaderTextBlockStyle}" Grid.Row="1" Text="Athens Device" Margin="0,48,0,0"/>
-            <ScrollViewer Grid.Row="2" HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Orientation="Vertical" Grid.Column="0">
-                        <Border Height="48">
-                            <TextBlock x:Uid="MainPageDeviceName" Text="Device name" Style="{StaticResource BerthaBodyTextBlockStyle}" VerticalAlignment="Bottom"/>
-                        </Border>
-                        <Border Height="24">
-                            <TextBlock x:Name="DeviceName" Style="{StaticResource BerthaDataTextBlockStyle}" VerticalAlignment="Bottom"/>
-                        </Border>
-                        <Border Height="48">
-                            <TextBlock x:Uid="MainPageIPAddress" x:Name="IPAddressCaption" Text="IP address" Style="{StaticResource BerthaBodyTextBlockStyle}" VerticalAlignment="Bottom"/>
-                        </Border>
-                        <Border Height="24">
-                            <TextBlock x:Name="IPAddress1" Style="{StaticResource BerthaDataTextBlockStyle}" VerticalAlignment="Bottom"/>
-                        </Border>
-                    </StackPanel>
-                    <StackPanel Orientation="Vertical" Grid.Column="1">
-                        <Border Height="48">
-                            <TextBlock x:Uid="MainPageNetwork" x:Name="NetworkNameCaption" Text="Network" Style="{StaticResource BerthaBodyTextBlockStyle}" VerticalAlignment="Bottom"/>
-                        </Border>
-                        <Border Height="24">
-                            <TextBlock x:Name="NetworkName1" Style="{StaticResource BerthaDataTextBlockStyle}" VerticalAlignment="Bottom"/>
-                        </Border>
-                        <Border Height="48">
-                            <TextBlock x:Uid="MainPageMACAddress" x:Name="MACAddressCaption" Text="MAC address" Style="{StaticResource BerthaBodyTextBlockStyle}" VerticalAlignment="Bottom"/>
-                        </Border>
-                        <Border Height="24">
-                            <TextBlock x:Name="MACAddress1" Style="{StaticResource BerthaDataTextBlockStyle}" VerticalAlignment="Bottom"/>
-                        </Border>
-                    </StackPanel>
-                </Grid>
-            </ScrollViewer>
-        </Grid>
+		<Grid Grid.Column="1" Grid.Row="1">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="256"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
+			<Ellipse Margin="24,16,0,0" Width="240" Height="240" HorizontalAlignment="Left" VerticalAlignment="Bottom" Fill="{StaticResource AccentBrush}"/>
+			<Image x:Name="BoardImage"  VerticalAlignment="Bottom" Source="Assets/GenericBoard.png" Stretch="None" HorizontalAlignment="Left"/>
+			<TextBlock x:Name="BoardName" Style="{StaticResource BerthaSubheaderTextBlockStyle}" Grid.Row="1" Text="Athens Device" Margin="0,48,0,0"/>
+			<ScrollViewer Grid.Row="2" HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto">
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+					<StackPanel Orientation="Vertical" Grid.Column="0">
+						<Border Height="48">
+							<TextBlock x:Uid="MainPageDeviceName" Text="Device name" Style="{StaticResource BerthaBodyTextBlockStyle}" VerticalAlignment="Bottom"/>
+						</Border>
+						<Border Height="24">
+							<TextBlock x:Name="DeviceName" Style="{StaticResource BerthaDataTextBlockStyle}" VerticalAlignment="Bottom"/>
+						</Border>
+						<Border Height="48">
+							<TextBlock x:Uid="MainPageIPAddress" x:Name="IPAddressCaption" Text="IP address" Style="{StaticResource BerthaBodyTextBlockStyle}" VerticalAlignment="Bottom"/>
+						</Border>
+						<Border Height="24">
+							<TextBlock x:Name="IPAddress1" Style="{StaticResource BerthaDataTextBlockStyle}" VerticalAlignment="Bottom"/>
+						</Border>
+					</StackPanel>
+					<StackPanel Orientation="Vertical" Grid.Column="1">
+						<Border Height="48">
+							<TextBlock x:Uid="MainPageNetwork" x:Name="NetworkNameCaption" Text="Network" Style="{StaticResource BerthaBodyTextBlockStyle}" VerticalAlignment="Bottom"/>
+						</Border>
+						<Border Height="24">
+							<TextBlock x:Name="NetworkName1" Style="{StaticResource BerthaDataTextBlockStyle}" VerticalAlignment="Bottom"/>
+						</Border>
+						<Border Height="48">
+							<TextBlock x:Uid="MainPageMACAddress" x:Name="MACAddressCaption" Text="MAC address" Style="{StaticResource BerthaBodyTextBlockStyle}" VerticalAlignment="Bottom"/>
+						</Border>
+						<Border Height="24">
+							<TextBlock x:Name="MACAddress1" Style="{StaticResource BerthaDataTextBlockStyle}" VerticalAlignment="Bottom"/>
+						</Border>
+					</StackPanel>
+				</Grid>
+			</ScrollViewer>
+		</Grid>
+		
+		<!-- Right panel -->
+		<Grid Grid.Column="4" Grid.Row="1" Visibility="Collapsed">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="50"/>
+				<RowDefinition Height="15"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
+			<TextBlock Style="{StaticResource BerthaTitleTextBlockStyle}" Text="Get started" Padding="0,16,0,0"/>
+			<!-- REVIEW (alecont): I don't like X2=1000... :-( -->
+			<Line Grid.Row="1" X2="1000" VerticalAlignment="Top" Stroke="{StaticResource AccentBrush}" Stretch="Fill" Width="412" HorizontalAlignment="Left" />
+			<ListView Grid.Row="2" ItemContainerStyle="{StaticResource BerthaMainPageListViewItemStyle}">
+				<ListViewItem x:Name="TelnetSession" FontFamily="Global User Interface" Tapped="TelnetSession_Tapped" PointerEntered="TelnetSession_PointerEntered" PointerExited="TelnetSession_PointerExited">
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="32"/>
+							<ColumnDefinition Width="8"/>
+							<ColumnDefinition Width="*"/>
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="4"/>
+							<RowDefinition Height="*"/>
+							<RowDefinition Height="4"/>
+						</Grid.RowDefinitions>
 
-        <!-- Right panel -->
-        <Grid Grid.Column="4" Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="15"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <TextBlock Style="{StaticResource BerthaTitleTextBlockStyle}" Text="Get started" Padding="0,16,0,0"/>
-            <!-- REVIEW (alecont): I don't like X2=1000... :-( -->
-            <Line Grid.Row="1" X2="1000" VerticalAlignment="Top" Stroke="{StaticResource AccentBrush}" Stretch="Fill" Width="412" HorizontalAlignment="Left" />
-            <ListView Grid.Row="2" ItemContainerStyle="{StaticResource BerthaMainPageListViewItemStyle}">
-                <ListViewItem x:Name="TelnetSession" FontFamily="Global User Interface" Tapped="TelnetSession_Tapped" PointerEntered="TelnetSession_PointerEntered" PointerExited="TelnetSession_PointerExited">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="32"/>
-                            <ColumnDefinition Width="8"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="4"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="4"/>
-                        </Grid.RowDefinitions>
-
-                        <Glyphs Grid.Row="1" UnicodeString="{StaticResource ResourceKey=IconTelnet}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="{StaticResource AccentBrush}" VerticalAlignment="Center"/>
-                        <TextBlock x:Name="TelnetText" Grid.Row="1" Grid.Column="2" Style="{StaticResource BerthaBodyTextBlockStyle}" Text="Open a telnet session" FontFamily="Global User Interface" VerticalAlignment="Center"/>
+						<Glyphs Grid.Row="1" UnicodeString="{StaticResource ResourceKey=IconTelnet}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="{StaticResource AccentBrush}" VerticalAlignment="Center"/>
+						<TextBlock x:Name="TelnetText" Grid.Row="1" Grid.Column="2" Style="{StaticResource BerthaBodyTextBlockStyle}" Text="Open a telnet session" FontFamily="Global User Interface" VerticalAlignment="Center"/>
 						<TextBlock x:Name="TelnetTextUnderline" Visibility="Collapsed" Grid.Row="1" Grid.Column="2" Style="{StaticResource BerthaBodyTextBlockStyle}" FontFamily="Global User Interface" VerticalAlignment="Center">
 							<Underline><Run Text="Open a telnet session"/></Underline>
 						</TextBlock>
 					</Grid>
-                </ListViewItem>
-                <ListViewItem x:Name="MakeLEDBlink" FontFamily="Global User Interface" Tapped="MakeLEDBlink_Tapped" PointerEntered="MakeLEDBlink_PointerEntered" PointerExited="MakeLEDBlink_PointerExited">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="32"/>
-                            <ColumnDefinition Width="8"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="4"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="4"/>
-                        </Grid.RowDefinitions>
+				</ListViewItem>
+				<ListViewItem x:Name="MakeLEDBlink" FontFamily="Global User Interface" Tapped="MakeLEDBlink_Tapped" PointerEntered="MakeLEDBlink_PointerEntered" PointerExited="MakeLEDBlink_PointerExited">
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="32"/>
+							<ColumnDefinition Width="8"/>
+							<ColumnDefinition Width="*"/>
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="4"/>
+							<RowDefinition Height="*"/>
+							<RowDefinition Height="4"/>
+						</Grid.RowDefinitions>
 
-                        <Glyphs Grid.Row="1" UnicodeString="{StaticResource ResourceKey=IconLED}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="{StaticResource AccentBrush}" VerticalAlignment="Center"/>
-                        <TextBlock x:Name="LEDText" Grid.Row="1" Grid.Column="2" Style="{StaticResource BerthaBodyTextBlockStyle}" Text="Make LED blink" FontFamily="Global User Interface" VerticalAlignment="Center"/>
+						<Glyphs Grid.Row="1" UnicodeString="{StaticResource ResourceKey=IconLED}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="{StaticResource AccentBrush}" VerticalAlignment="Center"/>
+						<TextBlock x:Name="LEDText" Grid.Row="1" Grid.Column="2" Style="{StaticResource BerthaBodyTextBlockStyle}" Text="Make LED blink" FontFamily="Global User Interface" VerticalAlignment="Center"/>
 						<TextBlock x:Name="LEDTextUnderline" Visibility="Collapsed" Grid.Row="1" Grid.Column="2" Style="{StaticResource BerthaBodyTextBlockStyle}" FontFamily="Global User Interface" VerticalAlignment="Center">
 							<Underline><Run Text="Make LED blink"/></Underline>
 						</TextBlock>
 					</Grid>
-                </ListViewItem>
-                <ListViewItem x:Name="ConnectToPC" FontFamily="Global User Interface" Tapped="ConnectToPC_Tapped" PointerEntered="ConnectToPC_PointerEntered" PointerExited="ConnectToPC_PointerExited">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="32"/>
-                            <ColumnDefinition Width="8"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="4"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="4"/>
-                        </Grid.RowDefinitions>
+				</ListViewItem>
+				<ListViewItem x:Name="ConnectToPC" FontFamily="Global User Interface" Tapped="ConnectToPC_Tapped" PointerEntered="ConnectToPC_PointerEntered" PointerExited="ConnectToPC_PointerExited">
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="32"/>
+							<ColumnDefinition Width="8"/>
+							<ColumnDefinition Width="*"/>
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="4"/>
+							<RowDefinition Height="*"/>
+							<RowDefinition Height="4"/>
+						</Grid.RowDefinitions>
 
-                        <Glyphs Grid.Row="1" UnicodeString="{StaticResource ResourceKey=IconLaptop}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="{StaticResource AccentBrush}" VerticalAlignment="Center"/>
-                        <TextBlock x:Name="ConnectText" Grid.Row="1" Grid.Column="2" Style="{StaticResource BerthaBodyTextBlockStyle}" Text="Connect to your PC" FontFamily="Global User Interface" VerticalAlignment="Center"/>
+						<Glyphs Grid.Row="1" UnicodeString="{StaticResource ResourceKey=IconLaptop}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="{StaticResource AccentBrush}" VerticalAlignment="Center"/>
+						<TextBlock x:Name="ConnectText" Grid.Row="1" Grid.Column="2" Style="{StaticResource BerthaBodyTextBlockStyle}" Text="Connect to your PC" FontFamily="Global User Interface" VerticalAlignment="Center"/>
 						<TextBlock x:Name="ConnectTextUnderline" Visibility="Collapsed" Grid.Row="1" Grid.Column="2" Style="{StaticResource BerthaBodyTextBlockStyle}" FontFamily="Global User Interface" VerticalAlignment="Center">
 							<Underline><Run Text="Connect to your PC"/></Underline>
 						</TextBlock>
 					</Grid>
-                </ListViewItem>
-                <ListViewItem x:Name="GetCoding" FontFamily="Global User Interface" Tapped="GetCoding_Tapped" PointerEntered="GetCoding_PointerEntered" PointerExited="GetCoding_PointerExited">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="32"/>
-                            <ColumnDefinition Width="8"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="4"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="4"/>
-                        </Grid.RowDefinitions>
+				</ListViewItem>
+				<ListViewItem x:Name="GetCoding" FontFamily="Global User Interface" Tapped="GetCoding_Tapped" PointerEntered="GetCoding_PointerEntered" PointerExited="GetCoding_PointerExited">
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="32"/>
+							<ColumnDefinition Width="8"/>
+							<ColumnDefinition Width="*"/>
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="4"/>
+							<RowDefinition Height="*"/>
+							<RowDefinition Height="4"/>
+						</Grid.RowDefinitions>
 
-                        <Glyphs Grid.Row="1" UnicodeString="{StaticResource ResourceKey=IconCoding}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="{StaticResource AccentBrush}" VerticalAlignment="Center"/>
-                        <TextBlock x:Name="CodingText" Grid.Row="1" Grid.Column="2" Style="{StaticResource BerthaBodyTextBlockStyle}" Text="Get coding" FontFamily="Global User Interface" VerticalAlignment="Center"/>
+						<Glyphs Grid.Row="1" UnicodeString="{StaticResource ResourceKey=IconCoding}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="{StaticResource AccentBrush}" VerticalAlignment="Center"/>
+						<TextBlock x:Name="CodingText" Grid.Row="1" Grid.Column="2" Style="{StaticResource BerthaBodyTextBlockStyle}" Text="Get coding" FontFamily="Global User Interface" VerticalAlignment="Center"/>
 						<TextBlock x:Name="CodingTextUnderline" Visibility="Collapsed" Grid.Row="1" Grid.Column="2" Style="{StaticResource BerthaBodyTextBlockStyle}" FontFamily="Global User Interface" VerticalAlignment="Center">
 							<Underline><Run Text="Get coding"/></Underline>
 						</TextBlock>
 					</Grid>
-                </ListViewItem>
-                <ListViewItem x:Name="ConnectToCloud" FontFamily="Global User Interface" Tapped="ConnectToCloud_Tapped" PointerEntered="ConnectToCloud_PointerEntered" PointerExited="ConnectToCloud_PointerExited">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="32"/>
-                            <ColumnDefinition Width="8"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="4"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="4"/>
-                        </Grid.RowDefinitions>
+				</ListViewItem>
+				<ListViewItem x:Name="ConnectToCloud" FontFamily="Global User Interface" Tapped="ConnectToCloud_Tapped" PointerEntered="ConnectToCloud_PointerEntered" PointerExited="ConnectToCloud_PointerExited">
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="32"/>
+							<ColumnDefinition Width="8"/>
+							<ColumnDefinition Width="*"/>
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="4"/>
+							<RowDefinition Height="*"/>
+							<RowDefinition Height="4"/>
+						</Grid.RowDefinitions>
 
-                        <Glyphs Grid.Row="1" UnicodeString="{StaticResource ResourceKey=IconCloud}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="{StaticResource AccentBrush}" VerticalAlignment="Center"/>
-                        <TextBlock x:Name="CloudText" Grid.Row="1" Grid.Column="2" Style="{StaticResource BerthaBodyTextBlockStyle}" Text="Connect to Microsoft Maker Cloud" FontFamily="Global User Interface" VerticalAlignment="Center"/>
+						<Glyphs Grid.Row="1" UnicodeString="{StaticResource ResourceKey=IconCloud}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="{StaticResource AccentBrush}" VerticalAlignment="Center"/>
+						<TextBlock x:Name="CloudText" Grid.Row="1" Grid.Column="2" Style="{StaticResource BerthaBodyTextBlockStyle}" Text="Connect to Microsoft Maker Cloud" FontFamily="Global User Interface" VerticalAlignment="Center"/>
 						<TextBlock x:Name="CloudTextUnderline" Visibility="Collapsed" Grid.Row="1" Grid.Column="2" Style="{StaticResource BerthaBodyTextBlockStyle}" FontFamily="Global User Interface" VerticalAlignment="Center">
 							<Underline><Run Text="Connect to Microsoft Maker Cloud"/></Underline>
 						</TextBlock>
 					</Grid>
-                </ListViewItem>
-                <ListViewItem x:Name="Tutorials" FontFamily="Global User Interface" Tapped="Tutorials_Tapped" PointerEntered="Tutorials_PointerEntered" PointerExited="Tutorials_PointerExited">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="32"/>
-                            <ColumnDefinition Width="8"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="4"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="4"/>
-                        </Grid.RowDefinitions>
+				</ListViewItem>
+				<ListViewItem x:Name="Tutorials" FontFamily="Global User Interface" Tapped="Tutorials_Tapped" PointerEntered="Tutorials_PointerEntered" PointerExited="Tutorials_PointerExited">
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="32"/>
+							<ColumnDefinition Width="8"/>
+							<ColumnDefinition Width="*"/>
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="4"/>
+							<RowDefinition Height="*"/>
+							<RowDefinition Height="4"/>
+						</Grid.RowDefinitions>
 
-                        <Glyphs Grid.Row="1" UnicodeString="{StaticResource ResourceKey=IconTutorial}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="{StaticResource AccentBrush}" VerticalAlignment="Center"/>
-                        <TextBlock x:Name="TutorialText" Grid.Row="1" Grid.Column="2" Style="{StaticResource BerthaBodyTextBlockStyle}" Text="Tutorials" FontFamily="Global User Interface" VerticalAlignment="Center"/>
+						<Glyphs Grid.Row="1" UnicodeString="{StaticResource ResourceKey=IconTutorial}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="{StaticResource AccentBrush}" VerticalAlignment="Center"/>
+						<TextBlock x:Name="TutorialText" Grid.Row="1" Grid.Column="2" Style="{StaticResource BerthaBodyTextBlockStyle}" Text="Tutorials" FontFamily="Global User Interface" VerticalAlignment="Center"/>
 						<TextBlock x:Name="TutorialTextUnderline" Visibility="Collapsed" Grid.Row="1" Grid.Column="2" Style="{StaticResource BerthaBodyTextBlockStyle}" FontFamily="Global User Interface" VerticalAlignment="Center">
 							<Underline><Run Text="Tutorials"/></Underline>
 						</TextBlock>
 					</Grid>
-                </ListViewItem>
-                <ListViewItem x:Name="Settings" FontFamily="Global User Interface" Tapped="Settings_Tapped" PointerEntered="Settings_PointerEntered" PointerExited="Settings_PointerExited">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="32"/>
-                            <ColumnDefinition Width="8"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="4"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="4"/>
-                        </Grid.RowDefinitions>
+				</ListViewItem>
+				<ListViewItem x:Name="Settings" FontFamily="Global User Interface" Tapped="Settings_Tapped" PointerEntered="Settings_PointerEntered" PointerExited="Settings_PointerExited">
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="32"/>
+							<ColumnDefinition Width="8"/>
+							<ColumnDefinition Width="*"/>
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="4"/>
+							<RowDefinition Height="*"/>
+							<RowDefinition Height="4"/>
+						</Grid.RowDefinitions>
 
-                        <Glyphs Grid.Row="1" UnicodeString="{StaticResource ResourceKey=IconSettings}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="{StaticResource AccentBrush}" VerticalAlignment="Center"/>
-                        <TextBlock x:Name="SettingsText" Grid.Row="1" Grid.Column="2" Style="{StaticResource BerthaBodyTextBlockStyle}" Text="Settings" FontFamily="Global User Interface" VerticalAlignment="Center"/>
+						<Glyphs Grid.Row="1" UnicodeString="{StaticResource ResourceKey=IconSettings}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="{StaticResource AccentBrush}" VerticalAlignment="Center"/>
+						<TextBlock x:Name="SettingsText" Grid.Row="1" Grid.Column="2" Style="{StaticResource BerthaBodyTextBlockStyle}" Text="Settings" FontFamily="Global User Interface" VerticalAlignment="Center"/>
 						<TextBlock x:Name="SettingsTextUnderline" Visibility="Collapsed" Grid.Row="1" Grid.Column="2" Style="{StaticResource BerthaBodyTextBlockStyle}" FontFamily="Global User Interface" VerticalAlignment="Center">
 							<Underline><Run Text="Settings"/></Underline>
 						</TextBlock>
 					</Grid>
-                </ListViewItem>
-            </ListView>
-        </Grid>
-    </Grid>
+				</ListViewItem>
+			</ListView>
+		</Grid>
+		
+		<StackPanel Grid.Row="2" Grid.ColumnSpan="5" Orientation="Vertical" VerticalAlignment="Bottom">
+			<TextBlock Style="{StaticResource BerthaBodyTextBlockStyle}" Text="By using this software you agree to Microsoft license terms" HorizontalAlignment="Right"/>
+			<TextBlock  Text="This limited-feature version of Windows IoT Athens is designed exclusively for driver development only" Style="{StaticResource BerthaBodyTextBlockStyle}" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+		</StackPanel>
+	</Grid>
 </Page>
