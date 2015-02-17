@@ -13,13 +13,14 @@
 		<Grid.RowDefinitions>
 			<RowDefinition Height="144"/>
 			<RowDefinition Height="*"/>
-			<RowDefinition Height="48"/>
+			<RowDefinition Height="100"/>
+            <RowDefinition Height="24"/>
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="64"/>
 			<ColumnDefinition Width="*"/>
-			<ColumnDefinition Width="16"/>
-			<ColumnDefinition Width="16"/>
+			<!--<ColumnDefinition Width="16"/>
+			<ColumnDefinition Width="16"/>-->
 			<ColumnDefinition Width="*"/>
 			<ColumnDefinition Width="64"/>
 		</Grid.ColumnDefinitions>
@@ -49,7 +50,7 @@
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center">
 					<TextBlock x:Name="CurrentTime" HorizontalAlignment="Right" Style="{StaticResource BerthaBodyTextBlockStyle}" VerticalAlignment="Center" Padding="0,0,12,0"/>
 					<Button x:Name="ShutdownButton" HorizontalAlignment="Center" VerticalAlignment="Center" Tapped="ShutdownButton_Tapped" Background="Transparent" BorderThickness="0" Height="40" Width="40">
-						<Glyphs x:Name="ShutdownGlyph" UnicodeString="{StaticResource ResourceKey=IconShutdown}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="24" Fill="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+						<Glyphs x:Name="ShutdownGlyph" Fill="White" UnicodeString="{StaticResource ResourceKey=IconShutdown}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 					</Button>
 				</StackPanel>
 				<Popup Grid.ColumnSpan="2" Name="ShutdownDropdown" HorizontalAlignment="Left" IsLightDismissEnabled="True">
@@ -88,8 +89,12 @@
 			</Grid.RowDefinitions>
 			<Ellipse Margin="24,16,0,0" Width="240" Height="240" HorizontalAlignment="Left" VerticalAlignment="Bottom" Fill="{StaticResource AccentBrush}"/>
 			<Image x:Name="BoardImage"  VerticalAlignment="Bottom" Source="Assets/GenericBoard.png" Stretch="None" HorizontalAlignment="Left"/>
-			<TextBlock x:Name="BoardName" Style="{StaticResource BerthaSubheaderTextBlockStyle}" Grid.Row="1" Text="Athens Device" Margin="0,48,0,0"/>
-			<ScrollViewer Grid.Row="2" HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto">
+			
+		</Grid>
+		
+        <StackPanel Grid.Column="2" Grid.Row="1" Orientation="Vertical">
+            <TextBlock x:Name="BoardName" Style="{StaticResource BerthaSubheaderTextBlockStyle}" Grid.Row="1" Text="Athens Device" Margin="0,24,0,0"/>
+			<ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto">
 				<Grid>
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="*"/>
@@ -125,8 +130,8 @@
 					</StackPanel>
 				</Grid>
 			</ScrollViewer>
-		</Grid>
-		
+        </StackPanel>
+        
 		<!-- Right panel -->
 		<Grid Grid.Column="4" Grid.Row="1" Visibility="Collapsed">
 			<Grid.RowDefinitions>
@@ -281,9 +286,10 @@
 			</ListView>
 		</Grid>
 		
-		<StackPanel Grid.Row="2" Grid.ColumnSpan="5" Orientation="Vertical" VerticalAlignment="Bottom">
-			<TextBlock Style="{StaticResource BerthaBodyTextBlockStyle}" Text="By using this software you agree to Microsoft license terms" HorizontalAlignment="Right"/>
-			<TextBlock  Text="This limited-feature version of Windows IoT Athens is designed exclusively for driver development only" Style="{StaticResource BerthaBodyTextBlockStyle}" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
-		</StackPanel>
+		<StackPanel Grid.Row="2" Grid.ColumnSpan="6" Grid.Column="1" Orientation="Vertical" VerticalAlignment="Bottom">
+			<TextBlock Style="{StaticResource BerthaBodyTextBlockStyle}" Text="By using this software you agree to Microsoft license terms." HorizontalAlignment="Left"/>
+			<TextBlock  Text="This limited-feature version of Windows IoT Athens is designed exclusively for driver development only." Style="{StaticResource BerthaBodyTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+            <TextBlock  Text="The privacy statement for this prerelease version of the Windows operating system can be viewed here: http://go.microsoft.com/fwlink/?LinkId=506737. You can review linked terms by pasting the forward link into your browser window once the software is running" Style="{StaticResource BerthaBodyTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom" TextWrapping="WrapWholeWords"/>
+        </StackPanel>
 	</Grid>
 </Page>

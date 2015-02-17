@@ -35,21 +35,25 @@
     <Style x:Key="BerthaHeaderTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
         <Setter Property="FontWeight" Value="SemiLight"/>
         <Setter Property="FontSize" Value="34"/>
+        <Setter Property="Foreground" Value="White"/>
     </Style>
 
     <Style x:Key="BerthaTitleTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
         <Setter Property="FontWeight" Value="SemiLight"/>
         <Setter Property="FontSize" Value="24"/>
+        <Setter Property="Foreground" Value="White"/>
     </Style>
 
     <Style x:Key="BerthaAthensTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
         <Setter Property="FontWeight" Value="SemiLight"/>
         <Setter Property="FontSize" Value="18"/>
+        <Setter Property="Foreground" Value="White"/>
     </Style>
 
     <Style x:Key="BerthaBodyTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
         <Setter Property="FontWeight" Value="Normal"/>
         <Setter Property="FontSize" Value="15"/>
+        <Setter Property="Foreground" Value="White"/>
     </Style>
 
     <Style x:Key="BerthaDataTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BerthaBodyTextBlockStyle}">
