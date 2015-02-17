@@ -32,12 +32,12 @@ void BackgroundTask::Run(IBackgroundTaskInstance^ taskInstance)
                 if (LEDStatus == 0)
                 {
                     LEDStatus = 1;
-					pin->Write(GpioPinValue::High);
+                    pin->Write(GpioPinValue::High);
                 }
                 else
                 {
                     LEDStatus = 0;
-					pin->Write(GpioPinValue::Low);
+                    pin->Write(GpioPinValue::Low);
                 }
             }
         }
@@ -51,14 +51,14 @@ void BackgroundTask::Run(IBackgroundTaskInstance^ taskInstance)
 
 void BackgroundTask::InitGpio()
 {
-	create_task(GpioController::GetDefaultAsync()).then([this](task<GpioController ^> controllerOp) {
-		auto gpio = controllerOp.get();
-		pin = gpio->OpenPin(LED_PIN);
+    create_task(GpioController::GetDefaultAsync()).then([this](task<GpioController ^> controllerOp) {
+        auto gpio = controllerOp.get();
+        pin = gpio->OpenPin(LED_PIN);
 
-		if (pin != nullptr)
-		{
-			pin->Write(GpioPinValue::High);
-			pin->SetDriveMode(GpioPinDriveMode::Output);
-		}
-	});
+        if (pin != nullptr)
+        {
+            pin->Write(GpioPinValue::High);
+            pin->SetDriveMode(GpioPinDriveMode::Output);
+        }
+    });
 }

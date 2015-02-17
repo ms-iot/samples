@@ -19,7 +19,7 @@ namespace StartupTask
     public ref class BackgroundTask sealed : public IBackgroundTask
     {
     public:
-		BackgroundTask();
+        BackgroundTask();
         virtual void Run(IBackgroundTaskInstance^ taskInstance);
 
     private:
@@ -29,8 +29,8 @@ namespace StartupTask
         Platform::Agile<Windows::ApplicationModel::Background::BackgroundTaskDeferral> Deferral;
         IBackgroundTaskInstance^ TaskInstance;
         ThreadPoolTimer ^Timer;
-		int LEDStatus = 0;
-		const int LED_PIN = 21;
-		Windows::Devices::Gpio::GpioPin ^pin;
+        int LEDStatus = 0;
+        const int LED_PIN = 21;
+        Windows::Devices::Gpio::GpioPin ^pin;
     };
 }
