@@ -46,43 +46,22 @@ MainPage::MainPage()
 
 void MainPage::InitGPIO()
 {
-    try
-    {
-        auto selector = GpioController::GetDeviceSelector("GPIO_S5");
-        create_task(DeviceInformation::FindAllAsync(selector, nullptr)).then([this](task<DeviceInformationCollection ^> collectionOp) {
-            try
-            {
-                auto deviceInfos = collectionOp.get();
-                auto deviceId = deviceInfos->GetAt(0)->Id;
+	create_task(GpioController::GetDefaultAsync()).then([this](task<GpioController ^> controllerOp) {
+		auto gpio = controllerOp.get();
+		pin_ = gpio->OpenPin(LED_PIN);
 
-                create_task(GpioController::FromIdAsync(deviceId)).then([this](task<GpioController^> controllerOp) {
-                    try
-                    {
-                        auto controller = controllerOp.get();
-                        auto pinInfo = controller->Pins->Lookup(0);
-                        pinInfo->TryOpenOutput(GpioPinValue::Low, GpioSharingMode::Exclusive, &outPin_);
-                        GpioStatus->Text = "GPIO pin initialized correctly.";
-                    }
-                    catch (Exception ^)
-                    {
-                        // TODO: we need to marshal this back...
-                        GpioStatus->Text = "There were problems initializing the GPIO pin.";
-                    }
-                });
+		if (pin_ == nullptr)
+		{
+			GpioStatus->Text = "There were problems initializing the GPIO pin.";
+		}
+		else
+		{
+			pin_->Write(GpioPinValue::High);
+			pin_->SetDriveMode(GpioPinDriveMode::Output);
 
-            }
-            catch (Exception ^)
-            {
-                // TODO: we need to marshal this back...
-                GpioStatus->Text = "There were problems initializing the GPIO pin.";
-            }
-        });
-    }
-    catch (Exception ^)
-    {
-        // TODO: we need to marshal this back...
-        GpioStatus->Text = "There were problems initializing the GPIO pin.";
-    }
+			GpioStatus->Text = "GPIO pin initialized correctly.";
+		}
+	});
 }
 
 void MainPage::FlipLED()
@@ -90,18 +69,18 @@ void MainPage::FlipLED()
 	if (LEDStatus_ == 0)
 	{
 		LEDStatus_ = 1;
-		if (outPin_ != nullptr)
+		if (pin_ != nullptr)
 		{
-			outPin_->Value = GpioPinValue::High;
+			pin_->Write(GpioPinValue::High);
 		}
 		LED->Fill = redBrush_;
 	}
 	else
 	{
 		LEDStatus_ = 0;
-		if (outPin_ != nullptr)
+		if (pin_ != nullptr)
 		{
-			outPin_->Value = GpioPinValue::Low;
+			pin_->Write(GpioPinValue::Low);
 		}
 		LED->Fill = grayBrush_;
 	}

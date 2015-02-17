@@ -27,17 +27,17 @@ void BackgroundTask::Run(IBackgroundTaskInstance^ taskInstance)
     TimerElapsedHandler ^handler = ref new TimerElapsedHandler(
         [this](ThreadPoolTimer ^timer) 
         {
-            if (outPin != nullptr) 
+            if (pin != nullptr)
             {
                 if (LEDStatus == 0)
                 {
                     LEDStatus = 1;
-                    outPin->Value = GpioPinValue::High;
+					pin->Write(GpioPinValue::High);
                 }
                 else
                 {
                     LEDStatus = 0;
-                    outPin->Value = GpioPinValue::Low;
+					pin->Write(GpioPinValue::Low);
                 }
             }
         }
@@ -51,39 +51,14 @@ void BackgroundTask::Run(IBackgroundTaskInstance^ taskInstance)
 
 void BackgroundTask::InitGpio()
 {
-    try
-    {
-        auto deviceId = GpioController::GetDeviceSelector("GPIO_S5");
-        create_task(DeviceInformation::FindAllAsync(deviceId, nullptr)).then(
-            [this](task<DeviceInformationCollection ^> collectionOp) 
-            {
-                try 
-                {
-                    auto deviceInfos = collectionOp.get();
-                    auto firstDeviceId = deviceInfos->GetAt(0)->Id;
-                    create_task(GpioController::FromIdAsync(firstDeviceId)).then(
-                        [this](task<GpioController^> controllerOp) 
-                        {
-                            try
-                            {
-                                auto controller = controllerOp.get();
-                                auto pinInfo = controller->Pins->Lookup(0);
-                                pinInfo->TryOpenOutput(GpioPinValue::Low, GpioSharingMode::Exclusive, &outPin);
-                            }
-                            catch (Exception ^)
-                            {
-                                // TODO: we need to marshal this back...
-                            }
-                        });
-                }
-                catch (Exception ^)
-                {
-                    // TODO: we need to marshal this back...
-                }
-            });
-    }
-    catch (Exception ^)
-    {
-        // TODO: we need to marshal this back...
-    }
+	create_task(GpioController::GetDefaultAsync()).then([this](task<GpioController ^> controllerOp) {
+		auto gpio = controllerOp.get();
+		pin = gpio->OpenPin(LED_PIN);
+
+		if (pin != nullptr)
+		{
+			pin->Write(GpioPinValue::High);
+			pin->SetDriveMode(GpioPinDriveMode::Output);
+		}
+	});
 }
