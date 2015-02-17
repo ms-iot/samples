@@ -151,4 +151,13 @@
   <data name="ShutdownText.Text" xml:space="preserve">
     <value>Shut down</value>
   </data>
+  <data name="LegalText1.Text" xml:space="preserve">
+    <value>By using this software you agree to Microsoft license terms.</value>
+  </data>
+  <data name="LegalText2.Text" xml:space="preserve">
+    <value>This limited-feature version of Windows IoT Athens is designed exclusively for driver development only.</value>
+  </data>
+  <data name="LegalText3.Text" xml:space="preserve">
+    <value>The privacy statement for this prerelease version of the Windows operating system can be viewed here: http://go.microsoft.com/fwlink/?LinkId=506737. You can review linked terms by pasting the forward link into your browser window once the software is running</value>
+  </data>
 </root>

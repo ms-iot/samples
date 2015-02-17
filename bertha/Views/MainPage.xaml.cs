@@ -63,18 +63,18 @@ namespace bertha
 
         private DispatcherTimer timer;
 
-		private void ShutdownButton_Tapped(object sender, TappedRoutedEventArgs e)
-		{
-			ShutdownDropdown.IsOpen = true;
-		}
+        private void ShutdownButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            ShutdownDropdown.IsOpen = true;
+        }
 
-		private void ShutdownOption_Tapped(object sender, TappedRoutedEventArgs e)
-		{
+        private void ShutdownOption_Tapped(object sender, TappedRoutedEventArgs e)
+        {
             ShutdownManager.BeginShutdown(TimeSpan.Zero, ShutdownKind.Shutdown);
-		}
+        }
 
-		private void RestartOption_Tapped(object sender, TappedRoutedEventArgs e)
-		{
+        private void RestartOption_Tapped(object sender, TappedRoutedEventArgs e)
+        {
             ShutdownManager.BeginShutdown(TimeSpan.Zero, ShutdownKind.Restart);
         }
     }

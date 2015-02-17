@@ -9,132 +9,132 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-		<Grid.RowDefinitions>
-			<RowDefinition Height="144"/>
-			<RowDefinition Height="*"/>
-			<RowDefinition Height="100"/>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="144"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="100"/>
             <RowDefinition Height="24"/>
-		</Grid.RowDefinitions>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="64"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="64"/>
             <ColumnDefinition Width="432"/>
             <ColumnDefinition Width="*"/>
-			<ColumnDefinition Width="64"/>
-		</Grid.ColumnDefinitions>
+            <ColumnDefinition Width="64"/>
+        </Grid.ColumnDefinitions>
 
-		<!-- Header row -->
-		<Grid Margin="0,48" Grid.Column="1" Grid.ColumnSpan="4">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="Auto"/>
-				<ColumnDefinition Width="Auto"/>
-			</Grid.ColumnDefinitions>
-			<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-				<Path Data="M12.7344,22.4998 L28.75,22.4998 L28.75,36.5623 L12.7344,34.2185 z M0,22.4998 L11.6406,22.4998 L11.6406,34.0623 L0,32.3435 z M11.6406,9.53104 L11.6406,20.9373 L0,20.9373 L0,11.1717 z M28.75,7.03104 L28.75,20.9373 L12.7344,20.9373 L12.7344,9.29667 z" Fill="White" Margin="0,0,10,0" RenderTransformOrigin="0.5,0.5" Stretch="Fill" UseLayoutRounding="False" Width="22" Height="22" VerticalAlignment="Center">
-					<Path.RenderTransform>
-						<TransformGroup>
-							<ScaleTransform/>
-							<SkewTransform/>
-							<RotateTransform/>
-							<TranslateTransform/>
-						</TransformGroup>
-					</Path.RenderTransform>
-				</Path>
-				<TextBlock x:Uid="AthensHeader" Style="{StaticResource BerthaAthensTextBlockStyle}" Text="Windows Athens" VerticalAlignment="Center"/>
-			</StackPanel>
+        <!-- Header row -->
+        <Grid Margin="0,48" Grid.Column="1" Grid.ColumnSpan="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <Path Data="M12.7344,22.4998 L28.75,22.4998 L28.75,36.5623 L12.7344,34.2185 z M0,22.4998 L11.6406,22.4998 L11.6406,34.0623 L0,32.3435 z M11.6406,9.53104 L11.6406,20.9373 L0,20.9373 L0,11.1717 z M28.75,7.03104 L28.75,20.9373 L12.7344,20.9373 L12.7344,9.29667 z" Fill="White" Margin="0,0,10,0" RenderTransformOrigin="0.5,0.5" Stretch="Fill" UseLayoutRounding="False" Width="22" Height="22" VerticalAlignment="Center">
+                    <Path.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Path.RenderTransform>
+                </Path>
+                <TextBlock x:Uid="AthensHeader" Style="{StaticResource BerthaAthensTextBlockStyle}" Text="Windows Athens" VerticalAlignment="Center"/>
+            </StackPanel>
 
-			<StackPanel Grid.Column="2" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Right">
-				<StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center">
-					<TextBlock x:Name="CurrentTime" HorizontalAlignment="Right" Style="{StaticResource BerthaBodyTextBlockStyle}" VerticalAlignment="Center" Padding="0,0,12,0"/>
-					<Button x:Name="ShutdownButton" HorizontalAlignment="Center" VerticalAlignment="Center" Tapped="ShutdownButton_Tapped" Background="Transparent" BorderThickness="0" Height="40" Width="40">
-						<Glyphs x:Name="ShutdownGlyph" Fill="White" UnicodeString="{StaticResource ResourceKey=IconShutdown}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-					</Button>
-				</StackPanel>
-				<Popup Grid.ColumnSpan="2" Name="ShutdownDropdown" HorizontalAlignment="Left" IsLightDismissEnabled="True">
-					<ListView Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" ItemContainerStyle="{StaticResource BerthaSettingsListViewItemStyle}" BorderThickness="1.0" BorderBrush="White" Width="120">
-						<ListViewItem x:Name="ShutdownOption" HorizontalAlignment="Stretch" Tapped="ShutdownOption_Tapped" HorizontalContentAlignment="Stretch" Height="30">
-							<Grid>
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="20"/>
-									<ColumnDefinition Width="*"/>
-								</Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="2" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Right">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                    <TextBlock x:Name="CurrentTime" HorizontalAlignment="Right" Style="{StaticResource BerthaBodyTextBlockStyle}" VerticalAlignment="Center" Padding="0,0,12,0"/>
+                    <Button x:Name="ShutdownButton" HorizontalAlignment="Center" VerticalAlignment="Center" Tapped="ShutdownButton_Tapped" Background="Transparent" BorderThickness="0" Height="40" Width="40">
+                        <Glyphs x:Name="ShutdownGlyph" Fill="White" UnicodeString="{StaticResource ResourceKey=IconShutdown}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
+                </StackPanel>
+                <Popup Grid.ColumnSpan="2" Name="ShutdownDropdown" HorizontalAlignment="Left" IsLightDismissEnabled="True">
+                    <ListView Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" ItemContainerStyle="{StaticResource BerthaSettingsListViewItemStyle}" BorderThickness="1.0" BorderBrush="White" Width="120">
+                        <ListViewItem x:Name="ShutdownOption" HorizontalAlignment="Stretch" Tapped="ShutdownOption_Tapped" HorizontalContentAlignment="Stretch" Height="30">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="20"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
 
-								<TextBlock x:Uid="ShutdownText" Grid.Column="1" Text="Shut down" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BerthaBodyTextBlockStyle}"/>
-							</Grid>
-						</ListViewItem>
-						<ListViewItem x:Name="RestartOption" HorizontalAlignment="Stretch" Tapped="RestartOption_Tapped" HorizontalContentAlignment="Stretch" Height="30">
-							<Grid>
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="20"/>
-									<ColumnDefinition Width="*"/>
-								</Grid.ColumnDefinitions>
+                                <TextBlock x:Uid="ShutdownText" Grid.Column="1" Text="Shut down" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BerthaBodyTextBlockStyle}"/>
+                            </Grid>
+                        </ListViewItem>
+                        <ListViewItem x:Name="RestartOption" HorizontalAlignment="Stretch" Tapped="RestartOption_Tapped" HorizontalContentAlignment="Stretch" Height="30">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="20"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
 
-								<TextBlock x:Uid="RestartText" Grid.Column="1" Text="Restart" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BerthaBodyTextBlockStyle}"/>
-							</Grid>
-						</ListViewItem>
-					</ListView>
-				</Popup>
-			</StackPanel>
-		</Grid>
+                                <TextBlock x:Uid="RestartText" Grid.Column="1" Text="Restart" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BerthaBodyTextBlockStyle}"/>
+                            </Grid>
+                        </ListViewItem>
+                    </ListView>
+                </Popup>
+            </StackPanel>
+        </Grid>
 
-		<!-- Left panel -->
-		<Grid Grid.Column="1" Grid.Row="1">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="256"/>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="*"/>
-			</Grid.RowDefinitions>
-			<Ellipse Margin="24,16,0,0" Width="240" Height="240" HorizontalAlignment="Left" VerticalAlignment="Bottom" Fill="{StaticResource AccentBrush}"/>
+        <!-- Left panel -->
+        <Grid Grid.Column="1" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="256"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Ellipse Margin="24,16,0,0" Width="240" Height="240" HorizontalAlignment="Left" VerticalAlignment="Bottom" Fill="{StaticResource AccentBrush}"/>
             <Image x:Name="BoardImage"  VerticalAlignment="Bottom" Source="Assets/GenericBoard.png" Stretch="None" HorizontalAlignment="Left"/>
         </Grid>
-		
+        
         <!-- Right Panel -->
         <StackPanel Grid.Column="2" Grid.Row="1" Orientation="Vertical">
             <TextBlock x:Name="BoardName" Style="{StaticResource BerthaSubheaderTextBlockStyle}" Grid.Row="1" Text="Athens Device" Margin="0,24,0,0"/>
-			<ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto">
-				<Grid>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="216"/>
-						<ColumnDefinition Width="*"/>
-					</Grid.ColumnDefinitions>
-					<StackPanel Orientation="Vertical" Grid.Column="0">
-						<Border Height="48">
-							<TextBlock x:Uid="MainPageDeviceName" Text="Device name" Style="{StaticResource BerthaBodyTextBlockStyle}" VerticalAlignment="Bottom"/>
-						</Border>
-						<Border Height="24">
-							<TextBlock x:Name="DeviceName" Style="{StaticResource BerthaDataTextBlockStyle}" VerticalAlignment="Bottom"/>
-						</Border>
-						<Border Height="48">
-							<TextBlock x:Uid="MainPageIPAddress" x:Name="IPAddressCaption" Text="IP address" Style="{StaticResource BerthaBodyTextBlockStyle}" VerticalAlignment="Bottom"/>
-						</Border>
-						<Border Height="24">
-							<TextBlock x:Name="IPAddress1" Style="{StaticResource BerthaDataTextBlockStyle}" VerticalAlignment="Bottom"/>
-						</Border>
-					</StackPanel>
-					<StackPanel Orientation="Vertical" Grid.Column="1">
-						<Border Height="48">
-							<TextBlock x:Uid="MainPageNetwork" x:Name="NetworkNameCaption" Text="Network" Style="{StaticResource BerthaBodyTextBlockStyle}" VerticalAlignment="Bottom"/>
-						</Border>
-						<Border Height="24">
-							<TextBlock x:Name="NetworkName1" Style="{StaticResource BerthaDataTextBlockStyle}" VerticalAlignment="Bottom"/>
-						</Border>
-						<Border Height="48">
-							<TextBlock x:Uid="MainPageMACAddress" x:Name="MACAddressCaption" Text="MAC address" Style="{StaticResource BerthaBodyTextBlockStyle}" VerticalAlignment="Bottom"/>
-						</Border>
-						<Border Height="24">
-							<TextBlock x:Name="MACAddress1" Style="{StaticResource BerthaDataTextBlockStyle}" VerticalAlignment="Bottom"/>
-						</Border>
-					</StackPanel>
-				</Grid>
-			</ScrollViewer>
+            <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="216"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Vertical" Grid.Column="0">
+                        <Border Height="48">
+                            <TextBlock x:Uid="MainPageDeviceName" Text="Device name" Style="{StaticResource BerthaBodyTextBlockStyle}" VerticalAlignment="Bottom"/>
+                        </Border>
+                        <Border Height="24">
+                            <TextBlock x:Name="DeviceName" Style="{StaticResource BerthaDataTextBlockStyle}" VerticalAlignment="Bottom"/>
+                        </Border>
+                        <Border Height="48">
+                            <TextBlock x:Uid="MainPageIPAddress" x:Name="IPAddressCaption" Text="IP address" Style="{StaticResource BerthaBodyTextBlockStyle}" VerticalAlignment="Bottom"/>
+                        </Border>
+                        <Border Height="24">
+                            <TextBlock x:Name="IPAddress1" Style="{StaticResource BerthaDataTextBlockStyle}" VerticalAlignment="Bottom"/>
+                        </Border>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" Grid.Column="1">
+                        <Border Height="48">
+                            <TextBlock x:Uid="MainPageNetwork" x:Name="NetworkNameCaption" Text="Network" Style="{StaticResource BerthaBodyTextBlockStyle}" VerticalAlignment="Bottom"/>
+                        </Border>
+                        <Border Height="24">
+                            <TextBlock x:Name="NetworkName1" Style="{StaticResource BerthaDataTextBlockStyle}" VerticalAlignment="Bottom"/>
+                        </Border>
+                        <Border Height="48">
+                            <TextBlock x:Uid="MainPageMACAddress" x:Name="MACAddressCaption" Text="MAC address" Style="{StaticResource BerthaBodyTextBlockStyle}" VerticalAlignment="Bottom"/>
+                        </Border>
+                        <Border Height="24">
+                            <TextBlock x:Name="MACAddress1" Style="{StaticResource BerthaDataTextBlockStyle}" VerticalAlignment="Bottom"/>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+            </ScrollViewer>
         </StackPanel>
         
-		<!-- Legal Text -->
-		<StackPanel Grid.Row="2" Grid.ColumnSpan="6" Grid.Column="1" Orientation="Vertical" VerticalAlignment="Bottom">
-			<TextBlock Style="{StaticResource BerthaLegalTextBlockStyle}" Text="By using this software you agree to Microsoft license terms." HorizontalAlignment="Left"/>
-			<TextBlock  Text="This limited-feature version of Windows IoT Athens is designed exclusively for driver development only." Style="{StaticResource BerthaLegalTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-            <TextBlock  Text="The privacy statement for this prerelease version of the Windows operating system can be viewed here: http://go.microsoft.com/fwlink/?LinkId=506737. You can review linked terms by pasting the forward link into your browser window once the software is running" Style="{StaticResource BerthaLegalTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom" TextWrapping="WrapWholeWords"/>
+        <!-- Legal Text -->
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="6" Grid.Column="1" Orientation="Vertical" VerticalAlignment="Bottom">
+            <TextBlock x:Uid="LegalText1" Style="{StaticResource BerthaLegalTextBlockStyle}" Text="By using this software you agree to Microsoft license terms." HorizontalAlignment="Left"/>
+            <TextBlock x:Uid="LegalText2" Text="This limited-feature version of Windows IoT Athens is designed exclusively for driver development only." Style="{StaticResource BerthaLegalTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+            <TextBlock x:Uid="LegalText3" Text="The privacy statement for this prerelease version of the Windows operating system can be viewed here: http://go.microsoft.com/fwlink/?LinkId=506737. You can review linked terms by pasting the forward link into your browser window once the software is running" Style="{StaticResource BerthaLegalTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom" TextWrapping="WrapWholeWords"/>
         </StackPanel>
-	</Grid>
+    </Grid>
 </Page>

@@ -60,20 +60,20 @@ namespace bertha
 
         internal static string GetCurrentMACAddress()
         {
-			//var networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
-			//foreach (var nic in networkInterfaces)
-			//{
-			//    if (nic.OperationalStatus == OperationalStatus.Up)
-			//    {
-			//        return string.Join(":", nic.GetPhysicalAddress().GetAddressBytes().Select(b => b.ToString("X2")));
-			//    }
-			//}
+            //var networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
+            //foreach (var nic in networkInterfaces)
+            //{
+            //    if (nic.OperationalStatus == OperationalStatus.Up)
+            //    {
+            //        return string.Join(":", nic.GetPhysicalAddress().GetAddressBytes().Select(b => b.ToString("X2")));
+            //    }
+            //}
 
-			//return string.Empty;
+            //return string.Empty;
 
 
-			// Temporary until the API is found/fixed
-			return "00:00:00:00";
+            // Temporary until the API is found/fixed
+            return "00:00:00:00";
         }
 
         internal string GetProcessor()
@@ -107,9 +107,9 @@ namespace bertha
 
         internal string GetBoardName()
         {
-			var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
+            var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
 
-			switch (systemInfo.wProcessorArchitecture)
+            switch (systemInfo.wProcessorArchitecture)
             {
                 //Assume intel is MBM
                 case SystemInfoFactory.PROCESSOR_ARCHITECTURE_INTEL:
