@@ -1,4 +1,6 @@
-﻿<ResourceDictionary
+﻿<!-- © Copyright (C) Microsoft. All rights reserved. -->
+    
+<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:bertha">
@@ -6,13 +8,6 @@
     <!--Icons-->
     <x:String x:Key="IconFontUri">ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf</x:String>
     <x:String x:Key="IconShutdown">&#xE7E8;</x:String>
-    <x:String x:Key="IconLED">&#xE781;</x:String>
-    <x:String x:Key="IconLaptop">&#xE770;</x:String>
-    <x:String x:Key="IconCoding">&#xE943;</x:String>
-    <x:String x:Key="IconSettings">&#xE713;</x:String>
-    <x:String x:Key="IconTelnet">&#xE7F2;</x:String>
-    <x:String x:Key="IconTutorial">&#xE7BE;</x:String>
-    <x:String x:Key="IconCloud">&#xE753;</x:String>
 
     <!--Colours-->
     <Color x:Key="AccentColor">#FF70DDA5</Color>

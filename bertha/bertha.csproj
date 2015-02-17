@@ -1,4 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- © Copyright (C) Microsoft. All rights reserved. -->
+
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -119,21 +121,10 @@
     </Compile>
     <Compile Include="Presenters\DeviceInfoPresenter.cs" />
     <Compile Include="Utils\SystemInfoFactory.cs" />
-    <Compile Include="Views\ConnectToPC.xaml.cs">
-      <DependentUpon>ConnectToPC.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Settings.xaml.cs">
-      <DependentUpon>Settings.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Terminal\Console.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\RemoteShell.xaml.cs">
-      <DependentUpon>RemoteShell.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Terminal\TelnetClient.cs" />
     <Compile Include="Utils\NavigationUtils.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -149,7 +140,6 @@
     <Content Include="Assets\GenericBoard.png" />
     <Content Include="Assets\Logo.scale-100.png" />
     <Content Include="Assets\MBMBoard.png" />
-    <Content Include="Assets\RaspberryPiBoard.png" />
     <Content Include="Assets\SmallLogo.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="Assets\StoreLogo.scale-100.png" />
@@ -160,14 +150,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Views\ConnectToPC.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Settings.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Styles.xaml">
       <SubType>
       </SubType>
@@ -177,10 +159,6 @@
     <Page Include="Views\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\RemoteShell.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -207,7 +185,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <SDKReference  Include="Windows IoT, Version=10.0.10021.0"/>
+    <SDKReference Include="Windows IoT, Version=10.0.10021.0" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

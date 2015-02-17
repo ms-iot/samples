@@ -105,34 +105,15 @@ namespace bertha
             }
         }
 
-        internal static string GetRAM()
-        {
-            // Temporary until WinRT API is available
-            return "512 MB";
-        }
-
-        internal static string GetWindowsEdition()
-        {
-            // Temporary until WinRT API is available
-            return "Windows 10 Athens";
-        }
-
-        internal static string GetActivationString()
-        {
-            // Temporary until WinRT API is available
-            return "Windows is activated";
-        }
-
         internal string GetBoardName()
         {
 			var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
-			// Hacky for now
+
 			switch (systemInfo.wProcessorArchitecture)
             {
+                //Assume intel is MBM
                 case SystemInfoFactory.PROCESSOR_ARCHITECTURE_INTEL:
                     return loader.GetString("MBMName");
-                case SystemInfoFactory.PROCESSOR_ARCHITECTURE_ARM:
-                    return loader.GetString("Rpi2Name");
                 default:
                     return loader.GetString("GenericBoardName");
             }
@@ -140,13 +121,12 @@ namespace bertha
 
         internal Uri GetBoardImageUri()
         {
-            // Hacky for now
+
             switch (systemInfo.wProcessorArchitecture)
             {
+                //Assume MBM is intel
                 case SystemInfoFactory.PROCESSOR_ARCHITECTURE_INTEL:
                     return new Uri("ms-appx:///Assets/MBMBoard.png");
-                case SystemInfoFactory.PROCESSOR_ARCHITECTURE_ARM:
-                    return new Uri("ms-appx:///Assets/RaspberryPiBoard.png");
                 default:
                     return new Uri("ms-appx:///Assets/GenericBoard.png");
             }
