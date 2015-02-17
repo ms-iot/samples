@@ -4,6 +4,7 @@ using System;
 using System.Globalization;
 using Windows.Networking.Connectivity;
 using Windows.Storage;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -91,7 +92,7 @@ namespace bertha
 
         private void MakeLEDBlink_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            NavigationUtils.NavigateToScreen(typeof(BlinkLED));
+            //NavigationUtils.NavigateToScreen(typeof(BlinkLED));
         }
 
 		private void GetCoding_Tapped(object sender, TappedRoutedEventArgs e)
@@ -192,12 +193,12 @@ namespace bertha
 
 		private void ShutdownOption_Tapped(object sender, TappedRoutedEventArgs e)
 		{
-
+            ShutdownManager.BeginShutdown(TimeSpan.Zero, ShutdownKind.Shutdown);
 		}
 
 		private void RestartOption_Tapped(object sender, TappedRoutedEventArgs e)
 		{
-
-		}
-	}
+            ShutdownManager.BeginShutdown(TimeSpan.Zero, ShutdownKind.Restart);
+        }
+    }
 }
