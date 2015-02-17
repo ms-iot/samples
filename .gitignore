@@ -181,3 +181,7 @@ UpgradeLog*.htm
 
 # Microsoft Fakes
 FakesAssemblies/
+
+# Generated Files
+Blinky/Cpp/Generated Files/
+BlinkyHeadless/CPP/CppBlinkyStartup/Application/Generated Files/
