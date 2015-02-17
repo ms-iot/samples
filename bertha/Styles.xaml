@@ -55,6 +55,12 @@
         <Setter Property="FontSize" Value="15"/>
         <Setter Property="Foreground" Value="White"/>
     </Style>
+	
+	<Style x:Key="BerthaLegalTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
 
     <Style x:Key="BerthaDataTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BerthaBodyTextBlockStyle}">
         <Setter Property="Foreground" Value="{StaticResource ButtonDisabledForegroundThemeBrush}"/>
