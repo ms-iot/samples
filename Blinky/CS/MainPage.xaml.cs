@@ -107,7 +107,7 @@ namespace Blinky
         }
 
         private int LEDStatus = 0;
-        private const int LED_PIN = 21;
+        private const int LED_PIN = 0;
         private GpioPin pin;
         private DispatcherTimer timer;
         private SolidColorBrush redBrush = new SolidColorBrush(Windows.UI.Colors.Red);

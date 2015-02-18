@@ -30,7 +30,7 @@ namespace StartupTask
         IBackgroundTaskInstance^ TaskInstance;
         ThreadPoolTimer ^Timer;
         int LEDStatus = 0;
-        const int LED_PIN = 21;
+        const int LED_PIN = 0;
         Windows::Devices::Gpio::GpioPin ^pin;
     };
 }

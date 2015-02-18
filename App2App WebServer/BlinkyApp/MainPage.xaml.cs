@@ -138,7 +138,7 @@ namespace BlinkyWebService
         }
 
         private int LEDStatus = 0;
-        const int LED_PIN = 21;
+        private const int LED_PIN = 0;
         private GpioPin pin;
         private SolidColorBrush redBrush = new SolidColorBrush(Windows.UI.Colors.Red);
         private SolidColorBrush grayBrush = new SolidColorBrush(Windows.UI.Colors.LightGray);

@@ -30,7 +30,7 @@ namespace BlinkyCpp
 
         Windows::UI::Xaml::DispatcherTimer ^timer_;
         int LEDStatus_ = 0;
-        const int LED_PIN = 21;
+        const int LED_PIN = 0;
         Windows::Devices::Gpio::GpioPin ^pin_;
         Windows::UI::Xaml::Media::SolidColorBrush ^redBrush_ = ref new Windows::UI::Xaml::Media::SolidColorBrush(Windows::UI::Colors::Red);
         Windows::UI::Xaml::Media::SolidColorBrush ^grayBrush_ = ref new Windows::UI::Xaml::Media::SolidColorBrush(Windows::UI::Colors::LightGray);

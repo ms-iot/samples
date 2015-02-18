@@ -51,7 +51,7 @@ namespace StartupTask
         }
 
         private int LEDStatus = 0;
-        private const int LED_PIN = 21;
+        private const int LED_PIN = 0;
         private GpioPin pin;
         private ThreadPoolTimer timer;
     }
