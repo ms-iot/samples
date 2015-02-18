@@ -18,7 +18,7 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="64"/>
-            <ColumnDefinition Width="432"/>
+            <ColumnDefinition Width="390"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="64"/>
         </Grid.ColumnDefinitions>
@@ -120,10 +120,10 @@
                             <TextBlock x:Name="NetworkName1" Style="{StaticResource BerthaDataTextBlockStyle}" VerticalAlignment="Bottom"/>
                         </Border>
                         <Border Height="48">
-                            <TextBlock x:Uid="MainPageMACAddress" x:Name="MACAddressCaption" Text="MAC address" Style="{StaticResource BerthaBodyTextBlockStyle}" VerticalAlignment="Bottom"/>
+                            <TextBlock x:Uid="MainPageEdition" x:Name="EditionCaption" Text="Edition" Style="{StaticResource BerthaBodyTextBlockStyle}" VerticalAlignment="Bottom"/>
                         </Border>
                         <Border Height="24">
-                            <TextBlock x:Name="MACAddress1" Style="{StaticResource BerthaDataTextBlockStyle}" VerticalAlignment="Bottom"/>
+                            <TextBlock x:Uid="MainPageEditionText" Style="{StaticResource BerthaDataTextBlockStyle}" VerticalAlignment="Bottom" Text="Windows Athens"/>
                         </Border>
                     </StackPanel>
                 </Grid>

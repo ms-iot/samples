@@ -128,8 +128,8 @@
   <data name="MainPageDeviceName.Text" xml:space="preserve">
     <value>Device name</value>
   </data>
-  <data name="MainPageIPAddress.Text" xml:space="preserve">
-    <value>IP address</value>
+  <data name="MainPageEdition.Text" xml:space="preserve">
+    <value>Edition</value>
   </data>
   <data name="MainPageMACAddress" xml:space="preserve">
     <value>MAC address</value>
@@ -159,5 +159,8 @@
   </data>
   <data name="LegalText3.Text" xml:space="preserve">
     <value>The privacy statement for this prerelease version of the Windows operating system can be viewed here: http://go.microsoft.com/fwlink/?LinkId=506737. You can review linked terms by pasting the forward link into your browser window once the software is running</value>
+  </data>
+  <data name="MainPageEditionText" xml:space="preserve">
+    <value>Windows Athens</value>
   </data>
 </root>

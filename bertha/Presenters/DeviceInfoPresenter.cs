@@ -56,25 +56,7 @@ namespace bertha
             }
 
             return "<no Internet connection>";
-        }
-
-        internal static string GetCurrentMACAddress()
-        {
-            //var networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
-            //foreach (var nic in networkInterfaces)
-            //{
-            //    if (nic.OperationalStatus == OperationalStatus.Up)
-            //    {
-            //        return string.Join(":", nic.GetPhysicalAddress().GetAddressBytes().Select(b => b.ToString("X2")));
-            //    }
-            //}
-
-            //return string.Empty;
-
-
-            // Temporary until the API is found/fixed
-            return "00:00:00:00";
-        }
+        }        
 
         internal string GetBoardName()
         {

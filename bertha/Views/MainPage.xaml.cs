@@ -58,7 +58,6 @@ namespace bertha
             this.DeviceName.Text = DeviceInfoPresenter.GetDeviceName();
             this.IPAddress1.Text = DeviceInfoPresenter.GetCurrentIpv4Address();
             this.NetworkName1.Text = DeviceInfoPresenter.GetCurrentNetworkName();
-            this.MACAddress1.Text = DeviceInfoPresenter.GetCurrentMACAddress();
         }
 
         private DispatcherTimer timer;
