@@ -76,35 +76,6 @@ namespace bertha
             return "00:00:00:00";
         }
 
-        internal string GetProcessor()
-        {
-            StringBuilder sb = new StringBuilder();
-
-            sb.Append(GetProcessorArch(systemInfo.wProcessorArchitecture));
-            sb.Append(' ');
-            sb.Append(systemInfo.dwNumberOfProcessors);
-            sb.Append((systemInfo.dwNumberOfProcessors > 1) ? " Cores" : " Core");
-
-            return sb.ToString();
-        }
-
-        private static string GetProcessorArch(ushort arch)
-        {
-            switch (arch)
-            {
-                case SystemInfoFactory.PROCESSOR_ARCHITECTURE_INTEL:
-                    return "x86";
-                case SystemInfoFactory.PROCESSOR_ARCHITECTURE_AMD64:
-                    return "x64";
-                case SystemInfoFactory.PROCESSOR_ARCHITECTURE_IA64:
-                    return "Intel Itanium";
-                case SystemInfoFactory.PROCESSOR_ARCHITECTURE_ARM:
-                    return "ARM";
-                default:
-                    return "Unknown";
-            }
-        }
-
         internal string GetBoardName()
         {
             var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
@@ -121,7 +92,6 @@ namespace bertha
 
         internal Uri GetBoardImageUri()
         {
-
             switch (systemInfo.wProcessorArchitecture)
             {
                 //Assume MBM is intel
