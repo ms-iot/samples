@@ -134,7 +134,7 @@
         <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="1" Orientation="Vertical" VerticalAlignment="Bottom">
             <TextBlock x:Uid="LegalText1" Style="{StaticResource BerthaLegalTextBlockStyle}" Text="By using this software you agree to Microsoft license terms." HorizontalAlignment="Left"/>
             <TextBlock x:Uid="LegalText2" Text="This limited-feature version of Windows IoT Athens is designed exclusively for driver development only." Style="{StaticResource BerthaLegalTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-            <TextBlock x:Uid="LegalText3" Text="The privacy statement for this prerelease version of the Windows operating system can be viewed here: http://go.microsoft.com/fwlink/?LinkId=506737. You can review linked terms by pasting the forward link into your browser window once the software is running" Style="{StaticResource BerthaLegalTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom" TextWrapping="WrapWholeWords"/>
+            <TextBlock x:Uid="LegalText3" Text="The privacy statement for this prerelease version of the Windows operating system can be viewed here: http://go.microsoft.com/fwlink/?LinkId=506737." Style="{StaticResource BerthaLegalTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom" TextWrapping="WrapWholeWords"/>
         </StackPanel>
     </Grid>
 </Page>

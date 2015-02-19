@@ -158,7 +158,7 @@
     <value>This limited-feature version of Windows IoT Athens is designed exclusively for driver development only.</value>
   </data>
   <data name="LegalText3.Text" xml:space="preserve">
-    <value>The privacy statement for this prerelease version of the Windows operating system can be viewed here: http://go.microsoft.com/fwlink/?LinkId=506737. You can review linked terms by pasting the forward link into your browser window once the software is running</value>
+    <value>The privacy statement for this prerelease version of the Windows operating system can be viewed here: http://go.microsoft.com/fwlink/?LinkId=506737.</value>
   </data>
   <data name="MainPageEditionText" xml:space="preserve">
     <value>Windows Athens</value>
