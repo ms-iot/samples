@@ -69,12 +69,12 @@ namespace bertha
 
         private void ShutdownOption_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            ShutdownManager.BeginShutdown(TimeSpan.Zero, ShutdownKind.Shutdown);
+            ShutdownManager.BeginShutdown(TimeSpan.FromSeconds(0.5), ShutdownKind.Shutdown);
         }
 
         private void RestartOption_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            ShutdownManager.BeginShutdown(TimeSpan.Zero, ShutdownKind.Restart);
+            ShutdownManager.BeginShutdown(TimeSpan.FromSeconds(0.5), ShutdownKind.Restart);
         }
     }
 }
