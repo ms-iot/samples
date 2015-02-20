@@ -48,19 +48,26 @@ void MainPage::InitGPIO()
 {
     create_task(GpioController::GetDefaultAsync()).then([this](task<GpioController ^> controllerOp) {
         auto gpio = controllerOp.get();
+
+        if (gpio == nullptr)
+        {
+            pin_ = nullptr;
+            GpioStatus->Text = "There is no GPIO controller on this device.";
+            return;
+        }
+
         pin_ = gpio->OpenPin(LED_PIN);
 
         if (pin_ == nullptr)
         {
             GpioStatus->Text = "There were problems initializing the GPIO pin.";
+            return;
         }
-        else
-        {
-            pin_->Write(GpioPinValue::High);
-            pin_->SetDriveMode(GpioPinDriveMode::Output);
 
-            GpioStatus->Text = "GPIO pin initialized correctly.";
-        }
+        pin_->Write(GpioPinValue::High);
+        pin_->SetDriveMode(GpioPinDriveMode::Output);
+
+        GpioStatus->Text = "GPIO pin initialized correctly.";
     });
 }
 

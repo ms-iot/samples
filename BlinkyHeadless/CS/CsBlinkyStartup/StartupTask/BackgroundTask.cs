@@ -22,6 +22,13 @@ namespace StartupTask
         private async void InitGPIO()
         {
             var gpio = await GpioController.GetDefaultAsync();
+
+            if (gpio == null)
+            {
+                pin = null;
+                return;
+            }
+
             pin = gpio.OpenPin(LED_PIN);
 
             if (pin == null)

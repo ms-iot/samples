@@ -53,12 +53,21 @@ void BackgroundTask::InitGpio()
 {
     create_task(GpioController::GetDefaultAsync()).then([this](task<GpioController ^> controllerOp) {
         auto gpio = controllerOp.get();
+
+        if (gpio == nullptr)
+        {
+            pin = nullptr;
+            return;
+        }
+
         pin = gpio->OpenPin(LED_PIN);
 
-        if (pin != nullptr)
+        if (pin == nullptr)
         {
-            pin->Write(GpioPinValue::High);
-            pin->SetDriveMode(GpioPinDriveMode::Output);
+            return;
         }
+
+        pin->Write(GpioPinValue::High);
+        pin->SetDriveMode(GpioPinDriveMode::Output);
     });
 }
