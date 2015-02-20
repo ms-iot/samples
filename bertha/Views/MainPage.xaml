@@ -45,15 +45,15 @@
             </StackPanel>
 
             <StackPanel Grid.Column="2" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Right">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="0,0,0,0">
                     <TextBlock x:Name="CurrentTime" HorizontalAlignment="Right" Style="{StaticResource BerthaBodyTextBlockStyle}" VerticalAlignment="Center" Padding="0,0,12,0"/>
-                    <Button x:Name="ShutdownButton" HorizontalAlignment="Center" VerticalAlignment="Center" Tapped="ShutdownButton_Tapped" Background="Transparent" BorderThickness="0" Height="40" Width="40">
+                    <Button x:Name="ShutdownButton" Style="{StaticResource ShutdownButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Tapped="ShutdownButton_Tapped" Background="{StaticResource HoverBrush}" BorderThickness="0" Height="50" Width="50">
                         <Glyphs x:Name="ShutdownGlyph" Fill="White" UnicodeString="{StaticResource ResourceKey=IconShutdown}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
                 </StackPanel>
                 <Popup Grid.ColumnSpan="2" Name="ShutdownDropdown" HorizontalAlignment="Left" IsLightDismissEnabled="True" Margin="28,0,0,0">
                     <ListView Background="White" ItemContainerStyle="{StaticResource BerthaShutdownListViewItemStyle}" BorderThickness="2.0" BorderBrush="{StaticResource ShutdownBorderBrush}" Width="120">
-                        <ListViewItem x:Name="ShutdownOption" HorizontalAlignment="Stretch" Tapped="ShutdownOption_Tapped" HorizontalContentAlignment="Stretch" Height="40" Margin="0,5,0,0">
+                        <ListViewItem x:Name="ShutdownOption" HorizontalAlignment="Stretch" Tapped="ShutdownOption_Tapped" HorizontalContentAlignment="Stretch" Height="40" Margin="0,5,0,0" Background="{StaticResource AccentBrush}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="20"/>
