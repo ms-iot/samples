@@ -2,23 +2,12 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using Windows.Devices.Enumeration;
-using Windows.Devices.Gpio;
 using Windows.ApplicationModel.AppService;
+using Windows.Devices.Gpio;
+using Windows.Foundation.Collections;
 using Windows.UI.Core;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 namespace BlinkyWebService
 {
@@ -35,20 +24,29 @@ namespace BlinkyWebService
 
         private async void InitGPIO()
         {
-            try
+            var gpio = await GpioController.GetDefaultAsync();
+
+            // Show an error if there is no GPIO controller
+            if (gpio == null)
             {
-                var deviceId = GpioController.GetDeviceSelector("GPIO_S5");
-                var deviceInfos = await DeviceInformation.FindAllAsync(deviceId, null);
-                var controller = await GpioController.FromIdAsync(deviceInfos[0].Id);
-                GpioPinInfo pinInfo;
-                controller.Pins.TryGetValue(0, out pinInfo);
-                pinInfo.TryOpenOutput(GpioPinValue.High, GpioSharingMode.Exclusive, out outPin);
-                GpioStatus.Text = "GPIO pin initialized correctly.";
+                pin = null;
+                GpioStatus.Text = "There is no GPIO controller on this device.";
+                return;
             }
-            catch (Exception)
+
+            pin = gpio.OpenPin(LED_PIN);
+
+            // Show an error if the pin wasn't initialized properly
+            if (pin == null)
             {
                 GpioStatus.Text = "There were problems initializing the GPIO pin.";
+                return;
             }
+
+            pin.Write(GpioPinValue.High);
+            pin.SetDriveMode(GpioPinDriveMode.Output);
+
+            GpioStatus.Text = "GPIO pin initialized correctly.";
         }
 
         private async void InitAppSvc()
@@ -113,10 +111,10 @@ namespace BlinkyWebService
             if (LEDStatus == 0)
             {
                 LEDStatus = 1;
-                if (outPin != null)
+                if (pin != null)
                 {
                     // to turn on the LED, we need to push the pin 'low'
-                    outPin.Value = GpioPinValue.Low;
+                    pin.Write(GpioPinValue.Low);
                 }
                 LED.Fill = redBrush;
                 StateText.Text = "On";
@@ -124,9 +122,9 @@ namespace BlinkyWebService
             else
             {
                 LEDStatus = 0;
-                if (outPin != null)
+                if (pin != null)
                 {
-                    outPin.Value = GpioPinValue.High;
+                    pin.Write(GpioPinValue.High);
                 }
                 LED.Fill = grayBrush;
                 StateText.Text = "Off"; 
@@ -149,7 +147,8 @@ namespace BlinkyWebService
         }
 
         private int LEDStatus = 0;
-        private GpioOutputPin outPin;
+        private const int LED_PIN = 0;
+        private GpioPin pin;
         private SolidColorBrush redBrush = new SolidColorBrush(Windows.UI.Colors.Red);
         private SolidColorBrush grayBrush = new SolidColorBrush(Windows.UI.Colors.LightGray);
     }
