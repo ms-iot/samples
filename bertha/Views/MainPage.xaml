@@ -51,26 +51,26 @@
                         <Glyphs x:Name="ShutdownGlyph" Fill="White" UnicodeString="{StaticResource ResourceKey=IconShutdown}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
                 </StackPanel>
-                <Popup Grid.ColumnSpan="2" Name="ShutdownDropdown" HorizontalAlignment="Left" IsLightDismissEnabled="True">
-                    <ListView Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" ItemContainerStyle="{StaticResource BerthaSettingsListViewItemStyle}" BorderThickness="1.0" BorderBrush="White" Width="120">
-                        <ListViewItem x:Name="ShutdownOption" HorizontalAlignment="Stretch" Tapped="ShutdownOption_Tapped" HorizontalContentAlignment="Stretch" Height="30">
+                <Popup Grid.ColumnSpan="2" Name="ShutdownDropdown" HorizontalAlignment="Left" IsLightDismissEnabled="True" Margin="28,0,0,0">
+                    <ListView Background="White" ItemContainerStyle="{StaticResource BerthaShutdownListViewItemStyle}" BorderThickness="2.0" BorderBrush="{StaticResource ShutdownBorderBrush}" Width="120">
+                        <ListViewItem x:Name="ShutdownOption" HorizontalAlignment="Stretch" Tapped="ShutdownOption_Tapped" HorizontalContentAlignment="Stretch" Height="40" Margin="0,5,0,0">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="20"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <TextBlock x:Uid="ShutdownText" Grid.Column="1" Text="Shut down" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BerthaBodyTextBlockStyle}"/>
+                                <TextBlock x:Uid="ShutdownText" Grid.Column="1" Text="Shut down" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BerthaDarkBodyTextBlockStyle}"/>
                             </Grid>
                         </ListViewItem>
-                        <ListViewItem x:Name="RestartOption" HorizontalAlignment="Stretch" Tapped="RestartOption_Tapped" HorizontalContentAlignment="Stretch" Height="30">
+                        <ListViewItem x:Name="RestartOption" HorizontalAlignment="Stretch" Tapped="RestartOption_Tapped" HorizontalContentAlignment="Stretch" Height="40" Margin="0,0,0,5">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="20"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <TextBlock x:Uid="RestartText" Grid.Column="1" Text="Restart" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BerthaBodyTextBlockStyle}"/>
+                                <TextBlock x:Uid="RestartText" Grid.Column="1" Text="Restart" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BerthaDarkBodyTextBlockStyle}"/>
                             </Grid>
                         </ListViewItem>
                     </ListView>
