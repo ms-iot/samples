@@ -25,6 +25,15 @@ namespace BlinkyWebService
         private async void InitGPIO()
         {
             var gpio = await GpioController.GetDefaultAsync();
+
+            // Show an error if there is no GPIO controller
+            if (gpio == null)
+            {
+                pin = null;
+                GpioStatus.Text = "There is no GPIO controller on this device.";
+                return;
+            }
+
             pin = gpio.OpenPin(LED_PIN);
 
             // Show an error if the pin wasn't initialized properly
