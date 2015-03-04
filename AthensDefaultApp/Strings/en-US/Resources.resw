@@ -144,10 +144,6 @@
   <data name="RestartText.Text" xml:space="preserve">
     <value>Restart</value>
   </data>
-  <data name="Rpi2Name" xml:space="preserve">
-    <value>Raspberry Pi II</value>
-    <comment>The Raspberry Pi II Name</comment>
-  </data>
   <data name="ShutdownText.Text" xml:space="preserve">
     <value>Shut down</value>
   </data>

@@ -3,7 +3,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace bertha
+namespace AthensDefaultApp
 {
     [StructLayout(LayoutKind.Sequential)]
     internal struct SYSTEM_INFO

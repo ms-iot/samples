@@ -10,7 +10,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
 
-namespace bertha
+namespace AthensDefaultApp
 {
     public sealed partial class MainPage : Page
     {

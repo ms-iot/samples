@@ -8,18 +8,18 @@
     <ProjectGuid>{7BBB6CA3-2480-4F57-A4BC-D2D5ED9CD6D9}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>bertha</RootNamespace>
-    <AssemblyName>bertha</AssemblyName>
+    <RootNamespace>AthensDefaultApp</RootNamespace>
+    <AssemblyName>AthensDefaultApp</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.9927.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.9927.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.10010.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10010.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <AppxOSMinVersionReplaceManifestVersion>false</AppxOSMinVersionReplaceManifestVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <DebugEngines>{2E36F1D4-B23C-435D-AB41-18E608940038}</DebugEngines>
-    <PackageCertificateKeyFile>bertha_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>AthensDefaultApp_TemporaryKey.pfx</PackageCertificateKeyFile>
     <NuGetPackageImportStamp>b66cac28</NuGetPackageImportStamp>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -130,7 +130,7 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <Content Include="Assets\Fonts\SegMDL2.1.18.ttf" />
-    <None Include="bertha_TemporaryKey.pfx" />
+    <None Include="AthensDefaultApp_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <PRIResource Include="Strings\en-US\Resources.resw" />
   </ItemGroup>
@@ -183,7 +183,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="Windows IoT, Version=10.0.10021.0" />
+    <SDKReference Include="Windows IoT, Version=10.0.10028.0" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

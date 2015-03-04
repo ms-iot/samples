@@ -3,7 +3,7 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:bertha">
+    xmlns:local="using:AthensDefaultApp">
 
     <!--Icons-->
     <x:String x:Key="IconFontUri">ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf</x:String>
@@ -24,54 +24,54 @@
     <SolidColorBrush x:Key="ShutdownBorderBrush" Color="{StaticResource ShutdownBorderColor}"/>
 
     <!--Fonts-->    
-    <Style x:Key="BerthaSubheaderTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+    <Style x:Key="AthensDefaultAppSubheaderTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
         <Setter Property="FontWeight" Value="Light"/>
         <Setter Property="FontSize" Value="34"/>
         <Setter Property="Foreground" Value="{StaticResource AccentBrush}"/>
     </Style>
 
-    <Style x:Key="BerthaHeaderTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+    <Style x:Key="AthensDefaultAppHeaderTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
         <Setter Property="FontWeight" Value="SemiLight"/>
         <Setter Property="FontSize" Value="34"/>
         <Setter Property="Foreground" Value="White"/>
     </Style>
 
-    <Style x:Key="BerthaTitleTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+    <Style x:Key="AthensDefaultAppTitleTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
         <Setter Property="FontWeight" Value="SemiLight"/>
         <Setter Property="FontSize" Value="24"/>
         <Setter Property="Foreground" Value="White"/>
     </Style>
 
-    <Style x:Key="BerthaAthensTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+    <Style x:Key="AthensDefaultAppAthensTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
         <Setter Property="FontWeight" Value="SemiLight"/>
         <Setter Property="FontSize" Value="18"/>
         <Setter Property="Foreground" Value="White"/>
     </Style>
 
-    <Style x:Key="BerthaBodyTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+    <Style x:Key="AthensDefaultAppBodyTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
         <Setter Property="FontWeight" Value="Normal"/>
         <Setter Property="FontSize" Value="15"/>
         <Setter Property="Foreground" Value="White"/>
     </Style>
 
-    <Style x:Key="BerthaDarkBodyTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+    <Style x:Key="AthensDefaultAppDarkBodyTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
         <Setter Property="FontWeight" Value="SemiBold"/>
         <Setter Property="FontSize" Value="15"/>
         <Setter Property="Foreground" Value="Black"/>
     </Style>
     
-    <Style x:Key="BerthaLegalTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+    <Style x:Key="AthensDefaultAppLegalTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
         <Setter Property="FontWeight" Value="Normal"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="Foreground" Value="White"/>
     </Style>
 
-    <Style x:Key="BerthaDataTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BerthaBodyTextBlockStyle}">
+    <Style x:Key="AthensDefaultAppDataTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource AthensDefaultAppBodyTextBlockStyle}">
         <Setter Property="Foreground" Value="{StaticResource ButtonDisabledForegroundThemeBrush}"/>
     </Style>
 
     <!--List View Items-->
-    <Style x:Key="BerthaShutdownListViewItemStyle" TargetType="ListViewItem">
+    <Style x:Key="AthensDefaultAppShutdownListViewItemStyle" TargetType="ListViewItem">
         <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
         <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
         <Setter Property="Background" Value="Transparent"/>
