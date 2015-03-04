@@ -131,7 +131,6 @@
     </AppxManifest>
     <Content Include="Assets\Fonts\SegMDL2.1.18.ttf" />
     <None Include="AthensDefaultApp_TemporaryKey.pfx" />
-    <None Include="packages.config" />
     <PRIResource Include="Strings\en-US\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
@@ -158,29 +157,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="SharpDX">
-      <HintPath>packages\SharpDX.2.6.3\Bin\DirectX11_2-Signed-winrt\SharpDX.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.D3DCompiler">
-      <HintPath>packages\SharpDX.2.6.3\Bin\DirectX11_2-Signed-winrt\SharpDX.D3DCompiler.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.Direct2D1">
-      <HintPath>packages\SharpDX.2.6.3\Bin\DirectX11_2-Signed-winrt\SharpDX.Direct2D1.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.Direct3D11">
-      <HintPath>packages\SharpDX.2.6.3\Bin\DirectX11_2-Signed-winrt\SharpDX.Direct3D11.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.DXGI">
-      <HintPath>packages\SharpDX.2.6.3\Bin\DirectX11_2-Signed-winrt\SharpDX.DXGI.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.Toolkit">
-      <HintPath>packages\SharpDX.2.6.3\Bin\DirectX11_2-Signed-winrt\SharpDX.Toolkit.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.Toolkit.Graphics">
-      <HintPath>packages\SharpDX.2.6.3\Bin\DirectX11_2-Signed-winrt\SharpDX.Toolkit.Graphics.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <SDKReference Include="Windows IoT, Version=10.0.10028.0" />
