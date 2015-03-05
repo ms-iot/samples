@@ -60,26 +60,12 @@ namespace AthensDefaultApp
         {
             var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
 
-            switch (systemInfo.wProcessorArchitecture)
-            {
-                //Assume intel is MBM
-                case SystemInfoFactory.PROCESSOR_ARCHITECTURE_INTEL:
-                    return loader.GetString("MBMName");
-                default:
-                    return loader.GetString("GenericBoardName");
-            }
+            return loader.GetString("MBMName");
         }
 
         internal Uri GetBoardImageUri()
         {
-            switch (systemInfo.wProcessorArchitecture)
-            {
-                //Assume MBM is intel
-                case SystemInfoFactory.PROCESSOR_ARCHITECTURE_INTEL:
-                    return new Uri("ms-appx:///Assets/MBMBoard.png");
-                default:
-                    return new Uri("ms-appx:///Assets/GenericBoard.png");
-            }
+            return new Uri("ms-appx:///Assets/MBMBoard.png");
         }
     }
 }
