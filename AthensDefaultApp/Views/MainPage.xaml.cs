@@ -67,8 +67,8 @@ namespace AthensDefaultApp
         private void UpdateNetworkInfo()
         {
             this.DeviceName.Text = DeviceInfoPresenter.GetDeviceName();
-            this.IPAddress1.Text = DeviceInfoPresenter.GetCurrentIpv4Address();
-            this.NetworkName1.Text = DeviceInfoPresenter.GetCurrentNetworkName();
+            this.IPAddress1.Text = NetworkPresenter.GetCurrentIpv4Address();
+            this.NetworkName1.Text = NetworkPresenter.GetCurrentNetworkName();
         }
 
         private DispatcherTimer timer;

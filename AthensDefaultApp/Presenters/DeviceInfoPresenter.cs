@@ -27,35 +27,6 @@ namespace AthensDefaultApp
             return "<no device name>";
         }
 
-        internal static string GetCurrentNetworkName()
-        {
-            var icp = NetworkInformation.GetInternetConnectionProfile();
-            return icp.ProfileName;
-        }
-
-        internal static string GetCurrentIpv4Address()
-        {
-            var icp = NetworkInformation.GetInternetConnectionProfile();
-            var name = icp.ProfileName;
-            if (icp != null && icp.NetworkAdapter != null)
-            {
-                var hostnames = NetworkInformation.GetHostNames();
-
-                foreach (var hn in hostnames)
-                {
-                    if (hn.IPInformation != null &&
-                        hn.IPInformation.NetworkAdapter != null &&
-                        hn.IPInformation.NetworkAdapter.NetworkAdapterId == icp.NetworkAdapter.NetworkAdapterId &&
-                        hn.Type == HostNameType.Ipv4)
-                    {
-                        return hn.CanonicalName;
-                    }
-                }
-            }
-
-            return "<no Internet connection>";
-        }
-
         internal string GetBoardName()
         {
             var loader = new Windows.ApplicationModel.Resources.ResourceLoader();

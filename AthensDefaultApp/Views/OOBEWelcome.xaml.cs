@@ -47,6 +47,7 @@ namespace AthensDefaultApp
         private void NextButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
             SetPreferences();
+            NavigationUtils.NavigateToScreen(typeof(OOBENetwork));
         }
     }
 }

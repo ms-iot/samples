@@ -120,11 +120,18 @@
     </Compile>
     <Compile Include="Presenters\DeviceInfoPresenter.cs" />
     <Compile Include="Presenters\LanguageManager.cs" />
+    <Compile Include="Presenters\NetworkPresenter.cs" />
+    <Compile Include="Presenters\WifiNetwork.cs" />
+    <Compile Include="Utils\Constants.cs" />
+    <Compile Include="Utils\NavigationUtils.cs" />
     <Compile Include="Utils\SystemInfoFactory.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\OOBENetwork.xaml.cs">
+      <DependentUpon>OOBENetwork.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\OOBEWelcome.xaml.cs">
       <DependentUpon>OOBEWelcome.xaml</DependentUpon>
     </Compile>
@@ -161,6 +168,10 @@
     <Page Include="Views\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\OOBENetwork.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\OOBEWelcome.xaml">
       <SubType>Designer</SubType>

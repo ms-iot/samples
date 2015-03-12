@@ -9,6 +9,7 @@
     <x:String x:Key="IconFontUri">ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf</x:String>
     <x:String x:Key="IconShutdown">&#xE7E8;</x:String>
     <x:String x:Key="IconSettings">&#xE713;</x:String>
+    <x:String x:Key="IconLaptop">&#xE770;</x:String>
 
     <!--Colours-->
     <Color x:Key="AccentColor">#0078d6</Color>
@@ -94,7 +95,7 @@
         </Setter>
     </Style>
 
-    <!-- Buttons -->
+        <!-- Buttons -->
     <Style x:Key="ShutdownButtonStyle" TargetType="Button">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="{StaticResource ButtonForegroundThemeBrush}"/>
