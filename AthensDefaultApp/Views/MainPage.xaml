@@ -101,16 +101,16 @@
                         <TextBlock x:Name="DeviceName" Style="{StaticResource AthensDefaultAppDataTextBlockStyle}" VerticalAlignment="Bottom"/>
                     </Border>
                     <Border Height="48">
-                        <TextBlock x:Uid="MainPageIPAddress" x:Name="IPAddressCaption" Text="IP address" Style="{StaticResource AthensDefaultAppBodyTextBlockStyle}" VerticalAlignment="Bottom"/>
-                    </Border>
-                    <Border Height="24">
-                        <TextBlock x:Name="IPAddress1" Style="{StaticResource AthensDefaultAppDataTextBlockStyle}" VerticalAlignment="Bottom"/>
-                    </Border>
-                    <Border Height="48">
                         <TextBlock x:Uid="MainPageNetwork" x:Name="NetworkNameCaption" Text="Network" Style="{StaticResource AthensDefaultAppBodyTextBlockStyle}" VerticalAlignment="Bottom"/>
                     </Border>
                     <Border Height="24">
                         <TextBlock x:Name="NetworkName1" Style="{StaticResource AthensDefaultAppDataTextBlockStyle}" VerticalAlignment="Bottom"/>
+                    </Border>
+                    <Border Height="48">
+                        <TextBlock x:Uid="MainPageIPAddress" x:Name="IPAddressCaption" Text="IP address" Style="{StaticResource AthensDefaultAppBodyTextBlockStyle}" VerticalAlignment="Bottom"/>
+                    </Border>
+                    <Border Height="24">
+                        <TextBlock x:Name="IPAddress1" Style="{StaticResource AthensDefaultAppDataTextBlockStyle}" VerticalAlignment="Bottom"/>
                     </Border>
                 </StackPanel>
             </ScrollViewer>
@@ -118,7 +118,7 @@
         
         
         <!-- Legal Text -->
-        <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Text="Visit www.windowsondevices.com to start developing" Style="{StaticResource AthensDefaultAppTitleTextBlockStyle}"/>
+        <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Text="Visit www.windowsondevices.com to start developing" Style="{StaticResource TitleTextBlockStyle}" Margin="0,25,0,0"/>
         <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="1" Orientation="Vertical" VerticalAlignment="Bottom">
             <Button x:Name="SettingsButton" Style="{StaticResource ShutdownButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Top" Tapped="SettingsButton_Tapped" Background="Transparent" BorderThickness="0" Height="50" Width="50">
                 <Glyphs x:Name="SettingsGlyph" Fill="White" UnicodeString="{StaticResource ResourceKey=IconSettings}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
