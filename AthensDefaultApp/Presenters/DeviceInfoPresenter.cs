@@ -54,18 +54,35 @@ namespace AthensDefaultApp
             }
 
             return "<no Internet connection>";
-        }        
+        }
 
         internal string GetBoardName()
         {
             var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
-
-            return loader.GetString("MBMName");
+            // Hacky for now
+            switch (systemInfo.wProcessorArchitecture)
+            {
+                case SystemInfoFactory.PROCESSOR_ARCHITECTURE_INTEL:
+                    return loader.GetString("MBMName");
+                case SystemInfoFactory.PROCESSOR_ARCHITECTURE_ARM:
+                    return loader.GetString("Rpi2Name");
+                default:
+                    return loader.GetString("GenericBoardName");
+            }
         }
 
         internal Uri GetBoardImageUri()
         {
-            return new Uri("ms-appx:///Assets/MBMBoard.png");
+            // Hacky for now
+            switch (systemInfo.wProcessorArchitecture)
+            {
+                case SystemInfoFactory.PROCESSOR_ARCHITECTURE_INTEL:
+                    return new Uri("ms-appx:///Assets/MBMBoard.png");
+                case SystemInfoFactory.PROCESSOR_ARCHITECTURE_ARM:
+                    return new Uri("ms-appx:///Assets/RaspberryPiBoard.png");
+                default:
+                    return new Uri("ms-appx:///Assets/GenericBoard.png");
+            }
         }
     }
 }

@@ -119,11 +119,15 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Presenters\DeviceInfoPresenter.cs" />
+    <Compile Include="Presenters\LanguageManager.cs" />
     <Compile Include="Utils\SystemInfoFactory.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\OOBEWelcome.xaml.cs">
+      <DependentUpon>OOBEWelcome.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -137,6 +141,7 @@
     <Content Include="Assets\GenericBoard.png" />
     <Content Include="Assets\Logo.scale-100.png" />
     <Content Include="Assets\MBMBoard.png" />
+    <Content Include="Assets\RaspberryPiBoard.png" />
     <Content Include="Assets\SmallLogo.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="Assets\StoreLogo.scale-100.png" />
@@ -156,6 +161,10 @@
     <Page Include="Views\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\OOBEWelcome.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

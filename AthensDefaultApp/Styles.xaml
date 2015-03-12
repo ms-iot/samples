@@ -8,9 +8,13 @@
     <!--Icons-->
     <x:String x:Key="IconFontUri">ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf</x:String>
     <x:String x:Key="IconShutdown">&#xE7E8;</x:String>
+    <x:String x:Key="IconSettings">&#xE713;</x:String>
 
     <!--Colours-->
-    <Color x:Key="AccentColor">#FF70DDA5</Color>
+    <Color x:Key="AccentColor">#0078d6</Color>
+    <Color x:Key="DarkAccentColor">#0e548d</Color>
+    <Color x:Key="AccentBorderColor">#6eb5ec</Color>
+    <SolidColorBrush x:Key="DarkAccentBrush" Color="{StaticResource DarkAccentColor}"/>
     <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}"/>
     <SolidColorBrush x:Key="HoverBrush" Color="{StaticResource AccentColor}" Opacity="0.2"/>
 

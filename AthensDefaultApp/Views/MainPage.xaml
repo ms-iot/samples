@@ -13,7 +13,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="144"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="100"/>
+            <RowDefinition MinHeight="100" Height="*"/>
             <RowDefinition Height="24"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -41,7 +41,7 @@
                         </TransformGroup>
                     </Path.RenderTransform>
                 </Path>
-                <TextBlock x:Uid="AthensHeader" Style="{StaticResource AthensDefaultAppAthensTextBlockStyle}" Text="Windows Athens" VerticalAlignment="Center"/>
+                <TextBlock x:Uid="AthensHeader" Style="{StaticResource AthensDefaultAppAthensTextBlockStyle}" Text="Windows 10 IoT Core" VerticalAlignment="Center"/>
             </StackPanel>
 
             <StackPanel Grid.Column="2" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Right">
@@ -93,46 +93,38 @@
         <StackPanel Grid.Column="2" Grid.Row="1" Orientation="Vertical">
             <TextBlock x:Name="BoardName" Style="{StaticResource AthensDefaultAppSubheaderTextBlockStyle}" Grid.Row="1" Text="Athens Device" Margin="0,24,0,0"/>
             <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="216"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Orientation="Vertical" Grid.Column="0">
-                        <Border Height="48">
-                            <TextBlock x:Uid="MainPageDeviceName" Text="Device name" Style="{StaticResource AthensDefaultAppBodyTextBlockStyle}" VerticalAlignment="Bottom"/>
-                        </Border>
-                        <Border Height="24">
-                            <TextBlock x:Name="DeviceName" Style="{StaticResource AthensDefaultAppDataTextBlockStyle}" VerticalAlignment="Bottom"/>
-                        </Border>
-                        <Border Height="48">
-                            <TextBlock x:Uid="MainPageIPAddress" x:Name="IPAddressCaption" Text="IP address" Style="{StaticResource AthensDefaultAppBodyTextBlockStyle}" VerticalAlignment="Bottom"/>
-                        </Border>
-                        <Border Height="24">
-                            <TextBlock x:Name="IPAddress1" Style="{StaticResource AthensDefaultAppDataTextBlockStyle}" VerticalAlignment="Bottom"/>
-                        </Border>
-                    </StackPanel>
-                    <StackPanel Orientation="Vertical" Grid.Column="1">
-                        <Border Height="48">
-                            <TextBlock x:Uid="MainPageNetwork" x:Name="NetworkNameCaption" Text="Network" Style="{StaticResource AthensDefaultAppBodyTextBlockStyle}" VerticalAlignment="Bottom"/>
-                        </Border>
-                        <Border Height="24">
-                            <TextBlock x:Name="NetworkName1" Style="{StaticResource AthensDefaultAppDataTextBlockStyle}" VerticalAlignment="Bottom"/>
-                        </Border>
-                        <Border Height="48">
-                            <TextBlock x:Uid="MainPageEdition" x:Name="EditionCaption" Text="Edition" Style="{StaticResource AthensDefaultAppBodyTextBlockStyle}" VerticalAlignment="Bottom"/>
-                        </Border>
-                        <Border Height="24">
-                            <TextBlock x:Uid="MainPageEditionText" Style="{StaticResource AthensDefaultAppDataTextBlockStyle}" VerticalAlignment="Bottom" Text="Windows Athens"/>
-                        </Border>
-                    </StackPanel>
-                </Grid>
+                <StackPanel Orientation="Vertical" Grid.Column="0">
+                    <Border Height="48">
+                        <TextBlock x:Uid="MainPageDeviceName" Text="Device name" Style="{StaticResource AthensDefaultAppBodyTextBlockStyle}" VerticalAlignment="Bottom"/>
+                    </Border>
+                    <Border Height="24">
+                        <TextBlock x:Name="DeviceName" Style="{StaticResource AthensDefaultAppDataTextBlockStyle}" VerticalAlignment="Bottom"/>
+                    </Border>
+                    <Border Height="48">
+                        <TextBlock x:Uid="MainPageIPAddress" x:Name="IPAddressCaption" Text="IP address" Style="{StaticResource AthensDefaultAppBodyTextBlockStyle}" VerticalAlignment="Bottom"/>
+                    </Border>
+                    <Border Height="24">
+                        <TextBlock x:Name="IPAddress1" Style="{StaticResource AthensDefaultAppDataTextBlockStyle}" VerticalAlignment="Bottom"/>
+                    </Border>
+                    <Border Height="48">
+                        <TextBlock x:Uid="MainPageNetwork" x:Name="NetworkNameCaption" Text="Network" Style="{StaticResource AthensDefaultAppBodyTextBlockStyle}" VerticalAlignment="Bottom"/>
+                    </Border>
+                    <Border Height="24">
+                        <TextBlock x:Name="NetworkName1" Style="{StaticResource AthensDefaultAppDataTextBlockStyle}" VerticalAlignment="Bottom"/>
+                    </Border>
+                </StackPanel>
             </ScrollViewer>
         </StackPanel>
         
+        
         <!-- Legal Text -->
+        <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Text="Visit www.windowsondevices.com to start developing" Style="{StaticResource AthensDefaultAppTitleTextBlockStyle}"/>
         <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="1" Orientation="Vertical" VerticalAlignment="Bottom">
+            <Button x:Name="SettingsButton" Style="{StaticResource ShutdownButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Top" Tapped="SettingsButton_Tapped" Background="Transparent" BorderThickness="0" Height="50" Width="50">
+                <Glyphs x:Name="SettingsGlyph" Fill="White" UnicodeString="{StaticResource ResourceKey=IconSettings}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Button>
             <TextBlock x:Uid="LegalText1" Style="{StaticResource AthensDefaultAppLegalTextBlockStyle}" Text="By using this software you agree to Microsoft license terms." HorizontalAlignment="Left"/>
+            <Border Height="24"/>
             <TextBlock x:Uid="LegalText2" Text="This limited-feature version of Windows IoT Athens is designed exclusively for driver development only." Style="{StaticResource AthensDefaultAppLegalTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
             <TextBlock x:Uid="LegalText3" Text="The privacy statement for this prerelease version of the Windows operating system can be viewed here: http://go.microsoft.com/fwlink/?LinkId=506737." Style="{StaticResource AthensDefaultAppLegalTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom" TextWrapping="WrapWholeWords"/>
         </StackPanel>

@@ -9,6 +9,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
+using Windows.UI.Xaml.Navigation;
 
 namespace AthensDefaultApp
 {
@@ -28,6 +29,16 @@ namespace AthensDefaultApp
             timer.Tick += timer_Tick;
             timer.Interval = TimeSpan.FromSeconds(30);
             timer.Start();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            if (!ApplicationData.Current.LocalSettings.Values.ContainsKey("DefaultAppHasDoneOOBE"))
+            {
+                ApplicationData.Current.LocalSettings.Values["DefaultAppHasDoneOOBE"] = "YES";
+            }
+
+            base.OnNavigatedTo(e);
         }
 
         private void NetworkInformation_NetworkStatusChanged(object sender)
@@ -75,6 +86,11 @@ namespace AthensDefaultApp
         private void RestartOption_Tapped(object sender, TappedRoutedEventArgs e)
         {
             ShutdownManager.BeginShutdown(TimeSpan.FromSeconds(0.5), ShutdownKind.Restart);
+        }
+
+        private void SettingsButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+
         }
     }
 }
