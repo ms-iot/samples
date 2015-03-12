@@ -33,9 +33,9 @@ namespace AthensDefaultApp
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (!ApplicationData.Current.LocalSettings.Values.ContainsKey("DefaultAppHasDoneOOBE"))
+            if (!ApplicationData.Current.LocalSettings.Values.ContainsKey(Constants.HasDoneOOBEKey))
             {
-                ApplicationData.Current.LocalSettings.Values["DefaultAppHasDoneOOBE"] = "YES";
+                ApplicationData.Current.LocalSettings.Values[Constants.HasDoneOOBEKey] = Constants.HasDoneOOBEValue;
             }
 
             base.OnNavigatedTo(e);
