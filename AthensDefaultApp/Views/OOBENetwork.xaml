@@ -14,7 +14,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Glyphs Grid.Column="0" UnicodeString="{StaticResource ResourceKey=IconLaptop}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="{StaticResource TextBoxForegroundThemeBrush}" VerticalAlignment="Center"/>
+                <Glyphs Grid.Column="0" UnicodeString="{StaticResource ResourceKey=IconLaptop}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="White" VerticalAlignment="Center"/>
                 <TextBlock Grid.Column="1" Text="TestNetworkName" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
             </Grid>
         </DataTemplate>
@@ -31,9 +31,9 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" Orientation="Horizontal">
-                    <Glyphs  UnicodeString="{StaticResource ResourceKey=IconLaptop}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="{StaticResource TextBoxForegroundThemeBrush}" VerticalAlignment="Center"/>
+                    <Glyphs  UnicodeString="{StaticResource ResourceKey=IconLaptop}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="White" VerticalAlignment="Center"/>
                     <TextBlock Text="TestNetworkName" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
-                </StackPanel>                
+                </StackPanel>
                 <CheckBox Grid.Row="1" x:Name="ConnectAutomaticallyCheckBox" IsChecked="True" HorizontalAlignment="Left" Style="{StaticResource AthensDefaultAppCheckBoxStyle}" Margin="50,0,0,0">
                     <TextBlock Text="Connect automatically" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}"/>
                 </CheckBox>
@@ -45,7 +45,6 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
@@ -55,16 +54,16 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Glyphs Grid.Row="0" Grid.Column="0" UnicodeString="{StaticResource ResourceKey=IconLaptop}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="{StaticResource TextBoxForegroundThemeBrush}" VerticalAlignment="Center"/>
+                <Glyphs Grid.Row="0" Grid.Column="0" UnicodeString="{StaticResource ResourceKey=IconLaptop}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="White" VerticalAlignment="Center"/>
                 <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="TestNetworkName" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
-                <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2">
+                <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="0,5,0,0">
                     <TextBlock Text="Enter the network security key" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}"/>
-                    <PasswordBox x:Name="WifiPasswordBox" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                </StackPanel>
-                <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                    <Button x:Name="NextButton" Content="Next" Width="100" HorizontalAlignment="Right" VerticalAlignment="Bottom" Tapped="NextButton_Tapped"/>
-                    <Button x:Name="CancelButton" Content="Cancel" Width="100" HorizontalAlignment="Right" VerticalAlignment="Bottom" Tapped="CancelButton_Tapped" Margin="10,0,40,0"/>
-                </StackPanel>
+                    <PasswordBox x:Name="WifiPasswordBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="350" Margin="0,5,0,0"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,25,0,0">
+                        <Button x:Name="NextButton" Content="Next" Width="100" HorizontalAlignment="Right" VerticalAlignment="Bottom" Tapped="NextButton_Tapped"/>
+                        <Button x:Name="CancelButton" Content="Cancel" Width="100" HorizontalAlignment="Right" VerticalAlignment="Bottom" Tapped="CancelButton_Tapped" Margin="10,0,0,0"/>
+                    </StackPanel>
+                </StackPanel>                
             </Grid>
         </DataTemplate>
         <DataTemplate x:Name="WifiConnectingState">
@@ -72,7 +71,6 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
@@ -82,13 +80,13 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Glyphs Grid.Row="0" Grid.Column="0" UnicodeString="{StaticResource ResourceKey=IconLaptop}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="{StaticResource TextBoxForegroundThemeBrush}" VerticalAlignment="Center"/>
+                <Glyphs Grid.Row="0" Grid.Column="0" UnicodeString="{StaticResource ResourceKey=IconLaptop}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="White" VerticalAlignment="Center"/>
                 <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="TestNetworkName" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
-                <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2">
-                    <ProgressRing x:Name="ConnectingProgressRing" IsActive="True"/>
-                    <TextBlock Grid.ColumnSpan="2" Text="Checking network requirements" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
+                <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
+                    <ProgressRing x:Name="ConnectingProgressRing" IsActive="True" Foreground="White"/>
+                    <TextBlock Text="Checking network requirements" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
                 </StackPanel>
-                <Button Grid.Row="3" Grid.Column="2" x:Name="CancelButton" Content="Cancel" Width="100" HorizontalAlignment="Left" VerticalAlignment="Bottom" Tapped="CancelButton_Tapped"/>
+                <Button Grid.Row="3" Grid.Column="1" x:Name="CancelButton" Content="Cancel" Width="100" HorizontalAlignment="Center" VerticalAlignment="Bottom" Tapped="CancelButton_Tapped"/>
             </Grid>
         </DataTemplate>
     </Page.Resources>
@@ -112,7 +110,7 @@
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <TextBlock Text="Direct connections" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,25"/>
                     <TextBlock x:Name="NoneFoundText" Text="None found" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed"/>
-                    <ListView x:Name="DirectConnectionsListView" VerticalAlignment="Top" HorizontalAlignment="Left" SelectionMode="None">
+                    <ListView x:Name="DirectConnectionsListView" VerticalAlignment="Top" HorizontalAlignment="Left" SelectionMode="None" ItemContainerStyle="{StaticResource AthensDefaultAppNetworkListViewItemStyle}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Grid>
@@ -121,7 +119,7 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <Glyphs Grid.Column="0" UnicodeString="{StaticResource ResourceKey=IconLaptop}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="{StaticResource TextBoxForegroundThemeBrush}" VerticalAlignment="Center"/>
+                                    <Glyphs Grid.Column="0" UnicodeString="{StaticResource ResourceKey=IconLaptop}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="White" VerticalAlignment="Center"/>
                                     <TextBlock Grid.Column="1" Text="Ethernet" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
                                 </Grid>
                             </DataTemplate>
