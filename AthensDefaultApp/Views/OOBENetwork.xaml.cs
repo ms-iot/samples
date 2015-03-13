@@ -71,7 +71,7 @@ namespace AthensDefaultApp
 
         private void ConnectButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            SwitchToItemState(sender as Button, WifiConnectState);
+            SwitchToItemState(sender as Button, WifiPasswordState);
         }
 
         private void NextButton_Tapped(object sender, TappedRoutedEventArgs e)
