@@ -71,26 +71,28 @@ namespace AthensDefaultApp
 
         private void ConnectButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            var button = sender as Button;
-
-            var item = WifiListView.ContainerFromItem(button.DataContext) as ListViewItem;
-
-            item.ContentTemplate = WifiPasswordState;
+            SwitchToItemState(sender as Button, WifiConnectState);
         }
 
         private void NextButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            NavigationUtils.NavigateToScreen(typeof(MainPage));
+            SwitchToItemState(sender as Button, WifiConnectingState);
+
+            //NavigationUtils.NavigateToScreen(typeof(MainPage));
         }
 
         private void CancelButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            var button = sender as Button;
-
-            var item = WifiListView.ContainerFromItem(button.DataContext) as ListViewItem;
-
-            item.ContentTemplate = WifiInitialState;
+            var item = SwitchToItemState(sender as Button, WifiInitialState);
             item.IsSelected = false;
+        }
+
+        private ListViewItem SwitchToItemState(Button sender, DataTemplate template)
+        {
+            var item = WifiListView.ContainerFromItem(sender.DataContext) as ListViewItem;
+            item.ContentTemplate = template;
+
+            return item;
         }
 
         private void BackButton_Tapped(object sender, TappedRoutedEventArgs e)

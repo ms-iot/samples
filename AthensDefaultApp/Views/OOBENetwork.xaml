@@ -69,6 +69,30 @@
                 </StackPanel>
             </Grid>
         </DataTemplate>
+        <DataTemplate x:Name="WifiConnectingState">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Glyphs Grid.Row="0" Grid.Column="0" UnicodeString="{StaticResource ResourceKey=IconLaptop}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="{StaticResource TextBoxForegroundThemeBrush}" VerticalAlignment="Center"/>
+                <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="TestNetworkName" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
+                <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2">
+                    <ProgressRing x:Name="ConnectingProgressRing" IsActive="True"/>
+                    <TextBlock Grid.ColumnSpan="2" Text="Checking network requirements" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
+                </StackPanel>
+                <Button Grid.Row="3" Grid.Column="2" x:Name="CancelButton" Content="Cancel" Width="100" HorizontalAlignment="Left" VerticalAlignment="Bottom" Tapped="CancelButton_Tapped"/>
+            </Grid>
+        </DataTemplate>
     </Page.Resources>
 
     <Grid Background="{StaticResource AccentBrush}">

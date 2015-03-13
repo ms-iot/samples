@@ -95,7 +95,7 @@
         </Setter>
     </Style>
 
-        <!-- Buttons -->
+    <!-- Buttons -->
     <Style x:Key="ShutdownButtonStyle" TargetType="Button">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="{StaticResource ButtonForegroundThemeBrush}"/>
