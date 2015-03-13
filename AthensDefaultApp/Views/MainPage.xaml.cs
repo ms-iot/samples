@@ -5,6 +5,7 @@ using System.Globalization;
 using Windows.Networking.Connectivity;
 using Windows.Storage;
 using Windows.System;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -41,14 +42,20 @@ namespace AthensDefaultApp
             base.OnNavigatedTo(e);
         }
 
-        private void NetworkInformation_NetworkStatusChanged(object sender)
+        private async void NetworkInformation_NetworkStatusChanged(object sender)
         {
-            UpdateNetworkInfo();
+            await Window.Current.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () => 
+            {
+                UpdateNetworkInfo();
+            });
         }
 
-        void timer_Tick(object sender, object e)
+        private async void timer_Tick(object sender, object e)
         {
-            UpdateDateTime();
+            await Window.Current.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+            {
+                UpdateDateTime();
+            });
         }
 
         private void UpdateBoardInfo()
