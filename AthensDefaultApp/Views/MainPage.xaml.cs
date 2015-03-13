@@ -3,11 +3,8 @@
 using System;
 using System.Globalization;
 using Windows.Networking.Connectivity;
-using Windows.Storage;
-using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace AthensDefaultApp
@@ -30,14 +27,20 @@ namespace AthensDefaultApp
             timer.Start();
         }
 
-        private void NetworkInformation_NetworkStatusChanged(object sender)
+        private async void NetworkInformation_NetworkStatusChanged(object sender)
         {
-            UpdateNetworkInfo();
+            await Window.Current.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Low, () =>
+            {
+                UpdateNetworkInfo();
+            });
         }
 
-        void timer_Tick(object sender, object e)
+        private async void timer_Tick(object sender, object e)
         {
-            UpdateDateTime();
+            await Window.Current.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Low, () =>
+            {
+                UpdateDateTime();
+            });
         }
 
         private void UpdateBoardInfo()
@@ -61,20 +64,5 @@ namespace AthensDefaultApp
         }
 
         private DispatcherTimer timer;
-
-        private void ShutdownButton_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            ShutdownDropdown.IsOpen = true;
-        }
-
-        private void ShutdownOption_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            ShutdownManager.BeginShutdown(TimeSpan.FromSeconds(0.5), ShutdownKind.Shutdown);
-        }
-
-        private void RestartOption_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            ShutdownManager.BeginShutdown(TimeSpan.FromSeconds(0.5), ShutdownKind.Restart);
-        }
     }
 }
