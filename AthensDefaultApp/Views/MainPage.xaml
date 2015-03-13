@@ -118,7 +118,19 @@
         
         
         <!-- Legal Text -->
-        <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Text="Visit www.windowsondevices.com to start developing" Style="{StaticResource TitleTextBlockStyle}" Margin="0,25,0,0"/>
+        <RichTextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Margin="0,25,0,0">
+            <Paragraph>
+                <InlineUIContainer>
+                    <TextBlock Text="Visit" Style="{StaticResource TitleTextBlockStyle}"/>
+                </InlineUIContainer>
+                <InlineUIContainer>
+                    <TextBlock Text=" www.windowsondevices.com" Style="{StaticResource TitleTextBlockStyle}" Foreground="{StaticResource AccentBrush}"/>
+                </InlineUIContainer>
+                <InlineUIContainer>
+                    <TextBlock Text=" to start developing" Style="{StaticResource TitleTextBlockStyle}"/>
+                </InlineUIContainer>
+            </Paragraph>
+        </RichTextBlock>
         <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="1" Orientation="Vertical" VerticalAlignment="Bottom">
             <Button x:Name="SettingsButton" Style="{StaticResource ShutdownButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Top" Tapped="SettingsButton_Tapped" Background="Transparent" BorderThickness="0" Height="50" Width="50">
                 <Glyphs x:Name="SettingsGlyph" Fill="White" UnicodeString="{StaticResource ResourceKey=IconSettings}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
