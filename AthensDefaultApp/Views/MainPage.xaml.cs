@@ -97,7 +97,7 @@ namespace AthensDefaultApp
 
         private void SettingsButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
-
+            NavigationUtils.NavigateToScreen(typeof(Settings));
         }
     }
 }
