@@ -25,8 +25,8 @@
 
         <Rectangle Grid.Column="1" Grid.Row="1" Fill="Gray" Width="auto" Height="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
-        <ListView Grid.Column="0" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="#1a1a1a">
-            <ListViewItem x:Name="PreferencesListViewItem" Content="Basic preferences" HorizontalAlignment="Stretch" Tapped="PreferencesListViewItem_Tapped"/>
+        <ListView Grid.Column="0" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="#1a1a1a" SelectionMode="Single">
+            <ListViewItem x:Name="PreferencesListViewItem" Content="Basic preferences" HorizontalAlignment="Stretch" Tapped="PreferencesListViewItem_Tapped" IsSelected="True"/>
             <ListViewItem x:Name="NetworkListViewItem" Content="Network and Wi-Fi" HorizontalAlignment="Stretch" Tapped="NetworkListViewItem_Tapped"/>
         </ListView>
 

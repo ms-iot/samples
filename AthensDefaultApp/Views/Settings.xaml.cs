@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -23,10 +12,14 @@ namespace AthensDefaultApp
     public sealed partial class Settings : Page
     {
         private LanguageManager languageManager;
+        private UIElement visibleContent;
 
         public Settings()
         {
             this.InitializeComponent();
+
+            visibleContent = BasicPreferencesGridView;
+
             SetupLanguages();
         }
 
@@ -50,12 +43,17 @@ namespace AthensDefaultApp
 
         private void NetworkListViewItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
-
+            visibleContent.Visibility = Visibility.Collapsed;
         }
 
         private void PreferencesListViewItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            BasicPreferencesGridView.Visibility = Visibility.Visible;
+            if (BasicPreferencesGridView.Visibility == Visibility.Collapsed)
+            {
+                visibleContent.Visibility = Visibility.Collapsed;
+                BasicPreferencesGridView.Visibility = Visibility.Visible;
+                visibleContent = BasicPreferencesGridView;
+            }            
         }
 
         private void LanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
