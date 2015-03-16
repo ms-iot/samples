@@ -46,8 +46,35 @@
 
             <StackPanel Grid.Column="2" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Right">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="0,0,0,0">
-                    <TextBlock x:Name="CurrentTime" HorizontalAlignment="Right" Style="{StaticResource AthensDefaultAppBodyTextBlockStyle}" VerticalAlignment="Center" Padding="0,0,12,0"/>                    
-                </StackPanel>                
+                    <TextBlock x:Name="CurrentTime" HorizontalAlignment="Right" Style="{StaticResource AthensDefaultAppBodyTextBlockStyle}" VerticalAlignment="Center" Padding="0,0,12,0"/>
+                    <Button x:Name="ShutdownButton" Style="{StaticResource ShutdownButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Tapped="ShutdownButton_Tapped" Background="Transparent" BorderThickness="0" Height="50" Width="50">
+                        <Glyphs x:Name="ShutdownGlyph" Fill="White" UnicodeString="{StaticResource ResourceKey=IconShutdown}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
+                </StackPanel>
+                <Popup Grid.ColumnSpan="2" Name="ShutdownDropdown" HorizontalAlignment="Left" IsLightDismissEnabled="True" Margin="28,0,0,0">
+                    <ListView Background="White" ItemContainerStyle="{StaticResource AthensDefaultAppShutdownListViewItemStyle}" BorderThickness="2.0" BorderBrush="{StaticResource ShutdownBorderBrush}" Width="120">
+                        <ListViewItem x:Name="ShutdownOption" HorizontalAlignment="Stretch" Tapped="ShutdownOption_Tapped" HorizontalContentAlignment="Stretch" Height="40" Margin="0,5,0,0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="20"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock x:Uid="ShutdownText" Grid.Column="1" Text="Shut down" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource AthensDefaultAppDarkBodyTextBlockStyle}"/>
+                            </Grid>
+                        </ListViewItem>
+                        <ListViewItem x:Name="RestartOption" HorizontalAlignment="Stretch" Tapped="RestartOption_Tapped" HorizontalContentAlignment="Stretch" Height="40" Margin="0,0,0,5">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="20"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock x:Uid="RestartText" Grid.Column="1" Text="Restart" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource AthensDefaultAppDarkBodyTextBlockStyle}"/>
+                            </Grid>
+                        </ListViewItem>
+                    </ListView>
+                </Popup>
             </StackPanel>
         </Grid>
 
