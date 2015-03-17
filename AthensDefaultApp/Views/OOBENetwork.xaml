@@ -8,94 +8,99 @@
     mc:Ignorable="d">
     <Page.Resources>
         <DataTemplate x:Name="WifiInitialState">
-            <Grid>
+            <Grid Height="44">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="44"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Glyphs Grid.Column="0" UnicodeString="{StaticResource ResourceKey=IconLaptop}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="White" VerticalAlignment="Center"/>
+                <Glyphs Grid.Column="0" UnicodeString="{StaticResource ResourceKey=IconLaptop}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="White" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 <TextBlock Grid.Column="1" Text="TestNetworkName" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Name="WifiConnectState">
-            <Grid>
+            <Grid Height="138">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="44"/>
                     <RowDefinition Height="auto"/>
+                    <RowDefinition Height="26"/>
                     <RowDefinition Height="auto"/>
-                    <RowDefinition Height="20"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="8"/>
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" Orientation="Horizontal">
-                    <Glyphs  UnicodeString="{StaticResource ResourceKey=IconLaptop}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="White" VerticalAlignment="Center"/>
+                    <Border Width="44" Height="44">
+                        <Glyphs UnicodeString="{StaticResource ResourceKey=IconLaptop}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
                     <TextBlock Text="TestNetworkName" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
                 </StackPanel>
-                <CheckBox Grid.Row="1" x:Name="ConnectAutomaticallyCheckBox" IsChecked="True" HorizontalAlignment="Left" Style="{StaticResource AthensDefaultAppCheckBoxStyle}" Margin="50,0,0,0">
+                <CheckBox Grid.Row="1" x:Name="ConnectAutomaticallyCheckBox" IsChecked="True" HorizontalAlignment="Left" Margin="45,0,0,0" Height="32">
                     <TextBlock Text="Connect automatically" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}"/>
                 </CheckBox>
-                <Button Grid.Row="3" x:Name="ConnectButton" Content="Connect" Width="100" HorizontalAlignment="Left" VerticalAlignment="Bottom" Tapped="ConnectButton_Tapped" Margin="75,0,0,0"/>
+                <Button Grid.Row="3" x:Name="ConnectButton" Content="Connect" Width="120" Height="32" HorizontalAlignment="Left" VerticalAlignment="Bottom" Tapped="ConnectButton_Tapped" Margin="102,0,0,0"/>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Name="WifiPasswordState">
-            <Grid>
+            <Grid Height="204">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="44"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="44"/>
                     <RowDefinition Height="auto"/>
+                    <RowDefinition Height="50"/>
                     <RowDefinition Height="auto"/>
-                    <RowDefinition Height="20"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="8"/>
                 </Grid.RowDefinitions>
 
-                <Glyphs Grid.Row="0" Grid.Column="0" UnicodeString="{StaticResource ResourceKey=IconLaptop}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="White" VerticalAlignment="Center"/>
+                <Glyphs Grid.Row="0" Grid.Column="0" UnicodeString="{StaticResource ResourceKey=IconLaptop}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="White" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="TestNetworkName" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
-                <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="0,5,0,0">
+                <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch">
                     <TextBlock Text="Enter the network security key" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}"/>
-                    <PasswordBox x:Name="WifiPasswordBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="350" Margin="0,5,0,0"/>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,25,0,0">
-                        <Button x:Name="NextButton" Content="Next" Width="100" HorizontalAlignment="Right" VerticalAlignment="Bottom" Tapped="NextButton_Tapped"/>
-                        <Button x:Name="CancelButton" Content="Cancel" Width="100" HorizontalAlignment="Right" VerticalAlignment="Bottom" Tapped="CancelButton_Tapped" Margin="10,0,0,0"/>
-                    </StackPanel>
-                </StackPanel>                
+                    <PasswordBox x:Name="WifiPasswordBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="334" Margin="0,8,0,0" BorderBrush="{StaticResource SystemControlBorderBrush}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="130,0,0,0">
+                    <Button x:Name="NextButton" Content="Next" Width="120" HorizontalAlignment="Right" VerticalAlignment="Bottom" Tapped="NextButton_Tapped" Height="32"/>
+                    <Button x:Name="CancelButton" Content="Cancel" Width="120" HorizontalAlignment="Right" VerticalAlignment="Bottom" Tapped="CancelButton_Tapped" Margin="12,0,0,0" Height="32"/>
+                </StackPanel>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Name="WifiConnectingState">
-            <Grid>
+            <Grid Height="138">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="44"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="44"/>
                     <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="26"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="8"/>
                 </Grid.RowDefinitions>
 
-                <Glyphs Grid.Row="0" Grid.Column="0" UnicodeString="{StaticResource ResourceKey=IconLaptop}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="White" VerticalAlignment="Center"/>
+                <Glyphs Grid.Row="0" Grid.Column="0" UnicodeString="{StaticResource ResourceKey=IconLaptop}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="White" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="TestNetworkName" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
                 <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
                     <ProgressRing x:Name="ConnectingProgressRing" IsActive="True" Foreground="White"/>
-                    <TextBlock Text="Checking network requirements" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
+                    <TextBlock Text="Checking network requirements" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="12,0,0,0"/>
                 </StackPanel>
-                <Button Grid.Row="3" Grid.Column="1" x:Name="CancelButton" Content="Cancel" Width="100" HorizontalAlignment="Center" VerticalAlignment="Bottom" Tapped="CancelButton_Tapped"/>
+                <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" x:Name="CancelButton" Content="Cancel" Width="120" HorizontalAlignment="Left" VerticalAlignment="Bottom" Tapped="CancelButton_Tapped" Margin="130,0,0,0"/>
             </Grid>
         </DataTemplate>
     </Page.Resources>
 
     <Grid Background="{StaticResource AccentBrush}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="60"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="30"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -108,31 +113,20 @@
             <TextBlock Text="Let's get connected" Style="{StaticResource SubheaderTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,25,0,0">
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">
-                    <TextBlock Text="Direct connections" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,25"/>
+                    <TextBlock Text="Direct connections" Style="{StaticResource BaseTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,12"/>
                     <TextBlock x:Name="NoneFoundText" Text="None found" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed"/>
-                    <ListView x:Name="DirectConnectionsListView" VerticalAlignment="Top" HorizontalAlignment="Left" SelectionMode="None" ItemContainerStyle="{StaticResource AthensDefaultAppNetworkListViewItemStyle}">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-
-                                    <Glyphs Grid.Column="0" UnicodeString="{StaticResource ResourceKey=IconLaptop}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="White" VerticalAlignment="Center"/>
-                                    <TextBlock Grid.Column="1" Text="Ethernet" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                    <TextBlock Text="Wi-Fi" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,25,0,25"/>
-                    <ListView x:Name="WifiListView" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionMode="Single" Width="450" ItemContainerStyle="{StaticResource AthensDefaultAppNetworkListViewItemStyle}" ItemTemplate="{StaticResource WifiInitialState}" SelectionChanged="WifiListView_SelectionChanged"/>
+                    <StackPanel x:Name="DirectConnectionStackPanel" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <Border Width="44" Height="44">
+                            <Glyphs UnicodeString="{StaticResource ResourceKey=IconLaptop}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="White" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                        <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="Ethernet" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <TextBlock Text="Wi-Fi" Style="{StaticResource BaseTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,33,0,12"/>
+                    <ListView x:Name="WifiListView" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionMode="Single" Width="446" ItemTemplate="{StaticResource WifiInitialState}" SelectionChanged="WifiListView_SelectionChanged"/>
                 </StackPanel>
             </ScrollViewer>
         </StackPanel>
-        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-            <Button x:Name="BackButton" Content="Back" Width="125" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="{StaticResource DarkAccentBrush}" Tapped="BackButton_Tapped"/>
-            <Button x:Name="SkipButton" Content="Skip" Width="125" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="{StaticResource DarkAccentBrush}" Margin="10,0,0,0" Tapped="SkipButton_Tapped"/>
-        </StackPanel>
+        <HyperlinkButton Grid.Column="1" Content="Skip this step" Grid.Row="1" x:Name="SkipButton" HorizontalAlignment="Left" VerticalAlignment="Bottom" Tapped="SkipButton_Tapped" HorizontalContentAlignment="Left"/>
+        <Button Grid.Column="1" Grid.Row="1" x:Name="BackButton" Content="Back" Width="120" HorizontalAlignment="Right" VerticalAlignment="Bottom" Tapped="BackButton_Tapped" Height="32"/>
     </Grid>
 </Page>

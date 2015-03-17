@@ -36,11 +36,12 @@ namespace AthensDefaultApp
             if (ethernetProfile.Equals("None found"))
             {
                 NoneFoundText.Visibility = Visibility.Visible;
-                DirectConnectionsListView.Visibility = Visibility.Collapsed;
+                DirectConnectionStackPanel.Visibility = Visibility.Collapsed;
             }
             else
             {
-                DirectConnectionsListView.ItemsSource = new List<string> { ethernetProfile };
+                NoneFoundText.Visibility = Visibility.Collapsed;
+                DirectConnectionStackPanel.Visibility = Visibility.Visible;
             }
         }
 

@@ -25,7 +25,8 @@
     <SolidColorBrush x:Key="SystemControlHighlightAltListAccentLowBrush" Color="{StaticResource AccentBorderColor}" Opacity="0.6"/>
     <SolidColorBrush x:Key="SystemControlHighlightAltListAccentMediumBrush" Color="{StaticResource AccentBorderColor}" Opacity="0.8"/>
     <SolidColorBrush x:Key="SystemControlHighlightAltListAccentHighBrush" Color="{StaticResource AccentBorderColor}" Opacity="0.9"/>
-    <!--<SolidColorBrush x:Key="SystemControlForegroundListMediumBrush" Color="{StaticResource AccentColor}" Opacity="0.9"/>-->
+    <SolidColorBrush x:Key="SystemControlHighlightAccentBrush" Color="{StaticResource AccentBorderColor}"/>
+    <SolidColorBrush x:Key="SystemControlHyperlinkTextBrush" Color="{StaticResource AccentBorderColor}"/>
 
     <!--<Color x:Key="BackgroundColor">#000000</Color>
     <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="{StaticResource BackgroundColor}"/>-->
