@@ -17,31 +17,20 @@ namespace AthensDefaultApp
             this.InitializeComponent();
 
             SetupLanguages();
-            SetupCountryOrRegion();
         }
 
         private void SetupLanguages()
         {
             languageManager = new LanguageManager();
 
-            LanguageComboBox.ItemsSource = languageManager.LanguageDisplayNames;
-            LanguageComboBox.SelectedItem = LanguageManager.GetCurrentLanguageDisplayName();
-        }
-
-        private void SetupCountryOrRegion()
-        {
-            RegionComboBox.SelectedItem = LanguageManager.GetCurrentRegion();
+            LanguagesListView.ItemsSource = languageManager.LanguageDisplayNames;
+            LanguagesListView.SelectedItem = LanguageManager.GetCurrentLanguageDisplayName();
         }
 
         private void SetPreferences()
         {
-            var selectedLanguage = LanguageComboBox.SelectedItem as string;
+            var selectedLanguage = LanguagesListView.SelectedItem as string;
             languageManager.UpdateLanguage(selectedLanguage);
-        }
-
-        private void SetupKeyboardLayout()
-        {
-            LanguageComboBox.SelectedItem = LanguageManager.GetCurrentKeyboardLanguage();
         }
 
         private void NextButton_Tapped(object sender, TappedRoutedEventArgs e)

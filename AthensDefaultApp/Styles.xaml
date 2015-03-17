@@ -19,11 +19,16 @@
     <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}"/>
     <SolidColorBrush x:Key="HoverBrush" Color="{StaticResource AccentColor}" Opacity="0.2"/>
 
-    <SolidColorBrush x:Key="ListViewItemSelectedPointerOverBorderThemeBrush" Color="Transparent" />
-    <SolidColorBrush x:Key="ListViewItemFocusBorderThemeBrush" Color="Transparent" />
+    <!--<SolidColorBrush x:Key="ListViewItemSelectedPointerOverBorderThemeBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="ListViewItemFocusBorderThemeBrush" Color="Transparent" />-->
 
-    <Color x:Key="BackgroundColor">#000000</Color>
-    <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="{StaticResource BackgroundColor}"/>
+    <SolidColorBrush x:Key="SystemControlHighlightAltListAccentLowBrush" Color="{StaticResource AccentBorderColor}" Opacity="0.6"/>
+    <SolidColorBrush x:Key="SystemControlHighlightAltListAccentMediumBrush" Color="{StaticResource AccentBorderColor}" Opacity="0.8"/>
+    <SolidColorBrush x:Key="SystemControlHighlightAltListAccentHighBrush" Color="{StaticResource AccentBorderColor}" Opacity="0.9"/>
+    <!--<SolidColorBrush x:Key="SystemControlForegroundListMediumBrush" Color="{StaticResource AccentColor}" Opacity="0.9"/>-->
+
+    <!--<Color x:Key="BackgroundColor">#000000</Color>
+    <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="{StaticResource BackgroundColor}"/>-->
 
     <Color x:Key="ShutdownBorderColor">#333333</Color>
     <SolidColorBrush x:Key="ShutdownBorderBrush" Color="{StaticResource ShutdownBorderColor}"/>
