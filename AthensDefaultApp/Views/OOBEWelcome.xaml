@@ -21,15 +21,15 @@
         </Grid.RowDefinitions>
         
         <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical">
-            <TextBlock Text="Hi there, welcome to Windows IoT Core" Style="{ThemeResource SubheaderTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <TextBlock Text="Let's get some basic stuff out of the way." Style="{ThemeResource BodyTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,14,0,0"/>
+            <TextBlock x:Uid="OOBEWelcomeTitle" Text="Hi there, welcome to Windows IoT Core" Style="{ThemeResource SubheaderTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <TextBlock x:Uid="OOBEIntro" Text="Let's get some basic stuff out of the way." Style="{ThemeResource BodyTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,14,0,0"/>
 
-            <TextBlock Text="Choose Your Language" Style="{ThemeResource BaseTextBlockStyle}" HorizontalAlignment="Left" FontWeight="Normal" VerticalAlignment="Top" Margin="0,54,0,0"/>
+            <TextBlock x:Uid="OOBELanguageSelect" Text="Choose Your Language" Style="{ThemeResource BaseTextBlockStyle}" HorizontalAlignment="Left" FontWeight="Normal" VerticalAlignment="Top" Margin="0,54,0,0"/>
             <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
                 <ListView x:Name="LanguagesListView" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionMode="Single" Margin="0,14,0,0" Width="446" HorizontalContentAlignment="Stretch"/>
             </ScrollViewer>
         </StackPanel>
 
-        <Button Grid.Column="1" Grid.Row="1" x:Name="NextButton" Tapped="NextButton_Tapped" Content="Next" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="120" Height="32"/>
+        <Button x:Uid="NextButton" Grid.Column="1" Grid.Row="1" x:Name="NextButton" Tapped="NextButton_Tapped" Content="Next" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="120" Height="32"/>
     </Grid>
 </Page>

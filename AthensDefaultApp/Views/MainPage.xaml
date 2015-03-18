@@ -48,7 +48,7 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <TextBlock x:Uid="ShutdownText" Grid.Column="1" Text="Shut down" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource AthensDefaultAppDarkBodyTextBlockStyle}"/>
+                                <TextBlock x:Uid="ShutdownText" Grid.Column="1" Text="Shutdown" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource AthensDefaultAppDarkBodyTextBlockStyle}"/>
                             </Grid>
                         </ListViewItem>
                         <ListViewItem x:Name="RestartOption" HorizontalAlignment="Stretch" Tapped="RestartOption_Tapped" HorizontalContentAlignment="Stretch" Height="40" Margin="0,0,0,5">
@@ -104,13 +104,13 @@
         <RichTextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Top" Margin="0,85,0,0">
             <Paragraph>
                 <InlineUIContainer>
-                    <TextBlock Text="Visit" Style="{StaticResource TitleTextBlockStyle}"/>
+                    <TextBlock x:Uid="Visit" Text="Visit" Style="{StaticResource TitleTextBlockStyle}"/>
                 </InlineUIContainer>
                 <InlineUIContainer>
-                    <TextBlock Text=" www.windowsondevices.com" Style="{StaticResource TitleTextBlockStyle}" Foreground="{StaticResource AccentBrush}"/>
+                    <TextBlock x:Uid="WindowsOnDevicesUrl" Text=" www.windowsondevices.com" Style="{StaticResource TitleTextBlockStyle}" Foreground="{StaticResource AccentBrush}"/>
                 </InlineUIContainer>
                 <InlineUIContainer>
-                    <TextBlock Text=" to start developing" Style="{StaticResource TitleTextBlockStyle}"/>
+                    <TextBlock x:Uid="StartDeveloping" Text=" to start developing" Style="{StaticResource TitleTextBlockStyle}"/>
                 </InlineUIContainer>
             </Paragraph>
         </RichTextBlock>
@@ -119,8 +119,8 @@
                 <Glyphs x:Name="SettingsGlyph" Fill="White" UnicodeString="{StaticResource ResourceKey=IconSettings}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Button>
             <TextBlock x:Uid="LegalText1" Style="{StaticResource CaptionTextBlockStyle}" Text="By using this software you agree to Microsoft license terms." HorizontalAlignment="Left"/>
-            <TextBlock x:Uid="LegalText2" Text="This limited-feature version of Windows IoT Athens is designed exclusively for driver development only." Style="{StaticResource CaptionTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-            <TextBlock x:Uid="LegalText3" Text="The privacy statement for this prerelease version of the Windows operating system can be viewed here: http://go.microsoft.com/fwlink/?LinkId=506737." Style="{StaticResource CaptionTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom" TextWrapping="WrapWholeWords"/>
+            <TextBlock x:Uid="LegalText3" Text="The privacy statement for this prerelease version of the Windows operating system can be viewed at http://go.microsoft.com/fwlink/?LinkId=506737." Style="{StaticResource CaptionTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom" TextWrapping="WrapWholeWords"/>
+            <TextBlock x:Uid="LegalText2" Text="You can review linked terms by pasting the forward link into your browser window once the software is running" Style="{StaticResource CaptionTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
         </StackPanel>
     </Grid>
 </Page>
