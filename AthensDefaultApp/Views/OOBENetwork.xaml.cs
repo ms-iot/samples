@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Windows.Devices.WiFi;
+using Windows.Security.Credentials;
+using Windows.System.Threading;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -22,6 +16,9 @@ namespace AthensDefaultApp
     /// </summary>
     public sealed partial class OOBENetwork : Page
     {
+        private NetworkPresenter networkPresenter;
+        private bool Automatic = true;
+
         public OOBENetwork()
         {
             this.InitializeComponent();
@@ -47,10 +44,9 @@ namespace AthensDefaultApp
 
         private void SetupWifi()
         {
-            var network = new WifiNetwork();
-            network.NetworkName = "Test Network Name";
+            networkPresenter = new NetworkPresenter();
 
-            WifiListView.ItemsSource = new List<WifiNetwork>() { network };
+            WifiListView.ItemsSource = networkPresenter.GetAvailableNetworks();
         }
 
         private void WifiListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -65,21 +61,69 @@ namespace AthensDefaultApp
 
             foreach(var item in e.AddedItems)
             {
+                Automatic = true;
                 var listViewItem = listView.ContainerFromItem(item) as ListViewItem;
                 listViewItem.ContentTemplate = WifiConnectState;
             }
         }
 
-        private void ConnectButton_Tapped(object sender, TappedRoutedEventArgs e)
+        private async void ConnectButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            SwitchToItemState(sender as Button, WifiPasswordState);
+            var button = sender as Button;
+            var network = button.DataContext as WiFiAvailableNetwork;
+
+            if (NetworkPresenter.IsNetworkOpen(network))
+            {
+               await ThreadPool.RunAsync((item) =>
+                {
+                    ConnectToWifi(button, network, null, Window.Current.Dispatcher);
+                });
+            }
+            else
+            {
+                await Window.Current.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    SwitchToItemState(button, WifiPasswordState);
+                });
+            }
         }
 
-        private void NextButton_Tapped(object sender, TappedRoutedEventArgs e)
+        private async void ConnectToWifi(Button button, WiFiAvailableNetwork network, PasswordCredential credential, CoreDispatcher dispatcher)
         {
-            SwitchToItemState(sender as Button, WifiConnectingState);
+            var didConnect = credential == null ?
+                networkPresenter.ConnectToNetwork(network, Automatic) :
+                networkPresenter.ConnectToNetworkWithPassword(network, Automatic, credential);
 
-            //NavigationUtils.NavigateToScreen(typeof(MainPage));
+            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                SwitchToItemState(button, WifiConnectingState);
+            });
+
+            if (await didConnect)
+            {
+                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    NavigationUtils.NavigateToScreen(typeof(MainPage));
+                });
+            }
+            else
+            {
+                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    var item = SwitchToItemState(button, WifiInitialState);
+                    item.IsSelected = false;
+                });
+            }
+        }
+
+        private async void NextButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var network = button.DataContext as WiFiAvailableNetwork;
+            await ThreadPool.RunAsync((item) =>
+            {
+                ConnectToWifi(button, network, null, Window.Current.Dispatcher);
+            });                
         }
 
         private void CancelButton_Tapped(object sender, TappedRoutedEventArgs e)
@@ -104,6 +148,13 @@ namespace AthensDefaultApp
         private void SkipButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
             NavigationUtils.NavigateToScreen(typeof(MainPage));
+        }
+
+        private void ConnectAutomaticallyCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            var checkbox = sender as CheckBox;
+
+            Automatic = checkbox.IsChecked ?? false;
         }
     }
 }

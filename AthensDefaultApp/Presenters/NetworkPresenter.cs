@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using Windows.Devices.WiFi;
 using Windows.Networking;
 using Windows.Networking.Connectivity;
+using Windows.Security.Credentials;
 
 namespace AthensDefaultApp
 {
-    internal static class NetworkPresenter
+    internal class NetworkPresenter
     {
         private static int EthernetIanaType = 6;
 
@@ -47,6 +48,94 @@ namespace AthensDefaultApp
             }
 
             return "<no Internet connection>";
+        }
+
+        private Dictionary<WiFiAvailableNetwork, WiFiAdapter> networkNameToInfo;
+
+        private WiFiAccessStatus? accessStatus;
+
+        internal NetworkPresenter()
+        {
+            UpdateInfo();
+        }
+
+        private async void UpdateInfo()
+        {
+            if ((await TestAccess()) == false)
+            {
+                return;
+            }
+
+            networkNameToInfo = new Dictionary<WiFiAvailableNetwork, WiFiAdapter>();
+
+            var adapters = WiFiAdapter.FindAllAdaptersAsync();
+
+            foreach (var adapter in await adapters)
+            {
+                await adapter.ScanAsync();
+
+                foreach(var network in adapter.NetworkReport.AvailableNetworks)
+                {
+                    if (!string.IsNullOrEmpty(network.Ssid))
+                    {
+                        networkNameToInfo[network] = adapter;
+                    }
+                }
+            }
+        }
+
+        internal async Task<IList<WiFiAvailableNetwork>> GetAvailableNetworks()
+        {
+            await Task.Run(() => UpdateInfo());
+
+            return networkNameToInfo.Keys.ToList();
+        }
+
+        internal async Task<bool> ConnectToNetwork(WiFiAvailableNetwork network, bool autoConnect)
+        {
+            if (network == null)
+            {
+                return false;
+            }
+
+            var result = await networkNameToInfo[network].ConnectAsync(network, autoConnect ? WiFiReconnectionKind.Automatic : WiFiReconnectionKind.Manual);
+
+            return (result.ConnectionStatus == WiFiConnectionStatus.Success);
+        }
+
+        internal void DisconnectNetwork(WiFiAvailableNetwork network)
+        {
+            networkNameToInfo[network].Disconnect();
+        }
+
+        internal static bool IsNetworkOpen(WiFiAvailableNetwork network)
+        {
+            return network.SecuritySettings.NetworkEncryptionType == NetworkEncryptionType.None;
+        }
+
+        internal async Task<bool> ConnectToNetworkWithPassword(WiFiAvailableNetwork network, bool autoConnect, PasswordCredential password)
+        {
+            if (network == null)
+            {
+                return false;
+            }
+
+            var result = await networkNameToInfo[network].ConnectAsync(
+                network,
+                autoConnect ? WiFiReconnectionKind.Automatic : WiFiReconnectionKind.Manual,
+                password);
+
+            return (result.ConnectionStatus == WiFiConnectionStatus.Success);
+        }
+
+        private async Task<bool> TestAccess()
+        {
+            if (!accessStatus.HasValue)
+            {
+                accessStatus = await WiFiAdapter.RequestAccessAsync(WiFiAccessKind.ScanAndConnect);
+            }
+
+            return (accessStatus == WiFiAccessStatus.Allowed);
         }
     }
 }
