@@ -15,7 +15,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Glyphs Grid.Column="0" UnicodeString="{StaticResource ResourceKey=IconLaptop}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="White" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <TextBlock Grid.Column="1" Text="{Binding Ssid}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
+                <TextBlock Grid.Column="1" Text="ConnectionName" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Name="WifiConnectState">
@@ -29,7 +29,7 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="26"/>
                     <RowDefinition Height="auto"/>
-                    <RowDefinition Height="8"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" Orientation="Horizontal">
                     <Border Width="44" Height="44">

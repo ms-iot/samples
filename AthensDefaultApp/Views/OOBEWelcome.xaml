@@ -30,6 +30,6 @@
             </ScrollViewer>
         </StackPanel>
 
-        <Button x:Uid="NextButton" Grid.Column="1" Grid.Row="1" x:Name="NextButton" Tapped="NextButton_Tapped" Content="Next" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="120" Height="32"/>
+        <Button Grid.Column="1" Grid.Row="1" x:Name="NextButton" Tapped="NextButton_Tapped" Content="Next" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="120" Height="32"/>
     </Grid>
 </Page>

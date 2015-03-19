@@ -70,13 +70,13 @@ namespace AthensDefaultApp
                 // configuring the new page by passing required information as a navigation
                 // parameter
 
-                if (ApplicationData.Current.LocalSettings.Values.ContainsKey(Constants.HasDoneOOBEKey))
+                if (!ApplicationData.Current.LocalSettings.Values.ContainsKey(Constants.HasDoneOOBEKey))
                 {
                     rootFrame.Navigate(typeof(MainPage), e.Arguments);
                 }
                 else
                 {
-                    rootFrame.Navigate(typeof(OOBEWelcome), e.Arguments);
+                    rootFrame.Navigate(typeof(OOBENetwork), e.Arguments);
                 }
                 
             }

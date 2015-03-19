@@ -12,7 +12,7 @@
     <x:String x:Key="IconLaptop">&#xE770;</x:String>
 
     <!--Colours-->
-    <Color x:Key="AccentColor">#0078d6</Color>
+    <Color x:Key="AccentColor">#005a98</Color>
     <Color x:Key="DarkAccentColor">#0e548d</Color>
     <Color x:Key="AccentBorderColor">#6eb5ec</Color>
     <SolidColorBrush x:Key="DarkAccentBrush" Color="{StaticResource DarkAccentColor}"/>
@@ -22,12 +22,13 @@
     <!--<SolidColorBrush x:Key="ListViewItemSelectedPointerOverBorderThemeBrush" Color="Transparent" />
     <SolidColorBrush x:Key="ListViewItemFocusBorderThemeBrush" Color="Transparent" />-->
 
-    <SolidColorBrush x:Key="SystemControlHighlightAltListAccentLowBrush" Color="{StaticResource AccentBorderColor}" Opacity="0.6"/>
-    <SolidColorBrush x:Key="SystemControlHighlightAltListAccentMediumBrush" Color="{StaticResource AccentBorderColor}" Opacity="0.8"/>
-    <SolidColorBrush x:Key="SystemControlHighlightAltListAccentHighBrush" Color="{StaticResource AccentBorderColor}" Opacity="0.9"/>
-    <SolidColorBrush x:Key="SystemControlHighlightAccentBrush" Color="{StaticResource AccentBorderColor}"/>
+    <SolidColorBrush x:Key="SystemControlHighlightAltListAccentLowBrush" Color="White" Opacity="0.2"/>
+    <SolidColorBrush x:Key="SystemControlHighlightAltListAccentMediumBrush" Color="White" Opacity="0.4"/>
+    <SolidColorBrush x:Key="SystemControlHighlightAltListAccentHighBrush" Color="White" Opacity="0.4"/>
+    <SolidColorBrush x:Key="SystemControlHighlightAccentBrush" Color="White"/>
     <SolidColorBrush x:Key="SystemControlHyperlinkTextBrush" Color="{StaticResource AccentBorderColor}"/>
-    <SolidColorBrush x:Key="SystemControlForegroundListLowBrush" Color="{StaticResource DarkAccentColor}" Opacity="0.2"/>
+    <SolidColorBrush x:Key="SystemControlForegroundListLowBrush" Color="White" Opacity="0.1"/>
+    <SolidColorBrush x:Key="SystemControlForegroundListMediumBrush" Color="White" Opacity="0.2"/>
 
     <!--<Color x:Key="BackgroundColor">#000000</Color>
     <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="{StaticResource BackgroundColor}"/>-->
