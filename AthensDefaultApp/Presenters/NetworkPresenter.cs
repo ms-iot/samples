@@ -11,12 +11,13 @@ namespace AthensDefaultApp
 {
     internal class NetworkPresenter
     {
-        private static int EthernetIanaType = 6;
+        private static uint EthernetIanaType = 6;
 
         internal static string GetDirectConnectionName()
         {
             var icp = NetworkInformation.GetInternetConnectionProfile();
-            var interfaceType = icp.NetworkAdapter.IanaInterfaceType;
+
+            var interfaceType = icp == null ? 0 : icp.NetworkAdapter.IanaInterfaceType;
 
             return (interfaceType == EthernetIanaType ? icp.ProfileName : "None found");
         }
@@ -24,15 +25,16 @@ namespace AthensDefaultApp
         internal static string GetCurrentNetworkName()
         {
             var icp = NetworkInformation.GetInternetConnectionProfile();
-            return icp.ProfileName;
+            return icp != null ? icp.ProfileName : null;
         }
 
         internal static string GetCurrentIpv4Address()
         {
             var icp = NetworkInformation.GetInternetConnectionProfile();
-            var name = icp.ProfileName;
             if (icp != null && icp.NetworkAdapter != null)
             {
+                var name = icp.ProfileName;
+
                 var hostnames = NetworkInformation.GetHostNames();
 
                 foreach (var hn in hostnames)
