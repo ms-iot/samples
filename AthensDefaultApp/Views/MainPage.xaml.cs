@@ -87,12 +87,12 @@ namespace AthensDefaultApp
 
         private void ShutdownOption_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            ShutdownManager.BeginShutdown(TimeSpan.FromSeconds(0.5), ShutdownKind.Shutdown);
+            ShutdownManager.BeginShutdown(ShutdownKind.Shutdown, TimeSpan.FromSeconds(0.5));
         }
 
         private void RestartOption_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            ShutdownManager.BeginShutdown(TimeSpan.FromSeconds(0.5), ShutdownKind.Restart);
+            ShutdownManager.BeginShutdown(ShutdownKind.Restart, TimeSpan.FromSeconds(0.5));
         }
 
         private void SettingsButton_Tapped(object sender, TappedRoutedEventArgs e)
