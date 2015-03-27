@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Windows.Globalization;
+using Windows.System;
 using Windows.System.UserProfile;
 
 namespace AthensDefaultApp
@@ -33,7 +34,11 @@ namespace AthensDefaultApp
         public void UpdateKeyboardLanguage(string displayName)
         {
             var tag = GetLanguageTagFromDisplayName(displayName);
-            //Language.SetCurrentInputMethodLanguageTag(tag);
+
+            if(!Language.TrySetInputMethodLanguageTag(tag))
+            {
+                throw new ArgumentException("displayName");
+            }
         }
 
         private string GetLanguageTagFromDisplayName(string displayName)
@@ -63,9 +68,29 @@ namespace AthensDefaultApp
             return keyboardLang.DisplayName;
         }
 
-        public static string GetCurrentRegion()
+        public static IReadOnlyList<string> GetSupportedTimeZones()
         {
-            return GlobalizationPreferences.HomeGeographicRegion;
+            return TimeZoneSettings.SupportedTimeZoneDisplayNames;
+        }
+
+        public static string GetCurrentTimeZone()
+        {
+            return TimeZoneSettings.CurrentTimeZoneDisplayName;
+        }
+
+        public static void ChangeTimeZone(string timeZone)
+        {
+            if (!TimeZoneSettings.CanChangeTimeZone)
+            {
+                return;
+            }
+
+            if (!TimeZoneSettings.SupportedTimeZoneDisplayNames.Contains(timeZone))
+            {
+                throw new ArgumentException("timeZone");
+            }
+
+            TimeZoneSettings.ChangeTimeZoneByDisplayName(timeZone);
         }
     }
 }

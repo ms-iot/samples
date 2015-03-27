@@ -36,6 +36,12 @@ namespace AthensDefaultApp
 
             LanguageComboBox.ItemsSource = languageManager.LanguageDisplayNames;
             LanguageComboBox.SelectedItem = LanguageManager.GetCurrentLanguageDisplayName();
+
+            KeyboardComboBox.ItemsSource = languageManager.LanguageDisplayNames;
+            KeyboardComboBox.SelectedItem = LanguageManager.GetCurrentKeyboardLanguage();
+
+            TimeZoneComboBox.ItemsSource = LanguageManager.GetSupportedTimeZones();
+            TimeZoneComboBox.SelectedItem = LanguageManager.GetCurrentTimeZone();
         }
 
         private void SetupNetwork()
@@ -79,12 +85,14 @@ namespace AthensDefaultApp
 
         private void KeyboardComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            var comboBox = sender as ComboBox;
+            languageManager.UpdateKeyboardLanguage(comboBox.SelectedItem as string);
         }
 
         private void TimeZoneComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            var comboBox = sender as ComboBox;
+            LanguageManager.ChangeTimeZone(comboBox.SelectedItem as string);
         }
 
         private void SetupEthernet()
