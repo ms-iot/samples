@@ -110,7 +110,7 @@ namespace AthensDefaultApp
             }
         }
 
-        private  void NextButton_Tapped(object sender, TappedRoutedEventArgs e)
+        private void NextButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
             var button = sender as Button;
 

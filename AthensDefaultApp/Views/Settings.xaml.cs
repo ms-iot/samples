@@ -20,6 +20,7 @@ namespace AthensDefaultApp
         private UIElement visibleContent;
         private NetworkPresenter networkPresenter;
         private bool Automatic = true;
+        private string CurrentPassword = string.Empty;
 
         public Settings()
         {
@@ -111,11 +112,11 @@ namespace AthensDefaultApp
             }
         }
 
-        private void SetupWifi()
+        private async void SetupWifi()
         {
             networkPresenter = new NetworkPresenter();
 
-            WifiListView.ItemsSource = networkPresenter.GetAvailableNetworks();
+            WifiListView.ItemsSource = await networkPresenter.GetAvailableNetworks();
         }
 
         private void WifiListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -136,24 +137,17 @@ namespace AthensDefaultApp
             }
         }
 
-        private async void ConnectButton_Tapped(object sender, TappedRoutedEventArgs e)
+        private void ConnectButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
             var button = sender as Button;
             var network = button.DataContext as WiFiAvailableNetwork;
-
             if (NetworkPresenter.IsNetworkOpen(network))
             {
-                await ThreadPool.RunAsync((item) =>
-                {
-                    ConnectToWifi(button, network, null, Window.Current.Dispatcher);
-                });
+                ConnectToWifi(button, network, null, Window.Current.Dispatcher);
             }
             else
             {
-                await Window.Current.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    SwitchToItemState(button, WifiPasswordState);
-                });
+                SwitchToItemState(button, WifiPasswordState);
             }
         }
 
@@ -185,14 +179,26 @@ namespace AthensDefaultApp
             }
         }
 
-        private async void NextButton_Tapped(object sender, TappedRoutedEventArgs e)
+        private void NextButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
             var button = sender as Button;
-            var network = button.DataContext as WiFiAvailableNetwork;
-            await ThreadPool.RunAsync((item) =>
+
+            PasswordCredential credential;
+
+            if (string.IsNullOrEmpty(CurrentPassword))
             {
-                ConnectToWifi(button, network, null, Window.Current.Dispatcher);
-            });
+                credential = null;
+            }
+            else
+            {
+                credential = new PasswordCredential()
+                {
+                    Password = CurrentPassword
+                };
+            }
+
+            var network = button.DataContext as WiFiAvailableNetwork;
+            ConnectToWifi(button, network, credential, Window.Current.Dispatcher);
         }
 
         private void CancelButton_Tapped(object sender, TappedRoutedEventArgs e)
@@ -214,6 +220,12 @@ namespace AthensDefaultApp
             var checkbox = sender as CheckBox;
 
             Automatic = checkbox.IsChecked ?? false;
+        }
+
+        private void WifiPasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            var passwordBox = sender as PasswordBox;
+            CurrentPassword = passwordBox.Password;
         }
     }
 }
