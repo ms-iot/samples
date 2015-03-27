@@ -7,7 +7,7 @@ using Windows.System.UserProfile;
 
 namespace AthensDefaultApp
 {
-    internal class LanguageManager
+    public class LanguageManager
     {
         private Dictionary<string, string> displayNameToLanguageMap;
         public IReadOnlyList<string> LanguageDisplayNames

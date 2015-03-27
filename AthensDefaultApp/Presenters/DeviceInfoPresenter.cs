@@ -7,16 +7,16 @@ using Windows.Networking.Connectivity;
 
 namespace AthensDefaultApp
 {
-    internal class DeviceInfoPresenter
+    public class DeviceInfoPresenter
     {
         private SYSTEM_INFO systemInfo;
 
-        internal DeviceInfoPresenter()
+        public DeviceInfoPresenter()
         {
             systemInfo = SystemInfoFactory.GetNativeSystemInfo();
         }
 
-        internal static string GetDeviceName()
+        public static string GetDeviceName()
         {
             var hostname = NetworkInformation.GetHostNames()
                 .FirstOrDefault(x => x.Type == HostNameType.DomainName);
@@ -27,7 +27,7 @@ namespace AthensDefaultApp
             return "<no device name>";
         }
 
-        internal string GetBoardName()
+        public string GetBoardName()
         {
             var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
             // Hacky for now
@@ -42,7 +42,7 @@ namespace AthensDefaultApp
             }
         }
 
-        internal Uri GetBoardImageUri()
+        public Uri GetBoardImageUri()
         {
             // Hacky for now
             switch (systemInfo.wProcessorArchitecture)

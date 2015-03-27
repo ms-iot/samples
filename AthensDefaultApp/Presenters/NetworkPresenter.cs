@@ -9,11 +9,11 @@ using Windows.Security.Credentials;
 
 namespace AthensDefaultApp
 {
-    internal class NetworkPresenter
+    public class NetworkPresenter
     {
         private static uint EthernetIanaType = 6;
 
-        internal static string GetDirectConnectionName()
+        public static string GetDirectConnectionName()
         {
             var icp = NetworkInformation.GetInternetConnectionProfile();
 
@@ -22,13 +22,13 @@ namespace AthensDefaultApp
             return (interfaceType == EthernetIanaType ? icp.ProfileName : "None found");
         }
 
-        internal static string GetCurrentNetworkName()
+        public static string GetCurrentNetworkName()
         {
             var icp = NetworkInformation.GetInternetConnectionProfile();
             return icp != null ? icp.ProfileName : null;
         }
 
-        internal static string GetCurrentIpv4Address()
+        public static string GetCurrentIpv4Address()
         {
             var icp = NetworkInformation.GetInternetConnectionProfile();
             if (icp != null && icp.NetworkAdapter != null && icp.NetworkAdapter.NetworkAdapterId != null)
@@ -57,7 +57,7 @@ namespace AthensDefaultApp
 
         private WiFiAccessStatus? accessStatus;
 
-        internal static async Task<bool> WifiIsAvailable()
+        public static async Task<bool> WifiIsAvailable()
         {
             return ((await WiFiAdapter.FindAllAdaptersAsync()).Count > 0);
         }
@@ -94,14 +94,14 @@ namespace AthensDefaultApp
             return true;
         }
 
-        internal async Task<IList<WiFiAvailableNetwork>> GetAvailableNetworks()
+        public async Task<IList<WiFiAvailableNetwork>> GetAvailableNetworks()
         {
             await UpdateInfo();
 
             return networkNameToInfo.Keys.ToList();
         }
 
-        internal async Task<bool> ConnectToNetwork(WiFiAvailableNetwork network, bool autoConnect)
+        public async Task<bool> ConnectToNetwork(WiFiAvailableNetwork network, bool autoConnect)
         {
             if (network == null)
             {
@@ -113,17 +113,17 @@ namespace AthensDefaultApp
             return (result.ConnectionStatus == WiFiConnectionStatus.Success);
         }
 
-        internal void DisconnectNetwork(WiFiAvailableNetwork network)
+        public void DisconnectNetwork(WiFiAvailableNetwork network)
         {
             networkNameToInfo[network].Disconnect();
         }
 
-        internal static bool IsNetworkOpen(WiFiAvailableNetwork network)
+        public static bool IsNetworkOpen(WiFiAvailableNetwork network)
         {
             return network.SecuritySettings.NetworkEncryptionType == NetworkEncryptionType.None;
         }
 
-        internal async Task<bool> ConnectToNetworkWithPassword(WiFiAvailableNetwork network, bool autoConnect, PasswordCredential password)
+        public async Task<bool> ConnectToNetworkWithPassword(WiFiAvailableNetwork network, bool autoConnect, PasswordCredential password)
         {
             if (network == null)
             {

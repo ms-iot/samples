@@ -1,8 +1,8 @@
 ﻿namespace AthensDefaultApp
 {
-    internal static class Constants
+    public static class Constants
     {
-        internal static string HasDoneOOBEKey = "DefaultAppHasDoneOOBE";
-        internal static string HasDoneOOBEValue = "YES";
+        public static string HasDoneOOBEKey = "DefaultAppHasDoneOOBE";
+        public static string HasDoneOOBEValue = "YES";
     }
 }
