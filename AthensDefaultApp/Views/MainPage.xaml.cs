@@ -60,9 +60,8 @@ namespace AthensDefaultApp
 
         private void UpdateBoardInfo()
         {
-            DeviceInfoPresenter presenter = new DeviceInfoPresenter();
-            BoardName.Text = presenter.GetBoardName();
-            BoardImage.Source = new BitmapImage(presenter.GetBoardImageUri());
+            BoardName.Text = DeviceInfoPresenter.GetBoardName();
+            BoardImage.Source = new BitmapImage(DeviceInfoPresenter.GetBoardImageUri());
         }
 
         private void UpdateDateTime()

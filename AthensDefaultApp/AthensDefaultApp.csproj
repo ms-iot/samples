@@ -32,7 +32,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NETFX_CORE;WINDOWS_UAP;BOARD_RPI2</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NETFX_CORE;WINDOWS_UAP;RPI</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -123,7 +123,6 @@
     <Compile Include="Presenters\NetworkPresenter.cs" />
     <Compile Include="Utils\Constants.cs" />
     <Compile Include="Utils\NavigationUtils.cs" />
-    <Compile Include="Utils\SystemInfoFactory.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

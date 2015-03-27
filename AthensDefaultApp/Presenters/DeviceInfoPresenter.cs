@@ -7,15 +7,8 @@ using Windows.Networking.Connectivity;
 
 namespace AthensDefaultApp
 {
-    public class DeviceInfoPresenter
+    public static class DeviceInfoPresenter
     {
-        private SYSTEM_INFO systemInfo;
-
-        public DeviceInfoPresenter()
-        {
-            systemInfo = SystemInfoFactory.GetNativeSystemInfo();
-        }
-
         public static string GetDeviceName()
         {
             var hostname = NetworkInformation.GetHostNames()
@@ -27,33 +20,27 @@ namespace AthensDefaultApp
             return "<no device name>";
         }
 
-        public string GetBoardName()
+        public static string GetBoardName()
         {
             var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
-            // Hacky for now
-            switch (systemInfo.wProcessorArchitecture)
-            {
-                case SystemInfoFactory.PROCESSOR_ARCHITECTURE_INTEL:
-                    return loader.GetString("MBMName");
-                case SystemInfoFactory.PROCESSOR_ARCHITECTURE_ARM:
-                    return loader.GetString("Rpi2Name");
-                default:
-                    return loader.GetString("GenericBoardName");
-            }
+#if MBM
+            return loader.GetString("MBMName");
+#elif RPI
+            return loader.GetString("Rpi2Name");
+#else
+            return loader.GetString("GenericBoardName");
+#endif
         }
 
-        public Uri GetBoardImageUri()
+        public static Uri GetBoardImageUri()
         {
-            // Hacky for now
-            switch (systemInfo.wProcessorArchitecture)
-            {
-                case SystemInfoFactory.PROCESSOR_ARCHITECTURE_INTEL:
-                    return new Uri("ms-appx:///Assets/MBMBoard.png");
-                case SystemInfoFactory.PROCESSOR_ARCHITECTURE_ARM:
-                    return new Uri("ms-appx:///Assets/RaspberryPiBoard.png");
-                default:
-                    return new Uri("ms-appx:///Assets/GenericBoard.png");
-            }
+#if MBM
+            return new Uri("ms-appx:///Assets/MBMBoard.png");
+#elif RPI
+            return new Uri("ms-appx:///Assets/RaspberryPiBoard.png");
+#else
+            return new Uri("ms-appx:///Assets/GenericBoard.png");
+#endif
         }
     }
 }
