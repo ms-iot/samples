@@ -39,10 +39,17 @@ namespace AthensDefaultApp
         private async void NextButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
             var wifiAvailable = NetworkPresenter.WifiIsAvailable();
-
             SetPreferences();
+            Type nextScreen;
 
-            var nextScreen = (await wifiAvailable) ? typeof(OOBENetwork) : typeof(MainPage);
+            try
+            {
+                nextScreen = (await wifiAvailable) ? typeof(OOBENetwork) : typeof(MainPage);
+            }
+            catch (Exception)
+            {
+                nextScreen = typeof(MainPage);
+            }
 
             await Window.Current.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
