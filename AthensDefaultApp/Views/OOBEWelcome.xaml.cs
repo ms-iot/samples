@@ -1,4 +1,7 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using System;
+using Windows.UI.Core;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
@@ -33,10 +36,18 @@ namespace AthensDefaultApp
             languageManager.UpdateLanguage(selectedLanguage);
         }
 
-        private void NextButton_Tapped(object sender, TappedRoutedEventArgs e)
+        private async void NextButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            var wifiAvailable = NetworkPresenter.WifiIsAvailable();
+
             SetPreferences();
-            NavigationUtils.NavigateToScreen(typeof(OOBENetwork));
+
+            var nextScreen = (await wifiAvailable) ? typeof(OOBENetwork) : typeof(MainPage);
+
+            await Window.Current.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                NavigationUtils.NavigateToScreen(nextScreen);
+            });
         }
     }
 }

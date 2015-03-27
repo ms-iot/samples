@@ -57,6 +57,11 @@ namespace AthensDefaultApp
 
         private WiFiAccessStatus? accessStatus;
 
+        internal static async Task<bool> WifiIsAvailable()
+        {
+            return ((await WiFiAdapter.FindAllAdaptersAsync()).Count > 0);
+        }
+
         private async Task<bool> UpdateInfo()
         {
             if ((await TestAccess()) == false)
