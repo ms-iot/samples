@@ -76,7 +76,7 @@ namespace AthensDefaultApp
                 }
                 else
                 {
-                    rootFrame.Navigate(typeof(OOBENetwork), e.Arguments);
+                    rootFrame.Navigate(typeof(OOBEWelcome), e.Arguments);
                 }
                 
             }

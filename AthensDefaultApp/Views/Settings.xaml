@@ -149,7 +149,7 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" VerticalAlignment="Stretch" Background="#2a2a2a">
-            <Button x:Name="BackButton" Style="{ThemeResource NavigationBackButtonSmallStyle}" Tapped="BackButton_Tapped" Margin="10,5,20,0" VerticalAlignment="Center"/>
+            <Button x:Name="BackButton" Content="{StaticResource IconBack}" Background="Transparent" BorderThickness="0" BorderBrush="Transparent"  FontFamily="Segoe MDL2 Assets" FontSize="24" Tapped="BackButton_Tapped" Margin="10,5,20,0" Height="48" Width="48" VerticalAlignment="Center"/>
             <TextBlock x:Uid="SettingsTitle" Text="Device Settings" Style="{ThemeResource TitleTextBlockStyle}" VerticalAlignment="Center"/>
         </StackPanel>
 

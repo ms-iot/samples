@@ -14,12 +14,12 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Glyphs Grid.Column="0" UnicodeString="{StaticResource ResourceKey=IconLaptop}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="White" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <TextBlock Grid.Column="1" Text="ConnectionName" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
+                <TextBlock Grid.Column="0" Text="{StaticResource ResourceKey=IconWifiFull}" FontSize="24" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Column="1" Text="{Binding Ssid}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Name="WifiConnectState">
-            <Grid Height="138">
+            <Grid Height="144">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
@@ -33,11 +33,11 @@
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" Orientation="Horizontal">
                     <Border Width="44" Height="44">
-                        <Glyphs UnicodeString="{StaticResource ResourceKey=IconLaptop}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="0" Text="{StaticResource ResourceKey=IconWifiFull}" FontSize="24" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     </Border>
-                    <TextBlock Text="TestNetworkName" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
+                    <TextBlock Text="{Binding Ssid}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
                 </StackPanel>
-                <CheckBox Grid.Row="1" x:Name="ConnectAutomaticallyCheckBox" IsChecked="True" HorizontalAlignment="Left" Margin="45,0,0,0" Height="32" Checked="ConnectAutomaticallyCheckBox_Checked">
+                <CheckBox Grid.Row="1" x:Name="ConnectAutomaticallyCheckBox" IsChecked="True" HorizontalAlignment="Left" Margin="45,0,0,0" Height="32" Checked="ConnectAutomaticallyCheckBox_Checked" Style="{StaticResource AthensDefaultAppCheckBoxStyle}">
                     <TextBlock x:Uid="ConnectAutomatically" Text="Connect automatically" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}"/>
                 </CheckBox>
                 <Button Grid.Row="3" x:Uid="ConnectButton" x:Name="ConnectButton" Content="Connect" Width="120" Height="32" HorizontalAlignment="Left" VerticalAlignment="Bottom" Tapped="ConnectButton_Tapped" Margin="102,0,0,0"/>
@@ -58,11 +58,11 @@
                     <RowDefinition Height="8"/>
                 </Grid.RowDefinitions>
 
-                <Glyphs Grid.Row="0" Grid.Column="0" UnicodeString="{StaticResource ResourceKey=IconLaptop}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="White" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="TestNetworkName" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="{StaticResource ResourceKey=IconWifiFull}" FontSize="24" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Ssid}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
                 <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch">
                     <TextBlock x:Uid="NetworkPasswordPrompt" Text="Enter the network security key" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}"/>
-                    <PasswordBox x:Name="WifiPasswordBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="334" Margin="0,8,0,0" BorderBrush="{StaticResource SystemControlBorderBrush}"/>
+                    <PasswordBox x:Name="WifiPasswordBox" PasswordChanged="WifiPasswordBox_PasswordChanged" HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="334" Margin="0,8,0,0" BorderBrush="{StaticResource SystemControlBorderBrush}"/>
                 </StackPanel>
                 <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="130,0,0,0">
                     <Button x:Uid="NextButton" x:Name="NextButton" Content="Next" Width="120" HorizontalAlignment="Right" VerticalAlignment="Bottom" Tapped="NextButton_Tapped" Height="32"/>
@@ -85,8 +85,8 @@
                     <RowDefinition Height="8"/>
                 </Grid.RowDefinitions>
 
-                <Glyphs Grid.Row="0" Grid.Column="0" UnicodeString="{StaticResource ResourceKey=IconLaptop}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="White" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="TestNetworkName" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
+                <TextBlock Grid.Column="0" Text="{StaticResource ResourceKey=IconWifiFull}" FontSize="24" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Ssid}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
                 <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
                     <ProgressRing x:Name="ConnectingProgressRing" IsActive="True" Foreground="White"/>
                     <TextBlock x:Uid="NetworkConnectingMessage" Text="Checking network requirements" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="12,0,0,0"/>
@@ -117,7 +117,7 @@
                     <TextBlock x:Uid="NoNetworks" x:Name="NoneFoundText" Text="None found" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed"/>
                     <StackPanel x:Name="DirectConnectionStackPanel" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <Border Width="44" Height="44">
-                            <Glyphs UnicodeString="{StaticResource ResourceKey=IconLaptop}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="25" Fill="White" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <TextBlock Text="{StaticResource ResourceKey=IconEthernet}" FontSize="24" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </Border>
                         <TextBlock x:Uid="Ethernet" Style="{StaticResource BodyTextBlockStyle}" Text="Ethernet" VerticalAlignment="Center"/>
                     </StackPanel>

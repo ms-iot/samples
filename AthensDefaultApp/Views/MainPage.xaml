@@ -13,15 +13,15 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="150"/>
             <RowDefinition Height="*"/>
-            <RowDefinition MinHeight="200" Height="*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="24"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="195"/>
+            <ColumnDefinition Width="*" MinWidth="44"/>
             <ColumnDefinition Width="336"/>
             <ColumnDefinition Width="164"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="64"/>
+            <ColumnDefinition Width="*" MinWidth="624"/>
+            <ColumnDefinition Width="*" MinWidth="44"/>
         </Grid.ColumnDefinitions>
 
         <!-- Header row -->
@@ -35,9 +35,7 @@
             <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Right">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                     <TextBlock x:Name="CurrentTime" HorizontalAlignment="Right" Style="{StaticResource AthensDefaultAppBodyTextBlockStyle}" VerticalAlignment="Center" Padding="0,0,14,0"/>
-                    <Button x:Name="ShutdownButton" Style="{StaticResource ShutdownButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Tapped="ShutdownButton_Tapped" Background="Transparent" BorderThickness="0" Height="48" Width="48">
-                        <Glyphs x:Name="ShutdownGlyph" Fill="White" UnicodeString="{StaticResource ResourceKey=IconShutdown}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Button>
+                    <Button x:Name="ShutdownButton" Style="{StaticResource ShutdownButtonStyle}" Content="{StaticResource IconShutdown}" FontFamily="Segoe MDL2 Assets" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Tapped="ShutdownButton_Tapped" Background="Transparent" BorderThickness="0" Height="48" Width="48"/>
                 </StackPanel>
                 <Popup Grid.ColumnSpan="2" Name="ShutdownDropdown" HorizontalAlignment="Left" IsLightDismissEnabled="True" Margin="28,0,0,0">
                     <ListView Background="White" ItemContainerStyle="{StaticResource AthensDefaultAppShutdownListViewItemStyle}" BorderThickness="2.0" BorderBrush="{StaticResource ShutdownBorderBrush}" Width="120">
@@ -81,19 +79,19 @@
                         <TextBlock x:Uid="MainPageDeviceName" Text="Device name" Style="{StaticResource BaseTextBlockStyle}" VerticalAlignment="Bottom"/>
                     </Border>
                     <Border Height="24">
-                        <TextBlock x:Name="DeviceName" Style="{StaticResource CaptionTextBlockStyle}" VerticalAlignment="Bottom"/>
+                        <TextBlock x:Name="DeviceName" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}" VerticalAlignment="Bottom"/>
                     </Border>
                     <Border Height="48">
                         <TextBlock x:Uid="MainPageNetwork" x:Name="NetworkNameCaption" Text="Network" Style="{StaticResource BaseTextBlockStyle}" VerticalAlignment="Bottom"/>
                     </Border>
                     <Border Height="24">
-                        <TextBlock x:Name="NetworkName1" Style="{StaticResource CaptionTextBlockStyle}" VerticalAlignment="Bottom"/>
+                        <TextBlock x:Name="NetworkName1" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}" VerticalAlignment="Bottom"/>
                     </Border>
                     <Border Height="48">
                         <TextBlock x:Uid="MainPageIPAddress" x:Name="IPAddressCaption" Text="IP address" Style="{StaticResource BaseTextBlockStyle}" VerticalAlignment="Bottom"/>
                     </Border>
                     <Border Height="24">
-                        <TextBlock x:Name="IPAddress1" Style="{StaticResource CaptionTextBlockStyle}" VerticalAlignment="Bottom"/>
+                        <TextBlock x:Name="IPAddress1" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}" VerticalAlignment="Bottom"/>
                     </Border>
                 </StackPanel>
             </ScrollViewer>
@@ -115,9 +113,7 @@
             </Paragraph>
         </RichTextBlock>
         <StackPanel Grid.Row="2" Grid.ColumnSpan="3" Grid.Column="1" Orientation="Vertical" VerticalAlignment="Bottom">
-            <Button x:Name="SettingsButton" Style="{StaticResource ShutdownButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Top" Tapped="SettingsButton_Tapped" Background="Transparent" BorderThickness="0" Height="48" Width="48">
-                <Glyphs x:Name="SettingsGlyph" Fill="White" UnicodeString="{StaticResource ResourceKey=IconSettings}" FontUri="ms-appx:///Assets/Fonts/SegMDL2.1.18.ttf" FontRenderingEmSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Button>
+            <Button x:Name="SettingsButton" Style="{StaticResource ShutdownButtonStyle}" Content="{StaticResource IconSettings}" FontFamily="Segoe MDL2 Assets" FontSize="24" HorizontalAlignment="Right" VerticalAlignment="Top" Tapped="SettingsButton_Tapped" Background="Transparent" BorderThickness="0" Height="48" Width="48"/>
             <TextBlock x:Uid="LegalText1" Style="{StaticResource CaptionTextBlockStyle}" Text="By using this software you agree to Microsoft license terms." HorizontalAlignment="Left"/>
             <TextBlock x:Uid="LegalText3" Text="The privacy statement for this prerelease version of the Windows operating system can be viewed at http://go.microsoft.com/fwlink/?LinkId=506737." Style="{StaticResource CaptionTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom" TextWrapping="WrapWholeWords"/>
             <TextBlock x:Uid="LegalText2" Text="You can review linked terms by pasting the forward link into your browser window once the software is running" Style="{StaticResource CaptionTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>

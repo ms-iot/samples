@@ -31,7 +31,7 @@ namespace AthensDefaultApp
         internal static string GetCurrentIpv4Address()
         {
             var icp = NetworkInformation.GetInternetConnectionProfile();
-            if (icp != null && icp.NetworkAdapter != null)
+            if (icp != null && icp.NetworkAdapter != null && icp.NetworkAdapter.NetworkAdapterId != null)
             {
                 var name = icp.ProfileName;
 
@@ -41,6 +41,7 @@ namespace AthensDefaultApp
                 {
                     if (hn.IPInformation != null &&
                         hn.IPInformation.NetworkAdapter != null &&
+                        hn.IPInformation.NetworkAdapter.NetworkAdapterId != null &&
                         hn.IPInformation.NetworkAdapter.NetworkAdapterId == icp.NetworkAdapter.NetworkAdapterId &&
                         hn.Type == HostNameType.Ipv4)
                     {
@@ -56,16 +57,11 @@ namespace AthensDefaultApp
 
         private WiFiAccessStatus? accessStatus;
 
-        internal NetworkPresenter()
-        {
-            UpdateInfo();
-        }
-
-        private async void UpdateInfo()
+        private async Task<bool> UpdateInfo()
         {
             if ((await TestAccess()) == false)
             {
-                return;
+                return false;
             }
 
             networkNameToInfo = new Dictionary<WiFiAvailableNetwork, WiFiAdapter>();
@@ -76,6 +72,11 @@ namespace AthensDefaultApp
             {
                 await adapter.ScanAsync();
 
+                if (adapter.NetworkReport == null)
+                {
+                    continue;
+                }
+
                 foreach(var network in adapter.NetworkReport.AvailableNetworks)
                 {
                     if (!string.IsNullOrEmpty(network.Ssid))
@@ -84,11 +85,13 @@ namespace AthensDefaultApp
                     }
                 }
             }
+
+            return true;
         }
 
         internal async Task<IList<WiFiAvailableNetwork>> GetAvailableNetworks()
         {
-            await Task.Run(() => UpdateInfo());
+            await UpdateInfo();
 
             return networkNameToInfo.Keys.ToList();
         }
@@ -134,7 +137,7 @@ namespace AthensDefaultApp
         {
             if (!accessStatus.HasValue)
             {
-                accessStatus = await WiFiAdapter.RequestAccessAsync(WiFiAccessKind.ScanAndConnect);
+                accessStatus = await WiFiAdapter.RequestAccessAsync();
             }
 
             return (accessStatus == WiFiAccessStatus.Allowed);

@@ -10,11 +10,19 @@
     <x:String x:Key="IconShutdown">&#xE7E8;</x:String>
     <x:String x:Key="IconSettings">&#xE713;</x:String>
     <x:String x:Key="IconLaptop">&#xE770;</x:String>
+    <x:String x:Key="IconEthernet">&#xE839;</x:String>
+    <x:String x:Key="IconWifiFull">&#xE908;</x:String>
+    <x:String x:Key="IconWifi34">&#xE907;</x:String>
+    <x:String x:Key="IconWifi12">&#xE906;</x:String>
+    <x:String x:Key="IconWifi14">&#xE905;</x:String>
+    <x:String x:Key="IconWifiNone">&#xE904;</x:String>
+    <x:String x:Key="IconBack">&#xE72B;</x:String>
 
     <!--Colours-->
     <Color x:Key="AccentColor">#005a98</Color>
     <Color x:Key="DarkAccentColor">#0e548d</Color>
     <Color x:Key="AccentBorderColor">#6eb5ec</Color>
+    <SolidColorBrush x:Key="PaleTextBrush" Color="White" Opacity="0.6"/>
     <SolidColorBrush x:Key="DarkAccentBrush" Color="{StaticResource DarkAccentColor}"/>
     <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}"/>
     <SolidColorBrush x:Key="HoverBrush" Color="{StaticResource AccentColor}" Opacity="0.2"/>

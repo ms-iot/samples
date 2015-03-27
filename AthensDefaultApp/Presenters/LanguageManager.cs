@@ -27,6 +27,17 @@ namespace AthensDefaultApp
 
         public void UpdateLanguage(string displayName)
         {
+            ApplicationLanguages.PrimaryLanguageOverride = GetLanguageTagFromDisplayName(displayName);
+        }
+
+        public void UpdateKeyboardLanguage(string displayName)
+        {
+            var tag = GetLanguageTagFromDisplayName(displayName);
+            //Language.SetCurrentInputMethodLanguageTag(tag);
+        }
+
+        private string GetLanguageTagFromDisplayName(string displayName)
+        {
             string newLang;
             displayNameToLanguageMap.TryGetValue(displayName, out newLang);
 
@@ -35,7 +46,7 @@ namespace AthensDefaultApp
                 throw new ArgumentException("displayName");
             }
 
-            ApplicationLanguages.PrimaryLanguageOverride = newLang;
+            return newLang;
         }
 
         public static string GetCurrentLanguageDisplayName()
