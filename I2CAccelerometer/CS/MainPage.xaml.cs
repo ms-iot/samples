@@ -13,7 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.Devices.Enumeration;
-using Windows.Devices.I2C;
+using Windows.Devices.I2c;
 
 namespace I2CAccelerometer
 {
@@ -22,6 +22,10 @@ namespace I2CAccelerometer
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        /* Important! Set the correct I2C controller name for your target device here */
+        private const string I2C_CONTROLLER_NAME = "I2C5";        /* For Minnowboard Max, use I2C5 */
+        //private const string I2C_CONTROLLER_NAME = "I2C1";        /* For Raspberry Pi 2, use I2C1 */
+
         private const byte ACCEL_I2C_ADDR = 0x53;           /* 7-bit I2C address of the ADXL345      */
         private const byte ACCEL_REG_POWER_CONTROL = 0x2D;  /* Address of the Power Control register */
         private const byte ACCEL_REG_DATA_FORMAT = 0x31;    /* Address of the Data Format register   */
@@ -29,7 +33,7 @@ namespace I2CAccelerometer
         private const byte ACCEL_REG_Y = 0x34;              /* Address of the Y Axis data register   */
         private const byte ACCEL_REG_Z = 0x36;              /* Address of the Z Axis data register   */
 
-        private I2CDevice I2CAccel;
+        private I2cDevice I2CAccel;
         private DispatcherTimer periodicTimer;
 
         public MainPage()
@@ -47,12 +51,12 @@ namespace I2CAccelerometer
         {
             /* Initialize the I2C bus */
             try {
-                var settings = new I2CConnectionSettings(ACCEL_I2C_ADDR); 
-                settings.BusSpeed = I2CBusSpeed.FastMode;
+                var settings = new I2cConnectionSettings(ACCEL_I2C_ADDR); 
+                settings.BusSpeed = I2cBusSpeed.FastMode;
 
-                string aqs = I2CBus.GetDeviceSelector("I2C5");  /* "I2C5" is the name of the I2C bus controller exposed on the MinnowBoard Max JP1 header */
-                var dis = await DeviceInformation.FindAllAsync(aqs);    /* Find the I2C bus controller device with our selector string                    */
-                I2CAccel = await I2CBus.CreateDeviceAsync(dis[0].Id, settings); /* Create an I2CDevice with our selected bus controller and I2C settings  */
+                string aqs = I2cDevice.GetDeviceSelector(I2C_CONTROLLER_NAME);  /* Find the selector string for the I2C bus controller                   */
+                var dis = await DeviceInformation.FindAllAsync(aqs);            /* Find the I2C bus controller device with our selector string           */
+                I2CAccel = await I2cDevice.FromIdAsync(dis[0].Id, settings);    /* Create an I2cDevice with our selected bus controller and I2C settings */
 
             }
             /* If initialization fails, display the exception and stop running */
