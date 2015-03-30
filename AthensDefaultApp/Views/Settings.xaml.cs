@@ -81,12 +81,6 @@ namespace AthensDefaultApp
             languageManager.UpdateLanguage(comboBox.SelectedItem as string);
         }
 
-        private void KeyboardComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var comboBox = sender as ComboBox;
-            languageManager.UpdateKeyboardLanguage(comboBox.SelectedItem as string);
-        }
-
         private void TimeZoneComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = sender as ComboBox;

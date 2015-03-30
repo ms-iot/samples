@@ -12,7 +12,7 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="150"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="0.5*" MinHeight="240"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="24"/>
         </Grid.RowDefinitions>
@@ -66,8 +66,8 @@
 
         <!-- Left panel -->
         <Grid Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center">
-            <Ellipse Margin="24,16,0,0" Width="240" Height="240" HorizontalAlignment="Left" VerticalAlignment="Bottom" Fill="{StaticResource AccentBrush}"/>
-            <Image x:Name="BoardImage" VerticalAlignment="Bottom" Source="Assets/GenericBoard.png" Stretch="None" HorizontalAlignment="Center"/>
+            <Ellipse Margin="24,16,0,0" Width="240" Height="240" HorizontalAlignment="Left" VerticalAlignment="Top" Fill="{StaticResource AccentBrush}"/>
+            <Image x:Name="BoardImage" VerticalAlignment="Center" Source="Assets/GenericBoard.png" Stretch="None" HorizontalAlignment="Left"/>
         </Grid>
         
         <!-- Right Panel -->
