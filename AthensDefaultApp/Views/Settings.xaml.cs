@@ -38,9 +38,6 @@ namespace AthensDefaultApp
             LanguageComboBox.ItemsSource = languageManager.LanguageDisplayNames;
             LanguageComboBox.SelectedItem = LanguageManager.GetCurrentLanguageDisplayName();
 
-            KeyboardComboBox.ItemsSource = languageManager.LanguageDisplayNames;
-            KeyboardComboBox.SelectedItem = LanguageManager.GetCurrentKeyboardLanguage();
-
             TimeZoneComboBox.ItemsSource = LanguageManager.GetSupportedTimeZones();
             TimeZoneComboBox.SelectedItem = LanguageManager.GetCurrentTimeZone();
         }

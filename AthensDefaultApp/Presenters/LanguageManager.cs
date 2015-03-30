@@ -31,16 +31,6 @@ namespace AthensDefaultApp
             ApplicationLanguages.PrimaryLanguageOverride = GetLanguageTagFromDisplayName(displayName);
         }
 
-        public void UpdateKeyboardLanguage(string displayName)
-        {
-            var tag = GetLanguageTagFromDisplayName(displayName);
-
-            if(!Language.TrySetInputMethodLanguageTag(tag))
-            {
-                throw new ArgumentException("displayName");
-            }
-        }
-
         private string GetLanguageTagFromDisplayName(string displayName)
         {
             string newLang;
@@ -59,13 +49,6 @@ namespace AthensDefaultApp
             var lang = new Language(GlobalizationPreferences.Languages[0]);
 
             return lang.DisplayName;
-        }
-
-        public static string GetCurrentKeyboardLanguage()
-        {
-            var keyboardLang = new Language(Language.CurrentInputMethodLanguageTag);
-
-            return keyboardLang.DisplayName;
         }
 
         public static IReadOnlyList<string> GetSupportedTimeZones()
