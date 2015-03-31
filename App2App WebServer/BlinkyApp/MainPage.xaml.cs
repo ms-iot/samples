@@ -1,4 +1,4 @@
-// © Copyright (C) Microsoft. All rights reserved.
+﻿// © Copyright (C) Microsoft. All rights reserved.
 
 
 using System;
@@ -22,9 +22,9 @@ namespace BlinkyWebService
             InitAppSvc();
         }
 
-        private async void InitGPIO()
+        private void InitGPIO()
         {
-            var gpio = await GpioController.GetDefaultAsync();
+            var gpio = GpioController.GetDefault();
 
             // Show an error if there is no GPIO controller
             if (gpio == null)
@@ -147,7 +147,7 @@ namespace BlinkyWebService
         }
 
         private int LEDStatus = 0;
-        private const int LED_PIN = 0;
+        private const int LED_PIN = 5;
         private GpioPin pin;
         private SolidColorBrush redBrush = new SolidColorBrush(Windows.UI.Colors.Red);
         private SolidColorBrush grayBrush = new SolidColorBrush(Windows.UI.Colors.LightGray);
