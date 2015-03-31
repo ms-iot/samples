@@ -101,27 +101,27 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>$(VCInstallDir)lib\onecore;$(WindowsSdkDir_UAP)lib\$(DefaultTargetPlatformVersion)\um\x86;$(WindowsSdkDir_UAP)Lib\winv10.0\ucrt\x86</LibraryPath>
+    <LibraryPath>$(VCInstallDir)lib\onecore;$(WindowsSDK_LibraryPath_x86);$(UniversalCRT_LibraryPath_x86)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>$(VCInstallDir)lib\onecore\arm;$(WindowsSdkDir_UAP)lib\$(DefaultTargetPlatformVersion)\um\arm;$(WindowsSdkDir_UAP)Lib\winv10.0\ucrt\arm</LibraryPath>
+    <LibraryPath>$(VCInstallDir)lib\onecore\arm;$(WindowsSDK_LibraryPath_arm);$(UniversalCRT_LibraryPath_arm)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>$(VCInstallDir)lib\onecore\amd64;$(WindowsSdkDir_UAP)lib\$(DefaultTargetPlatformVersion)\um\x64;$(WindowsSdkDir_UAP)Lib\winv10.0\ucrt\x64</LibraryPath>
+    <LibraryPath>$(VCInstallDir)lib\onecore\amd64;$(WindowsSDK_LibraryPath_x64);$(UniversalCRT_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <LibraryPath>$(VCInstallDir)lib\onecore;$(WindowsSdkDir_UAP)lib\$(DefaultTargetPlatformVersion)\um\x86;$(WindowsSdkDir_UAP)Lib\winv10.0\ucrt\x86</LibraryPath>
+    <LibraryPath>$(VCInstallDir)lib\onecore;$(WindowsSDK_LibraryPath_x86);$(UniversalCRT_LibraryPath_x86)</LibraryPath>    
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <LinkIncremental>false</LinkIncremental>
-    <LibraryPath>$(VCInstallDir)lib\onecore\arm;$(WindowsSdkDir_UAP)lib\$(DefaultTargetPlatformVersion)\um\arm;$(WindowsSdkDir_UAP)Lib\winv10.0\ucrt\arm</LibraryPath>
+    <LibraryPath>$(VCInstallDir)lib\onecore\arm;$(WindowsSDK_LibraryPath_arm);$(UniversalCRT_LibraryPath_arm)</LibraryPath>    
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <LibraryPath>$(VCInstallDir)lib\onecore\amd64;$(WindowsSdkDir_UAP)lib\$(DefaultTargetPlatformVersion)\um\x64;$(WindowsSdkDir_UAP)Lib\winv10.0\ucrt\x64</LibraryPath>
+    <LibraryPath>$(VCInstallDir)lib\onecore\amd64;$(WindowsSDK_LibraryPath_x64);$(UniversalCRT_LibraryPath_x64)</LibraryPath>    
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
