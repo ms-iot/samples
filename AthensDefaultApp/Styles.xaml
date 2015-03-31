@@ -247,7 +247,7 @@
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
                                                                    Storyboard.TargetProperty="Fill">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource CheckBoxPointerOverBackgroundThemeBrush}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
                                                                    Storyboard.TargetProperty="Stroke">
@@ -255,7 +255,7 @@
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckGlyph"
                                                                    Storyboard.TargetProperty="Fill">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource CheckBoxPointerOverForegroundThemeBrush}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlTextBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="IndeterminateGlyph"
                                                                    Storyboard.TargetProperty="Fill">
@@ -351,7 +351,7 @@
                             </Grid.ColumnDefinitions>
                             <Grid VerticalAlignment="Top">
                                 <Rectangle x:Name="NormalRectangle"
-                                       Fill="{ThemeResource CheckBoxBackgroundThemeBrush}"
+                                       Fill="Transparent"
                                        Stroke="{ThemeResource CheckBoxBorderThemeBrush}"
                                        StrokeThickness="{ThemeResource CheckBoxBorderThemeThickness}"
                                        UseLayoutRounding="False"
@@ -359,7 +359,7 @@
                                        Width="21" />
                                 <Path x:Name="CheckGlyph"
                                   Data="F1 M 0,58 L 2,56 L 6,60 L 13,51 L 15,53 L 6,64 z"
-                                  Fill="{ThemeResource CheckBoxForegroundThemeBrush}"
+                                  Fill="{ThemeResource SystemControlTextBrush}"
                                   Height="14"
                                   Stretch="Fill"
                                   Width="16"
