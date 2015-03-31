@@ -51,29 +51,29 @@ namespace AthensDefaultApp
             return lang.DisplayName;
         }
 
-        public static IReadOnlyList<string> GetSupportedTimeZones()
-        {
-            return TimeZoneSettings.SupportedTimeZoneDisplayNames;
-        }
+        //public static IReadOnlyList<string> GetSupportedTimeZones()
+        //{
+        //    return TimeZoneSettings.SupportedTimeZoneDisplayNames;
+        //}
 
-        public static string GetCurrentTimeZone()
-        {
-            return TimeZoneSettings.CurrentTimeZoneDisplayName;
-        }
+        //public static string GetCurrentTimeZone()
+        //{
+        //    return TimeZoneSettings.CurrentTimeZoneDisplayName;
+        //}
 
-        public static void ChangeTimeZone(string timeZone)
-        {
-            if (!TimeZoneSettings.CanChangeTimeZone)
-            {
-                return;
-            }
+        //public static void ChangeTimeZone(string timeZone)
+        //{
+        //    if (!TimeZoneSettings.CanChangeTimeZone)
+        //    {
+        //        return;
+        //    }
 
-            if (!TimeZoneSettings.SupportedTimeZoneDisplayNames.Contains(timeZone))
-            {
-                throw new ArgumentException("timeZone");
-            }
+        //    if (!TimeZoneSettings.SupportedTimeZoneDisplayNames.Contains(timeZone))
+        //    {
+        //        throw new ArgumentException("timeZone");
+        //    }
 
-            TimeZoneSettings.ChangeTimeZoneByDisplayName(timeZone);
-        }
+        //    TimeZoneSettings.ChangeTimeZoneByDisplayName(timeZone);
+        //}
     }
 }

@@ -8,7 +8,6 @@
     mc:Ignorable="d">
     <Page.Resources>
         <local:WifiGlyphConverter x:Key="GlyphConverter"/>
-        
         <DataTemplate x:Name="WifiInitialState">
             <Grid Height="44">
                 <Grid.ColumnDefinitions>
