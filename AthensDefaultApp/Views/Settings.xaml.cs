@@ -68,7 +68,6 @@ namespace AthensDefaultApp
         {
             if (BasicPreferencesGridView.Visibility == Visibility.Collapsed)
             {
-                SetupLanguages();
                 visibleContent.Visibility = Visibility.Collapsed;
                 BasicPreferencesGridView.Visibility = Visibility.Visible;
                 visibleContent = BasicPreferencesGridView;
