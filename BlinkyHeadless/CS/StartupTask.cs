@@ -1,16 +1,22 @@
-// © Copyright (C) Microsoft. All rights reserved.
-
-
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Net.Http;
 using Windows.ApplicationModel.Background;
 using Windows.Devices.Gpio;
 using Windows.System.Threading;
 
-namespace StartupTask
+namespace BlinkyHeadlessCS
 {
-    public sealed class BackgroundTask : IBackgroundTask
+    public sealed class StartupTask : IBackgroundTask
     {
         BackgroundTaskDeferral _deferral;
+        private int LEDStatus = 0;
+        private const int LED_PIN = 5;
+        private GpioPin pin;
+        private ThreadPoolTimer timer;
+
         public void Run(IBackgroundTaskInstance taskInstance)
         {
             _deferral = taskInstance.GetDeferral();
@@ -18,10 +24,9 @@ namespace StartupTask
             timer = ThreadPoolTimer.CreatePeriodicTimer(Timer_Tick, TimeSpan.FromMilliseconds(500));
             InitGPIO();
         }
-
-        private async void InitGPIO()
+        private void InitGPIO()
         {
-            var gpio = await GpioController.GetDefaultAsync();
+            var gpio = GpioController.GetDefault();
 
             if (gpio == null)
             {
@@ -56,10 +61,5 @@ namespace StartupTask
                 }
             }
         }
-
-        private int LEDStatus = 0;
-        private const int LED_PIN = 0;
-        private GpioPin pin;
-        private ThreadPoolTimer timer;
     }
 }
