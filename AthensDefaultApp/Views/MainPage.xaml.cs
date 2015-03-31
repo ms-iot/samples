@@ -16,6 +16,9 @@ namespace AthensDefaultApp
 {
     public sealed partial class MainPage : Page
     {
+        private CoreDispatcher MainPageDispatcher;
+        private DispatcherTimer timer;
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -23,6 +26,8 @@ namespace AthensDefaultApp
             UpdateBoardInfo();
             UpdateNetworkInfo();
             UpdateDateTime();
+
+            MainPageDispatcher = Window.Current.Dispatcher;
 
             NetworkInformation.NetworkStatusChanged += NetworkInformation_NetworkStatusChanged;
 
@@ -44,18 +49,15 @@ namespace AthensDefaultApp
 
         private async void NetworkInformation_NetworkStatusChanged(object sender)
         {
-            await Window.Current.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () => 
+            await MainPageDispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
             {
                 UpdateNetworkInfo();
             });
         }
 
-        private async void timer_Tick(object sender, object e)
+        private void timer_Tick(object sender, object e)
         {
-            await Window.Current.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
-            {
-                UpdateDateTime();
-            });
+            UpdateDateTime();
         }
 
         private void UpdateBoardInfo()
@@ -75,9 +77,7 @@ namespace AthensDefaultApp
             this.DeviceName.Text = DeviceInfoPresenter.GetDeviceName();
             this.IPAddress1.Text = NetworkPresenter.GetCurrentIpv4Address();
             this.NetworkName1.Text = NetworkPresenter.GetCurrentNetworkName() ?? "Not connected";
-        }
-
-        private DispatcherTimer timer;
+        }        
 
         private void ShutdownButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
