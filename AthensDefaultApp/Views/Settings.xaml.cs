@@ -38,8 +38,8 @@ namespace AthensDefaultApp
             LanguageComboBox.ItemsSource = languageManager.LanguageDisplayNames;
             LanguageComboBox.SelectedItem = LanguageManager.GetCurrentLanguageDisplayName();
 
-            //TimeZoneComboBox.ItemsSource = LanguageManager.GetSupportedTimeZones();
-            //TimeZoneComboBox.SelectedItem = LanguageManager.GetCurrentTimeZone();
+            TimeZoneComboBox.ItemsSource = LanguageManager.GetSupportedTimeZones();
+            TimeZoneComboBox.SelectedItem = LanguageManager.GetCurrentTimeZone();
         }
 
         private void SetupNetwork()
@@ -82,8 +82,8 @@ namespace AthensDefaultApp
 
         private void TimeZoneComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //var comboBox = sender as ComboBox;
-            //LanguageManager.ChangeTimeZone(comboBox.SelectedItem as string);
+            var comboBox = sender as ComboBox;
+            LanguageManager.ChangeTimeZone(comboBox.SelectedItem as string);
         }
 
         private void SetupEthernet()
