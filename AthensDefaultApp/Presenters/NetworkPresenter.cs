@@ -55,10 +55,15 @@ namespace AthensDefaultApp
 
         private Dictionary<WiFiAvailableNetwork, WiFiAdapter> networkNameToInfo;
 
-        private WiFiAccessStatus? accessStatus;
+        private static WiFiAccessStatus? accessStatus;
 
         public static async Task<bool> WifiIsAvailable()
         {
+            if ((await TestAccess()) == false)
+            {
+                return false;
+            }
+
             return ((await WiFiAdapter.FindAllAdaptersAsync()).Count > 0);
         }
 
@@ -138,7 +143,7 @@ namespace AthensDefaultApp
             return (result.ConnectionStatus == WiFiConnectionStatus.Success);
         }
 
-        private async Task<bool> TestAccess()
+        private static async Task<bool> TestAccess()
         {
             if (!accessStatus.HasValue)
             {

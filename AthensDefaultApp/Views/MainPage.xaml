@@ -12,16 +12,16 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="150"/>
-            <RowDefinition Height="0.5*" MinHeight="240"/>
+            <RowDefinition Height="auto" MinHeight="260"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="24"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" MinWidth="44"/>
+            <ColumnDefinition Width="0.2*" MinWidth="44"/>
             <ColumnDefinition Width="336"/>
             <ColumnDefinition Width="164"/>
-            <ColumnDefinition Width="*" MinWidth="624"/>
-            <ColumnDefinition Width="*" MinWidth="44"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="0.2*" MinWidth="44"/>
         </Grid.ColumnDefinitions>
 
         <!-- Header row -->

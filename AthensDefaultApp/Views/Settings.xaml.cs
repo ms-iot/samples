@@ -105,8 +105,10 @@ namespace AthensDefaultApp
         private async void SetupWifi()
         {
             networkPresenter = new NetworkPresenter();
-
-            WifiListView.ItemsSource = await networkPresenter.GetAvailableNetworks();
+            if (await NetworkPresenter.WifiIsAvailable())
+            {
+                WifiListView.ItemsSource = await networkPresenter.GetAvailableNetworks();
+            }
         }
 
         private void WifiListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
