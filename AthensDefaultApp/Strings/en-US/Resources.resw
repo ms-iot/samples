@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AthensHeader.Text" xml:space="preserve">
-    <value>Windows Athens</value>
+    <value>Windows 10 IoT Core</value>
     <comment>The Operating System Name</comment>
   </data>
   <data name="GenericBoardName" xml:space="preserve">
@@ -127,12 +127,6 @@
   </data>
   <data name="MainPageDeviceName.Text" xml:space="preserve">
     <value>Device name</value>
-  </data>
-  <data name="MainPageEdition.Text" xml:space="preserve">
-    <value>Edition</value>
-  </data>
-  <data name="MainPageMACAddress" xml:space="preserve">
-    <value>MAC address</value>
   </data>
   <data name="MainPageNetwork.Text" xml:space="preserve">
     <value>Network</value>
@@ -145,18 +139,99 @@
     <value>Restart</value>
   </data>
   <data name="ShutdownText.Text" xml:space="preserve">
-    <value>Shut down</value>
+    <value>Shutdown</value>
   </data>
   <data name="LegalText1.Text" xml:space="preserve">
     <value>By using this software you agree to Microsoft license terms.</value>
   </data>
   <data name="LegalText2.Text" xml:space="preserve">
-    <value>This limited-feature version of Windows IoT Athens is designed exclusively for driver development only.</value>
+    <value>You can review linked terms by pasting the forward link into your browser window once the software is running</value>
   </data>
   <data name="LegalText3.Text" xml:space="preserve">
-    <value>The privacy statement for this prerelease version of the Windows operating system can be viewed here: http://go.microsoft.com/fwlink/?LinkId=506737.</value>
+    <value>The privacy statement for this prerelease version of the Windows operating system can be viewed at http://go.microsoft.com/fwlink/?LinkId=506737.</value>
   </data>
-  <data name="MainPageEditionText" xml:space="preserve">
-    <value>Windows Athens</value>
+  <data name="BackButton.Content" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="CancelButton.Content" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ConnectAutomatically.Text" xml:space="preserve">
+    <value>Connect automatically</value>
+  </data>
+  <data name="ConnectButton.Content" xml:space="preserve">
+    <value>Connect</value>
+  </data>
+  <data name="DirectConnections.Text" xml:space="preserve">
+    <value>Direct connections</value>
+  </data>
+  <data name="Ethernet.Text" xml:space="preserve">
+    <value>Ethernet</value>
+  </data>
+  <data name="NetworkConnectingMessage.Text" xml:space="preserve">
+    <value>Checking network requirements</value>
+  </data>
+  <data name="NetworkPasswordPrompt.Text" xml:space="preserve">
+    <value>Enter the network security key</value>
+  </data>
+  <data name="NextButton.Content" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="NoNetworks.Text" xml:space="preserve">
+    <value>None found</value>
+  </data>
+  <data name="OOBEIntro.Text" xml:space="preserve">
+    <value>Let's get some basic stuff out of the way.</value>
+  </data>
+  <data name="OOBELanguageSelect.Text" xml:space="preserve">
+    <value>Choose your language</value>
+  </data>
+  <data name="OOBENetworkTitle.Text" xml:space="preserve">
+    <value>Let's get connected</value>
+  </data>
+  <data name="OOBEWelcomeTitle.Text" xml:space="preserve">
+    <value>Hi there, welcome to Windows IoT Core</value>
+  </data>
+  <data name="Rpi2Name" xml:space="preserve">
+    <value>Raspberry Pi II</value>
+  </data>
+  <data name="SkipStep.Content" xml:space="preserve">
+    <value>Skip this step</value>
+  </data>
+  <data name="Wifi.Text" xml:space="preserve">
+    <value>Wi-Fi</value>
+  </data>
+  <data name="StartDeveloping.Text" xml:space="preserve">
+    <value> to start developing</value>
+    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
+  </data>
+  <data name="Visit.Text" xml:space="preserve">
+    <value>Visit</value>
+    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
+  </data>
+  <data name="WindowsOnDevicesUrl.Text" xml:space="preserve">
+    <value> windowsondevices.com</value>
+    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
+  </data>
+  <data name="KeyboardTitle.Text" xml:space="preserve">
+    <value>Keyboard layout</value>
+  </data>
+  <data name="LanguageTitle.Text" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="NetworkConnected.Text" xml:space="preserve">
+    <value>Connected</value>
+  </data>
+  <data name="NetworkPreferences.Content" xml:space="preserve">
+    <value>Network &amp; Wi-Fi</value>
+  </data>
+  <data name="SettingsPreferences.Content" xml:space="preserve">
+    <value>Basic preferences</value>
+  </data>
+  <data name="SettingsTitle.Text" xml:space="preserve">
+    <value>Device Settings</value>
+  </data>
+  <data name="TimeZoneTitle.Text" xml:space="preserve">
+    <value>Time zone</value>
   </data>
 </root>

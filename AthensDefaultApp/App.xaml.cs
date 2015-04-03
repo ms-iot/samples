@@ -3,6 +3,7 @@
 using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -69,7 +70,15 @@ namespace AthensDefaultApp
                 // configuring the new page by passing required information as a navigation
                 // parameter
 
-                rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                if (ApplicationData.Current.LocalSettings.Values.ContainsKey(Constants.HasDoneOOBEKey))
+                {
+                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                }
+                else
+                {
+                    rootFrame.Navigate(typeof(OOBEWelcome), e.Arguments);
+                }
+                
             }
             // Ensure the current window is active
             Window.Current.Activate();

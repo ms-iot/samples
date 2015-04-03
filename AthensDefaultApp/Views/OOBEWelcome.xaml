@@ -1,0 +1,35 @@
+﻿<Page
+    x:Class="AthensDefaultApp.OOBEWelcome"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:AthensDefaultApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{StaticResource AccentBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="60"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="30"/>
+        </Grid.ColumnDefinitions>
+            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="120"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical">
+            <TextBlock x:Uid="OOBEWelcomeTitle" Text="Hi there, welcome to Windows IoT Core" Style="{ThemeResource SubheaderTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <TextBlock x:Uid="OOBEIntro" Text="Let's get some basic stuff out of the way." Style="{ThemeResource BodyTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,14,0,0"/>
+
+            <TextBlock x:Uid="OOBELanguageSelect" Text="Choose Your Language" Style="{ThemeResource BaseTextBlockStyle}" HorizontalAlignment="Left" FontWeight="Normal" VerticalAlignment="Top" Margin="0,54,0,0"/>
+            <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
+                <ListView x:Name="LanguagesListView" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionMode="Single" Margin="0,14,0,0" Width="446" HorizontalContentAlignment="Stretch"/>
+            </ScrollViewer>
+        </StackPanel>
+
+        <Button Grid.Column="1" Grid.Row="1" x:Name="NextButton" Tapped="NextButton_Tapped" Content="Next" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="120" Height="32"/>
+    </Grid>
+</Page>

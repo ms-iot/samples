@@ -7,16 +7,9 @@ using Windows.Networking.Connectivity;
 
 namespace AthensDefaultApp
 {
-    internal class DeviceInfoPresenter
+    public static class DeviceInfoPresenter
     {
-        private SYSTEM_INFO systemInfo;
-
-        internal DeviceInfoPresenter()
-        {
-            systemInfo = SystemInfoFactory.GetNativeSystemInfo();
-        }
-
-        internal static string GetDeviceName()
+        public static string GetDeviceName()
         {
             var hostname = NetworkInformation.GetHostNames()
                 .FirstOrDefault(x => x.Type == HostNameType.DomainName);
@@ -27,45 +20,27 @@ namespace AthensDefaultApp
             return "<no device name>";
         }
 
-        internal static string GetCurrentNetworkName()
-        {
-            var icp = NetworkInformation.GetInternetConnectionProfile();
-            return icp.ProfileName;
-        }
-
-        internal static string GetCurrentIpv4Address()
-        {
-            var icp = NetworkInformation.GetInternetConnectionProfile();
-            var name = icp.ProfileName;
-            if (icp != null && icp.NetworkAdapter != null)
-            {
-                var hostnames = NetworkInformation.GetHostNames();
-
-                foreach (var hn in hostnames)
-                {
-                    if (hn.IPInformation != null &&
-                        hn.IPInformation.NetworkAdapter != null &&
-                        hn.IPInformation.NetworkAdapter.NetworkAdapterId == icp.NetworkAdapter.NetworkAdapterId &&
-                        hn.Type == HostNameType.Ipv4)
-                    {
-                        return hn.CanonicalName;
-                    }
-                }
-            }
-
-            return "<no Internet connection>";
-        }        
-
-        internal string GetBoardName()
+        public static string GetBoardName()
         {
             var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
-
+#if MBM
             return loader.GetString("MBMName");
+#elif RPI
+            return loader.GetString("Rpi2Name");
+#else
+            return loader.GetString("GenericBoardName");
+#endif
         }
 
-        internal Uri GetBoardImageUri()
+        public static Uri GetBoardImageUri()
         {
+#if MBM
             return new Uri("ms-appx:///Assets/MBMBoard.png");
+#elif RPI
+            return new Uri("ms-appx:///Assets/RaspberryPiBoard.png");
+#else
+            return new Uri("ms-appx:///Assets/GenericBoard.png");
+#endif
         }
     }
 }
