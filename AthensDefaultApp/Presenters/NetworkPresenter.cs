@@ -11,7 +11,8 @@ namespace AthensDefaultApp
 {
     public class NetworkPresenter
     {
-        private static uint EthernetIanaType = 6;
+        private readonly static uint EthernetIanaType = 6;
+        private readonly static uint WifiIanaType = 71;
 
         public static string GetDirectConnectionName()
         {
@@ -104,6 +105,25 @@ namespace AthensDefaultApp
             await UpdateInfo();
 
             return networkNameToInfo.Keys.ToList();
+        }
+
+        public WiFiAvailableNetwork GetCurrentWifiNetwork()
+        {
+            var connectionProfiles = NetworkInformation.GetConnectionProfiles();
+
+            var validProfiles = connectionProfiles.Where(profile =>
+            {
+                return (profile.NetworkAdapter != null && profile.NetworkAdapter.IanaInterfaceType == WifiIanaType);
+            });
+
+            var firstProfile = validProfiles.First() as ConnectionProfile;
+
+            if (firstProfile == null)
+            {
+                return null;
+            }
+
+            return networkNameToInfo.Keys.First(wifiNetwork => wifiNetwork.Ssid.Equals(firstProfile.ProfileName) );
         }
 
         public async Task<bool> ConnectToNetwork(WiFiAvailableNetwork network, bool autoConnect)

@@ -105,9 +105,20 @@ namespace AthensDefaultApp
         private async void SetupWifi()
         {
             networkPresenter = new NetworkPresenter();
-            if (await NetworkPresenter.WifiIsAvailable())
+
+            if (!await NetworkPresenter.WifiIsAvailable())
             {
-                WifiListView.ItemsSource = await networkPresenter.GetAvailableNetworks();
+                return;
+            }
+
+            WifiListView.ItemsSource = await networkPresenter.GetAvailableNetworks();
+
+            var connectedNetwork = networkPresenter.GetCurrentWifiNetwork();
+
+            if (connectedNetwork != null)
+            {
+                var connectedListItem = WifiListView.ContainerFromItem(connectedNetwork) as ListViewItem;
+                connectedListItem.ContentTemplate = WifiConnectedState;
             }
         }
 
@@ -154,21 +165,13 @@ namespace AthensDefaultApp
                 SwitchToItemState(button, WifiConnectingState);
             });
 
-            if (await didConnect)
+            DataTemplate nextState = (await didConnect) ? WifiConnectedState : WifiInitialState;
+
+            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    NavigationUtils.NavigateToScreen(typeof(MainPage));
-                });
-            }
-            else
-            {
-                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    var item = SwitchToItemState(button, WifiInitialState);
-                    item.IsSelected = false;
-                });
-            }
+                var item = SwitchToItemState(button, nextState);
+                item.IsSelected = false;
+            });
         }
 
         private void NextButton_Tapped(object sender, TappedRoutedEventArgs e)
