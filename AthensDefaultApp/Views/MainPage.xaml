@@ -115,8 +115,8 @@
         <StackPanel Grid.Row="2" Grid.ColumnSpan="3" Grid.Column="1" Orientation="Vertical" VerticalAlignment="Bottom">
             <Button x:Name="SettingsButton" Style="{StaticResource ShutdownButtonStyle}" Content="{StaticResource IconSettings}" FontFamily="Segoe MDL2 Assets" FontSize="24" HorizontalAlignment="Right" VerticalAlignment="Top" Tapped="SettingsButton_Tapped" Background="Transparent" BorderThickness="0" Height="48" Width="48"/>
             <TextBlock x:Uid="LegalText1" Style="{StaticResource CaptionTextBlockStyle}" Text="By using this software you agree to Microsoft license terms." HorizontalAlignment="Left"/>
-            <TextBlock x:Uid="LegalText3" Text="The privacy statement for this prerelease version of the Windows operating system can be viewed at http://go.microsoft.com/fwlink/?LinkId=506737." Style="{StaticResource CaptionTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom" TextWrapping="WrapWholeWords"/>
-            <TextBlock x:Uid="LegalText2" Text="You can review linked terms by pasting the forward link into your browser window once the software is running" Style="{StaticResource CaptionTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+            <TextBlock x:Uid="LegalText3" Text="The privacy statement for this prerelease version of the Windows operating system can be viewed here: http://go.microsoft.com/fwlink/?LinkId=506737." Style="{StaticResource CaptionTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom" TextWrapping="WrapWholeWords"/>
+            <TextBlock x:Uid="LegalText2" Text="You can review linked terms by pasting the forward link into your browser window once the software is running." Style="{StaticResource CaptionTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
         </StackPanel>
     </Grid>
 </Page>
