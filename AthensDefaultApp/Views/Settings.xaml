@@ -20,6 +20,21 @@
                 <TextBlock Grid.Column="1" Text="{Binding Ssid}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
             </Grid>
         </DataTemplate>
+        <DataTemplate x:Name="WifiConnectedState">
+            <Grid Height="44">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="32"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border Background="{StaticResource AccentBrush}" Grid.Row="0" Grid.Column="0" Width="32" Height="32">
+                    <TextBlock Grid.Column="0" Text="{Binding SignalBars, Mode=OneWay, Converter={StaticResource GlyphConverter}}" FontSize="18" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Border>
+                <StackPanel Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0">
+                    <TextBlock Text="{Binding Ssid}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}"/>
+                    <TextBlock x:Uid="Connected" Text="Connected" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
         <DataTemplate x:Name="WifiConnectState">
             <Grid Height="144">
                 <Grid.ColumnDefinitions>
