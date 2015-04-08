@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AthensHeader.Text" xml:space="preserve">
-    <value>Windows 10 IoT Core</value>
+    <value>Windows 10 IoT Core Technical Preview</value>
     <comment>The Operating System Name</comment>
   </data>
   <data name="GenericBoardName" xml:space="preserve">
@@ -145,10 +145,10 @@
     <value>By using this software you agree to Microsoft license terms.</value>
   </data>
   <data name="LegalText2.Text" xml:space="preserve">
-    <value>You can review linked terms by pasting the forward link into your browser window once the software is running</value>
+    <value>You can review linked terms by pasting the forward link into your browser window once the software is running.</value>
   </data>
   <data name="LegalText3.Text" xml:space="preserve">
-    <value>The privacy statement for this prerelease version of the Windows operating system can be viewed at http://go.microsoft.com/fwlink/?LinkId=506737.</value>
+    <value>The privacy statement for this prerelease version of the Windows operating system can be viewed here: http://go.microsoft.com/fwlink/?LinkId=506737.</value>
   </data>
   <data name="BackButton.Content" xml:space="preserve">
     <value>Back</value>
