@@ -11,8 +11,8 @@
     <AssemblyName>BlinkyHeadlessCS</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10041.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10041.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.10058.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10058.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -114,7 +114,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <SDKReference Include="WindowsIoT, Version=10.0.10046.0">
+    <SDKReference Include="WindowsIoT, Version=10.0.10058.0">
       <Name>Windows IoT Extension SDK</Name>
     </SDKReference>
   </ItemGroup>
