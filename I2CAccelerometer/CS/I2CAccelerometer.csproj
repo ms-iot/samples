@@ -11,8 +11,8 @@
     <AssemblyName>I2CAccelerometer</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10046.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10046.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.10058.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10058.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
     <FileAlignment>512</FileAlignment>
@@ -110,7 +110,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <SDKReference Include="WindowsIoT, Version=10.0.10046.0">
+    <SDKReference Include="WindowsIoT, Version=10.0.10058.0">
       <Name>Windows IoT Extension SDK</Name>
     </SDKReference>
   </ItemGroup>

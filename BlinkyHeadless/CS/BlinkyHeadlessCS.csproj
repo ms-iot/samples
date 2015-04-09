@@ -114,7 +114,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <SDKReference Include="WindowsIoT, Version=10.0.10046.0">
+    <SDKReference Include="WindowsIoT, Version=10.0.10058.0">
       <Name>Windows IoT Extension SDK</Name>
     </SDKReference>
   </ItemGroup>
