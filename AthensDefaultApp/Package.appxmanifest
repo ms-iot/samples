@@ -38,11 +38,7 @@
         Square44x44Logo="Assets\SmallLogo.png"
         Description="AthensDefaultApp"
         BackgroundColor="#464646">
-        <uap:DefaultTile 
-          Wide310x150Logo="Assets\WideLogo.png"
-          DefaultSize="square150x150Logo"/>
-        <uap:SplashScreen
-          Image="Assets\SplashScreen.png" />
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
     </Application>
   </Applications>
