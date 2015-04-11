@@ -11,7 +11,7 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="150"/>
+            <RowDefinition Height="200"/>
             <RowDefinition Height="auto" MinHeight="260"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="24"/>
@@ -32,7 +32,21 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Right">
+            <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left">
+                <Path Data="M12.7344,22.4998 L28.75,22.4998 L28.75,36.5623 L12.7344,34.2185 z M0,22.4998 L11.6406,22.4998 L11.6406,34.0623 L0,32.3435 z M11.6406,9.53104 L11.6406,20.9373 L0,20.9373 L0,11.1717 z M28.75,7.03104 L28.75,20.9373 L12.7344,20.9373 L12.7344,9.29667 z" Fill="White" Margin="0,0,10,0" RenderTransformOrigin="0.5,0.5" Stretch="Fill" UseLayoutRounding="False" Width="22" Height="22" VerticalAlignment="Center">
+                    <Path.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Path.RenderTransform>
+                </Path>
+                <TextBlock x:Uid="AthensHeader" Style="{StaticResource AthensDefaultAppAthensTextBlockStyle}" Text="Windows 10 IoT Core Insider Preview" VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Bottom" HorizontalAlignment="Right">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                     <TextBlock x:Name="CurrentTime" HorizontalAlignment="Right" Style="{StaticResource AthensDefaultAppBodyTextBlockStyle}" VerticalAlignment="Center" Padding="0,0,14,0"/>
                     <Button x:Name="ShutdownButton" Style="{StaticResource ShutdownButtonStyle}" Content="{StaticResource IconShutdown}" FontFamily="Segoe MDL2 Assets" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Tapped="ShutdownButton_Tapped" Background="Transparent" BorderThickness="0" Height="48" Width="48"/>

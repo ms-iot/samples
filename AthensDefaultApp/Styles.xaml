@@ -69,7 +69,6 @@
     <Style x:Key="AthensDefaultAppAthensTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
         <Setter Property="FontWeight" Value="SemiLight"/>
         <Setter Property="FontSize" Value="18"/>
-        <Setter Property="Foreground" Value="White"/>
     </Style>
 
     <Style x:Key="AthensDefaultAppBodyTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">

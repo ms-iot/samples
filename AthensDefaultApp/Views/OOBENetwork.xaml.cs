@@ -47,7 +47,22 @@ namespace AthensDefaultApp
         {
             networkPresenter = new NetworkPresenter();
 
-            WifiListView.ItemsSource = await networkPresenter.GetAvailableNetworks();
+            if (await NetworkPresenter.WifiIsAvailable())
+            {
+                var networks = await networkPresenter.GetAvailableNetworks();
+
+                if (networks.Count > 0)
+                {
+                    WifiListView.ItemsSource = networks;
+
+                    NoWifiFoundText.Visibility = Visibility.Collapsed;
+                    WifiListView.Visibility = Visibility.Visible;
+                    return;
+                }
+            }
+
+            NoWifiFoundText.Visibility = Visibility.Visible;
+            WifiListView.Visibility = Visibility.Collapsed;
         }
 
         private void WifiListView_SelectionChanged(object sender, SelectionChangedEventArgs e)

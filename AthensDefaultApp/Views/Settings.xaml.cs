@@ -106,20 +106,30 @@ namespace AthensDefaultApp
         {
             networkPresenter = new NetworkPresenter();
 
-            if (!await NetworkPresenter.WifiIsAvailable())
+            if (await NetworkPresenter.WifiIsAvailable())
             {
-                return;
+                var networks = await networkPresenter.GetAvailableNetworks();
+
+                if (networks.Count > 0)
+                {
+                    WifiListView.ItemsSource = networks;
+                    var connectedNetwork = networkPresenter.GetCurrentWifiNetwork();
+
+                    if (connectedNetwork != null)
+                    {
+                        var connectedListItem = WifiListView.ContainerFromItem(connectedNetwork) as ListViewItem;
+                        connectedListItem.ContentTemplate = WifiConnectedState;
+                    }
+
+                    NoWifiFoundText.Visibility = Visibility.Collapsed;
+                    WifiListView.Visibility = Visibility.Visible;
+
+                    return;
+                }
             }
 
-            WifiListView.ItemsSource = await networkPresenter.GetAvailableNetworks();
-
-            var connectedNetwork = networkPresenter.GetCurrentWifiNetwork();
-
-            if (connectedNetwork != null)
-            {
-                var connectedListItem = WifiListView.ContainerFromItem(connectedNetwork) as ListViewItem;
-                connectedListItem.ContentTemplate = WifiConnectedState;
-            }
+            NoWifiFoundText.Visibility = Visibility.Visible;
+            WifiListView.Visibility = Visibility.Collapsed;
         }
 
         private void WifiListView_SelectionChanged(object sender, SelectionChangedEventArgs e)

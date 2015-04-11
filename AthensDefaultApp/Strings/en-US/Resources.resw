@@ -195,7 +195,7 @@
   <data name="Rpi2Name" xml:space="preserve">
     <value>Raspberry Pi II</value>
   </data>
-  <data name="SkipStep.Content" xml:space="preserve">
+  <data name="SkipStep.Text" xml:space="preserve">
     <value>Skip this step</value>
   </data>
   <data name="Wifi.Text" xml:space="preserve">

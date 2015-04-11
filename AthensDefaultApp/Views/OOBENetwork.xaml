@@ -111,7 +111,8 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical">
-            <TextBlock x:Uid="Let's get connected" Text="Let's get connected" Style="{StaticResource SubheaderTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <TextBlock x:Uid="OOBEWelcomeTitle" Text="Hi there, welcome to the Windows 10 IoT Core Insider Preview" Style="{ThemeResource SubheaderTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <TextBlock x:Uid="OOBENetworkTitle" Text="Let's get connected" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,14,0,0"/>
             <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,25,0,0">
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <TextBlock x:Uid="DirectConnections" Text="Direct connections" Style="{StaticResource BaseTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,12"/>
@@ -124,10 +125,13 @@
                     </StackPanel>
                     <TextBlock x:Uid="Wifi" Text="Wi-Fi" Style="{StaticResource BaseTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,33,0,12"/>
                     <ListView x:Name="WifiListView" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionMode="Single" Width="446" ItemTemplate="{StaticResource WifiInitialState}" SelectionChanged="WifiListView_SelectionChanged" ItemContainerStyle="{StaticResource WifiListViewItemStyle}"/>
+                    <TextBlock x:Uid="NoNetworks" x:Name="NoWifiFoundText" Text="None found" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed"/>
                 </StackPanel>
             </ScrollViewer>
         </StackPanel>
-        <HyperlinkButton x:Uid="SkipStep" Grid.Column="1" Content="Skip this step" Grid.Row="1" x:Name="SkipButton" HorizontalAlignment="Left" VerticalAlignment="Bottom" Tapped="SkipButton_Tapped" HorizontalContentAlignment="Left"/>
-        <Button x:Uid="BackButton" Grid.Column="1" Grid.Row="1" x:Name="BackButton" Content="Back" Width="120" HorizontalAlignment="Right" VerticalAlignment="Bottom" Tapped="BackButton_Tapped" Height="32"/>
+        <HyperlinkButton Grid.Column="1" Grid.Row="1" x:Name="SkipButton" HorizontalAlignment="Left" VerticalAlignment="Bottom" Tapped="SkipButton_Tapped" HorizontalContentAlignment="Left">
+            <TextBlock  x:Uid="SkipStep" Text="Skip this step"/>
+        </HyperlinkButton>
+        <!--<Button x:Uid="BackButton" Grid.Column="1" Grid.Row="1" x:Name="BackButton" Content="Back" Width="120" HorizontalAlignment="Right" VerticalAlignment="Bottom" Tapped="BackButton_Tapped" Height="32"/>-->
     </Grid>
 </Page>

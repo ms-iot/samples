@@ -150,9 +150,9 @@
 
             <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical" VerticalAlignment="Top">
                 <TextBlock x:Uid="LanguageTitle" Text="Language" Style="{StaticResource SubtitleTextBlockStyle}" HorizontalAlignment="Left" FontWeight="Normal" VerticalAlignment="Top"/>
-                <ComboBox x:Name="LanguageComboBox" Width="296" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Height="30" Margin="0,10,0,0" SelectionChanged="LanguageComboBox_SelectionChanged"/>
+                <ComboBox x:Name="LanguageComboBox" Width="500" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Height="35" Margin="0,10,0,0" SelectionChanged="LanguageComboBox_SelectionChanged"/>
                 <TextBlock x:Uid="TimeZoneTitle" Text="Time zone" Style="{StaticResource SubtitleTextBlockStyle}" HorizontalAlignment="Left" FontWeight="Normal" VerticalAlignment="Top" Margin="0,28,0,0"/>
-                <ComboBox x:Name="TimeZoneComboBox" Width="296" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Height="30" Margin="0,10,0,0" SelectionChanged="TimeZoneComboBox_SelectionChanged"/>
+                <ComboBox x:Name="TimeZoneComboBox" Width="500" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Height="35" Margin="0,10,0,0" SelectionChanged="TimeZoneComboBox_SelectionChanged"/>
             </StackPanel>
         </Grid>
 
@@ -180,6 +180,7 @@
                         </StackPanel>
                         <TextBlock x:Uid="Wifi" Text="Wi-Fi" Style="{StaticResource BaseTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,33,0,12"/>
                         <ListView x:Name="WifiListView" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionMode="Single" Width="446" ItemTemplate="{StaticResource WifiInitialState}" SelectionChanged="WifiListView_SelectionChanged" ItemContainerStyle="{StaticResource WifiListViewItemStyle}"/>
+                        <TextBlock x:Uid="NoNetworks" x:Name="NoWifiFoundText" Text="None found" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed"/>
                     </StackPanel>
                 </ScrollViewer>
             </StackPanel>
