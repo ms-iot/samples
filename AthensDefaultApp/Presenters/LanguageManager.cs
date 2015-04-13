@@ -10,6 +10,7 @@ namespace AthensDefaultApp
     public class LanguageManager
     {
         private Dictionary<string, string> displayNameToLanguageMap;
+        private static bool hasChangedTimeZone = false;
         public IReadOnlyList<string> LanguageDisplayNames
         {
             get;
@@ -61,6 +62,35 @@ namespace AthensDefaultApp
             return TimeZoneSettings.CurrentTimeZoneDisplayName;
         }
 
+        public static DateTime GetTimeZoneAdjustedDateTimeNow()
+        {
+            if (!hasChangedTimeZone)
+            {
+                return DateTime.Now;
+            }
+
+            var timeZoneString = GetCurrentTimeZone();  // In the format (UTC+00:00) <NAME>
+
+            if (timeZoneString.StartsWith("(UTC)")) // Exception being UTC time zones
+            {
+                return DateTime.UtcNow;
+            }
+
+            var utcOffset = timeZoneString.Substring(4, 6); // Pull off +00:00 portion of the display name
+
+            var positive = utcOffset[0] == '+'; // Determine which side of UTC we are at
+
+            var hours = Convert.ToInt32(utcOffset.Substring(1, 2)); // Pull off first part of the time for hours and assume daylight savings right now
+            var minutes = Convert.ToInt32(utcOffset.Substring(4)); // Last two characters for minutes
+
+            var offset = new TimeSpan(hours, minutes, 0);
+
+            // subtract or add depending depending on the UTC side
+            var finalTime = positive == true ? DateTime.UtcNow.Add(offset) : DateTime.UtcNow.Subtract(offset);
+
+            return finalTime.Add(TimeSpan.FromHours(1)); // Hack for DST
+        }
+
         public static void ChangeTimeZone(string timeZone)
         {
             if (!TimeZoneSettings.CanChangeTimeZone)
@@ -74,6 +104,7 @@ namespace AthensDefaultApp
             }
 
             TimeZoneSettings.ChangeTimeZoneByDisplayName(timeZone);
+            hasChangedTimeZone = true;
         }
     }
 }

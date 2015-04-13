@@ -68,7 +68,7 @@ namespace AthensDefaultApp
 
         private void UpdateDateTime()
         {
-            var t = TimeZoneInfo.ConvertTime(DateTime.UtcNow, TimeZoneInfo.Local);
+            var t = LanguageManager.GetTimeZoneAdjustedDateTimeNow();
             this.CurrentTime.Text = t.ToString("t", CultureInfo.CurrentCulture);
         }
 
