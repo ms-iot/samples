@@ -89,7 +89,7 @@ namespace AthensDefaultApp
             var network = button.DataContext as WiFiAvailableNetwork;
             if (NetworkPresenter.IsNetworkOpen(network))
             {
-                ConnectToWifi(network, network, null, Window.Current.Dispatcher);
+                ConnectToWifi(network, null, Window.Current.Dispatcher);
             }
             else
             {
@@ -97,7 +97,7 @@ namespace AthensDefaultApp
             }
         }
 
-        private async void ConnectToWifi(object dataContext, WiFiAvailableNetwork network, PasswordCredential credential, CoreDispatcher dispatcher)
+        private async void ConnectToWifi(WiFiAvailableNetwork network, PasswordCredential credential, CoreDispatcher dispatcher)
         {
             var didConnect = credential == null ?
                 networkPresenter.ConnectToNetwork(network, Automatic) :
@@ -105,7 +105,7 @@ namespace AthensDefaultApp
 
             await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                SwitchToItemState(dataContext, WifiConnectingState);
+                SwitchToItemState(network, WifiConnectingState);
             });
 
             if (await didConnect)
@@ -119,7 +119,7 @@ namespace AthensDefaultApp
             {
                 await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
-                    var item = SwitchToItemState(dataContext, WifiInitialState);
+                    var item = SwitchToItemState(network, WifiInitialState);
                     item.IsSelected = false;
                 });
             }
@@ -143,7 +143,7 @@ namespace AthensDefaultApp
             }
 
             var network = button.DataContext as WiFiAvailableNetwork;
-            ConnectToWifi(network, network, credential, Window.Current.Dispatcher);
+            ConnectToWifi(network, credential, Window.Current.Dispatcher);
         }
 
         private void CancelButton_Tapped(object sender, TappedRoutedEventArgs e)
