@@ -229,7 +229,7 @@
     <value>Basic preferences</value>
   </data>
   <data name="SettingsTitle.Text" xml:space="preserve">
-    <value>Device Settings</value>
+    <value>Device settings</value>
   </data>
   <data name="TimeZoneTitle.Text" xml:space="preserve">
     <value>Time zone</value>

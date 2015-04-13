@@ -38,7 +38,7 @@
                     </Border>
                     <TextBlock Text="{Binding Ssid}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
                 </StackPanel>
-                <CheckBox Grid.Row="1" x:Name="ConnectAutomaticallyCheckBox" IsChecked="True" HorizontalAlignment="Left" Margin="45,0,0,0" Height="32" Foreground="{ThemeResource SystemControlTextBrush}" Checked="ConnectAutomaticallyCheckBox_Checked" Style="{StaticResource AthensDefaultAppCheckBoxStyle}">
+                <CheckBox Grid.Row="1" x:Name="ConnectAutomaticallyCheckBox" IsChecked="True" HorizontalAlignment="Left" Margin="45,0,0,0" Height="32" Foreground="White" Checked="ConnectAutomaticallyCheckBox_Checked" Style="{StaticResource AthensDefaultAppCheckBoxStyle}">
                     <TextBlock x:Uid="ConnectAutomatically" Text="Connect automatically" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}"/>
                 </CheckBox>
                 <Button Grid.Row="3" x:Uid="ConnectButton" x:Name="ConnectButton" Content="Connect" Width="120" Height="32" HorizontalAlignment="Left" VerticalAlignment="Bottom" Tapped="ConnectButton_Tapped" Margin="102,0,0,0"/>

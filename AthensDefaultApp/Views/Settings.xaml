@@ -14,7 +14,7 @@
                     <ColumnDefinition Width="32"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Border Background="{StaticResource AccentBrush}" Grid.Row="0" Grid.Column="0" Width="32" Height="32">
+                <Border Background="{StaticResource AccentBrush}" Grid.Row="0" Grid.Column="0" Width="32" Height="32" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <TextBlock Grid.Column="0" Text="{Binding SignalBars, Mode=OneWay, Converter={StaticResource GlyphConverter}}" FontSize="18" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Border>
                 <TextBlock Grid.Column="1" Text="{Binding Ssid}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
@@ -26,7 +26,7 @@
                     <ColumnDefinition Width="32"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Border Background="{StaticResource AccentBrush}" Grid.Row="0" Grid.Column="0" Width="32" Height="32">
+                <Border Background="{StaticResource AccentBrush}" Grid.Row="0" Grid.Column="0" Width="32" Height="32" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <TextBlock Grid.Column="0" Text="{Binding SignalBars, Mode=OneWay, Converter={StaticResource GlyphConverter}}" FontSize="18" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Border>
                 <StackPanel Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0">
@@ -42,19 +42,19 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="44"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="26"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" Orientation="Horizontal">
-                    <Border Width="32" Height="32" Background="{ThemeResource AccentBrush}">
+                    <Border Width="32" Height="32" VerticalAlignment="Center">
                         <TextBlock Grid.Column="0" Text="{Binding SignalBars, Mode=OneWay, Converter={StaticResource GlyphConverter}}" FontSize="18" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     </Border>
                     <TextBlock Text="{Binding Ssid}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
                 </StackPanel>
-                <CheckBox Grid.Row="1" x:Name="ConnectAutomaticallyCheckBox" IsChecked="True" HorizontalAlignment="Left" Margin="45,0,0,0" Height="32" Foreground="{ThemeResource SystemControlTextBrush}" Checked="ConnectAutomaticallyCheckBox_Checked" Style="{StaticResource AthensDefaultAppCheckBoxStyle}">
+                <CheckBox Grid.Row="1" x:Name="ConnectAutomaticallyCheckBox" IsChecked="True" HorizontalAlignment="Left" Margin="45,0,0,0" Height="32" Checked="ConnectAutomaticallyCheckBox_Checked" Style="{StaticResource AthensDefaultAppCheckBoxStyle}">
                     <TextBlock x:Uid="ConnectAutomatically" Text="Connect automatically" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}"/>
                 </CheckBox>
                 <Button Grid.Row="3" x:Uid="ConnectButton" x:Name="ConnectButton" Content="Connect" Width="120" Height="32" HorizontalAlignment="Left" VerticalAlignment="Bottom" Tapped="ConnectButton_Tapped" Margin="102,0,0,0"/>
@@ -68,19 +68,19 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="44"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="8"/>
                 </Grid.RowDefinitions>
-                <Border Background="{StaticResource AccentBrush}" Grid.Row="0" Grid.Column="0" Width="32" Height="32">
+                <Border Grid.Row="0" Grid.Column="0" Width="32" Height="32" VerticalAlignment="Center">
                     <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding SignalBars, Mode=OneWay, Converter={StaticResource GlyphConverter}}" FontSize="18" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Border>
                 <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Ssid}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
                 <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch">
                     <TextBlock x:Uid="NetworkPasswordPrompt" Text="Enter the network security key" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}"/>
-                    <PasswordBox x:Name="WifiPasswordBox" PasswordChanged="WifiPasswordBox_PasswordChanged" HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="334" Margin="0,8,0,0" BorderBrush="{StaticResource SystemControlBorderBrush}"/>
+                    <PasswordBox x:Name="WifiPasswordBox" PasswordChanged="WifiPasswordBox_PasswordChanged" HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="334" Margin="0,8,0,0"/>
                 </StackPanel>
                 <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="130,0,0,0">
                     <Button x:Uid="NextButton" x:Name="NextButton" Content="Next" Width="120" HorizontalAlignment="Right" VerticalAlignment="Bottom" Tapped="NextButton_Tapped" Height="32"/>
@@ -102,7 +102,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="8"/>
                 </Grid.RowDefinitions>
-                <Border Background="{StaticResource AccentBrush}" Grid.Row="0" Grid.Column="0" Width="32" Height="32">
+                <Border Grid.Row="0" Grid.Column="0" Width="32" Height="32" VerticalAlignment="Center">
                     <TextBlock Grid.Column="0" Text="{Binding SignalBars, Mode=OneWay, Converter={StaticResource GlyphConverter}}" FontSize="18" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Border>
                 <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Ssid}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
@@ -128,7 +128,7 @@
 
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" VerticalAlignment="Stretch" Background="#2a2a2a">
             <Button x:Name="BackButton" Content="{StaticResource IconBack}" Background="Transparent" BorderThickness="0" BorderBrush="Transparent"  FontFamily="Segoe MDL2 Assets" FontSize="24" Tapped="BackButton_Tapped" Margin="10,5,20,0" Height="48" Width="48" VerticalAlignment="Center"/>
-            <TextBlock x:Uid="SettingsTitle" Text="Device Settings" Style="{ThemeResource TitleTextBlockStyle}" VerticalAlignment="Center"/>
+            <TextBlock x:Uid="SettingsTitle" Text="Device settings" Style="{ThemeResource TitleTextBlockStyle}" VerticalAlignment="Center"/>
         </StackPanel>
 
         <Rectangle Grid.Column="1" Grid.Row="1" Fill="Gray" Width="auto" Height="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
