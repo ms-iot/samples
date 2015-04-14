@@ -65,7 +65,9 @@ namespace AthensDefaultApp
                 return false;
             }
 
-            return ((await WiFiAdapter.FindAllAdaptersAsync()).Count > 0);
+            var adapters = await WiFiAdapter.FindAllAdaptersAsync();
+
+            return adapters.Count > 0;
         }
 
         private async Task<bool> UpdateInfo()
@@ -111,19 +113,24 @@ namespace AthensDefaultApp
         {
             var connectionProfiles = NetworkInformation.GetConnectionProfiles();
 
+            if (connectionProfiles.Count < 1)
+            {
+                return null;
+            }
+
             var validProfiles = connectionProfiles.Where(profile =>
             {
                 return (profile.NetworkAdapter != null && profile.NetworkAdapter.IanaInterfaceType == WifiIanaType);
             });
 
-            var firstProfile = validProfiles.First() as ConnectionProfile;
-
-            if (firstProfile == null)
+            if (validProfiles.Count() < 1)
             {
                 return null;
             }
 
-            return networkNameToInfo.Keys.First(wifiNetwork => wifiNetwork.Ssid.Equals(firstProfile.ProfileName) );
+            var firstProfile = validProfiles.First() as ConnectionProfile;
+
+            return networkNameToInfo.Keys.First(wifiNetwork => wifiNetwork.Ssid.Equals(firstProfile.ProfileName));
         }
 
         public async Task<bool> ConnectToNetwork(WiFiAvailableNetwork network, bool autoConnect)

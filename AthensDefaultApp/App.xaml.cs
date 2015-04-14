@@ -32,7 +32,7 @@ namespace AthensDefaultApp
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
 
 /*#if DEBUG
@@ -70,13 +70,15 @@ namespace AthensDefaultApp
                 // configuring the new page by passing required information as a navigation
                 // parameter
 
-                if (ApplicationData.Current.LocalSettings.Values.ContainsKey(Constants.HasDoneOOBEKey))
+                var wifiIsAvailable = await NetworkPresenter.WifiIsAvailable();
+
+                if (ApplicationData.Current.LocalSettings.Values.ContainsKey(Constants.HasDoneOOBEKey) || !wifiIsAvailable)
                 {
                     rootFrame.Navigate(typeof(MainPage), e.Arguments);
                 }
                 else
                 {
-                    rootFrame.Navigate(typeof(OOBEWelcome), e.Arguments);
+                    rootFrame.Navigate(typeof(OOBENetwork), e.Arguments);
                 }
                 
             }

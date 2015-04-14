@@ -74,6 +74,9 @@ namespace AthensDefaultApp
             }
 
             TimeZoneSettings.ChangeTimeZoneByDisplayName(timeZone);
+
+            // "Workaround" to flush TimeZoneInfo cache. Yes, this really works.
+            TimeZoneInfo.ConvertTime(DateTime.MinValue, TimeZoneInfo.Local); 
         }
     }
 }

@@ -69,7 +69,6 @@
     <Style x:Key="AthensDefaultAppAthensTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
         <Setter Property="FontWeight" Value="SemiLight"/>
         <Setter Property="FontSize" Value="18"/>
-        <Setter Property="Foreground" Value="White"/>
     </Style>
 
     <Style x:Key="AthensDefaultAppBodyTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
@@ -279,7 +278,7 @@
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckGlyph"
                                                                    Storyboard.TargetProperty="Fill">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlTextBrush}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="White" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="IndeterminateGlyph"
                                                                    Storyboard.TargetProperty="Fill">
@@ -383,7 +382,7 @@
                                        Width="21" />
                                 <Path x:Name="CheckGlyph"
                                   Data="F1 M 0,58 L 2,56 L 6,60 L 13,51 L 15,53 L 6,64 z"
-                                  Fill="{ThemeResource SystemControlTextBrush}"
+                                  Fill="White"
                                   Height="14"
                                   Stretch="Fill"
                                   Width="16"

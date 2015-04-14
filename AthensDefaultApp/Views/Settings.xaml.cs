@@ -106,20 +106,30 @@ namespace AthensDefaultApp
         {
             networkPresenter = new NetworkPresenter();
 
-            if (!await NetworkPresenter.WifiIsAvailable())
+            if (await NetworkPresenter.WifiIsAvailable())
             {
-                return;
+                var networks = await networkPresenter.GetAvailableNetworks();
+
+                if (networks.Count > 0)
+                {
+                    WifiListView.ItemsSource = networks;
+                    var connectedNetwork = networkPresenter.GetCurrentWifiNetwork();
+
+                    if (connectedNetwork != null)
+                    {
+                        var connectedListItem = WifiListView.ContainerFromItem(connectedNetwork) as ListViewItem;
+                        connectedListItem.ContentTemplate = WifiConnectedState;
+                    }
+
+                    NoWifiFoundText.Visibility = Visibility.Collapsed;
+                    WifiListView.Visibility = Visibility.Visible;
+
+                    return;
+                }
             }
 
-            WifiListView.ItemsSource = await networkPresenter.GetAvailableNetworks();
-
-            var connectedNetwork = networkPresenter.GetCurrentWifiNetwork();
-
-            if (connectedNetwork != null)
-            {
-                var connectedListItem = WifiListView.ContainerFromItem(connectedNetwork) as ListViewItem;
-                connectedListItem.ContentTemplate = WifiConnectedState;
-            }
+            NoWifiFoundText.Visibility = Visibility.Visible;
+            WifiListView.Visibility = Visibility.Collapsed;
         }
 
         private void WifiListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -146,15 +156,15 @@ namespace AthensDefaultApp
             var network = button.DataContext as WiFiAvailableNetwork;
             if (NetworkPresenter.IsNetworkOpen(network))
             {
-                ConnectToWifi(button, network, null, Window.Current.Dispatcher);
+                ConnectToWifi(network, null, Window.Current.Dispatcher);
             }
             else
             {
-                SwitchToItemState(button, WifiPasswordState);
+                SwitchToItemState(network, WifiPasswordState);
             }
         }
 
-        private async void ConnectToWifi(Button button, WiFiAvailableNetwork network, PasswordCredential credential, CoreDispatcher dispatcher)
+        private async void ConnectToWifi(WiFiAvailableNetwork network, PasswordCredential credential, CoreDispatcher dispatcher)
         {
             var didConnect = credential == null ?
                 networkPresenter.ConnectToNetwork(network, Automatic) :
@@ -162,22 +172,22 @@ namespace AthensDefaultApp
 
             await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                SwitchToItemState(button, WifiConnectingState);
+                SwitchToItemState(network, WifiConnectingState);
             });
 
             DataTemplate nextState = (await didConnect) ? WifiConnectedState : WifiInitialState;
 
             await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                var item = SwitchToItemState(button, nextState);
+                var item = WifiListView.ContainerFromItem(network) as ListViewItem;
                 item.IsSelected = false;
+                item.ContentTemplate = nextState;
             });
         }
 
         private void NextButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
             var button = sender as Button;
-
             PasswordCredential credential;
 
             if (string.IsNullOrEmpty(CurrentPassword))
@@ -193,18 +203,19 @@ namespace AthensDefaultApp
             }
 
             var network = button.DataContext as WiFiAvailableNetwork;
-            ConnectToWifi(button, network, credential, Window.Current.Dispatcher);
+            ConnectToWifi(network, credential, Window.Current.Dispatcher);
         }
 
         private void CancelButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            var item = SwitchToItemState(sender as Button, WifiInitialState);
+            var button = sender as Button;
+            var item = SwitchToItemState(button.DataContext, WifiInitialState);
             item.IsSelected = false;
         }
 
-        private ListViewItem SwitchToItemState(Button sender, DataTemplate template)
+        private ListViewItem SwitchToItemState(object dataContext, DataTemplate template)
         {
-            var item = WifiListView.ContainerFromItem(sender.DataContext) as ListViewItem;
+            var item = WifiListView.ContainerFromItem(dataContext) as ListViewItem;
             item.ContentTemplate = template;
 
             return item;
