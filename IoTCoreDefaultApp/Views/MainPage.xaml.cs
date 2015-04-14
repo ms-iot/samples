@@ -12,7 +12,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
-namespace AthensDefaultApp
+namespace IoTCoreDefaultApp
 {
     public sealed partial class MainPage : Page
     {

@@ -7,7 +7,7 @@ using Windows.Networking;
 using Windows.Networking.Connectivity;
 using Windows.Security.Credentials;
 
-namespace AthensDefaultApp
+namespace IoTCoreDefaultApp
 {
     public class NetworkPresenter
     {

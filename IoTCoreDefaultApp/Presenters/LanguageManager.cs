@@ -5,7 +5,7 @@ using Windows.Globalization;
 using Windows.System;
 using Windows.System.UserProfile;
 
-namespace AthensDefaultApp
+namespace IoTCoreDefaultApp
 {
     public class LanguageManager
     {

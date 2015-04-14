@@ -8,8 +8,8 @@
     <ProjectGuid>{7BBB6CA3-2480-4F57-A4BC-D2D5ED9CD6D9}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AthensDefaultApp</RootNamespace>
-    <AssemblyName>AthensDefaultApp</AssemblyName>
+    <RootNamespace>IotCoreDefaultApp</RootNamespace>
+    <AssemblyName>IotCoreDefaultApp</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10058.0</TargetPlatformVersion>

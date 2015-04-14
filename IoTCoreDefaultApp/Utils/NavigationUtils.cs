@@ -2,7 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace AthensDefaultApp
+namespace IoTCoreDefaultApp
 {
     public static class NavigationUtils
     {

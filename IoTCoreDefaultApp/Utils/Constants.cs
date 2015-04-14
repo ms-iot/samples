@@ -1,4 +1,4 @@
-﻿namespace AthensDefaultApp
+﻿namespace IoTCoreDefaultApp
 {
     public static class Constants
     {
