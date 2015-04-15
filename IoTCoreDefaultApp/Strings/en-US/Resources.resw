@@ -117,12 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AthensHeader.Text" xml:space="preserve">
+  <data name="IoTCoreHeader.Text" xml:space="preserve">
     <value>Windows 10 IoT Core Insider Preview</value>
     <comment>The Operating System Name</comment>
   </data>
   <data name="GenericBoardName" xml:space="preserve">
-    <value>Athens Board</value>
+    <value>IoTCore Board</value>
     <comment>A generic board name</comment>
   </data>
   <data name="MainPageDeviceName.Text" xml:space="preserve">

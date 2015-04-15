@@ -1,7 +1,7 @@
 ﻿using System;
 using Windows.UI.Xaml.Data;
 
-namespace AthensDefaultApp
+namespace IoTCoreDefaultApp
 {
     public class WifiGlyphConverter : IValueConverter
     {

@@ -8,14 +8,14 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="AthensDefaultApp"
+    Name="IoTCoreDefaultApp"
     Publisher="CN=Test"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="6803bb24-895c-48b4-915c-13e4ea5d023e" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>AthensDefaultApp</DisplayName>
+    <DisplayName>IoTCoreDefaultApp</DisplayName>
     <PublisherDisplayName>Test</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -31,12 +31,12 @@
   <Applications>
     <Application Id="App"
       Executable="$targetnametoken$.exe"
-      EntryPoint="AthensDefaultApp.App">
+      EntryPoint="IoTCoreDefaultApp.App">
       <uap:VisualElements
-        DisplayName="AthensDefaultApp"
+        DisplayName="IoTCoreDefaultApp"
         Square150x150Logo="Assets\Logo.png"
         Square44x44Logo="Assets\SmallLogo.png"
-        Description="AthensDefaultApp"
+        Description="IoTCoreDefaultApp"
         BackgroundColor="#464646">
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>

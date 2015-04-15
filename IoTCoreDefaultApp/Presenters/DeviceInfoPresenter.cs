@@ -5,7 +5,7 @@ using System.Linq;
 using Windows.Networking;
 using Windows.Networking.Connectivity;
 
-namespace AthensDefaultApp
+namespace IoTCoreDefaultApp
 {
     public static class DeviceInfoPresenter
     {
