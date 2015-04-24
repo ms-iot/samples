@@ -9,10 +9,10 @@ gpio.setup(led_pin, gpio.OUT, gpio.PUD_OFF, gpio.HIGH)
 while True:
     if ledstatus == 0:
         ledstatus = 1
-        gpio.output(gpio.HIGH)
+        gpio.output(led_pin, gpio.HIGH)
     else:
         ledstatus = 0
-        gpio.output(gpio.LOW)
+        gpio.output(led_pin, gpio.LOW)
 
     time.sleep(0.5)
 
