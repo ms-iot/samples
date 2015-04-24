@@ -53,13 +53,13 @@
       <Name>_wingpio.pyd</Name>
       <PythonExtension>windevices\ARM\_wingpio.pyd</PythonExtension>
     </Reference>
-    <Reference Include="windevices\x86\_wingpio_d.pyd" Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <Reference Include="windevices\Win32\_wingpio_d.pyd" Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
       <Name>_wingpio_d.pyd</Name>
-      <PythonExtension>windevices\x86\_wingpio_d.pyd</PythonExtension>
+      <PythonExtension>windevices\Win32\_wingpio_d.pyd</PythonExtension>
     </Reference>
-    <Reference Include="windevices\x86\_wingpio.pyd" Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <Reference Include="windevices\Win32\_wingpio.pyd" Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
       <Name>_wingpio.pyd</Name>
-      <PythonExtension>windevices\x86\_wingpio.pyd</PythonExtension>
+      <PythonExtension>windevices\Win32\_wingpio.pyd</PythonExtension>
     </Reference>
   </ItemGroup>
   <PropertyGroup>
