@@ -200,7 +200,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <SDKReference Include="WindowsIoT, Version=10.0.10065.0" />
+    <SDKReference Include="WindowsIoT, Version=10.0.10069.0" />
   </ItemGroup>
 
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
