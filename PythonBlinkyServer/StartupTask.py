@@ -1,7 +1,6 @@
 import http.server
 import socketserver
 import _wingpio as gpio
-import time
 
 led_pin = 5
 led_status = gpio.HIGH
