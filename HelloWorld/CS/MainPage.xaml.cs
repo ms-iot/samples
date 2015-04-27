@@ -1,4 +1,4 @@
-// © Copyright (C) Microsoft. All rights reserved.
+﻿// © Copyright (C) Microsoft. All rights reserved.
 
 
 using System;
@@ -32,7 +32,7 @@ namespace HelloWorld
 
         private void ClickMe_Click(object sender, RoutedEventArgs e)
         {
-            HelloMessage.Text = "Hello, Athens!";
+            HelloMessage.Text = "Hello, Windows 10 IoT Core!";
         }
     }
 }
