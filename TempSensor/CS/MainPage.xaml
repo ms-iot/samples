@@ -1,0 +1,16 @@
+﻿<Page
+    x:Class="TempSensor.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TempSensor"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock x:Name="GpioStatus" Text="Waiting for GPIO to be initialized" Margin="10,30,10,10" TextAlignment="Center" FontSize="26.667" />
+            <TextBlock x:Name="textPlaceHolder" Text="Show Values Here" Margin="10,50,10,10" TextAlignment="Center" FontSize="26.667" />
+        </StackPanel>
+    </Grid>
+</Page>
