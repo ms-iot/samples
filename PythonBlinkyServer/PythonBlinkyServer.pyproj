@@ -46,25 +46,25 @@
     </AppxManifest>
     <None Include="PythonBlinkyServer_TemporaryKey.pfx" />
   </ItemGroup>
-	<ItemGroup>
-		<Reference Include="windevices\ARM\_wingpio_d.pyd" Condition=" '$(Configuration)|$(Platform)' == 'Debug|ARM' ">
-			<Name>_wingpio_d.pyd</Name>
-			<PythonExtension>windevices\ARM\_wingpio_d.pyd</PythonExtension>
-		</Reference>
-		<Reference Include="windevices\ARM\_wingpio.pyd" Condition=" '$(Configuration)|$(Platform)' == 'Release|ARM' ">
-			<Name>_wingpio.pyd</Name>
-			<PythonExtension>windevices\ARM\_wingpio.pyd</PythonExtension>
-		</Reference>
-		<Reference Include="windevices\Win32\_wingpio_d.pyd" Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-			<Name>_wingpio_d.pyd</Name>
-			<PythonExtension>windevices\Win32\_wingpio_d.pyd</PythonExtension>
-		</Reference>
-		<Reference Include="windevices\Win32\_wingpio.pyd" Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-			<Name>_wingpio.pyd</Name>
-			<PythonExtension>windevices\Win32\_wingpio.pyd</PythonExtension>
-		</Reference>
-	</ItemGroup>
-	<PropertyGroup>
+  <ItemGroup>
+    <Reference Include="windevices\ARM\_wingpio_d.pyd" Condition=" '$(Configuration)|$(Platform)' == 'Debug|ARM' ">
+      <Name>_wingpio_d.pyd</Name>
+      <PythonExtension>windevices\ARM\_wingpio_d.pyd</PythonExtension>
+    </Reference>
+    <Reference Include="windevices\ARM\_wingpio.pyd" Condition=" '$(Configuration)|$(Platform)' == 'Release|ARM' ">
+      <Name>_wingpio.pyd</Name>
+      <PythonExtension>windevices\ARM\_wingpio.pyd</PythonExtension>
+    </Reference>
+    <Reference Include="windevices\Win32\_wingpio_d.pyd" Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+      <Name>_wingpio_d.pyd</Name>
+      <PythonExtension>windevices\Win32\_wingpio_d.pyd</PythonExtension>
+    </Reference>
+    <Reference Include="windevices\Win32\_wingpio.pyd" Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+      <Name>_wingpio.pyd</Name>
+      <PythonExtension>windevices\Win32\_wingpio.pyd</PythonExtension>
+    </Reference>
+  </ItemGroup>
+  <PropertyGroup>
     <CPythonTargetsFile>$(LocalAppData)\Microsoft\VisualStudio\$(VisualStudioVersion)Exp\Extensions\Microsoft\Python UAP\3.5\DesignTime\CommonConfiguration\Neutral\CPython.targets</CPythonTargetsFile>
     <CPythonTargetsFile Condition="'$(CPythonTargetsFile)' == '' or !Exists('$(CPythonTargetsFile)')">$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v10.0\ExtensionSDKs\PyUAP\3.5\DesignTime\CommonConfiguration\Neutral\CPython.targets</CPythonTargetsFile>
   </PropertyGroup>
