@@ -1,0 +1,129 @@
+NAME
+    _winspi - SPI functionality of a Windows 10 IoT Core device
+
+CLASSES
+    builtins.object
+        spibusinfo
+        spidevice
+    
+    class spibusinfo(builtins.object)
+     |  spibusinfo(friendlyname) -> spibusinfo
+     |  
+     |  Creates a new instance of a SPI bus info object
+     |  
+     |  Methods defined here:
+     |  
+     |  __getattribute__(self, name, /)
+     |      Return getattr(self, name).
+     |  
+     |  __init__(self, /, *args, **kwargs)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |  
+     |  __new__(*args, **kwargs) from builtins.type
+     |      Create and return a new object.  See help(type) for accurate signature.
+     |  
+     |  chipselectlinecount(...)
+     |      chipselectlinecount() -> int
+     |      
+     |      Retrieves the chip select line count for the SPI bus
+     |  
+     |  maxclockfrequency(...)
+     |      maxclockfrequency() -> int
+     |      
+     |      Retrieves the max clock frequency for the SPI bus
+     |  
+     |  minclockfrequency(...)
+     |      minclockfrequency() -> int
+     |      
+     |      Retrieves the min clock frequency for the SPI bus
+     |  
+     |  supporteddatalengthbits(...)
+     |      supporteddatalengthbits() -> list(int)
+     |      
+     |      Retrieves the supported data length bits for the SPI bus
+    
+    class spidevice(builtins.object)
+     |  spidevice(friendlyname, chipselectline, clockfrequency=<default>, databitlength=<default>, mode=MODE0, sharingmode=EXCLUSIVEMODE) -> spidevice
+     |  
+     |  Creates a new instance of SPI device
+     |  
+     |  Methods defined here:
+     |  
+     |  __getattribute__(self, name, /)
+     |      Return getattr(self, name).
+     |  
+     |  __init__(self, /, *args, **kwargs)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |  
+     |  __new__(*args, **kwargs) from builtins.type
+     |      Create and return a new object.  See help(type) for accurate signature.
+     |  
+     |  chipselectline(...)
+     |      chipselectline() -> int
+     |      
+     |      Retrieves the chip select line for the SPI device
+     |  
+     |  clockfrequency(...)
+     |      clockfrequency() -> int
+     |      
+     |      Retrieves the clock frequency for the SPI device
+     |  
+     |  databitlength(...)
+     |      databitlength() -> int
+     |      
+     |      Retrieves the data bit length for the SPI device
+     |  
+     |  deviceid(...)
+     |      deviceid() -> string
+     |      
+     |      Retrieves the device id for the SPI device
+     |  
+     |  mode(...)
+     |      mode() -> int (MODE0,MODE1,MODE2 or MODE3)
+     |      
+     |      Retrieves the mode for the SPI device
+     |  
+     |  read(...)
+     |      read(count) -> bytes
+     |      
+     |      Reads from the device the specified number of bytes
+     |      
+     |      count=Number of bytes to read
+     |  
+     |  sharingmode(...)
+     |      sharingmode() -> int (EXCLUSIVEMODE or SHAREDMODE)
+     |      
+     |      Retrieves the sharing mode for the SPI device
+     |  
+     |  transfer(...)
+     |      transfer(bytes, count) -> bytes
+     |      
+     |      Writes the bytes to the device and reads the expected number of bytes in full duplex
+     |      
+     |      bytes=Byte array to be written to the device
+     |  
+     |  transfersequential(...)
+     |      transfersequential(bytes, count) -> bytes
+     |      
+     |      Writes the bytes to the device and reads the expected number of bytes in sequential mode
+     |      
+     |      bytes=Byte array to be written to the device
+     |  
+     |  write(...)
+     |      write(bytes)
+     |      
+     |      Writes the bytes to the device
+     |      
+     |      bytes=Byte array to be written to the device
+
+DATA
+    EXCLUSIVEMODE = 0
+    MODE0 = 0
+    MODE1 = 1
+    MODE2 = 2
+    MODE3 = 3
+    SHAREDMODE = 1
+
+FILE
+    _winspi_d.pyd
+
