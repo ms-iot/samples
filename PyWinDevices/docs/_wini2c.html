@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module _wini2c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>_wini2c</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:_wini2c_d.pyd">_wini2c_d.pyd</a></font></td></tr></table>
+    <p><tt>I2C&nbsp;functionality&nbsp;of&nbsp;a&nbsp;Windows&nbsp;10&nbsp;IoT&nbsp;Core&nbsp;device</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="_wini2c.html#i2cdevice">i2cdevice</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="i2cdevice">class <strong>i2cdevice</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#i2cdevice">i2cdevice</a>(friendlyname,&nbsp;slaveaddress,&nbsp;busspeed=STANDARDSPEED,&nbsp;sharingmode=EXCLUSIVEMODE)&nbsp;-&gt;&nbsp;<a href="#i2cdevice">i2cdevice</a><br>
+&nbsp;<br>
+Creates&nbsp;a&nbsp;new&nbsp;instance&nbsp;of&nbsp;an&nbsp;I2C&nbsp;device<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="i2cdevice-__getattribute__"><strong>__getattribute__</strong></a>(self, name, /)</dt><dd><tt>Return&nbsp;getattr(self,&nbsp;name).</tt></dd></dl>
+
+<dl><dt><a name="i2cdevice-__init__"><strong>__init__</strong></a>(self, /, *args, **kwargs)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="i2cdevice-__new__"><strong>__new__</strong></a>(*args, **kwargs)<font color="#909090"><font face="helvetica, arial"> from <a href="builtins.html#type">builtins.type</a></font></font></dt><dd><tt>Create&nbsp;and&nbsp;return&nbsp;a&nbsp;new&nbsp;<a href="builtins.html#object">object</a>.&nbsp;&nbsp;See&nbsp;help(type)&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="i2cdevice-busspeed"><strong>busspeed</strong></a>(...)</dt><dd><tt><a href="#i2cdevice-busspeed">busspeed</a>()&nbsp;-&gt;&nbsp;int&nbsp;(FASTSPEED&nbsp;or&nbsp;STANDARDSPEED)<br>
+&nbsp;<br>
+Retrieves&nbsp;the&nbsp;bus&nbsp;speed&nbsp;for&nbsp;the&nbsp;I2C&nbsp;device</tt></dd></dl>
+
+<dl><dt><a name="i2cdevice-deviceid"><strong>deviceid</strong></a>(...)</dt><dd><tt><a href="#i2cdevice-deviceid">deviceid</a>()&nbsp;-&gt;&nbsp;string<br>
+&nbsp;<br>
+Retrieves&nbsp;the&nbsp;device&nbsp;id&nbsp;for&nbsp;the&nbsp;I2C&nbsp;device</tt></dd></dl>
+
+<dl><dt><a name="i2cdevice-read"><strong>read</strong></a>(...)</dt><dd><tt><a href="#i2cdevice-read">read</a>(count)&nbsp;-&gt;&nbsp;bytes<br>
+&nbsp;<br>
+Reads&nbsp;from&nbsp;the&nbsp;device&nbsp;the&nbsp;specified&nbsp;number&nbsp;of&nbsp;bytes<br>
+&nbsp;<br>
+count=Number&nbsp;of&nbsp;bytes&nbsp;to&nbsp;read</tt></dd></dl>
+
+<dl><dt><a name="i2cdevice-sharingmode"><strong>sharingmode</strong></a>(...)</dt><dd><tt><a href="#i2cdevice-sharingmode">sharingmode</a>()&nbsp;-&gt;&nbsp;int&nbsp;(EXCLUSIVEMODE&nbsp;or&nbsp;SHAREDMODE)<br>
+&nbsp;<br>
+Retrieves&nbsp;the&nbsp;sharing&nbsp;mode&nbsp;for&nbsp;the&nbsp;I2C&nbsp;device</tt></dd></dl>
+
+<dl><dt><a name="i2cdevice-slaveaddress"><strong>slaveaddress</strong></a>(...)</dt><dd><tt><a href="#i2cdevice-slaveaddress">slaveaddress</a>()&nbsp;-&gt;&nbsp;int<br>
+&nbsp;<br>
+Retrieves&nbsp;the&nbsp;slave&nbsp;address&nbsp;for&nbsp;the&nbsp;I2C&nbsp;device</tt></dd></dl>
+
+<dl><dt><a name="i2cdevice-write"><strong>write</strong></a>(...)</dt><dd><tt><a href="#i2cdevice-write">write</a>(bytes)<br>
+&nbsp;<br>
+Writes&nbsp;the&nbsp;bytes&nbsp;to&nbsp;the&nbsp;device<br>
+&nbsp;<br>
+bytes=Byte&nbsp;array&nbsp;to&nbsp;be&nbsp;written&nbsp;to&nbsp;the&nbsp;device</tt></dd></dl>
+
+<dl><dt><a name="i2cdevice-writeread"><strong>writeread</strong></a>(...)</dt><dd><tt><a href="#i2cdevice-writeread">writeread</a>(bytes,&nbsp;count)&nbsp;-&gt;&nbsp;bytes<br>
+&nbsp;<br>
+Writes&nbsp;the&nbsp;bytes&nbsp;to&nbsp;the&nbsp;device&nbsp;and&nbsp;reads&nbsp;the&nbsp;expected&nbsp;number&nbsp;of&nbsp;bytes<br>
+&nbsp;<br>
+bytes=Byte&nbsp;array&nbsp;to&nbsp;be&nbsp;written&nbsp;to&nbsp;the&nbsp;device</tt></dd></dl>
+
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>EXCLUSIVEMODE</strong> = 0<br>
+<strong>FASTSPEED</strong> = 1<br>
+<strong>SHAREDMODE</strong> = 1<br>
+<strong>STANDARDSPEED</strong> = 0</td></tr></table>
+</body></html>
