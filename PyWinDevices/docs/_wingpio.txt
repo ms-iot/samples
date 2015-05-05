@@ -1,0 +1,76 @@
+NAME
+    _wingpio - GPIO functionality of a Windows 10 IoT Core device
+
+FUNCTIONS
+    add_event_callback(...)
+        Add a callback for an event already defined using add_event_detect()
+        channel = A pin number.
+        callback = A callback function to be added.
+    
+    add_event_detect(...)
+        Enable edge detection events for a particular GPIO channel.
+        channel = A pin number.
+        edge = RISING, FALLING or BOTH
+        [callback] = A callback function for the event (optional)
+        [bouncetime] = Switch bounce timeout in ms for callback
+    
+    cleanup(...)
+        cleanup(channel=None)
+        
+        Resets GPIO channels specified or all if none specified
+        
+        channel=A single channel or list of channels to cleanup
+    
+    event_detected(...)
+        Returns True if an edge has occured on a given GPIO.  You need to enable edge detection using add_event_detect() first.
+        channel = A pin number.
+    
+    input(...)
+        input(channel) -> HIGH/LOW
+        
+        Gets the current state of the GPIO pin specified
+        
+        channel=A single pin number
+    
+    output(...)
+        output(channels, values)
+        
+        Outputs to GPIO pins the corresponding values specified
+        
+        channels - A single channel or list of channel pins
+        
+        values - HIGH or LOW for every corresponding channel
+    
+    remove_event_detect(...)
+        Remove edge detection for a particular GPIO channel
+        channel = A pin number.
+    
+    setup(...)
+        setup(channel(s), direction, pull_up_down=PUD_OFF, initial=None)
+        
+        Setup a GPIO channel or multiple GPIO channels for use.
+        channel(s) is a single channel pin number or list of channel
+        pins to setup.
+        
+        direction is either IN or OUT depending on how the pins are used
+        
+        pull_up_down is either PUD_OFF, PUD_UP or PUD_DOWN.
+        
+        initial is an initial value (HIGH or LOW) for the pin after setup
+
+DATA
+    BOTH = 3
+    FALLING = 2
+    HIGH = 1
+    IN = 1
+    LOW = 0
+    OUT = 0
+    PUD_DOWN = 1
+    PUD_OFF = 0
+    PUD_UP = 2
+    RISING = 1
+    pincount = <dependent on device>
+
+FILE
+    _wingpio_d.pyd
+

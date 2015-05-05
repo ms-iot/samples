@@ -1,0 +1,73 @@
+NAME
+    _wini2c - I2C functionality of a Windows 10 IoT Core device
+
+CLASSES
+    builtins.object
+        i2cdevice
+    
+    class i2cdevice(builtins.object)
+     |  i2cdevice(friendlyname, slaveaddress, busspeed=STANDARDSPEED, sharingmode=EXCLUSIVEMODE) -> i2cdevice
+     |  
+     |  Creates a new instance of an I2C device
+     |  
+     |  Methods defined here:
+     |  
+     |  __getattribute__(self, name, /)
+     |      Return getattr(self, name).
+     |  
+     |  __init__(self, /, *args, **kwargs)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |  
+     |  __new__(*args, **kwargs) from builtins.type
+     |      Create and return a new object.  See help(type) for accurate signature.
+     |  
+     |  busspeed(...)
+     |      busspeed() -> int (FASTSPEED or STANDARDSPEED)
+     |      
+     |      Retrieves the bus speed for the I2C device
+     |  
+     |  deviceid(...)
+     |      deviceid() -> string
+     |      
+     |      Retrieves the device id for the I2C device
+     |  
+     |  read(...)
+     |      read(count) -> bytes
+     |      
+     |      Reads from the device the specified number of bytes
+     |      
+     |      count=Number of bytes to read
+     |  
+     |  sharingmode(...)
+     |      sharingmode() -> int (EXCLUSIVEMODE or SHAREDMODE)
+     |      
+     |      Retrieves the sharing mode for the I2C device
+     |  
+     |  slaveaddress(...)
+     |      slaveaddress() -> int
+     |      
+     |      Retrieves the slave address for the I2C device
+     |  
+     |  write(...)
+     |      write(bytes)
+     |      
+     |      Writes the bytes to the device
+     |      
+     |      bytes=Byte array to be written to the device
+     |  
+     |  writeread(...)
+     |      writeread(bytes, count) -> bytes
+     |      
+     |      Writes the bytes to the device and reads the expected number of bytes
+     |      
+     |      bytes=Byte array to be written to the device
+
+DATA
+    EXCLUSIVEMODE = 0
+    FASTSPEED = 1
+    SHAREDMODE = 1
+    STANDARDSPEED = 0
+
+FILE
+    _wini2c_d.pyd
+
