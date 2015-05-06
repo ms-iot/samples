@@ -193,7 +193,7 @@
     <value>Hi there, welcome to the Windows IoT Core Insider Preview</value>
   </data>
   <data name="Rpi2Name" xml:space="preserve">
-    <value>Raspberry Pi II</value>
+    <value>Raspberry Pi 2</value>
   </data>
   <data name="SkipStep.Text" xml:space="preserve">
     <value>Skip this step</value>
