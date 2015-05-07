@@ -52,13 +52,13 @@ namespace IoTCoreDefaultApp
             return icp != null ? icp.ProfileName : null;
         }
 
-        public static string GetCurrentIpv4Address()
+        public static string GetCurrentIPAddress()
         {
             var icp = NetworkInformation.GetInternetConnectionProfile();
             if (icp != null && icp.NetworkAdapter != null && icp.NetworkAdapter.NetworkAdapterId != null)
             {
+                var ipaddr = String.Empty;
                 var name = icp.ProfileName;
-
                 var hostnames = NetworkInformation.GetHostNames();
 
                 foreach (var hn in hostnames)
@@ -67,9 +67,10 @@ namespace IoTCoreDefaultApp
                         hn.IPInformation.NetworkAdapter != null &&
                         hn.IPInformation.NetworkAdapter.NetworkAdapterId != null &&
                         hn.IPInformation.NetworkAdapter.NetworkAdapterId == icp.NetworkAdapter.NetworkAdapterId &&
-                        hn.Type == HostNameType.Ipv4)
+                        (hn.Type == HostNameType.Ipv4 || hn.Type == HostNameType.Ipv6))
                     {
-                        return hn.CanonicalName;
+                        ipaddr += hn.CanonicalName + "\n";
+                        return ipaddr.Trim();
                     }
                 }
             }

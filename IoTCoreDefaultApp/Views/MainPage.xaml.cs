@@ -97,7 +97,7 @@ namespace IoTCoreDefaultApp
         private void UpdateNetworkInfo()
         {
             this.DeviceName.Text = DeviceInfoPresenter.GetDeviceName();
-            this.IPAddress1.Text = NetworkPresenter.GetCurrentIpv4Address();
+            this.IPAddress1.Text = NetworkPresenter.GetCurrentIPAddress();
             this.NetworkName1.Text = NetworkPresenter.GetCurrentNetworkName() ?? "Not connected";
         }
 
