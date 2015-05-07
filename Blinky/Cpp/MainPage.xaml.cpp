@@ -73,13 +73,6 @@ void MainPage::InitGPIO()
 	}
 
 	pin_ = gpio->OpenPin(LED_PIN);
-
-	if (pin_ == nullptr)
-	{
-		GpioStatus->Text = "There were problems initializing the GPIO pin.";
-		return;
-	}
-
 	pin_->Write(GpioPinValue::High);
 	pin_->SetDriveMode(GpioPinDriveMode::Output);
 

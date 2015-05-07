@@ -78,12 +78,6 @@ void StartupTask::InitGpio()
 	}
 
 	pin = gpio->OpenPin(LED_PIN);
-
-	if (pin == nullptr)
-	{
-		return;
-	}
-
 	pin->Write(GpioPinValue::High);
 	pin->SetDriveMode(GpioPinDriveMode::Output);
 }
