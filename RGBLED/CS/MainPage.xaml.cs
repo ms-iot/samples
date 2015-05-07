@@ -61,16 +61,9 @@ namespace RGBLED
                 return;
             }
 
-           redpin = gpio.OpenPin(REDLED_PIN);
-           bluepin = gpio.OpenPin(BLUELED_PIN);
-           greenpin = gpio.OpenPin(GREENLED_PIN);
-
-            // Show an error if the pin wasn't initialized properly
-            if (redpin == null || bluepin == null || greenpin == null)
-            {
-                GpioStatus.Text = "There were problems initializing the GPIO red/blue/green pin.";
-                return;
-            }
+            redpin = gpio.OpenPin(REDLED_PIN);
+            bluepin = gpio.OpenPin(BLUELED_PIN);
+            greenpin = gpio.OpenPin(GREENLED_PIN);
 
             redpin.Write(GpioPinValue.High);
             redpin.SetDriveMode(GpioPinDriveMode.Output);
