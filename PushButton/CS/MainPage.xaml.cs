@@ -61,20 +61,9 @@ namespace PushButton
             }
             pushButton = gpio.OpenPin(PB_PIN);
             pin = gpio.OpenPin(LED_PIN);
-
-            // Show an error if the pin wasn't initialized properly
-            if (pin == null)
-            {
-                GpioStatus.Text = "There were problems initializing the GPIO LED pin.";
-                return;
-            }
-            if (pushButton == null)
-            {
-                GpioStatus.Text = "There were problems initializing the GPIO Push Button pin.";
-                return;
-            }
-
+            
             pushButton.SetDriveMode(GpioPinDriveMode.Input);
+            pin.Write(GpioPinValue.Low);
             pin.SetDriveMode(GpioPinDriveMode.Output);
 
             GpioStatus.Text = "GPIO pin initialized correctly.";

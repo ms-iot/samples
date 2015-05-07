@@ -58,12 +58,6 @@ namespace BlinkyHeadlessCS
             }
 
             pin = gpio.OpenPin(LED_PIN);
-
-            if (pin == null)
-            {
-                return;
-            }
-
             pin.Write(GpioPinValue.High);
             pin.SetDriveMode(GpioPinDriveMode.Output);
         }
