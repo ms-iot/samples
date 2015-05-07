@@ -70,11 +70,10 @@ namespace IoTCoreDefaultApp
                         (hn.Type == HostNameType.Ipv4 || hn.Type == HostNameType.Ipv6))
                     {
                         ipaddr += hn.CanonicalName + "\n";
-                        return ipaddr.Trim();
                     }
                 }
+                return ipaddr.Trim();
             }
-
             return "<no Internet connection>";
         }
 
