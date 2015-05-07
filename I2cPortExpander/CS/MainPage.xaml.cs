@@ -47,7 +47,6 @@ namespace I2cPortExpander
     public sealed partial class MainPage : Page
     {
         // use these constants for controlling how the I2C bus is setup
-        private const string I2C_CONTROLLER_NAME = "I2C1"; //specific to RPI2
         private const byte PORT_EXPANDER_I2C_ADDRESS = 0x20; // 7-bit I2C address of the port expander
         private const byte PORT_EXPANDER_IODIR_REGISTER_ADDRESS = 0x00; // IODIR register controls the direction of the GPIO on the port expander
         private const byte PORT_EXPANDER_GPIO_REGISTER_ADDRESS = 0x09; // GPIO register is used to read the pins input
@@ -87,19 +86,26 @@ namespace I2cPortExpander
             byte[] i2CWriteBuffer;
             byte[] i2CReadBuffer;
             byte bitMask;
-
+            
             // initialize I2C communications
-            try
+            string deviceSelector = I2cDevice.GetDeviceSelector();
+            var i2cDeviceControllers = await DeviceInformation.FindAllAsync(deviceSelector);
+            if (i2cDeviceControllers.Count == 0)
             {
-                var i2cSettings = new I2cConnectionSettings(PORT_EXPANDER_I2C_ADDRESS);
-                i2cSettings.BusSpeed = I2cBusSpeed.FastMode;
-                string deviceSelector = I2cDevice.GetDeviceSelector(I2C_CONTROLLER_NAME);
-                var i2cDeviceControllers = await DeviceInformation.FindAllAsync(deviceSelector);
-                i2cPortExpander = await I2cDevice.FromIdAsync(i2cDeviceControllers[0].Id, i2cSettings);
+                System.Diagnostics.Debug.WriteLine("No I2C controllers were found on this system.");
+                return;
             }
-            catch (Exception e)
+            
+            var i2cSettings = new I2cConnectionSettings(PORT_EXPANDER_I2C_ADDRESS);
+            i2cSettings.BusSpeed = I2cBusSpeed.FastMode;
+            i2cPortExpander = await I2cDevice.FromIdAsync(i2cDeviceControllers[0].Id, i2cSettings);
+            if (i2cPortExpander == null)
             {
-                System.Diagnostics.Debug.WriteLine("Exception: {0}", e.Message);
+                System.Diagnostics.Debug.WriteLine(
+                    "Slave address {0} is currently in use on {1}. " +
+                    "Please ensure that no other applications are using I2C.",
+                    i2cSettings.SlaveAddress,
+                    i2cDeviceControllers[0].Id);
                 return;
             }
 
