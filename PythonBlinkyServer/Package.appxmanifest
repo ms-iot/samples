@@ -41,7 +41,7 @@
         <uap:SplashScreen Image="SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
-        <Extension Category="windows.backgroundTasks" EntryPoint="pyuapbackgroundservice.StartupTask">
+        <Extension Category="windows.backgroundTasks" EntryPoint="pyuwpbackgroundservice.StartupTask">
           <BackgroundTasks>
             <iot:Task Type="startup"/>
           </BackgroundTasks>
@@ -59,8 +59,8 @@
   <Extensions>
     <Extension Category="windows.activatableClass.inProcessServer">
       <InProcessServer>
-        <Path>pyuapbackgroundservice.dll</Path>
-        <ActivatableClass ActivatableClassId="pyuapbackgroundservice.StartupTask" ThreadingModel="both" />
+        <Path>pyuwpbackgroundservice.dll</Path>
+        <ActivatableClass ActivatableClassId="pyuwpbackgroundservice.StartupTask" ThreadingModel="both" />
       </InProcessServer>
     </Extension>
   </Extensions>
