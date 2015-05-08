@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module _wingpio</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>_wingpio</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:_wingpio_d.pyd">_wingpio_d.pyd</a></font></td></tr></table>
+    <p><tt>GPIO&nbsp;functionality&nbsp;of&nbsp;a&nbsp;Windows&nbsp;10&nbsp;IoT&nbsp;Core&nbsp;device</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-add_event_callback"><strong>add_event_callback</strong></a>(...)</dt><dd><tt>Add&nbsp;a&nbsp;callback&nbsp;for&nbsp;an&nbsp;event&nbsp;already&nbsp;defined&nbsp;using&nbsp;<a href="#-add_event_detect">add_event_detect</a>()<br>
+channel&nbsp;=&nbsp;A&nbsp;pin&nbsp;number.<br>
+callback&nbsp;=&nbsp;A&nbsp;callback&nbsp;function&nbsp;to&nbsp;be&nbsp;added.</tt></dd></dl>
+ <dl><dt><a name="-add_event_detect"><strong>add_event_detect</strong></a>(...)</dt><dd><tt>Enable&nbsp;edge&nbsp;detection&nbsp;events&nbsp;for&nbsp;a&nbsp;particular&nbsp;GPIO&nbsp;channel.<br>
+channel&nbsp;=&nbsp;A&nbsp;pin&nbsp;number.<br>
+edge&nbsp;=&nbsp;RISING,&nbsp;FALLING&nbsp;or&nbsp;BOTH<br>
+[callback]&nbsp;=&nbsp;A&nbsp;callback&nbsp;function&nbsp;for&nbsp;the&nbsp;event&nbsp;(optional)<br>
+[bouncetime]&nbsp;=&nbsp;Switch&nbsp;bounce&nbsp;timeout&nbsp;in&nbsp;ms&nbsp;for&nbsp;callback</tt></dd></dl>
+ <dl><dt><a name="-cleanup"><strong>cleanup</strong></a>(...)</dt><dd><tt><a href="#-cleanup">cleanup</a>(channel=None)<br>
+&nbsp;<br>
+Resets&nbsp;GPIO&nbsp;channels&nbsp;specified&nbsp;or&nbsp;all&nbsp;if&nbsp;none&nbsp;specified<br>
+&nbsp;<br>
+channel=A&nbsp;single&nbsp;channel&nbsp;or&nbsp;list&nbsp;of&nbsp;channels&nbsp;to&nbsp;cleanup</tt></dd></dl>
+ <dl><dt><a name="-event_detected"><strong>event_detected</strong></a>(...)</dt><dd><tt>Returns&nbsp;True&nbsp;if&nbsp;an&nbsp;edge&nbsp;has&nbsp;occured&nbsp;on&nbsp;a&nbsp;given&nbsp;GPIO.&nbsp;&nbsp;You&nbsp;need&nbsp;to&nbsp;enable&nbsp;edge&nbsp;detection&nbsp;using&nbsp;<a href="#-add_event_detect">add_event_detect</a>()&nbsp;first.<br>
+channel&nbsp;=&nbsp;A&nbsp;pin&nbsp;number.</tt></dd></dl>
+ <dl><dt><a name="-input"><strong>input</strong></a>(...)</dt><dd><tt><a href="#-input">input</a>(channel)&nbsp;-&gt;&nbsp;HIGH/LOW<br>
+&nbsp;<br>
+Gets&nbsp;the&nbsp;current&nbsp;state&nbsp;of&nbsp;the&nbsp;GPIO&nbsp;pin&nbsp;specified<br>
+&nbsp;<br>
+channel=A&nbsp;single&nbsp;pin&nbsp;number</tt></dd></dl>
+ <dl><dt><a name="-output"><strong>output</strong></a>(...)</dt><dd><tt><a href="#-output">output</a>(channels,&nbsp;values)<br>
+&nbsp;<br>
+Outputs&nbsp;to&nbsp;GPIO&nbsp;pins&nbsp;the&nbsp;corresponding&nbsp;values&nbsp;specified<br>
+&nbsp;<br>
+channels&nbsp;-&nbsp;A&nbsp;single&nbsp;channel&nbsp;or&nbsp;list&nbsp;of&nbsp;channel&nbsp;pins<br>
+&nbsp;<br>
+values&nbsp;-&nbsp;HIGH&nbsp;or&nbsp;LOW&nbsp;for&nbsp;every&nbsp;corresponding&nbsp;channel</tt></dd></dl>
+ <dl><dt><a name="-remove_event_detect"><strong>remove_event_detect</strong></a>(...)</dt><dd><tt>Remove&nbsp;edge&nbsp;detection&nbsp;for&nbsp;a&nbsp;particular&nbsp;GPIO&nbsp;channel<br>
+channel&nbsp;=&nbsp;A&nbsp;pin&nbsp;number.</tt></dd></dl>
+ <dl><dt><a name="-setup"><strong>setup</strong></a>(...)</dt><dd><tt><a href="#-setup">setup</a>(channel(s),&nbsp;direction,&nbsp;pull_up_down=PUD_OFF,&nbsp;initial=None)<br>
+&nbsp;<br>
+Setup&nbsp;a&nbsp;GPIO&nbsp;channel&nbsp;or&nbsp;multiple&nbsp;GPIO&nbsp;channels&nbsp;for&nbsp;use.<br>
+channel(s)&nbsp;is&nbsp;a&nbsp;single&nbsp;channel&nbsp;pin&nbsp;number&nbsp;or&nbsp;list&nbsp;of&nbsp;channel<br>
+pins&nbsp;to&nbsp;setup.<br>
+&nbsp;<br>
+direction&nbsp;is&nbsp;either&nbsp;IN&nbsp;or&nbsp;OUT&nbsp;depending&nbsp;on&nbsp;how&nbsp;the&nbsp;pins&nbsp;are&nbsp;used<br>
+&nbsp;<br>
+pull_up_down&nbsp;is&nbsp;either&nbsp;PUD_OFF,&nbsp;PUD_UP&nbsp;or&nbsp;PUD_DOWN.<br>
+&nbsp;<br>
+initial&nbsp;is&nbsp;an&nbsp;initial&nbsp;value&nbsp;(HIGH&nbsp;or&nbsp;LOW)&nbsp;for&nbsp;the&nbsp;pin&nbsp;after&nbsp;setup</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>BOTH</strong> = 3<br>
+<strong>FALLING</strong> = 2<br>
+<strong>HIGH</strong> = 1<br>
+<strong>IN</strong> = 1<br>
+<strong>LOW</strong> = 0<br>
+<strong>OUT</strong> = 0<br>
+<strong>PUD_DOWN</strong> = 1<br>
+<strong>PUD_OFF</strong> = 0<br>
+<strong>PUD_UP</strong> = 2<br>
+<strong>RISING</strong> = 1<br>
+<strong>pincount</strong> = 54</td></tr></table>
+</body></html>
