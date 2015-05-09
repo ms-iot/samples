@@ -43,9 +43,9 @@ namespace I2CAccelerometer
 {
     struct Acceleration
     {
-        double X;
-        double Y;
-        double Z;
+        public double X;
+        public double Y;
+        public double Z;
     };
     
     /// <summary>
@@ -53,7 +53,7 @@ namespace I2CAccelerometer
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private const byte ACCEL_I2C_ADDR = 0x53;           /* 7-bit I2C address of the ADXL345      */
+        private const byte ACCEL_I2C_ADDR = 0x1D;           /* 7-bit I2C address of the ADXL345 with SDO pulled high */
         private const byte ACCEL_REG_POWER_CONTROL = 0x2D;  /* Address of the Power Control register */
         private const byte ACCEL_REG_DATA_FORMAT = 0x31;    /* Address of the Data Format register   */
         private const byte ACCEL_REG_X = 0x32;              /* Address of the X Axis data register   */
@@ -92,7 +92,7 @@ namespace I2CAccelerometer
                 Text_Status.Text = string.Format(
                     "Slave address {0} on I2C Controller {1} is currently in use by " +
                     "another application. Please ensure that no other applications are using I2C.",
-                    settings.SlaveAddres,
+                    settings.SlaveAddress,
                     dis[0].Id);
                 return;
             }
@@ -114,9 +114,9 @@ namespace I2CAccelerometer
                 I2CAccel.Write(WriteBuf_PowerControl);
             }
             /* If the write fails display the error and stop running */
-            catch (Exception)
+            catch (Exception ex)
             {
-                Text_Status.Text = "Status: Accelerometer initialization failed";
+                Text_Status.Text = "Failed to communicate with device: " + ex.Message;
                 return;
             }
 
@@ -166,8 +166,6 @@ namespace I2CAccelerometer
             const int ACCEL_RES = 1024;         /* The ADXL345 has 10 bit resolution giving 1024 unique values                     */
             const int ACCEL_DYN_RANGE_G = 8;    /* The ADXL345 had a total dynamic range of 8G, since we're configuring it to +-4G */
             const int UNITS_PER_G = ACCEL_RES / ACCEL_DYN_RANGE_G;  /* Ratio of raw int values to G units                          */
-     
-            Int16 AccelerationRawX, AccelerationRawY, AccelerationRawZ; /* Raw readings from the accelerometer */
 
             byte[] RegAddrBuf = new byte[] { ACCEL_REG_X }; /* Register address we want to read from                                         */
             byte[] ReadBuf = new byte[6];                   /* We read 6 bytes sequentially to get all 3 two-byte axes registers in one read */
@@ -176,15 +174,15 @@ namespace I2CAccelerometer
              * Read from the accelerometer 
              * We call WriteRead() so we first write the address of the X-Axis I2C register, then read all 3 axes
              */
-            I2CAccel.WriteRead(RegAddrBuf, ReadBuf);        
+            I2CAccel.WriteRead(RegAddrBuf, ReadBuf);
 
             /* 
              * In order to get the raw 16-bit data values, we need to concatenate two 8-bit bytes from the I2C read for each axis.
              * We accomplish this by using bit shift and logical OR operations
              */
-            AccelerationRawX = BitConverter.ToInt16(ReadBuf, 0);
-            AccelerationRawY = BitConverter.ToInt16(ReadBuf, 2);
-            AccelerationRawZ = BitConverter.ToInt16(ReadBuf, 4);
+            short AccelerationRawX = BitConverter.ToInt16(ReadBuf, 0);
+            short AccelerationRawY = BitConverter.ToInt16(ReadBuf, 2);
+            short AccelerationRawZ = BitConverter.ToInt16(ReadBuf, 4);
 
             /* Convert raw values to G's */
             Acceleration accel;
