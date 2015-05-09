@@ -92,7 +92,7 @@ namespace I2cPortExpander
             var i2cDeviceControllers = await DeviceInformation.FindAllAsync(deviceSelector);
             if (i2cDeviceControllers.Count == 0)
             {
-                System.Diagnostics.Debug.WriteLine("No I2C controllers were found on this system.");
+                ButtonStatusText.Text = "No I2C controllers were found on this system.";
                 return;
             }
             
@@ -101,7 +101,7 @@ namespace I2cPortExpander
             i2cPortExpander = await I2cDevice.FromIdAsync(i2cDeviceControllers[0].Id, i2cSettings);
             if (i2cPortExpander == null)
             {
-                System.Diagnostics.Debug.WriteLine(
+                ButtonStatusText.Text = string.Format(
                     "Slave address {0} is currently in use on {1}. " +
                     "Please ensure that no other applications are using I2C.",
                     i2cSettings.SlaveAddress,
@@ -141,28 +141,21 @@ namespace I2cPortExpander
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine("Exception: {0}", e.Message);
+                ButtonStatusText.Text = "Failed to initialize I2C port expander: " + e.Message;
                 return;
             }
 
             // setup our timers, one for the LED blink interval, the other for checking button status
-            try
-            {
-                ledTimer = new DispatcherTimer();
-                ledTimer.Interval = TimeSpan.FromMilliseconds(TIMER_INTERVAL);
-                ledTimer.Tick += LedTimer_Tick;
-                ledTimer.Start();
+            
+            ledTimer = new DispatcherTimer();
+            ledTimer.Interval = TimeSpan.FromMilliseconds(TIMER_INTERVAL);
+            ledTimer.Tick += LedTimer_Tick;
+            ledTimer.Start();
 
-                buttonStatusCheckTimer = new DispatcherTimer();
-                buttonStatusCheckTimer.Interval = TimeSpan.FromMilliseconds(BUTTON_STATUS_CHECK_TIMER_INTERVAL);
-                buttonStatusCheckTimer.Tick += ButtonStatusCheckTimer_Tick;
-                buttonStatusCheckTimer.Start();
-            }
-            catch (Exception e)
-            {
-                System.Diagnostics.Debug.WriteLine("Exception: {0}", e.Message);
-                return;
-            }
+            buttonStatusCheckTimer = new DispatcherTimer();
+            buttonStatusCheckTimer.Interval = TimeSpan.FromMilliseconds(BUTTON_STATUS_CHECK_TIMER_INTERVAL);
+            buttonStatusCheckTimer.Tick += ButtonStatusCheckTimer_Tick;
+            buttonStatusCheckTimer.Start();
         }
 
         private void MainPage_Unloaded(object sender, object args)
