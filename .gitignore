@@ -186,3 +186,4 @@ Blinky/Cpp/Generated Files/
 BlinkyHeadless/CPP/CppBlinkyStartup/Application/Generated Files/
 *.tlog
 PythonBlinkyServer/lib.zip/
+lib.zip/
