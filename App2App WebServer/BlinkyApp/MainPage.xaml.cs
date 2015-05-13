@@ -56,14 +56,6 @@ namespace BlinkyWebService
             }
 
             pin = gpio.OpenPin(LED_PIN);
-
-            // Show an error if the pin wasn't initialized properly
-            if (pin == null)
-            {
-                GpioStatus.Text = "There were problems initializing the GPIO pin.";
-                return;
-            }
-
             pin.Write(GpioPinValue.High);
             pin.SetDriveMode(GpioPinDriveMode.Output);
 

@@ -95,13 +95,6 @@ namespace ShiftRegister
             outputEnable = gpio.OpenPin(OE_PIN);
             shiftRegisterClear = gpio.OpenPin(SRCLR_PIN);
 
-            // Show an error if the pin wasn't initialized properly
-            if (shiftRegisterClock == null || serial == null || registerClock == null || outputEnable == null || shiftRegisterClear == null)
-            {
-                GpioStatus.Text = "There were problems initializing the GPIO pin.";
-                return;
-            }
-
             // reset the pins to a known state
             shiftRegisterClock.Write(GpioPinValue.Low);
             shiftRegisterClock.SetDriveMode(GpioPinDriveMode.Output);

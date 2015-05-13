@@ -183,26 +183,23 @@ namespace SPIDisplay
 
         /* Initialize the GPIO */
         private void InitGpio()
-        {
-            try
+        {            
+            IoController = GpioController.GetDefault(); /* Get the default GPIO controller on the system */
+            if (IoController == null)
             {
-                IoController = GpioController.GetDefault(); /* Get the default GPIO controller on the system */
-
-                /* Initialize a pin as output for the Data/Command line on the display  */
-                DataCommandPin = IoController.OpenPin(DATA_COMMAND_PIN);
-                DataCommandPin.Write(GpioPinValue.High);
-                DataCommandPin.SetDriveMode(GpioPinDriveMode.Output);
-
-                /* Initialize a pin as output for the hardware Reset line on the display */
-                ResetPin = IoController.OpenPin(RESET_PIN);
-                ResetPin.Write(GpioPinValue.High);
-                ResetPin.SetDriveMode(GpioPinDriveMode.Output);
+                throw new Exception("GPIO does not exist on the current system.");
             }
-            /* If initialization fails, throw an exception */
-            catch (Exception ex)
-            {
-                throw new Exception("GPIO initialization failed", ex);
-            }
+            
+            /* Initialize a pin as output for the Data/Command line on the display  */
+            DataCommandPin = IoController.OpenPin(DATA_COMMAND_PIN);
+            DataCommandPin.Write(GpioPinValue.High);
+            DataCommandPin.SetDriveMode(GpioPinDriveMode.Output);
+
+            /* Initialize a pin as output for the hardware Reset line on the display */
+            ResetPin = IoController.OpenPin(RESET_PIN);
+            ResetPin.Write(GpioPinValue.High);
+            ResetPin.SetDriveMode(GpioPinDriveMode.Output);
+        
         }
 
         /* Send graphics data to the screen */
