@@ -48,14 +48,14 @@ namespace WebServerTask
             taskInstance.Canceled += OnCanceled;
 
             // Get the deferral object from the task instance
-            _serviceDeferral = taskInstance.GetDeferral();
+            serviceDeferral = taskInstance.GetDeferral();
 
             var appService = taskInstance.TriggerDetails as AppServiceTriggerDetails;
             if (appService != null &&
                 appService.Name == "App2AppComService")
             {
-                _appServiceConnection = appService.AppServiceConnection;
-                _appServiceConnection.RequestReceived += OnRequestReceived;
+                appServiceConnection = appService.AppServiceConnection;
+                appServiceConnection.RequestReceived += OnRequestReceived;
             }
         }
 
@@ -71,7 +71,7 @@ namespace WebServerTask
                         var messageDeferral = args.GetDeferral();
                         //Set a result to return to the caller
                         var returnMessage = new ValueSet();
-                        HttpServer server = new HttpServer(8000, _appServiceConnection);
+                        HttpServer server = new HttpServer(8000, appServiceConnection);
                         IAsyncAction asyncAction = Windows.System.Threading.ThreadPool.RunAsync(
                             (workItem) =>
                             {
@@ -87,7 +87,7 @@ namespace WebServerTask
                     {
                         //Service was asked to quit. Give us service deferral
                         //so platform can terminate the background task
-                        _serviceDeferral.Complete();
+                        serviceDeferral.Complete();
                         break;
                     }
             }
@@ -97,8 +97,8 @@ namespace WebServerTask
             //Clean up and get ready to exit
         }
 
-        BackgroundTaskDeferral _serviceDeferral;
-        AppServiceConnection _appServiceConnection;
+        BackgroundTaskDeferral serviceDeferral;
+        AppServiceConnection appServiceConnection;
     }
 
     public sealed class HttpServer : IDisposable
@@ -110,11 +110,11 @@ namespace WebServerTask
         private readonly StreamSocketListener listener;
         private AppServiceConnection appServiceConnection;
 
-        public HttpServer(int serverPort, AppServiceConnection _appServiceConnection)
+        public HttpServer(int serverPort, AppServiceConnection appServiceConnection)
         {
             listener = new StreamSocketListener();
             port = serverPort; 
-            appServiceConnection = _appServiceConnection;
+            appServiceConnection = appServiceConnection;
             listener.ConnectionReceived += (s, e) => ProcessRequestAsync(e.Socket);
         }
 
