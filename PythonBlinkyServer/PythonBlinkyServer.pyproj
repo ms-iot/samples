@@ -65,15 +65,10 @@
     </Reference>
   </ItemGroup>
   <PropertyGroup>
-    <CPythonTargetsFile>$(LocalAppData)\Microsoft\VisualStudio\$(VisualStudioVersion)Exp\Extensions\Microsoft\Python UAP\3.5\DesignTime\CommonConfiguration\Neutral\CPython.targets</CPythonTargetsFile>
-    <CPythonTargetsFile Condition="'$(CPythonTargetsFile)' == '' or !Exists('$(CPythonTargetsFile)')">$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v10.0\ExtensionSDKs\PyUAP\3.5\DesignTime\CommonConfiguration\Neutral\CPython.targets</CPythonTargetsFile>
-  </PropertyGroup>
-  <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
     <PtvsVersion Condition="'$(PtvsVersion)' == ''">2.2</PtvsVersion>
-    <PtvsTargetsFile>$(LocalAppData)\Microsoft\VisualStudio\$(VisualStudioVersion)Exp\Extensions\Microsoft\Python Tools for Visual Studio - UAP\$(PtvsVersion)\Microsoft.PythonTools.Uap.targets</PtvsTargetsFile>
-    <PtvsTargetsFile Condition="'$(PtvsTargetsFile)' == '' or !Exists('$(PtvsTargetsFile)')">$(MSBuildProgramFiles32)\Microsoft Visual Studio $(VisualStudioVersion)\Common7\IDE\Extensions\Microsoft\Python Tools for Visual Studio - UAP\$(PtvsVersion)\Microsoft.PythonTools.Uap.targets</PtvsTargetsFile>
+    <PtvsTargetsFile>$(LocalAppData)\Microsoft\VisualStudio\$(VisualStudioVersion)Exp\Extensions\Microsoft\Python Tools for Visual Studio - UWP\$(PtvsVersion)\Microsoft.PythonTools.Uwp.targets</PtvsTargetsFile>
+    <PtvsTargetsFile Condition="'$(PtvsTargetsFile)' == '' or !Exists('$(PtvsTargetsFile)')">$(MSBuildProgramFiles32)\Microsoft Visual Studio $(VisualStudioVersion)\Common7\IDE\Extensions\Microsoft\Python Tools for Visual Studio - UWP\$(PtvsVersion)\Microsoft.PythonTools.Uwp.targets</PtvsTargetsFile>
   </PropertyGroup>
-  <Import Project="$(CPythonTargetsFile)" />
-  <Import Condition="Exists($(PtvsTargetsFile))" Project="$(PtvsTargetsFile)" />
+  <Import Project="$(PtvsTargetsFile)" />
 </Project>
