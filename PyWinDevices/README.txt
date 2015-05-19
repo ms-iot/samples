@@ -1,1 +1,1 @@
-Download the latest PyWinDevices bits from https://github.com/ms-iot/python/releases
+Download the PyWinDevices bits from https://github.com/ms-iot/python/releases/download/v1.0Alpha/pywindevices.zip
