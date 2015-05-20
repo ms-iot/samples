@@ -50,9 +50,9 @@ namespace ShiftRegister
         private const double TIMER_INTERVAL = 100; // value is milliseconds and denotes the timer interval
         private const double TIME_DELAY = 1;
 
-        private const int SRCLK_PIN = 0; // GPIO 0 is pin 27 on RPI2 header
+        private const int SRCLK_PIN = 18; // GPIO 18 is pin 12 on RPI2 header
         private GpioPin shiftRegisterClock;
-        private const int SER_PIN = 1; // GPIO 1 is pin 28 on RPI2 header
+        private const int SER_PIN = 4; // GPIO 4 is pin 7 on the RPI2 header
         private GpioPin serial;
         private const int RCLK_PIN = 5; // GPIO 5 is pin 29 on RPI2 header
         private GpioPin registerClock;
