@@ -94,14 +94,14 @@ namespace IoTCoreDefaultApp
 
                 var wifiIsAvailable = await NetworkPresenter.WifiIsAvailable();
 
-                if (ApplicationData.Current.LocalSettings.Values.ContainsKey(Constants.HasDoneOOBEKey) || !wifiIsAvailable)
-                {
+                //if (ApplicationData.Current.LocalSettings.Values.ContainsKey(Constants.HasDoneOOBEKey) || !wifiIsAvailable)
+                //{
                     rootFrame.Navigate(typeof(MainPage), e.Arguments);
-                }
-                else
-                {
-                    rootFrame.Navigate(typeof(OOBENetwork), e.Arguments);
-                }
+                //}
+                //else
+                //{
+                //    rootFrame.Navigate(typeof(OOBENetwork), e.Arguments);
+                //}
                 
             }
             // Ensure the current window is active
