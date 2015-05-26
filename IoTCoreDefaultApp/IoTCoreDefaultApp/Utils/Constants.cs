@@ -27,5 +27,7 @@ namespace IoTCoreDefaultApp
     {
         public static string HasDoneOOBEKey = "DefaultAppHasDoneOOBE";
         public static string HasDoneOOBEValue = "YES";
+        public static string OnboardingBackgroundTaskName = "AlljoynOnboarding";
+        public static string OnboardingTaskEntryPoint = "OnBoardee.OnboardingBackgroundTask";
     }
 }
