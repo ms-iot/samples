@@ -22,8 +22,10 @@
     THE SOFTWARE.
 */
 
+using OnBoardee;
 using System;
 using System.Globalization;
+using System.Threading.Tasks;
 using Windows.Networking.Connectivity;
 using Windows.Storage;
 using Windows.System;
@@ -40,6 +42,7 @@ namespace IoTCoreDefaultApp
     {
         private CoreDispatcher MainPageDispatcher;
         private DispatcherTimer timer;
+        private OnboardingService OnboardingService;
 
         public MainPage()
         {
@@ -57,6 +60,8 @@ namespace IoTCoreDefaultApp
             timer.Tick += timer_Tick;
             timer.Interval = TimeSpan.FromSeconds(30);
             timer.Start();
+
+            OnboardingService = new OnboardingService();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -65,6 +70,9 @@ namespace IoTCoreDefaultApp
             {
                 ApplicationData.Current.LocalSettings.Values[Constants.HasDoneOOBEKey] = Constants.HasDoneOOBEValue;
             }
+            Task.Run(() => {
+                OnboardingService.Initialize();
+            });
 
             base.OnNavigatedTo(e);
         }
