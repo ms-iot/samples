@@ -40,7 +40,7 @@ StartupTask::StartupTask()
 void StartupTask::Run(IBackgroundTaskInstance^ taskInstance)
 {
 	Deferral = taskInstance->GetDeferral();
-
+	InitGpio();
 	TimerElapsedHandler ^handler = ref new TimerElapsedHandler(
 		[this](ThreadPoolTimer ^timer)
 	{
@@ -63,7 +63,7 @@ void StartupTask::Run(IBackgroundTaskInstance^ taskInstance)
 	interval.Duration = 500 * 1000 * 10;
 	Timer = ThreadPoolTimer::CreatePeriodicTimer(handler, interval);
 
-	InitGpio();
+	
 }
 
 void StartupTask::InitGpio()
