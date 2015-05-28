@@ -44,6 +44,7 @@
 
   <Capabilities>
     <Capability Name="internetClient" />
+    <Capability Name="allJoyn"/>
     <DeviceCapability Name="wiFiControl" />
   </Capabilities>
 </Package>

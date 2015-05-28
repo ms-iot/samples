@@ -92,9 +92,6 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -166,6 +163,16 @@
   </ItemGroup>
   <ItemGroup>
     <SDKReference Include="WindowsIoT, Version=10.0.10069.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AllJoynOnBoarding\AllJoynOnBoarding.vcxproj">
+      <Project>{e3a2f25b-1d8f-4564-ad8b-024518a4c6de}</Project>
+      <Name>org.alljoyn</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OnBoardee\OnBoardee.vcxproj">
+      <Project>{8ff91bae-5593-4fd6-9bdf-9f11b2978fc9}</Project>
+      <Name>OnBoardee</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
