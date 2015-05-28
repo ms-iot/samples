@@ -1,27 +1,4 @@
-﻿/*
-    Copyright(c) Microsoft Open Technologies, Inc. All rights reserved.
-
-    The MIT License(MIT)
-
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files(the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions :
-
-    The above copyright notice and this permission notice shall be included in
-    all copies or substantial portions of the Software.
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-    THE SOFTWARE.
-*/
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -40,10 +17,14 @@ namespace IoTCoreDefaultApp
         public static string GetDirectConnectionName()
         {
             var icp = NetworkInformation.GetInternetConnectionProfile();
-
-            var interfaceType = icp == null ? 0 : icp.NetworkAdapter.IanaInterfaceType;
-
-            return (interfaceType == EthernetIanaType ? icp.ProfileName : "None found");
+            if (icp != null)
+            {
+                if(icp.NetworkAdapter.IanaInterfaceType == EthernetIanaType)
+                {
+                    return icp.ProfileName;
+                }
+            }
+            return ("None found");
         }
 
         public static string GetCurrentNetworkName()
@@ -88,9 +69,15 @@ namespace IoTCoreDefaultApp
                 return false;
             }
 
-            var adapters = await WiFiAdapter.FindAllAdaptersAsync();
-
-            return adapters.Count > 0;
+            try
+            {
+                var adapters = await WiFiAdapter.FindAllAdaptersAsync();
+                return adapters.Count > 0;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         private async Task<bool> UpdateInfo()
@@ -113,7 +100,7 @@ namespace IoTCoreDefaultApp
                     continue;
                 }
 
-                foreach(var network in adapter.NetworkReport.AvailableNetworks)
+                foreach (var network in adapter.NetworkReport.AvailableNetworks)
                 {
                     if (!string.IsNullOrEmpty(network.Ssid))
                     {
@@ -201,6 +188,54 @@ namespace IoTCoreDefaultApp
             }
 
             return (accessStatus == WiFiAccessStatus.Allowed);
+        }
+
+
+        public class NetworkInfo
+        {
+            public string NetworkName { get; set; }
+            public string NetworkIpv6 { get; set; }
+            public string NetworkIpv4 { get; set; }
+            public string NetworkStatus { get; set; }
+        }
+
+        public static async Task<IList<NetworkInfo>> GetNetworkInformation()
+        {
+            var networkList = new Dictionary<string, NetworkInfo>();
+            var hostNamesList = NetworkInformation.GetHostNames();
+
+            foreach (var hostName in hostNamesList)
+            {
+                if ((hostName.Type == HostNameType.Ipv4 || hostName.Type == HostNameType.Ipv6) &&
+                    (hostName != null && hostName.IPInformation != null && hostName.IPInformation.NetworkAdapter != null))
+                {
+                    var profile = await hostName.IPInformation.NetworkAdapter.GetConnectedProfileAsync();
+                    NetworkInfo info;
+                    var found = networkList.TryGetValue(profile.ProfileName, out info);
+                    if (!found)
+                    {
+                        info = new NetworkInfo();
+                        info.NetworkName = profile.ProfileName;
+                        info.NetworkStatus = profile.GetNetworkConnectivityLevel().ToString();
+                    }
+                    if (hostName.Type == HostNameType.Ipv4)
+                    {
+                        info.NetworkIpv4 = hostName.CanonicalName;
+                    }
+                    else
+                    {
+                        info.NetworkIpv6 = hostName.CanonicalName;
+                    }
+                    if (!found)
+                    {
+                        networkList[profile.ProfileName] = info;
+                    }
+                }
+            }
+
+            var res = new List<NetworkInfo>();
+            res.AddRange(networkList.Values);
+            return res;
         }
     }
 }

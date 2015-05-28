@@ -1,27 +1,4 @@
-﻿/*
-    Copyright(c) Microsoft Open Technologies, Inc. All rights reserved.
-
-    The MIT License(MIT)
-
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files(the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions :
-
-    The above copyright notice and this permission notice shall be included in
-    all copies or substantial portions of the Software.
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-    THE SOFTWARE.
-*/
-using System;
+﻿using System;
 using Windows.Devices.WiFi;
 using Windows.Security.Credentials;
 using Windows.System.Threading;
@@ -106,7 +83,7 @@ namespace IoTCoreDefaultApp
             }
         }
 
-        private void ConnectButton_Tapped(object sender, TappedRoutedEventArgs e)
+        private void ConnectButton_Clicked(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
             var network = button.DataContext as WiFiAvailableNetwork;
@@ -148,7 +125,7 @@ namespace IoTCoreDefaultApp
             }
         }
 
-        private void NextButton_Tapped(object sender, TappedRoutedEventArgs e)
+        private void NextButton_Clicked(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
             PasswordCredential credential;
@@ -169,7 +146,7 @@ namespace IoTCoreDefaultApp
             ConnectToWifi(network, credential, Window.Current.Dispatcher);
         }
 
-        private void CancelButton_Tapped(object sender, TappedRoutedEventArgs e)
+        private void CancelButton_Clicked(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
             var item = SwitchToItemState(button.DataContext, WifiInitialState);
@@ -184,12 +161,12 @@ namespace IoTCoreDefaultApp
             return item;
         }
 
-        private void BackButton_Tapped(object sender, TappedRoutedEventArgs e)
+        private void BackButton_Clicked(object sender, RoutedEventArgs e)
         {
             NavigationUtils.GoBack();
         }
 
-        private void SkipButton_Tapped(object sender, TappedRoutedEventArgs e)
+        private void SkipButton_Clicked(object sender, RoutedEventArgs e)
         {
             NavigationUtils.NavigateToScreen(typeof(MainPage));
         }
@@ -205,6 +182,11 @@ namespace IoTCoreDefaultApp
         {
             var passwordBox = sender as PasswordBox;
             CurrentPassword = passwordBox.Password;
+        }
+
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            SetupWifi();
         }
     }
 }
