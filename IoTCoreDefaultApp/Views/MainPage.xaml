@@ -123,8 +123,8 @@
                     <Border Height="48">
                         <TextBlock x:Uid="MainPageIPAddress" x:Name="IPAddressCaption" Text="IP address" Style="{StaticResource BaseTextBlockStyle}" VerticalAlignment="Bottom"/>
                     </Border>
-                    <Border Height="24">
-                        <TextBlock x:Name="IPAddress1" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}" VerticalAlignment="Bottom"/>
+                    <Border Height="64">
+                        <TextBlock x:Name="IPAddress1" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}" VerticalAlignment="Top" Padding="0,6,0,0"/>
                     </Border>
                 </StackPanel>
             </ScrollViewer>
