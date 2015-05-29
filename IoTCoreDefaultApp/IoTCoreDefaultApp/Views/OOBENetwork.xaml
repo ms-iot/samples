@@ -1,21 +1,24 @@
-<!--
-    Copyright(c) Microsoft Open Technologies, Inc. All rights reserved.
-    The MIT License(MIT)
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files(the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions :
-    The above copyright notice and this permission notice shall be included in
-    all copies or substantial portions of the Software.
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-    THE SOFTWARE.
+﻿<!--
+    Copyright(c) Microsoft Open Technologies, Inc. All rights reserved.
+
+    The MIT License(MIT)
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files(the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions :
+    The above copyright notice and this permission notice shall be included in
+    all copies or substantial portions of the Software.
+    
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+    THE SOFTWARE.
 -->
 
 <Page
@@ -35,7 +38,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" Text="{Binding SignalBars, Mode=OneWay, Converter={StaticResource GlyphConverter}}" FontSize="24" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Column="0" Text="{Binding SignalBars, Mode=OneWay, Converter={StaticResource GlyphConverter}}" FontSize="24" FontFamily="{StaticResource IconFontFamily}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 <TextBlock Grid.Column="1" Text="{Binding Ssid}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
             </Grid>
         </DataTemplate>
@@ -54,14 +57,14 @@
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" Orientation="Horizontal">
                     <Border Width="44" Height="44">
-                        <TextBlock Grid.Column="0" Text="{Binding SignalBars, Mode=OneWay, Converter={StaticResource GlyphConverter}}" FontSize="24" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Column="0" Text="{Binding SignalBars, Mode=OneWay, Converter={StaticResource GlyphConverter}}" FontSize="24" FontFamily="{StaticResource IconFontFamily}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     </Border>
                     <TextBlock Text="{Binding Ssid}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
                 </StackPanel>
                 <CheckBox Grid.Row="1" x:Name="ConnectAutomaticallyCheckBox" IsChecked="True" HorizontalAlignment="Left" Margin="45,0,0,0" Height="32" Foreground="White" Checked="ConnectAutomaticallyCheckBox_Checked" Style="{StaticResource IoTCoreDefaultAppCheckBoxStyle}">
                     <TextBlock x:Uid="ConnectAutomatically" Text="Connect automatically" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}"/>
                 </CheckBox>
-                <Button Grid.Row="3" x:Uid="ConnectButton" x:Name="ConnectButton" Content="Connect" Width="120" Height="32" HorizontalAlignment="Left" VerticalAlignment="Bottom" Tapped="ConnectButton_Tapped" Margin="102,0,0,0"/>
+                <Button Grid.Row="3" x:Uid="ConnectButton" x:Name="ConnectButton" Content="Connect" Width="120" Height="32" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="ConnectButton_Clicked" Margin="102,0,0,0"/>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Name="WifiPasswordState">
@@ -79,15 +82,15 @@
                     <RowDefinition Height="8"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding SignalBars, Mode=OneWay, Converter={StaticResource GlyphConverter}}" FontSize="24" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding SignalBars, Mode=OneWay, Converter={StaticResource GlyphConverter}}" FontSize="24" FontFamily="{StaticResource IconFontFamily}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Ssid}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
                 <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch">
                     <TextBlock x:Uid="NetworkPasswordPrompt" Text="Enter the network security key" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}"/>
                     <PasswordBox x:Name="WifiPasswordBox" PasswordChanged="WifiPasswordBox_PasswordChanged" HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="334" Margin="0,8,0,0" BorderBrush="{StaticResource SystemControlBorderBrush}"/>
                 </StackPanel>
                 <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="130,0,0,0">
-                    <Button x:Uid="NextButton" x:Name="NextButton" Content="Next" Width="120" HorizontalAlignment="Right" VerticalAlignment="Bottom" Tapped="NextButton_Tapped" Height="32"/>
-                    <Button x:Uid="CancelButton" x:Name="CancelButton" Content="Cancel" Width="120" HorizontalAlignment="Right" VerticalAlignment="Bottom" Tapped="CancelButton_Tapped" Margin="12,0,0,0" Height="32"/>
+                    <Button x:Uid="NextButton" x:Name="NextButton" Content="Next" Width="120" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="NextButton_Clicked" Height="32"/>
+                    <Button x:Uid="CancelButton" x:Name="CancelButton" Content="Cancel" Width="120" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="CancelButton_Clicked" Margin="12,0,0,0" Height="32"/>
                 </StackPanel>
             </Grid>
         </DataTemplate>
@@ -106,13 +109,13 @@
                     <RowDefinition Height="8"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Column="0" Text="{Binding SignalBars, Mode=OneWay, Converter={StaticResource GlyphConverter}}" FontSize="24" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Column="0" Text="{Binding SignalBars, Mode=OneWay, Converter={StaticResource GlyphConverter}}" FontSize="24" FontFamily="{StaticResource IconFontFamily}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Ssid}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
                 <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
                     <ProgressRing x:Name="ConnectingProgressRing" IsActive="True" Foreground="White"/>
                     <TextBlock x:Uid="NetworkConnectingMessage" Text="Checking network requirements" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="12,0,0,0"/>
                 </StackPanel>
-                <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" x:Name="CancelButton" Content="Cancel" Width="120" HorizontalAlignment="Left" VerticalAlignment="Bottom" Tapped="CancelButton_Tapped" Margin="130,0,0,0"/>
+                <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" x:Name="CancelButton" Content="Cancel" Width="120" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="CancelButton_Clicked" Margin="130,0,0,0"/>
             </Grid>
         </DataTemplate>
     </Page.Resources>
@@ -139,19 +142,26 @@
                     <TextBlock x:Uid="NoNetworks" x:Name="NoneFoundText" Text="None found" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed"/>
                     <StackPanel x:Name="DirectConnectionStackPanel" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <Border Width="44" Height="44">
-                            <TextBlock Text="{StaticResource ResourceKey=IconEthernet}" FontSize="24" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <TextBlock Text="{StaticResource ResourceKey=IconEthernet}" FontSize="24" FontFamily="{StaticResource IconFontFamily}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </Border>
                         <TextBlock x:Uid="Ethernet" Style="{StaticResource BodyTextBlockStyle}" Text="Ethernet" VerticalAlignment="Center"/>
                     </StackPanel>
-                    <TextBlock x:Uid="Wifi" Text="Wi-Fi" Style="{StaticResource BaseTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,33,0,12"/>
+                    <Grid Margin="0,21,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Uid="Wifi" Text="Wi-Fi" Style="{StaticResource BaseTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,12,0,12"/>
+                        <Button Grid.Column="2" x:Name="RefreshButton" x:Uid="Refresh" Content="Refresh" Click="RefreshButton_Click" />
+                    </Grid>
                     <ListView x:Name="WifiListView" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionMode="Single" Width="446" ItemTemplate="{StaticResource WifiInitialState}" SelectionChanged="WifiListView_SelectionChanged" ItemContainerStyle="{StaticResource WifiListViewItemStyle}"/>
                     <TextBlock x:Uid="NoNetworks" x:Name="NoWifiFoundText" Text="None found" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed"/>
                 </StackPanel>
             </ScrollViewer>
         </StackPanel>
-        <HyperlinkButton Grid.Column="1" Grid.Row="1" x:Name="SkipButton" HorizontalAlignment="Left" VerticalAlignment="Bottom" Tapped="SkipButton_Tapped" HorizontalContentAlignment="Left">
+        <HyperlinkButton Grid.Column="1" Grid.Row="1" x:Name="SkipButton" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="SkipButton_Clicked" HorizontalContentAlignment="Left">
             <TextBlock  x:Uid="SkipStep" Text="Skip this step"/>
         </HyperlinkButton>
-        <!--<Button x:Uid="BackButton" Grid.Column="1" Grid.Row="1" x:Name="BackButton" Content="Back" Width="120" HorizontalAlignment="Right" VerticalAlignment="Bottom" Tapped="BackButton_Tapped" Height="32"/>-->
     </Grid>
 </Page>

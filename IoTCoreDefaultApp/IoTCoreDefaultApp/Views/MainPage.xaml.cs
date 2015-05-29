@@ -22,10 +22,8 @@
     THE SOFTWARE.
 */
 
-using OnBoardee;
 using System;
 using System.Globalization;
-using System.Threading.Tasks;
 using Windows.Networking.Connectivity;
 using Windows.Storage;
 using Windows.System;
@@ -42,17 +40,18 @@ namespace IoTCoreDefaultApp
     {
         private CoreDispatcher MainPageDispatcher;
         private DispatcherTimer timer;
-        private OnboardingService OnboardingService;
+        private ConnectedDevicePresenter connectedDevicePresenter;
 
         public MainPage()
         {
             this.InitializeComponent();
 
+            MainPageDispatcher = Window.Current.Dispatcher;
+
             UpdateBoardInfo();
             UpdateNetworkInfo();
             UpdateDateTime();
-
-            MainPageDispatcher = Window.Current.Dispatcher;
+            UpdateConnectedDevices();
 
             NetworkInformation.NetworkStatusChanged += NetworkInformation_NetworkStatusChanged;
 
@@ -60,8 +59,6 @@ namespace IoTCoreDefaultApp
             timer.Tick += timer_Tick;
             timer.Interval = TimeSpan.FromSeconds(30);
             timer.Start();
-
-            OnboardingService = new OnboardingService();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -70,9 +67,6 @@ namespace IoTCoreDefaultApp
             {
                 ApplicationData.Current.LocalSettings.Values[Constants.HasDoneOOBEKey] = Constants.HasDoneOOBEValue;
             }
-            Task.Run(() => {
-                OnboardingService.Initialize();
-            });
 
             base.OnNavigatedTo(e);
         }
@@ -94,6 +88,21 @@ namespace IoTCoreDefaultApp
         {
             BoardName.Text = DeviceInfoPresenter.GetBoardName();
             BoardImage.Source = new BitmapImage(DeviceInfoPresenter.GetBoardImageUri());
+
+            ulong version = 0;
+            if (!ulong.TryParse(Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamilyVersion, out version))
+            {
+                var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
+                OSVersion.Text = loader.GetString("OSVersionNotAvailable");
+            }
+            else
+            {
+                OSVersion.Text = String.Format(CultureInfo.InvariantCulture,"{0}.{1}.{2}.{3}",
+                    (version & 0xFFFF000000000000) >> 48,
+                    (version & 0x0000FFFF00000000) >> 32,
+                    (version & 0x00000000FFFF0000) >> 16,
+                    version & 0x000000000000FFFF);
+            }
         }
 
         private void UpdateDateTime()
@@ -102,31 +111,56 @@ namespace IoTCoreDefaultApp
             this.CurrentTime.Text = t.ToString("t", CultureInfo.CurrentCulture);
         }
 
-        private void UpdateNetworkInfo()
+        private async void UpdateNetworkInfo()
         {
             this.DeviceName.Text = DeviceInfoPresenter.GetDeviceName();
             this.IPAddress1.Text = NetworkPresenter.GetCurrentIpv4Address();
             this.NetworkName1.Text = NetworkPresenter.GetCurrentNetworkName() ?? "Not connected";
+            this.NetworkInfo.ItemsSource = await NetworkPresenter.GetNetworkInformation();
         }
 
-        private void ShutdownButton_Tapped(object sender, TappedRoutedEventArgs e)
+        private void UpdateConnectedDevices()
+        {
+            connectedDevicePresenter = new ConnectedDevicePresenter(MainPageDispatcher);
+            this.ConnectedDevices.ItemsSource = connectedDevicePresenter.GetConnectedDevices();
+        }
+
+        private void ShutdownButton_Clicked(object sender, RoutedEventArgs e)
         {
             ShutdownDropdown.IsOpen = true;
         }
 
-        private void ShutdownOption_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            ShutdownManager.BeginShutdown(ShutdownKind.Shutdown, TimeSpan.FromSeconds(0.5));
-        }
-
-        private void RestartOption_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            ShutdownManager.BeginShutdown(ShutdownKind.Restart, TimeSpan.FromSeconds(0.5));
-        }
-
-        private void SettingsButton_Tapped(object sender, TappedRoutedEventArgs e)
+        private void SettingsButton_Clicked(object sender, RoutedEventArgs e)
         {
             NavigationUtils.NavigateToScreen(typeof(Settings));
+        }
+
+        private void Tutorials_Clicked(object sender, RoutedEventArgs e)
+        {
+            NavigationUtils.NavigateToScreen(typeof(TutorialMainPage));
+        }
+
+        private void ShutdownHelper(ShutdownKind kind)
+        {
+            ShutdownManager.BeginShutdown(kind, TimeSpan.FromSeconds(0.5));
+        }
+
+        private void ShutdownListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var item = e.ClickedItem as FrameworkElement;
+            if (item == null)
+            {
+                return;
+            }
+            switch (item.Name)
+            {
+                case "ShutdownOption":
+                    ShutdownHelper(ShutdownKind.Shutdown);
+                    break;
+                case "RestartOption":
+                    ShutdownHelper(ShutdownKind.Restart);
+                    break;
+            }
         }
     }
 }

@@ -21,6 +21,7 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
 */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,7 @@ namespace IoTCoreDefaultApp
         public IReadOnlyList<string> LanguageDisplayNames
         {
             get;
+            set;
         }
 
         public LanguageManager()
@@ -61,7 +63,7 @@ namespace IoTCoreDefaultApp
 
             if (newLang == null)
             {
-                throw new ArgumentException("displayName");
+                throw new ArgumentException("Failed to get language tag for "+ displayName);
             }
 
             return newLang;
@@ -93,7 +95,7 @@ namespace IoTCoreDefaultApp
 
             if (!TimeZoneSettings.SupportedTimeZoneDisplayNames.Contains(timeZone))
             {
-                throw new ArgumentException("timeZone");
+                throw new ArgumentException("Failed to change timezone to " + timeZone);
             }
 
             TimeZoneSettings.ChangeTimeZoneByDisplayName(timeZone);

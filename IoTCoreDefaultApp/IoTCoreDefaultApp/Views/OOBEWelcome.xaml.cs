@@ -21,6 +21,7 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
 */
+
 using System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -59,7 +60,7 @@ namespace IoTCoreDefaultApp
             languageManager.UpdateLanguage(selectedLanguage);
         }
 
-        private async void NextButton_Tapped(object sender, TappedRoutedEventArgs e)
+        private async void NextButton_Clicked(object sender, RoutedEventArgs e)
         {
             var wifiAvailable = NetworkPresenter.WifiIsAvailable();
             SetPreferences();

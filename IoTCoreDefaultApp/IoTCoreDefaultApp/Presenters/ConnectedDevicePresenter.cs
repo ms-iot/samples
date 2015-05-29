@@ -23,41 +23,44 @@
 */
 
 using System;
-using Windows.UI.Xaml.Data;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Windows.Devices.Enumeration;
+using Windows.UI.Core;
 
 namespace IoTCoreDefaultApp
 {
-    public class WifiGlyphConverter : IValueConverter
+    public class ConnectedDevicePresenter
     {
-        public object Convert(object value, Type targetType, object parameter, string language)
+        private CoreDispatcher dispatcher;
+
+        public ConnectedDevicePresenter(CoreDispatcher dispatcher)
         {
-            if (!(value is byte))
-            {
-                return null;
-            }
+            this.dispatcher = dispatcher;
+            var deviceClass = "(System.Devices.InterfaceClassGuid:=\"{" + Constants.GUID_DEVINTERFACE_USB_DEVICE + "}\")";
 
-            var strength = (byte)value;
-
-            switch (strength)
-            {
-                case 0:
-                    return "\xE904";
-                case 1:
-                    return "\xE905";
-                case 2:
-                case 3:
-                    return "\xE906";
-                case 4:
-                    return "\xE907";
-                default:
-                    return "\xE908";
-            }
-
+            usbConnectedDevicesWatcher = DeviceInformation.CreateWatcher(deviceClass);
+            usbConnectedDevicesWatcher.Added += DevicesAdded;
+            usbConnectedDevicesWatcher.Start();
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        private async void DevicesAdded(DeviceWatcher sender, DeviceInformation args)
         {
-            throw new NotImplementedException();
+            await dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+            {
+                devices.Add(args.Name);
+            });
         }
+
+        public ObservableCollection<string> GetConnectedDevices()
+        {
+            return devices;
+        }
+
+        private ObservableCollection<string> devices = new ObservableCollection<string>();
+        private DeviceWatcher usbConnectedDevicesWatcher;
     }
 }
