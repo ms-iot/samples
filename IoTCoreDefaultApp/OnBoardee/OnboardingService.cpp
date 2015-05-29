@@ -58,17 +58,23 @@ void OnboardingService::Initialize()
     m_config.Init("OnboardingConfig.xml");
 
     m_wifiAdapter = this->GetWiFiAdapter();
-    if (NetworkInformation::GetInternetConnectionProfile()->IsWlanConnectionProfile)
+
+    auto profiles = NetworkInformation::GetConnectionProfiles();
+    for (auto profile : profiles)
     {
-        AutoLock lock(&m_stateLock, true);
-        m_state = OnBoardingState::ConfiguredValidated;
+        if (profile->IsWlanConnectionProfile)
+        {
+            AutoLock lock(&m_stateLock, true);
+            m_state = OnBoardingState::ConfiguredValidated;
+            break;
+        }
     }
 
     m_accessPoint = ref new OnboardingAccessPoint(m_config.SSID(), m_config.Password());
     if (m_state != OnBoardingState::ConfiguredValidated)
     {
         m_accessPoint->Start();
-    }    
+    }
 
     m_busAttachment = ref new AllJoynBusAttachment();
     m_busAttachment->AboutData->DefaultDescription = m_config.DefaultDescription();
