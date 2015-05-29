@@ -21,21 +21,10 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
 */
+
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using Windows.Devices.Enumeration;
 using Windows.Devices.I2c;
 
@@ -53,7 +42,7 @@ namespace I2CAccelerometer
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private const byte ACCEL_I2C_ADDR = 0x1D;           /* 7-bit I2C address of the ADXL345 with SDO pulled high */
+        private const byte ACCEL_I2C_ADDR = 0x53;           /* 7-bit I2C address of the ADXL345 with SDO pulled low */
         private const byte ACCEL_REG_POWER_CONTROL = 0x2D;  /* Address of the Power Control register */
         private const byte ACCEL_REG_DATA_FORMAT = 0x31;    /* Address of the Data Format register   */
         private const byte ACCEL_REG_X = 0x32;              /* Address of the X Axis data register   */
@@ -135,6 +124,7 @@ namespace I2CAccelerometer
             string xText, yText, zText;
             string statusText;
             
+			/* Read and format accelerometer data */
             try
             {
                 Acceleration accel = ReadI2CAccel();
@@ -151,7 +141,7 @@ namespace I2CAccelerometer
                 statusText = "Failed to read from Accelerometer: " + ex.Message;
             }
             
-            // UI updates must be invoked on the UI thread.
+            /* UI updates must be invoked on the UI thread */
             var task = this.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
             {
                 Text_X_Axis.Text = xText;
@@ -178,7 +168,7 @@ namespace I2CAccelerometer
 
             /* 
              * In order to get the raw 16-bit data values, we need to concatenate two 8-bit bytes from the I2C read for each axis.
-             * We accomplish this by using bit shift and logical OR operations
+             * We accomplish this by using the BitConverter class.
              */
             short AccelerationRawX = BitConverter.ToInt16(ReadBuf, 0);
             short AccelerationRawY = BitConverter.ToInt16(ReadBuf, 2);
