@@ -234,25 +234,28 @@ namespace IoTCoreDefaultApp
                     (hostName != null && hostName.IPInformation != null && hostName.IPInformation.NetworkAdapter != null))
                 {
                     var profile = await hostName.IPInformation.NetworkAdapter.GetConnectedProfileAsync();
-                    NetworkInfo info;
-                    var found = networkList.TryGetValue(profile.ProfileName, out info);
-                    if (!found)
+                    if (profile != null)
                     {
-                        info = new NetworkInfo();
-                        info.NetworkName = profile.ProfileName;
-                        info.NetworkStatus = profile.GetNetworkConnectivityLevel().ToString();
-                    }
-                    if (hostName.Type == HostNameType.Ipv4)
-                    {
-                        info.NetworkIpv4 = hostName.CanonicalName;
-                    }
-                    else
-                    {
-                        info.NetworkIpv6 = hostName.CanonicalName;
-                    }
-                    if (!found)
-                    {
-                        networkList[profile.ProfileName] = info;
+                        NetworkInfo info;
+                        var found = networkList.TryGetValue(profile.ProfileName, out info);
+                        if (!found)
+                        {
+                            info = new NetworkInfo();
+                            info.NetworkName = profile.ProfileName;
+                            info.NetworkStatus = profile.GetNetworkConnectivityLevel().ToString();
+                        }
+                        if (hostName.Type == HostNameType.Ipv4)
+                        {
+                            info.NetworkIpv4 = hostName.CanonicalName;
+                        }
+                        else
+                        {
+                            info.NetworkIpv6 = hostName.CanonicalName;
+                        }
+                        if (!found)
+                        {
+                            networkList[profile.ProfileName] = info;
+                        }
                     }
                 }
             }
