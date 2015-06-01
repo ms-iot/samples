@@ -81,6 +81,20 @@ namespace IoTCoreDefaultApp
         {
             var comboBox = sender as ComboBox;
             languageManager.UpdateLanguage(comboBox.SelectedItem as string);
+
+            // reload
+            if (this.Frame != null)
+            {
+                Type type = this.Frame.CurrentSourcePageType;
+                try
+                {
+                    this.Frame.Navigate(type);
+                }
+                finally
+                {
+                    this.Frame.BackStack.Remove(this.Frame.BackStack[this.Frame.BackStack.Count - 1]);
+                }
+            }
         }
 
         private void TimeZoneComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

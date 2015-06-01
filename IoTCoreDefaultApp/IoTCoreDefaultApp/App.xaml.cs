@@ -54,7 +54,7 @@ namespace IoTCoreDefaultApp
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
-        protected override async void OnLaunched(LaunchActivatedEventArgs e)
+        protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
 
 /*#if DEBUG
@@ -92,15 +92,13 @@ namespace IoTCoreDefaultApp
                 // configuring the new page by passing required information as a navigation
                 // parameter
 
-                var wifiIsAvailable = await NetworkPresenter.WifiIsAvailable();
-
-                if (ApplicationData.Current.LocalSettings.Values.ContainsKey(Constants.HasDoneOOBEKey) || !wifiIsAvailable)
+                if (ApplicationData.Current.LocalSettings.Values.ContainsKey(Constants.HasDoneOOBEKey))
                 {
                     rootFrame.Navigate(typeof(MainPage), e.Arguments);
                 }
                 else
                 {
-                    rootFrame.Navigate(typeof(OOBENetwork), e.Arguments);
+                    rootFrame.Navigate(typeof(OOBEWelcome), e.Arguments);
                 }
                 
             }
