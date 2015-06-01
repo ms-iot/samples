@@ -154,7 +154,7 @@ namespace IoTCoreDefaultApp
 
             var validProfiles = connectionProfiles.Where(profile =>
             {
-                return (profile.NetworkAdapter != null && profile.NetworkAdapter.IanaInterfaceType == WifiIanaType);
+                return (profile.IsWlanConnectionProfile && profile.GetNetworkConnectivityLevel() != NetworkConnectivityLevel.None);
             });
 
             if (validProfiles.Count() < 1)
