@@ -42,7 +42,7 @@ namespace IoTCoreDefaultApp
 
         public LanguageManager()
         {
-            displayNameToLanguageMap = ApplicationLanguages.Languages.Select(tag =>
+            displayNameToLanguageMap = ApplicationLanguages.ManifestLanguages.Select(tag =>
             {
                 var lang = new Language(tag);
                 return new KeyValuePair<string, string>(lang.DisplayName, lang.LanguageTag);
@@ -71,7 +71,7 @@ namespace IoTCoreDefaultApp
 
         public static string GetCurrentLanguageDisplayName()
         {
-            var lang = new Language(GlobalizationPreferences.Languages[0]);
+            var lang = new Language(ApplicationLanguages.PrimaryLanguageOverride);
 
             return lang.DisplayName;
         }

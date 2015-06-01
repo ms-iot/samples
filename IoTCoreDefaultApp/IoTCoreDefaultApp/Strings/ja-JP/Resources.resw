@@ -1,0 +1,343 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="IoTCoreHeader.Text" xml:space="preserve">
+    <value>Windows 10 IoT Core Insider Preview</value>
+    <comment>The Operating System Name</comment>
+  </data>
+  <data name="GenericBoardName" xml:space="preserve">
+    <value>IoTCore ボード</value>
+    <comment>A generic board name</comment>
+  </data>
+  <data name="MainPageDeviceName.Text" xml:space="preserve">
+    <value>デバイス名</value>
+    <comment>Field label</comment>
+  </data>
+  <data name="MainPageNetwork.Text" xml:space="preserve">
+    <value>ネットワーク</value>
+    <comment>Field label</comment>
+  </data>
+  <data name="MBMName" xml:space="preserve">
+    <value>MinnowBoard Max</value>
+    <comment>Board name</comment>
+  </data>
+  <data name="RestartText.Text" xml:space="preserve">
+    <value>再起動</value>
+    <comment>Restart entry in the shutdown menu</comment>
+  </data>
+  <data name="ShutdownText.Text" xml:space="preserve">
+    <value>シャットダウン</value>
+    <comment>Shutdown entry in the shutdown menu</comment>
+  </data>
+  <data name="LegalText1.Text" xml:space="preserve">
+    <value>このソフトウェアを使うことでマイクロソフトのライセンス条項に同意したことになります。</value>
+  </data>
+  <data name="BackButton.Content" xml:space="preserve">
+    <value>戻る</value>
+  </data>
+  <data name="CancelButton.Content" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
+  <data name="ConnectAutomatically.Text" xml:space="preserve">
+    <value>自動的に接続する</value>
+  </data>
+  <data name="ConnectButton.Content" xml:space="preserve">
+    <value>接続</value>
+  </data>
+  <data name="DirectConnections.Text" xml:space="preserve">
+    <value>直接接続</value>
+  </data>
+  <data name="Ethernet.Text" xml:space="preserve">
+    <value>イーサネット</value>
+    <comment>Field label</comment>
+  </data>
+  <data name="NetworkConnectingMessage.Text" xml:space="preserve">
+    <value>ネットワーク要件を確認しています</value>
+  </data>
+  <data name="NetworkPasswordPrompt.Text" xml:space="preserve">
+    <value>ネットワーク セキュリティ キーを入力</value>
+  </data>
+  <data name="NextButton.Content" xml:space="preserve">
+    <value>次へ</value>
+  </data>
+  <data name="NoNetworks.Text" xml:space="preserve">
+    <value>見つかりませんでした</value>
+  </data>
+  <data name="OOBEIntro.Text" xml:space="preserve">
+    <value>いくつか基本的なことを確認してみましょう。</value>
+  </data>
+  <data name="OOBELanguageSelect.Text" xml:space="preserve">
+    <value>言語を選択</value>
+  </data>
+  <data name="OOBENetworkTitle.Text" xml:space="preserve">
+    <value>さぁ、接続してみましょう</value>
+  </data>
+  <data name="OOBEWelcomeTitle.Text" xml:space="preserve">
+    <value>Windows IoT Core Insider Preview へようこそ</value>
+  </data>
+  <data name="Rpi2Name" xml:space="preserve">
+    <value>Raspberry Pi 2</value>
+    <comment>Board name</comment>
+  </data>
+  <data name="SkipStep.Text" xml:space="preserve">
+    <value>このステップをスキップ</value>
+  </data>
+  <data name="Wifi.Text" xml:space="preserve">
+    <value>Wi-Fi</value>
+    <comment>Label for Wi-Fi list in options page</comment>
+  </data>
+  <data name="StartDeveloping.Text" xml:space="preserve">
+    <value> にアクセスしてください</value>
+    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
+  </data>
+  <data name="Visit.Text" xml:space="preserve">
+    <value>開発を始めるには </value>
+    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
+  </data>
+  <data name="WindowsOnDevicesUrl.Text" xml:space="preserve">
+    <value> www.windowsondevices.com</value>
+    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
+  </data>
+  <data name="KeyboardTitle.Text" xml:space="preserve">
+    <value>キーボード レイアウト</value>
+    <comment>Field label</comment>
+  </data>
+  <data name="LanguageTitle.Text" xml:space="preserve">
+    <value>言語</value>
+    <comment>Field label</comment>
+  </data>
+  <data name="NetworkConnected.Text" xml:space="preserve">
+    <value>接続完了</value>
+  </data>
+  <data name="NetworkPreferences.Text" xml:space="preserve">
+    <value>ネットワークと Wi-Fi</value>
+  </data>
+  <data name="SettingsPreferences.Text" xml:space="preserve">
+    <value>基本設定</value>
+  </data>
+  <data name="SettingsTitle.Text" xml:space="preserve">
+    <value>デバイス設定</value>
+  </data>
+  <data name="TimeZoneTitle.Text" xml:space="preserve">
+    <value>タイムゾーン</value>
+  </data>
+  <data name="DeviceInfo.Text" xml:space="preserve">
+    <value>デバイス情報</value>
+  </data>
+  <data name="Tutorials.Text" xml:space="preserve">
+    <value>チュートリアル</value>
+    <comment>Text under the Tutorials button on the top bar</comment>
+  </data>
+  <data name="ConnectedDevices.Text" xml:space="preserve">
+    <value>接続済みデバイス</value>
+  </data>
+  <data name="Ipv4.Text" xml:space="preserve">
+    <value>IPv4</value>
+    <comment>Field label</comment>
+  </data>
+  <data name="Ipv6.Text" xml:space="preserve">
+    <value>IPv6</value>
+    <comment>Field label</comment>
+  </data>
+  <data name="MainPageIPAddress.Text" xml:space="preserve">
+    <value>IP アドレス</value>
+    <comment>Field label</comment>
+  </data>
+  <data name="NetworkInformation.Text" xml:space="preserve">
+    <value>ネットワーク情報</value>
+  </data>
+  <data name="Status.Text" xml:space="preserve">
+    <value>ステータス</value>
+    <comment>Status of the network connection (e.g. not connected, limited, etc.)</comment>
+  </data>
+  <data name="TutorialGetCodingDescription.Text" xml:space="preserve">
+    <value>PC からリモートでコードを書く方法</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialGetCodingTitle.Text" xml:space="preserve">
+    <value>コードを取得</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialGetConnectedDescription.Text" xml:space="preserve">
+    <value>デバイスをインターネットと PC に接続</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialGetConnectedTitle.Text" xml:space="preserve">
+    <value>接続</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialGetStartedDescription.Text" xml:space="preserve">
+    <value>Windows IoT Core の紹介</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialGetStartedTitle.Text" xml:space="preserve">
+    <value>はじめに</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialHeader.Text" xml:space="preserve">
+    <value>Windows IoT Core の活用方法</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialHelloBlinkyDescription.Text" xml:space="preserve">
+    <value>デバイスの LED を切り替え</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialHelloBlinkyTitle.Text" xml:space="preserve">
+    <value>LED を点滅</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialTitle.Text" xml:space="preserve">
+    <value>接続と開発に役立つリソースとツール</value>
+  </data>
+  <data name="TutorialBlinkyBody1.Text" xml:space="preserve">
+    <value>ボードを使って一番初めに行う最も基本的なことは点滅です。</value>
+  </data>
+  <data name="TutorialBlinkyBody2.Text" xml:space="preserve">
+    <value>「はじめに」セクションで説明したとおり、このオープン ソースのソース コードは www. windowsondevices.com からダウンロードできます (IoTCoreDefaultApp を探してみてください)。</value>
+  </data>
+  <data name="TutorialBlinkyBody3.Text" xml:space="preserve">
+    <value>セットアップは必要ありません。[開始] を押すだけです。</value>
+  </data>
+  <data name="TutorialBlinkyBody4.Text" xml:space="preserve">
+    <value>点滅の頻度を変更することもできます。友だちをたくさん集めて Raspberry Pi 2 の周りでダンス パーティーをしてみるのもいいですね。</value>
+  </data>
+  <data name="TutorialBlinkyBody5.Text" xml:space="preserve">
+    <value>免責事項: ボードで LED を点滅させてレイヴ パーティーなどを開催した結果発生したいかなる損害にも Microsoft は責任を負いません。</value>
+  </data>
+  <data name="TutorialBlinkyTitle1.Text" xml:space="preserve">
+    <value>LED を点滅</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialBlinkyTitle2.Text" xml:space="preserve">
+    <value>ボードを点滅させる</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="MainPageOSVersion.Text" xml:space="preserve">
+    <value>OS バージョン</value>
+    <comment>Label for OS Version field in main page</comment>
+  </data>
+  <data name="OSVersionNotAvailable" xml:space="preserve">
+    <value>利用不可</value>
+    <comment>Text shown when we cannot retrieve the OS Version</comment>
+  </data>
+  <data name="Refresh.Content" xml:space="preserve">
+    <value>最新の情報に更新</value>
+    <comment>Refresh button</comment>
+  </data>
+</root>
