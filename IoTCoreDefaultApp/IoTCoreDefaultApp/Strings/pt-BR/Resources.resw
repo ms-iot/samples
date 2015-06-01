@@ -1,0 +1,346 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="IoTCoreHeader.Text" xml:space="preserve">
+    <value>Windows 10 IoT Core Insider Preview</value>
+    <comment>The Operating System Name</comment>
+  </data>
+  <data name="GenericBoardName" xml:space="preserve">
+    <value>Placa do IoTCore</value>
+    <comment>A generic board name</comment>
+  </data>
+  <data name="MainPageDeviceName.Text" xml:space="preserve">
+    <value>Nome do dispositivo</value>
+    <comment>Field label</comment>
+  </data>
+  <data name="MainPageNetwork.Text" xml:space="preserve">
+    <value>Rede</value>
+    <comment>Field label</comment>
+  </data>
+  <data name="MBMName" xml:space="preserve">
+    <value>MinnowBoard Max</value>
+    <comment>Board name</comment>
+  </data>
+  <data name="RestartText.Text" xml:space="preserve">
+    <value>Reiniciar</value>
+    <comment>Restart entry in the shutdown menu</comment>
+  </data>
+  <data name="ShutdownText.Text" xml:space="preserve">
+    <value>Desligar</value>
+    <comment>Shutdown entry in the shutdown menu</comment>
+  </data>
+  <data name="LegalText1.Text" xml:space="preserve">
+    <value>Ao usar este software, você concorda com os termos da licença da Microsoft.</value>
+  </data>
+  <data name="LegalText2.Text" xml:space="preserve">
+    <value>A política de privacidade para esta versão de pré-lançamento do sistema operacional do Windows pode ser vista aqui: http://go.microsoft.com/fwlink/?LinkId=506737. Você pode examinar os termos vinculados colando o link em seu navegador assim que o software estiver em execução.</value>
+  </data>
+  <data name="BackButton.Content" xml:space="preserve">
+    <value>Voltar</value>
+  </data>
+  <data name="CancelButton.Content" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="ConnectAutomatically.Text" xml:space="preserve">
+    <value>Conectar automaticamente</value>
+  </data>
+  <data name="ConnectButton.Content" xml:space="preserve">
+    <value>Conectar</value>
+  </data>
+  <data name="DirectConnections.Text" xml:space="preserve">
+    <value>Conexões diretas</value>
+  </data>
+  <data name="Ethernet.Text" xml:space="preserve">
+    <value>Ethernet</value>
+    <comment>Field label</comment>
+  </data>
+  <data name="NetworkConnectingMessage.Text" xml:space="preserve">
+    <value>Verificando requisitos da rede</value>
+  </data>
+  <data name="NetworkPasswordPrompt.Text" xml:space="preserve">
+    <value>Insira a chave de segurança da rede</value>
+  </data>
+  <data name="NextButton.Content" xml:space="preserve">
+    <value>Avançar</value>
+  </data>
+  <data name="NoNetworks.Text" xml:space="preserve">
+    <value>Nada foi encontrado</value>
+  </data>
+  <data name="OOBEIntro.Text" xml:space="preserve">
+    <value>Vamos resolver algumas coisas básicas.</value>
+  </data>
+  <data name="OOBELanguageSelect.Text" xml:space="preserve">
+    <value>Escolha seu idioma</value>
+  </data>
+  <data name="OOBENetworkTitle.Text" xml:space="preserve">
+    <value>Vamos nos conectar</value>
+  </data>
+  <data name="OOBEWelcomeTitle.Text" xml:space="preserve">
+    <value>Olá, bem-vindo ao Windows IoT Core Insider Preview</value>
+  </data>
+  <data name="Rpi2Name" xml:space="preserve">
+    <value>Raspberry Pi 2</value>
+    <comment>Board name</comment>
+  </data>
+  <data name="SkipStep.Text" xml:space="preserve">
+    <value>Ignorar este teste</value>
+  </data>
+  <data name="Wifi.Text" xml:space="preserve">
+    <value>Wi-Fi</value>
+    <comment>Label for Wi-Fi list in options page</comment>
+  </data>
+  <data name="StartDeveloping.Text" xml:space="preserve">
+    <value> para começar a desenvolver</value>
+    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
+  </data>
+  <data name="Visit.Text" xml:space="preserve">
+    <value>Visite</value>
+    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
+  </data>
+  <data name="WindowsOnDevicesUrl.Text" xml:space="preserve">
+    <value> www.windowsondevices.com</value>
+    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
+  </data>
+  <data name="KeyboardTitle.Text" xml:space="preserve">
+    <value>Layout do teclado</value>
+    <comment>Field label</comment>
+  </data>
+  <data name="LanguageTitle.Text" xml:space="preserve">
+    <value>Idioma</value>
+    <comment>Field label</comment>
+  </data>
+  <data name="NetworkConnected.Text" xml:space="preserve">
+    <value>Conectada</value>
+  </data>
+  <data name="NetworkPreferences.Text" xml:space="preserve">
+    <value>Rede e Wi-Fi</value>
+  </data>
+  <data name="SettingsPreferences.Text" xml:space="preserve">
+    <value>Preferências básicas</value>
+  </data>
+  <data name="SettingsTitle.Text" xml:space="preserve">
+    <value>Configurações do dispositivo</value>
+  </data>
+  <data name="TimeZoneTitle.Text" xml:space="preserve">
+    <value>Fuso horário</value>
+  </data>
+  <data name="DeviceInfo.Text" xml:space="preserve">
+    <value>Informações do dispositivo</value>
+  </data>
+  <data name="Tutorials.Text" xml:space="preserve">
+    <value>Tutoriais</value>
+    <comment>Text under the Tutorials button on the top bar</comment>
+  </data>
+  <data name="ConnectedDevices.Text" xml:space="preserve">
+    <value>Dispositivos conectados</value>
+  </data>
+  <data name="Ipv4.Text" xml:space="preserve">
+    <value>IPv4</value>
+    <comment>Field label</comment>
+  </data>
+  <data name="Ipv6.Text" xml:space="preserve">
+    <value>IPv6</value>
+    <comment>Field label</comment>
+  </data>
+  <data name="MainPageIPAddress.Text" xml:space="preserve">
+    <value>Endereço IP</value>
+    <comment>Field label</comment>
+  </data>
+  <data name="NetworkInformation.Text" xml:space="preserve">
+    <value>INFORMAÇÕES DA REDE</value>
+  </data>
+  <data name="Status.Text" xml:space="preserve">
+    <value>Status</value>
+    <comment>Status of the network connection (e.g. not connected, limited, etc.)</comment>
+  </data>
+  <data name="TutorialGetCodingDescription.Text" xml:space="preserve">
+    <value>Saiba como escrever códigos remotamente do seu computador</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialGetCodingTitle.Text" xml:space="preserve">
+    <value>Comece a codificar</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialGetConnectedDescription.Text" xml:space="preserve">
+    <value>Conecte seu dispositivo à Internet e ao computador</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialGetConnectedTitle.Text" xml:space="preserve">
+    <value>Conecte-se</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialGetStartedDescription.Text" xml:space="preserve">
+    <value>Conheça o Windows IoT Core</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialGetStartedTitle.Text" xml:space="preserve">
+    <value>Introdução</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialHeader.Text" xml:space="preserve">
+    <value>Saiba como tirar o melhor proveito do Windows IoT Core</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialHelloBlinkyDescription.Text" xml:space="preserve">
+    <value>Ativar LED no dispositivo</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialHelloBlinkyTitle.Text" xml:space="preserve">
+    <value>Olá Blinky</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialTitle.Text" xml:space="preserve">
+    <value>Recursos e ferramentas para ajudar você a conectar-se e a desenvolver</value>
+  </data>
+  <data name="TutorialBlinkyBody1.Text" xml:space="preserve">
+    <value>A primeira e mais básica coisa que uma placa deve fazer é piscar.</value>
+  </data>
+  <data name="TutorialBlinkyBody2.Text" xml:space="preserve">
+    <value>Conforme mencionado na seção "Introdução", todo o código-fonte para este código aberto está disponível em www.windowsondevices.com (procure pelo IoTCoreDefaultApp).</value>
+  </data>
+  <data name="TutorialBlinkyBody3.Text" xml:space="preserve">
+    <value>Não é necessário nenhuma configuração. Basta pressionar iniciar.</value>
+  </data>
+  <data name="TutorialBlinkyBody4.Text" xml:space="preserve">
+    <value>A frequência da intermitência também pode ser alterada. Fique à vontade para reunir seus amigos e fazer uma festa com seu Raspberry Pi 2.</value>
+  </data>
+  <data name="TutorialBlinkyBody5.Text" xml:space="preserve">
+    <value>Aviso de isenção de responsabilidade: a Microsoft não se responsabiliza por quaisquer danos que possam ocorrer pelo uso do pequeno LED piscante na placa.</value>
+  </data>
+  <data name="TutorialBlinkyTitle1.Text" xml:space="preserve">
+    <value>Olá Blinky</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialBlinkyTitle2.Text" xml:space="preserve">
+    <value>Faça sua placa piscar</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="MainPageOSVersion.Text" xml:space="preserve">
+    <value>Versão do Sistema Operacional</value>
+    <comment>Label for OS Version field in main page</comment>
+  </data>
+  <data name="OSVersionNotAvailable" xml:space="preserve">
+    <value>Não Disponível</value>
+    <comment>Text shown when we cannot retrieve the OS Version</comment>
+  </data>
+  <data name="Refresh.Content" xml:space="preserve">
+    <value>Atualizar</value>
+    <comment>Refresh button</comment>
+  </data>
+</root>
