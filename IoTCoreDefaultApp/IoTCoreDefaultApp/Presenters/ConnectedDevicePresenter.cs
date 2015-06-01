@@ -30,29 +30,77 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Devices.Enumeration;
 using Windows.UI.Core;
+using System.Diagnostics;
 
 namespace IoTCoreDefaultApp
 {
     public class ConnectedDevicePresenter
     {
         private CoreDispatcher dispatcher;
+        const string usbDevicesSelector = "(System.Devices.InterfaceClassGuid:=\"{" + Constants.GUID_DEVINTERFACE_USB_DEVICE + "}\")";
 
         public ConnectedDevicePresenter(CoreDispatcher dispatcher)
         {
             this.dispatcher = dispatcher;
-            var deviceClass = "(System.Devices.InterfaceClassGuid:=\"{" + Constants.GUID_DEVINTERFACE_USB_DEVICE + "}\")";
 
-            usbConnectedDevicesWatcher = DeviceInformation.CreateWatcher(deviceClass);
-            usbConnectedDevicesWatcher.Added += DevicesAdded;
+            usbConnectedDevicesWatcher = DeviceInformation.CreateWatcher(usbDevicesSelector);
+            usbConnectedDevicesWatcher.EnumerationCompleted += DevicesEnumCompleted;
+            usbConnectedDevicesWatcher.Updated += DevicesUpdated;
+            usbConnectedDevicesWatcher.Removed += DevicesRemoved;
             usbConnectedDevicesWatcher.Start();
         }
 
-        private async void DevicesAdded(DeviceWatcher sender, DeviceInformation args)
+        private async void DevicesEnumCompleted(DeviceWatcher sender, object args)
         {
+            Debug.WriteLine("USB Devices Enumeration Completed");
+
             await dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
             {
-                devices.Add(args.Name);
+                UpdateDevices();
             });
+        }
+
+        private async void DevicesUpdated(DeviceWatcher sender, DeviceInformationUpdate args)
+        {
+            Debug.WriteLine("Updated USB device: " + args.Id);
+
+            await dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+            {
+                UpdateDevices();
+            });
+        }
+
+        private async void DevicesRemoved(DeviceWatcher sender, DeviceInformationUpdate args)
+        {
+            Debug.WriteLine("Removed USB device: " + args.Id);
+
+            await dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+            {
+                UpdateDevices();
+            });
+        }
+
+        private async void UpdateDevices()
+        {
+            // Get a list of all enumerated usb devices              
+            var deviceInformationCollection = await DeviceInformation.FindAllAsync(usbDevicesSelector);
+
+            // Always start with a clean list                 
+            devices.Clear();  
+
+            if (deviceInformationCollection == null || deviceInformationCollection.Count == 0)  
+            {
+                return;
+            }
+
+            // If devices are found, enumerate them and add only enabled ones
+            foreach (var device in deviceInformationCollection)
+            {
+                if (device.IsEnabled)
+                {
+                    devices.Add(device.Name);
+                }
+            }
         }
 
         public ObservableCollection<string> GetConnectedDevices()
