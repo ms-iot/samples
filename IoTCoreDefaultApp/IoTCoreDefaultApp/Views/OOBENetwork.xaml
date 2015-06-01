@@ -115,7 +115,7 @@
                     <ProgressRing x:Name="ConnectingProgressRing" IsActive="True" Foreground="White"/>
                     <TextBlock x:Uid="NetworkConnectingMessage" Text="Checking network requirements" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="12,0,0,0"/>
                 </StackPanel>
-                <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" x:Name="CancelButton" Content="Cancel" Width="120" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="CancelButton_Clicked" Margin="130,0,0,0"/>
+                <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" x:Uid="CancelButton" x:Name="CancelButton" Content="Cancel" Width="120" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="CancelButton_Clicked" Margin="130,0,0,0"/>
             </Grid>
         </DataTemplate>
     </Page.Resources>
@@ -134,7 +134,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical">
-            <TextBlock x:Uid="OOBEWelcomeTitle" Text="Hi there, welcome to the Windows 10 IoT Core Insider Preview" Style="{ThemeResource SubheaderTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <TextBlock x:Uid="OOBEWelcomeTitle" Style="{ThemeResource SubheaderTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <TextBlock x:Uid="OOBENetworkTitle" Text="Let's get connected" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,14,0,0"/>
             <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,50,0,0">
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">
