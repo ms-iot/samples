@@ -23,7 +23,6 @@
 */
 
 using System;
-using System.Diagnostics;
 using Windows.Devices.WiFi;
 using Windows.Security.Credentials;
 using Windows.System.Threading;
@@ -121,14 +120,7 @@ namespace IoTCoreDefaultApp
 
                     if (connectedNetwork != null)
                     {
-                        // By this line, it is not guaranteed that the Wifi ListView control
-                        // has created its new UI elements after setting new ItemsSource above
-                        // Calling UpdateLayout to force the ListView to recreate its items UI elements
-                        // aka item containers, otherwise the ContainerFromItem call will return null
-                        WifiListView.UpdateLayout();
-
                         var connectedListItem = WifiListView.ContainerFromItem(connectedNetwork) as ListViewItem;
-                        Debug.Assert(connectedListItem != null);
                         connectedListItem.ContentTemplate = WifiConnectedState;
                     }
 
