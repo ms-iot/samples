@@ -145,12 +145,6 @@
     <value>Arresta il sistema</value>
     <comment>Shutdown entry in the shutdown menu</comment>
   </data>
-  <data name="LegalText1.Text" xml:space="preserve">
-    <value>Usando questo software, accetti le condizioni di licenza Microsoft.</value>
-  </data>
-  <data name="LegalText2.Text" xml:space="preserve">
-    <value>L'informativa sulla privacy per questa versione non definitiva del sistema operativo Windows è disponibile all'indirizzo: http://go.microsoft.com/fwlink/?LinkId=506737. Puoi consultare le condizioni collegate incollando il link nella finestra del browser una volta che il software è in esecuzione.</value>
-  </data>
   <data name="BackButton.Content" xml:space="preserve">
     <value>Indietro</value>
   </data>

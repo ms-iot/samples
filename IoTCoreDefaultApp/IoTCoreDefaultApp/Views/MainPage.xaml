@@ -183,12 +183,6 @@
                 <ItemsControl x:Name="ConnectedDevices" Foreground="{StaticResource PaleTextBrush}" />
             </StackPanel>
             
-            <!-- Legal Text -->
-            <StackPanel Grid.Row="6">
-                <TextBlock x:Uid="LegalText1" Style="{StaticResource CaptionTextBlockStyle}" TextWrapping="WrapWholeWords" />
-                <TextBlock x:Uid="LegalText2" Style="{StaticResource CaptionTextBlockStyle}" TextWrapping="WrapWholeWords" />
-            </StackPanel>
-
         </Grid>
         
     </Grid>

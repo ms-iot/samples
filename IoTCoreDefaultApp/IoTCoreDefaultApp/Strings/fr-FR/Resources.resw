@@ -145,12 +145,6 @@
     <value>Arrêt</value>
     <comment>Shutdown entry in the shutdown menu</comment>
   </data>
-  <data name="LegalText1.Text" xml:space="preserve">
-    <value>En utilisant ce logiciel, vous acceptez les termes du contrat de licence Microsoft.</value>
-  </data>
-  <data name="LegalText2.Text" xml:space="preserve">
-    <value>La déclaration de confidentialité de cette version préliminaire du système d’exploitation Windows peut être consultée ici : http://go.microsoft.com/fwlink/?LinkId=506737. Vous pouvez consulter les termes apparaissant sous forme de liens en collant la cible du lien dans votre fenêtre de navigateur une fois que le logiciel est en cours d’exécution.</value>
-  </data>
   <data name="BackButton.Content" xml:space="preserve">
     <value>Précédent</value>
   </data>
