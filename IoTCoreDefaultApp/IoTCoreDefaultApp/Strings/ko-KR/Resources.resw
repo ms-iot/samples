@@ -145,12 +145,6 @@
     <value>종료</value>
     <comment>Shutdown entry in the shutdown menu</comment>
   </data>
-  <data name="LegalText1.Text" xml:space="preserve">
-    <value>이 소프트웨어를 사용하면 Microsoft 사용 조건에 동의하게 됩니다.</value>
-  </data>
-  <data name="LegalText2.Text" xml:space="preserve">
-    <value>이 시험판 버전의 Windows 운영 체제에 대한 개인 정보 취급 방침은 http://go.microsoft.com/fwlink/?LinkId=506737에서 확인할 수 있습니다. 소프트웨어가 실행된 다음 이 링크를 브라우저 창에 붙여 넣어 연결된 조건을 검토할 수 있습니다.</value>
-  </data>
   <data name="BackButton.Content" xml:space="preserve">
     <value>뒤로</value>
   </data>

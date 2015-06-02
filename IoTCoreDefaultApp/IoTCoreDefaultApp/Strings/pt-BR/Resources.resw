@@ -145,12 +145,6 @@
     <value>Desligar</value>
     <comment>Shutdown entry in the shutdown menu</comment>
   </data>
-  <data name="LegalText1.Text" xml:space="preserve">
-    <value>Ao usar este software, você concorda com os termos da licença da Microsoft.</value>
-  </data>
-  <data name="LegalText2.Text" xml:space="preserve">
-    <value>A política de privacidade para esta versão de pré-lançamento do sistema operacional do Windows pode ser vista aqui: http://go.microsoft.com/fwlink/?LinkId=506737. Você pode examinar os termos vinculados colando o link em seu navegador assim que o software estiver em execução.</value>
-  </data>
   <data name="BackButton.Content" xml:space="preserve">
     <value>Voltar</value>
   </data>

@@ -145,12 +145,6 @@
     <value>Завершение работы</value>
     <comment>Shutdown entry in the shutdown menu</comment>
   </data>
-  <data name="LegalText1.Text" xml:space="preserve">
-    <value>Используя это программное обеспечение, вы принимаете условия лицензии Майкрософт.</value>
-  </data>
-  <data name="LegalText2.Text" xml:space="preserve">
-    <value>Заявление о конфиденциальности для этой предварительной версии операционной системы Windows можно просмотреть здесь: http://go.microsoft.com/fwlink/?LinkId=506737. Чтобы просмотреть связанные условия, вставьте ссылку ниже в окно браузера, когда программное обеспечение работает.</value>
-  </data>
   <data name="BackButton.Content" xml:space="preserve">
     <value>Назад</value>
   </data>

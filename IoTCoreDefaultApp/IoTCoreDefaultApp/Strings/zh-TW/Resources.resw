@@ -145,12 +145,6 @@
     <value>關機</value>
     <comment>Shutdown entry in the shutdown menu</comment>
   </data>
-  <data name="LegalText1.Text" xml:space="preserve">
-    <value>使用此軟體代表您同意 Microsoft 授權條款。</value>
-  </data>
-  <data name="LegalText2.Text" xml:space="preserve">
-    <value>您可在此處閱讀此 Windows 作業系統搶鮮版的隱私權聲明: http://go.microsoft.com/fwlink/?LinkId=506737。您可以在軟體開始執行後，將前一連結貼進瀏覽器視窗來檢閱相關條款。</value>
-  </data>
   <data name="BackButton.Content" xml:space="preserve">
     <value>上一頁</value>
   </data>

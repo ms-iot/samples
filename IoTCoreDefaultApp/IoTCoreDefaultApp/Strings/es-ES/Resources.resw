@@ -145,12 +145,6 @@
     <value>Apagar</value>
     <comment>Shutdown entry in the shutdown menu</comment>
   </data>
-  <data name="LegalText1.Text" xml:space="preserve">
-    <value>Al usar este software aceptas los términos de licencia de Microsoft.</value>
-  </data>
-  <data name="LegalText2.Text" xml:space="preserve">
-    <value>La declaración de privacidad de esta versión preliminar del sistema operativo Windows se puede ver aquí: http://go.microsoft.com/fwlink/?LinkId=506737. Para revisar los términos vinculados, pega el vínculo hacia delante en la ventana del explorador cuando el software se esté ejecutando.</value>
-  </data>
   <data name="BackButton.Content" xml:space="preserve">
     <value>Atrás</value>
   </data>
