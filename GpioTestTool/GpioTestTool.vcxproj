@@ -33,7 +33,7 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccProvider>SAK</SccProvider>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>GpioCppWrl</RootNamespace>
+    <RootNamespace>GpioTestTool</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

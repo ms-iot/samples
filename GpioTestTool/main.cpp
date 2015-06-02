@@ -23,7 +23,7 @@ THE SOFTWARE.
 */
 
 //
-// GpioCppWrl
+// GpioTestTool
 //
 //   Utility to manipulate GPIO pins from the command line.
 //   Demonstrates how to use the GPIO WinRT APIs from straight 
