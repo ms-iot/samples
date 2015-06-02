@@ -40,7 +40,7 @@ namespace BlinkyHeadlessCpp
 		Platform::Agile<Windows::ApplicationModel::Background::BackgroundTaskDeferral> Deferral;
 		Windows::ApplicationModel::Background::IBackgroundTaskInstance^ TaskInstance;
 		Windows::System::Threading::ThreadPoolTimer ^Timer;
-		int LEDStatus = 0;
+		Windows::Devices::Gpio::GpioPinValue pinValue;
 		const int LED_PIN = 5;
 		Windows::Devices::Gpio::GpioPin ^pin;
     };
