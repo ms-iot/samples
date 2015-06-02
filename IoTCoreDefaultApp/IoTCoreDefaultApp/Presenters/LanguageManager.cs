@@ -71,7 +71,12 @@ namespace IoTCoreDefaultApp
 
         public static string GetCurrentLanguageDisplayName()
         {
-            var lang = new Language(ApplicationLanguages.PrimaryLanguageOverride);
+            var langTag = ApplicationLanguages.PrimaryLanguageOverride;
+            if (String.IsNullOrEmpty(langTag))
+            {
+                langTag = GlobalizationPreferences.Languages[0];
+            }
+            var lang = new Language(langTag);
 
             return lang.DisplayName;
         }
