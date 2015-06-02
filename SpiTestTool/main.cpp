@@ -23,8 +23,6 @@ THE SOFTWARE.
 */
 
 //
-// Copyright (c) Microsoft Corporation. All rights reserved.
-//
 // spitesttool
 //
 //   Utility to read and write SPI devices from the command line.

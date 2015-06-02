@@ -23,8 +23,6 @@ THE SOFTWARE.
 */
 
 //
-// Copyright (c) Microsoft Corporation. All rights reserved.
-//
 // i2ctesttool
 //
 //   Utility to read and write I2C devices from the command line.
