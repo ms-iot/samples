@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="IoTCoreHeader.Text" xml:space="preserve">
-    <value>Windows 10 IoT Core Insider Preview</value>
+    <value>Windows 10 IoT Core</value>
     <comment>The Operating System Name</comment>
   </data>
   <data name="GenericBoardName" xml:space="preserve">
@@ -144,9 +144,6 @@
   <data name="ShutdownText.Text" xml:space="preserve">
     <value>シャットダウン</value>
     <comment>Shutdown entry in the shutdown menu</comment>
-  </data>
-  <data name="LegalText1.Text" xml:space="preserve">
-    <value>このソフトウェアを使うことでマイクロソフトのライセンス条項に同意したことになります。</value>
   </data>
   <data name="BackButton.Content" xml:space="preserve">
     <value>戻る</value>
@@ -189,7 +186,7 @@
     <value>さぁ、接続してみましょう</value>
   </data>
   <data name="OOBEWelcomeTitle.Text" xml:space="preserve">
-    <value>Windows IoT Core Insider Preview へようこそ</value>
+    <value>Windows IoT Core へようこそ</value>
   </data>
   <data name="Rpi2Name" xml:space="preserve">
     <value>Raspberry Pi 2</value>

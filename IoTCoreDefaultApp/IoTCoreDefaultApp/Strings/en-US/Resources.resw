@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="IoTCoreHeader.Text" xml:space="preserve">
-    <value>Windows 10 IoT Core Insider Preview</value>
+    <value>Windows 10 IoT Core</value>
     <comment>The Operating System Name</comment>
   </data>
   <data name="GenericBoardName" xml:space="preserve">
@@ -144,12 +144,6 @@
   <data name="ShutdownText.Text" xml:space="preserve">
     <value>Shutdown</value>
     <comment>Shutdown entry in the shutdown menu</comment>
-  </data>
-  <data name="LegalText1.Text" xml:space="preserve">
-    <value>By using this software you agree to Microsoft license terms.</value>
-  </data>
-  <data name="LegalText2.Text" xml:space="preserve">
-    <value>The privacy statement for this prerelease version of the Windows operating system can be viewed here: http://go.microsoft.com/fwlink/?LinkId=506737. You can review linked terms by pasting the forward link into your browser window once the software is running.</value>
   </data>
   <data name="BackButton.Content" xml:space="preserve">
     <value>Back</value>
@@ -192,7 +186,7 @@
     <value>Let's get connected</value>
   </data>
   <data name="OOBEWelcomeTitle.Text" xml:space="preserve">
-    <value>Hi there, welcome to the Windows IoT Core Insider Preview</value>
+    <value>Hi there, welcome to the Windows IoT Core</value>
   </data>
   <data name="Rpi2Name" xml:space="preserve">
     <value>Raspberry Pi 2</value>
@@ -342,5 +336,14 @@
   <data name="Refresh.Content" xml:space="preserve">
     <value>Refresh</value>
     <comment>Refresh button</comment>
+  </data>
+  <data name="Tutorial.GetStarted.001.h1" xml:space="preserve">
+    <value>title test</value>
+  </data>
+  <data name="Tutorial.GetStarted.002.p" xml:space="preserve">
+    <value>body test 2</value>
+  </data>
+  <data name="Tutorial.GetStarted.004.p" xml:space="preserve">
+    <value>body test</value>
   </data>
 </root>

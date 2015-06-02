@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="IoTCoreHeader.Text" xml:space="preserve">
-    <value>Windows 10 IoT Core Insider Preview</value>
+    <value>Windows 10 IoT Core</value>
     <comment>The Operating System Name</comment>
   </data>
   <data name="GenericBoardName" xml:space="preserve">
@@ -144,12 +144,6 @@
   <data name="ShutdownText.Text" xml:space="preserve">
     <value>关机</value>
     <comment>Shutdown entry in the shutdown menu</comment>
-  </data>
-  <data name="LegalText1.Text" xml:space="preserve">
-    <value>使用此软件即表示你同意 Microsoft 许可条款。</value>
-  </data>
-  <data name="LegalText2.Text" xml:space="preserve">
-    <value>可以在此处查看 Windows 操作系统的此预发布版本的隐私声明: http://go.microsoft.com/fwlink/?LinkId=506737。你可以在该软件运行后将前向链接粘贴到浏览器窗口来查看链接条款。</value>
   </data>
   <data name="BackButton.Content" xml:space="preserve">
     <value>上一步</value>
@@ -192,7 +186,7 @@
     <value>让我们保持联络</value>
   </data>
   <data name="OOBEWelcomeTitle.Text" xml:space="preserve">
-    <value>你好，欢迎使用 Windows IoT Core Insider Preview</value>
+    <value>你好，欢迎使用 Windows IoT Core</value>
   </data>
   <data name="Rpi2Name" xml:space="preserve">
     <value>Raspberry Pi 2</value>

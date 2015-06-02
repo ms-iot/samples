@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="IoTCoreHeader.Text" xml:space="preserve">
-    <value>Windows 10 IoT Core Insider Preview</value>
+    <value>Windows 10 IoT Core</value>
     <comment>The Operating System Name</comment>
   </data>
   <data name="GenericBoardName" xml:space="preserve">
@@ -144,12 +144,6 @@
   <data name="ShutdownText.Text" xml:space="preserve">
     <value>Apagar</value>
     <comment>Shutdown entry in the shutdown menu</comment>
-  </data>
-  <data name="LegalText1.Text" xml:space="preserve">
-    <value>Al usar este software aceptas los términos de licencia de Microsoft.</value>
-  </data>
-  <data name="LegalText2.Text" xml:space="preserve">
-    <value>La declaración de privacidad de esta versión preliminar del sistema operativo Windows se puede ver aquí: http://go.microsoft.com/fwlink/?LinkId=506737. Para revisar los términos vinculados, pega el vínculo hacia delante en la ventana del explorador cuando el software se esté ejecutando.</value>
   </data>
   <data name="BackButton.Content" xml:space="preserve">
     <value>Atrás</value>
@@ -192,7 +186,7 @@
     <value>Vamos a conectarnos</value>
   </data>
   <data name="OOBEWelcomeTitle.Text" xml:space="preserve">
-    <value>Hola, bienvenido a Windows IoT Core Insider Preview</value>
+    <value>Hola, bienvenido a Windows IoT Core</value>
   </data>
   <data name="Rpi2Name" xml:space="preserve">
     <value>Raspberry Pi 2</value>
