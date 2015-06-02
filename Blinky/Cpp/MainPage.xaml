@@ -33,7 +33,6 @@
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <Ellipse x:Name="LED" Fill="LightGray" Stroke="White" Width="100" Height="100" Margin="10"/>
             <TextBlock x:Name="DelayText" Text="500ms" Margin="10" TextAlignment="Center" FontSize="26.667" />
-            <Slider x:Name="Delay" Width="200" Value="500" Maximum="1000" LargeChange="100" SmallChange="10" Margin="10" StepFrequency="10" ValueChanged="Delay_ValueChanged"/>
             <TextBlock x:Name="GpioStatus" Text="Waiting to initialize GPIO..." Margin="10,50,10,10" TextAlignment="Center" FontSize="26.667" />
         </StackPanel>
     </Grid>
