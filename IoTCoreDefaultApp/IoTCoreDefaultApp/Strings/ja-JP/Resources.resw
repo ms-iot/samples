@@ -145,9 +145,6 @@
     <value>シャットダウン</value>
     <comment>Shutdown entry in the shutdown menu</comment>
   </data>
-  <data name="LegalText1.Text" xml:space="preserve">
-    <value>このソフトウェアを使うことでマイクロソフトのライセンス条項に同意したことになります。</value>
-  </data>
   <data name="BackButton.Content" xml:space="preserve">
     <value>戻る</value>
   </data>

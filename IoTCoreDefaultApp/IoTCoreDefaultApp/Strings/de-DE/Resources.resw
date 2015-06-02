@@ -145,12 +145,6 @@
     <value>Herunterfahren</value>
     <comment>Shutdown entry in the shutdown menu</comment>
   </data>
-  <data name="LegalText1.Text" xml:space="preserve">
-    <value>Durch die Nutzung dieser Software stimmen Sie den Microsoft-Lizenzbedingungen zu.</value>
-  </data>
-  <data name="LegalText2.Text" xml:space="preserve">
-    <value>Die Datenschutzbestimmungen für diese Vorabversion des Windows-Betriebssystems können Sie über den folgenden Link aufrufen: http://go.microsoft.com/fwlink/?LinkId=506737. Lesen Sie die Bestimmungen, indem Sie den Weiterleitungslink in Ihr Browserfenster einfügen, sobald die Software ausgeführt wird.</value>
-  </data>
   <data name="BackButton.Content" xml:space="preserve">
     <value>Zurück</value>
   </data>
