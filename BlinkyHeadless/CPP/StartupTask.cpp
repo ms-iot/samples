@@ -44,19 +44,8 @@ void StartupTask::Run(IBackgroundTaskInstance^ taskInstance)
 	TimerElapsedHandler ^handler = ref new TimerElapsedHandler(
 		[this](ThreadPoolTimer ^timer)
 	{
-		if (pin != nullptr)
-		{
-			if (LEDStatus == 0)
-			{
-				LEDStatus = 1;
-				pin->Write(GpioPinValue::High);
-			}
-			else
-			{
-				LEDStatus = 0;
-				pin->Write(GpioPinValue::Low);
-			}
-		}
+		pinValue = (pinValue == GpioPinValue::High) ? GpioPinValue::Low : GpioPinValue::High;
+		pin->Write(pinValue);
 	});
 
 	TimeSpan interval;
@@ -68,17 +57,9 @@ void StartupTask::Run(IBackgroundTaskInstance^ taskInstance)
 
 void StartupTask::InitGpio()
 {
-
-	auto gpio = GpioController::GetDefault();
-
-	if (gpio == nullptr)
-	{
-		pin = nullptr;
-		return;
-	}
-
-	pin = gpio->OpenPin(LED_PIN);
-	pin->Write(GpioPinValue::High);
+	pin = GpioController::GetDefault()->OpenPin(LED_PIN);
+	pinValue = GpioPinValue::High;
+	pin->Write(pinValue);
 	pin->SetDriveMode(GpioPinDriveMode::Output);
 }
 
