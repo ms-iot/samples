@@ -40,13 +40,10 @@ namespace BlinkyCpp
 
     private:
         void InitGPIO();
-        void FlipLED();
-        void TurnOffLED();
         void OnTick(Platform::Object ^sender, Platform::Object ^args);
-        void Delay_ValueChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs^ e);
-
+        
         Windows::UI::Xaml::DispatcherTimer ^timer_;
-        int LEDStatus_ = 0;
+		Windows::Devices::Gpio::GpioPinValue pinValue_ = Windows::Devices::Gpio::GpioPinValue::High;
         const int LED_PIN = 5;
         Windows::Devices::Gpio::GpioPin ^pin_;
         Windows::UI::Xaml::Media::SolidColorBrush ^redBrush_ = ref new Windows::UI::Xaml::Media::SolidColorBrush(Windows::UI::Colors::Red);
