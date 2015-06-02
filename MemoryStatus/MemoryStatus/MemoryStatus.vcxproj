@@ -135,7 +135,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>mincore.lib</AdditionalDependencies>
+      <AdditionalDependencies>onecoreuap.lib</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>mincore.lib</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
@@ -166,7 +167,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>mincore.lib</AdditionalDependencies>
+      <AdditionalDependencies>onecoreuap.lib</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>mincore.lib</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -185,7 +187,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>mincore.lib</AdditionalDependencies>
+      <AdditionalDependencies>onecoreuap.lib</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>mincore.lib</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
@@ -224,7 +227,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>mincore.lib</AdditionalDependencies>
+      <AdditionalDependencies>onecoreuap.lib</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>mincore.lib</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
