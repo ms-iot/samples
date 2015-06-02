@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.22820.0
+VisualStudioVersion = 14.0.22823.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "PythonBlinky", "PythonBlinky.pyproj", "{C598CDAD-87EB-4704-AE6E-D93E7A75C5C5}"
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "PythonBlinky", "PythonBlinky\PythonBlinky.pyproj", "{F893FF10-3D7C-4230-AF72-BCB82B8C1826}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,24 +15,24 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C598CDAD-87EB-4704-AE6E-D93E7A75C5C5}.Debug|ARM.ActiveCfg = Debug|ARM
-		{C598CDAD-87EB-4704-AE6E-D93E7A75C5C5}.Debug|ARM.Build.0 = Debug|ARM
-		{C598CDAD-87EB-4704-AE6E-D93E7A75C5C5}.Debug|ARM.Deploy.0 = Debug|ARM
-		{C598CDAD-87EB-4704-AE6E-D93E7A75C5C5}.Debug|x64.ActiveCfg = Debug|x64
-		{C598CDAD-87EB-4704-AE6E-D93E7A75C5C5}.Debug|x64.Build.0 = Debug|x64
-		{C598CDAD-87EB-4704-AE6E-D93E7A75C5C5}.Debug|x64.Deploy.0 = Debug|x64
-		{C598CDAD-87EB-4704-AE6E-D93E7A75C5C5}.Debug|x86.ActiveCfg = Debug|x86
-		{C598CDAD-87EB-4704-AE6E-D93E7A75C5C5}.Debug|x86.Build.0 = Debug|x86
-		{C598CDAD-87EB-4704-AE6E-D93E7A75C5C5}.Debug|x86.Deploy.0 = Debug|x86
-		{C598CDAD-87EB-4704-AE6E-D93E7A75C5C5}.Release|ARM.ActiveCfg = Release|ARM
-		{C598CDAD-87EB-4704-AE6E-D93E7A75C5C5}.Release|ARM.Build.0 = Release|ARM
-		{C598CDAD-87EB-4704-AE6E-D93E7A75C5C5}.Release|ARM.Deploy.0 = Release|ARM
-		{C598CDAD-87EB-4704-AE6E-D93E7A75C5C5}.Release|x64.ActiveCfg = Release|x64
-		{C598CDAD-87EB-4704-AE6E-D93E7A75C5C5}.Release|x64.Build.0 = Release|x64
-		{C598CDAD-87EB-4704-AE6E-D93E7A75C5C5}.Release|x64.Deploy.0 = Release|x64
-		{C598CDAD-87EB-4704-AE6E-D93E7A75C5C5}.Release|x86.ActiveCfg = Release|x86
-		{C598CDAD-87EB-4704-AE6E-D93E7A75C5C5}.Release|x86.Build.0 = Release|x86
-		{C598CDAD-87EB-4704-AE6E-D93E7A75C5C5}.Release|x86.Deploy.0 = Release|x86
+		{F893FF10-3D7C-4230-AF72-BCB82B8C1826}.Debug|ARM.ActiveCfg = Debug|ARM
+		{F893FF10-3D7C-4230-AF72-BCB82B8C1826}.Debug|ARM.Build.0 = Debug|ARM
+		{F893FF10-3D7C-4230-AF72-BCB82B8C1826}.Debug|ARM.Deploy.0 = Debug|ARM
+		{F893FF10-3D7C-4230-AF72-BCB82B8C1826}.Debug|x64.ActiveCfg = Debug|x64
+		{F893FF10-3D7C-4230-AF72-BCB82B8C1826}.Debug|x64.Build.0 = Debug|x64
+		{F893FF10-3D7C-4230-AF72-BCB82B8C1826}.Debug|x64.Deploy.0 = Debug|x64
+		{F893FF10-3D7C-4230-AF72-BCB82B8C1826}.Debug|x86.ActiveCfg = Debug|x86
+		{F893FF10-3D7C-4230-AF72-BCB82B8C1826}.Debug|x86.Build.0 = Debug|x86
+		{F893FF10-3D7C-4230-AF72-BCB82B8C1826}.Debug|x86.Deploy.0 = Debug|x86
+		{F893FF10-3D7C-4230-AF72-BCB82B8C1826}.Release|ARM.ActiveCfg = Release|ARM
+		{F893FF10-3D7C-4230-AF72-BCB82B8C1826}.Release|ARM.Build.0 = Release|ARM
+		{F893FF10-3D7C-4230-AF72-BCB82B8C1826}.Release|ARM.Deploy.0 = Release|ARM
+		{F893FF10-3D7C-4230-AF72-BCB82B8C1826}.Release|x64.ActiveCfg = Release|x64
+		{F893FF10-3D7C-4230-AF72-BCB82B8C1826}.Release|x64.Build.0 = Release|x64
+		{F893FF10-3D7C-4230-AF72-BCB82B8C1826}.Release|x64.Deploy.0 = Release|x64
+		{F893FF10-3D7C-4230-AF72-BCB82B8C1826}.Release|x86.ActiveCfg = Release|x86
+		{F893FF10-3D7C-4230-AF72-BCB82B8C1826}.Release|x86.Build.0 = Release|x86
+		{F893FF10-3D7C-4230-AF72-BCB82B8C1826}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
