@@ -159,7 +159,7 @@ std::wostream& operator<< (std::wostream& os, Array<BYTE>^& bytes)
     return os;
 }
 
-static const WCHAR Help[] =
+PCWSTR Help =
     L"Commands:\n"
     L" > write { 00 11 22 .. FF }         Write supplied buffer\n"
     L" > read N                           Read N bytes\n"
@@ -363,6 +363,7 @@ int main (Platform::Array<Platform::String^>^ args)
         return 1;
     } catch (Platform::Exception^ ex) {
         std::wcerr << L"Error: " << ex->Message->Data() << L"\n";
+        return 1;
     }
 
     return 0;
