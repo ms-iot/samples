@@ -87,7 +87,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <ProjectReference Include="..\TimerProviderCommTask\WebServerTask.csproj">
+    <ProjectReference Include="..\WebServerTask\WebServerTask.csproj">
       <Project>{69afa59f-fb94-4b53-8e34-ff91ef3d3873}</Project>
       <Name>WebServerTask</Name>
     </ProjectReference>
