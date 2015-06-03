@@ -21,6 +21,7 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
 */
+
 using System;
 using Windows.Devices.WiFi;
 using Windows.Security.Credentials;
@@ -71,36 +72,29 @@ namespace IoTCoreDefaultApp
             SetupWifi();
         }
 
-        private void BackButton_Tapped(object sender, TappedRoutedEventArgs e)
+        private void BackButton_Clicked(object sender, RoutedEventArgs e)
         {
             NavigationUtils.GoBack();
-        }
-
-        private void NetworkListViewItem_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            if (NetworkGrid.Visibility == Visibility.Collapsed)
-            {
-                SetupNetwork();
-                visibleContent.Visibility = Visibility.Collapsed;
-                NetworkGrid.Visibility = Visibility.Visible;
-                visibleContent = NetworkGrid;
-            }
-        }
-
-        private void PreferencesListViewItem_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            if (BasicPreferencesGridView.Visibility == Visibility.Collapsed)
-            {
-                visibleContent.Visibility = Visibility.Collapsed;
-                BasicPreferencesGridView.Visibility = Visibility.Visible;
-                visibleContent = BasicPreferencesGridView;
-            }            
         }
 
         private void LanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = sender as ComboBox;
             languageManager.UpdateLanguage(comboBox.SelectedItem as string);
+
+            // reload
+            if (this.Frame != null)
+            {
+                Type type = this.Frame.CurrentSourcePageType;
+                try
+                {
+                    this.Frame.Navigate(type);
+                }
+                finally
+                {
+                    this.Frame.BackStack.Remove(this.Frame.BackStack[this.Frame.BackStack.Count - 1]);
+                }
+            }
         }
 
         private void TimeZoneComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -140,8 +134,7 @@ namespace IoTCoreDefaultApp
 
                     if (connectedNetwork != null)
                     {
-                        var connectedListItem = WifiListView.ContainerFromItem(connectedNetwork) as ListViewItem;
-                        connectedListItem.ContentTemplate = WifiConnectedState;
+                        SwitchToItemState(connectedNetwork, WifiConnectedState, true);
                     }
 
                     NoWifiFoundText.Visibility = Visibility.Collapsed;
@@ -161,19 +154,17 @@ namespace IoTCoreDefaultApp
 
             foreach (var item in e.RemovedItems)
             {
-                var listViewItem = listView.ContainerFromItem(item) as ListViewItem;
-                listViewItem.ContentTemplate = WifiInitialState;
+                SwitchToItemState(item, WifiInitialState, true);
             }
 
             foreach (var item in e.AddedItems)
             {
                 Automatic = true;
-                var listViewItem = listView.ContainerFromItem(item) as ListViewItem;
-                listViewItem.ContentTemplate = WifiConnectState;
+                SwitchToItemState(item, WifiConnectState, true);
             }
         }
 
-        private void ConnectButton_Tapped(object sender, TappedRoutedEventArgs e)
+        private void ConnectButton_Clicked(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
             var network = button.DataContext as WiFiAvailableNetwork;
@@ -183,7 +174,7 @@ namespace IoTCoreDefaultApp
             }
             else
             {
-                SwitchToItemState(network, WifiPasswordState);
+                SwitchToItemState(network, WifiPasswordState, false);
             }
         }
 
@@ -195,20 +186,19 @@ namespace IoTCoreDefaultApp
 
             await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                SwitchToItemState(network, WifiConnectingState);
+                SwitchToItemState(network, WifiConnectingState, false);
             });
 
             DataTemplate nextState = (await didConnect) ? WifiConnectedState : WifiInitialState;
 
             await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                var item = WifiListView.ContainerFromItem(network) as ListViewItem;
-                item.IsSelected = false;
-                item.ContentTemplate = nextState;
+                var item = SwitchToItemState(network, nextState, false);
+                item.IsSelected = false; 
             });
         }
 
-        private void NextButton_Tapped(object sender, TappedRoutedEventArgs e)
+        private void NextButton_Clicked(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
             PasswordCredential credential;
@@ -229,17 +219,24 @@ namespace IoTCoreDefaultApp
             ConnectToWifi(network, credential, Window.Current.Dispatcher);
         }
 
-        private void CancelButton_Tapped(object sender, TappedRoutedEventArgs e)
+        private void CancelButton_Clicked(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            var item = SwitchToItemState(button.DataContext, WifiInitialState);
+            var item = SwitchToItemState(button.DataContext, WifiInitialState, false);
             item.IsSelected = false;
         }
 
-        private ListViewItem SwitchToItemState(object dataContext, DataTemplate template)
+        private ListViewItem SwitchToItemState(object dataContext, DataTemplate template, bool forceUpdate)
         {
+            if (forceUpdate)
+            {
+                WifiListView.UpdateLayout();
+            }
             var item = WifiListView.ContainerFromItem(dataContext) as ListViewItem;
-            item.ContentTemplate = template;
+            if (item != null)
+            {
+                item.ContentTemplate = template;
+            }
 
             return item;
         }
@@ -255,6 +252,40 @@ namespace IoTCoreDefaultApp
         {
             var passwordBox = sender as PasswordBox;
             CurrentPassword = passwordBox.Password;
+        }
+
+        private void ListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var item = e.ClickedItem as FrameworkElement;
+            if (item == null)
+            {
+                return;
+            }
+            switch (item.Name)
+            {
+                case "PreferencesListViewItem":
+                    if (BasicPreferencesGridView.Visibility == Visibility.Collapsed)
+                    {
+                        visibleContent.Visibility = Visibility.Collapsed;
+                        BasicPreferencesGridView.Visibility = Visibility.Visible;
+                        visibleContent = BasicPreferencesGridView;
+                    }
+                    break;
+                case "NetworkListViewItem":
+                    if (NetworkGrid.Visibility == Visibility.Collapsed)
+                    {
+                        SetupNetwork();
+                        visibleContent.Visibility = Visibility.Collapsed;
+                        NetworkGrid.Visibility = Visibility.Visible;
+                        visibleContent = NetworkGrid;
+                    }
+                    break;
+            }
+        }
+
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            SetupWifi();
         }
     }
 }

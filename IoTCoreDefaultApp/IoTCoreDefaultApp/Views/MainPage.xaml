@@ -1,23 +1,25 @@
-<!--
-    Copyright(c) Microsoft Open Technologies, Inc. All rights reserved.
-    The MIT License(MIT)
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files(the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions :
-    The above copyright notice and this permission notice shall be included in
-    all copies or substantial portions of the Software.
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-    THE SOFTWARE.
--->
+﻿<!--
+    Copyright(c) Microsoft Open Technologies, Inc. All rights reserved.
 
+    The MIT License(MIT)
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files(the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions :
+    The above copyright notice and this permission notice shall be included in
+    all copies or substantial portions of the Software.
+    
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+    THE SOFTWARE.
+-->
 
 <Page
     x:Class="IoTCoreDefaultApp.MainPage"
@@ -27,129 +29,161 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    
+    <Page.Resources>
+        <ItemsPanelTemplate x:Name="NetworkInfoPanelTemplate">
+            <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="2" />
+        </ItemsPanelTemplate>
+        <DataTemplate x:Name="NetworkInfoDataTemplate">
+            <StackPanel>
+                <TextBlock Text="{Binding NetworkName}" Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,4,0,0" />
+                <TextBlock x:Uid="Ipv6" Style="{StaticResource BaseTextBlockStyle}" Margin="0,4,0,0" />
+                <TextBlock Text="{Binding NetworkIpv6}" Foreground="{StaticResource PaleTextBrush}" Style="{StaticResource BodyTextBlockStyle}" Margin="0,0,0,0" />
+                <TextBlock x:Uid="Ipv4" Style="{StaticResource BaseTextBlockStyle}" Margin="0,14,0,0" />
+                <TextBlock Text="{Binding NetworkIpv4}" Foreground="{StaticResource PaleTextBrush}" Style="{StaticResource BodyTextBlockStyle}" Margin="0,0,0,0" />
+                <TextBlock x:Uid="Status" Style="{StaticResource BaseTextBlockStyle}" Margin="0,14,0,0" />
+                <TextBlock Text="{Binding NetworkStatus}" Foreground="{StaticResource PaleTextBrush}" Style="{StaticResource BodyTextBlockStyle}" Margin="0,0,0,10" />
+            </StackPanel>
+        </DataTemplate>
+
+    </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="200"/>
-            <RowDefinition Height="auto" MinHeight="260"/>
+            <RowDefinition Height="72"/>
+            <RowDefinition Height="80"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="24"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.2*" MinWidth="44"/>
-            <ColumnDefinition Width="336"/>
-            <ColumnDefinition Width="164"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="0.2*" MinWidth="44"/>
+            <ColumnDefinition Width="40"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <!-- Header row -->
-        <Grid Grid.Column="1" Grid.ColumnSpan="3">
+        <Grid x:Name="HeaderRow" Grid.Column="0" Grid.ColumnSpan="5" Background="#2a2a2a">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="84" />
+                <ColumnDefinition Width="84" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="56" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="44" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="38" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource AccentBrush}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="1" FontFamily="{StaticResource IoTIconFontFamily}" FontSize="24" Text="{StaticResource IconPrototypingBoard}" TextAlignment="Center"/>
+                <TextBlock Grid.Row="2" x:Uid="DeviceInfo" Style="{StaticResource CaptionTextBlockStyle}" TextAlignment="Center" Margin="0,5,0,0"/>
+            </Grid>
+
+            <Button Grid.Column="1" x:Name="Tutorials" Style="{StaticResource ShutdownButtonStyle}" Background="Transparent" BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="Tutorials_Clicked">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="1" FontFamily="{StaticResource IconFontFamily}" FontSize="24" Text="{StaticResource IconEducation}" TextAlignment="Center"/>
+                    <TextBlock Grid.Row="2" x:Uid="Tutorials" Style="{StaticResource CaptionTextBlockStyle}" TextAlignment="Center" Margin="0,5,0,0"/>
+                </Grid>
+            </Button>
+
+            <TextBlock Grid.Column="2" x:Name="CurrentTime" HorizontalAlignment="Right" Style="{StaticResource IoTCoreDefaultAppBodyTextBlockStyle}" VerticalAlignment="Center" Padding="0,0,14,0"/>
+
+            <Button Grid.Column="4" x:Name="SettingsButton" Style="{StaticResource ShutdownButtonStyle}" Content="{StaticResource IconSettings}" FontFamily="{StaticResource IconFontFamily}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Click="SettingsButton_Clicked" Background="Transparent" BorderThickness="0" Height="48" Width="48" />
+
+            <Button Grid.Column="6" x:Name="ShutdownButton" Style="{StaticResource ShutdownButtonStyle}" Content="{StaticResource IconShutdown}" FontFamily="{StaticResource IconFontFamily}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Click="ShutdownButton_Clicked" Background="Transparent" BorderThickness="0" Height="48" Width="48" />
+
+            <Popup Grid.Column="6" x:Name="ShutdownDropdown" HorizontalAlignment="Left" IsLightDismissEnabled="True" VerticalOffset="72" HorizontalOffset="-92">
+                <ListView x:Name="ShutdownListView" Width="140" Background="White" ItemContainerStyle="{StaticResource IoTCoreDefaultAppShutdownListViewItemStyle}" BorderThickness="2.0" BorderBrush="{StaticResource ShutdownBorderBrush}" ItemClick="ShutdownListView_ItemClick" IsItemClickEnabled="True" IsTabStop="True" >
+                    <ListViewItem HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Height="40" Margin="0,5,0,0" >
+                        <TextBlock x:Name="ShutdownOption" x:Uid="ShutdownText" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource IoTCoreDefaultAppDarkBodyTextBlockStyle}" Margin="0,0,20,0"/>
+                    </ListViewItem>
+                    <ListViewItem HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Height="40" Margin="0,0,0,5" >
+                        <TextBlock x:Name="RestartOption" x:Uid="RestartText" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource IoTCoreDefaultAppDarkBodyTextBlockStyle}" Margin="0,0,20,0"/>
+                    </ListViewItem>
+                </ListView>
+            </Popup>
+
+        </Grid>
+       
+        <!-- Left panel -->
+        <Grid Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="48"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="24" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="44" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left">
-                <Path Data="M12.7344,22.4998 L28.75,22.4998 L28.75,36.5623 L12.7344,34.2185 z M0,22.4998 L11.6406,22.4998 L11.6406,34.0623 L0,32.3435 z M11.6406,9.53104 L11.6406,20.9373 L0,20.9373 L0,11.1717 z M28.75,7.03104 L28.75,20.9373 L12.7344,20.9373 L12.7344,9.29667 z" Fill="White" Margin="0,0,10,0" RenderTransformOrigin="0.5,0.5" Stretch="Fill" UseLayoutRounding="False" Width="22" Height="22" VerticalAlignment="Center">
-                    <Path.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Path.RenderTransform>
-                </Path>
-                <TextBlock x:Uid="IoTCoreHeader" Style="{StaticResource IoTCoreDefaultAppIoTCoreTextBlockStyle}" Text="Windows 10 IoT Core Insider Preview" VerticalAlignment="Center"/>
-            </StackPanel>
+            <Grid HorizontalAlignment="Center">
+                <Ellipse Margin="24,16,0,0" Width="240" Height="240" HorizontalAlignment="Left" VerticalAlignment="Top" Fill="{StaticResource AccentBrush}"/>
+                <Image x:Name="BoardImage" VerticalAlignment="Center" Source="Assets/GenericBoard.png" Stretch="None" HorizontalAlignment="Left"/>
+            </Grid>
 
-            <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Bottom" HorizontalAlignment="Right">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                    <TextBlock x:Name="CurrentTime" HorizontalAlignment="Right" Style="{StaticResource IoTCoreDefaultAppBodyTextBlockStyle}" VerticalAlignment="Center" Padding="0,0,14,0"/>
-                    <Button x:Name="ShutdownButton" Style="{StaticResource ShutdownButtonStyle}" Content="{StaticResource IconShutdown}" FontFamily="Segoe MDL2 Assets" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Tapped="ShutdownButton_Tapped" Background="Transparent" BorderThickness="0" Height="48" Width="48"/>
-                </StackPanel>
-                <Popup Grid.ColumnSpan="2" Name="ShutdownDropdown" HorizontalAlignment="Left" IsLightDismissEnabled="True" Margin="28,0,0,0">
-                    <ListView Background="White" ItemContainerStyle="{StaticResource IoTCoreDefaultAppShutdownListViewItemStyle}" BorderThickness="2.0" BorderBrush="{StaticResource ShutdownBorderBrush}" Width="120">
-                        <ListViewItem x:Name="ShutdownOption" HorizontalAlignment="Stretch" Tapped="ShutdownOption_Tapped" HorizontalContentAlignment="Stretch" Height="40" Margin="0,5,0,0">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="20"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
+            <RichTextBlock Grid.Row="2" TextWrapping="NoWrap">
+                <Paragraph>
+                    <InlineUIContainer>
+                        <TextBlock x:Uid="Visit" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                    </InlineUIContainer>
+                    <InlineUIContainer>
+                        <TextBlock x:Uid="WindowsOnDevicesUrl" Style="{StaticResource SubtitleTextBlockStyle}" Foreground="{StaticResource AccentBrush}"/>
+                    </InlineUIContainer>
+                    <InlineUIContainer>
+                        <TextBlock x:Uid="StartDeveloping" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                    </InlineUIContainer>
+                </Paragraph>
+            </RichTextBlock>
 
-                                <TextBlock x:Uid="ShutdownText" Grid.Column="1" Text="Shutdown" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource IoTCoreDefaultAppDarkBodyTextBlockStyle}"/>
-                            </Grid>
-                        </ListViewItem>
-                        <ListViewItem x:Name="RestartOption" HorizontalAlignment="Stretch" Tapped="RestartOption_Tapped" HorizontalContentAlignment="Stretch" Height="40" Margin="0,0,0,5">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="20"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="4" x:Uid="NetworkInformation" FontFamily="Segoe UI Regular" FontSize="16"/>
 
-                                <TextBlock x:Uid="RestartText" Grid.Column="1" Text="Restart" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource IoTCoreDefaultAppDarkBodyTextBlockStyle}"/>
-                            </Grid>
-                        </ListViewItem>
-                    </ListView>
-                </Popup>
-            </StackPanel>
+            <ListView Grid.Row="5" x:Name="NetworkInfo" ItemsPanel="{StaticResource NetworkInfoPanelTemplate}" ItemTemplate="{StaticResource NetworkInfoDataTemplate}"  />
+
         </Grid>
 
-        <!-- Left panel -->
-        <Grid Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center">
-            <Ellipse Margin="24,16,0,0" Width="240" Height="240" HorizontalAlignment="Left" VerticalAlignment="Top" Fill="{StaticResource AccentBrush}"/>
-            <Image x:Name="BoardImage" VerticalAlignment="Center" Source="Assets/GenericBoard.png" Stretch="None" HorizontalAlignment="Left"/>
-        </Grid>
-        
         <!-- Right Panel -->
-        <StackPanel Grid.Column="3" Grid.Row="1" Orientation="Vertical">
-            <TextBlock x:Name="BoardName" Style="{StaticResource SubheaderTextBlockStyle}" Foreground="{StaticResource AccentBrush}" Grid.Row="1" Text="IoTCore Device"/>
-            <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto">
-                <StackPanel Orientation="Vertical" Grid.Column="0">
-                    <Border Height="48">
-                        <TextBlock x:Uid="MainPageDeviceName" Text="Device name" Style="{StaticResource BaseTextBlockStyle}" VerticalAlignment="Bottom"/>
-                    </Border>
-                    <Border Height="24">
-                        <TextBlock x:Name="DeviceName" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}" VerticalAlignment="Bottom"/>
-                    </Border>
-                    <Border Height="48">
-                        <TextBlock x:Uid="MainPageNetwork" x:Name="NetworkNameCaption" Text="Network" Style="{StaticResource BaseTextBlockStyle}" VerticalAlignment="Bottom"/>
-                    </Border>
-                    <Border Height="24">
-                        <TextBlock x:Name="NetworkName1" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}" VerticalAlignment="Bottom"/>
-                    </Border>
-                    <Border Height="48">
-                        <TextBlock x:Uid="MainPageIPAddress" x:Name="IPAddressCaption" Text="IP address" Style="{StaticResource BaseTextBlockStyle}" VerticalAlignment="Bottom"/>
-                    </Border>
-                    <Border Height="24">
-                        <TextBlock x:Name="IPAddress1" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}" VerticalAlignment="Bottom"/>
-                    </Border>
-                </StackPanel>
-            </ScrollViewer>
-        </StackPanel>
+        <Grid Grid.Column="2" Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="32" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="16" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="72" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="24" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" x:Name="BoardName" Style="{StaticResource SubheaderTextBlockStyle}" Foreground="{StaticResource AccentBrush}" Text="IoTCore Device"/>
+
+            <StackPanel Grid.Row="2">
+                <TextBlock x:Uid="MainPageDeviceName" Style="{StaticResource BaseTextBlockStyle}" />
+                <TextBlock x:Name="DeviceName" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}" />
+                <TextBlock x:Uid="MainPageNetwork" x:Name="NetworkNameCaption" Style="{StaticResource BaseTextBlockStyle}" Margin="0,16,0,0" />
+                <TextBlock x:Name="NetworkName1" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}" />
+                <TextBlock x:Uid="MainPageIPAddress" x:Name="IPAddressCaption" Style="{StaticResource BaseTextBlockStyle}" Margin="0,16,0,0" />
+                <TextBlock x:Name="IPAddress1" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}"/>
+                <TextBlock x:Uid="MainPageOSVersion" x:Name="OSVersionCaption" Style="{StaticResource BaseTextBlockStyle}" Margin="0,16,0,0" />
+                <TextBlock x:Name="OSVersion" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="4">
+                <TextBlock x:Uid="ConnectedDevices" Style="{StaticResource BaseTextBlockStyle}" />
+                <ItemsControl x:Name="ConnectedDevices" Foreground="{StaticResource PaleTextBrush}" />
+            </StackPanel>
+            
+        </Grid>
         
-        
-        <!-- Legal Text -->
-        <RichTextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Top" Margin="0,85,0,0">
-            <Paragraph>
-                <InlineUIContainer>
-                    <TextBlock x:Uid="Visit" Text="Visit" Style="{StaticResource TitleTextBlockStyle}"/>
-                </InlineUIContainer>
-                <InlineUIContainer>
-                    <TextBlock x:Uid="WindowsOnDevicesUrl" Text=" www.windowsondevices.com" Style="{StaticResource TitleTextBlockStyle}" Foreground="{StaticResource AccentBrush}"/>
-                </InlineUIContainer>
-                <InlineUIContainer>
-                    <TextBlock x:Uid="StartDeveloping" Text=" to start developing" Style="{StaticResource TitleTextBlockStyle}"/>
-                </InlineUIContainer>
-            </Paragraph>
-        </RichTextBlock>
-        <StackPanel Grid.Row="2" Grid.ColumnSpan="3" Grid.Column="1" Orientation="Vertical" VerticalAlignment="Bottom">
-            <Button x:Name="SettingsButton" Style="{StaticResource ShutdownButtonStyle}" Content="{StaticResource IconSettings}" FontFamily="Segoe MDL2 Assets" FontSize="24" HorizontalAlignment="Right" VerticalAlignment="Top" Tapped="SettingsButton_Tapped" Background="Transparent" BorderThickness="0" Height="48" Width="48"/>
-            <TextBlock x:Uid="LegalText1" Style="{StaticResource CaptionTextBlockStyle}" Text="By using this software you agree to Microsoft license terms." HorizontalAlignment="Left"/>
-            <TextBlock x:Uid="LegalText3" Text="The privacy statement for this prerelease version of the Windows operating system can be viewed here: http://go.microsoft.com/fwlink/?LinkId=506737." Style="{StaticResource CaptionTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom" TextWrapping="WrapWholeWords"/>
-            <TextBlock x:Uid="LegalText2" Text="You can review linked terms by pasting the forward link into your browser window once the software is running." Style="{StaticResource CaptionTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-        </StackPanel>
     </Grid>
 </Page>

@@ -21,6 +21,7 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
 */
+
 using System;
 using Windows.Devices.WiFi;
 using Windows.Security.Credentials;
@@ -106,7 +107,7 @@ namespace IoTCoreDefaultApp
             }
         }
 
-        private void ConnectButton_Tapped(object sender, TappedRoutedEventArgs e)
+        private void ConnectButton_Clicked(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
             var network = button.DataContext as WiFiAvailableNetwork;
@@ -148,7 +149,7 @@ namespace IoTCoreDefaultApp
             }
         }
 
-        private void NextButton_Tapped(object sender, TappedRoutedEventArgs e)
+        private void NextButton_Clicked(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
             PasswordCredential credential;
@@ -169,7 +170,7 @@ namespace IoTCoreDefaultApp
             ConnectToWifi(network, credential, Window.Current.Dispatcher);
         }
 
-        private void CancelButton_Tapped(object sender, TappedRoutedEventArgs e)
+        private void CancelButton_Clicked(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
             var item = SwitchToItemState(button.DataContext, WifiInitialState);
@@ -184,12 +185,12 @@ namespace IoTCoreDefaultApp
             return item;
         }
 
-        private void BackButton_Tapped(object sender, TappedRoutedEventArgs e)
+        private void BackButton_Clicked(object sender, RoutedEventArgs e)
         {
             NavigationUtils.GoBack();
         }
 
-        private void SkipButton_Tapped(object sender, TappedRoutedEventArgs e)
+        private void SkipButton_Clicked(object sender, RoutedEventArgs e)
         {
             NavigationUtils.NavigateToScreen(typeof(MainPage));
         }
@@ -205,6 +206,11 @@ namespace IoTCoreDefaultApp
         {
             var passwordBox = sender as PasswordBox;
             CurrentPassword = passwordBox.Password;
+        }
+
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            SetupWifi();
         }
     }
 }

@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="IoTCoreHeader.Text" xml:space="preserve">
-    <value>Windows 10 IoT Core Insider Preview</value>
+    <value>Windows 10 IoT Core</value>
     <comment>The Operating System Name</comment>
   </data>
   <data name="GenericBoardName" xml:space="preserve">
@@ -127,28 +127,23 @@
   </data>
   <data name="MainPageDeviceName.Text" xml:space="preserve">
     <value>Device name</value>
+    <comment>Field label</comment>
   </data>
   <data name="MainPageNetwork.Text" xml:space="preserve">
     <value>Network</value>
+    <comment>Field label</comment>
   </data>
   <data name="MBMName" xml:space="preserve">
     <value>MinnowBoard Max</value>
-    <comment>The Minnowboard Max board name</comment>
+    <comment>Board name</comment>
   </data>
   <data name="RestartText.Text" xml:space="preserve">
     <value>Restart</value>
+    <comment>Restart entry in the shutdown menu</comment>
   </data>
   <data name="ShutdownText.Text" xml:space="preserve">
     <value>Shutdown</value>
-  </data>
-  <data name="LegalText1.Text" xml:space="preserve">
-    <value>By using this software you agree to Microsoft license terms.</value>
-  </data>
-  <data name="LegalText2.Text" xml:space="preserve">
-    <value>You can review linked terms by pasting the forward link into your browser window once the software is running.</value>
-  </data>
-  <data name="LegalText3.Text" xml:space="preserve">
-    <value>The privacy statement for this prerelease version of the Windows operating system can be viewed here: http://go.microsoft.com/fwlink/?LinkId=506737.</value>
+    <comment>Shutdown entry in the shutdown menu</comment>
   </data>
   <data name="BackButton.Content" xml:space="preserve">
     <value>Back</value>
@@ -167,6 +162,7 @@
   </data>
   <data name="Ethernet.Text" xml:space="preserve">
     <value>Ethernet</value>
+    <comment>Field label</comment>
   </data>
   <data name="NetworkConnectingMessage.Text" xml:space="preserve">
     <value>Checking network requirements</value>
@@ -190,16 +186,18 @@
     <value>Let's get connected</value>
   </data>
   <data name="OOBEWelcomeTitle.Text" xml:space="preserve">
-    <value>Hi there, welcome to the Windows IoT Core Insider Preview</value>
+    <value>Hi there, welcome to the Windows IoT Core</value>
   </data>
   <data name="Rpi2Name" xml:space="preserve">
-    <value>Raspberry Pi II</value>
+    <value>Raspberry Pi 2</value>
+    <comment>Board name</comment>
   </data>
   <data name="SkipStep.Text" xml:space="preserve">
     <value>Skip this step</value>
   </data>
   <data name="Wifi.Text" xml:space="preserve">
     <value>Wi-Fi</value>
+    <comment>Label for Wi-Fi list in options page</comment>
   </data>
   <data name="StartDeveloping.Text" xml:space="preserve">
     <value> to start developing</value>
@@ -210,22 +208,24 @@
     <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
   </data>
   <data name="WindowsOnDevicesUrl.Text" xml:space="preserve">
-    <value> windowsondevices.com</value>
+    <value> www.windowsondevices.com</value>
     <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
   </data>
   <data name="KeyboardTitle.Text" xml:space="preserve">
     <value>Keyboard layout</value>
+    <comment>Field label</comment>
   </data>
   <data name="LanguageTitle.Text" xml:space="preserve">
     <value>Language</value>
+    <comment>Field label</comment>
   </data>
   <data name="NetworkConnected.Text" xml:space="preserve">
     <value>Connected</value>
   </data>
-  <data name="NetworkPreferences.Content" xml:space="preserve">
+  <data name="NetworkPreferences.Text" xml:space="preserve">
     <value>Network &amp; Wi-Fi</value>
   </data>
-  <data name="SettingsPreferences.Content" xml:space="preserve">
+  <data name="SettingsPreferences.Text" xml:space="preserve">
     <value>Basic preferences</value>
   </data>
   <data name="SettingsTitle.Text" xml:space="preserve">
@@ -233,5 +233,117 @@
   </data>
   <data name="TimeZoneTitle.Text" xml:space="preserve">
     <value>Time zone</value>
+  </data>
+  <data name="DeviceInfo.Text" xml:space="preserve">
+    <value>Device info</value>
+  </data>
+  <data name="Tutorials.Text" xml:space="preserve">
+    <value>Tutorials</value>
+    <comment>Text under the Tutorials button on the top bar</comment>
+  </data>
+  <data name="ConnectedDevices.Text" xml:space="preserve">
+    <value>Connected devices</value>
+  </data>
+  <data name="Ipv4.Text" xml:space="preserve">
+    <value>IPv4</value>
+    <comment>Field label</comment>
+  </data>
+  <data name="Ipv6.Text" xml:space="preserve">
+    <value>IPv6</value>
+    <comment>Field label</comment>
+  </data>
+  <data name="MainPageIPAddress.Text" xml:space="preserve">
+    <value>IP address</value>
+    <comment>Field label</comment>
+  </data>
+  <data name="NetworkInformation.Text" xml:space="preserve">
+    <value>NETWORK INFORMATION</value>
+  </data>
+  <data name="Status.Text" xml:space="preserve">
+    <value>Status</value>
+    <comment>Status of the network connection (e.g. not connected, limited, etc.)</comment>
+  </data>
+  <data name="TutorialGetCodingDescription.Text" xml:space="preserve">
+    <value>Learn how to write code remotely from your PC</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialGetCodingTitle.Text" xml:space="preserve">
+    <value>Get Coding</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialGetConnectedDescription.Text" xml:space="preserve">
+    <value>Connect your device to the internet and to your PC</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialGetConnectedTitle.Text" xml:space="preserve">
+    <value>Get Connected</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialGetStartedDescription.Text" xml:space="preserve">
+    <value>Get introduced to Windows IoT Core</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialGetStartedTitle.Text" xml:space="preserve">
+    <value>Get Started</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialHeader.Text" xml:space="preserve">
+    <value>Learn how to make the most of Windows IoT Core</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialHelloBlinkyDescription.Text" xml:space="preserve">
+    <value>Toggle an LED on your device</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialHelloBlinkyTitle.Text" xml:space="preserve">
+    <value>Hello Blinky</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialTitle.Text" xml:space="preserve">
+    <value>Resources and tools to help you get connected and developing</value>
+  </data>
+  <data name="TutorialBlinkyBody1.Text" xml:space="preserve">
+    <value>The first, and most basic thing a board should do is blink.</value>
+  </data>
+  <data name="TutorialBlinkyBody2.Text" xml:space="preserve">
+    <value>As mentioned in the "Get Started" section, all the source code for this open source and available on www. windowsondevices.com (look for the IoTCoreDefaultApp).</value>
+  </data>
+  <data name="TutorialBlinkyBody3.Text" xml:space="preserve">
+    <value>No set up is required. Just press start.</value>
+  </data>
+  <data name="TutorialBlinkyBody4.Text" xml:space="preserve">
+    <value>You can also change the frequency of the blinking. Feel free to gather all of your friends and have a dance party around your Raspberry Pi 2.</value>
+  </data>
+  <data name="TutorialBlinkyBody5.Text" xml:space="preserve">
+    <value>Disclaimer: Microsoft takes no responsibility for whatever damage may be caused by hosting such a huge rave of a party using the small blinking LED on your board.</value>
+  </data>
+  <data name="TutorialBlinkyTitle1.Text" xml:space="preserve">
+    <value>Hello Blinky</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialBlinkyTitle2.Text" xml:space="preserve">
+    <value>Make your board blink</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="MainPageOSVersion.Text" xml:space="preserve">
+    <value>OS Version</value>
+    <comment>Label for OS Version field in main page</comment>
+  </data>
+  <data name="OSVersionNotAvailable" xml:space="preserve">
+    <value>Not Available</value>
+    <comment>Text shown when we cannot retrieve the OS Version</comment>
+  </data>
+  <data name="Refresh.Content" xml:space="preserve">
+    <value>Refresh</value>
+    <comment>Refresh button</comment>
+  </data>
+  <data name="Tutorial.GetStarted.001.h1" xml:space="preserve">
+    <value>title test</value>
+  </data>
+  <data name="Tutorial.GetStarted.002.p" xml:space="preserve">
+    <value>body test 2</value>
+  </data>
+  <data name="Tutorial.GetStarted.004.p" xml:space="preserve">
+    <value>body test</value>
   </data>
 </root>

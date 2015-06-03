@@ -21,6 +21,7 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
 */
+
 using System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -49,17 +50,17 @@ namespace IoTCoreDefaultApp
         {
             languageManager = new LanguageManager();
 
-            LanguagesListView.ItemsSource = languageManager.LanguageDisplayNames;
-            LanguagesListView.SelectedItem = LanguageManager.GetCurrentLanguageDisplayName();
+            LanguagesListBox.ItemsSource = languageManager.LanguageDisplayNames;
+            LanguagesListBox.SelectedItem = LanguageManager.GetCurrentLanguageDisplayName();
         }
 
         private void SetPreferences()
         {
-            var selectedLanguage = LanguagesListView.SelectedItem as string;
+            var selectedLanguage = LanguagesListBox.SelectedItem as string;
             languageManager.UpdateLanguage(selectedLanguage);
         }
 
-        private async void NextButton_Tapped(object sender, TappedRoutedEventArgs e)
+        private async void NextButton_Clicked(object sender, RoutedEventArgs e)
         {
             var wifiAvailable = NetworkPresenter.WifiIsAvailable();
             SetPreferences();
@@ -78,6 +79,25 @@ namespace IoTCoreDefaultApp
             {
                 NavigationUtils.NavigateToScreen(nextScreen);
             });
+        }
+
+        private void LanguagesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SetPreferences();
+
+            // reload
+            if (this.Frame != null)
+            {
+                Type type = this.Frame.CurrentSourcePageType;
+                try
+                {
+                    this.Frame.Navigate(type);
+                }
+                finally
+                {
+                    this.Frame.BackStack.Remove(this.Frame.BackStack[this.Frame.BackStack.Count - 1]);
+                }
+            }
         }
     }
 }
