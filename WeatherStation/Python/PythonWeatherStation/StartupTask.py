@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 """
 Copyright(c) Microsoft Open Technologies, Inc.All rights reserved.
 
@@ -21,6 +22,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
+=======
+>>>>>>> c992184... Adding python weather station
 import _wini2c as i2c
 import time
 
@@ -28,6 +31,10 @@ sample_temp_hold = bytes([0xe3])
 sample_humidity_hold = bytes([0xe5])
 
 htdu21d = i2c.i2cdevice('I2C1', 0x40, i2c.FASTSPEED, i2c.SHAREDMODE)
+<<<<<<< HEAD
+=======
+gpio.setup(5,gpio.OUT)
+>>>>>>> c992184... Adding python weather station
 
 while True:
     temp_data = htdu21d.writeread(sample_temp_hold, 3)

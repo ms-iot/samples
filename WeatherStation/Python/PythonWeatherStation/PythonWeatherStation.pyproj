@@ -10,7 +10,11 @@
     <ApplicationType>Windows Store</ApplicationType>
     <AppContainerApplication>true</AppContainerApplication>
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
+<<<<<<< HEAD
     <ProjectGuid>ad5173d1-38c4-4d93-a217-3352baf51e59</ProjectGuid>
+=======
+    <ProjectGuid>51d90c58-5628-45f8-8704-40b6d703941e</ProjectGuid>
+>>>>>>> c992184... Adding python weather station
     <ProjectHome>.</ProjectHome>
     <WorkingDirectory>.</WorkingDirectory>
     <StartupFile>StartupTask.py</StartupFile>
@@ -47,6 +51,7 @@
     <None Include="PythonWeatherStation_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Reference Include="windevices\ARM\_wingpio_d.pyd" Condition=" '$(Configuration)|$(Platform)' == 'Debug|ARM' ">
       <Name>_wingpio_d.pyd</Name>
       <PythonExtension>windevices\ARM\_wingpio_d.pyd</PythonExtension>
@@ -89,4 +94,23 @@
     <PtvsTargetsFile Condition="'$(PtvsTargetsFile)' == '' or !Exists('$(PtvsTargetsFile)')">$(MSBuildProgramFiles32)\Microsoft Visual Studio $(VisualStudioVersion)\Common7\IDE\Extensions\Microsoft\Python Tools for Visual Studio - UWP\$(PtvsVersion)\Microsoft.PythonTools.Uwp.targets</PtvsTargetsFile>
   </PropertyGroup>
   <Import Project="$(PtvsTargetsFile)" />
+=======
+    <Reference Include="windevices\ARM\_wini2c.pyd">
+      <Name>_wini2c.pyd</Name>
+      <PythonExtension>windevices\ARM\_wini2c.pyd</PythonExtension>
+    </Reference>
+  </ItemGroup>
+  <PropertyGroup>
+    <CPythonTargetsFile>$(LocalAppData)\Microsoft\VisualStudio\$(VisualStudioVersion)Exp\Extensions\Microsoft\Python UAP\3.5\DesignTime\CommonConfiguration\Neutral\CPython.targets</CPythonTargetsFile>
+    <CPythonTargetsFile Condition="'$(CPythonTargetsFile)' == '' or !Exists('$(CPythonTargetsFile)')">$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v10.0\ExtensionSDKs\PyUAP\3.5\DesignTime\CommonConfiguration\Neutral\CPython.targets</CPythonTargetsFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
+    <PtvsVersion Condition="'$(PtvsVersion)' == ''">2.2</PtvsVersion>
+    <PtvsTargetsFile>$(LocalAppData)\Microsoft\VisualStudio\$(VisualStudioVersion)Exp\Extensions\Microsoft\Python Tools for Visual Studio - UAP\$(PtvsVersion)\Microsoft.PythonTools.Uap.targets</PtvsTargetsFile>
+    <PtvsTargetsFile Condition="'$(PtvsTargetsFile)' == '' or !Exists('$(PtvsTargetsFile)')">$(MSBuildProgramFiles32)\Microsoft Visual Studio $(VisualStudioVersion)\Common7\IDE\Extensions\Microsoft\Python Tools for Visual Studio - UAP\$(PtvsVersion)\Microsoft.PythonTools.Uap.targets</PtvsTargetsFile>
+  </PropertyGroup>
+  <Import Project="$(CPythonTargetsFile)" />
+  <Import Condition="Exists($(PtvsTargetsFile))" Project="$(PtvsTargetsFile)" />
+>>>>>>> c992184... Adding python weather station
 </Project>
