@@ -110,11 +110,11 @@ namespace WebServerTask
         private readonly StreamSocketListener listener;
         private AppServiceConnection appServiceConnection;
 
-        public HttpServer(int serverPort, AppServiceConnection appServiceConnection)
+        public HttpServer(int serverPort, AppServiceConnection connection)
         {
             listener = new StreamSocketListener();
             port = serverPort; 
-            appServiceConnection = appServiceConnection;
+            appServiceConnection = connection;
             listener.ConnectionReceived += (s, e) => ProcessRequestAsync(e.Socket);
         }
 
