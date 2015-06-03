@@ -4,7 +4,7 @@
   "description": "NodeWeatherStation",
   "main": "server.js",
   "author": {
-    "name": "Microsoft",
+    "name": "jessek",
     "email": ""
   }
 }
