@@ -39,6 +39,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Xaml.Documents;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace IoTCoreDefaultApp
 {
@@ -74,7 +76,70 @@ namespace IoTCoreDefaultApp
 
         private void LoadDocument(string docname)
         {
-            TutorialText.Source = new Uri(string.Format(CultureInfo.InvariantCulture, "ms-appx-web:///assets/tutorials/{0}.htm", docname));
+            var resourceMap = Windows.ApplicationModel.Resources.Core.ResourceManager.Current.MainResourceMap;
+            var k = resourceMap.Keys.ToArray();
+            //IEnumerable<string> mock;
+            var keys = resourceMap.Keys.Where(s => { return s.StartsWith("Resources/Tutorial/" + docname + "/"); }).OrderBy(s => s).ToArray();
+            //TutorialText.Source = new Uri(string.Format(CultureInfo.InvariantCulture, "ms-appx-web:///assets/tutorials/{0}.htm", docname));
+
+            TutorialRichText.Blocks.Clear();
+            foreach (var key in keys)
+            {
+                var split = key.Split('/');
+                if (split.Length == 0)
+                {
+                    continue;
+                }
+                var blockType = split.Last();
+                var value = resourceMap[key].Resolve().ValueAsString;
+                var par = new Paragraph();
+                switch (blockType)
+                {
+                    case "title":
+                        par.FontSize = 28;
+                        par.Inlines.Add(new Run { Text = value });
+                        break;
+                    case "subtitle":
+                        par.FontSize = 11;
+                        par.Inlines.Add(new Run { Text = value });
+                        break;
+                    case "h1":
+                        par.FontSize = 16;
+                        par.Inlines.Add(new Run { Text = value });
+                        break;
+                    case "p":
+                        par.FontSize = 11;
+                        par.Inlines.Add(new Run { Text = value });
+                        break;
+                    case "ul":
+                        par.FontSize = 11;
+                        value = "\u27a4 " + value;
+                        par.Inlines.Add(new Run { Text = value });
+                        break;
+                    case "image":
+                        try
+                        {
+                            var imageSource = new BitmapImage(new Uri("ms-appx:///" + value));
+                            var size = split[split.Length - 2];
+                            if (size.Contains('x'))
+                            {
+                                var sizeSplit = size.Split('x');
+                                var dx = int.Parse(sizeSplit[0]);
+                                var dy = int.Parse(sizeSplit[1]);
+                                par.Inlines.Add(new InlineUIContainer { Child = new Image { Source = imageSource, Width = dx, Height = dy } });
+                            }
+                            else
+                            {
+                                par.Inlines.Add(new InlineUIContainer { Child = new Image { Source = imageSource } });
+                            }
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        break;
+                }
+                TutorialRichText.Blocks.Add(par);
+            }
         }
 
         private void timer_Tick(object sender, object e)

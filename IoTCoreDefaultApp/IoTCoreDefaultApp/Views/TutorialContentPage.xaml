@@ -102,7 +102,8 @@
 
         <Button Grid.Row="2" Grid.Column="2" x:Name="NextButton" FontSize="20" Content="Next" Background="Transparent" BorderThickness="0" BorderBrush="Transparent"  Click="NextButton_Clicked" Margin="0,0,0,24" VerticalAlignment="Bottom" HorizontalAlignment="Center" Visibility="Collapsed" />
 
-        <WebView Grid.Row="2" Grid.Column="1" x:Name="TutorialText" ScrollViewer.HorizontalScrollBarVisibility="Disabled" />
-
+        <ScrollViewer Grid.Row="2" Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <RichTextBlock x:Name="TutorialRichText" FontFamily="Segoe UI Light" />
+        </ScrollViewer>
     </Grid>
 </Page>
