@@ -186,7 +186,7 @@
     <value>Connectez-vous</value>
   </data>
   <data name="OOBEWelcomeTitle.Text" xml:space="preserve">
-    <value>Bonjour, bienvenue dans Windows IoT Standard</value>
+    <value>Bonjour, bienvenue dans Windows 10 IoT Standard</value>
   </data>
   <data name="Rpi2Name" xml:space="preserve">
     <value>Raspberry Pi 2</value>
@@ -280,7 +280,7 @@
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialGetStartedDescription.Text" xml:space="preserve">
-    <value>Découvrez Windows IoT Standard</value>
+    <value>Découvrez Windows 10 IoT Standard</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialGetStartedTitle.Text" xml:space="preserve">
@@ -288,7 +288,7 @@
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialHeader.Text" xml:space="preserve">
-    <value>Découvrez comment exploiter tout le potentiel de Windows IoT Standard</value>
+    <value>Découvrez comment exploiter tout le potentiel de Windows 10 IoT Standard</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialHelloBlinkyDescription.Text" xml:space="preserve">
