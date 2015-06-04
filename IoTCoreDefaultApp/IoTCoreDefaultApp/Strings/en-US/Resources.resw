@@ -514,7 +514,7 @@
     <value>Visual Studio 2015</value>
   </data>
   <data name="Tutorial.GetCoding.010.h1" xml:space="preserve">
-    <value>Setting up Visual Studio 2015 Preview on your PC</value>
+    <value>Setting up Visual Studio 2015 on your PC</value>
   </data>
   <data name="Tutorial.GetCoding.011.p" xml:space="preserve">
     <value>We have created a versions file describing the supported versions of the required tools. Use this as a blueprint for installing the required tools on your PC:</value>
