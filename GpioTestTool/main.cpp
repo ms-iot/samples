@@ -26,7 +26,7 @@ THE SOFTWARE.
 // GpioTestTool
 //
 //   Utility to manipulate GPIO pins from the command line.
-//   Demonstrates how to use the GPIO WinRT APIs from straight 
+//   Demonstrates how to use the GPIO WinRT APIs from standard
 //   C++ with WRL.
 //
 
@@ -65,7 +65,7 @@ private:
 ComPtr<IGpioPin> MakePin (int PinNumber)
 {
     ComPtr<IGpioPin> pin;
-    
+
     // get the activation factory
     ComPtr<IGpioControllerStatics> controllerStatics;
     HRESULT hr = GetActivationFactory(
@@ -87,7 +87,7 @@ ComPtr<IGpioPin> MakePin (int PinNumber)
     if (!controller) {
         throw wexception(L"GPIO is not available on this system");
     }
-    
+
     hr = controller->OpenPin(PinNumber, pin.GetAddressOf());
     if (FAILED(hr)) {
         std::wostringstream msg;
@@ -182,10 +182,10 @@ std::wostream& operator<< (std::wostream& os, GpioSharingMode value)
 
 PCWSTR Help =
     L"Commands:\n"
-    L" > write 0|1                        Write pin high or low\n"
+    L" > write 0|1                        Write pin low (0) or high (1)\n"
     L" > toggle                           Toggle the pin from its current state\n"
     L" > read                             Read pin\n"
-    L" > setdrivemode drive_mode          Set the pins's drive mode. Drive modes:\n"
+    L" > setdrivemode drive_mode          Set the pins's drive mode\n"
     L"     where drive_mode = input|output|\n"
     L"                        inputPullUp|inputPullDown\n"
     L" > info                             Dump information about the pin\n"
@@ -246,7 +246,7 @@ void ShowPrompt (_In_ IGpioPin* pin)
                 std::wcout << L"Syntax error: expecting valid drive mode\n";
                 continue;
             }
-            
+
             HRESULT hr = pin->SetDriveMode(driveMode);
             if (FAILED(hr)) {
                 std::wcout << L"Failed to set drive mode. hr = 0x" << std::hex << hr << "\n";
@@ -261,7 +261,7 @@ void ShowPrompt (_In_ IGpioPin* pin)
             pin->get_DebounceTimeout(&debounceTimeout);
             GpioPinDriveMode driveMode;
             pin->GetDriveMode(&driveMode);
-            
+
             std::wcout << L"        Pin Number: " << std::dec << pinNumber << L"\n";
             std::wcout << L"      Sharing Mode: " << sharingMode << L"\n";
             std::wcout << L"  Debounce Timeout: " << debounceTimeout.Duration << L"\n";
@@ -275,32 +275,55 @@ void ShowPrompt (_In_ IGpioPin* pin)
     }
 }
 
-int __cdecl wmain (_In_ int argc, _In_reads_(argc) wchar_t *argv[])
-{    
+void PrintUsage (PCWSTR name)
+{
     wprintf(
         L"%s: Command line GPIO testing utility\n"
-        L"  Usage: %s PinNumber\n"
-        L"  Example: %s 47\n"
-        L"  Type 'help' for a list of commands\n",
-        argv[0],
-        argv[0],
-        argv[0]);
+        L"Usage: %s PinNumber\n"
+        L"\n"
+        L"  PinNumber     The pin number with which you wish to interact. This\n"
+        L"                parameter is required.\n"
+        L"\n"
+        L"Example:\n"
+        L"  %s 47\n",
+        name,
+        name,
+        name);
+}
 
-    if (argc < 2) {
-        std::wcerr << L"Missing required command line parameter PinNumber\n";
+int __cdecl wmain (_In_ int argc, _In_reads_(argc) wchar_t *argv[])
+{
+    int optind = 1;
+    if (optind < argc) {
+        if (!_wcsicmp(argv[optind], L"-h") || !wcscmp(argv[optind], L"-?")) {
+            PrintUsage(argv[0]);
+            return 0;
+        }
+    } else {
+        std::wcerr << L"Missing required command line parameter PinNumber\n\n";
+        PrintUsage(argv[0]);
         return 1;
     }
 
-    wchar_t *endptr;
-    int pinNumber = int(wcstoul(argv[1], &endptr, 0));
-    std::wcout << L"  Pin Number: " << std::dec << pinNumber << L"\n";
+    INT32 pinNumber;
+    {
+        PCWSTR arg = argv[optind++];
+        wchar_t *endptr;
+        pinNumber = INT32(wcstoul(arg, &endptr, 0));
+        if (endptr != (arg + wcslen(arg))) {
+            std::wcerr << L"Expecting integer: " << arg << L"\n";
+            std::wcerr << L"Type '" << argv[0] << " -h' for usage\n";
+            return 1;
+        }
+    }
 
     RoInitializeWrapper roInit(RO_INIT_MULTITHREADED);
     try {
         auto pin = MakePin(pinNumber);
+        std::wcout << L"Type 'help' for a list of commands\n";
         ShowPrompt(pin.Get());
     } catch (const wexception& ex) {
-        std::wcerr << L"Fatal error occurred: " << ex.wwhat() << L"\n";
+        std::wcerr << L"Error: " << ex.wwhat() << L"\n";
         return 1;
     }
 
