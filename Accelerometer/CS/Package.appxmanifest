@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <Package
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
@@ -7,20 +7,20 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="I2CAccelerometer"
+    Name="6b970cdc-1e41-44a0-b4c5-af6e175e6bfe"
     Publisher="CN=IoTTools"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="0fa3457d-302c-434a-89f2-8f310529a81c" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="6b970cdc-1e41-44a0-b4c5-af6e175e6bfe" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>I2CAccelerometer</DisplayName>
+    <DisplayName>Accelerometer</DisplayName>
     <PublisherDisplayName>IoTTools</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
   <Dependencies>
-      <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.10069.0" MaxVersionTested="10.0.10069.0" />
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.10069.0" MaxVersionTested="10.0.10069.0" />
   </Dependencies>
 
   <Resources>
@@ -30,12 +30,12 @@
   <Applications>
     <Application Id="App"
       Executable="$targetnametoken$.exe"
-      EntryPoint="I2CAccelerometer.App">
+      EntryPoint="Accelerometer.App">
       <uap:VisualElements
-        DisplayName="I2CAccelerometer"
+        DisplayName="Accelerometer"
         Square150x150Logo="Assets\Logo.png"
         Square44x44Logo="Assets\SmallLogo.png"
-        Description="I2CAccelerometer"
+        Description="Accelerometer"
         BackgroundColor="#464646">
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
