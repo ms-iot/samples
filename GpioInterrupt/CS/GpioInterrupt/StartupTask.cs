@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿/*
 Copyright(c) Microsoft Open Technologies, Inc. All rights reserved.
 
@@ -23,6 +24,9 @@ THE SOFTWARE.
 */
 
 using System;
+=======
+﻿using System;
+>>>>>>> ad9a3e7... Added CPP weather station, C# interrupt
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
