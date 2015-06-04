@@ -199,7 +199,7 @@ void ShowPrompt (SpiDevice^ device)
         } else if (command == L"read") {
             // expecting a single int, number of bytes to read
             unsigned int bytesToRead;
-            if (!(linestream >> bytesToRead)) {
+            if (!(linestream >> std::dec >> bytesToRead)) {
                 std::wcout << L"Expecting integer. e.g: read 4\n";
                 continue;
             }
@@ -217,7 +217,7 @@ void ShowPrompt (SpiDevice^ device)
             }
 
             unsigned int bytesToRead;
-            if (!(linestream >> bytesToRead)) {
+            if (!(linestream >> std::dec >> bytesToRead)) {
                 std::wcout << L"Syntax error: expecting integer\n";
                 std::wcout << L"Usage: writeread { 55 a0 ... ff } 4\n";
                 continue;
