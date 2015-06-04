@@ -77,10 +77,7 @@ namespace IoTCoreDefaultApp
         private void LoadDocument(string docname)
         {
             var resourceMap = Windows.ApplicationModel.Resources.Core.ResourceManager.Current.MainResourceMap;
-            var k = resourceMap.Keys.ToArray();
-            //IEnumerable<string> mock;
             var keys = resourceMap.Keys.Where(s => { return s.StartsWith("Resources/Tutorial/" + docname + "/"); }).OrderBy(s => s).ToArray();
-            //TutorialText.Source = new Uri(string.Format(CultureInfo.InvariantCulture, "ms-appx-web:///assets/tutorials/{0}.htm", docname));
 
             TutorialRichText.Blocks.Clear();
             foreach (var key in keys)
@@ -135,6 +132,7 @@ namespace IoTCoreDefaultApp
                         }
                         catch (Exception)
                         {
+                            // just ignore this entry if anything goes wrong...
                         }
                         break;
                 }
