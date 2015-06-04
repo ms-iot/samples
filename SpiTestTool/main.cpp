@@ -69,14 +69,14 @@ SpiDevice^ MakeDevice (
         aqs = SpiDevice::GetDeviceSelector(friendlyName);
     else
         aqs = SpiDevice::GetDeviceSelector();
-    
+
     auto dis = concurrency::create_task(
         DeviceInformation::FindAllAsync(aqs)).get();
     if (dis->Size < 1)
         throw wexception(L"SPI bus not found.");
-    
+
     String^ id = dis->GetAt(0)->Id;
-    
+
     auto settings = ref new SpiConnectionSettings(chipSelectLine);
 
     if (int(mode) != -1) {
@@ -96,7 +96,7 @@ SpiDevice^ MakeDevice (
 
     if (!device) {
         std::wostringstream msg;
-        msg << L"Chip select line " << std::dec << chipSelectLine << L" on bus " << id->Data() << 
+        msg << L"Chip select line " << std::dec << chipSelectLine << L" on bus " << id->Data() <<
             L" is in use. Please ensure that no other applications are using SPI.";
         throw wexception(msg.str());
     }
@@ -161,9 +161,9 @@ std::wostream& operator<< (std::wostream& os, Array<BYTE>^& bytes)
 
 PCWSTR Help =
     L"Commands:\n"
-    L" > write { 00 11 22 .. FF }         Write supplied buffer\n"
+    L" > write { 00 11 22 .. FF }         Write bytes to device\n"
     L" > read N                           Read N bytes\n"
-    L" > writeread { 00 11 .. FF } N      Write buffer then read N bytes\n"
+    L" > writeread { 00 11 .. FF } N      Write bytes then read N bytes\n"
     L" > fullduplex { 00 11 .. FF }       Perform full duplex transfer\n"
     L" > info                             Display device information\n"
     L" > help                             Display this help message\n"
@@ -193,7 +193,9 @@ void ShowPrompt (SpiDevice^ device)
                 continue;
             }
 
-            device->Write(ArrayReference<BYTE>(writeBuf.data(), writeBuf.size()));
+            device->Write(ArrayReference<BYTE>(
+                writeBuf.data(),
+                static_cast<unsigned int>(writeBuf.size())));
         } else if (command == L"read") {
             // expecting a single int, number of bytes to read
             unsigned int bytesToRead;
@@ -223,7 +225,9 @@ void ShowPrompt (SpiDevice^ device)
             auto readBuf = ref new Array<BYTE>(bytesToRead);
 
             device->TransferSequential(
-                ArrayReference<BYTE>(writeBuf.data(), writeBuf.size()),
+                ArrayReference<BYTE>(
+                    writeBuf.data(),
+                    static_cast<unsigned int>(writeBuf.size())),
                 readBuf);
 
             std::wcout << readBuf << L"\n";
@@ -233,12 +237,15 @@ void ShowPrompt (SpiDevice^ device)
                 std::wcout << L"Usage: fullduplex { 55 a0 ... ff }\n";
                 continue;
             }
-            auto readBuf = ref new Array<BYTE>(writeBuf.size());
+            auto readBuf = ref new Array<BYTE>(
+                static_cast<unsigned int>(writeBuf.size()));
 
             device->TransferFullDuplex(
-                ArrayReference<BYTE>(writeBuf.data(), writeBuf.size()),
+                ArrayReference<BYTE>(
+                    writeBuf.data(),
+                    static_cast<unsigned int>(writeBuf.size())),
                 readBuf);
-            
+
             std::wcout << readBuf << L"\n";
         } else if (command == L"info") {
             auto settings = device->ConnectionSettings;
@@ -262,8 +269,22 @@ void PrintUsage (PCWSTR name)
 {
     wprintf(
         L"SpiTestTool: Command line SPI testing utility\n"
-        L"Usage: %s [-n FriendlyName] [-c ChipSelectLine] [-m Mode]\n"
-        L"          [-d DataBitLength] [-f ClockFrequency]\n"
+        L"Usage: %s [-n FriendlyName] [-c ChipSelectLine] [-m Mode] "
+        L"[-d DataBitLength] [-f ClockFrequency]\n"
+        L"\n"
+        L"  FriendlyName    The friendly name of the SPI controller over which\n"
+        L"                  you wish to communicate. This parameter is\n"
+        L"                  optional and defaults to the first enumerated SPI\n"
+        L"                  controller.\n"
+        L"  ChipSelectLine  The chip select line to use. This parameter is\n"
+        L"                  optional and defaults to 0.\n"
+        L"  Mode            The SPI mode to use (0-3). This parameter is\n"
+        L"                  optional and defaults to Mode 0.\n"
+        L"  DataBitLength   The data bit length to use. This parameter is optional\n"
+        L"                  and defaults to 8.\n"
+        L"  ClockFrequency  The SPI clock frequency to use. This parameter is\n"
+        L"                  optional and defaults to 4Mhz.\n"
+        L"\n"
         L"Examples:\n"
         L"  %s\n"
         L"  %s -n SPI1 -m 2\n",
