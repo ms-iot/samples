@@ -51,6 +51,9 @@ namespace WebServerTask
             serviceDeferral = taskInstance.GetDeferral();
 
             var appService = taskInstance.TriggerDetails as AppServiceTriggerDetails;
+            appService.AppServiceConnection.PackageFamilyName = appService.CallerPackageFamilyName;
+            appService.AppServiceConnection.AppServiceName = appService.Name;
+            
             if (appService != null &&
                 appService.Name == "App2AppComService")
             {
