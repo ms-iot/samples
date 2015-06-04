@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
 Copyright(c) Microsoft Open Technologies, Inc. All rights reserved.
 
@@ -21,6 +22,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+=======
+>>>>>>> ad9a3e7... Added CPP weather station, C# interrupt
 //
 // pch.cpp
 // Include the standard header and generate the precompiled header.

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
 Copyright(c) Microsoft Open Technologies, Inc. All rights reserved.
 
@@ -22,6 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
+=======
+>>>>>>> ad9a3e7... Added CPP weather station, C# interrupt
 //
 // pch.h
 // Header for standard system include files.

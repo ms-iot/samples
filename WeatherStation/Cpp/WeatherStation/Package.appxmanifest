@@ -9,14 +9,22 @@
 
   <Identity
     Name="WeatherStation"
+<<<<<<< HEAD
     Publisher="CN=Microsoft"
+=======
+    Publisher="CN=jessek"
+>>>>>>> ad9a3e7... Added CPP weather station, C# interrupt
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="e63bab45-a8a6-4f69-aa79-50c2ed9679a6" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>WeatherStation</DisplayName>
+<<<<<<< HEAD
     <PublisherDisplayName>Microsoft</PublisherDisplayName>
+=======
+    <PublisherDisplayName>jessek</PublisherDisplayName>
+>>>>>>> ad9a3e7... Added CPP weather station, C# interrupt
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
