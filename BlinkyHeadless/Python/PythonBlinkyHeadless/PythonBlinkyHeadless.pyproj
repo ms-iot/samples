@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <PropertyGroup>
-    <Name>PythonBlinky</Name>
+    <Name>PythonBlinkyHeadless</Name>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == 'Any CPU' ">x86</Platform>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
@@ -10,19 +10,19 @@
     <ApplicationType>Windows Store</ApplicationType>
     <AppContainerApplication>true</AppContainerApplication>
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
-    <ProjectGuid>f893ff10-3d7c-4230-af72-bcb82b8c1826</ProjectGuid>
+    <ProjectGuid>3e944b58-2349-48f5-89f7-34d205b4d27a</ProjectGuid>
     <ProjectHome>.</ProjectHome>
     <WorkingDirectory>.</WorkingDirectory>
     <StartupFile>StartupTask.py</StartupFile>
     <ContainsStartupTask>true</ContainsStartupTask>
     <SearchPath />
-    <PackageCertificateKeyFile>PythonBlinky_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>PythonBlinkyHeadless_TemporaryKey.pfx</PackageCertificateKeyFile>
     <DefaultLanguage>en-US</DefaultLanguage>
     <ProjectTypeGuids>{c85cbf2e-4147-4e9d-87e0-9a2fbf407f6e};{888888A0-9F3D-457C-B088-3A5042F75D52}</ProjectTypeGuids>
     <InterpreterId>{86767848-40b4-4007-8bcc-a3835edf0e69}</InterpreterId>
     <InterpreterVersion>3.5</InterpreterVersion>
     <RemoteDebugEnabled>true</RemoteDebugEnabled>
-    <RootNamespace>PythonBlinky</RootNamespace>
+    <RootNamespace>PythonBlinkyHeadless</RootNamespace>
     <UserSettingsChanged>
     </UserSettingsChanged>
   </PropertyGroup>
@@ -44,24 +44,31 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="PythonBlinky_TemporaryKey.pfx" />
+    <None Include="PythonBlinkyHeadless_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="windevices\ARM\_wingpio.pyd">
+    <Reference Include="windevices\ARM\_wingpio_d.pyd" Condition=" '$(Configuration)|$(Platform)' == 'Debug|ARM' ">
+      <Name>_wingpio_d.pyd</Name>
+      <PythonExtension>windevices\ARM\_wingpio_d.pyd</PythonExtension>
+    </Reference>
+    <Reference Include="windevices\ARM\_wingpio.pyd" Condition=" '$(Configuration)|$(Platform)' == 'Release|ARM' ">
       <Name>_wingpio.pyd</Name>
       <PythonExtension>windevices\ARM\_wingpio.pyd</PythonExtension>
     </Reference>
+    <Reference Include="windevices\Win32\_wingpio_d.pyd" Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+      <Name>_wingpio_d.pyd</Name>
+      <PythonExtension>windevices\Win32\_wingpio_d.pyd</PythonExtension>
+    </Reference>
+    <Reference Include="windevices\Win32\_wingpio.pyd" Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+      <Name>_wingpio.pyd</Name>
+      <PythonExtension>windevices\Win32\_wingpio.pyd</PythonExtension>
+    </Reference>
   </ItemGroup>
-  <PropertyGroup>
-    <CPythonTargetsFile>$(LocalAppData)\Microsoft\VisualStudio\$(VisualStudioVersion)Exp\Extensions\Microsoft\Python UAP\3.5\DesignTime\CommonConfiguration\Neutral\CPython.targets</CPythonTargetsFile>
-    <CPythonTargetsFile Condition="'$(CPythonTargetsFile)' == '' or !Exists('$(CPythonTargetsFile)')">$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v10.0\ExtensionSDKs\PyUAP\3.5\DesignTime\CommonConfiguration\Neutral\CPython.targets</CPythonTargetsFile>
-  </PropertyGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
     <PtvsVersion Condition="'$(PtvsVersion)' == ''">2.2</PtvsVersion>
-    <PtvsTargetsFile>$(LocalAppData)\Microsoft\VisualStudio\$(VisualStudioVersion)Exp\Extensions\Microsoft\Python Tools for Visual Studio - UAP\$(PtvsVersion)\Microsoft.PythonTools.Uap.targets</PtvsTargetsFile>
-    <PtvsTargetsFile Condition="'$(PtvsTargetsFile)' == '' or !Exists('$(PtvsTargetsFile)')">$(MSBuildProgramFiles32)\Microsoft Visual Studio $(VisualStudioVersion)\Common7\IDE\Extensions\Microsoft\Python Tools for Visual Studio - UAP\$(PtvsVersion)\Microsoft.PythonTools.Uap.targets</PtvsTargetsFile>
+    <PtvsTargetsFile>$(LocalAppData)\Microsoft\VisualStudio\$(VisualStudioVersion)Exp\Extensions\Microsoft\Python Tools for Visual Studio - UWP\$(PtvsVersion)\Microsoft.PythonTools.Uwp.targets</PtvsTargetsFile>
+    <PtvsTargetsFile Condition="'$(PtvsTargetsFile)' == '' or !Exists('$(PtvsTargetsFile)')">$(MSBuildProgramFiles32)\Microsoft Visual Studio $(VisualStudioVersion)\Common7\IDE\Extensions\Microsoft\Python Tools for Visual Studio - UWP\$(PtvsVersion)\Microsoft.PythonTools.Uwp.targets</PtvsTargetsFile>
   </PropertyGroup>
-  <Import Project="$(CPythonTargetsFile)" />
-  <Import Condition="Exists($(PtvsTargetsFile))" Project="$(PtvsTargetsFile)" />
+  <Import Project="$(PtvsTargetsFile)" />
 </Project>
