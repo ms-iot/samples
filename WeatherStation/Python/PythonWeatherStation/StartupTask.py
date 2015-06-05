@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> de59284... Fixing publisher names and adding copyright message
 """
 Copyright(c) Microsoft Open Technologies, Inc.All rights reserved.
 
@@ -22,8 +25,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
+<<<<<<< HEAD
 =======
 >>>>>>> c992184... Adding python weather station
+=======
+>>>>>>> de59284... Fixing publisher names and adding copyright message
 import _wini2c as i2c
 import time
 

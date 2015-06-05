@@ -10,10 +10,14 @@
   <Identity
     Name="WeatherStation"
 <<<<<<< HEAD
+<<<<<<< HEAD
     Publisher="CN=Microsoft"
 =======
     Publisher="CN=jessek"
 >>>>>>> ad9a3e7... Added CPP weather station, C# interrupt
+=======
+    Publisher="CN=Microsoft"
+>>>>>>> de59284... Fixing publisher names and adding copyright message
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="e63bab45-a8a6-4f69-aa79-50c2ed9679a6" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
@@ -21,10 +25,14 @@
   <Properties>
     <DisplayName>WeatherStation</DisplayName>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <PublisherDisplayName>Microsoft</PublisherDisplayName>
 =======
     <PublisherDisplayName>jessek</PublisherDisplayName>
 >>>>>>> ad9a3e7... Added CPP weather station, C# interrupt
+=======
+    <PublisherDisplayName>Microsoft</PublisherDisplayName>
+>>>>>>> de59284... Fixing publisher names and adding copyright message
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
