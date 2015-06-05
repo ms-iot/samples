@@ -11,7 +11,7 @@
 
   <Properties>
     <DisplayName>NodeJsBlinky</DisplayName>
-    <PublisherDisplayName>jessek</PublisherDisplayName>
+    <PublisherDisplayName>Microsoft</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
