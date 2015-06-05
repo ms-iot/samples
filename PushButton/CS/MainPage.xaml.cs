@@ -24,27 +24,18 @@
 
 using System;
 using Windows.Devices.Gpio;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media;
 
 namespace PushButton
 {
     public sealed partial class MainPage : Page
     {
-        private GpioPinValue pushButtonValue;
         public MainPage()
         {
             InitializeComponent();
-
-            timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(500);
-            timer.Tick += Timer_Tick;
-            timer.Start();
-
-            Unloaded += MainPage_Unloaded;
-
             InitGPIO();
         }
 
@@ -55,58 +46,54 @@ namespace PushButton
             // Show an error if there is no GPIO controller
             if (gpio == null)
             {
-                pin = null;
                 GpioStatus.Text = "There is no GPIO controller on this device.";
                 return;
             }
-            pushButton = gpio.OpenPin(PB_PIN);
-            pin = gpio.OpenPin(LED_PIN);
-            
-            pushButton.SetDriveMode(GpioPinDriveMode.Input);
-            pin.Write(GpioPinValue.Low);
-            pin.SetDriveMode(GpioPinDriveMode.Output);
 
-            GpioStatus.Text = "GPIO pin initialized correctly.";
+            buttonPin = gpio.OpenPin(BUTTON_PIN);
+            ledPin = gpio.OpenPin(LED_PIN);
+
+            ledPin.Write(GpioPinValue.Low);
+            ledPin.SetDriveMode(GpioPinDriveMode.Output);
+
+            buttonPin.SetDriveMode(GpioPinDriveMode.Input);
+            buttonPin.DebounceTimeout = TimeSpan.FromMilliseconds(50);
+            buttonPin.ValueChanged += buttonPin_ValueChanged;
+
+            GpioStatus.Text = "GPIO pins initialized correctly.";
         }
 
-        private void MainPage_Unloaded(object sender, object args)
+        private void buttonPin_ValueChanged(GpioPin sender, GpioPinValueChangedEventArgs e)
         {
-            // Cleanup
-            pin.Dispose();
-            pushButton.Dispose();
-        }
-
-        private void FlipLED()
-        {
-            pushButtonValue = pushButton.Read();
-            if (pushButtonValue == GpioPinValue.High)
+            // toggle the state of the onboard LED every time the button is pressed
+            if (e.Edge == GpioPinEdge.FallingEdge)
             {
-                LED.Fill = redBrush;
-                pin.Write(GpioPinValue.High);
+                ledPin.Write(ledPinValue);
+                ledPinValue = (ledPinValue == GpioPinValue.Low) ?
+                    GpioPinValue.High : GpioPinValue.Low;
             }
-            else if (pushButtonValue == GpioPinValue.Low)
-            {
-                LED.Fill = grayBrush;
-                pin.Write(GpioPinValue.Low);
-            }
+
+            // need to invoke UI updates on the UI thread because this event
+            // handler gets invoked on a separate thread.
+            var task = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
+                if (e.Edge == GpioPinEdge.FallingEdge)
+                {
+                    ledEllipse.Fill = redBrush;
+                    GpioStatus.Text = "Button Pressed";
+                }
+                else
+                {
+                    ledEllipse.Fill = grayBrush;
+                    GpioStatus.Text = "Button Released";
+                }
+            });
         }
 
-       
-
-       private void Timer_Tick(object sender, object e)
-        {
-            FlipLED();
-        }
-
-       
-        /// <summary>
-        /// 
-        /// </summary>
         private const int LED_PIN = 27;
-        private const int PB_PIN = 5;
-        private GpioPin pin;
-        private GpioPin pushButton;
-        private DispatcherTimer timer;
+        private const int BUTTON_PIN = 5;
+        private GpioPin ledPin;
+        private GpioPin buttonPin;
+        private GpioPinValue ledPinValue;
         private SolidColorBrush redBrush = new SolidColorBrush(Windows.UI.Colors.Red);
         private SolidColorBrush grayBrush = new SolidColorBrush(Windows.UI.Colors.LightGray);
     }
