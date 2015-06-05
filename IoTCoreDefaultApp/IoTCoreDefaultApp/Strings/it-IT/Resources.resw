@@ -186,7 +186,7 @@
     <value>Attivazione della connessione</value>
   </data>
   <data name="OOBEWelcomeTitle.Text" xml:space="preserve">
-    <value>Ciao, benvenuto in Windows IoT Core</value>
+    <value>Ciao, benvenuto in Windows 10 IoT Core</value>
   </data>
   <data name="Rpi2Name" xml:space="preserve">
     <value>Raspberry Pi 2</value>
@@ -280,7 +280,7 @@
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialGetStartedDescription.Text" xml:space="preserve">
-    <value>Introduzione a Windows IoT Core</value>
+    <value>Introduzione a Windows 10 IoT Core</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialGetStartedTitle.Text" xml:space="preserve">
@@ -288,7 +288,7 @@
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialHeader.Text" xml:space="preserve">
-    <value>Scopri come ottenere il massimo da Windows IoT Core</value>
+    <value>Scopri come ottenere il massimo da Windows 10 IoT Core</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialHelloBlinkyDescription.Text" xml:space="preserve">

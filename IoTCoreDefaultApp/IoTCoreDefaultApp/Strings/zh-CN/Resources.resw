@@ -186,7 +186,7 @@
     <value>让我们保持联络</value>
   </data>
   <data name="OOBEWelcomeTitle.Text" xml:space="preserve">
-    <value>你好，欢迎使用 Windows IoT Core</value>
+    <value>你好，欢迎使用 Windows 10 IoT Core</value>
   </data>
   <data name="Rpi2Name" xml:space="preserve">
     <value>Raspberry Pi 2</value>
@@ -280,7 +280,7 @@
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialGetStartedDescription.Text" xml:space="preserve">
-    <value>向你介绍 Windows IoT 核心版</value>
+    <value>向你介绍 Windows 10 IoT 核心版</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialGetStartedTitle.Text" xml:space="preserve">
@@ -288,7 +288,7 @@
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialHeader.Text" xml:space="preserve">
-    <value>了解如何充分利用 Windows IoT 核心版</value>
+    <value>了解如何充分利用 Windows 10 IoT 核心版</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialHelloBlinkyDescription.Text" xml:space="preserve">

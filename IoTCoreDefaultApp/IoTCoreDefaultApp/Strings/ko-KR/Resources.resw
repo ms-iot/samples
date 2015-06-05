@@ -186,7 +186,7 @@
     <value>연결하기</value>
   </data>
   <data name="OOBEWelcomeTitle.Text" xml:space="preserve">
-    <value>Windows IoT Core 시작</value>
+    <value>Windows 10 IoT Core 시작</value>
   </data>
   <data name="Rpi2Name" xml:space="preserve">
     <value>Raspberry Pi 2</value>
@@ -276,7 +276,7 @@
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialGetStartedDescription.Text" xml:space="preserve">
-    <value>Windows IoT Core 소개</value>
+    <value>Windows 10 IoT Core 소개</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialGetStartedTitle.Text" xml:space="preserve">
@@ -284,7 +284,7 @@
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialHeader.Text" xml:space="preserve">
-    <value>Windows IoT Core 활용 방법</value>
+    <value>Windows 10 IoT Core 활용 방법</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialHelloBlinkyDescription.Text" xml:space="preserve">

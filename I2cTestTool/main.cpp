@@ -69,7 +69,7 @@ I2cDevice^ MakeDevice (int slaveAddress, _In_opt_ String^ friendlyName)
     if (dis->Size != 1) {
         throw wexception(L"I2C bus not found");
     }
-    
+
     String^ id = dis->GetAt(0)->Id;
     auto device = concurrency::create_task(I2cDevice::FromIdAsync(
                     id,
@@ -171,9 +171,9 @@ std::wostream& operator<< (std::wostream& os, I2cBusSpeed busSpeed)
 
 PCWSTR Help =
     L"Commands:\n"
-    L" > write { 00 11 22 .. FF }         Write supplied buffer\n"
+    L" > write { 00 11 22 .. FF }         Write bytes to device\n"
     L" > read N                           Read N bytes\n"
-    L" > writeread { 00 11 .. FF } N      Write buffer, restart, read N bytes\n"
+    L" > writeread { 00 11 .. FF } N      Write bytes, restart, read N bytes\n"
     L" > info                             Display device information\n"
     L" > help                             Display this help message\n"
     L" > quit                             Quit\n\n";
@@ -203,7 +203,9 @@ void ShowPrompt (I2cDevice^ device)
             }
 
             I2cTransferResult result = device->WritePartial(
-                ArrayReference<BYTE>(writeBuf.data(), writeBuf.size()));
+                ArrayReference<BYTE>(
+                    writeBuf.data(),
+                    static_cast<unsigned int>(writeBuf.size())));
 
             switch (result.Status) {
             case I2cTransferStatus::FullTransfer:
@@ -221,7 +223,7 @@ void ShowPrompt (I2cDevice^ device)
         } else if (command == L"read") {
             // expecting a single int, number of bytes to read
             unsigned int bytesToRead;
-            if (!(linestream >> bytesToRead)) {
+            if (!(linestream >> std::dec >> bytesToRead)) {
                 std::wcout << L"Expecting integer. e.g: read 4\n";
                 continue;
             }
@@ -254,7 +256,7 @@ void ShowPrompt (I2cDevice^ device)
             }
 
             unsigned int bytesToRead;
-            if (!(linestream >> bytesToRead)) {
+            if (!(linestream >> std::dec >> bytesToRead)) {
                 std::wcout << L"Syntax error: expecting integer\n";
                 std::wcout << L"Usage: writeread { 55 a0 ... ff } 4\n";
                 continue;
@@ -262,7 +264,9 @@ void ShowPrompt (I2cDevice^ device)
             auto readBuf = ref new Array<BYTE>(bytesToRead);
 
             I2cTransferResult result = device->WriteReadPartial(
-                ArrayReference<BYTE>(writeBuf.data(), writeBuf.size()),
+                ArrayReference<BYTE>(
+                    writeBuf.data(),
+                    static_cast<unsigned int>(writeBuf.size())),
                 readBuf);
 
             switch (result.Status) {
@@ -306,6 +310,14 @@ void PrintUsage (PCWSTR name)
     wprintf(
         L"I2cTestTool: Command line I2C testing utility\n"
         L"Usage: %s SlaveAddress [FriendlyName]\n"
+        L"\n"
+        L"  SlaveAddress   The slave address of the device with which you\n"
+        L"                 wish to communicate. This is a required parameter.\n"
+        L"  FriendlyName   The friendly name of the I2C controller over\n"
+        L"                 which you wish to communicate. This parameter is\n"
+        L"                 optional and defaults to the first enumerated\n"
+        L"                 I2C controller.\n"
+        L"\n"
         L"Examples:\n"
         L"  %s 0x57\n"
         L"  %s 0x57 I2C1\n",
@@ -317,25 +329,32 @@ void PrintUsage (PCWSTR name)
 int main (Platform::Array<Platform::String^>^ args)
 {
     unsigned int optind = 1;
-    if (optind >= args->Length) {
+    if (optind < args->Length) {
+        if ((args->get(optind) == L"-h") || (args->get(optind) == L"-?")) {
+            PrintUsage(args->get(0)->Data());
+            return 0;
+        }
+    } else {
         std::wcerr << L"Missing required command line parameter SlaveAddress\n\n";
         PrintUsage(args->get(0)->Data());
         return 1;
     }
 
-    if (args->get(optind) == L"-h") {
-        PrintUsage(args->get(0)->Data());
-        return 0;
+    int slaveAddress;
+    {
+        String^ arg = args->get(optind++);
+        wchar_t *endptr;
+        slaveAddress = int(wcstoul(arg->Data(), &endptr, 0));
+        if (endptr != arg->End()) {
+            std::wcerr << L"Expecting integer: " << arg->Data() << L"\n";
+            std::wcerr << L"Type '" << args->get(0)->Data() << " -h' for usage\n";
+            return 1;
+        }
     }
-
-    wchar_t *endptr;
-    int slaveAddress = INT32(wcstoul(args->get(optind++)->Data(), &endptr, 0));
 
     String^ friendlyName;
     if (optind < args->Length) {
         friendlyName = args->get(optind++);
-    } else {
-        friendlyName = nullptr;
     }
 
     try {
