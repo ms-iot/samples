@@ -3,20 +3,20 @@
 <Package
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
   xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
-  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:uwp="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   xmlns:iot="http://schemas.microsoft.com/appx/manifest/iot/windows10"
-  IgnorableNamespaces="uap mp iot">
+  IgnorableNamespaces="uwp mp iot">
 
   <Identity
-	  Name="PythonBlinky"
-	  Publisher="CN=jessek"
+	  Name="PythonBlinkyHeadless"
+	  Publisher="CN=Microsoft"
 	  Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="299a28d7-a483-4b07-ab85-b1449f99790e" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="424e5b1f-0060-4bb4-8079-b767bd8e6cab" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>PythonBlinky</DisplayName>
-    <PublisherDisplayName>jessek</PublisherDisplayName>
+    <DisplayName>PythonBlinkyHeadless</DisplayName>
+    <PublisherDisplayName>Microsoft</PublisherDisplayName>
     <Logo>StoreLogo.png</Logo>
   </Properties>
 
@@ -30,18 +30,17 @@
 
   <Applications>
     <Application Id="App">
-      <uap:VisualElements
-			  DisplayName="PythonBlinky"
+      <uwp:VisualElements
+			  DisplayName="PythonBlinkyHeadless"
 			  Square150x150Logo="Logo.png"
 			  Square44x44Logo="SmallLogo.png"
-			  Description="PythonBlinky"
-			  ForegroundText="light"
+			  Description="PythonBlinkyHeadless"
 			  BackgroundColor="#464646"
         AppListEntry="none">
-        <uap:SplashScreen Image="SplashScreen.png" />
-      </uap:VisualElements>
+        <uwp:SplashScreen Image="SplashScreen.png" />
+      </uwp:VisualElements>
       <Extensions>
-        <Extension Category="windows.backgroundTasks" EntryPoint="pyuapbackgroundservice.StartupTask">
+        <Extension Category="windows.backgroundTasks" EntryPoint="pyuwpbackgroundservice.StartupTask">
           <BackgroundTasks>
             <iot:Task Type="startup"/>
           </BackgroundTasks>
@@ -59,8 +58,8 @@
   <Extensions>
     <Extension Category="windows.activatableClass.inProcessServer">
       <InProcessServer>
-        <Path>pyuapbackgroundservice.dll</Path>
-        <ActivatableClass ActivatableClassId="pyuapbackgroundservice.StartupTask" ThreadingModel="both" />
+        <Path>pyuwpbackgroundservice.dll</Path>
+        <ActivatableClass ActivatableClassId="pyuwpbackgroundservice.StartupTask" ThreadingModel="both" />
       </InProcessServer>
     </Extension>
   </Extensions>
