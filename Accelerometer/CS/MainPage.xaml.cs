@@ -257,8 +257,8 @@ namespace Accelerometer
             const int ACCEL_DYN_RANGE_G = 8;    /* The ADXL345 had a total dynamic range of 8G, since we're configuring it to +-4G */
             const int UNITS_PER_G = ACCEL_RES / ACCEL_DYN_RANGE_G;  /* Ratio of raw int values to G units                          */
 
-            byte[] ReadBuf = new byte[6];   /* We read 6 bytes sequentially to get all 3 two-byte axes registers in one read       */
-            byte[] RegAddrBuf;              /* Register address buffer                                                             */
+            byte[] ReadBuf;                 
+            byte[] RegAddrBuf;
 
             /* 
              * Read from the accelerometer 
@@ -267,15 +267,20 @@ namespace Accelerometer
             switch (HW_PROTOCOL)
             {
                 case Protocol.SPI:
-                    /* Register address we want to read from with read and multi-byte bit set           */
-                    RegAddrBuf = new byte[] { ACCEL_REG_X | ACCEL_SPI_RW_BIT | ACCEL_SPI_MB_BIT};
-                    SPIAccel.TransferSequential(RegAddrBuf, ReadBuf);
+                    ReadBuf = new byte[6 + 1];      /* Read buffer of size 6 bytes (2 bytes * 3 axes) + 1 byte padding */
+                    RegAddrBuf = new byte[1 + 6];   /* Register address buffer of size 1 byte + 6 bytes padding        */
+                    /* Register address we want to read from with read and multi-byte bit set                          */
+                    RegAddrBuf[0] =  ACCEL_REG_X | ACCEL_SPI_RW_BIT | ACCEL_SPI_MB_BIT ;
+                    SPIAccel.TransferFullDuplex(RegAddrBuf, ReadBuf);
+                    Array.Copy(ReadBuf, 1, ReadBuf, 0, 6);  /* Discard first dummy byte from read                      */
                     break;
                 case Protocol.I2C:
-                    RegAddrBuf = new byte[] { ACCEL_REG_X }; /* Register address we want to read from   */
+                    ReadBuf = new byte[6];  /* We read 6 bytes sequentially to get all 3 two-byte axes                 */
+                    RegAddrBuf = new byte[] { ACCEL_REG_X }; /* Register address we want to read from                  */
                     I2CAccel.WriteRead(RegAddrBuf, ReadBuf);
                     break;
-                default:
+                default:    /* Code should never get here */
+                    ReadBuf = new byte[6];
                     break;
             }
                          
