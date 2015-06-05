@@ -126,7 +126,7 @@ namespace IoTCoreDefaultApp
 
                 foreach (var network in adapter.NetworkReport.AvailableNetworks)
                 {
-                    if (!string.IsNullOrEmpty(network.Ssid))
+                    if (!HasSsid(networkNameToInfo, network.Ssid))
                     {
                         networkNameToInfo[network] = adapter;
                     }
@@ -134,6 +134,18 @@ namespace IoTCoreDefaultApp
             }
 
             return true;
+        }
+
+        private bool HasSsid(Dictionary<WiFiAvailableNetwork, WiFiAdapter> resultCollection, string ssid)
+        {
+            foreach (var network in resultCollection)
+            {
+                if (!string.IsNullOrEmpty(network.Key.Ssid) && network.Key.Ssid == ssid)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public async Task<IList<WiFiAvailableNetwork>> GetAvailableNetworks()
