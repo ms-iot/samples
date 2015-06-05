@@ -279,6 +279,14 @@ namespace Accelerometer
                     break;
             }
                          
+            /* Check the endianness of the system and flip the bytes if necessary */
+            if (!BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(ReadBuf, 0, 2);
+                Array.Reverse(ReadBuf, 2, 2);
+                Array.Reverse(ReadBuf, 4, 2);
+            }
+
             /* In order to get the raw 16-bit data values, we need to concatenate two 8-bit bytes for each axis */
             short AccelerationRawX = BitConverter.ToInt16(ReadBuf, 0);
             short AccelerationRawY = BitConverter.ToInt16(ReadBuf, 2);
