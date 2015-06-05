@@ -32,9 +32,12 @@ sample_humidity_hold = bytes([0xe5])
 
 htdu21d = i2c.i2cdevice('I2C1', 0x40, i2c.FASTSPEED, i2c.SHAREDMODE)
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 gpio.setup(5,gpio.OUT)
 >>>>>>> c992184... Adding python weather station
+=======
+>>>>>>> d351786... Fixes python samples, adding license text and Microsoft as publisher for others
 
 while True:
     temp_data = htdu21d.writeread(sample_temp_hold, 3)

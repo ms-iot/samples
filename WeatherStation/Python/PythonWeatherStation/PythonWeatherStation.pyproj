@@ -11,10 +11,14 @@
     <AppContainerApplication>true</AppContainerApplication>
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <ProjectGuid>ad5173d1-38c4-4d93-a217-3352baf51e59</ProjectGuid>
 =======
     <ProjectGuid>51d90c58-5628-45f8-8704-40b6d703941e</ProjectGuid>
 >>>>>>> c992184... Adding python weather station
+=======
+    <ProjectGuid>ad5173d1-38c4-4d93-a217-3352baf51e59</ProjectGuid>
+>>>>>>> d351786... Fixes python samples, adding license text and Microsoft as publisher for others
     <ProjectHome>.</ProjectHome>
     <WorkingDirectory>.</WorkingDirectory>
     <StartupFile>StartupTask.py</StartupFile>
@@ -52,6 +56,9 @@
   </ItemGroup>
   <ItemGroup>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d351786... Fixes python samples, adding license text and Microsoft as publisher for others
     <Reference Include="windevices\ARM\_wingpio_d.pyd" Condition=" '$(Configuration)|$(Platform)' == 'Debug|ARM' ">
       <Name>_wingpio_d.pyd</Name>
       <PythonExtension>windevices\ARM\_wingpio_d.pyd</PythonExtension>
@@ -75,6 +82,7 @@
     </Reference>
     <Reference Include="windevices\ARM\_wini2c.pyd" Condition=" '$(Configuration)|$(Platform)' == 'Release|ARM' ">
       <Name>_wingpio.pyd</Name>
+<<<<<<< HEAD
       <PythonExtension>windevices\ARM\_wini2c.pyd</PythonExtension>
     </Reference>
     <Reference Include="windevices\Win32\_wini2c_d.pyd" Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -97,20 +105,31 @@
 =======
     <Reference Include="windevices\ARM\_wini2c.pyd">
       <Name>_wini2c.pyd</Name>
+=======
+>>>>>>> d351786... Fixes python samples, adding license text and Microsoft as publisher for others
       <PythonExtension>windevices\ARM\_wini2c.pyd</PythonExtension>
     </Reference>
+    <Reference Include="windevices\Win32\_wini2c_d.pyd" Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+      <Name>_wingpio_d.pyd</Name>
+      <PythonExtension>windevices\Win32\_wini2c_d.pyd</PythonExtension>
+    </Reference>
+    <Reference Include="windevices\Win32\_wini2c.pyd" Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+      <Name>_wingpio.pyd</Name>
+      <PythonExtension>windevices\Win32\_wini2c.pyd</PythonExtension>
+    </Reference>
+
   </ItemGroup>
-  <PropertyGroup>
-    <CPythonTargetsFile>$(LocalAppData)\Microsoft\VisualStudio\$(VisualStudioVersion)Exp\Extensions\Microsoft\Python UAP\3.5\DesignTime\CommonConfiguration\Neutral\CPython.targets</CPythonTargetsFile>
-    <CPythonTargetsFile Condition="'$(CPythonTargetsFile)' == '' or !Exists('$(CPythonTargetsFile)')">$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v10.0\ExtensionSDKs\PyUAP\3.5\DesignTime\CommonConfiguration\Neutral\CPython.targets</CPythonTargetsFile>
-  </PropertyGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
     <PtvsVersion Condition="'$(PtvsVersion)' == ''">2.2</PtvsVersion>
-    <PtvsTargetsFile>$(LocalAppData)\Microsoft\VisualStudio\$(VisualStudioVersion)Exp\Extensions\Microsoft\Python Tools for Visual Studio - UAP\$(PtvsVersion)\Microsoft.PythonTools.Uap.targets</PtvsTargetsFile>
-    <PtvsTargetsFile Condition="'$(PtvsTargetsFile)' == '' or !Exists('$(PtvsTargetsFile)')">$(MSBuildProgramFiles32)\Microsoft Visual Studio $(VisualStudioVersion)\Common7\IDE\Extensions\Microsoft\Python Tools for Visual Studio - UAP\$(PtvsVersion)\Microsoft.PythonTools.Uap.targets</PtvsTargetsFile>
+    <PtvsTargetsFile>$(LocalAppData)\Microsoft\VisualStudio\$(VisualStudioVersion)Exp\Extensions\Microsoft\Python Tools for Visual Studio - UWP\$(PtvsVersion)\Microsoft.PythonTools.Uwp.targets</PtvsTargetsFile>
+    <PtvsTargetsFile Condition="'$(PtvsTargetsFile)' == '' or !Exists('$(PtvsTargetsFile)')">$(MSBuildProgramFiles32)\Microsoft Visual Studio $(VisualStudioVersion)\Common7\IDE\Extensions\Microsoft\Python Tools for Visual Studio - UWP\$(PtvsVersion)\Microsoft.PythonTools.Uwp.targets</PtvsTargetsFile>
   </PropertyGroup>
+<<<<<<< HEAD
   <Import Project="$(CPythonTargetsFile)" />
   <Import Condition="Exists($(PtvsTargetsFile))" Project="$(PtvsTargetsFile)" />
 >>>>>>> c992184... Adding python weather station
+=======
+  <Import Project="$(PtvsTargetsFile)" />
+>>>>>>> d351786... Fixes python samples, adding license text and Microsoft as publisher for others
 </Project>
