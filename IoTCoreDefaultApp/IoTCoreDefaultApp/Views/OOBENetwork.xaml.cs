@@ -30,6 +30,7 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using Windows.Networking.Connectivity;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -41,14 +42,30 @@ namespace IoTCoreDefaultApp
     public sealed partial class OOBENetwork : Page
     {
         private NetworkPresenter networkPresenter;
+        private CoreDispatcher OOBENetworkPageDispatcher;
         private bool Automatic = true;
         private string CurrentPassword = string.Empty;
 
         public OOBENetwork()
         {
             this.InitializeComponent();
+            OOBENetworkPageDispatcher = Window.Current.Dispatcher;
+            SetupNetwork();
+            NetworkInformation.NetworkStatusChanged += NetworkInformation_NetworkStatusChanged;
+        }
+
+        private void SetupNetwork()
+        {
             SetupEthernet();
             SetupWifi();
+        }
+
+        private async void NetworkInformation_NetworkStatusChanged(object sender)
+        {
+            await OOBENetworkPageDispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+            {
+                SetupNetwork();
+            });
         }
 
         private void SetupEthernet()
