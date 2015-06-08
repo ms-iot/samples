@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 466fd98... Fixing copyright banner and orelated issues.
 ﻿/*
 Copyright(c) Microsoft Open Technologies, Inc. All rights reserved.
 
@@ -24,9 +27,12 @@ THE SOFTWARE.
 */
 
 using System;
+<<<<<<< HEAD
 =======
 ﻿using System;
 >>>>>>> ad9a3e7... Added CPP weather station, C# interrupt
+=======
+>>>>>>> 466fd98... Fixing copyright banner and orelated issues.
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
