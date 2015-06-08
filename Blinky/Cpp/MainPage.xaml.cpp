@@ -52,13 +52,15 @@ MainPage::MainPage()
     InitializeComponent();
 
     InitGPIO();
-
-    timer_ = ref new DispatcherTimer();
-    TimeSpan interval;
-    interval.Duration = 500 * 1000 * 10;
-    timer_->Interval = interval;
-    timer_->Tick += ref new EventHandler<Object ^>(this, &MainPage::OnTick);
-    timer_->Start();
+	if (pin_ != nullptr)
+	{
+		timer_ = ref new DispatcherTimer();
+		TimeSpan interval;
+		interval.Duration = 500 * 1000 * 10;
+		timer_->Interval = interval;
+		timer_->Tick += ref new EventHandler<Object ^>(this, &MainPage::OnTick);
+		timer_->Start();
+	}
 }
 
 void MainPage::InitGPIO()
@@ -73,69 +75,29 @@ void MainPage::InitGPIO()
 	}
 
 	pin_ = gpio->OpenPin(LED_PIN);
-	pin_->Write(GpioPinValue::High);
+	pin_->Write(pinValue_);
 	pin_->SetDriveMode(GpioPinDriveMode::Output);
 
 	GpioStatus->Text = "GPIO pin initialized correctly.";
 }
 
-void MainPage::FlipLED()
-{
-    if (LEDStatus_ == 0)
-    {
-        LEDStatus_ = 1;
-        if (pin_ != nullptr)
-        {
-            pin_->Write(GpioPinValue::Low);
-        }
-        LED->Fill = redBrush_;
-    }
-    else
-    {
-        LEDStatus_ = 0;
-        if (pin_ != nullptr)
-        {
-            pin_->Write(GpioPinValue::High);
-        }
-        LED->Fill = grayBrush_;
-    }
-}
-
-void MainPage::TurnOffLED()
-{
-    if (LEDStatus_ == 1)
-    {
-        FlipLED();
-    }
-}
 
 void MainPage::OnTick(Object ^sender, Object ^args)
 {
-    FlipLED();
+	if (pinValue_ == GpioPinValue::High)
+	{
+		pinValue_ = GpioPinValue::Low;
+		pin_->Write(pinValue_);
+		LED->Fill = redBrush_;
+	}
+	else
+	{
+		pinValue_ = GpioPinValue::High;
+		pin_->Write(pinValue_);
+		LED->Fill = grayBrush_;
+	}
 }
 
 
-void MainPage::Delay_ValueChanged(Object^ sender, RangeBaseValueChangedEventArgs^ e)
-{
-    if (timer_ == nullptr)
-    {
-        return;
-    }
-    if (e->NewValue == Delay->Minimum)
-    {
-        DelayText->Text = "Stopped";
-        timer_->Stop();
-        TurnOffLED();
-    }
-    else
-    {
-        long delay = static_cast<long>(e->NewValue);
-        auto txt = std::to_wstring(delay) + L"ms";
-        DelayText->Text = ref new String(txt.c_str());
-        TimeSpan interval;
-        interval.Duration = delay * 1000 * 10;
-        timer_->Interval = interval;
-        timer_->Start();
-    }
 
-}
+

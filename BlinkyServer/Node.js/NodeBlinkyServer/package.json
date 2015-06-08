@@ -1,0 +1,10 @@
+{
+  "name": "NodeBlinkyServer",
+  "version": "0.0.0",
+  "description": "NodeBlinkyServer",
+  "main": "server.js",
+  "author": {
+    "name": "Microsoft",
+    "email": ""
+  }
+}

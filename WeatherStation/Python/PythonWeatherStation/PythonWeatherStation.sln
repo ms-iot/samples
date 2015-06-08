@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.22823.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "PythonWeatherStation", "PythonWeatherStation.pyproj", "{AD5173D1-38C4-4D93-A217-3352BAF51E59}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM = Debug|ARM
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|ARM = Release|ARM
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AD5173D1-38C4-4D93-A217-3352BAF51E59}.Debug|ARM.ActiveCfg = Debug|ARM
+		{AD5173D1-38C4-4D93-A217-3352BAF51E59}.Debug|ARM.Build.0 = Debug|ARM
+		{AD5173D1-38C4-4D93-A217-3352BAF51E59}.Debug|ARM.Deploy.0 = Debug|ARM
+		{AD5173D1-38C4-4D93-A217-3352BAF51E59}.Debug|x64.ActiveCfg = Debug|x64
+		{AD5173D1-38C4-4D93-A217-3352BAF51E59}.Debug|x64.Build.0 = Debug|x64
+		{AD5173D1-38C4-4D93-A217-3352BAF51E59}.Debug|x64.Deploy.0 = Debug|x64
+		{AD5173D1-38C4-4D93-A217-3352BAF51E59}.Debug|x86.ActiveCfg = Debug|x86
+		{AD5173D1-38C4-4D93-A217-3352BAF51E59}.Debug|x86.Build.0 = Debug|x86
+		{AD5173D1-38C4-4D93-A217-3352BAF51E59}.Debug|x86.Deploy.0 = Debug|x86
+		{AD5173D1-38C4-4D93-A217-3352BAF51E59}.Release|ARM.ActiveCfg = Release|ARM
+		{AD5173D1-38C4-4D93-A217-3352BAF51E59}.Release|ARM.Build.0 = Release|ARM
+		{AD5173D1-38C4-4D93-A217-3352BAF51E59}.Release|ARM.Deploy.0 = Release|ARM
+		{AD5173D1-38C4-4D93-A217-3352BAF51E59}.Release|x64.ActiveCfg = Release|x64
+		{AD5173D1-38C4-4D93-A217-3352BAF51E59}.Release|x64.Build.0 = Release|x64
+		{AD5173D1-38C4-4D93-A217-3352BAF51E59}.Release|x64.Deploy.0 = Release|x64
+		{AD5173D1-38C4-4D93-A217-3352BAF51E59}.Release|x86.ActiveCfg = Release|x86
+		{AD5173D1-38C4-4D93-A217-3352BAF51E59}.Release|x86.Build.0 = Release|x86
+		{AD5173D1-38C4-4D93-A217-3352BAF51E59}.Release|x86.Deploy.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
