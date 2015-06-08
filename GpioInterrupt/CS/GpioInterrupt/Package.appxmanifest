@@ -10,10 +10,14 @@
   <Identity
     Name="GpioInterrupt"
 <<<<<<< HEAD
+<<<<<<< HEAD
     Publisher="CN=Microsoft"
 =======
     Publisher="CN=jessek"
 >>>>>>> ad9a3e7... Added CPP weather station, C# interrupt
+=======
+    Publisher="CN=Microsoft"
+>>>>>>> 466fd98... Fixing copyright banner and orelated issues.
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="d69c4dc0-8c36-4b11-ad63-e4d578c258d4" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
@@ -21,10 +25,14 @@
   <Properties>
     <DisplayName>GpioInterrupt</DisplayName>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <PublisherDisplayName>Microsoft</PublisherDisplayName>
 =======
     <PublisherDisplayName>jessek</PublisherDisplayName>
 >>>>>>> ad9a3e7... Added CPP weather station, C# interrupt
+=======
+    <PublisherDisplayName>Microsoft</PublisherDisplayName>
+>>>>>>> 466fd98... Fixing copyright banner and orelated issues.
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
