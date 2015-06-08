@@ -56,7 +56,10 @@ namespace PushButton
             ledPin.Write(GpioPinValue.Low);
             ledPin.SetDriveMode(GpioPinDriveMode.Output);
 
-            buttonPin.SetDriveMode(GpioPinDriveMode.Input);
+            if (buttonPin.IsDriveModeSupported(GpioPinDriveMode.InputPullUp))
+                buttonPin.SetDriveMode(GpioPinDriveMode.InputPullUp);
+            else
+                buttonPin.SetDriveMode(GpioPinDriveMode.Input);
             buttonPin.DebounceTimeout = TimeSpan.FromMilliseconds(50);
             buttonPin.ValueChanged += buttonPin_ValueChanged;
 
@@ -89,7 +92,7 @@ namespace PushButton
             });
         }
 
-        private const int LED_PIN = 27;
+        private const int LED_PIN = 47;
         private const int BUTTON_PIN = 5;
         private GpioPin ledPin;
         private GpioPin buttonPin;
