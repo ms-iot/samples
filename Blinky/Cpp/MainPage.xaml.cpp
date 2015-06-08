@@ -86,7 +86,7 @@ void MainPage::FlipLED()
         LEDStatus_ = 1;
         if (pin_ != nullptr)
         {
-            pin_->Write(GpioPinValue::High);
+            pin_->Write(GpioPinValue::Low);
         }
         LED->Fill = redBrush_;
     }
@@ -95,7 +95,7 @@ void MainPage::FlipLED()
         LEDStatus_ = 0;
         if (pin_ != nullptr)
         {
-            pin_->Write(GpioPinValue::Low);
+            pin_->Write(GpioPinValue::High);
         }
         LED->Fill = grayBrush_;
     }
