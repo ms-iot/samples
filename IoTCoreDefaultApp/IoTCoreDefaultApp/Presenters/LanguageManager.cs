@@ -45,7 +45,7 @@ namespace IoTCoreDefaultApp
             displayNameToLanguageMap = ApplicationLanguages.ManifestLanguages.Select(tag =>
             {
                 var lang = new Language(tag);
-                return new KeyValuePair<string, string>(lang.DisplayName, lang.LanguageTag);
+                return new KeyValuePair<string, string>(lang.NativeName, lang.LanguageTag);
             }).ToDictionary(keyitem => keyitem.Key, valueItem => valueItem.Value);
 
             LanguageDisplayNames = displayNameToLanguageMap.Keys.ToList();
@@ -78,7 +78,7 @@ namespace IoTCoreDefaultApp
             }
             var lang = new Language(langTag);
 
-            return lang.DisplayName;
+            return lang.NativeName;
         }
 
         public static IReadOnlyList<string> GetSupportedTimeZones()
