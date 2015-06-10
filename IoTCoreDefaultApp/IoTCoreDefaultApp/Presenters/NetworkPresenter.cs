@@ -26,6 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Resources;
 using Windows.Devices.WiFi;
 using Windows.Networking;
 using Windows.Networking.Connectivity;
@@ -48,7 +49,8 @@ namespace IoTCoreDefaultApp
                     return icp.ProfileName;
                 }
             }
-            return ("None found");
+
+            return null;
         }
 
         public static string GetCurrentNetworkName()
@@ -79,7 +81,9 @@ namespace IoTCoreDefaultApp
                 }
             }
 
-            return "<no Internet connection>";
+            var resourceLoader = ResourceLoader.GetForCurrentView();
+            var msg = resourceLoader.GetString("NoInternetConnection");
+            return msg;
         }
 
         private Dictionary<WiFiAvailableNetwork, WiFiAdapter> networkNameToInfo;
@@ -239,6 +243,7 @@ namespace IoTCoreDefaultApp
         {
             var networkList = new Dictionary<string, NetworkInfo>();
             var hostNamesList = NetworkInformation.GetHostNames();
+            var resourceLoader = ResourceLoader.GetForCurrentView();
 
             foreach (var hostName in hostNamesList)
             {
@@ -254,7 +259,8 @@ namespace IoTCoreDefaultApp
                         {
                             info = new NetworkInfo();
                             info.NetworkName = profile.ProfileName;
-                            info.NetworkStatus = profile.GetNetworkConnectivityLevel().ToString();
+                            var statusTag = profile.GetNetworkConnectivityLevel().ToString();
+                            info.NetworkStatus = resourceLoader.GetString("NetworkConnectivityLevel_" + statusTag);
                         }
                         if (hostName.Type == HostNameType.Ipv4)
                         {

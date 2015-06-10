@@ -162,5 +162,18 @@ namespace IoTCoreDefaultApp
                     break;
             }
         }
+
+        private void ShutdownDropdown_Opened(object sender, object e)
+        {
+            var w = ShutdownListView.ActualWidth;
+            if (w == 0)
+            {
+                // trick to recalculate the size of the dropdown
+                ShutdownDropdown.IsOpen = false;
+                ShutdownDropdown.IsOpen = true;
+            }
+            var offset = -(ShutdownListView.ActualWidth - ShutdownButton.ActualWidth);
+            ShutdownDropdown.HorizontalOffset = offset;
+        }
     }
 }

@@ -72,7 +72,7 @@ namespace IoTCoreDefaultApp
         {
             var ethernetProfile = NetworkPresenter.GetDirectConnectionName();
 
-            if (ethernetProfile.Equals("None found"))
+            if (ethernetProfile == null)
             {
                 NoneFoundText.Visibility = Visibility.Visible;
                 DirectConnectionStackPanel.Visibility = Visibility.Collapsed;
