@@ -177,7 +177,7 @@
     <value>未找到</value>
   </data>
   <data name="OOBEIntro.Text" xml:space="preserve">
-    <value>让我们将一些基本资料移走。</value>
+    <value>让我们了解一些基本信息。</value>
   </data>
   <data name="OOBELanguageSelect.Text" xml:space="preserve">
     <value>选择语言</value>
@@ -333,10 +333,6 @@
     <value>刷新</value>
     <comment>Refresh button</comment>
   </data>
-  <data name="Tutorial.GetStarted.001.620x400.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetStarted.jpg</value>
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetStarted.002.title" xml:space="preserve">
     <value>入门</value>
   </data>
@@ -394,10 +390,6 @@
   <data name="Tutorial.GetStarted.020.p" xml:space="preserve">
     <value>在构建你自己的应用程序时，请随时使用此应用程序作为入门模板</value>
   </data>
-  <data name="Tutorial.GetConnected.001.620x400.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetConnected.jpg</value>
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetConnected.002.title" xml:space="preserve">
     <value>保持连接</value>
   </data>
@@ -410,9 +402,6 @@
   <data name="Tutorial.GetConnected.005.h1" xml:space="preserve">
     <value>以太网</value>
   </data>
-  <data name="Tutorial.GetConnected.006.p" xml:space="preserve">
-    <value>若要保持连接，最简单也是最可靠的方法是使用以太网。请将其插入</value>
-  </data>
   <data name="Tutorial.GetConnected.007.h1" xml:space="preserve">
     <value>WLAN</value>
   </data>
@@ -421,10 +410,6 @@
   </data>
   <data name="Tutorial.GetConnected.009.p" xml:space="preserve">
     <value>已经有一个? 太好了，请将其插入!</value>
-  </data>
-  <data name="Tutorial.GetConnected.010.620x350.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetConnected-004.jpg</value>
-    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.011.p" xml:space="preserve">
     <value>屏幕右上角是“设置齿轮”。单击该齿轮，然后导航到“网络和 WLAN”。在这里，你可以连接到本地网络。</value>
@@ -474,14 +459,6 @@
   <data name="Tutorial.GetConnected.026.p" xml:space="preserve">
     <value>我们已将一些高级网络诊断添加到主页中，以帮助你针对问题进行调试。有关更多支持，请访问 www.windowsondevices.com</value>
   </data>
-  <data name="Tutorial.GetConnected.027.620x400.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetConnected-006.jpg</value>
-    <comment>Please do NOT localize this string</comment>
-  </data>
-  <data name="Tutorial.GetCoding.001.620x400.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetCoding.jpg</value>
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetCoding.002.title" xml:space="preserve">
     <value>编写代码</value>
   </data>
@@ -526,10 +503,6 @@
   </data>
   <data name="Tutorial.GetCoding.016.ul" xml:space="preserve">
     <value>此时，你已准备好开发应用。请注意，Windows IoT Core Watcher 应用程序会在你登录时自动启动。该应用程序可用于查找将应用部署到的可用 Windows 10 IoT 核心版设备。</value>
-  </data>
-  <data name="Tutorial.GetCoding.017.600x360.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetCoding-003.png</value>
-    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetCoding.018.p" xml:space="preserve">
     <value>在网络上找到你的设备后，请访问 www.windowsondevices.com 下载一些要尝试并运行的示例代码!</value>
