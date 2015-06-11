@@ -410,9 +410,6 @@
   <data name="Tutorial.GetConnected.005.h1" xml:space="preserve">
     <value>Ethernet</value>
   </data>
-  <data name="Tutorial.GetConnected.006.p" xml:space="preserve">
-    <value>Il modo più semplice e affidabile per collegarti è usare Ethernet. Non devi fare altro che connetterti</value>
-  </data>
   <data name="Tutorial.GetConnected.007.h1" xml:space="preserve">
     <value>Wi-Fi</value>
   </data>

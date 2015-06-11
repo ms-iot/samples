@@ -117,6 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="IoTCoreHeader.Text" xml:space="preserve">
+    <value>Windows 10 IoT Базовая</value>
+    <comment>The Operating System Name</comment>
+  </data>
   <data name="GenericBoardName" xml:space="preserve">
     <value>Плата IoT Базовой</value>
     <comment>A generic board name</comment>
@@ -181,6 +185,9 @@
   <data name="OOBENetworkTitle.Text" xml:space="preserve">
     <value>Установка подключения</value>
   </data>
+  <data name="OOBEWelcomeTitle.Text" xml:space="preserve">
+    <value>Приветствуем! Добро пожаловать в Windows 10 IoT Базовую!</value>
+  </data>
   <data name="Rpi2Name" xml:space="preserve">
     <value>Raspberry Pi 2</value>
     <comment>Board name</comment>
@@ -198,10 +205,6 @@
   </data>
   <data name="Visit.Text" xml:space="preserve">
     <value>Перейдите по адресу</value>
-    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
-  </data>
-  <data name="WindowsOnDevicesUrl.Text" xml:space="preserve">
-    <value> www.windowsondevices.com</value>
     <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
   </data>
   <data name="KeyboardTitle.Text" xml:space="preserve">
@@ -231,7 +234,7 @@
     <value>Сведения об устройстве</value>
   </data>
   <data name="Tutorials.Text" xml:space="preserve">
-    <value>Учебники</value>
+    <value>Руководство</value>
     <comment>Text under the Tutorials button on the top bar</comment>
   </data>
   <data name="ConnectedDevices.Text" xml:space="preserve">
@@ -272,8 +275,16 @@
     <value>Подключение</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
+  <data name="TutorialGetStartedDescription.Text" xml:space="preserve">
+    <value>Введение в Windows 10 IoT Базовую</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
   <data name="TutorialGetStartedTitle.Text" xml:space="preserve">
     <value>Начало работы</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialHeader.Text" xml:space="preserve">
+    <value>Узнайте, как использовать Windows 10 IoT Базовую максимально продуктивно</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialHelloBlinkyDescription.Text" xml:space="preserve">
@@ -321,5 +332,200 @@
   <data name="Refresh.Content" xml:space="preserve">
     <value>Обновить</value>
     <comment>Refresh button</comment>
+  </data>
+  <data name="Tutorial.GetStarted.001.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetStarted.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetStarted.002.title" xml:space="preserve">
+    <value>Начало работы</value>
+  </data>
+  <data name="Tutorial.GetStarted.003.subtitle" xml:space="preserve">
+    <value>Добро пожаловать в Windows 10 IoT Базовую</value>
+  </data>
+  <data name="Tutorial.GetStarted.004.h1" xml:space="preserve">
+    <value>Вступление</value>
+  </data>
+  <data name="Tutorial.GetStarted.005.p" xml:space="preserve">
+    <value>Поздравляем! Вы настроили плату. Теперь вы готовы к знакомству с Windows 10 IoT Базовой — облегченной операционной системой, позволяющей создавать устройства. Выпуск Windows IoT Базовая содержит все средства, благодаря которым вы сможете подключить и запустить устройство в кратчайшие сроки. Наша цель — создать все условия для того, чтобы вы могли воплощать свои идеи как можно скорее.</value>
+  </data>
+  <data name="Tutorial.GetStarted.006.p" xml:space="preserve">
+    <value>Если вы хотите получить более подробную информацию и ознакомиться с руководствами, документацией и справкой, посетите сайт www.windowsondevices.com.</value>
+  </data>
+  <data name="Tutorial.GetStarted.007.h1" xml:space="preserve">
+    <value>Как приступить к кодированию?</value>
+  </data>
+  <data name="Tutorial.GetStarted.008.p" xml:space="preserve">
+    <value>Для создания проектов ОС Windows 10 IoT Базовая использует мощные возможности компьютера.</value>
+  </data>
+  <data name="Tutorial.GetStarted.009.p" xml:space="preserve">
+    <value>Все кодирование осуществляется удаленно через Visual Studio. Мы создали все условия, чтобы код можно было легко отправить на устройство для тестирования и при готовности проектов к доставке.</value>
+  </data>
+  <data name="Tutorial.GetStarted.010.h1" xml:space="preserve">
+    <value>Что вам понадобится</value>
+  </data>
+  <data name="Tutorial.GetStarted.011.ul" xml:space="preserve">
+    <value>Компьютер с Windows 10</value>
+  </data>
+  <data name="Tutorial.GetStarted.012.ul" xml:space="preserve">
+    <value>Подключение к Интернету</value>
+  </data>
+  <data name="Tutorial.GetStarted.013.ul" xml:space="preserve">
+    <value>Плата</value>
+  </data>
+  <data name="Tutorial.GetStarted.014.ul" xml:space="preserve">
+    <value>Visual Studio 2015</value>
+  </data>
+  <data name="Tutorial.GetStarted.015.p" xml:space="preserve">
+    <value>Чтобы получить дополнительные сведения, выберите руководство "Кодирование"</value>
+  </data>
+  <data name="Tutorial.GetStarted.016.h1" xml:space="preserve">
+    <value>Где кнопка "Пуск"?!</value>
+  </data>
+  <data name="Tutorial.GetStarted.017.p" xml:space="preserve">
+    <value>ОС Windows 10 IoT Базовая разработана так, чтобы быть максимально облегченной и незаметной для пользователя после создания приложения. Это означает отсутствие оболочки и кнопки "Пуск". Все кнопки, средства навигации и элементы пользовательского интерфейса должны создавать разработчики.</value>
+  </data>
+  <data name="Tutorial.GetStarted.018.p" xml:space="preserve">
+    <value>Но не беспокойтесь, мы вам поможем.</value>
+  </data>
+  <data name="Tutorial.GetStarted.019.p" xml:space="preserve">
+    <value>Это приложение имеет полностью открытый код! Все, что вы видите в приложении, создано на базе открытого кода и доступно на сайте www.windowsondevices.com.</value>
+  </data>
+  <data name="Tutorial.GetStarted.020.p" xml:space="preserve">
+    <value>Смело используйте все это как шаблон, чтобы приступить к созданию собственного приложения</value>
+  </data>
+  <data name="Tutorial.GetConnected.001.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetConnected.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetConnected.002.title" xml:space="preserve">
+    <value>Подключение</value>
+  </data>
+  <data name="Tutorial.GetConnected.003.subtitle" xml:space="preserve">
+    <value>Интернет вещей (IoT) не принесет много пользы без собственно Интернета, поэтому давайте попробуем подключиться.</value>
+  </data>
+  <data name="Tutorial.GetConnected.004.p" xml:space="preserve">
+    <value>Есть три способа подключения: Ethernet, Wi-Fi и общий доступ к подключению Интернета</value>
+  </data>
+  <data name="Tutorial.GetConnected.005.h1" xml:space="preserve">
+    <value>Ethernet</value>
+  </data>
+  <data name="Tutorial.GetConnected.007.h1" xml:space="preserve">
+    <value>Wi-Fi</value>
+  </data>
+  <data name="Tutorial.GetConnected.008.p" xml:space="preserve">
+    <value>Хотя на некоторых платах есть встроенный модуль Wi-Fi, на большинстве из них он отсутствует. Если на вашей плате нет такого модуля, вам понадобится приобрести USB-адаптер для Wi-Fi и подключить его к плате. Можете сбегать в магазин. Я подожду.</value>
+  </data>
+  <data name="Tutorial.GetConnected.009.p" xml:space="preserve">
+    <value>У вас уже есть адаптер? Отлично, тогда подключите его!</value>
+  </data>
+  <data name="Tutorial.GetConnected.010.620x350.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetConnected-004.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetConnected.011.p" xml:space="preserve">
+    <value>В верхнем правом углу экрана находится значок шестеренки, с помощью которого можно открыть настройки. Щелкните его и выберите раздел "Сеть и Wi-Fi". В нем можно подключиться к локальной сети.</value>
+  </data>
+  <data name="Tutorial.GetConnected.012.h1" xml:space="preserve">
+    <value>Общий доступ к подключению Интернета</value>
+  </data>
+  <data name="Tutorial.GetConnected.013.p" xml:space="preserve">
+    <value>Чтобы подключить к компьютеру устройство с IoT Базовой и использовать общий доступ к подключению Интернета, необходимо следующее:</value>
+  </data>
+  <data name="Tutorial.GetConnected.014.ul" xml:space="preserve">
+    <value>Свободный порт Ethernet на компьютере, на котором ведется разработка (для этого нужны дополнительная карта PCI Ethernet или аппаратный ключ USB-Ethernet).</value>
+  </data>
+  <data name="Tutorial.GetConnected.015.ul" xml:space="preserve">
+    <value>Кабель Ethernet для подключения компьютера, на котором ведется разработка, к устройству с IoT Базовой.</value>
+  </data>
+  <data name="Tutorial.GetConnected.016.p" xml:space="preserve">
+    <value>Чтобы включить на компьютере общий доступ к подключению Интернета, следуйте приведенным ниже инструкциям</value>
+  </data>
+  <data name="Tutorial.GetConnected.017.ul" xml:space="preserve">
+    <value>Чтобы открыть панель управления, щелкните правой кнопкой мыши по кнопке Windows и выберите пункт "Панель управления" или откройте окно командной строки и введите "control.exe"</value>
+  </data>
+  <data name="Tutorial.GetConnected.018.ul" xml:space="preserve">
+    <value>В поле поиска панели управления введите слово "адаптер"</value>
+  </data>
+  <data name="Tutorial.GetConnected.019.ul" xml:space="preserve">
+    <value>В разделе "Центр управления сетями и общим доступом" щелкните "Просмотр сетевых подключений"</value>
+  </data>
+  <data name="Tutorial.GetConnected.020.ul" xml:space="preserve">
+    <value>Щелкните правой кнопкой мыши подключение, к которому следует предоставить общий доступ, и выберите пункт "Свойства"</value>
+  </data>
+  <data name="Tutorial.GetConnected.021.ul" xml:space="preserve">
+    <value>Откройте вкладку "Общий доступ" и установите флажок "Разрешить другим пользователям сети использовать подключение к Интернету данного компьютера".</value>
+  </data>
+  <data name="Tutorial.GetConnected.022.p" xml:space="preserve">
+    <value>После включения общего доступа к подключению Интернета на компьютере к нему можно напрямую подключить устройство с Windows 10 IoT Базовой: вставьте один конец свободного кабеля Ethernet в дополнительный порт Ethernet на компьютере, а другой — в порт Ethernet на устройстве с IoT Базовой.</value>
+  </data>
+  <data name="Tutorial.GetConnected.024.ul" xml:space="preserve">
+    <value>Вкладка "Общий доступ" будет недоступна, если у вас только одно сетевое подключение.</value>
+  </data>
+  <data name="Tutorial.GetConnected.025.h1" xml:space="preserve">
+    <value>Возникли проблемы?</value>
+  </data>
+  <data name="Tutorial.GetConnected.026.p" xml:space="preserve">
+    <value>Мы добавили на главную страницу расширенные средства сетевой диагностики, чтобы вы могли отладить ошибки. Дополнительную поддержку можно получить на сайте www.windowsondevices.com</value>
+  </data>
+  <data name="Tutorial.GetConnected.027.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetConnected-006.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetCoding.001.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetCoding.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetCoding.002.title" xml:space="preserve">
+    <value>Кодирование</value>
+  </data>
+  <data name="Tutorial.GetCoding.003.subtitle" xml:space="preserve">
+    <value>Для создания проектов ОС Windows 10 IoT Базовая использует мощные возможности компьютера.</value>
+  </data>
+  <data name="Tutorial.GetCoding.004.p" xml:space="preserve">
+    <value>Все кодирование осуществляется удаленно через Visual Studio. Мы создали все условия, чтобы код можно было легко отправить на устройство для тестирования и при готовности проектов к доставке.</value>
+  </data>
+  <data name="Tutorial.GetCoding.005.h1" xml:space="preserve">
+    <value>Что вам понадобится</value>
+  </data>
+  <data name="Tutorial.GetCoding.006.ul" xml:space="preserve">
+    <value>Компьютер с Windows 10</value>
+  </data>
+  <data name="Tutorial.GetCoding.007.ul" xml:space="preserve">
+    <value>Подключение к Интернету</value>
+  </data>
+  <data name="Tutorial.GetCoding.008.ul" xml:space="preserve">
+    <value>Плата</value>
+  </data>
+  <data name="Tutorial.GetCoding.009.ul" xml:space="preserve">
+    <value>Visual Studio 2015</value>
+  </data>
+  <data name="Tutorial.GetCoding.010.h1" xml:space="preserve">
+    <value>Настройка Visual Studio 2015 на компьютере</value>
+  </data>
+  <data name="Tutorial.GetCoding.011.p" xml:space="preserve">
+    <value>Мы создали файл версий, в котором описаны поддерживаемые версии необходимых средств. Используйте его в качестве рекомендаций по установке требуемых средств на компьютере:</value>
+  </data>
+  <data name="Tutorial.GetCoding.012.ul" xml:space="preserve">
+    <value>Установите Windows 10.</value>
+  </data>
+  <data name="Tutorial.GetCoding.013.ul" xml:space="preserve">
+    <value>Установите Visual Studio 2015. При запуске установщика выберите пункт "Выборочная" и установите флажок, предусматривающий установку средств Windows 10.</value>
+  </data>
+  <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
+    <value>Если вы планируете разрабатывать драйверы, установите WDK.</value>
+  </data>
+  <data name="Tutorial.GetCoding.015.ul" xml:space="preserve">
+    <value>Установите MSI средств IoT.</value>
+  </data>
+  <data name="Tutorial.GetCoding.016.ul" xml:space="preserve">
+    <value>После установки всех необходимых средств вы будете готовы к разработке приложений. Обратите внимание, что приложение Windows IoT Core Watcher запускается автоматически при входе в систему. С помощью него можно находить доступные устройства с Windows 10 IoT Базовой, на которых можно развертывать приложения.</value>
+  </data>
+  <data name="Tutorial.GetCoding.017.600x360.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetCoding-003.png</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetCoding.018.p" xml:space="preserve">
+    <value>Когда устройство подключиться к сети, скачайте с сайта www.windowsondevices.com пример кода, чтобы ознакомиться с ним и запустить его!</value>
   </data>
 </root>

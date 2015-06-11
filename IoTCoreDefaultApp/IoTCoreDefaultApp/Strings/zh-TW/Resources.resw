@@ -410,9 +410,6 @@
   <data name="Tutorial.GetConnected.005.h1" xml:space="preserve">
     <value>乙太網路</value>
   </data>
-  <data name="Tutorial.GetConnected.006.p" xml:space="preserve">
-    <value>乙太網路是最簡單且可靠的連線方式。將它插入</value>
-  </data>
   <data name="Tutorial.GetConnected.007.h1" xml:space="preserve">
     <value>Wi-Fi</value>
   </data>

@@ -410,9 +410,6 @@
   <data name="Tutorial.GetConnected.005.h1" xml:space="preserve">
     <value>Ethernet</value>
   </data>
-  <data name="Tutorial.GetConnected.006.p" xml:space="preserve">
-    <value>Le mode de connexion le plus simple et le plus fiable est Ethernet. Branchez-le.</value>
-  </data>
   <data name="Tutorial.GetConnected.007.h1" xml:space="preserve">
     <value>Wi-Fi</value>
   </data>
