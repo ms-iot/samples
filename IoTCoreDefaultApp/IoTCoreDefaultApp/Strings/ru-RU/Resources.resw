@@ -117,12 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="IoTCoreHeader.Text" xml:space="preserve">
-    <value>Инсайдерский обзор Windows 10 IoT Core </value>
-    <comment>The Operating System Name</comment>
-  </data>
   <data name="GenericBoardName" xml:space="preserve">
-    <value>Плата IoTCore</value>
+    <value>Плата IoT Базовой</value>
     <comment>A generic board name</comment>
   </data>
   <data name="MainPageDeviceName.Text" xml:space="preserve">
@@ -184,9 +180,6 @@
   </data>
   <data name="OOBENetworkTitle.Text" xml:space="preserve">
     <value>Установка подключения</value>
-  </data>
-  <data name="OOBEWelcomeTitle.Text" xml:space="preserve">
-    <value>Приветствуем! Добро пожаловать в инсайдерский обзор Windows 10 IoT Core!</value>
   </data>
   <data name="Rpi2Name" xml:space="preserve">
     <value>Raspberry Pi 2</value>
@@ -279,16 +272,8 @@
     <value>Подключение</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialGetStartedDescription.Text" xml:space="preserve">
-    <value> Введение в Windows 10 IoT Core</value>
-    <comment>Tutorial titles and subtitles</comment>
-  </data>
   <data name="TutorialGetStartedTitle.Text" xml:space="preserve">
     <value>Начало работы</value>
-    <comment>Tutorial titles and subtitles</comment>
-  </data>
-  <data name="TutorialHeader.Text" xml:space="preserve">
-    <value>Узнайте, как использовать Windows 10 IoT Core максимально продуктивно</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialHelloBlinkyDescription.Text" xml:space="preserve">
