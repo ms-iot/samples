@@ -415,7 +415,7 @@
     <value>Ethernet</value>
   </data>
   <data name="Tutorial.GetConnected.006.p" xml:space="preserve">
-    <value>The easiest, and most reliable way to get connected is to use Ethernet. Plug it into</value>
+    <value>The easiest, and most reliable way to get connected is to use Ethernet. Plug an Ethernet cable into your board and connect it to your router or network switch.</value>
   </data>
   <data name="Tutorial.GetConnected.007.h1" xml:space="preserve">
     <value>Wi-Fi</value>
