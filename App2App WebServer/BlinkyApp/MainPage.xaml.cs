@@ -34,7 +34,7 @@ namespace BlinkyWebService
 {
     public sealed partial class MainPage : Page
     {
-        AppServiceConnection _appServiceConnection;
+        AppServiceConnection appServiceConnection;
 
         public MainPage()
         {
@@ -65,22 +65,22 @@ namespace BlinkyWebService
         private async void InitAppSvc()
         {
             // Initialize the AppServiceConnection
-            _appServiceConnection = new AppServiceConnection();
-            _appServiceConnection.PackageFamilyName = "WebServer_hz258y3tkez3a";
-            _appServiceConnection.AppServiceName = "App2AppComService";
+            appServiceConnection = new AppServiceConnection();
+            appServiceConnection.PackageFamilyName = "WebServer_hz258y3tkez3a";
+            appServiceConnection.AppServiceName = "App2AppComService";
 
             // Send a initialize request 
-            var res = await _appServiceConnection.OpenAsync();
+            var res = await appServiceConnection.OpenAsync();
             if (res == AppServiceConnectionStatus.Success)
             {
                 var message = new ValueSet();
                 message.Add("Command", "Initialize");
-                var response = await _appServiceConnection.SendMessageAsync(message);
+                var response = await appServiceConnection.SendMessageAsync(message);
                 if (response.Status != AppServiceResponseStatus.Success)
                 {
                     throw new Exception("Failed to send message");
                 }
-                _appServiceConnection.RequestReceived += OnMessageReceived;
+                appServiceConnection.RequestReceived += OnMessageReceived;
             }
         }
 

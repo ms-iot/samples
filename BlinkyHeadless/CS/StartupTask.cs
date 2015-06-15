@@ -34,7 +34,7 @@ namespace BlinkyHeadlessCS
 {
     public sealed class StartupTask : IBackgroundTask
     {
-        BackgroundTaskDeferral _deferral;
+        BackgroundTaskDeferral deferral;
         private GpioPinValue value = GpioPinValue.High;
         private const int LED_PIN = 5;
         private GpioPin pin;
@@ -42,7 +42,7 @@ namespace BlinkyHeadlessCS
 
         public void Run(IBackgroundTaskInstance taskInstance)
         {
-            _deferral = taskInstance.GetDeferral();
+            deferral = taskInstance.GetDeferral();
             InitGPIO();
             timer = ThreadPoolTimer.CreatePeriodicTimer(Timer_Tick, TimeSpan.FromMilliseconds(500));
             
