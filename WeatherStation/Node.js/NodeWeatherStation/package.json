@@ -1,0 +1,10 @@
+{
+  "name": "NodeWeatherStation",
+  "version": "0.0.0",
+  "description": "NodeWeatherStation",
+  "main": "server.js",
+  "author": {
+    "name": "Microsoft",
+    "email": ""
+  }
+}

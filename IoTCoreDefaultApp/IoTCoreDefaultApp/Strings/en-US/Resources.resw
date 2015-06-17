@@ -337,7 +337,6 @@
     <value>Refresh</value>
     <comment>Refresh button</comment>
   </data>
-  
   <data name="Tutorial.GetStarted.001.620x400.image" xml:space="preserve">
     <value>Assets/Tutorials/GetStarted.jpg</value>
     <comment>Please do NOT localize this string</comment>
@@ -399,7 +398,6 @@
   <data name="Tutorial.GetStarted.020.p" xml:space="preserve">
     <value>Feel free to use this as a template to get started when building your own application</value>
   </data>
-  
   <data name="Tutorial.GetConnected.001.620x400.image" xml:space="preserve">
     <value>Assets/Tutorials/GetConnected.jpg</value>
     <comment>Please do NOT localize this string</comment>
@@ -417,7 +415,7 @@
     <value>Ethernet</value>
   </data>
   <data name="Tutorial.GetConnected.006.p" xml:space="preserve">
-    <value>The easiest, and most reliable way to get connected is to use Ethernet. Plug it into</value>
+    <value>The easiest, and most reliable way to get connected is to use Ethernet. Plug an Ethernet cable into your board and connect it to your router or network switch.</value>
   </data>
   <data name="Tutorial.GetConnected.007.h1" xml:space="preserve">
     <value>Wi-Fi</value>
@@ -484,7 +482,6 @@
     <value>Assets/Tutorials/GetConnected-006.jpg</value>
     <comment>Please do NOT localize this string</comment>
   </data>
-
   <data name="Tutorial.GetCoding.001.620x400.image" xml:space="preserve">
     <value>Assets/Tutorials/GetCoding.jpg</value>
     <comment>Please do NOT localize this string</comment>
@@ -514,7 +511,7 @@
     <value>Visual Studio 2015</value>
   </data>
   <data name="Tutorial.GetCoding.010.h1" xml:space="preserve">
-    <value>Setting up Visual Studio 2015 Preview on your PC</value>
+    <value>Setting up Visual Studio 2015 on your PC</value>
   </data>
   <data name="Tutorial.GetCoding.011.p" xml:space="preserve">
     <value>We have created a versions file describing the supported versions of the required tools. Use this as a blueprint for installing the required tools on your PC:</value>
@@ -541,5 +538,20 @@
   <data name="Tutorial.GetCoding.018.p" xml:space="preserve">
     <value>Once you find your device on the network, visit www.windowsondevices.com to download some sample code to try and run!</value>
   </data>
-
+  <data name="NetworkConnectivityLevel_ConstrainedInternetAccess" xml:space="preserve">
+    <value>Limited Internet access</value>
+  </data>
+  <data name="NetworkConnectivityLevel_InternetAccess" xml:space="preserve">
+    <value>Local and Internet access</value>
+  </data>
+  <data name="NetworkConnectivityLevel_LocalAccess" xml:space="preserve">
+    <value>Local network access only</value>
+  </data>
+  <data name="NetworkConnectivityLevel_None" xml:space="preserve">
+    <value>No connectivity</value>
+  </data>
+  <data name="NoInternetConnection" xml:space="preserve">
+    <value>&lt;no Internet connection&gt;</value>
+    <comment>Used in the main page under "IP address"</comment>
+  </data>
 </root>

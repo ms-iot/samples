@@ -207,10 +207,6 @@
     <value>Visita</value>
     <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
   </data>
-  <data name="WindowsOnDevicesUrl.Text" xml:space="preserve">
-    <value> www.windowsondevices.com</value>
-    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
-  </data>
   <data name="KeyboardTitle.Text" xml:space="preserve">
     <value>Layout di tastiera</value>
     <comment>Field label</comment>
@@ -336,5 +332,203 @@
   <data name="Refresh.Content" xml:space="preserve">
     <value>Aggiorna</value>
     <comment>Refresh button</comment>
+  </data>
+  <data name="Tutorial.GetStarted.001.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetStarted.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetStarted.002.title" xml:space="preserve">
+    <value>Per iniziare</value>
+  </data>
+  <data name="Tutorial.GetStarted.003.subtitle" xml:space="preserve">
+    <value>Benvenuto in Windows 10 IoT Core</value>
+  </data>
+  <data name="Tutorial.GetStarted.004.h1" xml:space="preserve">
+    <value>Introduzione</value>
+  </data>
+  <data name="Tutorial.GetStarted.005.p" xml:space="preserve">
+    <value>Congratulazioni! Hai configurato la tua scheda e sei pronto per esplorare Windows 10 IoT Core: un sistema operativo leggero, progettato per la creazione di dispositivi. Con IoT Core, Windows mette a tua disposizione tutti gli strumenti che ti occorrono per connettere il tuo dispositivo e renderlo immediatamente operativo. Il nostro obiettivo è trasformare le tue idee in realtà nel modo più veloce possibile.</value>
+  </data>
+  <data name="Tutorial.GetStarted.006.p" xml:space="preserve">
+    <value>Se vuoi saperne di più e accedere ad esercitazioni, documentazione e informazioni, visita www.windowsondevices.com.</value>
+  </data>
+  <data name="Tutorial.GetStarted.007.h1" xml:space="preserve">
+    <value>Come posso iniziare a scrivere codice?</value>
+  </data>
+  <data name="Tutorial.GetStarted.008.p" xml:space="preserve">
+    <value>Windows 10 IoT Core usa la potenza del PC per la creazione di progetti.</value>
+  </data>
+  <data name="Tutorial.GetStarted.009.p" xml:space="preserve">
+    <value>Tutta la scrittura del codice viene eseguita in remoto tramite Visual Studio. È molto semplice trasferire il codice nel dispositivo per il testing e al momento della distribuzione.</value>
+  </data>
+  <data name="Tutorial.GetStarted.010.h1" xml:space="preserve">
+    <value>Che cosa ti occorre</value>
+  </data>
+  <data name="Tutorial.GetStarted.011.ul" xml:space="preserve">
+    <value>Un PC Windows 10</value>
+  </data>
+  <data name="Tutorial.GetStarted.012.ul" xml:space="preserve">
+    <value>Connessione a Internet</value>
+  </data>
+  <data name="Tutorial.GetStarted.013.ul" xml:space="preserve">
+    <value>La tua scheda</value>
+  </data>
+  <data name="Tutorial.GetStarted.014.ul" xml:space="preserve">
+    <value>Visual Studio 2015</value>
+  </data>
+  <data name="Tutorial.GetStarted.015.p" xml:space="preserve">
+    <value>Per altre informazioni, fai clic sull'esercitazione “Inizia a scrivere codice”</value>
+  </data>
+  <data name="Tutorial.GetStarted.016.h1" xml:space="preserve">
+    <value>Dov'è il pulsante Start?</value>
+  </data>
+  <data name="Tutorial.GetStarted.017.p" xml:space="preserve">
+    <value>Windows 10 IoT Core è stato progettato per essere estremamente leggero e invisibile all'utente una volta terminato lo sviluppo della tua applicazione. Per questo motivo, la shell e il pulsante Start non sono presenti. Tutti i pulsanti, lo spostamento e l'interfaccia utente devono essere forniti da te, lo sviluppatore.</value>
+  </data>
+  <data name="Tutorial.GetStarted.018.p" xml:space="preserve">
+    <value>Non preoccuparti: siamo qui per aiutarti.</value>
+  </data>
+  <data name="Tutorial.GetStarted.019.p" xml:space="preserve">
+    <value>Questa applicazione è completamente open source! Tutto quello che vedi nell'applicazione è open source e disponibile all'indirizzo www.windowsondevices.com.</value>
+  </data>
+  <data name="Tutorial.GetStarted.020.p" xml:space="preserve">
+    <value>Usa questa applicazione come modello per iniziare a sviluppare la tua</value>
+  </data>
+  <data name="Tutorial.GetConnected.001.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetConnected.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetConnected.002.title" xml:space="preserve">
+    <value>Collegati</value>
+  </data>
+  <data name="Tutorial.GetConnected.003.subtitle" xml:space="preserve">
+    <value>Internet of Things (IoT) non avrebbe senso senza Internet, quindi iniziamo dalla connessione.</value>
+  </data>
+  <data name="Tutorial.GetConnected.004.p" xml:space="preserve">
+    <value>Hai a disposizione tre modi per collegarti: Ethernet, Wi-Fi e Condivisione connessione Internet (ICS)</value>
+  </data>
+  <data name="Tutorial.GetConnected.005.h1" xml:space="preserve">
+    <value>Ethernet</value>
+  </data>
+  <data name="Tutorial.GetConnected.007.h1" xml:space="preserve">
+    <value>Wi-Fi</value>
+  </data>
+  <data name="Tutorial.GetConnected.008.p" xml:space="preserve">
+    <value>Anche se in alcune schede la connettività Wi-Fi è incorporata, nella maggior parte non lo è. Se la tua scheda non dispone di connettività Wi-Fi incorporata, devi acquistare una scheda Wi-Fi USB e collegarla alla scheda. Procuratene una: ti aspetterò.</value>
+  </data>
+  <data name="Tutorial.GetConnected.009.p" xml:space="preserve">
+    <value>Ne hai una? Ottimo, collegala!</value>
+  </data>
+  <data name="Tutorial.GetConnected.010.620x350.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetConnected-004.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetConnected.011.p" xml:space="preserve">
+    <value>Nell'angolo superiore destro dello schermo è presente l'icona di un ingranaggio per l'accesso alle impostazioni. Fai clic sull'icona e passa a Rete e Wi-Fi. Da qui puoi connetterti alla tua rete locale.</value>
+  </data>
+  <data name="Tutorial.GetConnected.012.h1" xml:space="preserve">
+    <value>Condivisione connessione Internet</value>
+  </data>
+  <data name="Tutorial.GetConnected.013.p" xml:space="preserve">
+    <value>Per connetterti e condividere la connessione Internet del PC con il tuo dispositivo IoT Core, devi avere:</value>
+  </data>
+  <data name="Tutorial.GetConnected.014.ul" xml:space="preserve">
+    <value>Una porta Ethernet di riserva nel tuo computer di sviluppo. Può essere una scheda Ethernet PCI aggiuntiva o un adattatore da USB a Ethernet.</value>
+  </data>
+  <data name="Tutorial.GetConnected.015.ul" xml:space="preserve">
+    <value>Un cavo Ethernet per collegare il computer di sviluppo al dispositivo IoT Core.</value>
+  </data>
+  <data name="Tutorial.GetConnected.016.p" xml:space="preserve">
+    <value>Segui le istruzioni seguenti per abilitare Condivisione connessione Internet (ICS) nel PC</value>
+  </data>
+  <data name="Tutorial.GetConnected.017.ul" xml:space="preserve">
+    <value>Apri il Pannello di controllo facendo clic con il pulsante destro del mouse sul pulsante Windows e selezionando 'Pannello di controllo' o aprendo una finestra del prompt dei comandi e digitando 'control.exe'</value>
+  </data>
+  <data name="Tutorial.GetConnected.018.ul" xml:space="preserve">
+    <value>Nella casella di ricerca del Pannello di controllo digita scheda</value>
+  </data>
+  <data name="Tutorial.GetConnected.019.ul" xml:space="preserve">
+    <value>In 'Centro connessioni di rete e condivisione' fai clic su 'Visualizza connessioni di rete'</value>
+  </data>
+  <data name="Tutorial.GetConnected.020.ul" xml:space="preserve">
+    <value>Fai clic con il pulsante destro del mouse sulla connessione che vuoi condividere, quindi fai clic su 'Proprietà'</value>
+  </data>
+  <data name="Tutorial.GetConnected.021.ul" xml:space="preserve">
+    <value>Fai clic sulla scheda 'Condivisione' e seleziona la casella 'Consenti ad altri utenti in rete di collegarsi tramite la connessione Internet di questo computer'.</value>
+  </data>
+  <data name="Tutorial.GetConnected.022.p" xml:space="preserve">
+    <value>Dopo avere abilitato Condivisione connessione Internet nel PC, puoi collegare direttamente al PC il tuo dispositivo Windows 10 IoT Core. Per farlo, collega un'estremità del cavo Ethernet alla porta Ethernet aggiuntiva del PC e l'altra estremità alla porta Ethernet del dispositivo IoT Core.</value>
+  </data>
+  <data name="Tutorial.GetConnected.023.p" xml:space="preserve">
+    <value>Nota:</value>
+  </data>
+  <data name="Tutorial.GetConnected.024.ul" xml:space="preserve">
+    <value>La scheda 'Condivisione' non sarà disponibile se è presente una sola connessione di rete.</value>
+  </data>
+  <data name="Tutorial.GetConnected.025.h1" xml:space="preserve">
+    <value>Problemi?</value>
+  </data>
+  <data name="Tutorial.GetConnected.026.p" xml:space="preserve">
+    <value>Per semplificare il debug in caso di problemi, sono state aggiunte funzionalità avanzate di diagnostica di rete nella pagina principale. Per assistenza, visita www.windowsondevices.com</value>
+  </data>
+  <data name="Tutorial.GetConnected.027.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetConnected-006.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetCoding.001.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetCoding.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetCoding.002.title" xml:space="preserve">
+    <value>Inizia a scrivere codice</value>
+  </data>
+  <data name="Tutorial.GetCoding.003.subtitle" xml:space="preserve">
+    <value>Windows 10 IoT Core usa la potenza del PC per la creazione di progetti.</value>
+  </data>
+  <data name="Tutorial.GetCoding.004.p" xml:space="preserve">
+    <value>Tutta la scrittura del codice viene eseguita in remoto tramite Visual Studio. È molto semplice trasferire il codice nel dispositivo per il testing e al momento della distribuzione.</value>
+  </data>
+  <data name="Tutorial.GetCoding.005.h1" xml:space="preserve">
+    <value>Che cosa ti occorre</value>
+  </data>
+  <data name="Tutorial.GetCoding.006.ul" xml:space="preserve">
+    <value>Un PC Windows 10</value>
+  </data>
+  <data name="Tutorial.GetCoding.007.ul" xml:space="preserve">
+    <value>Connessione a Internet</value>
+  </data>
+  <data name="Tutorial.GetCoding.008.ul" xml:space="preserve">
+    <value>La tua scheda</value>
+  </data>
+  <data name="Tutorial.GetCoding.009.ul" xml:space="preserve">
+    <value>Visual Studio 2015</value>
+  </data>
+  <data name="Tutorial.GetCoding.010.h1" xml:space="preserve">
+    <value>Configurazione di Visual Studio 2015 nel PC</value>
+  </data>
+  <data name="Tutorial.GetCoding.011.p" xml:space="preserve">
+    <value>È stato creato un file sulle versioni, in cui sono descritte le versioni supportate degli strumenti richiesti. Usalo come riferimento per l'installazione degli strumenti richiesti nel PC:</value>
+  </data>
+  <data name="Tutorial.GetCoding.012.ul" xml:space="preserve">
+    <value>Installa Windows 10</value>
+  </data>
+  <data name="Tutorial.GetCoding.013.ul" xml:space="preserve">
+    <value>Installa Visual Studio 2015. Scegli l'opzione per l'installazione personalizzata all'avvio del programma di installazione, quindi seleziona l'opzione per l'installazione degli strumenti per Windows 10.</value>
+  </data>
+  <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
+    <value>Se prevedi di sviluppare driver, installa il WDK.</value>
+  </data>
+  <data name="Tutorial.GetCoding.015.ul" xml:space="preserve">
+    <value>Installa il file MSI degli strumenti IoT.</value>
+  </data>
+  <data name="Tutorial.GetCoding.016.ul" xml:space="preserve">
+    <value>A questo punto, sei pronto per sviluppare app. Tieni presente che l'applicazione Windows IoT Core Watcher viene avviata automaticamente all'accesso. Può essere usata per trovare i dispositivi Windows 10 IoT Core disponibili per la distribuzione di app.</value>
+  </data>
+  <data name="Tutorial.GetCoding.017.600x360.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetCoding-003.png</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetCoding.018.p" xml:space="preserve">
+    <value>Dopo avere individuato il tuo dispositivo in rete, visita www.windowsondevices.com per scaricare del codice di esempio da provare!</value>
   </data>
 </root>

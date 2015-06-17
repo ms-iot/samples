@@ -59,11 +59,8 @@ namespace IoTCoreDefaultApp
         {
             languageManager = new LanguageManager();
 
-            LanguageComboBox.ItemsSource = languageManager.LanguageDisplayNames;
-            LanguageComboBox.SelectedItem = LanguageManager.GetCurrentLanguageDisplayName();
-
-            TimeZoneComboBox.ItemsSource = LanguageManager.GetSupportedTimeZones();
-            TimeZoneComboBox.SelectedItem = LanguageManager.GetCurrentTimeZone();
+            LanguageListBox.ItemsSource = languageManager.LanguageDisplayNames;
+            LanguageListBox.SelectedItem = LanguageManager.GetCurrentLanguageDisplayName();
         }
 
         private void SetupNetwork()
@@ -77,10 +74,14 @@ namespace IoTCoreDefaultApp
             NavigationUtils.GoBack();
         }
 
-        private void LanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void LanguageListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var comboBox = sender as ComboBox;
-            languageManager.UpdateLanguage(comboBox.SelectedItem as string);
+            var listBox = sender as ListBox;
+            if (!languageManager.UpdateLanguage(listBox.SelectedItem as string))
+            {
+                // just exit if the language has not changed
+                return;
+            }
 
             // reload
             if (this.Frame != null)
@@ -89,25 +90,20 @@ namespace IoTCoreDefaultApp
                 try
                 {
                     this.Frame.Navigate(type);
-                }
-                finally
-                {
                     this.Frame.BackStack.Remove(this.Frame.BackStack[this.Frame.BackStack.Count - 1]);
+                }
+                catch
+                {
                 }
             }
         }
 
-        private void TimeZoneComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var comboBox = sender as ComboBox;
-            LanguageManager.ChangeTimeZone(comboBox.SelectedItem as string);
-        }
 
         private void SetupEthernet()
         {
             var ethernetProfile = NetworkPresenter.GetDirectConnectionName();
 
-            if (ethernetProfile.Equals("None found"))
+            if (ethernetProfile == null)
             {
                 NoneFoundText.Visibility = Visibility.Visible;
                 DirectConnectionStackPanel.Visibility = Visibility.Collapsed;

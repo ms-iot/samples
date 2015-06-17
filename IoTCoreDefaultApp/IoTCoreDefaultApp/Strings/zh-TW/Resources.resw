@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="IoTCoreHeader.Text" xml:space="preserve">
-    <value>Windows 10 IoT 核心版測試人員預覽</value>
+    <value>Windows 10 IoT 核心版</value>
     <comment>The Operating System Name</comment>
   </data>
   <data name="GenericBoardName" xml:space="preserve">
@@ -186,7 +186,7 @@
     <value>開始連線</value>
   </data>
   <data name="OOBEWelcomeTitle.Text" xml:space="preserve">
-    <value>您好，歡迎使用 Windows 10 IoT 核心版測試人員預覽</value>
+    <value>您好，歡迎使用 Windows IoT 核心版</value>
   </data>
   <data name="Rpi2Name" xml:space="preserve">
     <value>Raspberry Pi 2</value>
@@ -205,10 +205,6 @@
   </data>
   <data name="Visit.Text" xml:space="preserve">
     <value>造訪</value>
-    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
-  </data>
-  <data name="WindowsOnDevicesUrl.Text" xml:space="preserve">
-    <value> www.windowsondevices.com</value>
     <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
   </data>
   <data name="KeyboardTitle.Text" xml:space="preserve">
@@ -280,7 +276,7 @@
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialGetStartedDescription.Text" xml:space="preserve">
-    <value>認識 Windows 10 IoT 核心版</value>
+    <value>認識 Windows IoT 核心版</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialGetStartedTitle.Text" xml:space="preserve">
@@ -288,7 +284,7 @@
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialHeader.Text" xml:space="preserve">
-    <value>瞭解如何徹底善用 Windows 10 IoT 核心版</value>
+    <value>瞭解如何徹底善用 Windows IoT 核心版</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialHelloBlinkyDescription.Text" xml:space="preserve">
@@ -336,5 +332,200 @@
   <data name="Refresh.Content" xml:space="preserve">
     <value>重新整理</value>
     <comment>Refresh button</comment>
+  </data>
+  <data name="Tutorial.GetStarted.001.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetStarted.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetStarted.002.title" xml:space="preserve">
+    <value>開始使用</value>
+  </data>
+  <data name="Tutorial.GetStarted.003.subtitle" xml:space="preserve">
+    <value>歡迎使用 Windows 10 IoT 核心版</value>
+  </data>
+  <data name="Tutorial.GetStarted.004.h1" xml:space="preserve">
+    <value>簡介</value>
+  </data>
+  <data name="Tutorial.GetStarted.005.p" xml:space="preserve">
+    <value>恭喜! 您已設定電路板且已可探索 Windows 10 IoT 核心版; 這是一個專供您設計裝置所打造的精簡作業系統。透過 IoT 核心版，Windows 提供讓裝置立即連線並運作所需的所有工具。我們的目標為盡快將您的構想化為現實。</value>
+  </data>
+  <data name="Tutorial.GetStarted.006.p" xml:space="preserve">
+    <value>若您想深入瞭解並尋找教學課程、文件及說明，請造訪 www.windowsondevices.com。</value>
+  </data>
+  <data name="Tutorial.GetStarted.007.h1" xml:space="preserve">
+    <value>我該如何開始撰寫程式碼?</value>
+  </data>
+  <data name="Tutorial.GetStarted.008.p" xml:space="preserve">
+    <value>Windows 10 IoT 核心版使用電腦功能來打造專案。</value>
+  </data>
+  <data name="Tutorial.GetStarted.009.p" xml:space="preserve">
+    <value>所有程式碼均透過 Visual Studio 遠端完成。我們可讓您輕鬆地將程式碼推播至您的裝置以供測試，以及在可以出貨時將程式碼推播至您的裝置。</value>
+  </data>
+  <data name="Tutorial.GetStarted.010.h1" xml:space="preserve">
+    <value>您需要的內容</value>
+  </data>
+  <data name="Tutorial.GetStarted.011.ul" xml:space="preserve">
+    <value>Windows 10 電腦</value>
+  </data>
+  <data name="Tutorial.GetStarted.012.ul" xml:space="preserve">
+    <value>網際網路連線</value>
+  </data>
+  <data name="Tutorial.GetStarted.013.ul" xml:space="preserve">
+    <value>您的電路板</value>
+  </data>
+  <data name="Tutorial.GetStarted.014.ul" xml:space="preserve">
+    <value>Visual Studio 2015</value>
+  </data>
+  <data name="Tutorial.GetStarted.015.p" xml:space="preserve">
+    <value>按一下「開始撰寫程式碼」教學課程以取得詳細資訊</value>
+  </data>
+  <data name="Tutorial.GetStarted.016.h1" xml:space="preserve">
+    <value>[開始] 按鈕在哪裡?!</value>
+  </data>
+  <data name="Tutorial.GetStarted.017.p" xml:space="preserve">
+    <value>Windows 10 IoT 核心版的設計極為精簡，並會在您完成設計應用程式之後向使用者隱藏。這代表沒有殼層和開始按鈕。所有的按鈕、瀏覽和 UI 都來自身為開發人員的您。</value>
+  </data>
+  <data name="Tutorial.GetStarted.018.p" xml:space="preserve">
+    <value>不過別擔心，我們會協助您。</value>
+  </data>
+  <data name="Tutorial.GetStarted.019.p" xml:space="preserve">
+    <value>此應用程式完全為開放來源! 您在應用程式中看到的所有內容均來自開放來源，可在 www.windowsondevices.com 上找到。</value>
+  </data>
+  <data name="Tutorial.GetStarted.020.p" xml:space="preserve">
+    <value>在設計您專屬的應用程式時，可以將它作為初始範本使用</value>
+  </data>
+  <data name="Tutorial.GetConnected.001.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetConnected.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetConnected.002.title" xml:space="preserve">
+    <value>開始連線</value>
+  </data>
+  <data name="Tutorial.GetConnected.003.subtitle" xml:space="preserve">
+    <value>物聯網 (IoT) 也需要網際網路，因此請嘗試並開始連線。</value>
+  </data>
+  <data name="Tutorial.GetConnected.004.p" xml:space="preserve">
+    <value>有三種連線方式：乙太網路、Wi-Fi 及網際網路連線共用 (ICS)</value>
+  </data>
+  <data name="Tutorial.GetConnected.005.h1" xml:space="preserve">
+    <value>乙太網路</value>
+  </data>
+  <data name="Tutorial.GetConnected.007.h1" xml:space="preserve">
+    <value>Wi-Fi</value>
+  </data>
+  <data name="Tutorial.GetConnected.008.p" xml:space="preserve">
+    <value>雖然部分電路板具備內建 Wi-Fi，但大多數電路板都缺少此功能。若您的主機板缺少內建 Wi-fi，您將必須購買 USB Wi-Fi 介面卡並插入電路板。您可以出門購買，我可以等候您。</value>
+  </data>
+  <data name="Tutorial.GetConnected.009.p" xml:space="preserve">
+    <value>有了? 非常好，插入電路板!</value>
+  </data>
+  <data name="Tutorial.GetConnected.010.620x350.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetConnected-004.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetConnected.011.p" xml:space="preserve">
+    <value>您的畫面右上角有一個「設定齒輪」。請按一下齒輪並瀏覽至 [網路及 Wi-Fi]。您可從該處連線至本機網路。</value>
+  </data>
+  <data name="Tutorial.GetConnected.012.h1" xml:space="preserve">
+    <value>網際網路連線共用</value>
+  </data>
+  <data name="Tutorial.GetConnected.013.p" xml:space="preserve">
+    <value>為連線並與 IoT 核心版共用您電腦的網際網路連線，您必須具備:</value>
+  </data>
+  <data name="Tutorial.GetConnected.014.ul" xml:space="preserve">
+    <value>開發電腦上的額外乙太網路連接埠。它可以是另一張 PCI 乙太網路卡或 USB 到乙太網路硬體鎖。</value>
+  </data>
+  <data name="Tutorial.GetConnected.015.ul" xml:space="preserve">
+    <value>可連接開發電腦與 IoT 核心版裝置的乙太網路連接線。</value>
+  </data>
+  <data name="Tutorial.GetConnected.016.p" xml:space="preserve">
+    <value>遵循下方說明在您的電腦上啟用網際網路連線共用 (ICS)</value>
+  </data>
+  <data name="Tutorial.GetConnected.017.ul" xml:space="preserve">
+    <value>在 Windows 鍵上按一下右鍵並選取 [控制台]，或開啟命令提示字元視窗並輸入「control.exe」來開啟控制台。</value>
+  </data>
+  <data name="Tutorial.GetConnected.018.ul" xml:space="preserve">
+    <value>在控制台的搜尋方塊中輸入介面卡</value>
+  </data>
+  <data name="Tutorial.GetConnected.019.ul" xml:space="preserve">
+    <value>在 [網路和共用中心] 下按一下 [檢視網路連線]</value>
+  </data>
+  <data name="Tutorial.GetConnected.020.ul" xml:space="preserve">
+    <value>以滑鼠右鍵按一下您想共用的連線，接著按一下 [內容]</value>
+  </data>
+  <data name="Tutorial.GetConnected.021.ul" xml:space="preserve">
+    <value>按一下 [共用] 索引標籤，並選取 [允許其他網路使用者透過此電腦的網際網路連線] 方塊。</value>
+  </data>
+  <data name="Tutorial.GetConnected.022.p" xml:space="preserve">
+    <value>當您在電腦上啟用 ICS 後，您即可將 Windows 10 IoT 核心版裝置直接連線至電腦。您可以將乙太網路連接線一端插入電腦上額外的乙太網路連接埠，將另一端插入 IoT 核心版裝置上的乙太網路連接埠。</value>
+  </data>
+  <data name="Tutorial.GetConnected.023.p" xml:space="preserve">
+    <value>注意:</value>
+  </data>
+  <data name="Tutorial.GetConnected.024.ul" xml:space="preserve">
+    <value>若您僅有一個網路連線，則無法使用 [共用] 索引標籤。</value>
+  </data>
+  <data name="Tutorial.GetConnected.025.h1" xml:space="preserve">
+    <value>遇到問題?</value>
+  </data>
+  <data name="Tutorial.GetConnected.026.p" xml:space="preserve">
+    <value>我們已在主頁面中新增一些進階網路診斷資訊以協助您偵錯問題。如需其他支援，請前往 www.windowsondevices.com</value>
+  </data>
+  <data name="Tutorial.GetConnected.027.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetConnected-006.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetCoding.001.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetCoding.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetCoding.002.title" xml:space="preserve">
+    <value>開始撰寫程式碼</value>
+  </data>
+  <data name="Tutorial.GetCoding.003.subtitle" xml:space="preserve">
+    <value>Windows 10 IoT 核心版使用電腦功能來打造專案。</value>
+  </data>
+  <data name="Tutorial.GetCoding.004.p" xml:space="preserve">
+    <value>所有程式碼均透過 Visual Studio 遠端完成。我們可讓您輕鬆地將程式碼推播至您的裝置以供測試，以及在可以出貨時將程式碼推播至您的裝置。</value>
+  </data>
+  <data name="Tutorial.GetCoding.005.h1" xml:space="preserve">
+    <value>您需要的內容</value>
+  </data>
+  <data name="Tutorial.GetCoding.006.ul" xml:space="preserve">
+    <value>Windows 10 電腦</value>
+  </data>
+  <data name="Tutorial.GetCoding.007.ul" xml:space="preserve">
+    <value>網際網路連線</value>
+  </data>
+  <data name="Tutorial.GetCoding.008.ul" xml:space="preserve">
+    <value>您的電路板</value>
+  </data>
+  <data name="Tutorial.GetCoding.009.ul" xml:space="preserve">
+    <value>Visual Studio 2015</value>
+  </data>
+  <data name="Tutorial.GetCoding.010.h1" xml:space="preserve">
+    <value>在您的電腦上設定 Visual Studio 2015</value>
+  </data>
+  <data name="Tutorial.GetCoding.012.ul" xml:space="preserve">
+    <value>安裝 Windows 10</value>
+  </data>
+  <data name="Tutorial.GetCoding.013.ul" xml:space="preserve">
+    <value>安裝 Visual Studio 2015。當您啟動安裝程式時，請選擇 [自訂] 選項，接著勾選安裝 Windows 10 工具的選項。</value>
+  </data>
+  <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
+    <value>若您計劃開發驅動程式，請安裝 WDK。</value>
+  </data>
+  <data name="Tutorial.GetCoding.015.ul" xml:space="preserve">
+    <value>安裝 IoT 工具 MSI。</value>
+  </data>
+  <data name="Tutorial.GetCoding.016.ul" xml:space="preserve">
+    <value>目前您已可開發 app。請注意，Windows IoT Core Watcher 應用程式會在您登入時自動啟動。您可使用它來尋找要部署 app 的可用 Windows 10 IoT 核心版裝置。</value>
+  </data>
+  <data name="Tutorial.GetCoding.017.600x360.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetCoding-003.png</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetCoding.018.p" xml:space="preserve">
+    <value>當您在網路上找到裝置後，請造訪 www.windowsondevices.com 下載簡單的程式碼並試用！</value>
   </data>
 </root>

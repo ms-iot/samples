@@ -45,15 +45,22 @@ namespace IoTCoreDefaultApp
             displayNameToLanguageMap = ApplicationLanguages.ManifestLanguages.Select(tag =>
             {
                 var lang = new Language(tag);
-                return new KeyValuePair<string, string>(lang.DisplayName, lang.LanguageTag);
+                return new KeyValuePair<string, string>(lang.NativeName, lang.LanguageTag);
             }).ToDictionary(keyitem => keyitem.Key, valueItem => valueItem.Value);
 
             LanguageDisplayNames = displayNameToLanguageMap.Keys.ToList();
         }
 
-        public void UpdateLanguage(string displayName)
+        public bool UpdateLanguage(string displayName)
         {
-            ApplicationLanguages.PrimaryLanguageOverride = GetLanguageTagFromDisplayName(displayName);
+            var currentLang = ApplicationLanguages.PrimaryLanguageOverride;
+            var newLang = GetLanguageTagFromDisplayName(displayName);
+            if (currentLang != newLang)
+            {
+                ApplicationLanguages.PrimaryLanguageOverride = newLang;
+                return true;
+            }
+            return false;
         }
 
         private string GetLanguageTagFromDisplayName(string displayName)
@@ -78,35 +85,8 @@ namespace IoTCoreDefaultApp
             }
             var lang = new Language(langTag);
 
-            return lang.DisplayName;
+            return lang.NativeName;
         }
 
-        public static IReadOnlyList<string> GetSupportedTimeZones()
-        {
-            return TimeZoneSettings.SupportedTimeZoneDisplayNames;
-        }
-
-        public static string GetCurrentTimeZone()
-        {
-            return TimeZoneSettings.CurrentTimeZoneDisplayName;
-        }
-
-        public static void ChangeTimeZone(string timeZone)
-        {
-            if (!TimeZoneSettings.CanChangeTimeZone)
-            {
-                return;
-            }
-
-            if (!TimeZoneSettings.SupportedTimeZoneDisplayNames.Contains(timeZone))
-            {
-                throw new ArgumentException("Failed to change timezone to " + timeZone);
-            }
-
-            TimeZoneSettings.ChangeTimeZoneByDisplayName(timeZone);
-
-            // "Workaround" to flush TimeZoneInfo cache. Yes, this really works.
-            TimeZoneInfo.ConvertTime(DateTime.MinValue, TimeZoneInfo.Local); 
-        }
     }
 }

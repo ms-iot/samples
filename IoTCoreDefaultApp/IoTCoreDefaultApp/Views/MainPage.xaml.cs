@@ -22,8 +22,10 @@
     THE SOFTWARE.
 */
 
+using OnBoardee;
 using System;
 using System.Globalization;
+using System.Threading.Tasks;
 using Windows.Networking.Connectivity;
 using Windows.Storage;
 using Windows.System;
@@ -41,6 +43,7 @@ namespace IoTCoreDefaultApp
         private CoreDispatcher MainPageDispatcher;
         private DispatcherTimer timer;
         private ConnectedDevicePresenter connectedDevicePresenter;
+        private OnboardingService OnboardingService;
 
         public MainPage()
         {
@@ -59,6 +62,8 @@ namespace IoTCoreDefaultApp
             timer.Tick += timer_Tick;
             timer.Interval = TimeSpan.FromSeconds(30);
             timer.Start();
+
+            OnboardingService = new OnboardingService();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -67,6 +72,10 @@ namespace IoTCoreDefaultApp
             {
                 ApplicationData.Current.LocalSettings.Values[Constants.HasDoneOOBEKey] = Constants.HasDoneOOBEValue;
             }
+
+            Task.Run(() => {
+                OnboardingService.Initialize();
+            });
 
             base.OnNavigatedTo(e);
         }
@@ -161,6 +170,19 @@ namespace IoTCoreDefaultApp
                     ShutdownHelper(ShutdownKind.Restart);
                     break;
             }
+        }
+
+        private void ShutdownDropdown_Opened(object sender, object e)
+        {
+            var w = ShutdownListView.ActualWidth;
+            if (w == 0)
+            {
+                // trick to recalculate the size of the dropdown
+                ShutdownDropdown.IsOpen = false;
+                ShutdownDropdown.IsOpen = true;
+            }
+            var offset = -(ShutdownListView.ActualWidth - ShutdownButton.ActualWidth);
+            ShutdownDropdown.HorizontalOffset = offset;
         }
     }
 }

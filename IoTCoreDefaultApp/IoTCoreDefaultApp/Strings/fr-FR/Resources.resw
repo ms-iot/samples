@@ -207,10 +207,6 @@
     <value>Visitez</value>
     <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
   </data>
-  <data name="WindowsOnDevicesUrl.Text" xml:space="preserve">
-    <value> www.windowsondevices.com</value>
-    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
-  </data>
   <data name="KeyboardTitle.Text" xml:space="preserve">
     <value>Disposition du clavier</value>
     <comment>Field label</comment>
@@ -280,7 +276,7 @@
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialGetStartedDescription.Text" xml:space="preserve">
-    <value>Découvrez Windows 10 IoT Standard</value>
+    <value>Découvrez Windows IoT Standard</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialGetStartedTitle.Text" xml:space="preserve">
@@ -288,7 +284,7 @@
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialHeader.Text" xml:space="preserve">
-    <value>Découvrez comment exploiter tout le potentiel de Windows 10 IoT Standard</value>
+    <value>Découvrez comment exploiter tout le potentiel de Windows IoT Standard</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialHelloBlinkyDescription.Text" xml:space="preserve">
@@ -336,5 +332,203 @@
   <data name="Refresh.Content" xml:space="preserve">
     <value>Actualiser</value>
     <comment>Refresh button</comment>
+  </data>
+  <data name="Tutorial.GetStarted.001.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetStarted.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetStarted.002.title" xml:space="preserve">
+    <value>Prise en main</value>
+  </data>
+  <data name="Tutorial.GetStarted.003.subtitle" xml:space="preserve">
+    <value>Bienvenue dans Windows 10 IoT Standard</value>
+  </data>
+  <data name="Tutorial.GetStarted.004.h1" xml:space="preserve">
+    <value>Intro</value>
+  </data>
+  <data name="Tutorial.GetStarted.005.p" xml:space="preserve">
+    <value>Félicitations ! Vous avez configuré votre carte, et vous êtes prêt à explorer Windows 10 IoT Standard, un système d’exploitation léger conçu pour vous permettre de créer des appareils. Avec IoT Standard, Windows vous apporte tous les outils dont vous avez besoin pour connecter votre appareil et le faire fonctionner en un rien de temps. Notre objectif est de donner vie à vos projets aussi rapidement que possible.</value>
+  </data>
+  <data name="Tutorial.GetStarted.006.p" xml:space="preserve">
+    <value>Si vous souhaitez examiner de près et explorer les didacticiels, la documentation et l’aide, visitez www.windowsondevices.com.</value>
+  </data>
+  <data name="Tutorial.GetStarted.007.h1" xml:space="preserve">
+    <value>Comment coder ?</value>
+  </data>
+  <data name="Tutorial.GetStarted.008.p" xml:space="preserve">
+    <value>Windows 10 IoT Standard génère des projets en utilisant la puissance du PC.</value>
+  </data>
+  <data name="Tutorial.GetStarted.009.p" xml:space="preserve">
+    <value>L’ensemble de votre codage est effectué à distance via Visual Studio. Nous facilitons la transmission de type push de votre code vers votre appareil à des fins de test, ainsi que son expédition lorsqu’il est prêt.</value>
+  </data>
+  <data name="Tutorial.GetStarted.010.h1" xml:space="preserve">
+    <value>Ce dont vous avez besoin</value>
+  </data>
+  <data name="Tutorial.GetStarted.011.ul" xml:space="preserve">
+    <value>Un PC Windows 10</value>
+  </data>
+  <data name="Tutorial.GetStarted.012.ul" xml:space="preserve">
+    <value>Une connexion Internet</value>
+  </data>
+  <data name="Tutorial.GetStarted.013.ul" xml:space="preserve">
+    <value>Votre carte</value>
+  </data>
+  <data name="Tutorial.GetStarted.014.ul" xml:space="preserve">
+    <value>Visual Studio 2015</value>
+  </data>
+  <data name="Tutorial.GetStarted.015.p" xml:space="preserve">
+    <value>Pour plus d’informations, cliquez sur le didacticiel « Coder ».</value>
+  </data>
+  <data name="Tutorial.GetStarted.016.h1" xml:space="preserve">
+    <value>Où se trouve le bouton Démarrer ?</value>
+  </data>
+  <data name="Tutorial.GetStarted.017.p" xml:space="preserve">
+    <value>Windows 10 IoT Standard a été conçu pour être extrêmement léger et invisible pour l’utilisateur, une fois que vous avez terminé de générer votre application. En d’autres termes, il n’y a ni interpréteur de commandes ni bouton Démarrer. C’est à vous, développeur, qu’il revient de créer l’ensemble des boutons et éléments de navigation et d’interface utilisateur.</value>
+  </data>
+  <data name="Tutorial.GetStarted.018.p" xml:space="preserve">
+    <value>Mais ne vous inquiétez pas, nous sommes là pour vous aider.</value>
+  </data>
+  <data name="Tutorial.GetStarted.019.p" xml:space="preserve">
+    <value>Cette application est entièrement open source ! Tout ce que vous y voyez est en open source et se trouve sur www.windowsondevices.com.</value>
+  </data>
+  <data name="Tutorial.GetStarted.020.p" xml:space="preserve">
+    <value>N’hésitez pas à l’utiliser comme modèle pour commencer lorsque vous créez votre propre application.</value>
+  </data>
+  <data name="Tutorial.GetConnected.001.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetConnected.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetConnected.002.title" xml:space="preserve">
+    <value>Connectez-vous</value>
+  </data>
+  <data name="Tutorial.GetConnected.003.subtitle" xml:space="preserve">
+    <value>L’Internet des objets (IoT) ne serait rien sans sa partie Internet. Essayez-le et connectez-vous.</value>
+  </data>
+  <data name="Tutorial.GetConnected.004.p" xml:space="preserve">
+    <value>Il existe trois méthodes de connexion : Ethernet, Wi-Fi et Partage de connexion Internet (ICS)</value>
+  </data>
+  <data name="Tutorial.GetConnected.005.h1" xml:space="preserve">
+    <value>Ethernet</value>
+  </data>
+  <data name="Tutorial.GetConnected.007.h1" xml:space="preserve">
+    <value>Wi-Fi</value>
+  </data>
+  <data name="Tutorial.GetConnected.008.p" xml:space="preserve">
+    <value>Même si certaines cartes sont fournies avec le Wi-Fi intégré, la plupart en sont dépourvues. Si tel est le cas pour votre carte, vous devez acheter une carte Wi-Fi USB et la brancher sur votre carte. N’hésitez pas à vous précipiter dans une boutique ; je patienterai.</value>
+  </data>
+  <data name="Tutorial.GetConnected.009.p" xml:space="preserve">
+    <value>Vous en avez une ? Excellent ! Branchez-la !</value>
+  </data>
+  <data name="Tutorial.GetConnected.010.620x350.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetConnected-004.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetConnected.011.p" xml:space="preserve">
+    <value>Une « roue dentée Paramètres » figure dans le coin supérieur droit de votre écran. Cliquez sur cette roue pour accéder à Réseau et Wi-Fi. C’est ici que vous pouvez vous connecter à votre réseau local.</value>
+  </data>
+  <data name="Tutorial.GetConnected.012.h1" xml:space="preserve">
+    <value>Partage de connexion Internet</value>
+  </data>
+  <data name="Tutorial.GetConnected.013.p" xml:space="preserve">
+    <value>Pour pouvoir vous connecter et partager la connexion Internet de votre PC avec votre appareil IoT Standard, vous devez disposer des éléments suivants :</value>
+  </data>
+  <data name="Tutorial.GetConnected.014.ul" xml:space="preserve">
+    <value>Un port Ethernet disponible sur votre ordinateur de développement. Il peut s’agir d’une carte PCI Ethernet supplémentaire ou d’une dongle USB-Ethernet.</value>
+  </data>
+  <data name="Tutorial.GetConnected.015.ul" xml:space="preserve">
+    <value>Un câble Ethernet pour raccorder votre ordinateur de développement à votre appareil IoT Standard.</value>
+  </data>
+  <data name="Tutorial.GetConnected.016.p" xml:space="preserve">
+    <value>Suivez les instructions ci-dessous pour activer le partage de connexion Internet sur votre PC :</value>
+  </data>
+  <data name="Tutorial.GetConnected.017.ul" xml:space="preserve">
+    <value>Affichez le Panneau de configuration en cliquant avec le bouton droit sur le bouton Windows et en sélectionnant Panneau de configuration. Vous pouvez également afficher une fenêtre d’invite de commandes et taper « control.exe ».</value>
+  </data>
+  <data name="Tutorial.GetConnected.018.ul" xml:space="preserve">
+    <value>Dans la zone de recherche du Panneau de configuration, tapez « carte adaptateur ».</value>
+  </data>
+  <data name="Tutorial.GetConnected.019.ul" xml:space="preserve">
+    <value>Sous Centre Réseau et partage, cliquez sur Afficher les connexions réseau.</value>
+  </data>
+  <data name="Tutorial.GetConnected.020.ul" xml:space="preserve">
+    <value>Cliquez avec le bouton droit sur la connexion à partager, puis cliquez sur Propriétés.</value>
+  </data>
+  <data name="Tutorial.GetConnected.021.ul" xml:space="preserve">
+    <value>Cliquez sur l’onglet Partage, puis cochez la case Autoriser d’autres utilisateurs du réseau à se connecter via la connexion Internet de cet ordinateur.</value>
+  </data>
+  <data name="Tutorial.GetConnected.022.p" xml:space="preserve">
+    <value>Après avoir activé ICS sur votre PC, vous pouvez à présent connecter directement votre appareil Windows 10 IoT Standard à votre PC. Pour ce faire, branchez une extrémité du câble Ethernet disponible sur le port Ethernet supplémentaire de votre PC et l’autre extrémité de ce câble sur le port Ethernet de votre appareil IoT Standard.</value>
+  </data>
+  <data name="Tutorial.GetConnected.023.p" xml:space="preserve">
+    <value>Remarque :</value>
+  </data>
+  <data name="Tutorial.GetConnected.024.ul" xml:space="preserve">
+    <value>L’onglet Partage n’est pas disponible si vous ne disposez que d’une seule connexion réseau.</value>
+  </data>
+  <data name="Tutorial.GetConnected.025.h1" xml:space="preserve">
+    <value>Vous rencontrez des problèmes ?</value>
+  </data>
+  <data name="Tutorial.GetConnected.026.p" xml:space="preserve">
+    <value>Nous avons ajouté des diagnostics réseau avancés dans la page principale pour vous aider à déboguer vos problèmes. Pour un support technique renforcé, accédez à www.windowsondevices.com.</value>
+  </data>
+  <data name="Tutorial.GetConnected.027.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetConnected-006.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetCoding.001.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetCoding.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetCoding.002.title" xml:space="preserve">
+    <value>Codez</value>
+  </data>
+  <data name="Tutorial.GetCoding.003.subtitle" xml:space="preserve">
+    <value>Windows 10 IoT Standard génère des projets en utilisant la puissance du PC.</value>
+  </data>
+  <data name="Tutorial.GetCoding.004.p" xml:space="preserve">
+    <value>L’ensemble de votre codage est effectué à distance via Visual Studio. Nous facilitons la transmission de type push de votre code vers votre appareil à des fins de test, ainsi que son expédition lorsqu’il est prêt.</value>
+  </data>
+  <data name="Tutorial.GetCoding.005.h1" xml:space="preserve">
+    <value>Ce dont vous avez besoin</value>
+  </data>
+  <data name="Tutorial.GetCoding.006.ul" xml:space="preserve">
+    <value>Un PC Windows 10</value>
+  </data>
+  <data name="Tutorial.GetCoding.007.ul" xml:space="preserve">
+    <value>Une connexion Internet</value>
+  </data>
+  <data name="Tutorial.GetCoding.008.ul" xml:space="preserve">
+    <value>Votre carte</value>
+  </data>
+  <data name="Tutorial.GetCoding.009.ul" xml:space="preserve">
+    <value>Visual Studio 2015</value>
+  </data>
+  <data name="Tutorial.GetCoding.010.h1" xml:space="preserve">
+    <value>Configuration de Visual Studio 2015 sur votre PC</value>
+  </data>
+  <data name="Tutorial.GetCoding.011.p" xml:space="preserve">
+    <value>Nous avons créé un fichier de version qui décrit les versions prises en charge des outils nécessaires. Utilisez-le comme modèle pour installer ces outils sur votre PC :</value>
+  </data>
+  <data name="Tutorial.GetCoding.012.ul" xml:space="preserve">
+    <value>Installez Windows 10</value>
+  </data>
+  <data name="Tutorial.GetCoding.013.ul" xml:space="preserve">
+    <value>Installez Visual Studio 2015. Choisissez l’option Personnalisée lorsque vous démarrez le programme d’installation, puis cochez l’option permettant d’installer les outils Windows 10.</value>
+  </data>
+  <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
+    <value>Si vous envisagez de développer des pilotes, installez le WDK.</value>
+  </data>
+  <data name="Tutorial.GetCoding.015.ul" xml:space="preserve">
+    <value>Installez le MSI des outils IoT.</value>
+  </data>
+  <data name="Tutorial.GetCoding.016.ul" xml:space="preserve">
+    <value>À ce stade, vous êtes prêt à développer des applications. Notez le démarrage automatique de l’application Windows IoT Core Watcher lorsque vous vous connectez. Elle permet de rechercher les appareils Windows 10 IoT Standard disponibles sur lesquels déployer les applications.</value>
+  </data>
+  <data name="Tutorial.GetCoding.017.600x360.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetCoding-003.png</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetCoding.018.p" xml:space="preserve">
+    <value>Lorsque vous avez trouvé votre appareil sur le réseau, visitez www.windowsondevices.com pour télécharger l’exemple de code pour l’essayer et l’exécuter !</value>
   </data>
 </root>

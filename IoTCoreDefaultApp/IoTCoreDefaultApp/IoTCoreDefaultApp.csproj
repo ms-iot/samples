@@ -149,7 +149,6 @@
   <ItemGroup>
     <Content Include="Assets\GenericBoard.png" />
     <Content Include="Assets\Tutorials\GetCoding-003.png" />
-    <Content Include="Assets\Tutorials\GetCoding.htm" />
     <Content Include="Assets\Tutorials\GetCoding.jpg" />
     <Content Include="Assets\Tutorials\GetCodingTile.jpg" />
     <Content Include="Assets\Tutorials\GetConnected-004.jpg" />

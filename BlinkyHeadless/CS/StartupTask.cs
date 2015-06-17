@@ -34,49 +34,30 @@ namespace BlinkyHeadlessCS
 {
     public sealed class StartupTask : IBackgroundTask
     {
-        BackgroundTaskDeferral _deferral;
-        private int LEDStatus = 0;
+        BackgroundTaskDeferral deferral;
+        private GpioPinValue value = GpioPinValue.High;
         private const int LED_PIN = 5;
         private GpioPin pin;
         private ThreadPoolTimer timer;
 
         public void Run(IBackgroundTaskInstance taskInstance)
         {
-            _deferral = taskInstance.GetDeferral();
+            deferral = taskInstance.GetDeferral();
             InitGPIO();
             timer = ThreadPoolTimer.CreatePeriodicTimer(Timer_Tick, TimeSpan.FromMilliseconds(500));
             
         }
         private void InitGPIO()
         {
-            var gpio = GpioController.GetDefault();
-
-            if (gpio == null)
-            {
-                pin = null;
-                return;
-            }
-
-            pin = gpio.OpenPin(LED_PIN);
+            pin = GpioController.GetDefault().OpenPin(LED_PIN);
             pin.Write(GpioPinValue.High);
             pin.SetDriveMode(GpioPinDriveMode.Output);
         }
 
         private void Timer_Tick(ThreadPoolTimer timer)
         {
-            if (pin != null)
-            {
-                if (LEDStatus == 0)
-                {
-                    LEDStatus = 1;
-                    pin.Write(GpioPinValue.High);
-                }
-                else
-                {
-                    LEDStatus = 0;
-                    pin.Write(GpioPinValue.Low);
-                }
-            }
+            value = (value == GpioPinValue.High) ? GpioPinValue.Low : GpioPinValue.High;
+            pin.Write(value);
         }
     }
 }

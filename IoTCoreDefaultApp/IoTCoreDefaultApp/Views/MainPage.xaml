@@ -55,9 +55,11 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="40"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
 
         <!-- Header row -->
@@ -103,13 +105,13 @@
 
             <Button Grid.Column="6" x:Name="ShutdownButton" Style="{StaticResource ShutdownButtonStyle}" Content="{StaticResource IconShutdown}" FontFamily="{StaticResource IconFontFamily}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Click="ShutdownButton_Clicked" Background="Transparent" BorderThickness="0" Height="48" Width="48" />
 
-            <Popup Grid.Column="6" x:Name="ShutdownDropdown" HorizontalAlignment="Left" IsLightDismissEnabled="True" VerticalOffset="72" HorizontalOffset="-92">
-                <ListView x:Name="ShutdownListView" Width="140" Background="White" ItemContainerStyle="{StaticResource IoTCoreDefaultAppShutdownListViewItemStyle}" BorderThickness="2.0" BorderBrush="{StaticResource ShutdownBorderBrush}" ItemClick="ShutdownListView_ItemClick" IsItemClickEnabled="True" IsTabStop="True" >
+            <Popup Grid.Column="6" x:Name="ShutdownDropdown" HorizontalAlignment="Left" IsLightDismissEnabled="True" VerticalOffset="72" Opened="ShutdownDropdown_Opened">
+                <ListView x:Name="ShutdownListView" Background="White" ItemContainerStyle="{StaticResource IoTCoreDefaultAppShutdownListViewItemStyle}" BorderThickness="2.0" BorderBrush="{StaticResource ShutdownBorderBrush}" ItemClick="ShutdownListView_ItemClick" IsItemClickEnabled="True" IsTabStop="True" >
                     <ListViewItem HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Height="40" Margin="0,5,0,0" >
-                        <TextBlock x:Name="ShutdownOption" x:Uid="ShutdownText" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource IoTCoreDefaultAppDarkBodyTextBlockStyle}" Margin="0,0,20,0"/>
+                        <TextBlock x:Name="ShutdownOption" x:Uid="ShutdownText" Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource IoTCoreDefaultAppDarkBodyTextBlockStyle}" Margin="20,0,20,0"/>
                     </ListViewItem>
                     <ListViewItem HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Height="40" Margin="0,0,0,5" >
-                        <TextBlock x:Name="RestartOption" x:Uid="RestartText" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource IoTCoreDefaultAppDarkBodyTextBlockStyle}" Margin="0,0,20,0"/>
+                        <TextBlock x:Name="RestartOption" x:Uid="RestartText" Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource IoTCoreDefaultAppDarkBodyTextBlockStyle}" Margin="20,0,20,0"/>
                     </ListViewItem>
                 </ListView>
             </Popup>
@@ -117,7 +119,7 @@
         </Grid>
        
         <!-- Left panel -->
-        <Grid Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right">
+        <Grid Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="24" />
@@ -132,7 +134,7 @@
                 <Image x:Name="BoardImage" VerticalAlignment="Center" Source="Assets/GenericBoard.png" Stretch="None" HorizontalAlignment="Left"/>
             </Grid>
 
-            <RichTextBlock Grid.Row="2" TextWrapping="NoWrap">
+            <RichTextBlock Grid.Row="2">
                 <Paragraph>
                     <InlineUIContainer>
                         <TextBlock x:Uid="Visit" Style="{StaticResource SubtitleTextBlockStyle}"/>
@@ -153,7 +155,7 @@
         </Grid>
 
         <!-- Right Panel -->
-        <Grid Grid.Column="2" Grid.Row="2">
+        <Grid Grid.Column="3" Grid.Row="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="32" />
