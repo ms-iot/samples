@@ -45,8 +45,8 @@
         <!-- Header row -->
         <Grid Grid.Column="0" Grid.ColumnSpan="5" Background="#2a2a2a">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="84" />
-                <ColumnDefinition Width="84" />
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="56" />
                 <ColumnDefinition Width="Auto" />
@@ -83,7 +83,7 @@
 
             <Button Grid.Column="4" x:Name="SettingsButton" Style="{StaticResource ShutdownButtonStyle}" Content="{StaticResource IconSettings}" FontFamily="{StaticResource IconFontFamily}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Click="SettingsButton_Clicked" Background="Transparent" BorderThickness="0" Height="48" Width="48"/>
 
-            <Button Grid.Column="6" x:Name="ShutdownButton" Style="{StaticResource ShutdownButtonStyle}" Content="{StaticResource IconShutdown}" FontFamily="{StaticResource IconFontFamily}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Click="ShutdownButton_Clicked" Background="Transparent" BorderThickness="0" Height="48" Width="48"/>
+            <Button IsEnabled="False" Grid.Column="6" x:Name="ShutdownButton" Style="{StaticResource ShutdownButtonStyle}" Content="{StaticResource IconShutdown}" FontFamily="{StaticResource IconFontFamily}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Click="ShutdownButton_Clicked" Background="Transparent" BorderThickness="0" Height="48" Width="48"/>
 
             <Popup Grid.Column="6" x:Name="ShutdownDropdown" HorizontalAlignment="Left" IsLightDismissEnabled="True" VerticalOffset="72" Opened="ShutdownDropdown_Opened">
                 <ListView x:Name="ShutdownListView" Background="White" ItemContainerStyle="{StaticResource IoTCoreDefaultAppShutdownListViewItemStyle}" BorderThickness="2.0" BorderBrush="{StaticResource ShutdownBorderBrush}" ItemClick="ShutdownListView_ItemClick" IsItemClickEnabled="True" IsTabStop="True" >
@@ -100,7 +100,7 @@
 
         <Button Grid.Row="2" x:Name="BackButton" Content="{StaticResource IconBack}" Background="Transparent" BorderThickness="0" BorderBrush="Transparent"  FontFamily="{StaticResource IconFontFamily}" FontSize="24" Click="BackButton_Clicked" Margin="24,0,0,0" Height="48" Width="48" VerticalAlignment="Top"/>
 
-        <Button Grid.Row="2" Grid.Column="2" x:Name="NextButton" FontSize="20" Content="Next" Background="Transparent" BorderThickness="0" BorderBrush="Transparent"  Click="NextButton_Clicked" Margin="0,0,0,24" VerticalAlignment="Bottom" HorizontalAlignment="Center" Visibility="Collapsed" />
+        <Button Grid.Row="2" Grid.Column="2" x:Uid="NextButton" x:Name="NextButton" FontSize="20" Content="Next" Background="Transparent" BorderThickness="0" BorderBrush="Transparent"  Click="NextButton_Clicked" Margin="0,0,0,24" VerticalAlignment="Bottom" HorizontalAlignment="Center" Visibility="Collapsed" />
 
         <StackPanel Grid.Row="2" Grid.Column="1">
             <TextBlock x:Uid="TutorialBlinkyTitle1" Style="{StaticResource SubheaderTextBlockStyle}" />

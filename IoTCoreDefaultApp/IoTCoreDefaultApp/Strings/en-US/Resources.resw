@@ -554,4 +554,7 @@
     <value>&lt;no Internet connection&gt;</value>
     <comment>Used in the main page under "IP address"</comment>
   </data>
+  <data name="DefaultLanguageTimeout.Text" xml:space="preserve">
+    <value>We're choosing the default language automatically...</value>
+  </data>
 </root>

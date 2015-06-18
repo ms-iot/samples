@@ -77,6 +77,7 @@ namespace IoTCoreDefaultApp
         private void LoadDocument(string docname)
         {
             var resourceMap = Windows.ApplicationModel.Resources.Core.ResourceManager.Current.MainResourceMap;
+            var resourceContext = Windows.ApplicationModel.Resources.Core.ResourceContext.GetForCurrentView();
             var keys = resourceMap.Keys.Where(s => { return s.StartsWith("Resources/Tutorial/" + docname + "/"); }).OrderBy(s => s).ToArray();
 
             TutorialRichText.Blocks.Clear();
@@ -88,7 +89,7 @@ namespace IoTCoreDefaultApp
                     continue;
                 }
                 var blockType = split.Last();
-                var value = resourceMap[key].Resolve().ValueAsString;
+                var value = resourceMap[key].Resolve(resourceContext).ValueAsString;
                 var par = new Paragraph();
                 switch (blockType)
                 {
