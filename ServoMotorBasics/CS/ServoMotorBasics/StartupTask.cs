@@ -17,9 +17,11 @@ namespace ServoMotorBasics
         GpioPin _servoPin;
         GpioPin _forwardButton;
         GpioPin _backgwardButton;
-        
-        
+
+
+        //A pulse of 2ms moves the servo clockwise
         double ForwardPulseWidth = 2;
+        //A pulse of 1ms moves the servo counterclockwise
         double BackwardPulseWidth = 1;
         double PulseFrequency = 20;
 
@@ -86,15 +88,21 @@ namespace ServoMotorBasics
             }
         }
 
+
         private void MotorThread(IAsyncAction action)
         {
+            //This motor thread runs on a high priority task and loops forever to pulse the motor as determined by the drive buttons
             while (true)
             {
+                //If a button is pressed the pulsewidth is changed to cause the motor to spin in the appropriate direction
+                //Write the pin high for the appropriate length of time
                 if (_currentPulseWidth != 0)
                 {
                     _servoPin.Write(GpioPinValue.High);
                 }
+                //Use the wait helper method to wait for the length of the pulse
                 Wait(_currentPulseWidth);
+                //The pulse if over and so set the pin to low and then wait until it's time for the next pulse
                 _servoPin.Write(GpioPinValue.Low);
                 Wait(PulseFrequency - _currentPulseWidth);
             }
