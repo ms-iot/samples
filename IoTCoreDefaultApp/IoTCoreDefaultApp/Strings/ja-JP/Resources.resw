@@ -333,10 +333,6 @@
     <value>最新の情報に更新</value>
     <comment>Refresh button</comment>
   </data>
-  <data name="Tutorial.GetStarted.001.620x400.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetStarted.jpg</value>
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetStarted.002.title" xml:space="preserve">
     <value>作業の開始</value>
   </data>
@@ -394,10 +390,6 @@
   <data name="Tutorial.GetStarted.020.p" xml:space="preserve">
     <value>これは、独自のアプリケーションを構築する際のテンプレートとしてご自由にお使いください</value>
   </data>
-  <data name="Tutorial.GetConnected.001.620x400.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetConnected.jpg</value>
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetConnected.002.title" xml:space="preserve">
     <value>接続</value>
   </data>
@@ -410,6 +402,9 @@
   <data name="Tutorial.GetConnected.005.h1" xml:space="preserve">
     <value>イーサネット</value>
   </data>
+  <data name="Tutorial.GetConnected.006.p" xml:space="preserve">
+    <value>最も簡単で最も確実な接続方法は、イーサネットを使用することです。ボードにイーサネット ケーブルの一方を接続して、もう一方をルーターかネットワーク スイッチに接続してください。</value>
+  </data>
   <data name="Tutorial.GetConnected.007.h1" xml:space="preserve">
     <value>Wi-Fi</value>
   </data>
@@ -418,10 +413,6 @@
   </data>
   <data name="Tutorial.GetConnected.009.p" xml:space="preserve">
     <value>購入したら、接続しましょう!</value>
-  </data>
-  <data name="Tutorial.GetConnected.010.620x350.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetConnected-004.jpg</value>
-    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.011.p" xml:space="preserve">
     <value>画面の右上にあるのは "設定ギア" です。ギアをクリックし、[ネットワークと Wi-Fi] に移動します。そこでは、ローカル ネットワークに接続できます。</value>
@@ -468,14 +459,6 @@
   <data name="Tutorial.GetConnected.026.p" xml:space="preserve">
     <value>問題をデバッグする際に役立つ高度なネットワーク診断機能をメイン ページにいくつか追加しました。サポートが必要な場合は、www.windowsondevices.com にアクセスしてください</value>
   </data>
-  <data name="Tutorial.GetConnected.027.620x400.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetConnected-006.jpg</value>
-    <comment>Please do NOT localize this string</comment>
-  </data>
-  <data name="Tutorial.GetCoding.001.620x400.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetCoding.jpg</value>
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetCoding.002.title" xml:space="preserve">
     <value>コードを取得</value>
   </data>
@@ -518,11 +501,23 @@
   <data name="Tutorial.GetCoding.016.ul" xml:space="preserve">
     <value>これで、アプリを開発する準備が整いました。ログオンすると、Windows IoT Core Watcher アプリケーションが自動的に起動します。このアプリケーションを使用して、アプリの展開先として使用できる Windows 10 IoT Core デバイスを検索できます。</value>
   </data>
-  <data name="Tutorial.GetCoding.017.600x360.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetCoding-003.png</value>
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetCoding.018.p" xml:space="preserve">
     <value>ネットワーク上でデバイスが見つかったら、www.windowsondevices.com にアクセスし、サンプル コードをダウンロードして、実行してみてください。</value>
+  </data>
+  <data name="NetworkConnectivityLevel_ConstrainedInternetAccess" xml:space="preserve">
+    <value>制限付きインターネット アクセス</value>
+  </data>
+  <data name="NetworkConnectivityLevel_InternetAccess" xml:space="preserve">
+    <value>ローカルとインターネット アクセス</value>
+  </data>
+  <data name="NetworkConnectivityLevel_LocalAccess" xml:space="preserve">
+    <value>ローカル ネットワーク アクセスのみ</value>
+  </data>
+  <data name="NetworkConnectivityLevel_None" xml:space="preserve">
+    <value>接続がありません</value>
+  </data>
+  <data name="NoInternetConnection" xml:space="preserve">
+    <value>&lt;インターネット接続がありません&gt;</value>
+    <comment>Used in the main page under "IP address"</comment>
   </data>
 </root>

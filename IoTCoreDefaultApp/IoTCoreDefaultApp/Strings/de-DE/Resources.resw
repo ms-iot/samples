@@ -234,7 +234,8 @@
     <value>Geräteinfo</value>
   </data>
   <data name="Tutorials.Text" xml:space="preserve">
-    <value>Lernprogramme</value>
+    <value>Lern-
+programme</value>
     <comment>Text under the Tutorials button on the top bar</comment>
   </data>
   <data name="ConnectedDevices.Text" xml:space="preserve">
@@ -333,10 +334,6 @@
     <value>Aktualisieren</value>
     <comment>Refresh button</comment>
   </data>
-  <data name="Tutorial.GetStarted.001.620x400.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetStarted.jpg</value>
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetStarted.002.title" xml:space="preserve">
     <value>Erste Schritte</value>
   </data>
@@ -394,10 +391,6 @@
   <data name="Tutorial.GetStarted.020.p" xml:space="preserve">
     <value>Verwenden Sie dieses Beispiel als Ausgangsbasis für die Entwicklung einer eigenen Anwendung.</value>
   </data>
-  <data name="Tutorial.GetConnected.001.620x400.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetConnected.jpg</value>
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetConnected.002.title" xml:space="preserve">
     <value>Verbindung herstellen</value>
   </data>
@@ -410,6 +403,9 @@
   <data name="Tutorial.GetConnected.005.h1" xml:space="preserve">
     <value>Ethernet</value>
   </data>
+  <data name="Tutorial.GetConnected.006.p" xml:space="preserve">
+    <value>Die einfachste und zuverlässigste Verbindungsmethode ist Ethernet. Schließen Sie ein Ethernet-Kabel an Ihr Board an, und verbinden Sie es mit Ihrem Router oder Netzwerkswitch.</value>
+  </data>
   <data name="Tutorial.GetConnected.007.h1" xml:space="preserve">
     <value>WLAN</value>
   </data>
@@ -418,10 +414,6 @@
   </data>
   <data name="Tutorial.GetConnected.009.p" xml:space="preserve">
     <value>Sie haben einen? Wunderbar, schließen Sie ihn an!</value>
-  </data>
-  <data name="Tutorial.GetConnected.010.620x350.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetConnected-004.jpg</value>
-    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.011.p" xml:space="preserve">
     <value>In der oberen rechten Ecke Ihres Bildschirms befindet sich ein Zahnrad-Symbol. Klicken Sie auf dieses Symbol, und navigieren Sie zu „Netzwerk und WLAN“. Hier können Sie eine Verbindung mit Ihrem lokalen Netzwerk herstellen.</value>
@@ -471,14 +463,6 @@
   <data name="Tutorial.GetConnected.026.p" xml:space="preserve">
     <value>Wir haben einige erweiterte Netzwerkdiagnose-Funktionen auf der Hauptseite hinzugefügt, um Ihnen das Debuggen von Problemen zu erleichtern. Weitere Unterstützung erhalten Sie unter „www.windowsondevices.com“.</value>
   </data>
-  <data name="Tutorial.GetConnected.027.620x400.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetConnected-006.jpg</value>
-    <comment>Please do NOT localize this string</comment>
-  </data>
-  <data name="Tutorial.GetCoding.001.620x400.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetCoding.jpg</value>
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetCoding.002.title" xml:space="preserve">
     <value>Einstieg in die Programmierung</value>
   </data>
@@ -524,11 +508,23 @@
   <data name="Tutorial.GetCoding.016.ul" xml:space="preserve">
     <value>Sie sind jetzt bereit für die App-Entwicklung. Sobald Sie sich anmelden, wird die Windows IoT Core Watcher-Anwendung automatisch gestartet. Mit ihr können Sie verfügbare Windows 10 IoT Core-Geräte suchen, auf denen die Apps bereitgestellt werden.</value>
   </data>
-  <data name="Tutorial.GetCoding.017.600x360.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetCoding-003.png</value>
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetCoding.018.p" xml:space="preserve">
     <value>Nachdem Sie Ihr Gerät im Netzwerk gefunden haben, besuchen Sie „www.windowsondevices.com“, um Beispielcode zum Testen und Ausführen herunterzuladen!</value>
+  </data>
+  <data name="NetworkConnectivityLevel_ConstrainedInternetAccess" xml:space="preserve">
+    <value>Eingeschränkter Internetzugriff</value>
+  </data>
+  <data name="NetworkConnectivityLevel_InternetAccess" xml:space="preserve">
+    <value>Lokaler und Internetzugriff</value>
+  </data>
+  <data name="NetworkConnectivityLevel_LocalAccess" xml:space="preserve">
+    <value>Nur lokaler Netzwerkzugriff</value>
+  </data>
+  <data name="NetworkConnectivityLevel_None" xml:space="preserve">
+    <value>Keine Konnektivität</value>
+  </data>
+  <data name="NoInternetConnection" xml:space="preserve">
+    <value>&lt;keine Internetverbindung&gt;</value>
+    <comment>Used in the main page under "IP address"</comment>
   </data>
 </root>
