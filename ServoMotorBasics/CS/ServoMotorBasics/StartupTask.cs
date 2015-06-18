@@ -28,8 +28,8 @@ namespace ServoMotorBasics
         double BackwardPulseWidth = 1;
         double PulseFrequency = 20;
 
-        double _currentPulseWidth;
-        Stopwatch _stopwatch;
+        double currentPulseWidth;
+        Stopwatch stopwatch;
         
 
         public void Run(IBackgroundTaskInstance taskInstance)
@@ -37,10 +37,10 @@ namespace ServoMotorBasics
             deferral = taskInstance.GetDeferral();
 
             //Motor starts off
-            _currentPulseWidth = 0;
+            currentPulseWidth = 0;
 
             //The stopwatch will be used to precisely time calls to pulse the motor.
-            _stopwatch = Stopwatch.StartNew();
+            stopwatch = Stopwatch.StartNew();
 
             GpioController controller = GpioController.GetDefault();
 
@@ -71,10 +71,10 @@ namespace ServoMotorBasics
         {
             if (backwardButton.Read() == GpioPinValue.Low) 
             {
-                _currentPulseWidth = BackwardPulseWidth;
+                currentPulseWidth = BackwardPulseWidth;
             }else
             {
-                _currentPulseWidth = 0;
+                currentPulseWidth = 0;
             }
             
         }
@@ -83,11 +83,11 @@ namespace ServoMotorBasics
         {
             if (forwardButton.Read() == GpioPinValue.Low)
             {
-                _currentPulseWidth = ForwardPulseWidth;
+                currentPulseWidth = ForwardPulseWidth;
             }
             else
             {
-                _currentPulseWidth = 0;
+                currentPulseWidth = 0;
             }
         }
 
@@ -99,15 +99,15 @@ namespace ServoMotorBasics
             {
                 //If a button is pressed the pulsewidth is changed to cause the motor to spin in the appropriate direction
                 //Write the pin high for the appropriate length of time
-                if (_currentPulseWidth != 0)
+                if (currentPulseWidth != 0)
                 {
                     servoPin.Write(GpioPinValue.High);
                 }
                 //Use the wait helper method to wait for the length of the pulse
-                Wait(_currentPulseWidth);
+                Wait(currentPulseWidth);
                 //The pulse if over and so set the pin to low and then wait until it's time for the next pulse
                 servoPin.Write(GpioPinValue.Low);
-                Wait(PulseFrequency - _currentPulseWidth);
+                Wait(PulseFrequency - currentPulseWidth);
             }
         }
 
@@ -117,11 +117,11 @@ namespace ServoMotorBasics
         //in a loop until that threshold is hit. This allows for very precise timing.
         private void Wait(double milliseconds)
         {
-            long initialTick = _stopwatch.ElapsedTicks;
-            long initialElapsed = _stopwatch.ElapsedMilliseconds;
+            long initialTick = stopwatch.ElapsedTicks;
+            long initialElapsed = stopwatch.ElapsedMilliseconds;
             double desiredTicks = milliseconds / 1000.0 * Stopwatch.Frequency;
             double finalTick = initialTick + desiredTicks;
-            while (_stopwatch.ElapsedTicks < finalTick)
+            while (stopwatch.ElapsedTicks < finalTick)
             {
 
             }
