@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft. All rights reserved.
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,10 +16,10 @@ namespace ServoMotorBasics
 {
     public sealed class StartupTask : IBackgroundTask
     {
-        BackgroundTaskDeferral _deferral;
-        GpioPin _servoPin;
-        GpioPin _forwardButton;
-        GpioPin _backgwardButton;
+        BackgroundTaskDeferral deferral;
+        GpioPin servoPin;
+        GpioPin forwardButton;
+        GpioPin backgwardButton;
 
 
         //A pulse of 2ms moves the servo clockwise
@@ -31,7 +34,7 @@ namespace ServoMotorBasics
 
         public void Run(IBackgroundTaskInstance taskInstance)
         {
-            _deferral = taskInstance.GetDeferral();
+            deferral = taskInstance.GetDeferral();
 
             //Motor starts off
             _currentPulseWidth = 0;
@@ -43,19 +46,19 @@ namespace ServoMotorBasics
 
             //Buttons are attached to pins 5 and 6 to control which direction the motor should run in
             //Interrupts (ValueChanged) events are used to notify this app when the buttons are pressed
-            _forwardButton = controller.OpenPin(5);
-            _forwardButton.DebounceTimeout = new TimeSpan(0, 0, 0, 0, 250);
-            _forwardButton.SetDriveMode(GpioPinDriveMode.Input);
-            _forwardButton.ValueChanged += _forwardButton_ValueChanged;
+            forwardButton = controller.OpenPin(5);
+            forwardButton.DebounceTimeout = new TimeSpan(0, 0, 0, 0, 250);
+            forwardButton.SetDriveMode(GpioPinDriveMode.Input);
+            forwardButton.ValueChanged += _forwardButton_ValueChanged;
 
-            _backgwardButton = controller.OpenPin(6);
-            _backgwardButton.SetDriveMode(GpioPinDriveMode.Input);
-            _forwardButton.DebounceTimeout = new TimeSpan(0, 0, 0, 0, 250);
-            _backgwardButton.ValueChanged += _backgwardButton_ValueChanged;
+            backgwardButton = controller.OpenPin(6);
+            backgwardButton.SetDriveMode(GpioPinDriveMode.Input);
+            forwardButton.DebounceTimeout = new TimeSpan(0, 0, 0, 0, 250);
+            backgwardButton.ValueChanged += _backgwardButton_ValueChanged;
 
 
-            _servoPin = controller.OpenPin(13);
-            _servoPin.SetDriveMode(GpioPinDriveMode.Output);
+            servoPin = controller.OpenPin(13);
+            servoPin.SetDriveMode(GpioPinDriveMode.Output);
 
             
            
@@ -66,7 +69,7 @@ namespace ServoMotorBasics
 
         private void _backgwardButton_ValueChanged(GpioPin sender, GpioPinValueChangedEventArgs args)
         {
-            if (_backgwardButton.Read() == GpioPinValue.Low) 
+            if (backgwardButton.Read() == GpioPinValue.Low) 
             {
                 _currentPulseWidth = BackwardPulseWidth;
             }else
@@ -78,7 +81,7 @@ namespace ServoMotorBasics
 
         private void _forwardButton_ValueChanged(GpioPin sender, GpioPinValueChangedEventArgs args)
         {
-            if (_forwardButton.Read() == GpioPinValue.Low)
+            if (forwardButton.Read() == GpioPinValue.Low)
             {
                 _currentPulseWidth = ForwardPulseWidth;
             }
@@ -98,12 +101,12 @@ namespace ServoMotorBasics
                 //Write the pin high for the appropriate length of time
                 if (_currentPulseWidth != 0)
                 {
-                    _servoPin.Write(GpioPinValue.High);
+                    servoPin.Write(GpioPinValue.High);
                 }
                 //Use the wait helper method to wait for the length of the pulse
                 Wait(_currentPulseWidth);
                 //The pulse if over and so set the pin to low and then wait until it's time for the next pulse
-                _servoPin.Write(GpioPinValue.Low);
+                servoPin.Write(GpioPinValue.Low);
                 Wait(PulseFrequency - _currentPulseWidth);
             }
         }
