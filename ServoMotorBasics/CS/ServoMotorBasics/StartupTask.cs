@@ -19,7 +19,7 @@ namespace ServoMotorBasics
         BackgroundTaskDeferral deferral;
         GpioPin servoPin;
         GpioPin forwardButton;
-        GpioPin backgwardButton;
+        GpioPin backwardButton;
 
 
         //A pulse of 2ms moves the servo clockwise
@@ -51,10 +51,10 @@ namespace ServoMotorBasics
             forwardButton.SetDriveMode(GpioPinDriveMode.Input);
             forwardButton.ValueChanged += _forwardButton_ValueChanged;
 
-            backgwardButton = controller.OpenPin(6);
-            backgwardButton.SetDriveMode(GpioPinDriveMode.Input);
+            backwardButton = controller.OpenPin(6);
+            backwardButton.SetDriveMode(GpioPinDriveMode.Input);
             forwardButton.DebounceTimeout = new TimeSpan(0, 0, 0, 0, 250);
-            backgwardButton.ValueChanged += _backgwardButton_ValueChanged;
+            backwardButton.ValueChanged += _backgwardButton_ValueChanged;
 
 
             servoPin = controller.OpenPin(13);
@@ -69,7 +69,7 @@ namespace ServoMotorBasics
 
         private void _backgwardButton_ValueChanged(GpioPin sender, GpioPinValueChangedEventArgs args)
         {
-            if (backgwardButton.Read() == GpioPinValue.Low) 
+            if (backwardButton.Read() == GpioPinValue.Low) 
             {
                 _currentPulseWidth = BackwardPulseWidth;
             }else
