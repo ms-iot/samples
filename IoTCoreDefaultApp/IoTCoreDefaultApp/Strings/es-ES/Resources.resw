@@ -333,10 +333,6 @@
     <value>Actualizar</value>
     <comment>Refresh button</comment>
   </data>
-  <data name="Tutorial.GetStarted.001.620x400.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetStarted.jpg</value>
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetStarted.002.title" xml:space="preserve">
     <value>Introducción</value>
   </data>
@@ -394,10 +390,6 @@
   <data name="Tutorial.GetStarted.020.p" xml:space="preserve">
     <value>No dudes en usar esto como plantilla para comenzar a la hora de crear tu propia aplicación</value>
   </data>
-  <data name="Tutorial.GetConnected.001.620x400.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetConnected.jpg</value>
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetConnected.002.title" xml:space="preserve">
     <value>Conéctate</value>
   </data>
@@ -410,6 +402,9 @@
   <data name="Tutorial.GetConnected.005.h1" xml:space="preserve">
     <value>Ethernet</value>
   </data>
+  <data name="Tutorial.GetConnected.006.p" xml:space="preserve">
+    <value>La manera más fácil y confiable de conectarse es a través de una conexión Ethernet. Conecta un cable Ethernet a la placa y al enrutador o conmutador de red.</value>
+  </data>
   <data name="Tutorial.GetConnected.007.h1" xml:space="preserve">
     <value>Wi-Fi</value>
   </data>
@@ -418,10 +413,6 @@
   </data>
   <data name="Tutorial.GetConnected.009.p" xml:space="preserve">
     <value>¿Conseguiste uno? ¡Estupendo! Conéctalo ahora.</value>
-  </data>
-  <data name="Tutorial.GetConnected.010.620x350.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetConnected-004.jpg</value>
-    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.011.p" xml:space="preserve">
     <value>En la esquina superior derecha de la pantalla hay un "engranaje de configuración". Haz clic en él y ve a Redes y Wi-Fi. Aquí puedes conectarte a tu red local.</value>
@@ -471,14 +462,6 @@
   <data name="Tutorial.GetConnected.026.p" xml:space="preserve">
     <value>Hemos agregado algunos diagnósticos de red avanzados a la página principal para ayudarte a depurar los problemas. Para conseguir más soporte técnico, visita www.windowsondevices.com</value>
   </data>
-  <data name="Tutorial.GetConnected.027.620x400.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetConnected-006.jpg</value>
-    <comment>Please do NOT localize this string</comment>
-  </data>
-  <data name="Tutorial.GetCoding.001.620x400.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetCoding.jpg</value>
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetCoding.002.title" xml:space="preserve">
     <value>Obtén la codificación</value>
   </data>
@@ -524,11 +507,23 @@
   <data name="Tutorial.GetCoding.016.ul" xml:space="preserve">
     <value>Llegado a este punto, estás listo para desarrollar aplicaciones. Observa que la aplicación Windows IoT Core Watcher se inicia automáticamente cuando inicias sesión y se puede usar para buscar dispositivos Windows 10 IoT Core disponibles en los que implementar aplicaciones.</value>
   </data>
-  <data name="Tutorial.GetCoding.017.600x360.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetCoding-003.png</value>
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetCoding.018.p" xml:space="preserve">
     <value>Cuando encuentres tu dispositivo en la red, visita www.windowsondevices.com para descargar código de ejemplo que puedes probar y ejecutar.</value>
+  </data>
+  <data name="NetworkConnectivityLevel_ConstrainedInternetAccess" xml:space="preserve">
+    <value>Acceso a Internet limitado</value>
+  </data>
+  <data name="NetworkConnectivityLevel_InternetAccess" xml:space="preserve">
+    <value>Acceso local y a Internet</value>
+  </data>
+  <data name="NetworkConnectivityLevel_LocalAccess" xml:space="preserve">
+    <value>Solo acceso de red local</value>
+  </data>
+  <data name="NetworkConnectivityLevel_None" xml:space="preserve">
+    <value>Sin conectividad</value>
+  </data>
+  <data name="NoInternetConnection" xml:space="preserve">
+    <value>&lt;sin conexión a Internet&gt;</value>
+    <comment>Used in the main page under "IP address"</comment>
   </data>
 </root>

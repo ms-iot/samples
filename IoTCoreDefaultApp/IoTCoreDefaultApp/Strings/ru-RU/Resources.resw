@@ -122,7 +122,7 @@
     <comment>The Operating System Name</comment>
   </data>
   <data name="GenericBoardName" xml:space="preserve">
-    <value>Плата IoT Базовой</value>
+    <value>Плата IoTCore</value>
     <comment>A generic board name</comment>
   </data>
   <data name="MainPageDeviceName.Text" xml:space="preserve">
@@ -333,10 +333,6 @@
     <value>Обновить</value>
     <comment>Refresh button</comment>
   </data>
-  <data name="Tutorial.GetStarted.001.620x400.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetStarted.jpg</value>
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetStarted.002.title" xml:space="preserve">
     <value>Начало работы</value>
   </data>
@@ -394,10 +390,6 @@
   <data name="Tutorial.GetStarted.020.p" xml:space="preserve">
     <value>Смело используйте все это как шаблон, чтобы приступить к созданию собственного приложения</value>
   </data>
-  <data name="Tutorial.GetConnected.001.620x400.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetConnected.jpg</value>
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetConnected.002.title" xml:space="preserve">
     <value>Подключение</value>
   </data>
@@ -410,6 +402,9 @@
   <data name="Tutorial.GetConnected.005.h1" xml:space="preserve">
     <value>Ethernet</value>
   </data>
+  <data name="Tutorial.GetConnected.006.p" xml:space="preserve">
+    <value>Самый простой и надежный способ подключения — использовать кабель Ethernet. Вставьте его в свою плату и подключите к роутеру или сетевому концентратору.</value>
+  </data>
   <data name="Tutorial.GetConnected.007.h1" xml:space="preserve">
     <value>Wi-Fi</value>
   </data>
@@ -418,10 +413,6 @@
   </data>
   <data name="Tutorial.GetConnected.009.p" xml:space="preserve">
     <value>У вас уже есть адаптер? Отлично, тогда подключите его!</value>
-  </data>
-  <data name="Tutorial.GetConnected.010.620x350.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetConnected-004.jpg</value>
-    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.011.p" xml:space="preserve">
     <value>В верхнем правом углу экрана находится значок шестеренки, с помощью которого можно открыть настройки. Щелкните его и выберите раздел "Сеть и Wi-Fi". В нем можно подключиться к локальной сети.</value>
@@ -468,14 +459,6 @@
   <data name="Tutorial.GetConnected.026.p" xml:space="preserve">
     <value>Мы добавили на главную страницу расширенные средства сетевой диагностики, чтобы вы могли отладить ошибки. Дополнительную поддержку можно получить на сайте www.windowsondevices.com</value>
   </data>
-  <data name="Tutorial.GetConnected.027.620x400.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetConnected-006.jpg</value>
-    <comment>Please do NOT localize this string</comment>
-  </data>
-  <data name="Tutorial.GetCoding.001.620x400.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetCoding.jpg</value>
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetCoding.002.title" xml:space="preserve">
     <value>Кодирование</value>
   </data>
@@ -521,11 +504,23 @@
   <data name="Tutorial.GetCoding.016.ul" xml:space="preserve">
     <value>После установки всех необходимых средств вы будете готовы к разработке приложений. Обратите внимание, что приложение Windows IoT Core Watcher запускается автоматически при входе в систему. С помощью него можно находить доступные устройства с Windows 10 IoT Базовой, на которых можно развертывать приложения.</value>
   </data>
-  <data name="Tutorial.GetCoding.017.600x360.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetCoding-003.png</value>
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetCoding.018.p" xml:space="preserve">
     <value>Когда устройство подключиться к сети, скачайте с сайта www.windowsondevices.com пример кода, чтобы ознакомиться с ним и запустить его!</value>
+  </data>
+  <data name="NetworkConnectivityLevel_ConstrainedInternetAccess" xml:space="preserve">
+    <value>Ограниченный доступ к Интернету</value>
+  </data>
+  <data name="NetworkConnectivityLevel_InternetAccess" xml:space="preserve">
+    <value>Локальная сеть и Интернет</value>
+  </data>
+  <data name="NetworkConnectivityLevel_LocalAccess" xml:space="preserve">
+    <value>Только локальная сеть</value>
+  </data>
+  <data name="NetworkConnectivityLevel_None" xml:space="preserve">
+    <value>Отсутствует подключение</value>
+  </data>
+  <data name="NoInternetConnection" xml:space="preserve">
+    <value>&lt;отсутствует подключение к Интернету&gt;</value>
+    <comment>Used in the main page under "IP address"</comment>
   </data>
 </root>
