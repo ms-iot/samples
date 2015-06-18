@@ -92,11 +92,13 @@ namespace IoTCoreDefaultApp
                 // configuring the new page by passing required information as a navigation
                 // parameter
 
+#if !FORCE_OOBE_WELCOME_SCREEN
                 if (ApplicationData.Current.LocalSettings.Values.ContainsKey(Constants.HasDoneOOBEKey))
                 {
                     rootFrame.Navigate(typeof(MainPage), e.Arguments);
                 }
                 else
+#endif
                 {
                     rootFrame.Navigate(typeof(OOBEWelcome), e.Arguments);
                 }

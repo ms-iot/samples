@@ -179,7 +179,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="1" Grid.Row="1" x:Uid="LanguageTitle" Text="Language" Style="{StaticResource SubtitleTextBlockStyle}" FontWeight="Normal" />
-            <ListBox Grid.Column="1" Grid.Row="2" x:Name="LanguageListBox" FontSize="16" Margin="0,10,0,0" SelectionChanged="LanguageListBox_SelectionChanged" />
+            <ListBox Grid.Column="1" Grid.Row="2" x:Name="LanguageListBox" FontSize="16" Margin="0,10,0,0" Width="446" SelectionChanged="LanguageListBox_SelectionChanged" />
         </Grid>
 
         <Grid x:Name="NetworkGrid" Grid.Column="2" Grid.Row="1" Visibility="Collapsed">
