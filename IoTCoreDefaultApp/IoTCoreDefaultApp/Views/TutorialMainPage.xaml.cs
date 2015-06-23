@@ -52,7 +52,9 @@ namespace IoTCoreDefaultApp
         public TutorialMainPage()
         {
             this.InitializeComponent();
-#if !RPI
+#if RPI || ALWAYS_SHOW_BLINKY
+            // nothing to remove
+#else
             TutorialList.Items.Remove(HelloBlinkyGridViewItem);
 #endif
 

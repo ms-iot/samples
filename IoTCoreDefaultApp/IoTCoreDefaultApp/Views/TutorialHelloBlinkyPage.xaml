@@ -83,7 +83,7 @@
 
             <Button Grid.Column="4" x:Name="SettingsButton" Style="{StaticResource ShutdownButtonStyle}" Content="{StaticResource IconSettings}" FontFamily="{StaticResource IconFontFamily}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Click="SettingsButton_Clicked" Background="Transparent" BorderThickness="0" Height="48" Width="48"/>
 
-            <Button IsEnabled="False" Grid.Column="6" x:Name="ShutdownButton" Style="{StaticResource ShutdownButtonStyle}" Content="{StaticResource IconShutdown}" FontFamily="{StaticResource IconFontFamily}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Click="ShutdownButton_Clicked" Background="Transparent" BorderThickness="0" Height="48" Width="48"/>
+            <Button Grid.Column="6" x:Name="ShutdownButton" Style="{StaticResource ShutdownButtonStyle}" Content="{StaticResource IconShutdown}" FontFamily="{StaticResource IconFontFamily}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Click="ShutdownButton_Clicked" Background="Transparent" BorderThickness="0" Height="48" Width="48"/>
 
             <Popup Grid.Column="6" x:Name="ShutdownDropdown" HorizontalAlignment="Left" IsLightDismissEnabled="True" VerticalOffset="72" Opened="ShutdownDropdown_Opened">
                 <ListView x:Name="ShutdownListView" Background="White" ItemContainerStyle="{StaticResource IoTCoreDefaultAppShutdownListViewItemStyle}" BorderThickness="2.0" BorderBrush="{StaticResource ShutdownBorderBrush}" ItemClick="ShutdownListView_ItemClick" IsItemClickEnabled="True" IsTabStop="True" >
@@ -120,7 +120,7 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="0.1*" />
                 </Grid.ColumnDefinitions>
-                <Button x:Name="BlinkyStartStop" Grid.Row="1" Grid.Column="1" Content="START" FontSize="45.333" Foreground="Red" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" BorderBrush="#2a2a2a" HorizontalAlignment="Stretch" Click="BlinkyStartStop_Click"/>
+                <Button x:Name="BlinkyStartStop" Grid.Row="1" Grid.Column="1" FontSize="45.333" Foreground="Red" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" BorderBrush="#2a2a2a" HorizontalAlignment="Stretch" Click="BlinkyStartStop_Click"/>
                 <StackPanel Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Ellipse x:Name="LED" Fill="LightGray" Stroke="White" Width="100" Height="100" Margin="10"/>
                     <TextBlock x:Name="DelayText" Text="500ms" Margin="10" TextAlignment="Center" FontSize="26.667" />

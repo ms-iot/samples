@@ -43,6 +43,8 @@
   </Applications>
 
   <Capabilities>
+    <!--<Capability Name="iot:systemManagement" />-->
+    <!--<Capability Name="iot:lowLevelDevices" />-->
     <Capability Name="internetClient" />
     <Capability Name="allJoyn"/>
     <DeviceCapability Name="wiFiControl" />
