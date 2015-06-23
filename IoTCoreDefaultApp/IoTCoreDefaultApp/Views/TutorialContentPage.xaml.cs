@@ -95,24 +95,50 @@ namespace IoTCoreDefaultApp
                 {
                     case "title":
                         par.FontSize = 28;
+                        par.Margin = new Thickness(top: 0, left: 0, right: 0, bottom: 5);
                         par.Inlines.Add(new Run { Text = value });
                         break;
                     case "subtitle":
                         par.FontSize = 11;
+                        par.Margin = new Thickness(top: 0, left: 0, right: 0, bottom: 5);
                         par.Inlines.Add(new Run { Text = value });
                         break;
                     case "h1":
                         par.FontSize = 16;
+                        par.Margin = new Thickness(top: 10, left: 0, right: 0, bottom: 10);
                         par.Inlines.Add(new Run { Text = value });
                         break;
                     case "p":
                         par.FontSize = 11;
+                        par.Margin = new Thickness(top: 0, left: 0, right: 0, bottom: 4);
                         par.Inlines.Add(new Run { Text = value });
                         break;
                     case "ul":
                         par.FontSize = 11;
+                        par.Margin = new Thickness(top: 0, left: 0, right: 0, bottom: 4);
                         value = "\u27a4 " + value;
                         par.Inlines.Add(new Run { Text = value });
+                        break;
+                    case "br":
+                        try
+                        {
+                            double fontSize = 11;
+                            double bottomMarging = 4;
+                            var size = split[split.Length - 2];
+                            if (size.Contains('x'))
+                            {
+                                var sizeSplit = size.Split('x');
+                                fontSize = int.Parse(sizeSplit[0]);
+                                bottomMarging = int.Parse(sizeSplit[1]);
+                            }
+                            par.FontSize = fontSize;
+                            par.Margin = new Thickness(top: 0, left: 0, right: 0, bottom: bottomMarging);
+                            par.Inlines.Add(new Run { Text = value });
+                        }
+                        catch (Exception)
+                        {
+                            // just ignore this entry if anything goes wrong...
+                        }
                         break;
                     case "image":
                         try
@@ -130,6 +156,7 @@ namespace IoTCoreDefaultApp
                             {
                                 par.Inlines.Add(new InlineUIContainer { Child = new Image { Source = imageSource } });
                             }
+                            par.Margin = new Thickness(top: 6, left: 0, right: 0, bottom: 10);
                         }
                         catch (Exception)
                         {

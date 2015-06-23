@@ -53,6 +53,7 @@ namespace IoTCoreDefaultApp
         private SolidColorBrush redBrush = new SolidColorBrush(Windows.UI.Colors.Red);
         private SolidColorBrush grayBrush = new SolidColorBrush(Windows.UI.Colors.LightGray);
         private string docName;
+        private Windows.ApplicationModel.Resources.ResourceLoader loader;
 
         public TutorialHelloBlinkyPage()
         {
@@ -72,6 +73,9 @@ namespace IoTCoreDefaultApp
             blinkyTimer = new DispatcherTimer();
             blinkyTimer.Interval = TimeSpan.FromMilliseconds(500);
             blinkyTimer.Tick += Timer_Tick;
+
+            loader = new Windows.ApplicationModel.Resources.ResourceLoader();
+            BlinkyStartStop.Content = loader.GetString("BlinkyStart");
         }
 
         private void RootFrame_Navigated(object sender, NavigationEventArgs e)
@@ -157,13 +161,21 @@ namespace IoTCoreDefaultApp
 
         private void Start()
         {
-            var gpio = GpioController.GetDefault();
+            GpioController gpio = null;
+            try
+            {
+                gpio = GpioController.GetDefault();
+            }
+            catch (Exception)
+            {
+                // the error will be handled below
+            }
 
             // Show an error if there is no GPIO controller
             if (gpio == null)
             {
                 pin = null;
-                GpioStatus.Text = "There is no GPIO controller on this device.";
+                GpioStatus.Text = loader.GetString("NoGPIOController");
                 return;
             }
 
@@ -172,17 +184,17 @@ namespace IoTCoreDefaultApp
             // Show an error if the pin wasn't initialized properly
             if (pin == null)
             {
-                GpioStatus.Text = "There were problems initializing the GPIO pin.";
+                GpioStatus.Text = loader.GetString("ProblemsInitializingGPIOPin");
                 return;
             }
 
             pin.Write(GpioPinValue.High);
             pin.SetDriveMode(GpioPinDriveMode.Output);
 
-            GpioStatus.Text = "GPIO pin initialized correctly.";
+            GpioStatus.Text = loader.GetString("GPIOPinInitializedCorrectly");
 
             blinkyTimer.Start();
-            BlinkyStartStop.Content = "STOP";
+            BlinkyStartStop.Content = loader.GetString("BlinkyStop");
         }
 
         private void Stop()
@@ -194,7 +206,7 @@ namespace IoTCoreDefaultApp
                 pin.Dispose();
                 pin = null;
             }
-            BlinkyStartStop.Content = "START";
+            BlinkyStartStop.Content = loader.GetString("BlinkyStart");
         }
 
         private void FlipLED()
@@ -240,7 +252,7 @@ namespace IoTCoreDefaultApp
             }
             if (e.NewValue == Delay.Minimum)
             {
-                DelayText.Text = "Stopped";
+                DelayText.Text = loader.GetString("BlinkyStopped");
                 blinkyTimer.Stop();
                 TurnOffLED();
             }

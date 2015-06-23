@@ -214,7 +214,7 @@
                             <Button Grid.Column="2" x:Name="RefreshButton" x:Uid="Refresh" Content="Refresh" Click="RefreshButton_Click" />
                         </Grid>
                         <ListView x:Name="WifiListView" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionMode="Single" Width="446" ItemTemplate="{StaticResource WifiInitialState}" SelectionChanged="WifiListView_SelectionChanged" ItemContainerStyle="{StaticResource WifiListViewItemStyle}"/>
-                        <TextBlock x:Uid="NoNetworks" x:Name="NoWifiFoundText" Text="None found" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed"/>
+                        <TextBlock x:Uid="NoNetworks" x:Name="NoWifiFoundText" Text="None found" Width="446" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed"/>
                     </StackPanel>
                 </ScrollViewer>
             </StackPanel>

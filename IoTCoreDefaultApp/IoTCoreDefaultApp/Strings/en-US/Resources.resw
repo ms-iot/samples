@@ -380,6 +380,10 @@
   <data name="Tutorial.GetStarted.014.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
+  <data name="Tutorial.GetStarted.014a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetStarted.015.p" xml:space="preserve">
     <value>Click on the “Get Coding” tutorial for more information</value>
   </data>
@@ -397,6 +401,10 @@
   </data>
   <data name="Tutorial.GetStarted.020.p" xml:space="preserve">
     <value>Feel free to use this as a template to get started when building your own application</value>
+  </data>
+  <data name="Tutorial.GetStarted.021.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.001.620x400.image" xml:space="preserve">
     <value>Assets/Tutorials/GetConnected.jpg</value>
@@ -445,6 +453,10 @@
   <data name="Tutorial.GetConnected.015.ul" xml:space="preserve">
     <value>An Ethernet cable to link your development machine to your IoT Core device.</value>
   </data>
+  <data name="Tutorial.GetConnected.015a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.016.p" xml:space="preserve">
     <value>Follow the instructions below to enable Internet Connection Sharing (ICS) on your PC</value>
   </data>
@@ -463,6 +475,10 @@
   <data name="Tutorial.GetConnected.021.ul" xml:space="preserve">
     <value>Click the 'Sharing' tab, and select the 'Allow other network users to connect through this computer’s Internet connection' box.</value>
   </data>
+  <data name="Tutorial.GetConnected.021a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.022.p" xml:space="preserve">
     <value>After you have enabled ICS on your PC, you can now connect your Windows 10 IoT Core device directly to your PC. You can do it by plugging in one end of the spare Ethernet cable to the extra Ethernet port on your PC, and the other end of the cable to the Ethernet port on your IoT Core device.</value>
   </data>
@@ -472,6 +488,10 @@
   <data name="Tutorial.GetConnected.024.ul" xml:space="preserve">
     <value>The 'Sharing' tab won’t be available if you have only one network connection.</value>
   </data>
+  <data name="Tutorial.GetConnected.024a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.025.h1" xml:space="preserve">
     <value>Having Troubles?</value>
   </data>
@@ -480,6 +500,10 @@
   </data>
   <data name="Tutorial.GetConnected.027.620x400.image" xml:space="preserve">
     <value>Assets/Tutorials/GetConnected-006.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetConnected.028.br" xml:space="preserve">
+    <value />
     <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetCoding.001.620x400.image" xml:space="preserve">
@@ -510,6 +534,10 @@
   <data name="Tutorial.GetCoding.009.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
+  <data name="Tutorial.GetCoding.009a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetCoding.010.h1" xml:space="preserve">
     <value>Setting up Visual Studio 2015 on your PC</value>
   </data>
@@ -531,12 +559,20 @@
   <data name="Tutorial.GetCoding.016.ul" xml:space="preserve">
     <value>At this point, you are ready to develop apps. Notice that the Windows IoT Core Watcher application automatically starts when you log on. It can be used to find available Windows 10 IoT Core devices to deploy apps to.</value>
   </data>
+  <data name="Tutorial.GetCoding.016a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetCoding.017.600x360.image" xml:space="preserve">
     <value>Assets/Tutorials/GetCoding-003.png</value>
     <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetCoding.018.p" xml:space="preserve">
     <value>Once you find your device on the network, visit www.windowsondevices.com to download some sample code to try and run!</value>
+  </data>
+  <data name="Tutorial.GetCoding.019.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="NetworkConnectivityLevel_ConstrainedInternetAccess" xml:space="preserve">
     <value>Limited Internet access</value>
@@ -556,5 +592,24 @@
   </data>
   <data name="DefaultLanguageTimeout.Text" xml:space="preserve">
     <value>We're choosing the default language automatically...</value>
+  </data>
+  <data name="BlinkyStart" xml:space="preserve">
+    <value>START</value>
+  </data>
+  <data name="BlinkyStop" xml:space="preserve">
+    <value>STOP</value>
+  </data>
+  <data name="BlinkyStopped" xml:space="preserve">
+    <value>Stopped</value>
+    <comment>This message is shown when the user turn off the slider to make the LED blink</comment>
+  </data>
+  <data name="GPIOPinInitializedCorrectly" xml:space="preserve">
+    <value>GPIO pin initialized correctly.</value>
+  </data>
+  <data name="NoGPIOController" xml:space="preserve">
+    <value>There is no GPIO controller on this device.</value>
+  </data>
+  <data name="ProblemsInitializingGPIOPin" xml:space="preserve">
+    <value>There were problems initializing the GPIO pin.</value>
   </data>
 </root>
