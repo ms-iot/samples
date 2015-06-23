@@ -37,7 +37,6 @@ namespace IoTCoreDefaultApp
     public class NetworkPresenter
     {
         private readonly static uint EthernetIanaType = 6;
-        private readonly static uint WifiIanaType = 71;
 
         public static string GetDirectConnectionName()
         {
@@ -56,7 +55,14 @@ namespace IoTCoreDefaultApp
         public static string GetCurrentNetworkName()
         {
             var icp = NetworkInformation.GetInternetConnectionProfile();
-            return icp != null ? icp.ProfileName : null;
+            if (icp != null)
+            {
+                return icp.ProfileName;
+            }
+
+            var resourceLoader = ResourceLoader.GetForCurrentView();
+            var msg = resourceLoader.GetString("NoInternetConnection");
+            return msg;
         }
 
         public static string GetCurrentIpv4Address()

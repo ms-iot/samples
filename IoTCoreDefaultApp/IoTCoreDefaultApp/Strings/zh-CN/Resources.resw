@@ -177,7 +177,7 @@
     <value>未找到</value>
   </data>
   <data name="OOBEIntro.Text" xml:space="preserve">
-    <value>让我们了解一些基本信息。</value>
+    <value>让我们进行一些基本设置</value>
   </data>
   <data name="OOBELanguageSelect.Text" xml:space="preserve">
     <value>选择语言</value>
@@ -334,7 +334,7 @@
     <comment>Refresh button</comment>
   </data>
   <data name="Tutorial.GetStarted.002.title" xml:space="preserve">
-    <value>入门</value>
+    <value>开始使用</value>
   </data>
   <data name="Tutorial.GetStarted.003.subtitle" xml:space="preserve">
     <value>欢迎使用 Windows 10 IoT 核心版</value>
@@ -401,6 +401,9 @@
   </data>
   <data name="Tutorial.GetConnected.005.h1" xml:space="preserve">
     <value>以太网</value>
+  </data>
+  <data name="Tutorial.GetConnected.006.p" xml:space="preserve">
+    <value>若要保持连接，最简单也是最可靠的方法是使用以太网。请将以太网电缆插入插件板，然后将其连接到你的路由器或网络交换机。</value>
   </data>
   <data name="Tutorial.GetConnected.007.h1" xml:space="preserve">
     <value>WLAN</value>
@@ -506,5 +509,21 @@
   </data>
   <data name="Tutorial.GetCoding.018.p" xml:space="preserve">
     <value>在网络上找到你的设备后，请访问 www.windowsondevices.com 下载一些要尝试并运行的示例代码!</value>
+  </data>
+  <data name="NetworkConnectivityLevel_ConstrainedInternetAccess" xml:space="preserve">
+    <value>受限 Internet 访问</value>
+  </data>
+  <data name="NetworkConnectivityLevel_InternetAccess" xml:space="preserve">
+    <value>本地和 Internet 访问</value>
+  </data>
+  <data name="NetworkConnectivityLevel_LocalAccess" xml:space="preserve">
+    <value>仅限本地网络访问</value>
+  </data>
+  <data name="NetworkConnectivityLevel_None" xml:space="preserve">
+    <value>无连接</value>
+  </data>
+  <data name="NoInternetConnection" xml:space="preserve">
+    <value>&lt;无 Internet 连接&gt;</value>
+    <comment>Used in the main page under "IP address"</comment>
   </data>
 </root>

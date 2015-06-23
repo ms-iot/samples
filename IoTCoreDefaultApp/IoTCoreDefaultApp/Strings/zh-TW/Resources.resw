@@ -333,10 +333,6 @@
     <value>重新整理</value>
     <comment>Refresh button</comment>
   </data>
-  <data name="Tutorial.GetStarted.001.620x400.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetStarted.jpg</value>
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetStarted.002.title" xml:space="preserve">
     <value>開始使用</value>
   </data>
@@ -394,10 +390,6 @@
   <data name="Tutorial.GetStarted.020.p" xml:space="preserve">
     <value>在設計您專屬的應用程式時，可以將它作為初始範本使用</value>
   </data>
-  <data name="Tutorial.GetConnected.001.620x400.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetConnected.jpg</value>
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetConnected.002.title" xml:space="preserve">
     <value>開始連線</value>
   </data>
@@ -410,6 +402,9 @@
   <data name="Tutorial.GetConnected.005.h1" xml:space="preserve">
     <value>乙太網路</value>
   </data>
+  <data name="Tutorial.GetConnected.006.p" xml:space="preserve">
+    <value>乙太網路是最簡單且可靠的連線方式。將乙太網路纜線插入您的電路板並連線至您的路由器或網路交換器。</value>
+  </data>
   <data name="Tutorial.GetConnected.007.h1" xml:space="preserve">
     <value>Wi-Fi</value>
   </data>
@@ -418,10 +413,6 @@
   </data>
   <data name="Tutorial.GetConnected.009.p" xml:space="preserve">
     <value>有了? 非常好，插入電路板!</value>
-  </data>
-  <data name="Tutorial.GetConnected.010.620x350.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetConnected-004.jpg</value>
-    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.011.p" xml:space="preserve">
     <value>您的畫面右上角有一個「設定齒輪」。請按一下齒輪並瀏覽至 [網路及 Wi-Fi]。您可從該處連線至本機網路。</value>
@@ -471,14 +462,6 @@
   <data name="Tutorial.GetConnected.026.p" xml:space="preserve">
     <value>我們已在主頁面中新增一些進階網路診斷資訊以協助您偵錯問題。如需其他支援，請前往 www.windowsondevices.com</value>
   </data>
-  <data name="Tutorial.GetConnected.027.620x400.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetConnected-006.jpg</value>
-    <comment>Please do NOT localize this string</comment>
-  </data>
-  <data name="Tutorial.GetCoding.001.620x400.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetCoding.jpg</value>
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetCoding.002.title" xml:space="preserve">
     <value>開始撰寫程式碼</value>
   </data>
@@ -521,11 +504,23 @@
   <data name="Tutorial.GetCoding.016.ul" xml:space="preserve">
     <value>目前您已可開發 app。請注意，Windows IoT Core Watcher 應用程式會在您登入時自動啟動。您可使用它來尋找要部署 app 的可用 Windows 10 IoT 核心版裝置。</value>
   </data>
-  <data name="Tutorial.GetCoding.017.600x360.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetCoding-003.png</value>
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetCoding.018.p" xml:space="preserve">
     <value>當您在網路上找到裝置後，請造訪 www.windowsondevices.com 下載簡單的程式碼並試用！</value>
+  </data>
+  <data name="NetworkConnectivityLevel_ConstrainedInternetAccess" xml:space="preserve">
+    <value>受限的網際網路存取</value>
+  </data>
+  <data name="NetworkConnectivityLevel_InternetAccess" xml:space="preserve">
+    <value>本機和網際網路存取</value>
+  </data>
+  <data name="NetworkConnectivityLevel_LocalAccess" xml:space="preserve">
+    <value>僅限本機網路存取</value>
+  </data>
+  <data name="NetworkConnectivityLevel_None" xml:space="preserve">
+    <value>沒有連線能力</value>
+  </data>
+  <data name="NoInternetConnection" xml:space="preserve">
+    <value>&lt;沒有網際網路連線&gt;</value>
+    <comment>Used in the main page under "IP address"</comment>
   </data>
 </root>

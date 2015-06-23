@@ -343,7 +343,7 @@
     <value>소개</value>
   </data>
   <data name="Tutorial.GetStarted.005.p" xml:space="preserve">
-    <value>축하합니다! 보드 설정이 완료되었습니다. 이제 장치 개발을 돕도록 설계된 가벼운 운영 체제인 Windows 10 IoT Core를 살펴보세요. IoT Core를 사용하면 즉시 장치를 연결하여 실행하는 데 필요한 모든 도구가 Windows에서 제공됩니다. 여러분의 아이디어를 가능한 한 빨리 실현하도록 도와드리겠습니다.</value>
+    <value>축하합니다! 보드 설정이 완료되었습니다. 이제 장치 개발을 돕도록 설계된 가벼운 운영 체제인 Windows 10 IoT Core K를 살펴보세요. IoT Core K를 사용하면 즉시 장치를 연결하여 실행하는 데 필요한 모든 도구가 Windows에서 제공됩니다. 여러분의 아이디어를 가능한 한 빨리 실현하도록 도와드리겠습니다.</value>
   </data>
   <data name="Tutorial.GetStarted.006.p" xml:space="preserve">
     <value>자세한 내용을 알아보고 자습서, 설명서 및 도움말을 살펴보려면 www.windowsondevices.com을 방문하세요.</value>
@@ -401,6 +401,9 @@
   </data>
   <data name="Tutorial.GetConnected.005.h1" xml:space="preserve">
     <value>이더넷</value>
+  </data>
+  <data name="Tutorial.GetConnected.006.p" xml:space="preserve">
+    <value>이더넷을 사용하면 가장 쉽고 안정적으로 연결할 수 있습니다. 보드에 이더넷 케이블을 꽂아서 라우터 또는 네트워크 스위치에 연결하면 됩니다.</value>
   </data>
   <data name="Tutorial.GetConnected.007.h1" xml:space="preserve">
     <value>Wi-Fi</value>
@@ -500,5 +503,21 @@
   </data>
   <data name="Tutorial.GetCoding.018.p" xml:space="preserve">
     <value>네트워크에서 장치를 찾으면 www.windowsondevices.com을 방문하여 샘플 코드를 다운로드한 후 실행하고 시험해 보세요.</value>
+  </data>
+  <data name="NetworkConnectivityLevel_ConstrainedInternetAccess" xml:space="preserve">
+    <value>제한된 인터넷 액세스</value>
+  </data>
+  <data name="NetworkConnectivityLevel_InternetAccess" xml:space="preserve">
+    <value>로컬 및 인터넷 액세스</value>
+  </data>
+  <data name="NetworkConnectivityLevel_LocalAccess" xml:space="preserve">
+    <value>로컬 네트워크 액세스 전용</value>
+  </data>
+  <data name="NetworkConnectivityLevel_None" xml:space="preserve">
+    <value>연결되지 않음</value>
+  </data>
+  <data name="NoInternetConnection" xml:space="preserve">
+    <value>&lt;인터넷 연결 없음&gt;</value>
+    <comment>Used in the main page under "IP address"</comment>
   </data>
 </root>
