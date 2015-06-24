@@ -526,4 +526,26 @@
     <value>&lt;sin conexión a Internet&gt;</value>
     <comment>Used in the main page under "IP address"</comment>
   </data>
+  <data name="DefaultLanguageTimeout.Text" xml:space="preserve">
+    <value>El idioma predeterminado se está seleccionando automáticamente...</value>
+  </data>
+  <data name="BlinkyStart" xml:space="preserve">
+    <value>INICIAR</value>
+  </data>
+  <data name="BlinkyStop" xml:space="preserve">
+    <value>DETENER</value>
+  </data>
+  <data name="BlinkyStopped" xml:space="preserve">
+    <value>Detenido</value>
+    <comment>This message is shown when the user turn off the slider to make the LED blink</comment>
+  </data>
+  <data name="GPIOPinInitializedCorrectly" xml:space="preserve">
+    <value>El pin GPIO se ha iniciado correctamente.</value>
+  </data>
+  <data name="NoGPIOController" xml:space="preserve">
+    <value>En este dispositivo no hay ningún controlador GPIO.</value>
+  </data>
+  <data name="ProblemsInitializingGPIOPin" xml:space="preserve">
+    <value>Error al iniciar el pin GPIO.</value>
+  </data>
 </root>
