@@ -372,6 +372,10 @@
   <data name="Tutorial.GetStarted.014.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
+  <data name="Tutorial.GetStarted.014a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetStarted.015.p" xml:space="preserve">
     <value>有关详细信息，请单击“编写代码”教程</value>
   </data>
@@ -389,6 +393,10 @@
   </data>
   <data name="Tutorial.GetStarted.020.p" xml:space="preserve">
     <value>在构建你自己的应用程序时，请随时使用此应用程序作为入门模板</value>
+  </data>
+  <data name="Tutorial.GetStarted.021.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.002.title" xml:space="preserve">
     <value>保持连接</value>
@@ -429,6 +437,10 @@
   <data name="Tutorial.GetConnected.015.ul" xml:space="preserve">
     <value>具备一根以太网电缆，用于将你的开发计算机链接到 IoT 核心版设备。</value>
   </data>
+  <data name="Tutorial.GetConnected.015a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.016.p" xml:space="preserve">
     <value>按照以下说明在你的电脑上启用 Internet 连接共享(ICS)</value>
   </data>
@@ -447,6 +459,10 @@
   <data name="Tutorial.GetConnected.021.ul" xml:space="preserve">
     <value>单击“共享”选项卡，然后选中“允许其他网络用户通过此计算机的 Internet 连接来连接”框。</value>
   </data>
+  <data name="Tutorial.GetConnected.021a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.022.p" xml:space="preserve">
     <value>在你的电脑上启用了 ICS 后，现在便可将 Windows 10 IoT 核心版设备直接连接到你的电脑。为此，你可以将备用以太网电缆的一端插入到电脑上的以太网端口，并将该电缆的另一端插入到 IoT 核心版设备上的以太网端口。</value>
   </data>
@@ -456,11 +472,19 @@
   <data name="Tutorial.GetConnected.024.ul" xml:space="preserve">
     <value>如果你只有一个网络连接，则“共享”选项卡将不可用。</value>
   </data>
+  <data name="Tutorial.GetConnected.024a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.025.h1" xml:space="preserve">
     <value>是否遇到问题?</value>
   </data>
   <data name="Tutorial.GetConnected.026.p" xml:space="preserve">
     <value>我们已将一些高级网络诊断添加到主页中，以帮助你针对问题进行调试。有关更多支持，请访问 www.windowsondevices.com</value>
+  </data>
+  <data name="Tutorial.GetConnected.028.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetCoding.002.title" xml:space="preserve">
     <value>编写代码</value>
@@ -486,6 +510,10 @@
   <data name="Tutorial.GetCoding.009.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
+  <data name="Tutorial.GetCoding.009a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetCoding.010.h1" xml:space="preserve">
     <value>在你的电脑上设置 Visual Studio 2015</value>
   </data>
@@ -507,8 +535,16 @@
   <data name="Tutorial.GetCoding.016.ul" xml:space="preserve">
     <value>此时，你已准备好开发应用。请注意，Windows IoT Core Watcher 应用程序会在你登录时自动启动。该应用程序可用于查找将应用部署到的可用 Windows 10 IoT 核心版设备。</value>
   </data>
+  <data name="Tutorial.GetCoding.016a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetCoding.018.p" xml:space="preserve">
     <value>在网络上找到你的设备后，请访问 www.windowsondevices.com 下载一些要尝试并运行的示例代码!</value>
+  </data>
+  <data name="Tutorial.GetCoding.019.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="NetworkConnectivityLevel_ConstrainedInternetAccess" xml:space="preserve">
     <value>受限 Internet 访问</value>
@@ -525,5 +561,27 @@
   <data name="NoInternetConnection" xml:space="preserve">
     <value>&lt;无 Internet 连接&gt;</value>
     <comment>Used in the main page under "IP address"</comment>
+  </data>
+  <data name="DefaultLanguageTimeout.Text" xml:space="preserve">
+    <value>正在自动选择默认语言...</value>
+  </data>
+  <data name="BlinkyStart" xml:space="preserve">
+    <value>开始</value>
+  </data>
+  <data name="BlinkyStop" xml:space="preserve">
+    <value>停止</value>
+  </data>
+  <data name="BlinkyStopped" xml:space="preserve">
+    <value>已停止</value>
+    <comment>This message is shown when the user turn off the slider to make the LED blink</comment>
+  </data>
+  <data name="GPIOPinInitializedCorrectly" xml:space="preserve">
+    <value>GPIO 插针已正确初始化。</value>
+  </data>
+  <data name="NoGPIOController" xml:space="preserve">
+    <value>此设备上没有 GPIO 控制器。</value>
+  </data>
+  <data name="ProblemsInitializingGPIOPin" xml:space="preserve">
+    <value>初始化 GPIO 插针时遇到问题。</value>
   </data>
 </root>

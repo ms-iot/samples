@@ -373,6 +373,10 @@ programme</value>
   <data name="Tutorial.GetStarted.014.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
+  <data name="Tutorial.GetStarted.014a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetStarted.015.p" xml:space="preserve">
     <value>Klicken Sie auf das Lernprogramm „Einstieg in die Codierung“, um weitere Informationen zu erhalten.</value>
   </data>
@@ -390,6 +394,10 @@ programme</value>
   </data>
   <data name="Tutorial.GetStarted.020.p" xml:space="preserve">
     <value>Verwenden Sie dieses Beispiel als Ausgangsbasis für die Entwicklung einer eigenen Anwendung.</value>
+  </data>
+  <data name="Tutorial.GetStarted.021.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.002.title" xml:space="preserve">
     <value>Verbindung herstellen</value>
@@ -430,6 +438,10 @@ programme</value>
   <data name="Tutorial.GetConnected.015.ul" xml:space="preserve">
     <value>Ein Ethernetkabel zum Verbinden Ihres Entwicklungscomputers mit Ihrem IoT Core-Gerät</value>
   </data>
+  <data name="Tutorial.GetConnected.015a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.016.p" xml:space="preserve">
     <value>Folgen Sie den unten angegebenen Anweisungen, um die gemeinsame Nutzung der Internetverbindung (Internet Connection Sharing, ICS) auf Ihrem PC zu aktivieren.</value>
   </data>
@@ -448,6 +460,10 @@ programme</value>
   <data name="Tutorial.GetConnected.021.ul" xml:space="preserve">
     <value>Klicken Sie auf die Registerkarte „Freigabe“, und aktivieren Sie das Kontrollkästchen „Anderen Benutzern im Netzwerk gestatten, diese Verbindung des Computers als Internetverbindung zu verwenden“.</value>
   </data>
+  <data name="Tutorial.GetConnected.021a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.022.p" xml:space="preserve">
     <value>Nachdem Sie ICS auf Ihrem PC aktiviert haben, können Sie Ihr Windows 10 IoT Core-Gerät jetzt direkt an Ihren PC anschließen. Schließen Sie dazu ein Ende des Ethernet-Ersatzkabels an den zusätzlichen Ethernet-Anschluss am PC und das andere Ende an den Ethernet-Anschluss Ihres IoT Core-Geräts an.</value>
   </data>
@@ -457,11 +473,19 @@ programme</value>
   <data name="Tutorial.GetConnected.024.ul" xml:space="preserve">
     <value>Die Registerkarte „Freigabe“ ist nicht verfügbar, wenn Sie nur über eine Netzwerkverbindung verfügen.</value>
   </data>
+  <data name="Tutorial.GetConnected.024a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.025.h1" xml:space="preserve">
     <value>Probleme?</value>
   </data>
   <data name="Tutorial.GetConnected.026.p" xml:space="preserve">
     <value>Wir haben einige erweiterte Netzwerkdiagnose-Funktionen auf der Hauptseite hinzugefügt, um Ihnen das Debuggen von Problemen zu erleichtern. Weitere Unterstützung erhalten Sie unter „www.windowsondevices.com“.</value>
+  </data>
+  <data name="Tutorial.GetConnected.028.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetCoding.002.title" xml:space="preserve">
     <value>Einstieg in die Programmierung</value>
@@ -487,6 +511,10 @@ programme</value>
   <data name="Tutorial.GetCoding.009.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
+  <data name="Tutorial.GetCoding.009a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetCoding.010.h1" xml:space="preserve">
     <value>Einrichten von Visual Studio 2015 auf Ihrem PC</value>
   </data>
@@ -508,8 +536,16 @@ programme</value>
   <data name="Tutorial.GetCoding.016.ul" xml:space="preserve">
     <value>Sie sind jetzt bereit für die App-Entwicklung. Sobald Sie sich anmelden, wird die Windows IoT Core Watcher-Anwendung automatisch gestartet. Mit ihr können Sie verfügbare Windows 10 IoT Core-Geräte suchen, auf denen die Apps bereitgestellt werden.</value>
   </data>
+  <data name="Tutorial.GetCoding.016a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetCoding.018.p" xml:space="preserve">
     <value>Nachdem Sie Ihr Gerät im Netzwerk gefunden haben, besuchen Sie „www.windowsondevices.com“, um Beispielcode zum Testen und Ausführen herunterzuladen!</value>
+  </data>
+  <data name="Tutorial.GetCoding.019.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="NetworkConnectivityLevel_ConstrainedInternetAccess" xml:space="preserve">
     <value>Eingeschränkter Internetzugriff</value>
@@ -526,5 +562,27 @@ programme</value>
   <data name="NoInternetConnection" xml:space="preserve">
     <value>&lt;keine Internetverbindung&gt;</value>
     <comment>Used in the main page under "IP address"</comment>
+  </data>
+  <data name="DefaultLanguageTimeout.Text" xml:space="preserve">
+    <value>Die Standardsprache wird automatisch ausgewählt…</value>
+  </data>
+  <data name="BlinkyStart" xml:space="preserve">
+    <value>STARTEN</value>
+  </data>
+  <data name="BlinkyStop" xml:space="preserve">
+    <value>BEENDEN</value>
+  </data>
+  <data name="BlinkyStopped" xml:space="preserve">
+    <value>Beendet</value>
+    <comment>This message is shown when the user turn off the slider to make the LED blink</comment>
+  </data>
+  <data name="GPIOPinInitializedCorrectly" xml:space="preserve">
+    <value>Der GPIO-Pin wurde ordnungsgemäß initialisiert.</value>
+  </data>
+  <data name="NoGPIOController" xml:space="preserve">
+    <value>Dieses Gerät verfügt über keinen GPIO-Controller.</value>
+  </data>
+  <data name="ProblemsInitializingGPIOPin" xml:space="preserve">
+    <value>Bei der Initialisierung des GPIO-Pins sind Probleme aufgetreten.</value>
   </data>
 </root>

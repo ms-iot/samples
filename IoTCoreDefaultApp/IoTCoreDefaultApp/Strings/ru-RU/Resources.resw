@@ -372,6 +372,10 @@
   <data name="Tutorial.GetStarted.014.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
+  <data name="Tutorial.GetStarted.014a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetStarted.015.p" xml:space="preserve">
     <value>Чтобы получить дополнительные сведения, выберите руководство "Кодирование"</value>
   </data>
@@ -389,6 +393,10 @@
   </data>
   <data name="Tutorial.GetStarted.020.p" xml:space="preserve">
     <value>Смело используйте все это как шаблон, чтобы приступить к созданию собственного приложения</value>
+  </data>
+  <data name="Tutorial.GetStarted.021.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.002.title" xml:space="preserve">
     <value>Подключение</value>
@@ -429,6 +437,10 @@
   <data name="Tutorial.GetConnected.015.ul" xml:space="preserve">
     <value>Кабель Ethernet для подключения компьютера, на котором ведется разработка, к устройству с IoT Базовой.</value>
   </data>
+  <data name="Tutorial.GetConnected.015a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.016.p" xml:space="preserve">
     <value>Чтобы включить на компьютере общий доступ к подключению Интернета, следуйте приведенным ниже инструкциям</value>
   </data>
@@ -447,17 +459,29 @@
   <data name="Tutorial.GetConnected.021.ul" xml:space="preserve">
     <value>Откройте вкладку "Общий доступ" и установите флажок "Разрешить другим пользователям сети использовать подключение к Интернету данного компьютера".</value>
   </data>
+  <data name="Tutorial.GetConnected.021a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.022.p" xml:space="preserve">
     <value>После включения общего доступа к подключению Интернета на компьютере к нему можно напрямую подключить устройство с Windows 10 IoT Базовой: вставьте один конец свободного кабеля Ethernet в дополнительный порт Ethernet на компьютере, а другой — в порт Ethernet на устройстве с IoT Базовой.</value>
   </data>
   <data name="Tutorial.GetConnected.024.ul" xml:space="preserve">
     <value>Вкладка "Общий доступ" будет недоступна, если у вас только одно сетевое подключение.</value>
   </data>
+  <data name="Tutorial.GetConnected.024a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.025.h1" xml:space="preserve">
     <value>Возникли проблемы?</value>
   </data>
   <data name="Tutorial.GetConnected.026.p" xml:space="preserve">
     <value>Мы добавили на главную страницу расширенные средства сетевой диагностики, чтобы вы могли отладить ошибки. Дополнительную поддержку можно получить на сайте www.windowsondevices.com</value>
+  </data>
+  <data name="Tutorial.GetConnected.028.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetCoding.002.title" xml:space="preserve">
     <value>Кодирование</value>
@@ -483,6 +507,10 @@
   <data name="Tutorial.GetCoding.009.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
+  <data name="Tutorial.GetCoding.009a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetCoding.010.h1" xml:space="preserve">
     <value>Настройка Visual Studio 2015 на компьютере</value>
   </data>
@@ -504,8 +532,16 @@
   <data name="Tutorial.GetCoding.016.ul" xml:space="preserve">
     <value>После установки всех необходимых средств вы будете готовы к разработке приложений. Обратите внимание, что приложение Windows IoT Core Watcher запускается автоматически при входе в систему. С помощью него можно находить доступные устройства с Windows 10 IoT Базовой, на которых можно развертывать приложения.</value>
   </data>
+  <data name="Tutorial.GetCoding.016a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetCoding.018.p" xml:space="preserve">
     <value>Когда устройство подключиться к сети, скачайте с сайта www.windowsondevices.com пример кода, чтобы ознакомиться с ним и запустить его!</value>
+  </data>
+  <data name="Tutorial.GetCoding.019.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="NetworkConnectivityLevel_ConstrainedInternetAccess" xml:space="preserve">
     <value>Ограниченный доступ к Интернету</value>
@@ -522,5 +558,27 @@
   <data name="NoInternetConnection" xml:space="preserve">
     <value>&lt;отсутствует подключение к Интернету&gt;</value>
     <comment>Used in the main page under "IP address"</comment>
+  </data>
+  <data name="DefaultLanguageTimeout.Text" xml:space="preserve">
+    <value>Язык по умолчанию выбирается автоматически...</value>
+  </data>
+  <data name="BlinkyStart" xml:space="preserve">
+    <value>ЗАПУСТИТЬ</value>
+  </data>
+  <data name="BlinkyStop" xml:space="preserve">
+    <value>ОСТАНОВИТЬ</value>
+  </data>
+  <data name="BlinkyStopped" xml:space="preserve">
+    <value>Остановлено</value>
+    <comment>This message is shown when the user turn off the slider to make the LED blink</comment>
+  </data>
+  <data name="GPIOPinInitializedCorrectly" xml:space="preserve">
+    <value>Контакт GPIO инициализирован правильно.</value>
+  </data>
+  <data name="NoGPIOController" xml:space="preserve">
+    <value>На этом устройстве нет контроллера GPIO.</value>
+  </data>
+  <data name="ProblemsInitializingGPIOPin" xml:space="preserve">
+    <value>При инициализации контакта GPIO возникли проблемы.</value>
   </data>
 </root>
