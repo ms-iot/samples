@@ -1,0 +1,6 @@
+﻿This project requires Microsoft.Diagnostics.Tracing.EventSource to sucessfully compile and upload Telemetry events.
+
+This dependency is being used in binary format, and is not checked into SD.
+
+Please refer to this page https://microsoft.sharepoint.com/teams/osg_core_fun/idt/OSGInstrument/SitePages/Getting%20EventSource%20Enhancements%20(NuGet).aspx to get the package to the solution, before you compile it.
+
