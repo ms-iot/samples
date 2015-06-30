@@ -51,7 +51,7 @@ ServiceBinary  = %12%\gpiokmdfdemo.sys
 
 [Strings]
 SPSVCINST_ASSOCSERVICE= 0x00000002
-MSFT = "Microsoft"
+MSFT = "MSFT IoT Driver Sample"
 StdMfg = "(Standard system devices)"
 ClassName = "System"
 DiskId1 = "gpiokmdfdemo Installation Disk"
