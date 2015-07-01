@@ -177,13 +177,6 @@ namespace DigitalSignageUAP
                 return;
             }
 
-            TelemetryHelper.eventLogger.Write(TelemetryHelper.UserCommentEvent, TelemetryHelper.TelemetryInfoOption, new
-            {
-                isThumbUp = thumbUp,
-                comment = CommentTextbox.Text,
-                alias =  AliasTextBoxFirstTimeFocus ? "Anonymous" : AliasTextbox.Text // if the alias text box is not tapped, send empty, otherwise send the user input text
-            });
-
             // MessageDialog is not supported on Athens
             /*
             MessageDialog ResultDialog = new MessageDialog("Thanks for your feedback, it has been successfully uploaded!");

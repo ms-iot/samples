@@ -136,7 +136,6 @@ namespace DigitalSignageUAP
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            TelemetryHelper.eventLogger.Write(TelemetryHelper.SlideShowLaunchExitEvent, TelemetryHelper.TelemetryStartOption);
         }
 
         /// <summary>
@@ -146,7 +145,6 @@ namespace DigitalSignageUAP
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
-            TelemetryHelper.eventLogger.Write(TelemetryHelper.SlideShowLaunchExitEvent, TelemetryHelper.TelemetryStopOption);
         }
 
         /// <summary>

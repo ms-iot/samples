@@ -97,13 +97,11 @@ namespace DigitalSignageUAP
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            TelemetryHelper.eventLogger.Write(TelemetryHelper.BrowserLaunchExitEvent, TelemetryHelper.TelemetryStartOption);
             navigationHelper.OnNavigatedTo(e);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            TelemetryHelper.eventLogger.Write(TelemetryHelper.BrowserLaunchExitEvent, TelemetryHelper.TelemetryStopOption);
             navigationHelper.OnNavigatedFrom(e);
         }
 
