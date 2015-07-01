@@ -207,16 +207,16 @@ namespace OnScreenKeyboardSample
         /// </summary>
         public bool IsInShiftState
         {
-            get { return _isInShiftState; }
+            get { return isInShiftState; }
             set
             {
-                if (value != _isInShiftState)
+                if (value != isInShiftState)
                 {
-                    _isInShiftState = value;
+                    isInShiftState = value;
                     Notify("Text");
                 }
             }
         }
-        private bool _isInShiftState;
+        private bool isInShiftState;
     }
 }

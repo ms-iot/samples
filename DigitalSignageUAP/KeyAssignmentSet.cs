@@ -23,7 +23,7 @@ namespace OnScreenKeyboardSample
     public class KeyAssignmentSet
     {
         private static KeyAssignmentSet s_theKeyAssignmentSet;
-        private KeyModel[] _theKeyAssignmentArray;
+        private KeyModel[] theKeyAssignmentArray;
 
         public static KeyAssignmentSet KeyAssignment
         {
@@ -44,16 +44,16 @@ namespace OnScreenKeyboardSample
         {
             get
             {
-                if (_theKeyAssignmentArray == null)
+                if (theKeyAssignmentArray == null)
                 {
-                    _theKeyAssignmentArray = new KeyModel[] {
+                    theKeyAssignmentArray = new KeyModel[] {
                         KeyVK_Oem3, KeyVK_1, KeyVK_2, KeyVK_3, KeyVK_4, KeyVK_5, KeyVK_6, KeyVK_7, KeyVK_8, KeyVK_9, KeyVK_0, KeyVK_OemMinus, KeyVK_OemPlus,
                         KeyVK_Q, KeyVK_W, KeyVK_E, KeyVK_R, KeyVK_T, KeyVK_Y, KeyVK_U, KeyVK_I, KeyVK_O, KeyVK_P, KeyVK_OemOpenBrackets, KeyVK_Oem6, KeyVK_Oem5,
                         KeyVK_A, KeyVK_S, KeyVK_D, KeyVK_F, KeyVK_G, KeyVK_H, KeyVK_J, KeyVK_K, KeyVK_L, KeyVK_Oem1, KeyVK_Oem7,
                         KeyVK_Z, KeyVK_X, KeyVK_C, KeyVK_V, KeyVK_B, KeyVK_N, KeyVK_M, KeyVK_OemComma, KeyVK_OemPeriod, KeyVK_OemQuestion
                     };
                 }
-                return _theKeyAssignmentArray;
+                return theKeyAssignmentArray;
             }
         }
 

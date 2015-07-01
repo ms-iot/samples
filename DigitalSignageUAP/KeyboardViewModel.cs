@@ -54,7 +54,7 @@ namespace OnScreenKeyboardSample
         #region constructor
         public KeyboardViewModel(OnScreenKeyBoard container)
         {
-            _container = container;
+            this.container = container;
             KeyModel.theKeyboardViewModel = this;
         }
         #endregion constructor
@@ -67,11 +67,11 @@ namespace OnScreenKeyboardSample
         {
             get
             {
-                if (_backspaceCommand == null)
+                if (backspaceCommand == null)
                 {
-                    _backspaceCommand = new RelayCommand((x) => ExecuteBackspaceCommand());
+                    backspaceCommand = new RelayCommand((x) => ExecuteBackspaceCommand());
                 }
-                return _backspaceCommand;
+                return backspaceCommand;
             }
         }
 
@@ -82,13 +82,13 @@ namespace OnScreenKeyboardSample
 
             if (currentSelectionLength != 0)
             {
-                _container.OutputString = _container.OutputString.Remove(currentSelectionStart, currentSelectionLength);
+                container.OutputString = container.OutputString.Remove(currentSelectionStart, currentSelectionLength);
                 OnScreenKeyBoard.Buffer.SelectionLength = 0;
             }
 
             else if (OnScreenKeyBoard.Buffer.SelectionStart > 0)
             {
-                _container.OutputString = _container.OutputString.Remove(currentSelectionStart - 1, 1);
+                container.OutputString = container.OutputString.Remove(currentSelectionStart - 1, 1);
                 if (OnScreenKeyBoard.Buffer.SelectionStart > 0)
                 {
                     OnScreenKeyBoard.Buffer.SelectionStart--;
@@ -96,7 +96,7 @@ namespace OnScreenKeyboardSample
             }
         }
 
-        private RelayCommand _backspaceCommand;
+        private RelayCommand backspaceCommand;
 
         #endregion BackspaceCommand
 
@@ -106,11 +106,11 @@ namespace OnScreenKeyboardSample
         {
             get
             {
-                if (_capsLockCommand == null)
+                if (capsLockCommand == null)
                 {
-                    _capsLockCommand = new RelayCommand((x) => ExecuteCapsLockCommand());
+                    capsLockCommand = new RelayCommand((x) => ExecuteCapsLockCommand());
                 }
-                return _capsLockCommand;
+                return capsLockCommand;
             }
         }
 
@@ -131,7 +131,7 @@ namespace OnScreenKeyboardSample
         }
         #endregion
 
-        private RelayCommand _capsLockCommand;
+        private RelayCommand capsLockCommand;
 
         #endregion CapsLockCommand
 
@@ -141,11 +141,11 @@ namespace OnScreenKeyboardSample
         {
             get
             {
-                if (_keyPressedCommand == null)
+                if (keyPressedCommand == null)
                 {
-                    _keyPressedCommand = new RelayCommand((x) => ExecuteKeyPressedCommand(x));
+                    keyPressedCommand = new RelayCommand((x) => ExecuteKeyPressedCommand(x));
                 }
-                return _keyPressedCommand;
+                return keyPressedCommand;
             }
         }
 
@@ -156,17 +156,17 @@ namespace OnScreenKeyboardSample
         /// <param name="arg">The KeyModel of the key-button that was pressed</param>
         public void ExecuteKeyPressedCommand(object arg)
         {
-            if (_container.OutputString != null)
+            if (container.OutputString != null)
             {
                 int currentSelectionStart = OnScreenKeyBoard.Buffer.SelectionStart;
                 int currentSelectionLength = OnScreenKeyBoard.Buffer.SelectionLength;
 
                 if (currentSelectionLength != 0)
                 {
-                    _container.OutputString = _container.OutputString.Remove(currentSelectionStart, currentSelectionLength);
+                    container.OutputString = container.OutputString.Remove(currentSelectionStart, currentSelectionLength);
                     OnScreenKeyBoard.Buffer.SelectionLength = 0;
                 }
-                _container.OutputString = _container.OutputString.Insert(currentSelectionStart, (string)arg);
+                container.OutputString = container.OutputString.Insert(currentSelectionStart, (string)arg);
                 OnScreenKeyBoard.Buffer.SelectionStart++;
 
                 //Return to un-shift mode if currently in shift mode
@@ -178,7 +178,7 @@ namespace OnScreenKeyboardSample
         }
         #endregion
 
-        private RelayCommand _keyPressedCommand;
+        private RelayCommand keyPressedCommand;
 
         #endregion KeyPressedCommand
 
@@ -188,11 +188,11 @@ namespace OnScreenKeyboardSample
         {
             get
             {
-                if (_shiftCommand == null)
+                if (shiftCommand == null)
                 {
-                    _shiftCommand = new RelayCommand((x) => ExecuteShiftCommand());
+                    shiftCommand = new RelayCommand((x) => ExecuteShiftCommand());
                 }
-                return _shiftCommand;
+                return shiftCommand;
             }
         }
 
@@ -207,7 +207,7 @@ namespace OnScreenKeyboardSample
         #endregion
 
 
-        private RelayCommand _shiftCommand;
+        private RelayCommand shiftCommand;
 
         #endregion ShiftCommand
 
@@ -266,13 +266,13 @@ namespace OnScreenKeyboardSample
         {
             get
             {
-                return _isCapsLock;
+                return isCapsLock;
             }
             set
             {
-                if (value != _isCapsLock)
+                if (value != isCapsLock)
                 {
-                    _isCapsLock = value;
+                    isCapsLock = value;
                     if (IsShiftLock)
                     {
                         IsShiftLock = false;
@@ -295,13 +295,13 @@ namespace OnScreenKeyboardSample
         {
             get
             {
-                return _ShiftKey.IsInShiftState;
+                return shiftKey.IsInShiftState;
             }
             set
             {
-                if (value != _ShiftKey.IsInShiftState)
+                if (value != shiftKey.IsInShiftState)
                 {
-                    _ShiftKey.IsInShiftState = value;
+                    shiftKey.IsInShiftState = value;
                     NotifyTheIndividualKeys("Text");
                     Notify("IsShiftLock");
                 }
@@ -330,19 +330,19 @@ namespace OnScreenKeyboardSample
 
         public KeyModel TabKey
         {
-            get { return _Tab; }
-            set { _Tab = value; }
+            get { return Tab; }
+            set { Tab = value; }
         }
 
         public KeyModel EnterKey
         {
-            get { return _Enter; }
-            set { _Enter = value; }
+            get { return Enter; }
+            set { Enter = value; }
         }
 
         public ShiftKeyViewModel ShiftKey
         {
-            get { return _ShiftKey; }
+            get { return shiftKey; }
         }
 
         #endregion The view-model properties for the individual key-buttons of the keyboard
@@ -368,17 +368,17 @@ namespace OnScreenKeyboardSample
 
         #region fields
 
-        private bool _isCapsLock;
+        private bool isCapsLock;
 
         /// <summary>
         /// The KeyAssignmentSet that is currently attached to this keyboard.
         /// </summary>
         private KeyAssignmentSet _currentKeyboardAssignment;
         // These are view-models for the individual key-buttons of the keyboard which are not provided by the KeyAssignmentSet:
-        private KeyModel _Tab = new KeyModel('\t', '\t');
-        private KeyModel _Enter = new KeyModel('\n', '\n');
-        private ShiftKeyViewModel _ShiftKey = new ShiftKeyViewModel();
-        private OnScreenKeyBoard _container = null;
+        private KeyModel Tab = new KeyModel('\t', '\t');
+        private KeyModel Enter = new KeyModel('\n', '\n');
+        private ShiftKeyViewModel shiftKey = new ShiftKeyViewModel();
+        private OnScreenKeyBoard container = null;
 
         #endregion fields
     }
