@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Copyright (c) Microsoft. All rights reserved.
+
+using System;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Data;
 

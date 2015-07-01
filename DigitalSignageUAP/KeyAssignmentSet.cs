@@ -1,4 +1,6 @@
-﻿namespace OnScreenKeyboardSample
+﻿// Copyright (c) Microsoft. All rights reserved.
+
+namespace OnScreenKeyboardSample
 {
     public class KeyAssignmentSet
     {

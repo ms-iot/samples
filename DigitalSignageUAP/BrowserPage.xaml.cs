@@ -1,4 +1,6 @@
-﻿using DigitalSignageUAP.Common;
+﻿// Copyright (c) Microsoft. All rights reserved.
+
+using DigitalSignageUAP.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
