@@ -1,4 +1,6 @@
-﻿using DigitalSignageUAP.Common;
+﻿// Copyright (c) Microsoft. All rights reserved.
+
+using DigitalSignageUAP.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -176,13 +178,6 @@ namespace DigitalSignageUAP
                 dialog.ShowAsync();
                 return;
             }
-
-            // MessageDialog is not supported on Athens
-            /*
-            MessageDialog ResultDialog = new MessageDialog("Thanks for your feedback, it has been successfully uploaded!");
-            ResultDialog.Commands.Add(new UICommand("OK", CommandInvokeHandler));
-            ResultDialog.ShowAsync();
-            */
 
             // Get back to Main page
             this.Frame.Navigate(typeof(MainPage));
