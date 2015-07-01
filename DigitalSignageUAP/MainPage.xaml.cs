@@ -23,27 +23,6 @@ namespace DigitalSignageUAP
         static readonly TimeSpan heartbeatDuration = new TimeSpan(0, 30, 0);
         static readonly TimeSpan reloadContentIntervalDuration = new TimeSpan(0, 1, 0);
 
-        // maintain a global counter of heartbeat events
-        // when the timer ticks, upload the duration as counter*30 minutes because the timer ticks every 30 minutes
-        // this is to avoid any thing like system time being updated when app is runningS
-        static int heartBeatCounter = 0;
-        static public void StartHeartBeat()
-        {
-            if (heartBeatTimer == null)
-            {
-                heartBeatTimer = new DispatcherTimer();
-                heartBeatTimer.Interval = heartbeatDuration;
-                heartBeatTimer.Tick += heartBeatTimer_Tick;
-                heartBeatTimer.Start();
-                TelemetryHelper.eventLogger.Write(TelemetryHelper.HeartbeatEvent, TelemetryHelper.TelemetryInfoOption, new
-                {
-                    duration = 0,
-                }); // send a heartbeat at the very begining
-            }
-
-            // if it's already initialized, do nothing
-        }
-
         static public void StartReloadContentTimer(Page page)
         {
             currentPage = page;
@@ -71,19 +50,6 @@ namespace DigitalSignageUAP
                 currentPage.Frame.Navigate(typeof(SlideshowPage));
             }
         }
-
-        /// <summary>
-        /// when the timer ticks, send heartBeatCounter*30 duration in minutes for telemetry
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        static void heartBeatTimer_Tick(object sender, object e)
-        {
-            TelemetryHelper.eventLogger.Write(TelemetryHelper.HeartbeatEvent, TelemetryHelper.TelemetryInfoOption, new
-            {
-                duration = ++heartBeatCounter * 30,
-            });
-        }
     }
     /// <summary>
     /// Mainpage of the digital signage app
@@ -108,7 +74,6 @@ namespace DigitalSignageUAP
         {
             this.InitializeComponent();
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
-            GlobalTimerWrapper.StartHeartBeat();
 
             VisionVideoAcceptMouseEventTimer.Interval = VisionVideoAcceptInputTimeSpan;
             VisionVideoAcceptMouseEventTimer.Tick += VisionVideoAcceptMouseEventTimer_Tick;
@@ -118,7 +83,6 @@ namespace DigitalSignageUAP
             // put some special initialization here, that we only want to call once
             if (MainPageFirstTimeLoad)
             {
-                Application.Current.UnhandledException += Current_UnhandledException;
                 MainPageFirstTimeLoad = false;
             }
 
@@ -178,19 +142,6 @@ namespace DigitalSignageUAP
                 visionVideoInstance.IsFullWindow = false;
                 visionVideoInstance.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             }
-        }
-
-        /// <summary>
-        /// upload any unhandled exception as telemetry event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void Current_UnhandledException(object sender, UnhandledExceptionEventArgs e)
-        {
-            TelemetryHelper.eventLogger.Write(TelemetryHelper.UnhandledExceptionEvent, TelemetryHelper.DebugErrorOption, new
-            {
-                ExceptionMessage = e.Message
-            });
         }
 
         /// <summary>
@@ -254,7 +205,6 @@ namespace DigitalSignageUAP
         /// <param name="e"></param>
         private void visionVideoGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            TelemetryHelper.eventLogger.Write(TelemetryHelper.VisionVideoEvent, TelemetryHelper.TelemetryStartOption);
             visionVideoInstance.Source = new Uri(vszVisionVideoPath);
             visionVideoInstance.IsFullWindow = true;
             visionVideoInstance.Visibility = Windows.UI.Xaml.Visibility.Visible;

@@ -11,8 +11,8 @@
     <AssemblyName>DigitalSignageUAP</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10151.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10151.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.10156.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10156.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
     <UapDefaultAssetScale>100</UapDefaultAssetScale>
@@ -22,11 +22,11 @@
     <PackageCertificateKeyFile>DigitalSignageUAP_TemporaryKey.pfx</PackageCertificateKeyFile>
     <NuGetPackageImportStamp>4cc9f130</NuGetPackageImportStamp>
   </PropertyGroup>
- <ItemGroup>
-   <SDKReference Include="WindowsIoT, Version=10.0.10151.0">
-     <Name>Windows IoT Extension SDK</Name>
-      </SDKReference>
-    </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="WindowsIoT, Version=10.0.10156.0">
+      <Name>Windows IoT Extension SDK</Name>
+    </SDKReference>
+  </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\ARM\Debug\</OutputPath>
@@ -134,7 +134,6 @@
     <Compile Include="SlideshowPage.xaml.cs">
       <DependentUpon>SlideshowPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TelemetryHelper.cs" />
     <Compile Include="ViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

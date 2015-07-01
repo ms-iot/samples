@@ -48,10 +48,6 @@ namespace DigitalSignageUAP
         void SettingsFlyout1_Unloaded(object sender, RoutedEventArgs e)
         {
             localSettings.Values[configValueName] = configFileTextBoxValue;
-            if (noSettingYet || oldConfigSetting != configFileTextBoxValue) // if there was no setting when it's launched, or when the text is changed, we fire a settings change event!
-            {
-                TelemetryHelper.eventLogger.Write(TelemetryHelper.SettingsChangedEvent, TelemetryHelper.TelemetryInfoOption);
-            }
         }
 
         /// <summary>
