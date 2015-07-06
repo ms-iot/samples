@@ -91,15 +91,13 @@ namespace IoTCoreDefaultApp
 
             foreach(var item in e.RemovedItems)
             {
-                var listViewItem = listView.ContainerFromItem(item) as ListViewItem;
-                listViewItem.ContentTemplate = WifiInitialState;
+                SwitchToItemState(item, WifiInitialState, true);
             }
 
             foreach(var item in e.AddedItems)
             {
                 Automatic = true;
-                var listViewItem = listView.ContainerFromItem(item) as ListViewItem;
-                listViewItem.ContentTemplate = WifiConnectState;
+                SwitchToItemState(item, WifiConnectState, true);
             }
         }
 
@@ -113,7 +111,7 @@ namespace IoTCoreDefaultApp
             }
             else
             {
-                SwitchToItemState(network, WifiPasswordState);
+                SwitchToItemState(network, WifiPasswordState, false);
             }
         }
 
@@ -125,7 +123,7 @@ namespace IoTCoreDefaultApp
 
             await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                SwitchToItemState(network, WifiConnectingState);
+                SwitchToItemState(network, WifiConnectingState, false);
             });
 
             if (await didConnect)
@@ -139,7 +137,7 @@ namespace IoTCoreDefaultApp
             {
                 await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
-                    var item = SwitchToItemState(network, WifiInitialState);
+                    var item = SwitchToItemState(network, WifiInitialState, false);
                     item.IsSelected = false;
                 });
             }
@@ -169,15 +167,21 @@ namespace IoTCoreDefaultApp
         private void CancelButton_Clicked(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            var item = SwitchToItemState(button.DataContext, WifiInitialState);
+            var item = SwitchToItemState(button.DataContext, WifiInitialState, false);
             item.IsSelected = false;
         }
 
-        private ListViewItem SwitchToItemState(object dataContext, DataTemplate template)
+        private ListViewItem SwitchToItemState(object dataContext, DataTemplate template, bool forceUpdate)
         {
+            if (forceUpdate)
+            {
+                WifiListView.UpdateLayout();
+            }
             var item = WifiListView.ContainerFromItem(dataContext) as ListViewItem;
-            item.ContentTemplate = template;
-
+            if (item != null)
+            {
+                item.ContentTemplate = template;
+            }
             return item;
         }
 
