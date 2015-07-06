@@ -4,7 +4,8 @@
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
   xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
-  IgnorableNamespaces="uap mp">
+  xmlns:iot="http://schemas.microsoft.com/appx/manifest/iot/windows10"
+  IgnorableNamespaces="uap mp iot">
 
   <Identity
     Name="IoTCoreDefaultApp"
@@ -20,7 +21,7 @@
   </Properties>
 
   <Dependencies>
-    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.10156.0" MaxVersionTested="10.0.10156.0" />
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
   </Dependencies>
 
   <Resources>
@@ -43,10 +44,10 @@
   </Applications>
 
   <Capabilities>
-    <!--<Capability Name="iot:systemManagement" />-->
-    <!--<Capability Name="iot:lowLevelDevices" />-->
     <Capability Name="internetClient" />
     <Capability Name="allJoyn"/>
+    <iot:Capability Name="systemManagement" />
+    <iot:Capability Name="lowLevelDevices" />
     <DeviceCapability Name="wiFiControl" />
   </Capabilities>
 </Package>
