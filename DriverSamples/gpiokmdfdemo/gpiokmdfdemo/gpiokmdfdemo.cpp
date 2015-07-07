@@ -7,8 +7,8 @@
 //
 // Abstract:
 //
-//     GpioTestTool driver. Carries out operations on behalf of the usermode
-//     command shell program.
+//     GPIO KMDF Demo Driver. 
+//     Carries out operations on behalf of the usermode command shell program.
 //
 
 #include <ntddk.h>

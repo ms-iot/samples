@@ -48,7 +48,7 @@ DefinitionBlock ("ACPITABL.dat", "SSDT", 1, "MSFT", "gpiodemo", 1)
                 GpioIO(Shared, PullDefault, 0, 0, IoRestrictionNone, "\\_SB.GPO2", 0, ResourceConsumer, , ) { 0 }       // JP1:21
                 GpioIO(Shared, PullDefault, 0, 0, IoRestrictionNone, "\\_SB.GPO2", 0, ResourceConsumer, , ) { 1 }       // JP1:23
                 GpioIO(Shared, PullDefault, 0, 0, IoRestrictionNone, "\\_SB.GPO2", 0, ResourceConsumer, , ) { 2 }       // JP1:25
-                GpioIO(Shared, PullDefault, 0, 0, IoRestrictionNone, "\\_SB.GPO2", 0, ResourceConsumer, , ) { 0, 1, 2 }
+                //GpioIO(Shared, PullDefault, 0, 0, IoRestrictionNone, "\\_SB.GPO2", 0, ResourceConsumer, , ) { 0, 1, 2 }
                 
                 GpioIO(Shared, PullDefault, 0, 0, IoRestrictionNone, "\\_SB.GPO0", 0, ResourceConsumer, , ) { 62 }      // JP1:14
                 GpioIO(Shared, PullDefault, 0, 0, IoRestrictionNone, "\\_SB.GPO0", 0, ResourceConsumer, , ) { 63 }      // JP1:16
