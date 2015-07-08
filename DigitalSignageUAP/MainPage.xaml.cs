@@ -37,7 +37,6 @@ namespace DigitalSignageUAP
     /// </summary>
     static class GlobalTimerWrapper
     {
-        static DispatcherTimer heartBeatTimer;
         static DispatcherTimer reloadContentTimer;
         static private Page currentPage;
         static readonly TimeSpan heartbeatDuration = new TimeSpan(0, 30, 0);
@@ -207,17 +206,7 @@ namespace DigitalSignageUAP
         {
             flyout.ShowIndependent();
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void FeedbackGrid_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(FeedbackPage));
-        }
-
+        
         /// <summary>
         /// 
         /// </summary>

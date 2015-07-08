@@ -39,11 +39,6 @@
         BackgroundColor="#464646">
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
-       <Extensions>
-        <uap:Extension Category="windows.protocol">
-          <uap:Protocol Name="https" />
-        </uap:Extension>
-      </Extensions>
     </Application>
   </Applications>
 
