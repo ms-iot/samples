@@ -116,9 +116,6 @@
     <Compile Include="Common\ObservableDictionary.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
-    <Compile Include="FeedbackPage.xaml.cs">
-      <DependentUpon>FeedbackPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="KeyAssignmentSet.cs" />
     <Compile Include="KeyboardViewModel.cs" />
     <Compile Include="KeyModel.cs" />
@@ -158,10 +155,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="BrowserPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="FeedbackPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
