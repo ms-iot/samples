@@ -21,15 +21,6 @@
 - <!-- Webpage requires a special attribute type and its value to be webpage
   --> 
 - <!-- webpage URLs have to be XML escaped, e.g. below URL, & is replaced to &amp;. Not including the dot.Otherwise it will be considered as malformatted XML
-  --> 
-- <!-- 
-    <file type="webpage" path="http://insights/Report?id=2b66e943-ed71-4a4d-a006-56da5008429b&amp;isPublished=true#_tab=0" duration="30"/>
-    <file path="http://10.125.148.230/test/display/3.wmv"/>
-    <file path="http://10.125.148.230/test/display/4.png"/>
-    <file path="http://10.125.148.230/test/display/5.mp4"/>
-    <file path="http://10.125.148.230/test/display/6.BMP"/>
-
-
-  --> 
+  -->
   </Display>
   </DigitalSignageConfig>
