@@ -67,7 +67,7 @@ namespace DigitalSignageUAP
         static List<object> displayList;
         int currentIndexOfAudio = 0;
         int currentIndexOfDisplay = 0;
-        static DispatcherTimer AcceptUserInputTimer; // = new DispatcherTimer();
+        static DispatcherTimer AcceptUserInputTimer;
         DispatcherTimer DisplayImageWEBTimer;
         StorageFolder localFolder = ApplicationData.Current.LocalFolder;
         static string currentConfigFilePath;
@@ -198,8 +198,6 @@ namespace DigitalSignageUAP
                 videoInstance.Stop();
                 videoInstance.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                 imageInstance.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-                //webViewInstance.Visibility = Windows.UI.Xaml.Visibility.Visible;
-                //webViewInstance.Navigate(currentDO.uri);
 
                 DisplayImageWEBTimer.Interval = new TimeSpan(0, 0, currentDO.duration);
                 DisplayImageWEBTimer.Start();
@@ -212,7 +210,6 @@ namespace DigitalSignageUAP
                 {
                     videoInstance.Stop();
                     videoInstance.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-                    //webViewInstance.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                     imageInstance.Visibility = Windows.UI.Xaml.Visibility.Visible;
                     imageSource = new BitmapImage(new Uri(currentDO.file.Path));
                     imageInstance.Width = imageSource.DecodePixelHeight = (int)this.ActualWidth;
@@ -227,8 +224,6 @@ namespace DigitalSignageUAP
                     videoInstance.Source = new Uri(currentDO.file.Path);
                     videoInstance.Visibility = Windows.UI.Xaml.Visibility.Visible;
                     imageInstance.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-                    //webViewInstance.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-                    // videoInstance.IsFullWindow = true;
                     videoInstance.Play();
                 }
             }
