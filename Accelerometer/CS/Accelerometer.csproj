@@ -11,8 +11,8 @@
     <AssemblyName>Accelerometer</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10156.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10156.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.10192.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10192.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
     <FileAlignment>512</FileAlignment>
@@ -95,7 +95,7 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="WindowsIoT, Version=10.0.10156.0">
+    <SDKReference Include="WindowsIoT, Version=10.0.10192.0">
       <Name>Windows IoT Extension SDK</Name>
     </SDKReference>
   </ItemGroup>
