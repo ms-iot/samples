@@ -23,7 +23,7 @@
     <NuGetPackageImportStamp>4cc9f130</NuGetPackageImportStamp>
   </PropertyGroup>
   <ItemGroup>
-    <SDKReference Include="WindowsIoT, Version=10.0.10156.0">
+    <SDKReference Include="WindowsIoT, Version=10.0.10158.0">
       <Name>Windows IoT Extension SDK</Name>
     </SDKReference>
   </ItemGroup>
