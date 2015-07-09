@@ -61,7 +61,7 @@ namespace DigitalSignageUAP
         const string szAudioFolder = "Audio";
         const string szDisplayFolder = "Display";
         List<string> imageExtensions = new List<string>(new string[] { ".bmp", ".gif", ".ico", ".jpg", ".png", ".wdp", ".tiff" }); // MSDN
-        readonly string defaultConfigFilePath = @"Assets\config.xml";//@"http://iot-digisign01/ds/config.xml";
+        readonly string defaultConfigFilePath = @"Assets\config.xml";
         const string configValueName = "ConfigFilePath";        
         static List<object> audioList;
         static List<object> displayList;
@@ -283,9 +283,6 @@ namespace DigitalSignageUAP
                         else
                         {
                             DisplayObject DO = new DisplayObject();
-                            //HttpClient client = new HttpClient();
-                            //Uri fileElementUri = new Uri(fileElement.Attribute("path").Value);
-                            //HttpResponseMessage response = await client.GetAsync(fileElementUri);
                             string filename = fileElement.Attribute("path").Value.Substring(fileElement.Attribute("path").Value.LastIndexOf('/') + 1);
                             StorageFile file = await tmp.CreateFileAsync(filename, CreationCollisionOption.ReplaceExisting);
                             byte[] bytes = File.ReadAllBytes(filename);
