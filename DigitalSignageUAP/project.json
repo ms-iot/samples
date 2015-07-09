@@ -3,6 +3,8 @@
     "Microsoft.ApplicationInsights": "1.0.0",
     "Microsoft.ApplicationInsights.PersistenceChannel": "1.0.0",
     "Microsoft.ApplicationInsights.WindowsApps": "1.0.0",
+    "Microsoft.Diagnostics.Tracing.EventSource": "1.1.25",
+    "Microsoft.Diagnostics.Tracing.EventSource.Redist": "1.1.25",
     "Microsoft.NETCore.UniversalWindowsPlatform": "1.0.0-beta-23106"
   },
   "frameworks": {
