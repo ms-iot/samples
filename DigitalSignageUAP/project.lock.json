@@ -60,6 +60,27 @@
           "lib/netcore50/Microsoft.CSharp.dll": {}
         }
       },
+      "Microsoft.Diagnostics.Tracing.EventRegister/1.1.25": {},
+      "Microsoft.Diagnostics.Tracing.EventSource/1.1.25": {
+        "dependencies": {
+          "Microsoft.Diagnostics.Tracing.EventSource.Redist": "[1.1.25, )",
+          "Microsoft.Diagnostics.Tracing.EventRegister": "[1.1.25, )"
+        },
+        "compile": {
+          "lib/portable-net45+win8+wpa81/_._": {}
+        },
+        "runtime": {
+          "lib/portable-net45+win8+wpa81/_._": {}
+        }
+      },
+      "Microsoft.Diagnostics.Tracing.EventSource.Redist/1.1.25": {
+        "compile": {
+          "lib/portable-win8+wpa81/Microsoft.Diagnostics.Tracing.EventSource.dll": {}
+        },
+        "runtime": {
+          "lib/portable-win8+wpa81/Microsoft.Diagnostics.Tracing.EventSource.dll": {}
+        }
+      },
       "Microsoft.NETCore/5.0.0-beta-23106": {
         "dependencies": {
           "Microsoft.CSharp": "[4.0.0-beta-23106, )",
