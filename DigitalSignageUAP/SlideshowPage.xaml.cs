@@ -61,7 +61,7 @@ namespace DigitalSignageUAP
         const string szAudioFolder = "Audio";
         const string szDisplayFolder = "Display";
         List<string> imageExtensions = new List<string>(new string[] { ".bmp", ".gif", ".ico", ".jpg", ".png", ".wdp", ".tiff" }); // MSDN
-        readonly string defaultConfigFilePath = @"http://iot-digisign01/ds/config.xml";
+        readonly string defaultConfigFilePath = @"Assets\config.xml";//@"http://iot-digisign01/ds/config.xml";
         const string configValueName = "ConfigFilePath";        
         static List<object> audioList;
         static List<object> displayList;
@@ -71,7 +71,6 @@ namespace DigitalSignageUAP
         DispatcherTimer DisplayImageWEBTimer;
         StorageFolder localFolder = ApplicationData.Current.LocalFolder;
         static string currentConfigFilePath;
-        static bool SlideShowPageFirstTimeLoad = true;
         ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
         BitmapImage imageSource = new BitmapImage();
 
@@ -264,8 +263,7 @@ namespace DigitalSignageUAP
             try
             {
                 HttpClient configClient = new HttpClient();
-                Uri currentConfigFileUri = new Uri(currentConfigFilePath);
-                string configStr = await configClient.GetStringAsync(currentConfigFileUri);
+                string configStr = File.ReadAllText(currentConfigFilePath);
                 XElement xele = XElement.Parse(configStr);
 
                 foreach (XElement xe in xele.Elements())
@@ -285,12 +283,13 @@ namespace DigitalSignageUAP
                         else
                         {
                             DisplayObject DO = new DisplayObject();
-                            HttpClient client = new HttpClient();
-                            Uri fileElementUri = new Uri(fileElement.Attribute("path").Value);
-                            HttpResponseMessage response = await client.GetAsync(fileElementUri);
+                            //HttpClient client = new HttpClient();
+                            //Uri fileElementUri = new Uri(fileElement.Attribute("path").Value);
+                            //HttpResponseMessage response = await client.GetAsync(fileElementUri);
                             string filename = fileElement.Attribute("path").Value.Substring(fileElement.Attribute("path").Value.LastIndexOf('/') + 1);
                             StorageFile file = await tmp.CreateFileAsync(filename, CreationCollisionOption.ReplaceExisting);
-                            await FileIO.WriteBufferAsync(file, await response.Content.ReadAsBufferAsync());
+                            byte[] bytes = File.ReadAllBytes(filename);
+                            await FileIO.WriteBufferAsync(file, WindowsRuntimeBufferExtensions.AsBuffer(bytes));
 
                             if (fileElement.Attribute("duration") != null) // this is an image
                                 DO.duration = Convert.ToInt32(fileElement.Attribute("duration").Value);
