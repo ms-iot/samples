@@ -25,6 +25,21 @@ namespace SDKTemplate
             this.InitializeComponent();
             this.Suspending += OnSuspending;
         }
+        
+        protected override void OnActivated(IActivatedEventArgs args)
+        {
+            if(args == null)
+            {
+                return;
+            }
+            // NOTE: URI protocol handling code currently not implemented. As per the manifest declaration, protocol extension has been added to this app
+            // to prevent Windows.System.Launcher.dll module failure that occurs when attempting to navigate to URLs of this type
+            if (args.Kind == ActivationKind.Protocol)
+            {
+                ProtocolActivatedEventArgs eventArgs = args as ProtocolActivatedEventArgs;
+               System.Diagnostics.Debug.WriteLine(new Uri(eventArgs.Uri.AbsoluteUri));
+            }
+        }
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
