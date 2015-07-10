@@ -10,7 +10,7 @@
     <RootNamespace>WebServerTask</RootNamespace>
     <AssemblyName>WebServerTask</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
-    <TargetPlatformIdentifier>OUAP</TargetPlatformIdentifier>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10192.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.10192.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
