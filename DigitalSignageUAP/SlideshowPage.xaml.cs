@@ -38,7 +38,6 @@ using Windows.UI.Xaml.Navigation;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
-//using System.Net.Http;
 using Windows.Web.Http;
 using System.Xml.Linq;
 using System.Threading;
