@@ -36,9 +36,12 @@ namespace SerialSample
 {    
     public sealed partial class MainPage : Page
     {
+        /// <summary>
+        /// Private variables
+        /// </summary>
         private SerialDevice serialPort = null;
-        DataWriter DataWriteObject = null;
-        DataReader DataReaderObject = null;
+        DataWriter dataWriteObject = null;
+        DataReader dataReaderObject = null;
 
         private ObservableCollection<DeviceInformation> listOfDevices;
         private CancellationTokenSource ReadCancellationTokenSource;
@@ -52,6 +55,11 @@ namespace SerialSample
             ListAvailablePorts();
         }
 
+        /// <summary>
+        /// ListAvailablePorts
+        /// - Uses SerialDevice.GetDeviceSelector to enumerate all serial devices
+        /// - Attaches the device information to the ListBox source so that DeviceIds are displayes
+        /// </summary>
         private async void ListAvailablePorts()
         {
             try
@@ -75,6 +83,16 @@ namespace SerialSample
                 status.Text = ex.Message;
             }
         }
+
+        /// <summary>
+        /// comPortInput_Click: Action to take when 'Connect' is clicked on
+        /// - Get the selected device index and use DeviceId to create SerialDevice object
+        /// - Configure default settings for the serial port
+        /// - Create the ReadCancellationTokenSource token
+        /// - Add text to rcvdText textbox to invoke rcvdText_TextChanged event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void comPortInput_Click(object sender, RoutedEventArgs e)
         {
             var selection = ConnectDevices.SelectedItems;
@@ -126,15 +144,22 @@ namespace SerialSample
                 comPortInput.IsEnabled = true;
                 sendTextButton.IsEnabled = false;
             }
-        }        
-       
+        }
+
+        /// <summary>
+        /// sendTextButton_Click: Action to take when 'WRITE' is clicked on
+        /// - Create a DataWriter object with the OutputStream of the SerialDevice
+        /// - Create an async task that copies the user text to the DataWriter object
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void sendTextButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (serialPort != null)
                 {
-                    DataWriteObject = new DataWriter(serialPort.OutputStream);
+                    dataWriteObject = new DataWriter(serialPort.OutputStream);
                     await WriteAsync();
                 }
                 else
@@ -148,10 +173,10 @@ namespace SerialSample
             }
             finally
             {
-                if (DataWriteObject != null)
+                if (dataWriteObject != null)
                 {
-                    DataWriteObject.DetachStream();
-                    DataWriteObject = null;
+                    dataWriteObject.DetachStream();
+                    dataWriteObject = null;
                 }
             }
         }
@@ -165,10 +190,10 @@ namespace SerialSample
                 char[] buffer = new char[WriteBytesInputValue.Text.Length];
                 WriteBytesInputValue.Text.CopyTo(0, buffer, 0, WriteBytesInputValue.Text.Length);
                 String InputString = new string(buffer);
-                DataWriteObject.WriteString(InputString);
+                dataWriteObject.WriteString(InputString);
                 WriteBytesInputValue.Text = "";
 
-                storeAsyncTask = DataWriteObject.StoreAsync().AsTask();
+                storeAsyncTask = dataWriteObject.StoreAsync().AsTask();
 
                 UInt32 bytesWritten = await storeAsyncTask;
                 if (bytesWritten > 0)
@@ -183,13 +208,20 @@ namespace SerialSample
             }
         }
 
+        /// <summary>
+        /// rcvdText_TextChanged: Action to take when text is entered in the 'Read Data' textbox
+        /// - Create a DataReader object
+        /// - Create an async task to read from the SerialDevice InputStream
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void rcvdText_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
             {
                 if (serialPort != null)
                 {
-                    DataReaderObject = new DataReader(serialPort.InputStream);
+                    dataReaderObject = new DataReader(serialPort.InputStream);
                     await ReadAsync(ReadCancellationTokenSource.Token);
                 }
             }
@@ -207,10 +239,10 @@ namespace SerialSample
             }
             finally
             {
-                if (DataReaderObject != null)
+                if (dataReaderObject != null)
                 {
-                    DataReaderObject.DetachStream();
-                    DataReaderObject = null;
+                    dataReaderObject.DetachStream();
+                    dataReaderObject = null;
                 }
             }
         }
@@ -222,17 +254,21 @@ namespace SerialSample
 
             cancellationToken.ThrowIfCancellationRequested();
 
-            DataReaderObject.InputStreamOptions = InputStreamOptions.Partial;
-            loadAsyncTask = DataReaderObject.LoadAsync(ReadBufferLength).AsTask(cancellationToken);
+            dataReaderObject.InputStreamOptions = InputStreamOptions.Partial;
+            loadAsyncTask = dataReaderObject.LoadAsync(ReadBufferLength).AsTask(cancellationToken);
 
             UInt32 bytesRead = await loadAsyncTask;
             if (bytesRead > 0)
             {
-                rcvdText.Text = DataReaderObject.ReadString(bytesRead);
+                rcvdText.Text = dataReaderObject.ReadString(bytesRead);
             }
             status.Text = "\nBytes read successfully!";
         }
 
+        /// <summary>
+        /// CancelReadTask:
+        /// - Uses the ReadCancellationTokenSource to cancel read operations
+        /// </summary>
         private void CancelReadTask()
         {         
             if (ReadCancellationTokenSource != null)
@@ -244,6 +280,11 @@ namespace SerialSample
             }         
         }
 
+        /// <summary>
+        /// CloseDevice:
+        /// - Disposes SerialDevice object
+        /// - Clears the enumerated device Id list
+        /// </summary>
         private void CloseDevice()
         {            
             if (serialPort != null)
@@ -257,6 +298,15 @@ namespace SerialSample
             rcvdText.Text = "";
             listOfDevices.Clear();               
         }
+
+        /// <summary>
+        /// closeDevice_Click: Action to take when 'Disconnect and Refresh List' is clicked on
+        /// - Cancel all read operations
+        /// - Close and dispose the SerialDevice object
+        /// - Enumerate connected devices
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void closeDevice_Click(object sender, RoutedEventArgs e)
         {
             try
