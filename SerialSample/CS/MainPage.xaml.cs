@@ -1,26 +1,4 @@
-﻿/*
-    Copyright(c) Microsoft Open Technologies, Inc. All rights reserved.
-
-    The MIT License(MIT)
-
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files(the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions :
-
-    The above copyright notice and this permission notice shall be included in
-    all copies or substantial portions of the Software.
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-    THE SOFTWARE.
-*/
+﻿// Copyright (c) Microsoft. All rights reserved.
 
 using System;
 using System.Collections.ObjectModel;
@@ -57,8 +35,8 @@ namespace SerialSample
 
         /// <summary>
         /// ListAvailablePorts
-        /// - Uses SerialDevice.GetDeviceSelector to enumerate all serial devices
-        /// - Attaches the device information to the ListBox source so that DeviceIds are displayes
+        /// - Use SerialDevice.GetDeviceSelector to enumerate all serial devices
+        /// - Attaches the DeviceInformation to the ListBox source so that DeviceIds are displayed
         /// </summary>
         private async void ListAvailablePorts()
         {
@@ -85,8 +63,8 @@ namespace SerialSample
         }
 
         /// <summary>
-        /// comPortInput_Click: Action to take when 'Connect' is clicked on
-        /// - Get the selected device index and use DeviceId to create SerialDevice object
+        /// comPortInput_Click: Action to take when 'Connect' button is clicked
+        /// - Get the selected device index and use Id to create the SerialDevice object
         /// - Configure default settings for the serial port
         /// - Create the ReadCancellationTokenSource token
         /// - Add text to rcvdText textbox to invoke rcvdText_TextChanged event
@@ -99,6 +77,7 @@ namespace SerialSample
 
             if (selection.Count <= 0)
             {
+                status.Text = "Select a device and connect";
                 return;
             }
 
@@ -108,7 +87,7 @@ namespace SerialSample
             {                
                 serialPort = await SerialDevice.FromIdAsync(entry.Id);
 
-                // Disable the 'OK' button 
+                // Disable the 'Connect' button 
                 comPortInput.IsEnabled = false;
 
                 // Configure serial settings
@@ -125,8 +104,7 @@ namespace SerialSample
                 status.Text += "DataBits: " + serialPort.DataBits.ToString() + "\n";
                 status.Text += "Handshake: " + serialPort.Handshake.ToString() + "\n";
                 status.Text += "Parity: " + serialPort.Parity.ToString() + "\n";
-                status.Text += "StopBits: " + serialPort.StopBits.ToString() + "\n";                
-                status.Text += "FlowControl: None\n";                
+                status.Text += "StopBits: " + serialPort.StopBits.ToString() + "\n";                            
                     
                 // Set the RcvdText field to invoke the TextChanged callback
                 // The callback launches an async Read task to wait for data
@@ -147,24 +125,27 @@ namespace SerialSample
         }
 
         /// <summary>
-        /// sendTextButton_Click: Action to take when 'WRITE' is clicked on
+        /// sendTextButton_Click: Action to take when 'WRITE' button is clicked
         /// - Create a DataWriter object with the OutputStream of the SerialDevice
-        /// - Create an async task that copies the user text to the DataWriter object
+        /// - Create an async task that performs the write operation
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private async void sendTextButton_Click(object sender, RoutedEventArgs e)
         {
             try
-            {
+            {                
                 if (serialPort != null)
                 {
+                    // Create the DataWriter object and attach to OutputStream
                     dataWriteObject = new DataWriter(serialPort.OutputStream);
+
+                    //Launch the WriteAsync task to perform the write
                     await WriteAsync();
                 }
                 else
                 {
-                    status.Text = "Enter serial port number before sending text\n";                
+                    status.Text = "Select a device and connect";                
                 }
             }
             catch (Exception ex)
@@ -173,6 +154,7 @@ namespace SerialSample
             }
             finally
             {
+                // Cleanup once complete
                 if (dataWriteObject != null)
                 {
                     dataWriteObject.DetachStream();
@@ -181,30 +163,33 @@ namespace SerialSample
             }
         }
 
+        /// <summary>
+        /// WriteAsync: Task that asynchronously writes data from the input text box 'sendText' to the OutputStream 
+        /// </summary>
+        /// <returns></returns>
         private async Task WriteAsync()
         {
             Task<UInt32> storeAsyncTask;
 
-            if (WriteBytesInputValue.Text.Length != 0)
+            if (sendText.Text.Length != 0)
             {
-                char[] buffer = new char[WriteBytesInputValue.Text.Length];
-                WriteBytesInputValue.Text.CopyTo(0, buffer, 0, WriteBytesInputValue.Text.Length);
-                String InputString = new string(buffer);
-                dataWriteObject.WriteString(InputString);
-                WriteBytesInputValue.Text = "";
+                // Load the text from the sendText input text box to the dataWriter object
+                dataWriteObject.WriteString(sendText.Text);                
 
+                // Launch an async task to complete the write operation
                 storeAsyncTask = dataWriteObject.StoreAsync().AsTask();
 
                 UInt32 bytesWritten = await storeAsyncTask;
                 if (bytesWritten > 0)
-                {
-                    status.Text = InputString.Substring(0, (int)bytesWritten) + '\n';
+                {                    
+                    status.Text = sendText.Text + '\n';
+                    status.Text += "Bytes written successfully!";
                 }
-                status.Text += "Bytes written successfully!";
+                sendText.Text = "";
             }
             else
             {
-                status.Text = "No input received to write";
+                status.Text = "Enter the text you want to write and then click on 'WRITE'";
             }
         }
 
@@ -239,6 +224,7 @@ namespace SerialSample
             }
             finally
             {
+                // Cleanup once complete
                 if (dataReaderObject != null)
                 {
                     dataReaderObject.DetachStream();
@@ -246,23 +232,34 @@ namespace SerialSample
                 }
             }
         }
+
+        /// <summary>
+        /// ReadAsync: Task that waits on data and reads asynchronously from the serial device InputStream
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         private async Task ReadAsync(CancellationToken cancellationToken)
         {
             Task<UInt32> loadAsyncTask;
 
             uint ReadBufferLength = 1024;
 
+            // If task cancellation was requested, comply
             cancellationToken.ThrowIfCancellationRequested();
 
+            // Set InputStreamOptions to complete the asynchronous read operation when one or more bytes is available
             dataReaderObject.InputStreamOptions = InputStreamOptions.Partial;
+
+            // Create a task object to wait for data on the serialPort.InputStream
             loadAsyncTask = dataReaderObject.LoadAsync(ReadBufferLength).AsTask(cancellationToken);
 
+            // Launch the task and wait
             UInt32 bytesRead = await loadAsyncTask;
             if (bytesRead > 0)
             {
                 rcvdText.Text = dataReaderObject.ReadString(bytesRead);
-            }
-            status.Text = "\nBytes read successfully!";
+                status.Text = "\nBytes read successfully!";
+            }            
         }
 
         /// <summary>
