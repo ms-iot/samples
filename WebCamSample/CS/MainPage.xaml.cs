@@ -406,8 +406,7 @@ namespace WebCamSample
                     status.Text = "Playback recorded audio: " + audioFile.Path;
                     playbackElement3.AutoPlay = true;
                     playbackElement3.SetSource(stream, audioFile.FileType);
-                    playbackElement3.Play();
-                    stream.Dispose();
+                    playbackElement3.Play();                    
                 }
             }
             catch (Exception ex)
