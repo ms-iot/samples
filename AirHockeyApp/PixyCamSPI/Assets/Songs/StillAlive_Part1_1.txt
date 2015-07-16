@@ -1,0 +1,479 @@
+// Measure 0
+G4,0.5
+FSharp4,0.5
+E4,0.5
+E4,0.5
+// Measure 1
+FSharp4,2
+Rest,2
+// Measure 2
+Rest,1
+Rest,0.5
+A3,0.5
+G4,0.5
+FSharp4,0.5
+E4,0.5
+// Measure 3
+E4,1
+FSharp4,1.5
+D4,1
+E4,0.5
+// Measure 4
+A3,4
+A3,0.5
+// Measure 5
+E4,1
+FSharp4,0.5
+G4,1.5
+E4,0.5
+// Measure 6
+CSharp4,1
+D4,1.5
+E4,1
+A3,0.5
+// Measure 7
+A3,1
+FSharp4,3.5
+// Measure 8
+Rest,2
+G4,0.5
+FSharp4,0.5
+E4,0.5
+E4,0.5
+// Measure 9
+FSharp4,2
+Rest,2
+// Measure 10
+Rest,1
+Rest,0.5
+A3,0.5
+G4,0.5
+FSharp4,0.5
+E4,0.5
+// Measure 11
+E4,1.5
+FSharp4,0.5
+D4,1.5
+E4,0.5
+// Measure 12
+A3,2.5
+Rest,2
+// Measure 13
+E4,1
+FSharp4,0.5
+G4,1.5
+E4,0.5
+// Measure 14
+CSharp4,1.5
+D4,0.5
+E4,1
+A3,0.5
+D4,0.5
+E4,0.5
+// Measure 15
+F4,0.5
+E4,0.5
+D4,0.5
+C4,0.5
+Rest,1
+A3,0.5
+Bb3,0.5
+// Measure 16
+C4,1
+F4,1
+E4,0.5
+D4,0.5
+D4,0.5
+C4,0.5
+// Measure 17
+D4,0.5
+C4,0.5
+C4,1
+C4,1
+A3,0.5
+Bb3,0.5
+// Measure 18
+C4,1
+F4,1
+G4,0.5
+F4,0.5
+E4,0.5
+D4,0.5
+// Measure 19
+D4,0.5
+E4,0.5
+F4,1
+F4,1
+G4,0.5
+A4,0.5
+// Measure 20
+Bb4,0.5
+Bb4,0.5
+A4,1
+G4,1
+F4,0.5
+G4,0.5
+// Measure 21
+A4,0.5
+A4,0.5
+G4,1
+F4,1
+D4,0.5
+C4,0.5
+// Measure 22
+D4,0.5
+F4,0.5
+F4,0.5
+E4,1
+E4,0.5
+FSharp4,0.5
+FSharp4,0.5
+// Measure 23
+A4,0.5
+D5,0.5
+FSharp5,0.5
+D5,0.5
+B4,0.5
+D5,0.5
+FSharp5,0.5
+D5,0.5
+// Measure 24
+A4,0.5
+D5,0.5
+FSharp5,0.5
+D5,0.5
+B4,0.5
+D5,0.5
+FSharp5,0.5
+D5,0.5
+// Measure 25
+A4,0.5
+D5,0.5
+FSharp5,0.5
+D5,0.5
+B4,0.5
+D5,0.5
+FSharp5,0.5
+D5,0.5
+// Measure 26
+Rest,1
+Rest,0.5
+A3,0.5
+G4,0.5
+FSharp4,0.5
+E4,0.5
+// Measure 27
+E4,0.75
+FSharp4,1.75
+Rest,2
+// Measure 28
+Rest,1
+Rest,0.5
+A3,0.5
+G4,0.5
+FSharp4,0.5
+E4,0.5
+// Measure 29
+E4,1.5
+FSharp4,0.5
+D4,1
+E4,1
+// Measure 30
+A3,2.5
+Rest,2
+// Measure 31
+E4,1
+FSharp4,0.5
+G4,1.5
+E4,1
+// Measure 32
+CSharp4,1
+D4,0.5
+E4,1.5
+A3,0.5
+// Measure 33
+A3,1
+FSharp4,2.5
+Rest,1
+// Measure 34
+Rest,1
+Rest,0.5
+A3,0.5
+G4,0.5
+FSharp4,0.5
+E4,0.5
+E4,0.5
+// Measure 35
+FSharp4,1
+Rest,1
+Rest,2
+// Measure 36
+Rest,1
+Rest,0.5
+A3,0.5
+G4,0.5
+FSharp4,0.5
+E4,0.5
+// Measure 37
+E4,1.5
+FSharp4,0.5
+D4,1.5
+E4,0.5
+// Measure 38
+A3,2.5
+Rest,2
+// Measure 39
+E4,1
+FSharp4,0.5
+G4,1.5
+E4,1
+// Measure 40
+CSharp4,1
+D4,0.5
+E4,1
+A3,0.5
+D4,0.5
+E4,0.5
+// Measure 41
+F4,0.5
+E4,0.5
+D4,0.5
+C4,1.5
+A3,0.5
+Bb3,0.5
+// Measure 42
+C4,1
+F4,1
+E4,0.5
+D4,0.5
+D4,0.5
+C4,0.5
+// Measure 43
+D4,0.5
+C4,0.5
+C4,1
+C4,1
+A3,0.5
+Bb3,0.5
+// Measure 44
+C4,1
+F4,1
+G4,0.5
+F4,0.5
+E4,0.5
+D4,0.5
+// Measure 45
+D4,0.5
+E4,0.5
+F4,1
+F4,1
+G4,0.5
+A4,0.5
+// Measure 46
+Bb4,0.5
+Bb4,0.5
+A4,0.5
+A4,0.5
+G4,1
+F4,0.5
+G4,0.5
+// Measure 47
+A4,0.5
+A4,0.5
+G4,0.5
+F4,0.5
+F4,1
+D4,0.5
+C4,0.5
+// Measure 48
+D4,0.5
+F4,0.5
+F4,0.5
+E4,1
+E4,0.5
+FSharp4,0.5
+// Measure 49
+FSharp4,2.5
+Rest,2
+// Measure 50
+Rest,4
+// Measure 51
+Rest,4
+// Measure 26 (Repeat)
+Rest,1
+Rest,0.5
+A3,0.5
+G4,0.5
+FSharp4,0.5
+E4,0.5
+// Measure 27 (Repeat)
+E4,0.75
+FSharp4,1.75
+Rest,2
+// Measure 28 (Repeat)
+Rest,1
+Rest,0.5
+A3,0.5
+G4,0.5
+FSharp4,0.5
+E4,0.5
+// Measure 29 (Repeat)
+E4,1.5
+FSharp4,0.5
+D4,1
+E4,1
+// Measure 30 (Repeat)
+A3,2.5
+Rest,2
+// Measure 31 (Repeat)
+E4,1
+FSharp4,0.5
+G4,1.5
+E4,1
+// Measure 32 (Repeat)
+CSharp4,1
+D4,0.5
+E4,1.5
+A3,0.5
+// Measure 33 (Repeat)
+A3,1
+FSharp4,2.5
+Rest,1
+// Measure 34 (Repeat)
+Rest,1
+Rest,0.5
+A3,0.5
+G4,0.5
+FSharp4,0.5
+E4,0.5
+E4,0.5
+// Measure 35 (Repeat)
+FSharp4,1
+Rest,1
+Rest,2
+// Measure 36 (Repeat)
+Rest,1
+Rest,0.5
+A3,0.5
+G4,0.5
+FSharp4,0.5
+E4,0.5
+// Measure 37 (Repeat)
+E4,1.5
+FSharp4,0.5
+D4,1.5
+E4,0.5
+// Measure 38 (Repeat)
+A3,2.5
+Rest,2
+// Measure 39 (Repeat)
+E4,1
+FSharp4,0.5
+G4,1.5
+E4,1
+// Measure 40 (Repeat)
+CSharp4,1
+D4,0.5
+E4,1
+A3,0.5
+D4,0.5
+E4,0.5
+// Measure 41 (Repeat)
+F4,0.5
+E4,0.5
+D4,0.5
+C4,1.5
+A3,0.5
+Bb3,0.5
+// Measure 42 (Repeat)
+C4,1
+F4,1
+E4,0.5
+D4,0.5
+D4,0.5
+C4,0.5
+// Measure 43 (Repeat)
+D4,0.5
+C4,0.5
+C4,1
+C4,1
+A3,0.5
+Bb3,0.5
+// Measure 44 (Repeat)
+C4,1
+F4,1
+G4,0.5
+F4,0.5
+E4,0.5
+D4,0.5
+// Measure 45 (Repeat)
+D4,0.5
+E4,0.5
+F4,1
+F4,1
+G4,0.5
+A4,0.5
+// Measure 46 (Repeat)
+Bb4,0.5
+Bb4,0.5
+A4,0.5
+A4,0.5
+G4,1
+F4,0.5
+G4,0.5
+// Measure 47 (Repeat)
+A4,0.5
+A4,0.5
+G4,0.5
+F4,0.5
+F4,1
+D4,0.5
+C4,0.5
+// Measure 48 (Repeat)
+D4,0.5
+F4,0.5
+F4,0.5
+E4,1
+E4,0.5
+FSharp4,0.5
+FSharp4,0.5
+// Measure 52
+FSharp4,2
+Rest,0.5
+A4,0.5
+A4,0.5
+A4,0.5
+// Measure 53
+B4,0.5
+A4,0.5
+FSharp4,0.5
+D4,1
+E4,0.5
+FSharp4,0.5
+// Measure 52 (Repeat)
+FSharp4,3
+A4,0.5
+A4,0.5
+A4,0.5
+// Measure 53 (Repeat)
+B4,0.5
+A4,0.5
+FSharp4,0.5
+D4,1
+E4,0.5
+FSharp4,0.5
+FSharp4,0.5
+// Measure 54
+Rest,1
+Rest,0.5
+G4,0.5
+A4,0.5
+// Measure 55
+A4,1.5
+Rest,1
+Rest,0.5
+G4,0.5
+FSharp4,0.5
+// Measure 56
+FSharp4,2.5
+Rest,2

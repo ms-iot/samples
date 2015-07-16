@@ -1,0 +1,201 @@
+// Measure 1
+G3,1.5
+C3,1.5
+C4,1
+// Measure 2
+G3,1.5
+C3,1.5
+C4,1
+// Measure 3
+G3,1.5
+C3,1.5
+C4,1
+// Measure 4
+G3,1.5
+C3,1.5
+C4,1
+// Measure 5
+G3,4
+// Measure 6
+C3,1.5
+C3,1.5
+C3,1
+// Measure 7
+C3,2
+Rest,2
+// Measure 8
+B2,1.5
+B2,1.5
+B2,1
+// Measure 9
+B2,2
+Rest,2
+// Measure 10
+A2,4
+// Measure 11
+A2,4
+// Measure 12
+G2,1.5
+G2,1.5
+G2,1
+// Measure 13
+G2,2
+Rest,2
+// Measure 14
+F3,2
+F3,2
+// Measure 15
+E3,2
+E3,2
+// Measure 16
+E3,2
+E3,2
+// Measure 17
+A2,1.5
+A3,1.5
+E3,1
+// Measure 18
+D3,4
+// Measure 19
+D2,1.5
+E2,1.5
+F2,1
+// Measure 20
+G2,2
+Rest,2
+// Measure 21
+Ab2,2
+D3,2
+// Measure 22
+B2,2
+D3,2
+// Measure 23
+C3,4
+// Measure 24
+Rest,4
+// Measure 25
+Rest,4
+// Measure 26
+Rest,4
+// Measure 27
+Rest,4
+// Measure 28
+Rest,4
+// Measure 29
+C3,1
+C3,1
+C3,1
+C3,1
+// Measure 30
+C3,1
+C3,1
+C3,1
+C3,1
+// Measure 31
+B2,1
+B2,1
+B2,1
+B2,1
+// Measure 32
+B2,1
+B2,1
+B2,1
+B2,1
+// Measure 33
+A2,1
+A2,1
+A2,1
+A2,1
+// Measure 34
+A2,1
+A2,1
+A2,1
+A2,1
+// Measure 35
+G2,1
+G2,1
+G2,1
+G2,1
+// Measure 36
+G2,2
+Rest,0.5
+Rest,0.5
+A2,0.25
+B2,0.25
+C3,0.25
+D3,0.25
+// Measure 37
+F3,2
+F3,2
+// Measure 38
+E3,2
+E3,2
+// Measure 39
+E3,2
+E3,2
+// Measure 40
+A2,2
+Rest,2
+// Measure 41
+// Measure 42
+D3,5
+// Measure 43
+// Measure 44
+C3,8
+// Measure 45
+Rest,4
+// Measure 46
+Rest,4
+// Measure 47
+Rest,4
+// Measure 48
+Rest,4
+// Measure 49
+Rest,4
+// Measure 50
+Rest,4
+// Measure 51
+C3,2
+C3,2
+// Measure 52
+C3,2
+C3,2
+// Measure 53
+B2,2
+B2,2
+// Measure 54
+B2,2
+B2,2
+// Measure 55
+A2,2
+A2,2
+// Measure 56
+A2,2
+A2,2
+// Measure 57
+G2,4
+// Measure 58
+Rest,4
+// Measure 59
+F3,2
+F3,2
+// Measure 60
+E3,2
+E3,2
+// Measure 61
+E3,2
+E3,2
+// Measure 62
+// Measure 63
+A2,5
+// Measure 64
+Rest,2
+C3,2
+// Measure 65
+// Measure 66
+C3,5
+C3,2
+// Measure 67
+D3,4
+// Measure 68
+C3,4

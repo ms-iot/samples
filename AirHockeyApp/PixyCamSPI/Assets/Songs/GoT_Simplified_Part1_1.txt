@@ -1,0 +1,315 @@
+// Measure 1
+G5,1
+C5,1
+Eb5,0.5
+F5,0.5
+G5,1
+C5,1
+Eb5,0.5
+F5,0.5
+// Measure 2
+G5,1
+C5,1
+Eb5,0.5
+F5,0.5
+G5,1
+C5,1
+Eb5,0.5
+F5,0.5
+// Measure 3
+G5,1
+C5,1
+E5,0.5
+F5,0.5
+G5,1
+C5,1
+E5,0.5
+F5,0.5
+// Measure 4
+G5,1
+C5,1
+E5,0.5
+F5,0.5
+G5,1
+C5,1
+E5,0.5
+F5,0.5
+// Measure 5
+G4,3
+C4,3
+// Measure 6
+Eb4,0.5
+F4,0.5
+G4,2
+C4,2
+Eb4,0.5
+F4,0.5
+// Measure 7
+D4,1
+G3,1
+Bb3,0.5
+C4,0.5
+D4,1
+G3,1
+Bb3,0.5
+C4,0.5
+// Measure 8
+D4,1
+G3,1
+Bb3,0.5
+C4,0.5
+D4,1
+G3,1
+Bb3,0.5
+C4,0.5
+// Measure 9
+F4,3
+Bb3,3
+// Measure 10
+Eb4,0.5
+D4,0.5
+F4,2
+Bb3,2
+Eb4,0.5
+D4,0.5
+// Measure 11
+C4,1
+F3,1
+Ab3,0.5
+Bb3,0.5
+C4,1
+F3,1
+Ab3,0.5
+Bb3,0.5
+// Measure 12
+C4,1
+F3,1
+Ab3,0.5
+Bb3,0.5
+C4,1
+F3,1
+Ab3,0.5
+Bb3,0.5
+// Measure 13
+G4,3
+C4,3
+// Measure 14
+Eb4,0.5
+F4,0.5
+G4,2
+C4,2
+Eb4,0.5
+F4,0.5
+// Measure 15
+D4,1
+G3,1
+Bb3,0.5
+C4,0.5
+D4,1
+G3,1
+Bb3,0.5
+C4,0.5
+// Measure 16
+D4,1
+G3,1
+Bb3,0.5
+C4,0.5
+D4,1
+G3,1
+Bb3,0.5
+C4,0.5
+// Measure 17
+F4,3
+Bb3,3
+// Measure 18
+Eb4,0.5
+D4,0.5
+F4,2
+Bb3,2
+Eb4,0.5
+D4,0.5
+// Measure 19
+C4,1
+G3,1
+Ab3,0.5
+Bb3,0.5
+C4,1
+G3,1
+Ab3,0.5
+Bb3,0.5
+// Measure 20
+C4,1
+G3,1
+Ab3,0.5
+Bb3,0.5
+C4,1
+G3,1
+Ab3,0.5
+Bb3,0.5
+// Measure 21
+G5,3
+C5,3
+// Measure 22
+Eb5,0.5
+F5,0.5
+G5,2
+C5,2
+Eb5,0.5
+F5,0.5
+// Measure 23
+D4,2
+Bb3,0.5
+C4,0.5
+D4,2
+Bb3,0.5
+C4,0.5
+// Measure 24
+D4,2
+Bb3,0.5
+C4,0.5
+D4,2
+Bb3,0.5
+C4,0.5
+// Measure 25
+F5,3
+Bb4,3
+// Measure 26
+D5,1.5
+Eb5,1.5
+D5,1.5
+Bb4,1.5
+// Measure 27
+C4,1
+G3,1
+Ab3,0.5
+Bb3,0.5
+C4,1
+G3,1
+Ab3,0.5
+Bb3,0.5
+// Measure 28
+C4,1
+G3,1
+Ab3,0.5
+Bb3,0.5
+C4,1
+G3,1
+Ab3,0.5
+Bb3,0.5
+// Measure 29
+C5,6
+// Measure 30
+Bb4,6
+// Measure 31
+Ab4,6
+// Measure 32
+G4,6
+// Measure 33
+Eb4,6
+// Measure 34
+Eb4,2
+Eb4,1
+F4,2
+F4,1
+// Measure 35
+C4,1
+G3,1
+Ab3,0.5
+Bb3,0.5
+C4,1
+G3,1
+Ab3,0.5
+Bb3,0.5
+// Measure 36
+C4,1
+G3,1
+Ab3,0.5
+Bb3,0.5
+C4,1
+G3,1
+Ab3,0.5
+Bb3,0.5
+// Measure 37
+C5,1
+Eb4,1
+Ab4,0.5
+Bb4,0.5
+C5,1
+Eb4,1
+Ab4,0.5
+C5,0.5
+// Measure 38
+Bb4,1
+Eb4,1
+G4,0.5
+Ab4,0.5
+Bb4,1
+Eb4,1
+G4,0.5
+Bb4,0.5
+// Measure 39
+Ab4,1
+C4,1
+F4,0.5
+G4,0.5
+Ab4,1
+C4,1
+F4,0.5
+Ab4,0.5
+// Measure 40
+G4,1
+C4,1
+Eb4,0.5
+F4,0.5
+G4,1
+C4,1
+Eb4,0.5
+F4,0.5
+// Measure 41
+Eb4,1
+Ab3,1
+C4,0.5
+D4,0.5
+Eb4,1
+Ab3,1
+C4,0.5
+D4,0.5
+// Measure 42
+Eb4,1
+C4,1
+Eb4,1
+D4,1
+Bb3,1
+D4,1
+// Measure 43
+C4,1
+G3,1
+Ab3,0.5
+Bb3,0.5
+C4,1
+G3,1
+Ab3,0.5
+Bb3,0.5
+// Measure 44
+C5,1
+G4,1
+Ab4,0.5
+Bb4,0.5
+C5,1
+G4,1
+Ab4,0.5
+Bb4,0.5
+// Measure 45
+C5,1
+G5,1
+Ab5,0.5
+Bb5,0.5
+C6,1
+G5,1
+Ab5,0.5
+Bb5,0.5
+// Measure 46
+G5,1
+Ab5,0.5
+Bb5,0.5
+C6,3
