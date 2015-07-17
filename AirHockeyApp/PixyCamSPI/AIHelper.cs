@@ -36,11 +36,11 @@ namespace AirHockeyApp
         public RobotMode Mode;
         public Queue<Point> CommandQueue = new Queue<Point>();
 
-        private Robot _robot;
+        private Robot robot;
         private Point previousTrajectoryPoint;
         private List<Point> previousBouncePoints = new List<Point>();
         private Point defenseOffset;
-        private CenterOfMass _com;
+        private CenterOfMass com;
 
         private double speed;
         private Point puckPosition;
@@ -58,14 +58,14 @@ namespace AirHockeyApp
 
         public AIHelper(Robot robot)
         {
-            _robot = robot;
-            _com = new CenterOfMass();
+            this.robot = robot;
+            com = new CenterOfMass();
             previousTrajectoryPoint = CoordinateHelper.INVALID_POINT;
         }
 
         public Point GetPuckCenterOfMass()
         {
-            return _com.Position;
+            return com.Position;
         }
 
         public Point GetPuckPosition()
@@ -190,13 +190,13 @@ namespace AirHockeyApp
 
             // Calculate center of mass for trajectory calculations
             // Get the previous center of mass position
-            Point prevCenterOfMass = _com.Position;
+            Point prevCenterOfMass = com.Position;
             // Add the new puck position to the queue for calculations
-            _com.SafeEnqueue(currentPuckPosition);
+            com.SafeEnqueue(currentPuckPosition);
             // Calculate the new center of mass
-            Point centerOfMass = _com.Calculate();
+            Point centerOfMass = com.Calculate();
 
-            calculateLine(_com.PointQueue.ToArray());
+            calculateLine(com.PointQueue.ToArray());
 
             // If we don't have the previous center of mass, we can't do trajectory calculations, so skip this
             if (prevCenterOfMass == CoordinateHelper.INVALID_POINT)
@@ -211,9 +211,9 @@ namespace AirHockeyApp
             // Convert everything to positions (coordinates in the coordinate plane) or offsets (steps for motors)
             Point malletTargetOffset = CoordinateHelper.INVALID_POINT;
             // Mallet offset
-            Point currentMalletOffset = new Point(_robot.StepperX.CurrentPosition(), _robot.StepperY.CurrentPosition());
+            Point currentMalletOffset = new Point(robot.StepperX.CurrentPosition(), robot.StepperY.CurrentPosition());
             // Mallet target in steps
-            Point currentMalletTargetOffset = new Point(_robot.StepperX.TargetPosition(), _robot.StepperY.TargetPosition());
+            Point currentMalletTargetOffset = new Point(robot.StepperX.TargetPosition(), robot.StepperY.TargetPosition());
             // Mallet position coordinates
             Point currentMalletPosition = MotorHelper.GetCoordinatesFromOffset(currentMalletOffset);
             // Mallet target coordinates

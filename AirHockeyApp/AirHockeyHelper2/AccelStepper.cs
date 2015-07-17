@@ -12,55 +12,55 @@ namespace AirHockeyHelper2
     public class AccelStepper
     {
         Stopwatch stopwatch;
-        Direction _direction;
+        Direction direction;
 
         public bool Debug = false;
 
         #region Private variables
 
-        GpioPin _motorPin;
+        GpioPin motorPin;
 
-        GpioPin _directionPin;
+        GpioPin directionPin;
 
-        GpioPinValue _clockwiseValue;
+        GpioPinValue clockwiseValue;
 
         /// The current absolution position in steps.
-        long _currentPos;    // Steps
+        long currentPos;    // Steps
 
         /// The target position in steps. The AccelStepper library will move the
-        /// motor from the _currentPos to the _targetPos, taking into account the
+        /// motor from the currentPos to the targetPos, taking into account the
         /// max speed, acceleration and deceleration
-        long _targetPos;     // Steps
+        long targetPos;     // Steps
 
         /// The current motos speed in steps per second
         /// Positive is clockwise
-        float _speed;         // Steps per second
+        float speed;         // Steps per second
 
         /// The maximum permitted speed in steps per second. Must be > 0.
-        float _maxSpeed;
+        float maxSpeed;
 
         /// The acceleration to use to accelerate or decelerate the motor in steps
         /// per second per second. Must be > 0
-        float _acceleration;
+        float acceleration;
 
         /// The current interval between steps in ticks.
-        /// 0 means the motor is currently stopped with _speed == 0
-        long _stepInterval;
+        /// 0 means the motor is currently stopped with speed == 0
+        long stepInterval;
 
         /// The last step time in ticks
-        long _lastStepTime;
+        long lastStepTime;
 
         /// The step counter for speed calculations
-        long _n;
+        long n;
 
         /// Initial step size in ticks
-        float _c0;
+        float c0;
 
         /// Last step size in ticks
-        float _cn;
+        float cn;
 
         /// Min step size in ticks based on maxSpeed
-        float _cmin; // at max speed
+        float cmin; // at max speed
 
         object runLock = new object();
 
@@ -74,9 +74,9 @@ namespace AirHockeyHelper2
 
         public AccelStepper(GpioPin motorPin, GpioPin directionPin, GpioPinValue clockwiseValue)
         {
-            _motorPin = motorPin;
-            _directionPin = directionPin;
-            _clockwiseValue = clockwiseValue;
+            this.motorPin = motorPin;
+            this.directionPin = directionPin;
+            this.clockwiseValue = clockwiseValue;
 
             stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -84,16 +84,16 @@ namespace AirHockeyHelper2
 
         public void MoveTo(long absolute)
         {
-            if (_targetPos != absolute)
+            if (targetPos != absolute)
             {
-                _targetPos = absolute;
+                targetPos = absolute;
                 computeNewSpeed();
             }
         }
 
         public void Move(long relative)
         {
-            MoveTo(_currentPos + relative);
+            MoveTo(currentPos + relative);
         }
 
         public bool Run()
@@ -105,36 +105,36 @@ namespace AirHockeyHelper2
                     computeNewSpeed();
                 }
 
-                return _speed != 0 || DistanceToGo() != 0;
+                return speed != 0 || DistanceToGo() != 0;
             }
         }
 
         public bool RunSpeed()
         {
-            if (_stepInterval == 0)
+            if (stepInterval == 0)
             {
                 return false;
             }
 
             long time = stopwatch.ElapsedTicks;
-            long nextStepTime = _lastStepTime + _stepInterval;
+            long nextStepTime = lastStepTime + stepInterval;
 
-            if (((nextStepTime >= _lastStepTime) && ((time >= nextStepTime) || (time < _lastStepTime)))
-                   || ((nextStepTime < _lastStepTime) && ((time >= nextStepTime) && (time < _lastStepTime))))
+            if (((nextStepTime >= lastStepTime) && ((time >= nextStepTime) || (time < lastStepTime)))
+                   || ((nextStepTime < lastStepTime) && ((time >= nextStepTime) && (time < lastStepTime))))
             {
-                if (_direction == Direction.Clockwise)
+                if (direction == Direction.Clockwise)
                 {
                     // Clockwise
-                    _currentPos += 1;
+                    currentPos += 1;
                 }
                 else
                 {
                     // Anticlockwise  
-                    _currentPos -= 1;
+                    currentPos -= 1;
                 }
-                Step(_currentPos);
+                Step(currentPos);
 
-                _lastStepTime = time;
+                lastStepTime = time;
                 return true;
             }
             else
@@ -147,30 +147,30 @@ namespace AirHockeyHelper2
         {
             if (!Debug)
             {
-                if (_speed > 0)
+                if (speed > 0)
                 {
-                    _directionPin.Write(_clockwiseValue);
+                    directionPin.Write(clockwiseValue);
                 }
                 else
                 {
-                    _directionPin.Write((_clockwiseValue == GpioPinValue.High) ? GpioPinValue.Low : GpioPinValue.High);
+                    directionPin.Write((clockwiseValue == GpioPinValue.High) ? GpioPinValue.Low : GpioPinValue.High);
                 }
 
-                _motorPin.Write(GpioPinValue.Low);
-                _motorPin.Write(GpioPinValue.High);
+                motorPin.Write(GpioPinValue.Low);
+                motorPin.Write(GpioPinValue.High);
             }
         }
 
         public void SetMaxSpeed(float speed)
         {
-            if (_maxSpeed != speed)
+            if (maxSpeed != speed)
             {
-                _maxSpeed = speed;
-                _cmin = TimeSpan.TicksPerSecond / speed;
-                // Recompute _n from current speed and adjust speed if accelerating or cruising
-                if (_n > 0)
+                maxSpeed = speed;
+                cmin = TimeSpan.TicksPerSecond / speed;
+                // Recompute n from current speed and adjust speed if accelerating or cruising
+                if (n > 0)
                 {
-                    _n = (long)((_speed * _speed) / (2.0 * _acceleration)); // Equation 16
+                    n = (long)((speed * speed) / (2.0 * acceleration)); // Equation 16
                     computeNewSpeed();
                 }
             }
@@ -178,20 +178,20 @@ namespace AirHockeyHelper2
 
         public float Acceleration()
         {
-            return _acceleration;
+            return acceleration;
         }
 
         public void SetAcceleration(float acceleration)
         {
             if (acceleration == 0.0)
                 return;
-            if (_acceleration != acceleration)
+            if (this.acceleration != acceleration)
             {
-                // Recompute _n per Equation 17
-                _n = (long)(_n * (_acceleration / acceleration));
+                // Recompute n per Equation 17
+                n = (long)(n * (acceleration / acceleration));
                 // New c0 per Equation 7, with correction per Equation 15
-                _c0 = (float)(0.676 * Math.Sqrt(2.0 / acceleration) * TimeSpan.TicksPerSecond); // Equation 15
-                _acceleration = acceleration;
+                c0 = (float)(0.676 * Math.Sqrt(2.0 / acceleration) * TimeSpan.TicksPerSecond); // Equation 15
+                this.acceleration = acceleration;
                 computeNewSpeed();
             }
         }
@@ -212,49 +212,49 @@ namespace AirHockeyHelper2
 
         public void SetSpeed(float speed)
         {
-            if (speed == _speed)
+            if (this.speed == speed)
                 return;
-            speed = Constrain(speed, -_maxSpeed, _maxSpeed);
+            speed = Constrain(speed, -maxSpeed, maxSpeed);
             if (speed == 0.0)
-                _stepInterval = 0;
+                stepInterval = 0;
             else
             {
-                _stepInterval = (long)Math.Abs(TimeSpan.TicksPerSecond / speed);
-                _direction = (speed > 0.0) ? Direction.Clockwise : Direction.CounterClockwise;
+                stepInterval = (long)Math.Abs(TimeSpan.TicksPerSecond / speed);
+                direction = (speed > 0.0) ? Direction.Clockwise : Direction.CounterClockwise;
             }
-            _speed = speed;
+            this.speed = speed;
         }
 
         public float Speed()
         {
-            return _speed;
+            return speed;
         }
 
         public long DistanceToGo()
         {
-            return _targetPos - _currentPos;
+            return targetPos - currentPos;
         }
 
         public long TargetPosition()
         {
-            return _targetPos;
+            return targetPos;
         }
 
         public long CurrentPosition()
         {
-            return _currentPos;
+            return currentPos;
         }
 
         public float MaxSpeed()
         {
-            return _maxSpeed;
+            return maxSpeed;
         }
 
         public void SetCurrentPosition(long position)
         {
-            _targetPos = _currentPos = position;
-            _n = 0;
-            _stepInterval = 0;
+            targetPos = currentPos = position;
+            n = 0;
+            stepInterval = 0;
         }
 
         public void RunToPosition()
@@ -280,21 +280,21 @@ namespace AirHockeyHelper2
 
         public bool RunSpeedToPosition()
         {
-            if (_targetPos == _currentPos)
+            if (targetPos == currentPos)
                 return false;
-            if (_targetPos > _currentPos)
-                _direction = Direction.Clockwise;
+            if (targetPos > currentPos)
+                direction = Direction.Clockwise;
             else
-                _direction = Direction.CounterClockwise;
+                direction = Direction.CounterClockwise;
             return RunSpeed();
         }
 
         public void Stop()
         {
-            if (_speed != 0.0)
+            if (speed != 0.0)
             {
-                long stepsToStop = (long)((_speed * _speed) / (2.0 * _acceleration)) + 1; // Equation 16 (+integer rounding)
-                if (_speed > 0)
+                long stepsToStop = (long)((speed * speed) / (2.0 * acceleration)) + 1; // Equation 16 (+integer rounding)
+                if (speed > 0)
                     Move(stepsToStop);
                 else
                     Move(-stepsToStop);
@@ -305,14 +305,14 @@ namespace AirHockeyHelper2
         {
             long distanceTo = DistanceToGo(); // +ve is clockwise from curent location
 
-            long stepsToStop = (long)((_speed * _speed) / (2.0 * _acceleration)); // Equation 16
+            long stepsToStop = (long)((speed * speed) / (2.0 * acceleration)); // Equation 16
 
             if (distanceTo == 0 && stepsToStop <= 1)
             {
                 // We are at the target and its time to stop
-                _stepInterval = 0;
-                _speed = 0;
-                _n = 0;
+                stepInterval = 0;
+                speed = 0;
+                n = 0;
                 return;
             }
 
@@ -320,55 +320,55 @@ namespace AirHockeyHelper2
             {
                 // We are anticlockwise from the target
                 // Need to go clockwise from here, maybe decelerate now
-                if (_n > 0)
+                if (n > 0)
                 {
                     // Currently accelerating, need to decel now? Or maybe going the wrong way?
-                    if ((stepsToStop >= distanceTo) || _direction == Direction.CounterClockwise)
-                        _n = -stepsToStop; // Start deceleration
+                    if ((stepsToStop >= distanceTo) || direction == Direction.CounterClockwise)
+                        n = -stepsToStop; // Start deceleration
                 }
-                else if (_n < 0)
+                else if (n < 0)
                 {
                     // Currently decelerating, need to accel again?
-                    if ((stepsToStop < distanceTo) && _direction == Direction.Clockwise)
-                        _n = -_n; // Start accceleration
+                    if ((stepsToStop < distanceTo) && direction == Direction.Clockwise)
+                        n = -n; // Start accceleration
                 }
             }
             else if (distanceTo < 0)
             {
                 // We are clockwise from the target
                 // Need to go anticlockwise from here, maybe decelerate
-                if (_n > 0)
+                if (n > 0)
                 {
                     // Currently accelerating, need to decel now? Or maybe going the wrong way?
-                    if ((stepsToStop >= -distanceTo) || _direction == Direction.Clockwise)
-                        _n = -stepsToStop; // Start deceleration
+                    if ((stepsToStop >= -distanceTo) || direction == Direction.Clockwise)
+                        n = -stepsToStop; // Start deceleration
                 }
-                else if (_n < 0)
+                else if (n < 0)
                 {
                     // Currently decelerating, need to accel again?
-                    if ((stepsToStop < -distanceTo) && _direction == Direction.CounterClockwise)
-                        _n = -_n; // Start accceleration
+                    if ((stepsToStop < -distanceTo) && direction == Direction.CounterClockwise)
+                        n = -n; // Start accceleration
                 }
             }
 
             // Need to accelerate or decelerate
-            if (_n == 0)
+            if (n == 0)
             {
                 // First step from stopped
-                _cn = _c0;
-                _direction = (distanceTo > 0) ? Direction.Clockwise : Direction.CounterClockwise;
+                cn = c0;
+                direction = (distanceTo > 0) ? Direction.Clockwise : Direction.CounterClockwise;
             }
             else
             {
                 // Subsequent step. Works for accel (n is +_ve) and decel (n is -ve).
-                _cn = _cn - ((2.0f * _cn) / ((4.0f * _n) + 1)); // Equation 13
-                _cn = Math.Max(_cn, _cmin);
+                cn = cn - ((2.0f * cn) / ((4.0f * n) + 1)); // Equation 13
+                cn = Math.Max(cn, cmin);
             }
-            _n++;
-            _stepInterval = (long)_cn;
-            _speed = TimeSpan.TicksPerSecond / _cn;
-            if (_direction == Direction.CounterClockwise)
-                _speed = -_speed;
+            n++;
+            stepInterval = (long)cn;
+            speed = TimeSpan.TicksPerSecond / cn;
+            if (direction == Direction.CounterClockwise)
+                speed = -speed;
         }
     }
 }

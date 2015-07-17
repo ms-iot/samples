@@ -6,17 +6,17 @@ namespace AirHockeyHelper2
 {
     public class Global
     {
-        private static Stopwatch _stopwatch;
+        private static Stopwatch stopwatch;
         public static Stopwatch Stopwatch
         {
             get
             {
-                if (_stopwatch == null)
+                if (stopwatch == null)
                 {
-                    _stopwatch = new Stopwatch();
+                    stopwatch = new Stopwatch();
                 }
 
-                return _stopwatch;
+                return stopwatch;
             }
         }
     }
