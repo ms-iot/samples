@@ -132,16 +132,6 @@
     <Content Include="Assets\Pictures\baymax_square.png" />
     <Content Include="Assets\Pictures\warning.png" />
     <Content Include="Assets\SmallLogo.scale-100.png" />
-    <Content Include="Assets\Songs\Do_You_Wanna_Build_A_Snowman_piano_Part1_1.txt" />
-    <Content Include="Assets\Songs\Do_You_Wanna_Build_A_Snowman_piano_Part1_2.txt" />
-    <Content Include="Assets\Songs\GoT_Simplified_Part1_1.txt" />
-    <Content Include="Assets\Songs\GoT_Simplified_Part1_2.txt" />
-    <Content Include="Assets\Songs\StillAlive_Part1_1.txt" />
-    <Content Include="Assets\Songs\StillAlive_Part2_1.txt" />
-    <Content Include="Assets\Songs\Tetris_Part1_1.txt" />
-    <Content Include="Assets\Songs\Tetris_Part1_2.txt" />
-    <Content Include="Assets\Songs\Zelda_Main_Theme_Part1_1.txt" />
-    <Content Include="Assets\Songs\Zelda_Main_Theme_Part2_1.txt" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="Assets\StoreLogo.scale-100.png" />
     <Content Include="Assets\WideLogo.scale-100.png" />
