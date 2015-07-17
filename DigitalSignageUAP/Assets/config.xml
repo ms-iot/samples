@@ -8,7 +8,6 @@
   <Display>
     <!--Video does not require duration attribute. It will be played back in a loop end to end-->
     <!--<file path="Assets\grb.mpg"/>-->
-    <file path="Assets\BlackBerry.mp4"/>
     <file path="Assets\IoTVision.wmv"/>
     <!--image and webpage do require duration attribute so we know how long to show them-->
     <file path="Assets\mad_men_poster.jpg" duration="30"/>

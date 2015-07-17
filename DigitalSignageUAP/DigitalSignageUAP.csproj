@@ -141,7 +141,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\config.xml" />
-    <Content Include="Assets\BlackBerry.mp4" />
     <Content Include="Assets\IoTVision.wmv" />
     <Content Include="Assets\mandelbrot.png" />
     <Content Include="Assets\mad_men_poster.jpg" />
