@@ -54,8 +54,6 @@
                     <TextBlock x:Name="textBlock1_Copy" Canvas.Left="871" TextWrapping="Wrap" Text="Robot" Canvas.Top="114" FontSize="96" FontWeight="Light"/>
                     <TextBlock x:Name="humanScoreTextBlock" Canvas.Left="294" TextWrapping="Wrap" Text="0" Canvas.Top="242" FontSize="96" FontWeight="Light"/>
                     <TextBlock x:Name="robotScoreTextBlock" Canvas.Left="960" TextWrapping="Wrap" Text="0" Canvas.Top="242" FontSize="96" FontWeight="Light"/>
-                    <Image x:Name="humanImage" Height="200" Canvas.Left="224" Canvas.Top="403" Width="200" Source="Assets/Pictures/awesomeface.png"/>
-                    <Image x:Name="robotImage" Height="200" Canvas.Left="887" Canvas.Top="403" Width="200" Source="Assets/Pictures/baymax_square.png"/>
                 </Canvas>
             </Canvas>
             <Canvas Name="popUpCanvas" Background="Black" Visibility="Collapsed">

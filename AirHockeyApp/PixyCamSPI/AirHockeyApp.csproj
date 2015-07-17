@@ -128,9 +128,6 @@
     <Content Include="Assets\Icons\statistics_icon.png" />
     <Content Include="Assets\Icons\test_icon.png" />
     <Content Include="Assets\Logo.scale-100.png" />
-    <Content Include="Assets\Pictures\awesomeface.png" />
-    <Content Include="Assets\Pictures\baymax_square.png" />
-    <Content Include="Assets\Pictures\warning.png" />
     <Content Include="Assets\SmallLogo.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="Assets\StoreLogo.scale-100.png" />

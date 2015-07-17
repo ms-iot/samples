@@ -55,7 +55,6 @@
                 </Canvas>
             </Button>
             <TextBlock x:Name="textBlock" Canvas.Left="864" TextWrapping="Wrap" Text="Warning: Robot moves at high speeds when in motion.  Please remain a safe distance at all times and press the emergency stop button if you feel you are in danger.  Also, be careful of sharp edges." Canvas.Top="224" FontSize="33.333" FontWeight="Light" Height="405" Width="401"/>
-            <Image x:Name="image1" Height="100" Canvas.Left="740" Canvas.Top="224" Width="100" Source="Assets/Pictures/warning.png"/>
             <Button x:Name="testButton" Canvas.Left="470" Canvas.Top="224" Width="200" Height="200" FontSize="26.667" FontWeight="Light" Background="#FF7F0093" Click="testButton_Click">
                 <Canvas Width="190" Height="190">
                     <TextBlock Text="Test" Canvas.Top="163" FontSize="20" Canvas.Left="10"/>
