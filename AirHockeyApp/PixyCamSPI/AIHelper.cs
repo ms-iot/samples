@@ -56,9 +56,9 @@ namespace AirHockeyApp
         // Type of movement
         public MoveType Move = MoveType.Straight;
 
-        public AIHelper(Robot robot)
+        public AIHelper(Robot robotEntity)
         {
-            this.robot = robot;
+            robot = robotEntity;
             com = new CenterOfMass();
             previousTrajectoryPoint = CoordinateHelper.INVALID_POINT;
         }

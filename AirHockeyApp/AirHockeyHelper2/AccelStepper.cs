@@ -72,11 +72,11 @@ namespace AirHockeyHelper2
             CounterClockwise
         }
 
-        public AccelStepper(GpioPin motorPin, GpioPin directionPin, GpioPinValue clockwiseValue)
+        public AccelStepper(GpioPin motorPinEntity, GpioPin directionPinEntity, GpioPinValue clockwiseVal)
         {
-            this.motorPin = motorPin;
-            this.directionPin = directionPin;
-            this.clockwiseValue = clockwiseValue;
+            motorPin = motorPinEntity;
+            directionPin = directionPinEntity;
+            clockwiseValue = clockwiseVal;
 
             stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -161,12 +161,12 @@ namespace AirHockeyHelper2
             }
         }
 
-        public void SetMaxSpeed(float speed)
+        public void SetMaxSpeed(float speedValue)
         {
-            if (maxSpeed != speed)
+            if (maxSpeed != speedValue)
             {
-                maxSpeed = speed;
-                cmin = TimeSpan.TicksPerSecond / speed;
+                maxSpeed = speedValue;
+                cmin = TimeSpan.TicksPerSecond / speedValue;
                 // Recompute n from current speed and adjust speed if accelerating or cruising
                 if (n > 0)
                 {
@@ -181,17 +181,17 @@ namespace AirHockeyHelper2
             return acceleration;
         }
 
-        public void SetAcceleration(float acceleration)
+        public void SetAcceleration(float accelerationValue)
         {
-            if (acceleration == 0.0)
+            if (accelerationValue == 0.0)
                 return;
-            if (this.acceleration != acceleration)
+            if (acceleration != accelerationValue)
             {
                 // Recompute n per Equation 17
-                n = (long)(n * (acceleration / acceleration));
+                n = (long)(n * (acceleration / accelerationValue));
                 // New c0 per Equation 7, with correction per Equation 15
-                c0 = (float)(0.676 * Math.Sqrt(2.0 / acceleration) * TimeSpan.TicksPerSecond); // Equation 15
-                this.acceleration = acceleration;
+                c0 = (float)(0.676 * Math.Sqrt(2.0 / accelerationValue) * TimeSpan.TicksPerSecond); // Equation 15
+                acceleration = accelerationValue;
                 computeNewSpeed();
             }
         }
@@ -210,19 +210,19 @@ namespace AirHockeyHelper2
             return x;
         }
 
-        public void SetSpeed(float speed)
+        public void SetSpeed(float speedValue)
         {
-            if (this.speed == speed)
+            if (speed == speedValue)
                 return;
-            speed = Constrain(speed, -maxSpeed, maxSpeed);
-            if (speed == 0.0)
+            speedValue = Constrain(speedValue, -maxSpeed, maxSpeed);
+            if (speedValue == 0.0)
                 stepInterval = 0;
             else
             {
-                stepInterval = (long)Math.Abs(TimeSpan.TicksPerSecond / speed);
-                direction = (speed > 0.0) ? Direction.Clockwise : Direction.CounterClockwise;
+                stepInterval = (long)Math.Abs(TimeSpan.TicksPerSecond / speedValue);
+                direction = (speedValue > 0.0) ? Direction.Clockwise : Direction.CounterClockwise;
             }
-            this.speed = speed;
+            speed = speedValue;
         }
 
         public float Speed()

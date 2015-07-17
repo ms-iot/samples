@@ -192,10 +192,10 @@ namespace AirHockeyApp
         public double BeatsRemaining = 0;
         public int PitchCorrect = 20;
 
-        public SoundPlayer(AccelStepper stepper, long maxPosition)
+        public SoundPlayer(AccelStepper stepperEntity, long maxPos)
         {
-            this.stepper = stepper;
-            this.maxPosition = maxPosition;
+            stepper = stepperEntity;
+            maxPosition = maxPos;
             position = stepper.CurrentPosition();
         }
 
