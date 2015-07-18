@@ -1,4 +1,6 @@
-﻿//
+﻿// Copyright (c) Microsoft. All rights reserved.
+
+//
 // App.xaml.h
 // Declaration of the App class.
 //
@@ -7,7 +9,7 @@
 
 #include "App.g.h"
 
-namespace Cpp_Serial
+namespace SerialSampleCpp
 {
 	/// <summary>
 	/// Provides application-specific behavior to supplement the default Application class.

@@ -1,4 +1,6 @@
-﻿//
+﻿// Copyright (c) Microsoft. All rights reserved.
+
+//
 // App.xaml.cpp
 // Implementation of the App class.
 //
@@ -6,7 +8,7 @@
 #include "pch.h"
 #include "MainPage.xaml.h"
 
-using namespace Cpp_Serial;
+using namespace SerialSampleCpp;
 
 using namespace Platform;
 using namespace Windows::ApplicationModel;

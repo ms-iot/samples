@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{d0c79332-3b49-4a87-98f9-78cac311b9ce}</ProjectGuid>
-    <RootNamespace>Cpp_Serial</RootNamespace>
+    <ProjectGuid>{b5690b48-a2fa-44f8-a7a4-18af7ea247e6}</ProjectGuid>
+    <RootNamespace>SerialSampleCpp</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
-    <WindowsTargetPlatformVersion>10.0.10192.0</WindowsTargetPlatformVersion>
-    <WindowsTargetPlatformMinVersion>10.0.10192.0</WindowsTargetPlatformMinVersion>
+    <WindowsTargetPlatformVersion>10.0.10240.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.10240.0</WindowsTargetPlatformMinVersion>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
   </PropertyGroup>
@@ -109,7 +109,7 @@
 
   <PropertyGroup>
     
-    <PackageCertificateKeyFile>Cpp_Serial_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>SerialSampleCpp_TemporaryKey.pfx</PackageCertificateKeyFile>
     
   </PropertyGroup>
 
@@ -174,7 +174,7 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     
-    <None Include="Cpp_Serial_TemporaryKey.pfx" />
+    <None Include="SerialSampleCpp_TemporaryKey.pfx" />
     
   </ItemGroup>
 
