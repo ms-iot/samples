@@ -1,4 +1,6 @@
-﻿//
+﻿// Copyright (c) Microsoft. All rights reserved.
+
+//
 // MainPage.xaml.h
 // Declaration of the MainPage class.
 //
@@ -7,81 +9,75 @@
 
 #include "MainPage.g.h"
 
-namespace Cpp_Serial
+namespace SerialSampleCpp
 {
-	/// <summary>
-	/// An empty page that can be used on its own or navigated to within a Frame.
-	/// </summary>
-	public ref class MainPage sealed
-	{
-	public:
-		MainPage();
-        void ListAvailablePorts(void);
-        
-        static Windows::Foundation::IAsyncOperation<Windows::Devices::Enumeration::DeviceInformationCollection ^> ^ListAvailableSerialDevicesAsync(void);
 
-        property Windows::Foundation::Collections::IVector<Windows::Devices::Enumeration::DeviceInformation^>^ DevicesIVector
-        {
-            Windows::Foundation::Collections::IVector<Windows::Devices::Enumeration::DeviceInformation^>^ get() { return _devicesVector; }
-        }
+    /// <summary>
+    /// A wrapper class for holding DeviceInformation while being bindable to XAML. 
+    /// </summary>
+    [Windows::UI::Xaml::Data::Bindable] // in c++, adding this attribute to ref classes enables data binding for more info search for 'Bindable' on the page http://go.microsoft.com/fwlink/?LinkId=254639 
+    public ref class Device sealed
+    {
+    public:
+        Device(Platform::String^ id, Windows::Devices::Enumeration::DeviceInformation^ deviceInfo);
 
-        property Windows::Foundation::Collections::IObservableVector<Platform::Object^>^ Items
+        property Platform::String^ Id
         {
-            Windows::Foundation::Collections::IObservableVector<Platform::Object^>^ get()
+            Platform::String^ get()
             {
-                return _items;
+                return _id;
+            }
+        }
+        property Windows::Devices::Enumeration::DeviceInformation^ DeviceInfo
+        {
+            Windows::Devices::Enumeration::DeviceInformation^ get()
+            {
+                return _deviceInformation;
             }
         }
 
-        //property Windows::Foundation::Collections::IObservableVector<Windows::Devices::Enumeration::DeviceInformation^>^ Items
-        //{
-        //    Windows::Foundation::Collections::IObservableVector<Windows::Devices::Enumeration::DeviceInformation^>^ get()
-        //    {
-        //        return _items;
-        //    }
-        //}
-
-        //--------------------------------------------------
-        void TestGetDevices(void);        
-        static Windows::Foundation::IAsyncOperation<Windows::Devices::Enumeration::DeviceInformationCollection ^> ^listAvailableDevicesAsync(void);
-        
     private:
-        Platform::Collections::Vector<Windows::Devices::Enumeration::DeviceInformation^>^ _devicesVector;
-//        Platform::Collections::Vector<Windows::Devices::Enumeration::DeviceInformation^>^ _items;
-        Platform::Collections::Vector<Platform::Object^>^ _items;
+        Platform::String^ _id;
+        Windows::Devices::Enumeration::DeviceInformation^ _deviceInformation;
+    };
 
+    /// <summary>
+    /// The MainPage class
+    /// </summary>
+    public ref class MainPage sealed
+    {
+    public:
+        static Windows::Foundation::IAsyncOperation<Windows::Devices::Enumeration::DeviceInformationCollection ^> ^ListAvailableSerialDevicesAsync(void);
+
+        // For XAML binding purposes, use the IObservableVector interface containing Object^ objects. 
+        // This wraps the real implementation of _availableDevices which is implemented as a Vector.
+        // See "Data Binding Overview (XAML)" https://msdn.microsoft.com/en-us/library/windows/apps/xaml/hh758320.aspx
+        property Windows::Foundation::Collections::IObservableVector<Platform::Object^>^ AvailableDevices
+        {
+            Windows::Foundation::Collections::IObservableVector<Platform::Object^>^ get()
+            {
+                return _availableDevices;
+            }
+        }
+        MainPage();
+    private:
+        Platform::Collections::Vector<Platform::Object^>^ _availableDevices;
         Windows::Devices::SerialCommunication::SerialDevice ^_serialPort;
-        Windows::Foundation::Collections::IVector<Windows::Devices::Enumeration::DeviceInformation ^> ^_listOfDevices;
-        Concurrency::cancellation_token_source cancellationTokenSource;
-        Windows::Storage::Streams::DataWriter^ _dataWriteObject;
+        Windows::Storage::Streams::DataWriter^ _dataWriterObject;
         Windows::Storage::Streams::DataReader^ _dataReaderObject;
+        Concurrency::cancellation_token_source* cancellationTokenSource;
 
-        void CancelReadTask(void);
-        void CloseDevice(void);
-                
+        // event handlers
         void comPortInput_Click(Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
         void sendTextButton_Click(Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
         void closeDevice_Click(Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
         void rcvdText_TextChanged(Object^ sender, Windows::UI::Xaml::Controls::TextChangedEventArgs^ e);
 
-        Concurrency::task<void> WriteAsync(void);
-        Concurrency::task<void> ReadAsync(concurrency::cancellation_token_source cancellationTokenSource);
-        Concurrency::task<void> ConnectToSerialDeviceAsync(Windows::Devices::Enumeration::DeviceInformation ^device);
-
-
-        //----------------
-        uint32_t _baud = 9600;
-        Platform::String ^_errorMessage;
-        Windows::Devices::Enumeration::DeviceInformation ^_device;
-        Windows::Devices::Enumeration::DeviceInformationCollection ^_device_collection;
-        Windows::Devices::SerialCommunication::SerialDevice ^_serial_device;
-
-        // USB\VID_067B&PID_2303&REV_0300
-        Platform::String ^_pid = "2303";
-        Platform::String ^_vid = "067B";
-
-        Concurrency::task<void> connectToDeviceAsync(Windows::Devices::Enumeration::DeviceInformation ^device_);
-        Windows::Devices::Enumeration::DeviceInformation ^identifyDeviceFromCollection(Windows::Devices::Enumeration::DeviceInformationCollection ^devices_);
-
-	};
+        void ListAvailablePorts(void);
+        void CancelReadTask(void);
+        void CloseDevice(void);
+        Concurrency::task<void> WriteAsync(Concurrency::cancellation_token cancellationToken);
+        Concurrency::task<void> ReadAsync(Concurrency::cancellation_token cancellationToken);
+        Concurrency::task<void> ConnectToSerialDeviceAsync(Windows::Devices::Enumeration::DeviceInformation ^device, Concurrency::cancellation_token cancellationToken);
+    };
 }
