@@ -1,0 +1,85 @@
+﻿<Page
+    x:Class="BluetoothGATT.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BluetoothGATT"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <StackPanel Background="#FF1E1D42">
+        <TextBlock FontSize="35" Foreground="White" Margin="10" Text="BLE GATT Sample"/>
+        <ComboBox x:Name="SensorList" ItemsSource="{Binding}" PlaceholderText="Select a Sensor" Margin="10">
+            <ComboBoxItem>IR Temperature</ComboBoxItem>
+            <ComboBoxItem>Accelerometer</ComboBoxItem>
+            <ComboBoxItem>Humidity</ComboBoxItem>
+            <ComboBoxItem>Magnetometer</ComboBoxItem>
+            <ComboBoxItem>Barometer</ComboBoxItem>
+            <ComboBoxItem>Gyroscope</ComboBoxItem>
+            <ComboBoxItem>Key Press</ComboBoxItem>
+        </ComboBox>
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <Button x:Name="EnableButton" Content="Enable" Background="#CCFFFFFF" Click="EnableButton_Click" Margin="10,0,0,0"/>
+            <Button x:Name="DisableButton" Content="Disable" Background="#CCFFFFFF" Click="DisableButton_Click" Margin="10,0,0,0"/>
+        </StackPanel>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="180"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Row="0" Grid.Column="0" Padding="5,0,0,0">
+                <TextBlock x:Name="IRTitle" Foreground="White" FontSize="18">IR Sensor (C)</TextBlock>
+                <TextBlock x:Name="ObjTempOut" Foreground="White">Object:</TextBlock>
+                <TextBlock x:Name="AmbTempOut" Foreground="White">Ambient:</TextBlock>
+            </StackPanel>
+            <StackPanel Grid.Row="0" Grid.Column="1" >
+                <TextBlock x:Name="AccelTitle" Foreground="White" FontSize="18">Accelerometer (g)</TextBlock>
+                <TextBlock x:Name="AccelXOut" Foreground="White">X:</TextBlock>
+                <TextBlock x:Name="AccelYOut" Foreground="White">Y:</TextBlock>
+                <TextBlock x:Name="AccelZOut" Foreground="White">Z:</TextBlock>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="0" Padding="5,0,0,0">
+                <TextBlock x:Name="HumidTitle" Foreground="White" FontSize="18">Humidity</TextBlock>
+                <TextBlock x:Name="HumidOut" Foreground="White">N/A</TextBlock>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="1">
+                <TextBlock x:Name="MagnoTitle" Foreground="White" FontSize="18">Magnetometer (uT)</TextBlock>
+                <TextBlock x:Name="MagnoXOut" Foreground="White">X:</TextBlock>
+                <TextBlock x:Name="MagnoYOut" Foreground="White">Y:</TextBlock>
+                <TextBlock x:Name="MagnoZOut" Foreground="White">Z:</TextBlock>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Grid.Column="0" Padding="5,0,0,0">
+                <TextBlock x:Name="BaroTitle" Foreground="White" FontSize="18">Barometer (hP)</TextBlock>
+                <TextBlock x:Name="BaroOut" Foreground="White">N/A</TextBlock>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Grid.Column="1">
+                <TextBlock x:Name="GyroTitle" Foreground="White" FontSize="18">Gyroscope (degrees/s)</TextBlock>
+                <TextBlock x:Name="GyroXOut" Foreground="White">X:</TextBlock>
+                <TextBlock x:Name="GyroYOut" Foreground="White">Y:</TextBlock>
+                <TextBlock x:Name="GyroZOut" Foreground="White">Z:</TextBlock>
+            </StackPanel>
+            <StackPanel Grid.Row="3" Grid.Column="0" Padding="5,0,0,0">
+                <TextBlock x:Name="KeyTitle" Foreground="White" FontSize="18">Key Press</TextBlock>
+                <TextBlock x:Name="KeyLOut" Foreground="White">L:</TextBlock>
+                <TextBlock x:Name="KeyROut" Foreground="White">R:</TextBlock>
+            </StackPanel>
+            <Grid Grid.Row="3" Grid.Column="1" Height="180" Width="180">
+                <TextBlock Foreground="White" Canvas.ZIndex="1" Margin="0" HorizontalAlignment="Center">+Y</TextBlock>
+                <TextBlock Foreground="White" Canvas.ZIndex="1" Margin="0" HorizontalAlignment="Right" VerticalAlignment="Center">+X</TextBlock>
+                <Rectangle StrokeThickness="5" Width="90" Height="90" Stroke="Black"/>
+                <Rectangle StrokeThickness="5" Width="180" Height="180" Stroke="Black"/>
+                <Rectangle Height="10" Width="10" Fill="Red" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Rectangle.RenderTransform>
+                        <TranslateTransform x:Name="RecTranslateTransform" />
+                    </Rectangle.RenderTransform>
+                </Rectangle>
+            </Grid>
+        </Grid>
+    </StackPanel>
+</Page>
