@@ -2,19 +2,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // Required APIs to use Bluetooth GATT
 using Windows.Devices.Bluetooth;
@@ -25,8 +16,7 @@ using Windows.Devices.Enumeration;
 
 // Required APIs for data binding and buffer manipulation
 using Windows.Storage.Streams;
-
-
+using System.Threading.Tasks;
 
 namespace BluetoothGATT
 {
@@ -50,11 +40,10 @@ namespace BluetoothGATT
         public MainPage()
         {
             this.InitializeComponent();
-            init();
         }
 
         // Setup
-        private async void init()
+        private async Task<bool> init()
         {
             // Retreive instances of the GATT services that we will use
             for (int i = 0; i < 7; i++)
@@ -70,10 +59,19 @@ namespace BluetoothGATT
                 var services = await DeviceInformation.FindAllAsync(GattDeviceService.GetDeviceSelectorFromUuid(BLE_GUID), null);
                 if(services != null && services.Count > 0)
                 {
-                    serviceList[i] = await GattDeviceService.FromIdAsync(services[0].Id);
+                    if (services[0].IsEnabled)
+                    {
+                        serviceList[i] = await GattDeviceService.FromIdAsync(services[0].Id);
+                    }
+                    else
+                    {
+                        UserOut.Text = "SensorTag is off!";
+                        return false;
+                    }
                 }
                 else
                 {
+                    // SensorTag service somehow not discoverable
                     switch (SensorList.SelectedIndex)
                     {
                         case (IR_SENSOR):
@@ -102,6 +100,7 @@ namespace BluetoothGATT
                     }
                 }
             }
+            return true;
         }
 
 
@@ -162,21 +161,16 @@ namespace BluetoothGATT
             }
         }
 
-
-        // ---------------------------------------------------
-        //             Button Click Handlers
-        // ---------------------------------------------------
-
         // Enable and subscribe to specified GATT characteristic
-        private async void EnableButton_Click(object sender, RoutedEventArgs e)
-        { 
-            GattDeviceService gattService = serviceList[SensorList.SelectedIndex];
-            if(gattService != null)
+        private async void enableSensor(int sensor)
+        {
+            GattDeviceService gattService = serviceList[sensor];
+            if (gattService != null)
             {
                 // Turn on notifications
                 IReadOnlyList<GattCharacteristic> characteristicList;
-                if (SensorList.SelectedIndex >= 0 && SensorList.SelectedIndex <= 5)
-                    characteristicList = gattService.GetCharacteristics(new Guid("F000AA" + SensorList.SelectedIndex + "1-0451-4000-B000-000000000000"));
+                if (sensor >= 0 && sensor <= 5)
+                    characteristicList = gattService.GetCharacteristics(new Guid("F000AA" + sensor + "1-0451-4000-B000-000000000000"));
                 else
                     characteristicList = gattService.GetCharacteristics(new Guid("0000FFE1-0000-1000-8000-00805F9B34FB"));
 
@@ -185,7 +179,7 @@ namespace BluetoothGATT
                     GattCharacteristic characteristic = characteristicList[0];
                     if (characteristic.CharacteristicProperties.HasFlag(GattCharacteristicProperties.Notify))
                     {
-                        switch (SensorList.SelectedIndex)
+                        switch (sensor)
                         {
                             case (IR_SENSOR):
                                 characteristic.ValueChanged += tempChanged;
@@ -222,7 +216,7 @@ namespace BluetoothGATT
                         }
 
                         // Save a reference to each active characteristic, so that handlers do not get prematurely killed
-                        activeCharacteristics[SensorList.SelectedIndex] = characteristic;
+                        activeCharacteristics[sensor] = characteristic;
 
                         // Set the notify enable flag
                         await characteristic.WriteClientCharacteristicConfigurationDescriptorAsync(GattClientCharacteristicConfigurationDescriptorValue.Notify);
@@ -230,9 +224,9 @@ namespace BluetoothGATT
                 }
 
                 // Turn on sensor
-                if (SensorList.SelectedIndex >= 0 && SensorList.SelectedIndex <= 5)
+                if (sensor >= 0 && sensor <= 5)
                 {
-                    characteristicList = gattService.GetCharacteristics(new Guid("F000AA" + SensorList.SelectedIndex + "2-0451-4000-B000-000000000000"));
+                    characteristicList = gattService.GetCharacteristics(new Guid("F000AA" + sensor + "2-0451-4000-B000-000000000000"));
                     if (characteristicList != null)
                     {
                         GattCharacteristic characteristic = characteristicList[0];
@@ -240,7 +234,7 @@ namespace BluetoothGATT
                         {
                             var writer = new Windows.Storage.Streams.DataWriter();
                             // Special value for Gyroscope to enable all 3 axes
-                            if (SensorList.SelectedIndex == GYROSCOPE)
+                            if (sensor == GYROSCOPE)
                                 writer.WriteByte((Byte)0x07);
                             else
                                 writer.WriteByte((Byte)0x01);
@@ -253,15 +247,15 @@ namespace BluetoothGATT
         }
 
         // Disable notifications to specified GATT characteristic
-        private async void DisableButton_Click(object sender, RoutedEventArgs e)
+        private async void disableSensor(int sensor)
         {
-            GattDeviceService gattService = serviceList[SensorList.SelectedIndex];
+            GattDeviceService gattService = serviceList[sensor];
             if (gattService != null)
             {
                 // Disable notifications
                 IReadOnlyList<GattCharacteristic> characteristicList;
-                if (SensorList.SelectedIndex >= 0 && SensorList.SelectedIndex <= 5)
-                    characteristicList = gattService.GetCharacteristics(new Guid("F000AA" + SensorList.SelectedIndex + "1-0451-4000-B000-000000000000"));
+                if (sensor >= 0 && sensor <= 5)
+                    characteristicList = gattService.GetCharacteristics(new Guid("F000AA" + sensor + "1-0451-4000-B000-000000000000"));
                 else
                     characteristicList = gattService.GetCharacteristics(new Guid("0000FFE1-0000-1000-8000-00805F9B34FB"));
 
@@ -275,7 +269,7 @@ namespace BluetoothGATT
                 }
             }
 
-            switch (SensorList.SelectedIndex)
+            switch (sensor)
             {
                 case (IR_SENSOR):
                     IRTitle.Foreground = new SolidColorBrush(Colors.White);
@@ -301,9 +295,37 @@ namespace BluetoothGATT
                 default:
                     break;
             }
-            activeCharacteristics[SensorList.SelectedIndex] = null;
+            activeCharacteristics[sensor] = null;
         }
 
+
+        // ---------------------------------------------------
+        //             Button Click Handlers
+        // ---------------------------------------------------
+
+        private async void StartButton_Click(object sender, RoutedEventArgs e)
+        {
+            UserOut.Text = "Searching for SensorTag";
+            if (await init())
+            {
+                UserOut.Text = "Enabling Sensors";
+                for (int i = 0; i < 7; i++)
+                {
+                    enableSensor(i);
+                }
+                UserOut.Text = "Sensors on!";
+            }
+        }
+
+        private void EnableButton_Click(object sender, RoutedEventArgs e)
+        {
+            enableSensor(SensorList.SelectedIndex);
+        }
+
+        private void DisableButton_Click(object sender, RoutedEventArgs e)
+        {
+            disableSensor(SensorList.SelectedIndex);
+        }
 
         // ---------------------------------------------------
         //           GATT Notification Handlers
@@ -340,8 +362,8 @@ namespace BluetoothGATT
             tObj = (tObj - 273.15);
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
             {
-                AmbTempOut.Text = "Ambient:\t" + AmbTemp.ToString();
-                ObjTempOut.Text = "Object: \t" + tObj.ToString();
+                AmbTempOut.Text = string.Format("Chip:\t{0:0.0####}", AmbTemp);
+                ObjTempOut.Text = string.Format("IR:  \t{0:0.0####}", tObj);
             });
         }
 
@@ -481,8 +503,15 @@ namespace BluetoothGATT
 
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
             {
-                KeyROut.Text = "R: " + ((data & 0x01) == 0x01);
-                KeyLOut.Text = "L: " + ((data & 0x02) == 0x02);
+                if((data & 0x01) == 0x01)
+                    KeyROut.Background = new SolidColorBrush(Colors.Green);
+                else
+                    KeyROut.Background = new SolidColorBrush(Colors.Red);
+
+                if ((data & 0x02) == 0x02)
+                    KeyLOut.Background = new SolidColorBrush(Colors.Green);
+                else
+                    KeyLOut.Background = new SolidColorBrush(Colors.Red);
             });
         }
     }
