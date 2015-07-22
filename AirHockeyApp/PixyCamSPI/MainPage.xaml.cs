@@ -43,11 +43,6 @@ namespace AirHockeyApp
             this.Frame.Navigate(typeof(DiagnosticsPage), GameMode.Mirror);
         }
 
-        private void songButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(MusicPage), null);
-        }
-
         private void testButton_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(DiagnosticsPage), GameMode.Test);

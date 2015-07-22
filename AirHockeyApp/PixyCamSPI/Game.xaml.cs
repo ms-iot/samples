@@ -42,8 +42,6 @@ namespace AirHockeyApp
 
         private bool mirrorMode = false;
 
-        private SoundPlayer soundPlayerX, soundPlayerY;
-
         private bool stopThread = false;
         private IAsyncAction mainThread;
 
@@ -62,9 +60,6 @@ namespace AirHockeyApp
 
             robot.StepperX.SetAcceleration(Config.MOTOR_X_ACCELERATION);
             robot.StepperY.SetAcceleration(Config.MOTOR_Y_ACCELERATION);
-
-            soundPlayerX = new SoundPlayer(robot.StepperX, Config.MAX_MALLET_OFFSET_X);
-            soundPlayerY = new SoundPlayer(robot.StepperY, Config.MAX_MALLET_OFFSET_Y);
 
             // Adds event listeners for when a goal is scored
             robot.HumanGoalSensorTriggered += Robot_HumanGoalSensorTriggered;
@@ -192,8 +187,6 @@ namespace AirHockeyApp
         private void CloseAll()
         {
             stopThread = true;
-
-            MusicPlayer.Stop();
 
             if (robot != null)
             {
