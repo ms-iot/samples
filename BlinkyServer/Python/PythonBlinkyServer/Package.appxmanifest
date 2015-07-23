@@ -35,7 +35,7 @@
 			  Square150x150Logo="Logo.png"
 			  Square44x44Logo="SmallLogo.png"
 			  Description="PythonBlinkyServer"
-			  BackgroundColor="#464646"
+			  BackgroundColor="transparent"
         AppListEntry="none">
         <uwp:SplashScreen Image="SplashScreen.png" />
       </uwp:VisualElements>

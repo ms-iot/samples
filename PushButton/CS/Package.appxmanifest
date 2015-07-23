@@ -15,7 +15,7 @@
 
   <Properties>
     <DisplayName>PushButton</DisplayName>
-    <PublisherDisplayName>AleUser</PublisherDisplayName>
+    <PublisherDisplayName>IoTTools</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
