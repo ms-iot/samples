@@ -8,7 +8,7 @@
   IgnorableNamespaces="uap mp iot">
 
   <Identity
-    Name="BlinkyHeadlessCS"
+    Name="BlinkyHeadlessCS-uwp"
     Publisher="CN=IoTTools"
     Version="1.0.0.0" />
 

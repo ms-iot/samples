@@ -8,7 +8,7 @@
   IgnorableNamespaces="uap mp iot">
 
   <Identity
-    Name="ServoMotorBasics"
+    Name="ServoMotorBasics-uwp"
     Publisher="CN=Microsoft"
     Version="1.0.0.0" />
 
