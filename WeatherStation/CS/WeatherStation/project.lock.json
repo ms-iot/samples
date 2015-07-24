@@ -4181,6 +4181,34 @@
           "runtimes/win8-aot/lib/netcore50/System.Reflection.DispatchProxy.dll": {}
         }
       },
+      "System.Reflection.Emit/4.0.0": {
+        "dependencies": {
+          "System.Runtime": "[4.0.0, )",
+          "System.Reflection": "[4.0.0, )",
+          "System.Reflection.Emit.ILGeneration": "[4.0.0, )",
+          "System.IO": "[4.0.0, )",
+          "System.Reflection.Primitives": "[4.0.0, )"
+        },
+        "compile": {
+          "ref/dotnet/System.Reflection.Emit.dll": {}
+        },
+        "runtime": {
+          "lib/netcore50/System.Reflection.Emit.dll": {}
+        }
+      },
+      "System.Reflection.Emit.ILGeneration/4.0.0": {
+        "dependencies": {
+          "System.Runtime": "[4.0.0, )",
+          "System.Reflection": "[4.0.0, )",
+          "System.Reflection.Primitives": "[4.0.0, )"
+        },
+        "compile": {
+          "ref/dotnet/System.Reflection.Emit.ILGeneration.dll": {}
+        },
+        "runtime": {
+          "lib/netcore50/System.Reflection.Emit.ILGeneration.dll": {}
+        }
+      },
       "System.Reflection.Extensions/4.0.0": {
         "dependencies": {
           "System.Runtime": "[4.0.20, )",
@@ -7378,6 +7406,34 @@
         },
         "runtime": {
           "runtimes/win8-aot/lib/netcore50/System.Reflection.DispatchProxy.dll": {}
+        }
+      },
+      "System.Reflection.Emit/4.0.0": {
+        "dependencies": {
+          "System.Runtime": "[4.0.0, )",
+          "System.Reflection": "[4.0.0, )",
+          "System.Reflection.Emit.ILGeneration": "[4.0.0, )",
+          "System.IO": "[4.0.0, )",
+          "System.Reflection.Primitives": "[4.0.0, )"
+        },
+        "compile": {
+          "ref/dotnet/System.Reflection.Emit.dll": {}
+        },
+        "runtime": {
+          "lib/netcore50/System.Reflection.Emit.dll": {}
+        }
+      },
+      "System.Reflection.Emit.ILGeneration/4.0.0": {
+        "dependencies": {
+          "System.Runtime": "[4.0.0, )",
+          "System.Reflection": "[4.0.0, )",
+          "System.Reflection.Primitives": "[4.0.0, )"
+        },
+        "compile": {
+          "ref/dotnet/System.Reflection.Emit.ILGeneration.dll": {}
+        },
+        "runtime": {
+          "lib/netcore50/System.Reflection.Emit.ILGeneration.dll": {}
         }
       },
       "System.Reflection.Extensions/4.0.0": {
@@ -10579,6 +10635,34 @@
           "runtimes/win8-aot/lib/netcore50/System.Reflection.DispatchProxy.dll": {}
         }
       },
+      "System.Reflection.Emit/4.0.0": {
+        "dependencies": {
+          "System.Runtime": "[4.0.0, )",
+          "System.Reflection": "[4.0.0, )",
+          "System.Reflection.Emit.ILGeneration": "[4.0.0, )",
+          "System.IO": "[4.0.0, )",
+          "System.Reflection.Primitives": "[4.0.0, )"
+        },
+        "compile": {
+          "ref/dotnet/System.Reflection.Emit.dll": {}
+        },
+        "runtime": {
+          "lib/netcore50/System.Reflection.Emit.dll": {}
+        }
+      },
+      "System.Reflection.Emit.ILGeneration/4.0.0": {
+        "dependencies": {
+          "System.Runtime": "[4.0.0, )",
+          "System.Reflection": "[4.0.0, )",
+          "System.Reflection.Primitives": "[4.0.0, )"
+        },
+        "compile": {
+          "ref/dotnet/System.Reflection.Emit.ILGeneration.dll": {}
+        },
+        "runtime": {
+          "lib/netcore50/System.Reflection.Emit.ILGeneration.dll": {}
+        }
+      },
       "System.Reflection.Extensions/4.0.0": {
         "dependencies": {
           "System.Runtime": "[4.0.20, )",
@@ -11132,7 +11216,7 @@
   },
   "libraries": {
     "Microsoft.CSharp/4.0.0": {
-      "sha512": "84WkygNiu7ZLM30dxhoeCWW5CWxOdtx8GdIJh/Anw7LOmw5BFyq/GHQUZjS6KC+HHGVa+/FrX+f0RgUmhMaYvA==",
+      "sha512": "/q7Wo1eEf1Nv2cuOO5h1F/MzEM0xn0MoV2kb1YpgDZFYZ/y5gkPYUA0Ws6mVADJKiMWnl2/RXb87roVhUy0QXA==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -11168,34 +11252,34 @@
         "ref/wpa81/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/7be5fd003879478286aa1bab7b7d6f38.psmdcp",
+        "package/services/metadata/core-properties/2ac4ea902ef04f8faa81d43fede0c9af.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "Microsoft.NETCore/5.0.0": {
-      "sha512": "nrpg55L0wf4Umbgt2US2nE9Y1gjNxVbWEg+8acKR448klCbroRV5ZvINY6/DEurUFTYl+nVc30pVxI3JTljspw==",
+      "sha512": "YC1CpPMNP4gxBA9h9Pt38/MCrDS5sk4fKivp8w6tGmmrMAIi+6Tc/z2jGYOfyy9wpdP+wQIrc4NqxxQt0ZGDFQ==",
       "type": "Package",
       "files": [
         "_rels/.rels",
         "Microsoft.NETCore.nuspec",
         "_._",
-        "package/services/metadata/core-properties/807df50fae824c8eb9f9f3d8e14d7bfd.psmdcp",
+        "package/services/metadata/core-properties/5c19426597284132b9add3c9a9bb9a0d.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "Microsoft.NETCore.Platforms/1.0.0": {
-      "sha512": "QXz79QEzXcEJrnYgR3PNWEN/BG0NkZSM6xvshwZ7SQyyuI8j6darVlf+bu2zO/tGBtU7X22s1pQ8WdoL25lSDA==",
+      "sha512": "dOChpTfpqF9s/cKXqMTfl6fzwlcKr0BAD0g1OW7q/y4aJMVuK2U3MG4z7/gQ5zcMWdh26wG1ndMcMTTszozYxw==",
       "type": "Package",
       "files": [
         "_rels/.rels",
         "Microsoft.NETCore.Platforms.nuspec",
         "runtime.json",
-        "package/services/metadata/core-properties/9d4817baec374e4093ff736a7a54115f.psmdcp",
+        "package/services/metadata/core-properties/9c8a94967b9c49ea93dfe88dd697e984.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "Microsoft.NETCore.Portable.Compatibility/1.0.0": {
-      "sha512": "dgQI2Fb2HdRqAbqoXHVJ0iVDpNWwzAUz7jkEdBTf5e3JLi3MjkKIwcZOfA2xnhbESF9SPwwkwH4YjOy66DPIIg==",
+      "sha512": "xyA/3viCYlKD9D9NIkOeVCk/4XZG6JU5mWtbAcPMM96L10Z9pODQoAmCTSaqTXcFcZdyzonDL5JRXwMVHasC2w==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -11271,23 +11355,23 @@
         "ref/netcore50/System.Xml.Serialization.dll",
         "ref/wp80/_._",
         "ref/wpa81/_._",
-        "package/services/metadata/core-properties/1c7eb74b19f24ed4b5ee92794bbb3933.psmdcp",
+        "package/services/metadata/core-properties/68e2e8cddd2e4eac8589ff55eff940f7.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "Microsoft.NETCore.Runtime/1.0.0": {
-      "sha512": "6Xas0XIGx32XWSuyqoHyxVAaFPhmjb+Si/OcRncYv+UKm226/jymM49d/6IUpEKOj7j/WnfWIWuZiEJgupYDog==",
+      "sha512": "WLGNy01irr6GbZsa2cgwcXFo1xBnwl2xA1WLz9C5PrcCHGQQTQZhrXlOWxDKMVLm95+1LYCOmFU2t9E0ZEwz/A==",
       "type": "Package",
       "files": [
         "_rels/.rels",
         "Microsoft.NETCore.Runtime.nuspec",
         "runtime.json",
-        "package/services/metadata/core-properties/c28c56154bfa4720bed7c6b287b59e05.psmdcp",
+        "package/services/metadata/core-properties/130a0e13ca08468796e97132f5e44245.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "Microsoft.NETCore.Runtime.CoreCLR-arm/1.0.0": {
-      "sha512": "MvR0JzfZ1vYmD+5szoEjDuNrclGHtDc9g6mVcYvhj0HVEgMRL11XhAliq+jqg+g0BYmEeNgmQfXMKpeuFMq99Q==",
+      "sha512": "h3aGSDA8QUidg++JGFHobZY//pkw4ZytaqdegEELIxr78JihDgguXY82kuSjymGgRUX3dEa2vJjB4vZJ08KMMQ==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -11301,12 +11385,12 @@
         "runtimes/win8-arm/native/mscorrc.dll",
         "runtimes/win8-arm/lib/dotnet/mscorlib.ni.dll",
         "ref/dotnet/_._",
-        "package/services/metadata/core-properties/0eb9aa31691c455a806999efae22116c.psmdcp",
+        "package/services/metadata/core-properties/6f3415e22ba648e7bddab6e15b86e8fb.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "Microsoft.NETCore.Runtime.CoreCLR-x64/1.0.0": {
-      "sha512": "S60oVTRTYzKqUfuUy1weqhaCuW79+n4Hf3kCyXnO1CMEnKGFkYn8AWdAVMsZLdgo0JoQ3xcQnanBZyOz6jiDzw==",
+      "sha512": "4uKch6OiiZ1tEJZgAcbI5SW1upwPGHeGLMaALmx6xbWClR1KA2Y908vDdURWs/850cacr4l1nSM+KKwX4ZjW0A==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -11320,12 +11404,12 @@
         "runtimes/win7-x64/native/mscorrc.dll",
         "runtimes/win7-x64/lib/dotnet/mscorlib.ni.dll",
         "ref/dotnet/_._",
-        "package/services/metadata/core-properties/445d4026543c473a980e0a06bdd6ecac.psmdcp",
+        "package/services/metadata/core-properties/4d0fefaede4846a3a391bd5abc0b310f.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "Microsoft.NETCore.Runtime.CoreCLR-x86/1.0.0": {
-      "sha512": "0sNOFsos0uaJGInjLYLg+uMP7vHpRDb3oIM36FmxqSiWY45wCd4dyY52MxiCZZZlOwsmBl4WiWGYaq638c6nfg==",
+      "sha512": "hG8Om+3GLALPvfoAFpU+cDgTm06iibolDkjQGI9AObZ6bBuD44t71KSvtOLohEFbxgqS86UnVjxys2mB4dU/Hg==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -11339,56 +11423,56 @@
         "runtimes/win7-x86/native/mscorrc.dll",
         "runtimes/win7-x86/lib/dotnet/mscorlib.ni.dll",
         "ref/dotnet/_._",
-        "package/services/metadata/core-properties/ddab1c93a52c4aafac1efcd5173e7d10.psmdcp",
+        "package/services/metadata/core-properties/b8118c0be4ee4df4a07d0072a904f7f6.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "Microsoft.NETCore.Runtime.Native/1.0.0": {
-      "sha512": "EVClRicgxGi5aGlyBewPfsHjkEhrB/EPluHzrDXeK/7hB3uGBqLMOSbOYQYYlaQCIeZS9fvVrPdc6Lg7yBOToQ==",
+      "sha512": "YqSBF9fB6NEdaIikdGi6Bo8pGYh4E9j75+bXv7yiFjaSHZvCItQ++Q7MOpGYWVygavwI4Gji+rFd+oscbi3HHA==",
       "type": "Package",
       "files": [
         "_rels/.rels",
         "Microsoft.NETCore.Runtime.Native.nuspec",
         "_._",
-        "package/services/metadata/core-properties/97a6d97905d445c1b093f24605a762b1.psmdcp",
+        "package/services/metadata/core-properties/6f9a59cc7e304b7ebd52522cba68f725.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "Microsoft.NETCore.Targets/1.0.0": {
-      "sha512": "UNGgKiFq/Wg/2Srf0ODgD9wzwmUv75B7J4RhbLFOLnT93UYtl9KG6K1dFkW5v7WEdpN6uy8vEHupdYB9yGpbXw==",
+      "sha512": "z420UVnxpVimjP/uOLpjHL8Ht5lundIw8n+/lcpXGKrscNM4tVaYS+fPqaVrVXKaEh04aXbOSb2TSFA41AAB5w==",
       "type": "Package",
       "files": [
         "_rels/.rels",
         "Microsoft.NETCore.Targets.nuspec",
         "runtime.json",
-        "package/services/metadata/core-properties/7386a11ea7fb403c87782275ee64f704.psmdcp",
+        "package/services/metadata/core-properties/b474eae74684434186a205d6d6e82e42.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "Microsoft.NETCore.Targets.UniversalWindowsPlatform/5.0.0": {
-      "sha512": "WDjRcmeoBXtz9IS/Pzt03tP2LDvINnzidzoGcdHvJe5fTUtO/qFAcJ84yVsv430PL+zon4LigMynbWRCtuus7g==",
+      "sha512": "C5pZvgwjt4aLXGcqHxKi5JahwKOb32FJUPB+i8QAuSr1J4XXXNvEoY4bcrXcFWh1DyeQi63BSyktTFEY0yYSZw==",
       "type": "Package",
       "files": [
         "_rels/.rels",
         "Microsoft.NETCore.Targets.UniversalWindowsPlatform.nuspec",
         "runtime.json",
-        "package/services/metadata/core-properties/e3ce2e5f6df74efb8ec638af38af5702.psmdcp",
+        "package/services/metadata/core-properties/ddd92b7116d4441698a13b69b4de06c4.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "Microsoft.NETCore.UniversalWindowsPlatform/5.0.0": {
-      "sha512": "dnSsdh/QrFySNt1NCSmmJwymixpRClwwY1Iz9cy1vJmXBShWNiI5wyZK2dyBM/TdnQ426mrLM4AevO1MdLoE2g==",
+      "sha512": "gcmbRUiypZblyxgxJgmP1dKLfOkvyxEmIF/OtjE6KyRE78PN4RNAoI57kcWPWwBRspWHOnn8qExtMqzjzaLgsA==",
       "type": "Package",
       "files": [
         "_rels/.rels",
         "Microsoft.NETCore.UniversalWindowsPlatform.nuspec",
         "_._",
-        "package/services/metadata/core-properties/8622d297a7f54d4584af089415faf9b9.psmdcp",
+        "package/services/metadata/core-properties/263a7dd951ca47f38a9204cd8667e650.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "Microsoft.NETCore.Windows.ApiSets-x64/1.0.0": {
-      "sha512": "oUU3/XfSdpUMJGrE4VSCPMWAK+S0zGB9jLfFsVI4uaX6qKcLWBMZ5xq6RsjRaPRza5qCeQwCIqQbmUhFFHZoGQ==",
+      "sha512": "rMmhVSsVGrq1Rq5QDeNj0Qmn5ogGpEQXekIkWTRRJdI8uB3kdf5Z5DdjezeNAjS3nj+9+zn9ESvdeYyPdvGQQQ==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -11550,12 +11634,12 @@
         "runtimes/win81-x64/native/api-ms-win-core-sysinfo-l1-2-3.dll",
         "runtimes/win81-x64/native/api-ms-win-security-cpwl-l1-1-0.dll",
         "runtimes/win10-x64/native/_._",
-        "package/services/metadata/core-properties/9d60098686a4468aad75da2d93a6c199.psmdcp",
+        "package/services/metadata/core-properties/6ed26c026ec74779a1e31cfa0807e317.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "Microsoft.NETCore.Windows.ApiSets-x86/1.0.0": {
-      "sha512": "/E6dgpL3H50iyITyDyS6+RdFcg9IYqH62ZqLOQ+5ogtvyNMHcSyJZCLh4MGgel+fRL3reBWYKsa6jQSvHlnDWw==",
+      "sha512": "pLMpE6xJvxHdU/GAl+TdsMm5mWR/rsmXPIkXNzYFeYo1HuQ/8ueSBlOFBJwQfsawHRG/DffVEaD1fNZyaQvYNA==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -11717,12 +11801,12 @@
         "runtimes/win81-x86/native/api-ms-win-core-sysinfo-l1-2-3.dll",
         "runtimes/win81-x86/native/api-ms-win-security-cpwl-l1-1-0.dll",
         "runtimes/win10-x86/native/_._",
-        "package/services/metadata/core-properties/5772eee85776419e8e826dcbc979e0a1.psmdcp",
+        "package/services/metadata/core-properties/2a60b1220c43441a8818df7ae64c8b76.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "Microsoft.VisualBasic/10.0.0": {
-      "sha512": "jePs39BgihY5MhKJIA4o66TlTi2k+016PD6ZBb6v7MX1JrKu7fYIbdXx5AOPldw8CMN9KY0cq+amZw4uiLLDGg==",
+      "sha512": "KtE8IcXhBfGYCvOcNE3BUTowgwqXhbJxJO6Tn1UIG8WBeDopIf+ygpsGI3rFt7cycvGbuS1+zWUGnmBKdcSPMw==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -11748,12 +11832,12 @@
         "ref/netcore50/Microsoft.VisualBasic.dll",
         "ref/netcore50/Microsoft.VisualBasic.xml",
         "ref/wpa81/_._",
-        "package/services/metadata/core-properties/37a592ea601343a298773657db4016fa.psmdcp",
+        "package/services/metadata/core-properties/36ec6801501a45209248459a0953ef80.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "Microsoft.Win32.Primitives/4.0.0": {
-      "sha512": "LZvqHW89EEeRpQw3v2FFTRdcFWW9rZp3P8g9SJpArTjuEXxUK4VBO3zvdKCjTgi2mMNSXwpLfRD52Wcd95bE7w==",
+      "sha512": "WM3QrH2rfd/9hj7J/IBC04hjKxzlPg9JqchHSiVxSHVe+d+QpM8Aw7w4q6bhm7mrFhyW/BgX51bfr8TU9Hjo+Q==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -11780,12 +11864,12 @@
         "ref/MonoTouch10/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/34a57572a9284f60a4d35261cac7466f.psmdcp",
+        "package/services/metadata/core-properties/519ac46891b149da9e3021b01ce40cde.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.AppContext/4.0.0": {
-      "sha512": "1ZpAZHfktCcXKyxJSCgdWZINhzMEEc4aWxSw1fUuE4ATtwKiGAyp+joCe4/6h9BwxYODe771iVkoBy4b/K3TvQ==",
+      "sha512": "MAAI7lkOGRc6puP9ZEGaLF5ToBbwBWnPk0UUojElSCfQ9JyPmDeqCbuUhjkvzENo8SduSO3ePz6EyQCRvKxjZw==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -11813,12 +11897,12 @@
         "ref/MonoTouch10/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/a3bdca33ec044435929a4a1018438784.psmdcp",
+        "package/services/metadata/core-properties/655416029fcd4217aa3d84354108cc57.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Collections/4.0.10": {
-      "sha512": "CwJIFBisHYjxXlZQLxT8Z8uSSZJ4ENwrDkgyxQUjcH5w8s2jdw/O9TTQRnitrgUNt4p0tmvSdKEXmuGI9V1xZA==",
+      "sha512": "G+toQ0yP+OeP/4OoNZoS6pY4OumnLQxogIotGVnNAzBzlAysQ1/nN/QKkKz7cbjsl0j9rSG8gO6VBrRNfl3thg==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -11847,12 +11931,12 @@
         "ref/net46/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/a6ffca8408bc4c9cbeca553312712de4.psmdcp",
+        "package/services/metadata/core-properties/ac9c7722031241b9bfcf76a298a5d2cf.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Collections.Concurrent/4.0.10": {
-      "sha512": "3uTP/HEfeUw8mMDGCV15cc6oXUXpwBITfIEQvUyCJqVDKnO8PfntiEAr4MeNExqY3jZmcdhqkdbYzxssnjFxhw==",
+      "sha512": "CeIYWNXnFKCo2RP/cGupUPA0qi8BjUQn5L8Jd8Bc2+1g/+crKGiwl+wU6+i0LuSubQCC0V484vBvtBAjQhn2aA==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -11879,12 +11963,12 @@
         "ref/net46/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/f33bd0f5dfbe497aa83fca4b6cdfdee8.psmdcp",
+        "package/services/metadata/core-properties/48b38705af0d4bbb9c868ab1b8431c40.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Collections.Immutable/1.1.37": {
-      "sha512": "hYsEE8ntJLQ21QDjnN0xjDmAMkNRFAoChqaJImTnX/CsIlj0BqU22kKNTovl4Sw7lyuvjFGVglbi4h3l5obGuQ==",
+      "sha512": "yd3a6w6dGlYc2HV8m1RNBvZRY5g5sJeci+zrHab7i2ZXlyuLA22ruBAw9Cklh10bCZ1sNR+zgQR/1QXrTw+U9A==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -11893,12 +11977,12 @@
         "lib/dotnet/System.Collections.Immutable.xml",
         "lib/portable-net45+win8+wp8+wpa81/System.Collections.Immutable.xml",
         "lib/portable-net45+win8+wp8+wpa81/System.Collections.Immutable.dll",
-        "package/services/metadata/core-properties/7ab07b86af2947eeaf49d5e36c77ca88.psmdcp",
+        "package/services/metadata/core-properties/cbed47750633453193a8c9b73094d832.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Collections.NonGeneric/4.0.0": {
-      "sha512": "lDnC5eBzeMTqXsVdzeEIm288Bpox34DxTolStFPunBxhE6+bttA7XSdVkggfG3/nyA+rV/1D5jpzcz2EEOQROw==",
+      "sha512": "riqYXUiQwwDO82YCFxuoRDh+7lsA3cAxWxCkyuSHfusMAiuMrFHCyGfDpWQ6iH14BrupzgHyE89/Xlg/Usf75w==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -11925,12 +12009,12 @@
         "ref/MonoTouch10/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/6c6648f5f1704c298718775a31be84fb.psmdcp",
+        "package/services/metadata/core-properties/7be1bb283c124c6fba5b24b875562876.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Collections.Specialized/4.0.0": {
-      "sha512": "ESTYs8D2GdHz6BIfqLUDAsEhUC1qu5+6bcSnd40c4TdmVXkLjqn57KSEc2s0u+WZxq3yz6rSeW4EB0FApxJPyQ==",
+      "sha512": "DHWBV24iMkk7F74jKxKzEkCzTTL8fPX/BqwtKLaBVs+iYQE1SvXxilxPeYrs0Yil0Bh5+le3ZlBufmsFhUkkUQ==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -11957,12 +12041,12 @@
         "ref/MonoTouch10/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/564fb752ed3241a4ab3b33e3d6460eb9.psmdcp",
+        "package/services/metadata/core-properties/cbc8d683b6d0419abe14f23346262461.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.ComponentModel/4.0.0": {
-      "sha512": "rdLzJF5bh+rYAT4eljA691WFfbo3/dbcIRRJfUXNRBajMpZ9j+Fi0TWiHk5hNjnM58biib4zkwK2BjptTpUWdg==",
+      "sha512": "P2BJARZiQ/SJ+wT8qo9sc5kNMooTADLfwvYbXj4vGh7EV4Nf8B2j6Wgw2PxSXoL57y2Tv4FwN/1fcyY80rZa+w==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -11990,12 +12074,12 @@
         "ref/netcore50/System.ComponentModel.xml",
         "ref/wp80/_._",
         "ref/wpa81/_._",
-        "package/services/metadata/core-properties/c89885f472684a01a5cf2c7070946596.psmdcp",
+        "package/services/metadata/core-properties/c8fe56097dc94e2692e00b67652001e9.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.ComponentModel.Annotations/4.0.10": {
-      "sha512": "FuNqBolW0Armc4EfIqPOWx1sBdZVtKbRnWQx4S0wwGspM1bPA5HQl8VQjTDhic0ISTtc0TsUqDYihMJ9ubwyjQ==",
+      "sha512": "97Npx/OAmKtGCbPjHBjYCC3LYIq+esUnyF3IabA6mvNi8b1j9xYX8qw0az/3KN1pHRRJubiAVvQs8vuWLrJQ2g==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -12022,12 +12106,12 @@
         "ref/net46/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/1cc6edbc5e3c4d98bbc49a15da83d60a.psmdcp",
+        "package/services/metadata/core-properties/a85323f2882a446eaab7b8d4a66ac523.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.ComponentModel.EventBasedAsync/4.0.10": {
-      "sha512": "dw9OJe01KON7Jy7unt95QDxglk3A8bBQA6v+Xukr7ub9zm0vqCzcpPSZ0cCVJR4OV9qSKY4Xayw88BT1o+CeRQ==",
+      "sha512": "uMJi43QVmH0rSxFUbHq/4EevO0OBe9hz3ScosDruKnk4r6y4mZudzCxu5VWn5+k5qa+gbTHb45d1RVnDqJLlug==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -12054,12 +12138,12 @@
         "ref/net46/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/a9415a4e21434fa6bc04b39e7e3141f3.psmdcp",
+        "package/services/metadata/core-properties/fe5f603f0b634abfb786db1edf0ccff6.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Data.Common/4.0.0": {
-      "sha512": "D11HHylyRmWnWv/E74YwKrKmkanNO9EuHO2zktpLu8Cbu/NajebMsTJf86/8tL6PxgO4kL/cMJfUNNWwtINdnw==",
+      "sha512": "Euk8ArZkEZRif+eKdfimEyIS+X9sRuQJrS2oLeqfycLmWEaSISRLm9S1xxV2QnaQS9qeGahfXE/RDU6rYj2OeA==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -12086,12 +12170,12 @@
         "ref/MonoTouch10/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/d6e8bf942ce24f99ba6217798b4ae011.psmdcp",
+        "package/services/metadata/core-properties/fa7dabd358b54aacb434863246f6efcb.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Diagnostics.Contracts/4.0.0": {
-      "sha512": "aeDiQbhRfnopWo6uJW55M1+fvWqodLc12QvDEvp3iI/NoNpyjamgMS5/9ScAGnxvrM0Hx/QRilxYdykxwGkt2g==",
+      "sha512": "sEa09qL58PrTuOfARrfSw07J23fuxnvwPV4JkHsToY+++ApbF5ErQRtGz5kl97/vwCQUtxLvCIu5TuUKkbBqag==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -12120,12 +12204,12 @@
         "ref/netcore50/System.Diagnostics.Contracts.xml",
         "ref/wp80/_._",
         "ref/wpa81/_._",
-        "package/services/metadata/core-properties/539bba0b48ea4ac896b60e6762eb51c1.psmdcp",
+        "package/services/metadata/core-properties/3bb089bb140d4eab90594116d1a84885.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Diagnostics.Debug/4.0.10": {
-      "sha512": "xIHzBs6HKMqRVNLy8A/C3JFRaz4y1meN+OnqbAtItmzDTc1Ffol1CJZa23ExDd/t+7lN5jFLWBYnJdtLy0EbjQ==",
+      "sha512": "3hQHgjaio4VT69P/RZq5CA9V454I37H7XkwViR4smCsK4jeTgq+bQI7/vS45ZNTGUn97t9tCBPZOwC8AFFECLw==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -12154,12 +12238,12 @@
         "ref/net46/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/0a46ec69269d434098c304a3917b3a86.psmdcp",
+        "package/services/metadata/core-properties/d3937ee60f3f4d09943e79f2e32a2c9a.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Diagnostics.StackTrace/4.0.0": {
-      "sha512": "pbNO528rukyd2XyrE5DWwGJAVUa5ptCcyFr8BFoK7DdMJhZhXjyjVw7XkMP4WzowMHwGRuR/HvSFIO5O7Ue79Q==",
+      "sha512": "RecUY9dpaj9oAbgknEviNCxNyb6Y470JZfeYsFgnnD5H+kLI0EoJUFDere31C4p+niaszfY7lL4qItsiZQC5og==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -12188,12 +12272,12 @@
         "ref/MonoTouch10/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/f94ae363fb4c40598e7a7ab94908dcb1.psmdcp",
+        "package/services/metadata/core-properties/07ae6262c00549169137f620ed7dd0d3.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Diagnostics.Tools/4.0.0": {
-      "sha512": "bnKGTXNtNu5Q3wgg/dwDzTSThrcTTU2y4UAIM2O9MCu950eLCbCyMAsuzW/pCfZoTLR6+76p+mx4vnXCwRtQAA==",
+      "sha512": "ukmw+WIDKlW/ymnnAn9VUdeO7xPG2QjMjPA7RRA7TPm6FVDzQyt5WLaaHKTotsbRbdWmYEmNMJHsXrrrTnux2w==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -12222,12 +12306,12 @@
         "ref/netcore50/System.Diagnostics.Tools.xml",
         "ref/wp80/_._",
         "ref/wpa81/_._",
-        "package/services/metadata/core-properties/925e4d607e414edaa1c7daf05e33f0e5.psmdcp",
+        "package/services/metadata/core-properties/c256d7d920814e87aa8be3637f9aedbe.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Diagnostics.Tracing/4.0.20": {
-      "sha512": "80R6Hnde4kPUM5zH8A8LvYGPsmMGYHXCaUW8+MhJdSBtRO1n7t/EGVyepzmQS01YexFhUAfQcl4nn2uWI05lMw==",
+      "sha512": "mSlqpxtVNaEl/Fuymwjp9jGvjHb6+FNTUI+LQwBH1WFWy6S10VeXvJwokOC71FmYdbl+Cdyk0OGlVE6YXYa8dA==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -12256,12 +12340,12 @@
         "ref/net46/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/ca98187b7e9449e7935999284ec07218.psmdcp",
+        "package/services/metadata/core-properties/c747c51774304ae69103509c90e50186.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Dynamic.Runtime/4.0.10": {
-      "sha512": "3mktfwoGA4C3Ly1yfAF9KH9mLWXL0a91e+kmRiIGqyuor0LX7aOY2sgGjoXkGW9q9RsvStMPiMwgx6VOJGB5tA==",
+      "sha512": "k3fwDFybJA4Suar0164ar45UZZBdyJR3u2vY/baEX/syoVm9boThITUJ8PPTGqMDKkQiqtJxH2qmIcu6/A2k7Q==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -12291,12 +12375,12 @@
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
         "runtime.json",
-        "package/services/metadata/core-properties/cebeafe17b5c49888991aa6212b9a063.psmdcp",
+        "package/services/metadata/core-properties/abfcc357a8a745d4b3aa049e49f6edf3.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Globalization/4.0.10": {
-      "sha512": "cvJfn0vNFYfHhHQWiV+EJrLAnsFzFU5fORi+CUN2M3Lc0ar7MejBaZt6FCieO8sS1t+zSnH+uQZX/3uzYZPP5g==",
+      "sha512": "jTWDiuUyrWxvYToTPUHAu3HhZxsAgrlLWyk7TxpLI3Xhi0zsTPiyaljOOmDH6IyZjaJgYkT7tEwU2dYZixxCiw==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -12325,12 +12409,12 @@
         "ref/net46/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/8af164e66bdf43aabcc308701abcc75e.psmdcp",
+        "package/services/metadata/core-properties/1d0e237bdf4247dc8374d6875795bd4c.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Globalization.Calendars/4.0.0": {
-      "sha512": "FE8zrcTmETl7JPPgVdbTuujePrmfRadP+icBLwWZOeUhUTUWXLsvf5Gh+b7yuOAMHeNqiWZakZ6b+W3Bj3MgvA==",
+      "sha512": "nHK2XkMVQE8o4359SdEKTzyTYYwOOXsMRDsNBMSWjitxL8jK8C2zXpf5yrL1DEz68MRY152ONLtQ+Hfla+6DBg==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -12359,12 +12443,12 @@
         "ref/MonoTouch10/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/c3dc4ab42e9c4c52907fe205fe2c07b6.psmdcp",
+        "package/services/metadata/core-properties/75d6521437734eb3af6d9c4b212f783e.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Globalization.Extensions/4.0.0": {
-      "sha512": "ChsYwE73eGjxE/LVB+FfCTH2TO8hKSes1JpopJADG0zAd0g+tHdkB/x+NbHiL1BAh2ly4w+DPu7ICV83WDo2oQ==",
+      "sha512": "pPws0NUeAzOrrvAeZLXNBYU+spPE8q/EhVbPjaAgROpHZps2Njq02TNRUosSwYhZcp91GsVqa3AyzC5fajPc2Q==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -12391,12 +12475,12 @@
         "ref/MonoTouch10/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/7375f8ea87354c80adf1b0fc0a24e266.psmdcp",
+        "package/services/metadata/core-properties/7f76a26b53e344c68dd3167f7342037e.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.IO/4.0.10": {
-      "sha512": "JNaJ6SHmpEWW/H/KhCUGvHOA3wPqvNcmKhCyhq3rcIU55S9hc2ZYmJbULp6JBnvNpscgqsBx7kaPq2Jk7w+64w==",
+      "sha512": "b+unKeiPlPaS0uCNSZ7Zh/xRHgBWKGgYWs+Ti/MdYt6eZ+xzIjNCKgzFih3WCwndzHEp/+Lju8HISNfBsQ0Zxw==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -12425,12 +12509,12 @@
         "ref/net46/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/467c2f34436d48d88f4ae9d9371d9ca5.psmdcp",
+        "package/services/metadata/core-properties/5bdb8750256649919b9ba105fa95063c.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.IO.Compression/4.0.0": {
-      "sha512": "/G3sK2xu9uZDZNezCKYhyFcUnm7p1pcOK2/o4wl1uOILph86CgH2DDo1PTZ0Orl2AsZLgH0qzyv6Kp9rVpVZzQ==",
+      "sha512": "0UvH3ZGKby7nE1uaeiHb7lgRdT5jMkKOP4vSFdxylhRnUKsq5Dl3kw7gc4XuTmdpqL/khwTmSM6YDMWv0T1+UA==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -12465,48 +12549,48 @@
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
         "runtime.json",
-        "package/services/metadata/core-properties/8790f9952ff1424da85de0e6031174eb.psmdcp",
+        "package/services/metadata/core-properties/306e00d6f2584541ac675749670d3449.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.IO.Compression.clrcompression-arm/4.0.0": {
-      "sha512": "l1BPuQf57rc7Eo2fh13Ll4v342UaUOPrZ3aUU7s9NXqdfGxajKGaeP3zAdrR+MyEcqQ1bXAyNyOPe/9/T6Wd/Q==",
+      "sha512": "NMf6nOnXRWzQRXHJI5Mw16nDi9j1VFNK/V7SFMia7S8gAK6dUXnOMcRkqUS29qkOnjUtGOB8DXI0WA4BP/Jzlw==",
       "type": "Package",
       "files": [
         "_rels/.rels",
         "System.IO.Compression.clrcompression-arm.nuspec",
         "runtimes/win7-arm/native/clrcompression.dll",
         "runtimes/win10-arm/native/ClrCompression.dll",
-        "package/services/metadata/core-properties/4204248348954888be3e74554d4ba152.psmdcp",
+        "package/services/metadata/core-properties/ef5a9c99ba24479084226ed030316f2a.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.IO.Compression.clrcompression-x64/4.0.0": {
-      "sha512": "NUm9+i5BPzHRXbbiG26ufv2WdjZBLSf0BFNqyora+cHgDx6KoxHxRNySUlF5erHjxJTi+tHyDTliDwMJiV/EGg==",
+      "sha512": "RibRRZn7DBhdcRTA5Gmu8/Z2jCQVPQFjFooesqC6V95k6xjDMqQD3RlOyA/yVS2oADaACV1qtdhIjLWaEQ+NUQ==",
       "type": "Package",
       "files": [
         "_rels/.rels",
         "System.IO.Compression.clrcompression-x64.nuspec",
         "runtimes/win7-x64/native/clrcompression.dll",
         "runtimes/win10-x64/native/ClrCompression.dll",
-        "package/services/metadata/core-properties/b3353093777a421cbdd21aa8aac2b78c.psmdcp",
+        "package/services/metadata/core-properties/0a093359e13d4e2a9a3d2a6378979665.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.IO.Compression.clrcompression-x86/4.0.0": {
-      "sha512": "YjfP4169tYIiJKC3X8CtbQJhKPXmqzCaOh0gAMzJZsGXsxaNPIrUfwOq6MhA4cSNdek7OAVNeIPMNjuAq0mIAA==",
+      "sha512": "dws2DwhfIQ7XIhsIWhsgicwUvkXZgNGwA2uYvG5X3S+rLWJ1H/+x51FlUXXHWihGOVDfA+WE6ewaQKxODqM/5A==",
       "type": "Package",
       "files": [
         "_rels/.rels",
         "System.IO.Compression.clrcompression-x86.nuspec",
         "runtimes/win7-x86/native/clrcompression.dll",
         "runtimes/win10-x86/native/ClrCompression.dll",
-        "package/services/metadata/core-properties/fee48f05086645a0bbe699d30a56da69.psmdcp",
+        "package/services/metadata/core-properties/9133927234b843ef8d7719ef4bedbd2e.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.IO.Compression.ZipFile/4.0.0": {
-      "sha512": "ZRkuw59WUL73nIbf6J5HUd7lmEGzF5PjaZuvckVtBK8Ovl0b/Lf/qBsggTlW8ceAU7VIZ+WU2KApvrHgngRfaA==",
+      "sha512": "VBBh0ibi0ZdOWHERwK/MYC7LpMm69aE1uFEoFyEFFplWObd6G7QL6x7iZXlK4zYqR8X5tg8LhMatcAawUMjlhw==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -12533,12 +12617,12 @@
         "ref/MonoTouch10/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/401ae3dc435447e8a90a16156bee1a3c.psmdcp",
+        "package/services/metadata/core-properties/46ff1f5e213b44c6a667f6af5102a079.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.IO.FileSystem/4.0.0": {
-      "sha512": "iou/kalk+m0KG/8WWUAEXVVk3Nyv+is+4pAu+iQS1a+iJEoJRGa69zd0bgZkLIRdLUyYtpciSeiYYmGlynCuuw==",
+      "sha512": "QueD58wAm5iySBT+zioXc0D63uidMGxdPFJxquUbN6Tcsp4O+xXVatGMnOCg4WA3wo6p1G9vxZwn7xD+8sWmtA==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -12566,12 +12650,12 @@
         "ref/MonoTouch10/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/8de6b9ee65bc4bd59730133e89eb82c4.psmdcp",
+        "package/services/metadata/core-properties/444f82a87d0b400b8067c51b9ac8b343.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.IO.FileSystem.Primitives/4.0.0": {
-      "sha512": "Ladh1U0Sfr9hPczwjLilr5dnYfqxFld7jDn7CWq9P2PzzYHzTAQVIqtL0lBNTgpG/eFLz74wQ42m340i541WgA==",
+      "sha512": "gB1r7Gyubrk+v7au+mp5WM7/vm9yw3OGmETo3G8J9NuOZ68XjMljzZNtDCE4AmU0g9xtk5d5dPT+VVlE433RVA==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -12598,12 +12682,12 @@
         "ref/MonoTouch10/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/4a3a834bf02244c086d87281d89ae50f.psmdcp",
+        "package/services/metadata/core-properties/54e4f036e33b44de93e8b89b2037ced9.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.IO.IsolatedStorage/4.0.0": {
-      "sha512": "OkAW1QA5BKHqjbekm/4XGVjLZlVsvig1kQQ5HVkCN9wU+guD9vFFHw5+9BBK6BwpX4wSIop+ok8NErUn59oc0g==",
+      "sha512": "JZwmP3++ghqPCm1+PAcOQtk7zZjLQQ+fyetc8ipVcoMt9DVyDqoxmHukI36tK7maycfoUftNaNgezYNT3Purmg==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -12628,12 +12712,12 @@
         "ref/MonoTouch10/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/9d38322a84b249a0b4283bff162aa0a3.psmdcp",
+        "package/services/metadata/core-properties/f9b9a726a2fc472f884a9f7f945fc6bf.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.IO.UnmanagedMemoryStream/4.0.0": {
-      "sha512": "RuUOjDD+UwQ0ZnkfWsLrnvT6i8RgfUnQVGs3UAXcIiJ0X+V5Zv4DhHWaTrk2CBWO4nCwIsWOIeFGHtk6voxPKg==",
+      "sha512": "qm32tGSSvN0S9OoTyZjRi0qcu9CPV1Qm2KvIOL+f1WDS1wxW8Mp8SlKQ97L/t5FWpJQijLwuhTNTdS6bJDhmAQ==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -12660,12 +12744,12 @@
         "ref/MonoTouch10/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/e14f9f07913b406a898178fcc92902a0.psmdcp",
+        "package/services/metadata/core-properties/cf20262a861a490d8474ba5632a21300.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Linq/4.0.0": {
-      "sha512": "sFOQD+R64uSopCV6CwjI9QUOC/b6tjRTNU1Deg0N52k8ynjhif8UCvaG/5Z2vaE22JOboxPKHU17zrADmLwo5Q==",
+      "sha512": "de5y6zZ1XzkixH04wuyj7o+0oUeGvq4B5F1voWhUu/isJixUfjoSpu2OVK+0+vE+2drFh4085NtVyz6pM6jdJQ==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -12693,12 +12777,12 @@
         "ref/netcore50/System.Linq.xml",
         "ref/wp80/_._",
         "ref/wpa81/_._",
-        "package/services/metadata/core-properties/deffd18e536246468d473361a50ff191.psmdcp",
+        "package/services/metadata/core-properties/93bdeb6af21d4259927e4c747a814874.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Linq.Expressions/4.0.10": {
-      "sha512": "FL75ofGL6/eUBsmdzBaFJ+YaLLI704NoK1KHmLDcnBi8asDH9d+lnzQDkRf/buLr06FQvuBjoZShauveUf9k/w==",
+      "sha512": "SUMoj4NPl/KE9ezUKta8K4fz3YBJpAEAhlRodVNCN2HnhYl3/a0th/Si/ORLZ8/EbLK0DnCdJ4Co7pEdSH+9ww==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -12728,12 +12812,12 @@
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
         "runtime.json",
-        "package/services/metadata/core-properties/0a76d925b6824f5e9e32f19390739ec1.psmdcp",
+        "package/services/metadata/core-properties/c3c89b7953414a6893b3aa0e0c088df0.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Linq.Parallel/4.0.0": {
-      "sha512": "IPHCMbfwLUc679dZfmZkjcs7o6iYYCH2RaZ5Y52wJ3E5IonY4TK3FjsF2gd7rvb9z/COHRQpPYc1R/WmFoC/WA==",
+      "sha512": "flofdjqj8o3znrTyYQKaJ9JfRSFvObIbCKxn0++lljHafxrzvt2AQ+ZMaO0Egj8jbg5Tlek4JDajhKK+QKQngQ==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -12759,12 +12843,12 @@
         "ref/netcore50/System.Linq.Parallel.dll",
         "ref/netcore50/System.Linq.Parallel.xml",
         "ref/wpa81/_._",
-        "package/services/metadata/core-properties/0e6a890a247c423db03aa3d9b9c241ef.psmdcp",
+        "package/services/metadata/core-properties/c2e652a04ab04f118c1ce03787a2893b.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Linq.Queryable/4.0.0": {
-      "sha512": "hQ///QAiAXz69YokvW6rCaaaGe9zLxRMDC+DuSZx1dljvUa3OFR/t3qF80pLSkoITWx8t4iaXGdgxEq1mBD1ow==",
+      "sha512": "Y3l+g9XAjIG5pyCaAuUuiwUdCLzKfcYX7O4sMRn4jbpQnGPm5j34KqIpB2Qjer/rAnlUfqiotaYpCeeAfAiUKg==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -12792,12 +12876,12 @@
         "ref/netcore50/System.Linq.Queryable.xml",
         "ref/wp80/_._",
         "ref/wpa81/_._",
-        "package/services/metadata/core-properties/0fc6b40b42a240d8a367b7bf2a4637a4.psmdcp",
+        "package/services/metadata/core-properties/e029d40b28164639ab39118f5d7a25d6.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Net.Http/4.0.0": {
-      "sha512": "EfATYzfgUyEy1h0l2mMytVnWvlS1QgUUQ1vyU6ZiagIwlHTauJQqb5fYPteG9RXSE5eHLmpfp90z9iVBsqn3aQ==",
+      "sha512": "iaoR94Z3zuuVO5C2mZG3kVfTxWXA8UObPUe8TwKON2GvO6d/FWC+xF/0OrV7XdjrKdnhYBjwTwBRZV0Sx9B7mA==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -12823,12 +12907,12 @@
         "ref/netcore50/System.Net.Http.dll",
         "ref/netcore50/System.Net.Http.xml",
         "ref/wpa81/_._",
-        "package/services/metadata/core-properties/651814e453fe4abdbf3459b0614b0682.psmdcp",
+        "package/services/metadata/core-properties/719bda95ff694efaac791797bc4eff2f.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Net.Http.Rtc/4.0.0": {
-      "sha512": "JsKMjLUVVWpjeDWaYAJdrNJESxPEiwcNABJ66B6owoFjOIqv4VdAJi2yPjurVBgctjITF2GOqpA4u3UBzaccog==",
+      "sha512": "5NRniWqva0k5Q3bmarrQP0demcutcUkLw9vkfcPJgtvzheZzB1aLTtXmGfxBTW0OzolvQmbdq3cteCQdpedzbw==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -12849,12 +12933,12 @@
         "ref/win8/_._",
         "ref/netcore50/System.Net.Http.Rtc.dll",
         "ref/netcore50/System.Net.Http.Rtc.xml",
-        "package/services/metadata/core-properties/a626988efd8842f5ad5ec3aa084643c3.psmdcp",
+        "package/services/metadata/core-properties/f6d9f694b234476b9ed1c871629b293a.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Net.NetworkInformation/4.0.0": {
-      "sha512": "iaSC52WbaRQtGq0dNMZelTcju3YH0p1Ud8lD6gwtrE7LYYSnsEvSgu/8x4Rhp3+ncZ57kWb6upOHj7ELtGK5uQ==",
+      "sha512": "Hi1N9Ix89FMLI67I/yvYTqscLbXzuVOZ9RCRBWYYZ0T9nLnIaKzGExPAunNXIE6v275VB3po38CfJU+I6j86Nw==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -12889,12 +12973,12 @@
         "ref/wpa81/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/e23f05d16df74baa8dee1a665109296a.psmdcp",
+        "package/services/metadata/core-properties/80c73710e52b4c4fbd3a6816ff6489c8.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Net.Primitives/4.0.10": {
-      "sha512": "GzFyZ+kMopXH0IVHDnQS554LUBxmvOPgKqhAWxY90kxHRklB/qkCwRiHPg7vyS0Rf+r1lwoO2fgOd7+fwjQpJA==",
+      "sha512": "cPVSIgOVPiRVzYIX69+BuW5jLyOqgEE7PJMQgdi9CgdTJRL8piV5JP1y0EpOFp3cHI94Xr3+2hioHKOU+lhQbQ==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -12922,12 +13006,12 @@
         "ref/net46/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/3358f2277d1c4a6583b467b5b8cb9390.psmdcp",
+        "package/services/metadata/core-properties/9a5b789873a8456e8747313478ca873f.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Net.Requests/4.0.10": {
-      "sha512": "Kc5RLn1HEFcxAAmTND7pkf3/7Ba+Mqg3KBCKBbpH7odB6VlrzY3ocdag1g1gGCDigoh477Cnw6Ya5guzjE0XyQ==",
+      "sha512": "l/9XyySV18bnZdcQXn4r4FDPozQn2mIm56PfUgkbu/XAHnvmdQ28bbKwWOEsjNDU8fv8v0UEnTJvjHCg8l0+Qw==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -12954,12 +13038,12 @@
         "ref/net46/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/7571a7ef56a34b2ca9139af78397c3b1.psmdcp",
+        "package/services/metadata/core-properties/1e24201df1c34934a97c087092fcff4e.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Net.Sockets/4.0.0": {
-      "sha512": "hJf4dt88dNrs2l3RIhCdiYH4wc3p+PdplYrikxHTR4evEof1US+r1FE/XEafH0uRmKY9T8Ys1YHYcBJH10Ntgg==",
+      "sha512": "dTO0NmDbz3pEMdrCUlQeSCL2P+I3veLOmOw1HxDvlx6g7TkAVWY984ZPwBVZuA/xckXKkIT8bBWDZJCu1hPyeg==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -12986,12 +13070,12 @@
         "ref/MonoTouch10/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/6f823f6a6fb64262b3df2af56e690c7c.psmdcp",
+        "package/services/metadata/core-properties/ce72484c58e34726940faa6053a25f25.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Net.WebHeaderCollection/4.0.0": {
-      "sha512": "AUMbwH8vLoWyGXey1GSTi0r1eSiJgOWi9eJy30bMoF0rL7XFQauvndK7FG8cYHewUSbl4b4GI4u1sGlDRRwg2w==",
+      "sha512": "ek0QBZbx7sBTgrHnT1SpLp7ZO/FIIZoLPzdJ9+zt+qZt68KII+W1MmXjDG2kUm9c1GSAqCZML2DAnjyUAOo4/w==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -13018,12 +13102,12 @@
         "ref/net46/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/e93942d8497d4a0d96a1df8f3c075822.psmdcp",
+        "package/services/metadata/core-properties/798be8ad87da4c478813172e49a4a055.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Numerics.Vectors/4.1.0": {
-      "sha512": "J6MVeeJ1bgOw+waDZoF/WRyoRwTGzZ9tS97l0M5ML0TMBhRX+h8eXGcduiH7VOznqXQYv9mt3LbGDjBZYtcTrg==",
+      "sha512": "w8MekzAwKjeNC0iqxIYvaZDk3CbcLnhIFbWN2/Wnf5DLWTvk311W4ugDekBQB8jUmCeCd9R+uxLAijntiPDKUg==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -13040,23 +13124,23 @@
         "ref/MonoTouch10/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/3d47afc013324001af08daf0527d19b0.psmdcp",
+        "package/services/metadata/core-properties/b12ef1293e654c7fae889eceeb1319b4.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Numerics.Vectors.WindowsRuntime/4.0.0": {
-      "sha512": "VLkqGjXt4BxvTIuA0K16Gm79PtV4dGDaHineU36L43MDLzhFrrz0xIIrQrDS272efhEFRYd7LPzrk0PGCeuxpw==",
+      "sha512": "F6vkmpDdJWVe3oiyzE0k5cIh6YfUgnouFWtUJIGttMEfVJc8S4qJI+JHrhwAHWs6UKcdp8drlL2gAbH/amc3Tg==",
       "type": "Package",
       "files": [
         "_rels/.rels",
         "System.Numerics.Vectors.WindowsRuntime.nuspec",
         "lib/dotnet/System.Numerics.Vectors.WindowsRuntime.dll",
-        "package/services/metadata/core-properties/022fe68ca1df4128a1c1bd231da386a8.psmdcp",
+        "package/services/metadata/core-properties/fe62a237f1e94d3da8f7cdf547fd0e4e.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.ObjectModel/4.0.10": {
-      "sha512": "LlpvAVVkzsThxnxKhuf5u105xx4Eh9RKYDrJhrGHCJ9FnUCgBht430Hfedw+qp5M5AvPSqAFzR4v6cxAE9jzTQ==",
+      "sha512": "rU0Yk1ENLvIrJdd0AAoIylmZU4RA+5K3xF6Xkui0UnQpfHFGCksVwi3WkI3b/LXXfT971oYs35C3rUuriD09lg==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -13083,12 +13167,12 @@
         "ref/net46/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/f87859a4829742d79ed69228494e2bae.psmdcp",
+        "package/services/metadata/core-properties/abf28e891b7745c1947b84682d4c5a13.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Private.DataContractSerialization/4.0.0": {
-      "sha512": "R8Iw8ZP5qjoz/Pfd0nU/MQjhiBZLMbooN+pvES3MO/4XZ31MRxDCFH9JolCtDWhsRheBLpKVtqs/T0fMDGEHUg==",
+      "sha512": "tXCwHl1yAUejj3Uo/QRYAT55m09OwedsAqwkLIKBCuF0tUpPUavVxcT1u8MaMCcFDQBuAThNVOpTnaS1qhZmjA==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -13099,12 +13183,12 @@
         "ref/netcore50/_._",
         "runtimes/win8-aot/lib/netcore50/System.Private.DataContractSerialization.dll",
         "runtime.json",
-        "package/services/metadata/core-properties/d07fb6ae60964ddc9371afe1f9cf5eac.psmdcp",
+        "package/services/metadata/core-properties/0a489f3355c34f3ea67d4a40b054f3bb.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Private.Networking/4.0.0": {
-      "sha512": "9LV/0dzVfpMD8iSKYyJaj0CP+2db5eE6yttXYTcBlSO828n3tRuZTAIdpWAk3Rf8D5fqHhgBbctJYCjZBwxw9A==",
+      "sha512": "FRKMtXMHjhJue/ux1Lmj/Gn3pfkAc/TNXPpsfX1fWLlFH/suLFylAuCqc83EAJaU10/i40tGDw1+pelMD+W/Lw==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -13113,12 +13197,12 @@
         "lib/DNXCore50/System.Private.Networking.dll",
         "ref/dnxcore50/_._",
         "ref/netcore50/_._",
-        "package/services/metadata/core-properties/109e1c9a7c1c486cb965dd3ee9e4e7a5.psmdcp",
+        "package/services/metadata/core-properties/28cf7e3606b04d7facbc42dd2ae32a35.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Private.ServiceModel/4.0.0": {
-      "sha512": "egpOIIOjvNN/edPirUgnmBsFhnuXsUNzvIO5T4bVmcTj5aPamaZZzLbY2AvM6Evu26c2TFw4KrrFrn1ajPY32g==",
+      "sha512": "+F9GvA7xYA0j9ZxdfQDPWNogA+5i33ATaQAo33nHspMb8tALUALyQMzZnfb9PdXa/oKBpa9puMoZCVds2pR3nA==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -13127,12 +13211,12 @@
         "lib/DNXCore50/System.Private.ServiceModel.dll",
         "ref/dnxcore50/_._",
         "ref/netcore50/_._",
-        "package/services/metadata/core-properties/be56a044b8e8432e8d01b68b2754e300.psmdcp",
+        "package/services/metadata/core-properties/41c5c63ed32a475ba301001579fa23fe.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Private.Uri/4.0.0": {
-      "sha512": "r1OkjA479nJZhsJaqzezp/Zl6/TynLWiy6vAdYG+2kAxkhhjDCyvfjuwDoGfUgtSmKYsXJxFwT7LnTz26nw40A==",
+      "sha512": "9RjLyM3bRiPNyHFv0GCn/OQXYG3CI1PBdut6FC7xGnzuLDr0XrI21HA9iZVXuURfrFLjp8moKFoVPUxqx29L6w==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -13142,12 +13226,12 @@
         "ref/dnxcore50/_._",
         "ref/netcore50/_._",
         "runtimes/win8-aot/lib/netcore50/System.Private.Uri.dll",
-        "package/services/metadata/core-properties/7814a3e673424a8ca790da1924aae544.psmdcp",
+        "package/services/metadata/core-properties/40ac16f2842f44148a62af51bc06c2e5.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Reflection/4.0.10": {
-      "sha512": "xRz6+8JplNokzJ14+Wv9A7ytZEqW7MhgIChDPOhzs3QtkUkReVKd1z8w8HEVBsUb3kENxDVlMBk8Fj7CSBOINw==",
+      "sha512": "b6VhktNkFmVfd7ykoaAh4iQfc5DnbR8TEtPYFNGLAqagj7oKtoVdOJZ6vMgQeEQ3Kl5oEs+iC2oEDhRFZJfnLg==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -13176,12 +13260,12 @@
         "ref/net46/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/9455e27114bf49c3898bfac928e3cb3d.psmdcp",
+        "package/services/metadata/core-properties/010581211bc442b3bbd8480f841263df.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Reflection.Context/4.0.0": {
-      "sha512": "6+mXhJADsAardw3eaDcnOvY7/d25tWpaWjrebS4YHRbc8iZgs6K0P8dXgFDiuzuO6cfXFC6qGJtZs+vQvlM30g==",
+      "sha512": "6fGKFYmDqWiRS7H+tzgYtQZuWzIsTK8xdB9Fa1JpMsWIxGQTqmI7WjnAvucdBmAaG9FwTLQRheDWlcBXbJgvvA==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -13204,12 +13288,12 @@
         "ref/win8/_._",
         "ref/netcore50/System.Reflection.Context.dll",
         "ref/netcore50/System.Reflection.Context.xml",
-        "package/services/metadata/core-properties/97e85c1e51244211b0cf6b22fec27cb8.psmdcp",
+        "package/services/metadata/core-properties/a390b5f05eba4c939203149ed4eb3e1a.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Reflection.DispatchProxy/4.0.0": {
-      "sha512": "eZGF3NvND1tr3A2hkiQBY2BDNtqEYsqHO6vT0cdlpkJb8yIT7S4yGjQT9Fr5Po26FuQR9pBTrvjSMiWZd+E82Q==",
+      "sha512": "2byRd8+k5I0HyCJaA8hzz5NrJ3c9hxRbKpzdUgPcqnA86HxKdvzSSDGfDq+6U2BzVCSD5NKywC9GGX74OTZboA==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -13238,12 +13322,12 @@
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
         "runtime.json",
-        "package/services/metadata/core-properties/1b48d1b907ee4bd3b77e25ee922699ac.psmdcp",
+        "package/services/metadata/core-properties/c2a58040d1744864a9de720f8bbf5117.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Reflection.Emit/4.0.0": {
-      "sha512": "InFQjhvpiuN5GkIcfUQu3huGHfmv48MbO8/yueKLlSQgizDaQncu43alp36o+c5qYOiGlp9dZ9Y/C2jKrkZH8A==",
+      "sha512": "Sr0jcW7tOD+kT2B6oob30C0kmo+1Un/pt9Xw/lKCdeWsVULtoUMuIf2sQciJqxrVHWQW8vJYeErtvDOTpmTvzQ==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -13267,12 +13351,12 @@
         "ref/MonoAndroid10/_._",
         "ref/net45/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/f1b35f2cd3654ed4a519431ebd3b866e.psmdcp",
+        "package/services/metadata/core-properties/d14088cd80924522851059901fbcf65e.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Reflection.Emit.ILGeneration/4.0.0": {
-      "sha512": "30+nIfA58yhuro9Io6uMD3gQxqWsHyfSmKKDzsMOg8oyx8c3PpiNKzgGHiesB5oDa9zd9lvTnTpPI3QTCVsV/w==",
+      "sha512": "BED90hkcpXPJK0EuoBTeXAzskou6qbcogcl6AtIse1REBt7H8eXtc71BXtEeLGS6RustiL3fF7hkPmuF7cDQIw==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -13294,12 +13378,12 @@
         "ref/dotnet/es/System.Reflection.Emit.ILGeneration.xml",
         "ref/net45/_._",
         "ref/wp80/_._",
-        "package/services/metadata/core-properties/8cd5eab00576448e9e322e5b7464aa08.psmdcp",
+        "package/services/metadata/core-properties/c03e6e9347b146a08f9d9ced691d836b.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Reflection.Emit.Lightweight/4.0.0": {
-      "sha512": "APgbHgBrDPzOT8CD44OmywOGqSY/leKcBHPtl/jG12nxkqlfNdFUcMGQO7Fwww29PvAZ64sorAM89rbxkY3e1Q==",
+      "sha512": "Hahs1OpbuzkxrX3XgAtajSqZmNtyWbbZmxRIvuEBpnTCpyiXcSjt+HaSuKUX+nRvYPYvfXk/DANQawvonXl0sQ==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -13321,12 +13405,12 @@
         "ref/dotnet/es/System.Reflection.Emit.Lightweight.xml",
         "ref/net45/_._",
         "ref/wp80/_._",
-        "package/services/metadata/core-properties/962c98fe20dc4edfa7975d7bbf541d7a.psmdcp",
+        "package/services/metadata/core-properties/675d9e6e7df04390a55fd7a8ab6c7401.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Reflection.Extensions/4.0.0": {
-      "sha512": "9AsUh7VepLbr3ZITvAxuC7ehBSLSmU2DjVW7Y47zY3y+xYED5icpKJC+R76zlN+Z35OJ+sqWmh97T7hWi/zZsQ==",
+      "sha512": "aO0St/fkDUnr0kYjln8Aotyp7N6KedUpVHDNdt/tZZ22P+kAtlQoYDnAw3Teo/SawpYZWLQ+3k54/ZlPU9344g==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -13355,12 +13439,12 @@
         "ref/netcore50/System.Reflection.Extensions.xml",
         "ref/wp80/_._",
         "ref/wpa81/_._",
-        "package/services/metadata/core-properties/dcf8554b3e0a45378507149acbc3f052.psmdcp",
+        "package/services/metadata/core-properties/f4b9e7e1c50b469387a759d0178c734a.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Reflection.Metadata/1.0.22": {
-      "sha512": "MjHiJZMacNwrG3SuVlHqHMoFyTj+bt3IDKWlOErj6XmOwr8te3SOzUOqGna8TByVeLPEGOXmIF2vMueJC9wmPw==",
+      "sha512": "XNMokIyQboIdGHa3B+6RNcyiyUa61/9HQiHXTr/x2Kbbo3BFXxp9DVUbxUIi20vMina5C9c6+fyOgLR71z7tQw==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -13369,12 +13453,12 @@
         "lib/dotnet/System.Reflection.Metadata.xml",
         "lib/portable-net45+win8/System.Reflection.Metadata.xml",
         "lib/portable-net45+win8/System.Reflection.Metadata.dll",
-        "package/services/metadata/core-properties/58dae266a5dd4f8aaf4fd28f487f0cfe.psmdcp",
+        "package/services/metadata/core-properties/562676ccb1914d8499c9d0fa8d0fc4e9.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Reflection.Primitives/4.0.0": {
-      "sha512": "sFhWkXTrOf72Mmp5lTHJqH4r2tfq0qXa6TTE6/C4FVHXRsLOuPH2hAobNCQEnNe86GuLENboNBgolj7DDZNI5g==",
+      "sha512": "D3jA6wJvvurlD8zilI4ylxtVIvh8X8P4SC3pXsrspjkQIDKaBdSDVtNas81pe/5x9PZOhPrf3VklqL+daFg9bA==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -13403,12 +13487,12 @@
         "ref/netcore50/System.Reflection.Primitives.xml",
         "ref/wp80/_._",
         "ref/wpa81/_._",
-        "package/services/metadata/core-properties/f45c4f5fc32541e292a7ca700cf382af.psmdcp",
+        "package/services/metadata/core-properties/8e0e125413764723a29feaed5b58d31b.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Reflection.TypeExtensions/4.0.0": {
-      "sha512": "Pe6z0x/srnmPKzT94NTi7QMteJ1Yceu2bnKSx2pgBecpYpL8JkMNnRYfifVwN/zgz9NPk+LyoyAya1pRkpvlRA==",
+      "sha512": "OX4v3qhzUH+rzglUFxocjT1YaKWeq+JCgryFwli9hnCCIJdaqaVEdQ/29xQMBIp+CcNLryB2HSbCSxP3JHHt2A==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -13437,12 +13521,12 @@
         "ref/MonoTouch10/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/851733d3127842bb8d8df4ca9debdeae.psmdcp",
+        "package/services/metadata/core-properties/7073f566ec8c4d43aa683e2ab3ab2ac4.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Resources.ResourceManager/4.0.0": {
-      "sha512": "Us1xlyutDIdbbcWboUR+D/HKirGBINeQEeKReietaCqEec4VIoMwXav/VS57RmGJX69+OKwUR0a1iQWllOyd6g==",
+      "sha512": "V1R7VU+nA6TV/ozfAXkg77c6PE6y0fTDFeUgLCdn2e4fdlbMYpNefCBxQC70F2H71Bd9/2iuWuP/IRyN6nohhA==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -13471,12 +13555,12 @@
         "ref/netcore50/System.Resources.ResourceManager.xml",
         "ref/wp80/_._",
         "ref/wpa81/_._",
-        "package/services/metadata/core-properties/22d8ba110d5e49839a20294c50d16af0.psmdcp",
+        "package/services/metadata/core-properties/3cb35b0681d04a9aba820a2e9972bf96.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Runtime/4.0.20": {
-      "sha512": "BGabr0ua55VzFaZWGO3EC6U/CQC8aVKZB8yLdRGHaaNSkVkQqH1Tkpz29zw2EW2SSp3p2ERx+wKKGFNqdxK++Q==",
+      "sha512": "lk2daP5LCI/iUJPs+FcZLCBey2Ppe/tzEZ/Atb6IzbGL36+IEpvl//K6rNN+wFGq17TAmJAz9lJjAcUiJvN6yQ==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -13505,12 +13589,12 @@
         "ref/net46/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/826499d45a6c4802869cb3498b9fdb87.psmdcp",
+        "package/services/metadata/core-properties/e91eca3dfe4442a6a995ebb7093d180e.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Runtime.Extensions/4.0.10": {
-      "sha512": "0oqgezkqP1OecQUQ+ivYHtTyRADotQLvhtExUT7sgj+eStJPZPvxRFOnKVOhSE9srdxTct425PMM/qkwySMl2g==",
+      "sha512": "nJ5bAGB0PFD1cK9Xvj1omwXgwoVJfhfSHsH1JGL0VCH2IizUlmIZWksQ/XZbxu6mZ62vKbE0ZWrlhDds3ZjTWQ==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -13539,12 +13623,12 @@
         "ref/net46/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/7686e65545c140f8a2caf9f42a824e7a.psmdcp",
+        "package/services/metadata/core-properties/aab851eea4404ff49d6b79ba077d728d.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Runtime.Handles/4.0.0": {
-      "sha512": "Dvfcba2meYW5UzGQYk1zwVv8/lBl3U3k1WEpAQVtaSsQUSJIKybMPb8JISZmL00xbUdZ5I7/z8RLrR2ohrBUWg==",
+      "sha512": "sd8o4KQsKkdLmjJPycvEYpwLfa8NuYOVDqDVzU72CxXOFiSD0Oi1+EsmReeI1VA6UTpHGF7l9V8DCKXHervrpQ==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -13573,12 +13657,12 @@
         "ref/net46/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/ccf979c934fd40de996a23d12375a5fe.psmdcp",
+        "package/services/metadata/core-properties/ceb38b93222e45b39fc80acbb46ee814.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Runtime.InteropServices/4.0.20": {
-      "sha512": "NfwsO0JWtWOXaK3BAfUnq4FLRynnghne0lSSZ7rmM46l8QGZ5iVS7NUr4mvgDPtw3ekGzgPrBBdJe4y+lIBXzQ==",
+      "sha512": "grTr0P9/f0US5V0YqeOq8yeBsXxEpmG999E0xasYvhmhUGPCTDYCCT/T3Ng92f04wz66uPW2hP9eYdhVN2AgtQ==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -13607,12 +13691,12 @@
         "ref/net46/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/16c361c450714ec8abc3fd3d9b794b3a.psmdcp",
+        "package/services/metadata/core-properties/81f03decd30a4765816f34c93f027029.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Runtime.InteropServices.WindowsRuntime/4.0.0": {
-      "sha512": "AlTY4RfiC16d+S2IUHHhDhmyCUDOV9hJ//ULldBT0yg4QcjpzpMdbSQcB8R171zULn8LZ6FurbEDbXfoVs/v8Q==",
+      "sha512": "hV7B7kMqgyuObrG2pR9ASxVJwNkBWHnCltXLV1MmfFzyUxWBXDWrpxLMhE/BMSRAaVPDK3Wwcfzw1jYFQpLDAw==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -13640,12 +13724,12 @@
         "ref/netcore50/System.Runtime.InteropServices.WindowsRuntime.xml",
         "ref/wp80/_._",
         "ref/wpa81/_._",
-        "package/services/metadata/core-properties/e3a4af8b42064f87a71b62a21900bee9.psmdcp",
+        "package/services/metadata/core-properties/d69c4938f1974f52aa378310ab468e18.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Runtime.Numerics/4.0.0": {
-      "sha512": "QZQX7sjMIX+EtDuvB+si8uiJR/2PVABj30E7Pwd02REKYxmGr7r0XlpSDj9fqZ7mxP0h8YxAK0JSJe5LO0WNhA==",
+      "sha512": "FQ8Bu8IPNARW+wT7gHVpXJeWt6mircbALTlf+IwyXkzjRSggJujIdxZjwlKGgqCas5eNCmEgDqOz2O6pVZFs4A==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -13671,12 +13755,12 @@
         "ref/netcore50/System.Runtime.Numerics.dll",
         "ref/netcore50/System.Runtime.Numerics.xml",
         "ref/wpa81/_._",
-        "package/services/metadata/core-properties/580f0e29dd52425c9bfdf61fc7bc3d60.psmdcp",
+        "package/services/metadata/core-properties/62255f0fea1149a3a883d73d7d84f48c.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Runtime.Serialization.Json/4.0.0": {
-      "sha512": "L4LnkPTOmRFVmyxjHlavscuKTDAmPtBdj8enJYTwg9hISKxrMgOyx6I8JrIXbDgg9CrIAzyvfTv0siG7fE+Ieg==",
+      "sha512": "FBiYSldS03hMWaADQPDBPVgCgx5anoiBkDCr/2rpX/wcjQaWeqMD1gzLe+gCvoJKfSkAnp7OBRh0X0adnjvIDQ==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -13705,12 +13789,12 @@
         "ref/netcore50/System.Runtime.Serialization.Json.xml",
         "ref/wp80/_._",
         "ref/wpa81/_._",
-        "package/services/metadata/core-properties/c519c962f3de4bd1a297480d2e276d9a.psmdcp",
+        "package/services/metadata/core-properties/f8532195e9b4462ba7d61febba016a0c.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Runtime.Serialization.Primitives/4.0.10": {
-      "sha512": "GHlRJW26oub859cEZvJkGgVIL4EqJ5MKe0iNOp2AQPurKV3EyKKns3LZEGyyJQm3vhPSuBUMgbLyBZUyBGhY/w==",
+      "sha512": "W3k5VVDyCzyZNgykAayL0HcgBCikUbLtfiB7JNKqEgTHwQsVn+2OCCCu871WYN/eutYqRuIohWdk1duqy0Wvsg==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -13737,12 +13821,12 @@
         "ref/net46/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/db29dfa8fa874fd0b24a597b12351cd6.psmdcp",
+        "package/services/metadata/core-properties/d1ea219fed2f4734a922fbb3677f4a2e.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Runtime.Serialization.Xml/4.0.10": {
-      "sha512": "MNFVaVerwJPWxvbyidgBgUbGQiT5Th5Sd37bfz57J1k72GGC5c6Qm6dUsTCzahLecijb5p1CXczVeBiQwST1Tg==",
+      "sha512": "/uiSaVzf9WSVxpfR1WxsW+CC26Xuct+RvwHf7GBWnn7N8oihObtzPaEWi0mKZuUUjiMGc6iZkjWsoTz8Lr8jvA==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -13771,12 +13855,12 @@
         "ref/net46/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/d68ff1a3fa2a49c8820d85cf80d50786.psmdcp",
+        "package/services/metadata/core-properties/e1652b20613c45579a2f742ac62e467e.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Runtime.WindowsRuntime/4.0.10": {
-      "sha512": "u61UEql9k790F5NRdgi9O7lIGtGc2ozFF2XpDEbFcbGRxKbUd++hdJRexamO3G8ogClqZA7e5QEa7WV7ficT9A==",
+      "sha512": "sp2SURw8EA4sCqD27X3Y7l4mLn0MWRBEO+9B6kItp0SXwmmOUtBGAwoZYAemQMgtKcd8diPStMF8m/I4rpaUyA==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -13800,12 +13884,12 @@
         "ref/netcore50/System.Runtime.WindowsRuntime.dll",
         "ref/netcore50/System.Runtime.WindowsRuntime.xml",
         "ref/wpa81/_._",
-        "package/services/metadata/core-properties/bd6d1e72e29145668204de655ecf07d2.psmdcp",
+        "package/services/metadata/core-properties/03311433d01e48889c7d914542ef31a4.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Runtime.WindowsRuntime.UI.Xaml/4.0.0": {
-      "sha512": "bYbkgulrmj6is9hQtDVikcVdwLz2bflfdOUvbqzKEVRi5cJ2TylTCvM9oFN4ZDb+OTEGjX8VE6z/Dz0F+rzLcQ==",
+      "sha512": "KtNpa1MbMIvRVIAjyruqeDpCtfJaYzHeEjvKLdhAEsf9zQFlZsn8Svsb/1m39tlUzKVxuccgbBYywB02hAMWiw==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -13828,12 +13912,12 @@
         "ref/netcore50/System.Runtime.WindowsRuntime.UI.Xaml.dll",
         "ref/netcore50/System.Runtime.WindowsRuntime.UI.Xaml.xml",
         "ref/wpa81/_._",
-        "package/services/metadata/core-properties/083002d1b2014de2b43b149af9ed5491.psmdcp",
+        "package/services/metadata/core-properties/e61f1d3910bc4268b0e73c6b2aabd879.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Security.Claims/4.0.0": {
-      "sha512": "wM8GAP9xr3UgFgO20FBamgqZQVWiGgA/xWAQpfGmR/668+o65C5u5ST/V7dhfYnOABD9YxCnLlz6KH3JrqC7wQ==",
+      "sha512": "BAuhEuJHxliUFEnPD3ohARzTA3s1WnhB78gUlY0iTrxHS9OlfYYJGhXMQuMJGvvpUy4ZcUfBYaIf5Y7fazQVDw==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -13860,12 +13944,12 @@
         "ref/MonoTouch10/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/298a84bcd4a44d089c04cea913189001.psmdcp",
+        "package/services/metadata/core-properties/7e2fe39e39f34fbd93a2c565c44bfb11.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Security.Principal/4.0.0": {
-      "sha512": "c9Om+yXqFtfe8TpkoTAaw1YoOkH/QvOtLHAqZ3JRThsbsDaMtm5+rXCyVLbuq5LPejNfMWvFZVLIUCDmAr1MMg==",
+      "sha512": "xFQKpzFqijf5pjJmgGsN0kbZaKrJZXFvRM5J3VOaLrAw/0V1x4Dxt8RlXauFY/hMmI+Np9wD0rSWO1Z4VdFZ/A==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -13893,12 +13977,12 @@
         "ref/netcore50/System.Security.Principal.xml",
         "ref/wp80/_._",
         "ref/wpa81/_._",
-        "package/services/metadata/core-properties/1cf1a5fe55a3491abc0ae394ab6aa420.psmdcp",
+        "package/services/metadata/core-properties/6c652551d6dd442097dfc9e1e3abf6cf.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.ServiceModel.Duplex/4.0.0": {
-      "sha512": "uPb0SjZSZgcSqqKvYR6fJcvGOmZgdtpVqWspEO5U85AWuho+Oh0GvjrKxuCBzGJkaQIIUlTw5RkHoXiwv2MbQg==",
+      "sha512": "UjcGSpXLf7T01JZXwb3g3hq/mLNqMoGu/6TbQJ35tYx+3Y29nK2To9mxqsp3wEh5Yjo+VRbLGn2DXg5EukAhUw==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -13922,12 +14006,12 @@
         "ref/win8/_._",
         "ref/netcore50/System.ServiceModel.Duplex.dll",
         "ref/netcore50/System.ServiceModel.Duplex.xml",
-        "package/services/metadata/core-properties/cd9919baae124ce295ec5d891a561662.psmdcp",
+        "package/services/metadata/core-properties/f2edd702b70244d98802f30e5663d608.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.ServiceModel.Http/4.0.10": {
-      "sha512": "56QzWVNoMpbgte4NPql/lXH0XP15m/V78nD4sjUxpMowbnW0tUIo+kjNOuyBCwFbjV/t6mRHRp2wgYGXfNM8Eg==",
+      "sha512": "fFqDv6L0jBVH2VQ1PMnrfS88NIgWE3NcWq5giFor8V6obcdNtsj3HJsT5OgyCmnwl6AR0/z/XBpF162kr3m2NA==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -13955,12 +14039,12 @@
         "ref/net46/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/acea8f48c84a4c5aba271a670325ed33.psmdcp",
+        "package/services/metadata/core-properties/b914ac1b4d9642b6ba95cefd95f8925a.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.ServiceModel.NetTcp/4.0.0": {
-      "sha512": "0LhqAWE2YVFckb7Duv3LH4ZVROHUJkgjMdwCccORj9yBIzjAsXuQ/3S9AT3LGoZoZe+Ts+q7b9Y69B3ggC0vwg==",
+      "sha512": "P/yu3OV8THTi5x+xHSeA5C5rVOegDjDjps2HVynVXKjRrTQ2LpGF5Bo52ZNdth/Hxk+X+XECnumgAPzxmzN8YA==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -13984,12 +14068,12 @@
         "ref/win8/_._",
         "ref/netcore50/System.ServiceModel.NetTcp.dll",
         "ref/netcore50/System.ServiceModel.NetTcp.xml",
-        "package/services/metadata/core-properties/ebb5282e05f644309aa7d017d7a2222f.psmdcp",
+        "package/services/metadata/core-properties/5ac811b14dd44abdaabaed5cd965ff2e.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.ServiceModel.Primitives/4.0.0": {
-      "sha512": "HnkaBanr9lu0EJqg7BzGAuLo3cgwWMvpA4oWFjDBaj9otrV/w0ey5iZF6+cZDrOvWQcx1344HJbFdLyrGbAXfw==",
+      "sha512": "3qYmY9ESdBk67X3WLhw04alEyPkCQrEq/oheQIg3tZOvLEcCeO56as43YDCPMEQ8x77m9ZhbVgsp6LIO8lW3EQ==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -14013,12 +14097,12 @@
         "ref/win8/_._",
         "ref/netcore50/System.ServiceModel.Primitives.dll",
         "ref/netcore50/System.ServiceModel.Primitives.xml",
-        "package/services/metadata/core-properties/6d3f2dab63b6494cb0b66e57520bb42d.psmdcp",
+        "package/services/metadata/core-properties/8d6bf1d06bda4603a4c2ac5408b42eaa.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.ServiceModel.Security/4.0.0": {
-      "sha512": "bs8o9qmopxpXSOxtlt98vDirWTh+L48FcjtEJW9nYVwWwbGFBpmgEC5wz/IHfUuJJUVS3BPPwFWEk0uKwWmvjw==",
+      "sha512": "vfHPhKkH+O9CaOzZv9/Vcm5awwq9nzeIIjn02vk5XwvZebp6GnGZ7zQP3MX4ytoVumdsSE5VWbmtubR3DOb7nQ==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -14042,12 +14126,12 @@
         "ref/win8/_._",
         "ref/netcore50/System.ServiceModel.Security.dll",
         "ref/netcore50/System.ServiceModel.Security.xml",
-        "package/services/metadata/core-properties/53f47e42d21644a38d01e4f890e55c69.psmdcp",
+        "package/services/metadata/core-properties/8ab90a6f68e44778a803764f099c2a1b.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Text.Encoding/4.0.10": {
-      "sha512": "wxD1VyU7JZnrg6TigVgfpdTFY/ajwfLayKEgWHrXwP0JRZk3zjGhxzuRjqOPeSqLRgCsXURrDc4CDfZ1X/aCYA==",
+      "sha512": "sKguvFCt3hkwos5TciYU/1KH6kjKi7UPFIIgeKHQSSuZVzVufNpoK/lSp3agPZyc3lJWVGVY6ycczhpJ4IlxIw==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -14076,12 +14160,12 @@
         "ref/net46/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/69cdde9b37714581bc20c23ece24da8d.psmdcp",
+        "package/services/metadata/core-properties/846e6003d52f4eff9cdf1bd89e1c3463.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Text.Encoding.CodePages/4.0.0": {
-      "sha512": "nF/evjGUdgen0qbJVfWd5Qkoz0Mts85cPS/exZwaoJ+tSAGSLTt6M84qX0adef3ujh/F4i6dh8KDhF3MadCqnQ==",
+      "sha512": "CbYomNYySp/7AkosCRk9sIojiqnmXOl6WZyhcwThMlKW4hmcTgFy5cvKUdDjNCPFtnCuRpz9eNDKjCmd+9R+Vw==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -14106,12 +14190,12 @@
         "ref/MonoTouch10/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/b788771485c3420b930d8a528879dd50.psmdcp",
+        "package/services/metadata/core-properties/c79480cd7eab4a1b8811136cf93b4c11.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Text.Encoding.Extensions/4.0.10": {
-      "sha512": "s+fWCD9j3WmlNxeRYjlFbtWmtS+JpEanjKTR/g08N5M9EJNuyxyULBkW7ENlyzJiHEhagR3ermOLYYvznSDMMw==",
+      "sha512": "K8dF8EzVAjTjNu0/4MxYoRHcCl4wqLMhFLa1s9qxLqMfHlqC28R3Rr8xLhx+t6EGaycfO8lSDBdgRihng7817A==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -14140,12 +14224,12 @@
         "ref/net46/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/40d50942fc604d6ea8963a180fc871cf.psmdcp",
+        "package/services/metadata/core-properties/efe8218cfb7443aab8943943362229e5.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Text.RegularExpressions/4.0.10": {
-      "sha512": "V8zNgAhoRckzWcAa76dIXnEB/fZAnALU0+3lEmcRbjmGf1oxGFYbhV83vmuCpkVGf1SpMxkLANy86CI+/U2GrQ==",
+      "sha512": "X68y/y4GCoik5VcHC1q17NXcHlfcOKTHZbw34jhiKlSD58OZzgxzzJy2/a1HRTs2Ay9/1YgFaTEPDA7sY3+99A==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -14172,12 +14256,12 @@
         "ref/net46/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/6c51eb53116849ee827ae1b3d26add45.psmdcp",
+        "package/services/metadata/core-properties/831203f5ab894d81ab907112c232f60b.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Threading/4.0.10": {
-      "sha512": "4Bzp9TfOAbfzUNK0fsGkvVBkzUzqszBgNghudqaObQmll334OSJXGo1SoyYcE0WMi9UZm1HSDdkqiUP/52dqSg==",
+      "sha512": "r0kmTbXnz3G9pagdoO1fVptT4/1cV0R4zNfuJ6KzNo6PXs+WkmIUZUGWB5NL9UWPEu8AVWvQT6f9MPCGqbOC+A==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -14206,12 +14290,12 @@
         "ref/net46/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/7ff00dcdf1654c769cf58fe0b159f1d7.psmdcp",
+        "package/services/metadata/core-properties/da8a3fc9ec0f4340bc42010c30f283de.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Threading.Overlapped/4.0.0": {
-      "sha512": "ciji+qhu29SPnlSqJye5InC/uPlmC62gXNjHzjHJUJ6DomLHzROAC2FdZpK59NH5JKaTmi88CIqyFYkWF5AfvA==",
+      "sha512": "S2KmzZbckZcWRkJzi5eVUKlrB39DyVsNQXteK1BIcH5xvTd3gWvrkKH9creTthEZI5b/PqmihuKLlmNHKhPfsg==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -14231,12 +14315,12 @@
         "ref/dotnet/zh-hans/System.Threading.Overlapped.xml",
         "ref/dotnet/es/System.Threading.Overlapped.xml",
         "ref/net46/System.Threading.Overlapped.dll",
-        "package/services/metadata/core-properties/959461e1bfb0427aa4a6ae65a2b993d9.psmdcp",
+        "package/services/metadata/core-properties/ac0c01083f214340b03a728385bdb448.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Threading.Tasks/4.0.10": {
-      "sha512": "2+Tr0VdO1+GXDNGcaAyz7j01wf7jJ6Ow/lktBCBCLc4SfxP5TKKd2oOJjOt4K3R4oZgpCd+/EW7qsUVGJUOmDw==",
+      "sha512": "5W63czaYeGMLY7z2RpAuL2g/Yp8+5EwJjdNOHwg8tcoOovA4Yo4PL4SP/dlT8JEMz4t+UYOcaOpH0892cPt8MA==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -14265,12 +14349,12 @@
         "ref/net46/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/e7560e65230f437480b871131f825b00.psmdcp",
+        "package/services/metadata/core-properties/2163b143eb8c46b4a3f61659e208bab7.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Threading.Tasks.Dataflow/4.5.25": {
-      "sha512": "7IxfWiRpXzOjSV+6Fh8CCvhECX+y8AenCn1kT9yEg8YBGU2mEgoF10QWbkgWvjGC7SL4iTssUf7Gb3gkO9R3jg==",
+      "sha512": "/fHnL6WQPnnkGqJoctya1Muw1YJR+mSABpKRfRjyzFZLEGHmgj6UsAWwF1CpwdyE3v1lb8/9eTWzPDAX249Hiw==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -14281,12 +14365,12 @@
         "lib/portable-net45+win8+wpa81/System.Threading.Tasks.Dataflow.dll",
         "lib/portable-net45+win8+wp8+wpa81/System.Threading.Tasks.Dataflow.XML",
         "lib/portable-net45+win8+wp8+wpa81/System.Threading.Tasks.Dataflow.dll",
-        "package/services/metadata/core-properties/18ca676ca2d848bdbba5484fe5656213.psmdcp",
+        "package/services/metadata/core-properties/e24d19499af64162959c3a0ab9dbd074.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Threading.Tasks.Parallel/4.0.0": {
-      "sha512": "9BHG+bgFqbTDtiVssARvS589CsjooqGnv4k2DV5MifHN2t4jlwZKWxt0ddUcD0aTvN3SjsL3aLxTksyxmkz/Eg==",
+      "sha512": "q8At93Cu5XJBNwvWhUQg0r/hIpWDqfklsU46gify1JOuyu5buiYS7HJBEKrtQpmGnF6HooNOaC2uGGk0o3RH2Q==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -14312,12 +14396,12 @@
         "ref/netcore50/System.Threading.Tasks.Parallel.dll",
         "ref/netcore50/System.Threading.Tasks.Parallel.xml",
         "ref/wpa81/_._",
-        "package/services/metadata/core-properties/87f1fcac63214f258b099427ef6d145b.psmdcp",
+        "package/services/metadata/core-properties/b2824c035fab43e6920d7e5848d9cea0.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Threading.Timer/4.0.0": {
-      "sha512": "mPX6Y+Ka8+TTZ1OtvE5RfrhWeJIu9mZ7JfrSQ/G+xAGUhHv+2jF1P63M5/dCbCay4jDWMflct3O5bnCWgf7lKQ==",
+      "sha512": "xnHG7WAXhBXDFbMtuVsUJ/kfQTvRCUV+JtWr8PJRatkTADIblU6dqMJ8g6tTrG9AR1Bh+oahhbK27/iJ345ZjQ==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -14344,12 +14428,12 @@
         "ref/netcore50/System.Threading.Timer.dll",
         "ref/netcore50/System.Threading.Timer.xml",
         "ref/wpa81/_._",
-        "package/services/metadata/core-properties/f5cf67ef7bf4437899a90286a9c3fd99.psmdcp",
+        "package/services/metadata/core-properties/8cda0093b709467aa92d29f2d471bbc4.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Xml.ReaderWriter/4.0.10": {
-      "sha512": "mYYQfzndUViv+1NZebiT6+FPGzKEKd6VOU9RLap0SfhNvY85yHMoZO2JWniCvbQXSm8LDs14hCvw/IxY1O+8cQ==",
+      "sha512": "8yktKJIKKE3ZrLxjwbxYOJ/daDLKcro3Qt4MDB6yCEv7/9iS4sphbj0vCSHtlrGlQKrKPXnLjPYVAA+JnFX/7g==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -14376,12 +14460,12 @@
         "ref/net46/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/b256cd84a52a443f82ef85bec200654b.psmdcp",
+        "package/services/metadata/core-properties/f97fce435c684b1384b2a048cdc7eab4.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Xml.XDocument/4.0.10": {
-      "sha512": "GgQdRzX5j9SN7zBSABIC5ufVp9dhups3/WEY4zKSit7S5K/wFwulILoOU7C01wMoQo5DeiLF5TvvEtK5Hnuvuw==",
+      "sha512": "POFwEeE5gme26KxzZd5o8zhm8RJ5GhM5ar+DV5LPTPoCwzN48Tm8Qb0BRmwCOWVzi4KGLaR4waL1XAvH2W0v7g==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -14408,12 +14492,12 @@
         "ref/net46/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/d7368115ff0c4a91ad316846b2724244.psmdcp",
+        "package/services/metadata/core-properties/431d06b4e24c4087bb72252aca15f0cd.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Xml.XmlDocument/4.0.0": {
-      "sha512": "cX4w0XATFyBQ/GxkUB0JQSJNgMO27OdMGmnHslCSwIcFG5o9R0RarSbTRw7+6atCfJP9WMehC54KF4m/yayjMA==",
+      "sha512": "MRecp7CM/GcCyfpWEoZlBK61M5MvJSVjqYitebN2GQiJXeRfvSNkDWwockYQtMEmhPxcEFDfPJEfhZ+wv3wF1A==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -14440,12 +14524,12 @@
         "ref/MonoTouch10/_._",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "package/services/metadata/core-properties/9b81748ae8f44305bb7b601749699bfc.psmdcp",
+        "package/services/metadata/core-properties/d5077e230a0745b1ada6784b8bf644d0.psmdcp",
         "[Content_Types].xml"
       ]
     },
     "System.Xml.XmlSerializer/4.0.10": {
-      "sha512": "XFrMLvUOgDQd+GOh4hQgeplKEAP+dWs/y08qX5KTrIHp8oCGzPQ1b1r/93VT2/kUJeMlEA4Y3Oe3CFmuBcLAZw==",
+      "sha512": "XvaP/8Q5ocL16xlTsOaJtCs7Z00wEXrA/X2E2XLknpbQ1ykd8/IVaye0woROjPeOR5DLzOfUf5Ti086toNhcLg==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -14475,7 +14559,7 @@
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
         "runtime.json",
-        "package/services/metadata/core-properties/c6bef3cc96044f528f94bde5e2589f92.psmdcp",
+        "package/services/metadata/core-properties/c80d56868865446d9ee122fad8e0fdb9.psmdcp",
         "[Content_Types].xml"
       ]
     }
