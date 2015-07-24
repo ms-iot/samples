@@ -14,7 +14,7 @@ using Windows.Devices.Bluetooth.GenericAttributeProfile;
 // Required APIs to use built in GUIDs
 using Windows.Devices.Enumeration;
 
-// Required APIs for data binding and buffer manipulation
+// Required APIs for buffer manipulation & async operations
 using Windows.Storage.Streams;
 using System.Threading.Tasks;
 
@@ -25,10 +25,13 @@ namespace BluetoothGATT
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        // Arrays for information that needs to be saved
         private byte[] baroCalibrationData;
         private GattDeviceService[] serviceList = new GattDeviceService[7];
         private GattCharacteristic[] activeCharacteristics = new GattCharacteristic[7];
 
+        // IDs for Sensors
+        const int NUM_SENSORS = 7;
         const int IR_SENSOR = 0;
         const int ACCELEROMETER = 1;
         const int HUMIDITY = 2;
@@ -43,12 +46,14 @@ namespace BluetoothGATT
         }
 
         // Setup
+        // Saves GATT service object in array
         private async Task<bool> init()
         {
-            // Retreive instances of the GATT services that we will use
-            for (int i = 0; i < 7; i++)
+            // Retrieve instances of the GATT services that we will use
+            for (int i = 0; i < NUM_SENSORS; i++)
             {
                 // Setting Service GUIDs
+                // Built in enumerations are found in the GattServiceUuids class like this: GattServiceUuids.GenericAccess
                 Guid BLE_GUID;
                 if (i < 6)
                     BLE_GUID = new Guid("F000AA" + i + "0-0451-4000-B000-000000000000");
@@ -61,43 +66,25 @@ namespace BluetoothGATT
                 {
                     if (services[0].IsEnabled)
                     {
-                        serviceList[i] = await GattDeviceService.FromIdAsync(services[0].Id);
+                        GattDeviceService service = await GattDeviceService.FromIdAsync(services[0].Id);
+                        if(service.Device.ConnectionStatus == BluetoothConnectionStatus.Connected)
+                        {
+                            serviceList[i] = service;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                             
                     }
                     else
                     {
-                        UserOut.Text = "SensorTag is off!";
                         return false;
                     }
                 }
                 else
                 {
-                    // SensorTag service somehow not discoverable
-                    switch (SensorList.SelectedIndex)
-                    {
-                        case (IR_SENSOR):
-                            IRTitle.Foreground = new SolidColorBrush(Colors.Red);
-                            break;
-                        case (ACCELEROMETER):
-                            AccelTitle.Foreground = new SolidColorBrush(Colors.Red);
-                            break;
-                        case (HUMIDITY):
-                            HumidTitle.Foreground = new SolidColorBrush(Colors.Red);
-                            break;
-                        case (MAGNETOMETER):
-                            MagnoTitle.Foreground = new SolidColorBrush(Colors.Red);
-                            break;
-                        case (BAROMETRIC_PRESSURE):
-                            BaroTitle.Foreground = new SolidColorBrush(Colors.Red);
-                            break;
-                        case (GYROSCOPE):
-                            GyroTitle.Foreground = new SolidColorBrush(Colors.Red);
-                            break;
-                        case (KEYS):
-                            KeyTitle.Foreground = new SolidColorBrush(Colors.Red);
-                            break;
-                        default:
-                            break;
-                    }
+                    return false;
                 }
             }
             return true;
@@ -105,16 +92,16 @@ namespace BluetoothGATT
 
 
         // ---------------------------------------------------
-        //     Hardware Confirguration Helper Functions
+        //     Hardware Configuration Helper Functions
         // ---------------------------------------------------
 
-        // Retreive Barometer Calibration data
+        // Retrieve Barometer Calibration data
         private async void calibrateBarometer()
         {
             GattDeviceService gattService = serviceList[BAROMETRIC_PRESSURE];
             if (gattService != null)
             {
-                // Set Barometer configuration to 2, so that callibration data is saved
+                // Set Barometer configuration to 2, so that calibration data is saved
                 var characteristicList = gattService.GetCharacteristics(new Guid("F000AA42-0451-4000-B000-000000000000"));
                 if (characteristicList != null)
                 {
@@ -305,15 +292,19 @@ namespace BluetoothGATT
 
         private async void StartButton_Click(object sender, RoutedEventArgs e)
         {
-            UserOut.Text = "Searching for SensorTag";
-            if (await init())
+            UserOut.Text = "Setting up SensorTag";
+            bool okay = await init();
+            if (okay)
             {
-                UserOut.Text = "Enabling Sensors";
-                for (int i = 0; i < 7; i++)
+                for (int i = 0; i < NUM_SENSORS; i++)
                 {
                     enableSensor(i);
                 }
                 UserOut.Text = "Sensors on!";
+            }
+            else
+            {
+                UserOut.Text = "Something went wrong!";
             }
         }
 
@@ -430,8 +421,6 @@ namespace BluetoothGATT
         // Algorithm taken from http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Barometric_Pressure_Sensor_2
         async void pressureChanged(GattCharacteristic sender, GattValueChangedEventArgs eventArgs)
         {
-            //UInt16 c1 = (UInt16)(((UInt16)bArray[1] << 8) + (UInt16)bArray[0]);
-            //UInt16 c2 = (UInt16)(((UInt16)bArray[3] << 8) + (UInt16)bArray[2]);
             UInt16 c3 = (UInt16)(((UInt16)baroCalibrationData[5] << 8) + (UInt16)baroCalibrationData[4]);
             UInt16 c4 = (UInt16)(((UInt16)baroCalibrationData[7] << 8) + (UInt16)baroCalibrationData[6]);
             Int16 c5 = (Int16)(((UInt16)baroCalibrationData[9] << 8) + (UInt16)baroCalibrationData[8]);
