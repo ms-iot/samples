@@ -15,47 +15,47 @@
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
-  <Resources>
-    <Resource Language="x-generate"/>
-  </Resources>
-  
-  <Dependencies>
-    <TargetPlatform Name="Windows.Universal" MinVersion="10.0.10041.0" MaxVersionTested="10.0.10041.0" />
-  </Dependencies>
+    <Resources>
+        <Resource Language="x-generate"/>
+    </Resources>
 
-  <Applications>
-    <Application Id="App">
-      <uap:VisualElements
-        DisplayName="winuniversalnode"
-        Square150x150Logo="Assets\Logo.png"
-        Square44x44Logo="Assets\SmallLogo.png"
-        Description="winuniversalnode"
-        BackgroundColor="#464646"
-        AppListEntry="none">
-        <uap:SplashScreen Image="Assets\SplashScreen.png" />
-      </uap:VisualElements>
-      <Extensions>
-        <Extension Category="windows.backgroundTasks" EntryPoint="winuniversalnode.StartupTask">
-          <BackgroundTasks>
-            <iot:Task Type="startup" />
-          </BackgroundTasks>
+    <Dependencies>
+        <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
+    </Dependencies>
+
+    <Applications>
+        <Application Id="App">
+            <uap:VisualElements
+              DisplayName="nodeuwp"
+              Square150x150Logo="Assets\Logo.png"
+              Square44x44Logo="Assets\SmallLogo.png"
+              Description="nodeuwp"
+              BackgroundColor="#464646"
+              AppListEntry="none">
+                <uap:SplashScreen Image="Assets\SplashScreen.png" />
+            </uap:VisualElements>
+            <Extensions>
+                <Extension Category="windows.backgroundTasks" EntryPoint="nodeuwp.StartupTask">
+                    <BackgroundTasks>
+                        <iot:Task Type="startup" />
+                    </BackgroundTasks>
+                </Extension>
+            </Extensions>
+        </Application>
+    </Applications>
+
+    <Capabilities>
+        <Capability Name="internetClient" />
+        <Capability Name="internetClientServer" />
+        <Capability Name="privateNetworkClientServer" />
+    </Capabilities>
+
+    <Extensions>
+        <Extension Category="windows.activatableClass.inProcessServer">
+            <InProcessServer>
+                <Path>nodeuwp.dll</Path>
+                <ActivatableClass ActivatableClassId="nodeuwp.StartupTask" ThreadingModel="MTA" />
+            </InProcessServer>
         </Extension>
-      </Extensions>
-    </Application>
-  </Applications>
-  
-  <Capabilities>
-    <Capability Name="internetClient" />
-    <Capability Name="internetClientServer" />
-    <Capability Name="privateNetworkClientServer" />
-  </Capabilities>
-
-  <Extensions>
-    <Extension Category="windows.activatableClass.inProcessServer">
-      <InProcessServer>
-        <Path>winuniversalnode.dll</Path>
-        <ActivatableClass ActivatableClassId="winuniversalnode.StartupTask" ThreadingModel="MTA" />
-      </InProcessServer>
-    </Extension>
-  </Extensions>
+    </Extensions>
 </Package>

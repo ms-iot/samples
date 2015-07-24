@@ -62,7 +62,7 @@
   <ItemGroup>
     <Folder Include="Assets\" />
   </ItemGroup>
-  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsUap.targets" />
+  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsUwp.targets" />
   <PropertyGroup>
     <PlatformAware>true</PlatformAware>
     <AvailablePlatforms>x86,x64,ARM</AvailablePlatforms>
