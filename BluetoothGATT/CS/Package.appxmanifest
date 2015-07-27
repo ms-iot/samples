@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="f21a452f-f92e-401a-bce0-cf0173835522"
-    Publisher="CN=t-jonal"
+    Name="BluetoothGATT"
+    Publisher="CN=IoTTools"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="f21a452f-f92e-401a-bce0-cf0173835522" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>BluetoothGATT</DisplayName>
-    <PublisherDisplayName>t-jonal</PublisherDisplayName>
+    <PublisherDisplayName>IoTTools</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
