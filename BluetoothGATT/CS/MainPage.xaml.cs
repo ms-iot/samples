@@ -278,6 +278,8 @@ namespace BluetoothGATT
                     break;
                 case (KEYS):
                     KeyTitle.Foreground = new SolidColorBrush(Colors.White);
+                    KeyROut.Background = new SolidColorBrush(Colors.Red);
+                    KeyLOut.Background = new SolidColorBrush(Colors.Red);
                     break;
                 default:
                     break;
