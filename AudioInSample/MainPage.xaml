@@ -1,0 +1,33 @@
+﻿<Page
+    x:Class="AudioInSample.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:AudioInSample"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="LightBlue">
+        <StackPanel>
+            <Button Click="startRecord" Content="Start To Record" Margin="50,50,0,10"/>
+            <Button Click="endRecord" Content="End Record" Margin="50,10,0,10"/>
+            <Button Click="playRecordedAudio" Content="Play Recorded Audio" Margin="50,10,0,10"/>
+            <!--<
+            x:Name="media" Source="Videos/sample2.mp3" Margin="0,10,0,10" Width="100"
+                      Height="300"
+                      AreTransportControlsEnabled="True"
+                      Volume="1000"
+                      AutoPlay="False">
+
+            </MediaElement>-->
+            <MediaElement x:Name="media" Margin="0,10,0,10" Width="100"
+                      Height="300"
+                      AreTransportControlsEnabled="False"
+                      AutoPlay="True">
+
+            </MediaElement>
+            
+        </StackPanel>
+
+    </Grid>
+</Page>
