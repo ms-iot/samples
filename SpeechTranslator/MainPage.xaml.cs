@@ -33,7 +33,7 @@ using Windows.Devices.Gpio;
 using Windows.Globalization;
 using System.Threading.Tasks;
 
-namespace Shenzhen_DeviceOne
+namespace SpeechTranslator
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
