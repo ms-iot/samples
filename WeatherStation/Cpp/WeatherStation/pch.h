@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 466fd98... Fixing copyright banner and orelated issues.
 /*
 Copyright(c) Microsoft Open Technologies, Inc. All rights reserved.
 
@@ -26,11 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-<<<<<<< HEAD
-=======
->>>>>>> ad9a3e7... Added CPP weather station, C# interrupt
-=======
->>>>>>> 466fd98... Fixing copyright banner and orelated issues.
 //
 // pch.h
 // Header for standard system include files.
