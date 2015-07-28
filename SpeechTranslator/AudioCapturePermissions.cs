@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Media.Capture;
 
-namespace Shenzhen_DeviceOne
+namespace SpeechTranslator
 {
     class AudioCapturePermissions
     {  // If no recording device is attached, attempting to get access to audio capture devices will throw 

@@ -11,7 +11,7 @@ using System.Net;
 using System.IO;
 
 
-namespace Shenzhen_DeviceOne
+namespace SpeechTranslator
 {
     class AdmAuthentication
     {      // public static readonly string DatamarketAccessUri = "https://datamarket.accesscontrol.windows.net/v2/OAuth2-13";
