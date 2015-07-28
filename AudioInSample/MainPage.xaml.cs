@@ -32,9 +32,9 @@ namespace AudioInSample
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        Windows.Media.Capture.MediaCapture _audioCapture;
-        MediaCaptureInitializationSettings _captureInitSettings;
-        List<Windows.Devices.Enumeration.DeviceInformation> _deviceList;
+        Windows.Media.Capture.MediaCapture audioCapture;
+        MediaCaptureInitializationSettings captureInitSettings;
+        List<Windows.Devices.Enumeration.DeviceInformation> deviceList;
 
        // string audioFileName = "audioOut.mp3";
         string audioFileName=null;
@@ -55,18 +55,18 @@ namespace AudioInSample
             audioFileName = storageFile.Name;
             MediaEncodingProfile profile = null;
             profile = MediaEncodingProfile.CreateM4a(Windows.Media.MediaProperties.AudioEncodingQuality.Auto);
-            await _audioCapture.StartRecordToStorageFileAsync(profile, storageFile);
+            await audioCapture.StartRecordToStorageFileAsync(profile, storageFile);
 
         }
           private async void EnumerateAudioDevice()
         {
             var devices = await Windows.Devices.Enumeration.DeviceInformation.FindAllAsync(Windows.Devices.Enumeration.DeviceClass.AudioCapture);
-            _deviceList = new List<Windows.Devices.Enumeration.DeviceInformation>();
+            deviceList = new List<Windows.Devices.Enumeration.DeviceInformation>();
             if (devices.Count > 0)
             {
                 for(var i = 0; i < devices.Count; i++)
                 {
-                    _deviceList.Add(devices[i]);
+                    deviceList.Add(devices[i]);
                 }
                 InitCaptureSettings();
                 InitMediaCapture();
@@ -76,25 +76,25 @@ namespace AudioInSample
         private void InitCaptureSettings()
         {
             // Set the capture setting
-            _captureInitSettings = null;
-            _captureInitSettings = new Windows.Media.Capture.MediaCaptureInitializationSettings();
+            captureInitSettings = null;
+            captureInitSettings = new Windows.Media.Capture.MediaCaptureInitializationSettings();
 
-            _captureInitSettings.AudioDeviceId = "";
+            captureInitSettings.AudioDeviceId = "";
 
-            _captureInitSettings.StreamingCaptureMode = Windows.Media.Capture.StreamingCaptureMode.AudioAndVideo;
-            if (_deviceList.Count > 0)
+            captureInitSettings.StreamingCaptureMode = Windows.Media.Capture.StreamingCaptureMode.AudioAndVideo;
+            if (deviceList.Count > 0)
             {
-                _captureInitSettings.AudioDeviceId = _deviceList[0].Id;
+                captureInitSettings.AudioDeviceId = deviceList[0].Id;
             }
         }
         private async void InitMediaCapture()
         {
-            _audioCapture = null;
-            _audioCapture = new Windows.Media.Capture.MediaCapture();
+            audioCapture = null;
+            audioCapture = new Windows.Media.Capture.MediaCapture();
 
             // for dispose purpose
-            (App.Current as App).MediaCapture = _audioCapture;
-            await _audioCapture.InitializeAsync(_captureInitSettings);
+            (App.Current as App).MediaCapture = audioCapture;
+            await audioCapture.InitializeAsync(captureInitSettings);
            // CreateProfile();
 
         }
@@ -105,7 +105,7 @@ namespace AudioInSample
 
         private async void endRecord(object sender, RoutedEventArgs e)
         {
-            await _audioCapture.StopRecordAsync();
+            await audioCapture.StopRecordAsync();
         }
 
         private async void playRecordedAudio(object sender, RoutedEventArgs e)

@@ -30,13 +30,13 @@ namespace VideoCaptureSample
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        MediaCaptureInitializationSettings _captureInitSettings;
-        List<Windows.Devices.Enumeration.DeviceInformation> _deviceList;
-        Windows.Media.MediaProperties.MediaEncodingProfile _profile;
-        Windows.Media.Capture.MediaCapture _mediaCapture;
+        MediaCaptureInitializationSettings captureInitSettings;
+        List<Windows.Devices.Enumeration.DeviceInformation> deviceList;
+        Windows.Media.MediaProperties.MediaEncodingProfile profile;
+        Windows.Media.Capture.MediaCapture mediaCapture;
 
-        bool _recording = false;
-        bool _previewing = false;
+        bool recording = false;
+        bool previewing = false;
 
         public string fileName;
         public MainPage()
@@ -51,23 +51,23 @@ namespace VideoCaptureSample
             var storageFile = await Windows.Storage.KnownFolders.VideosLibrary.CreateFileAsync("cameraCapture.wmv", Windows.Storage.CreationCollisionOption.GenerateUniqueName);
             fileName = storageFile.Name;
 
-            await _mediaCapture.StartRecordToStorageFileAsync(_profile, storageFile);
-            _recording = true;
+            await mediaCapture.StartRecordToStorageFileAsync(profile, storageFile);
+            recording = true;
 
             // start the preview      
-            capturePreview.Source=_mediaCapture;                
-            await _mediaCapture.StartPreviewAsync();            
+            capturePreview.Source=mediaCapture;                
+            await mediaCapture.StartPreviewAsync();            
         }
 
         // Stop the video capture
         private async void StopMediaCaptureSession()
         {
-            await _mediaCapture.StopRecordAsync();
-            _recording = false;
+            await mediaCapture.StopRecordAsync();
+            recording = false;
             (App.Current as App).IsRecording = false;
 
             //stop the preview
-            await _mediaCapture.StopPreviewAsync();
+            await mediaCapture.StopPreviewAsync();
             
 
         }
@@ -75,13 +75,13 @@ namespace VideoCaptureSample
         private async void EnumerateCameras()
         {
             var devices = await Windows.Devices.Enumeration.DeviceInformation.FindAllAsync(Windows.Devices.Enumeration.DeviceClass.VideoCapture);
-            _deviceList = new List<Windows.Devices.Enumeration.DeviceInformation>();
+            deviceList = new List<Windows.Devices.Enumeration.DeviceInformation>();
 
             if (devices.Count > 0)
             {
                 for(var i = 0; i < devices.Count; i++)
                 {
-                    _deviceList.Add(devices[i]);
+                    deviceList.Add(devices[i]);
                 }
 
                 InitCaptureSettings();
@@ -93,41 +93,41 @@ namespace VideoCaptureSample
         private void InitCaptureSettings()
         {
             // Set the Capture Setting
-            _captureInitSettings = null;
-            _captureInitSettings = new Windows.Media.Capture.MediaCaptureInitializationSettings();
-            _captureInitSettings.AudioDeviceId = "";
-            _captureInitSettings.VideoDeviceId = "";
-            _captureInitSettings.StreamingCaptureMode = Windows.Media.Capture.StreamingCaptureMode.AudioAndVideo;
-            _captureInitSettings.PhotoCaptureSource = Windows.Media.Capture.PhotoCaptureSource.VideoPreview;
+            captureInitSettings = null;
+            captureInitSettings = new Windows.Media.Capture.MediaCaptureInitializationSettings();
+            captureInitSettings.AudioDeviceId = "";
+            captureInitSettings.VideoDeviceId = "";
+            captureInitSettings.StreamingCaptureMode = Windows.Media.Capture.StreamingCaptureMode.AudioAndVideo;
+            captureInitSettings.PhotoCaptureSource = Windows.Media.Capture.PhotoCaptureSource.VideoPreview;
             
-            if (_deviceList.Count > 0)
+            if (deviceList.Count > 0)
             {
-                _captureInitSettings.VideoDeviceId = _deviceList[0].Id;
+                captureInitSettings.VideoDeviceId = deviceList[0].Id;
             }
 
         }
 
         private async void InitMediaCapture()
         {
-            _mediaCapture = null;
-            _mediaCapture = new Windows.Media.Capture.MediaCapture();
+            mediaCapture = null;
+            mediaCapture = new Windows.Media.Capture.MediaCapture();
 
             // for dispose purpose
-            (App.Current as App).MediaCapture = _mediaCapture;
+            (App.Current as App).MediaCapture = mediaCapture;
             (App.Current as App).PreviewElement = capturePreview;
 
-            await _mediaCapture.InitializeAsync(_captureInitSettings);
+            await mediaCapture.InitializeAsync(captureInitSettings);
 
             // Add video stabilization effect during Live Capture
             //await _mediaCapture.AddEffectAsync(MediaStreamType.VideoRecord, Windows.Media.VideoEffects.VideoStabilization, null); //this will be deprecated soon
             Windows.Media.Effects.VideoEffectDefinition def = new Windows.Media.Effects.VideoEffectDefinition(Windows.Media.VideoEffects.VideoStabilization);
-            await _mediaCapture.AddVideoEffectAsync(def, MediaStreamType.VideoRecord);
+            await mediaCapture.AddVideoEffectAsync(def, MediaStreamType.VideoRecord);
 
            CreateProfile();
 
             // start preview
 
-            capturePreview.Source = _mediaCapture;
+            capturePreview.Source = mediaCapture;
             
             DisplayInformation.AutoRotationPreferences = DisplayOrientations.None;
 
@@ -139,12 +139,12 @@ namespace VideoCaptureSample
         //Create a profile
         private void CreateProfile()
         {
-            _profile = Windows.Media.MediaProperties.MediaEncodingProfile.CreateMp4(Windows.Media.MediaProperties.VideoEncodingQuality.Qvga);
+            profile = Windows.Media.MediaProperties.MediaEncodingProfile.CreateMp4(Windows.Media.MediaProperties.VideoEncodingQuality.Qvga);
 
             // Use MediaEncodingProfile to encode the profile
             System.Guid MFVideoRotationGuild = new System.Guid("C380465D-2271-428C-9B83-ECEA3B4A85C1");
             int MFVideoRotation = ConvertVideoRotationToMFRotation(VideoRotation.None);
-            _profile.Video.Properties.Add(MFVideoRotationGuild, PropertyValue.CreateInt32(MFVideoRotation));
+            profile.Video.Properties.Add(MFVideoRotationGuild, PropertyValue.CreateInt32(MFVideoRotation));
 
 
             // add the mediaTranscoder 
