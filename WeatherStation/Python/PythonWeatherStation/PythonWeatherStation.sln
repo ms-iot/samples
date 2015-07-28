@@ -3,15 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.22823.1
 MinimumVisualStudioVersion = 10.0.40219.1
-<<<<<<< HEAD
-<<<<<<< HEAD
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "PythonWeatherStation", "PythonWeatherStation.pyproj", "{AD5173D1-38C4-4D93-A217-3352BAF51E59}"
-=======
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "PythonWeatherStation", "PythonWeatherStation.pyproj", "{51D90C58-5628-45F8-8704-40B6D703941E}"
->>>>>>> c992184... Adding python weather station
-=======
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "PythonWeatherStation", "PythonWeatherStation.pyproj", "{AD5173D1-38C4-4D93-A217-3352BAF51E59}"
->>>>>>> d351786... Fixes python samples, adding license text and Microsoft as publisher for others
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +15,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> d351786... Fixes python samples, adding license text and Microsoft as publisher for others
 		{AD5173D1-38C4-4D93-A217-3352BAF51E59}.Debug|ARM.ActiveCfg = Debug|ARM
 		{AD5173D1-38C4-4D93-A217-3352BAF51E59}.Debug|ARM.Build.0 = Debug|ARM
 		{AD5173D1-38C4-4D93-A217-3352BAF51E59}.Debug|ARM.Deploy.0 = Debug|ARM
@@ -45,29 +33,6 @@ Global
 		{AD5173D1-38C4-4D93-A217-3352BAF51E59}.Release|x86.ActiveCfg = Release|x86
 		{AD5173D1-38C4-4D93-A217-3352BAF51E59}.Release|x86.Build.0 = Release|x86
 		{AD5173D1-38C4-4D93-A217-3352BAF51E59}.Release|x86.Deploy.0 = Release|x86
-<<<<<<< HEAD
-=======
-		{51D90C58-5628-45F8-8704-40B6D703941E}.Debug|ARM.ActiveCfg = Debug|ARM
-		{51D90C58-5628-45F8-8704-40B6D703941E}.Debug|ARM.Build.0 = Debug|ARM
-		{51D90C58-5628-45F8-8704-40B6D703941E}.Debug|ARM.Deploy.0 = Debug|ARM
-		{51D90C58-5628-45F8-8704-40B6D703941E}.Debug|x64.ActiveCfg = Debug|x64
-		{51D90C58-5628-45F8-8704-40B6D703941E}.Debug|x64.Build.0 = Debug|x64
-		{51D90C58-5628-45F8-8704-40B6D703941E}.Debug|x64.Deploy.0 = Debug|x64
-		{51D90C58-5628-45F8-8704-40B6D703941E}.Debug|x86.ActiveCfg = Debug|x86
-		{51D90C58-5628-45F8-8704-40B6D703941E}.Debug|x86.Build.0 = Debug|x86
-		{51D90C58-5628-45F8-8704-40B6D703941E}.Debug|x86.Deploy.0 = Debug|x86
-		{51D90C58-5628-45F8-8704-40B6D703941E}.Release|ARM.ActiveCfg = Release|ARM
-		{51D90C58-5628-45F8-8704-40B6D703941E}.Release|ARM.Build.0 = Release|ARM
-		{51D90C58-5628-45F8-8704-40B6D703941E}.Release|ARM.Deploy.0 = Release|ARM
-		{51D90C58-5628-45F8-8704-40B6D703941E}.Release|x64.ActiveCfg = Release|x64
-		{51D90C58-5628-45F8-8704-40B6D703941E}.Release|x64.Build.0 = Release|x64
-		{51D90C58-5628-45F8-8704-40B6D703941E}.Release|x64.Deploy.0 = Release|x64
-		{51D90C58-5628-45F8-8704-40B6D703941E}.Release|x86.ActiveCfg = Release|x86
-		{51D90C58-5628-45F8-8704-40B6D703941E}.Release|x86.Build.0 = Release|x86
-		{51D90C58-5628-45F8-8704-40B6D703941E}.Release|x86.Deploy.0 = Release|x86
->>>>>>> c992184... Adding python weather station
-=======
->>>>>>> d351786... Fixes python samples, adding license text and Microsoft as publisher for others
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
