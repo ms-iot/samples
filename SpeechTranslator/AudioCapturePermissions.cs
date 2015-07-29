@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Media.Capture;
 
@@ -48,8 +45,6 @@ namespace SpeechTranslator
                 // Can also occur if using the virtual machine console tool to access a VM instead of using remote desktop.
                 if (exception.HResult == NoCaptureDevicesHResult)
                 {
-                    var messageDialog = new Windows.UI.Popups.MessageDialog("No Audio Capture devices are present on this system.");
-                    await messageDialog.ShowAsync();
                     return false;
                 }
                 else
