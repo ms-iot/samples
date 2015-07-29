@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 
@@ -19,8 +16,8 @@ namespace SpeechTranslator
         {
             this.originalString = s;
             AdmAuthentication admAuth = new AdmAuthentication(ConstantParam.clientid, ConstantParam.clientsecret);
-            Task<AdmAccessToken> admToken = admAuth.GetAccessToken();
-            this.translated = TranslateMethod("Bearer" + " " + admToken.Result.access_token, this.originalString, from, to);
+            AdmAccessToken admToken = admAuth.GetAccessToken();
+            this.translated = TranslateMethod("Bearer" + " " + admToken.access_token, this.originalString, from, to);
         }
 
         public string GetTranslatedString()
@@ -30,18 +27,12 @@ namespace SpeechTranslator
 
         public static string TranslateMethod(string authToken, string originalS, string from, string to)
         {
-            string text = originalS; //"你能听见我";
-            //string from = "en";
-            //string to = "zh-CHS";
-            //string from = Constants.from;// "zh-CHS";
-            //string to = Constants.to; // "en";
+            string text = originalS;
 
             string transuri = ConstantParam.ApiUri + System.Net.WebUtility.UrlEncode(text) + "&from=" + from + "&to=" + to;
 
             HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(transuri);
-            //  httpWebRequest.ContentType = "application/x-www-form-urlencoded";
             httpWebRequest.Headers["Authorization"] = authToken;
-            //httpWebRequest.Method = "GET";
             string trans;
 
             Task<WebResponse> response = httpWebRequest.GetResponseAsync();
@@ -49,7 +40,6 @@ namespace SpeechTranslator
             using (Stream stream = response.Result.GetResponseStream())
             {
                 System.Runtime.Serialization.DataContractSerializer dcs = new System.Runtime.Serialization.DataContractSerializer(Type.GetType("System.String"));
-                //DataContractJsonSerializer dcs = new DataContractJsonSerializer(Type.GetType("System.String"));
                 trans = (string)dcs.ReadObject(stream);
                 return trans;
 
