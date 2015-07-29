@@ -821,14 +821,18 @@
           "lib/dotnet/System.Net.WebHeaderCollection.dll": {}
         }
       },
-      "System.Numerics.Vectors/4.0.0": {
+      "System.Numerics.Vectors/4.1.0": {
+        "dependencies": {
+          "System.Runtime": "[4.0.20, )",
+          "System.Resources.ResourceManager": "[4.0.0, )",
+          "System.Globalization": "[4.0.10, )",
+          "System.Runtime.Extensions": "[4.0.10, )"
+        },
         "compile": {
-          "lib/win8/System.Numerics.Vectors.dll": {},
-          "lib/win8/System.Numerics.Vectors.WindowsRuntime.dll": {}
+          "ref/dotnet/System.Numerics.Vectors.dll": {}
         },
         "runtime": {
-          "lib/win8/System.Numerics.Vectors.dll": {},
-          "lib/win8/System.Numerics.Vectors.WindowsRuntime.dll": {}
+          "lib/dotnet/System.Numerics.Vectors.dll": {}
         }
       },
       "System.Numerics.Vectors.WindowsRuntime/4.0.0": {
@@ -4270,34 +4274,6 @@
           "runtimes/win8-aot/lib/netcore50/System.Reflection.DispatchProxy.dll": {}
         }
       },
-      "System.Reflection.Emit/4.0.0": {
-        "dependencies": {
-          "System.Runtime": "[4.0.0, )",
-          "System.Reflection": "[4.0.0, )",
-          "System.Reflection.Emit.ILGeneration": "[4.0.0, )",
-          "System.IO": "[4.0.0, )",
-          "System.Reflection.Primitives": "[4.0.0, )"
-        },
-        "compile": {
-          "ref/dotnet/System.Reflection.Emit.dll": {}
-        },
-        "runtime": {
-          "lib/netcore50/System.Reflection.Emit.dll": {}
-        }
-      },
-      "System.Reflection.Emit.ILGeneration/4.0.0": {
-        "dependencies": {
-          "System.Runtime": "[4.0.0, )",
-          "System.Reflection": "[4.0.0, )",
-          "System.Reflection.Primitives": "[4.0.0, )"
-        },
-        "compile": {
-          "ref/dotnet/System.Reflection.Emit.ILGeneration.dll": {}
-        },
-        "runtime": {
-          "lib/netcore50/System.Reflection.Emit.ILGeneration.dll": {}
-        }
-      },
       "System.Reflection.Extensions/4.0.0": {
         "dependencies": {
           "System.Runtime": "[4.0.20, )",
@@ -7557,34 +7533,6 @@
         },
         "runtime": {
           "runtimes/win8-aot/lib/netcore50/System.Reflection.DispatchProxy.dll": {}
-        }
-      },
-      "System.Reflection.Emit/4.0.0": {
-        "dependencies": {
-          "System.Runtime": "[4.0.0, )",
-          "System.Reflection": "[4.0.0, )",
-          "System.Reflection.Emit.ILGeneration": "[4.0.0, )",
-          "System.IO": "[4.0.0, )",
-          "System.Reflection.Primitives": "[4.0.0, )"
-        },
-        "compile": {
-          "ref/dotnet/System.Reflection.Emit.dll": {}
-        },
-        "runtime": {
-          "lib/netcore50/System.Reflection.Emit.dll": {}
-        }
-      },
-      "System.Reflection.Emit.ILGeneration/4.0.0": {
-        "dependencies": {
-          "System.Runtime": "[4.0.0, )",
-          "System.Reflection": "[4.0.0, )",
-          "System.Reflection.Primitives": "[4.0.0, )"
-        },
-        "compile": {
-          "ref/dotnet/System.Reflection.Emit.ILGeneration.dll": {}
-        },
-        "runtime": {
-          "lib/netcore50/System.Reflection.Emit.ILGeneration.dll": {}
         }
       },
       "System.Reflection.Extensions/4.0.0": {
@@ -10848,34 +10796,6 @@
           "runtimes/win8-aot/lib/netcore50/System.Reflection.DispatchProxy.dll": {}
         }
       },
-      "System.Reflection.Emit/4.0.0": {
-        "dependencies": {
-          "System.Runtime": "[4.0.0, )",
-          "System.Reflection": "[4.0.0, )",
-          "System.Reflection.Emit.ILGeneration": "[4.0.0, )",
-          "System.IO": "[4.0.0, )",
-          "System.Reflection.Primitives": "[4.0.0, )"
-        },
-        "compile": {
-          "ref/dotnet/System.Reflection.Emit.dll": {}
-        },
-        "runtime": {
-          "lib/netcore50/System.Reflection.Emit.dll": {}
-        }
-      },
-      "System.Reflection.Emit.ILGeneration/4.0.0": {
-        "dependencies": {
-          "System.Runtime": "[4.0.0, )",
-          "System.Reflection": "[4.0.0, )",
-          "System.Reflection.Primitives": "[4.0.0, )"
-        },
-        "compile": {
-          "ref/dotnet/System.Reflection.Emit.ILGeneration.dll": {}
-        },
-        "runtime": {
-          "lib/netcore50/System.Reflection.Emit.ILGeneration.dll": {}
-        }
-      },
       "System.Reflection.Extensions/4.0.0": {
         "dependencies": {
           "System.Runtime": "[4.0.20, )",
@@ -13369,23 +13289,6 @@
         "[Content_Types].xml"
       ]
     },
-    "System.Numerics.Vectors/4.0.0": {
-      "sha512": "H/72pHnKZ5wZk8lMrZ2H10OsBgkRcbQ7sXuLzxAL9/evRB95yYf3j+iXdrRv2JHNGspdmC8oVo7B3RQrY5QBWw==",
-      "type": "Package",
-      "files": [
-        "_rels/.rels",
-        "System.Numerics.Vectors.nuspec",
-        "License-Stable.rtf",
-        "lib/portable-net45+win8+wpa81/System.Numerics.Vectors.dll",
-        "lib/portable-net45+win8+wpa81/System.Numerics.Vectors.xml",
-        "lib/win8/System.Numerics.Vectors.dll",
-        "lib/win8/System.Numerics.Vectors.xml",
-        "lib/win8/System.Numerics.Vectors.WindowsRuntime.dll",
-        "lib/win8/System.Numerics.Vectors.WindowsRuntime.xml",
-        "package/services/metadata/core-properties/afb278507bb44a2db19b52c23345c784.psmdcp",
-        "[Content_Types].xml"
-      ]
-    },
     "System.Numerics.Vectors/4.1.0": {
       "sha512": "u2UKYZi0Pb1bptFfAgpCtWfKDwUDeHYqH6MF6ucLBexVf27EQofvVGb0nd234j/BoBgw7axWBrBkpXHs+3/rjg==",
       "type": "Package",
@@ -14849,9 +14752,7 @@
       "Microsoft.ApplicationInsights >= 1.0.0",
       "Microsoft.ApplicationInsights.PersistenceChannel >= 1.0.0",
       "Microsoft.ApplicationInsights.WindowsApps >= 1.0.0",
-      "Microsoft.NETCore.Targets.UniversalWindowsPlatform >= 5.0.0",
-      "Microsoft.NETCore.UniversalWindowsPlatform >= 5.0.0",
-      "System.Numerics.Vectors >= 4.0.0"
+      "Microsoft.NETCore.UniversalWindowsPlatform >= 5.0.0"
     ],
     "UAP,Version=v10.0": []
   }
