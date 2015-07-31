@@ -34,7 +34,9 @@
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
-    <ApplicationTypeRevision>8.2</ApplicationTypeRevision>
+    <WindowsTargetPlatformVersion>10.0.10240.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.10240.0</WindowsTargetPlatformMinVersion>
+    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
     <UseAppLocalVCLibs>true</UseAppLocalVCLibs>
     <AppxPackage>true</AppxPackage>
     <AppxPackageSigningEnabled>true</AppxPackageSigningEnabled>
@@ -62,18 +64,21 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <PlatformToolset>v140</PlatformToolset>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <PlatformToolset>v140</PlatformToolset>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <PlatformToolset>v140</PlatformToolset>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -81,7 +86,7 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsIoT, Version=10.0.10069.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion), null, $(ExtensionSDKDirectoryRoot), null))\DesignTime\Retail\x86\WindowsIoT.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsIoT, Version=10.0.10069.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion), null, $(ExtensionSDKDirectoryRoot), null))\DesignTime\Retail\x86\WindowsIoT.props')" />
+    <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsIoT, Version=10.0.10240.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion), null, $(ExtensionSDKDirectoryRoot), null))\DesignTime\Retail\x86\WindowsIoT.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsIoT, Version=10.0.10240.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion), null, $(ExtensionSDKDirectoryRoot), null))\DesignTime\Retail\x86\WindowsIoT.props')" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -218,11 +223,13 @@
     <None Include="WeatherStation_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\Logo.scale-100.png" />
-    <Image Include="Assets\SmallLogo.scale-100.png" />
-    <Image Include="Assets\StoreLogo.scale-100.png" />
-    <Image Include="Assets\SplashScreen.scale-100.png" />
-    <Image Include="Assets\WideLogo.scale-100.png" />
+    <Image Include="Assets\LockScreenLogo.scale-200.png" />
+    <Image Include="Assets\SplashScreen.scale-200.png" />
+    <Image Include="Assets\Square150x150Logo.scale-200.png" />
+    <Image Include="Assets\Square44x44Logo.scale-200.png" />
+    <Image Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
+    <Image Include="Assets\StoreLogo.png" />
+    <Image Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -240,7 +247,7 @@
     <ClCompile Include="StartupTask.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="WindowsIoT, Version=10.0.10069.0" />
+    <SDKReference Include="WindowsIoT, Version=10.0.10240.0" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

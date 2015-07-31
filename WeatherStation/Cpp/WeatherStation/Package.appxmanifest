@@ -8,36 +8,20 @@
   IgnorableNamespaces="uap mp iot">
 
   <Identity
-    Name="WeatherStation"
-<<<<<<< HEAD
-<<<<<<< HEAD
+    Name="WeatherStation-uwp"
     Publisher="CN=Microsoft"
-=======
-    Publisher="CN=jessek"
->>>>>>> ad9a3e7... Added CPP weather station, C# interrupt
-=======
-    Publisher="CN=Microsoft"
->>>>>>> de59284... Fixing publisher names and adding copyright message
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="e63bab45-a8a6-4f69-aa79-50c2ed9679a6" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>WeatherStation</DisplayName>
-<<<<<<< HEAD
-<<<<<<< HEAD
     <PublisherDisplayName>Microsoft</PublisherDisplayName>
-=======
-    <PublisherDisplayName>jessek</PublisherDisplayName>
->>>>>>> ad9a3e7... Added CPP weather station, C# interrupt
-=======
-    <PublisherDisplayName>Microsoft</PublisherDisplayName>
->>>>>>> de59284... Fixing publisher names and adding copyright message
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
   <Dependencies>
-    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.10069.0" MaxVersionTested="10.0.10069.0" />
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
   </Dependencies>
 
   <Resources>
@@ -48,10 +32,10 @@
     <Application Id="App">
       <uap:VisualElements
         DisplayName="WeatherStation"
-        Square150x150Logo="Assets\Logo.png"
-        Square44x44Logo="Assets\SmallLogo.png"
+        Square150x150Logo="Assets\Square150x150Logo.png"
+        Square44x44Logo="Assets\Square44x44Logo.png"
         Description="WeatherStation"
-        BackgroundColor="#464646"
+        BackgroundColor="transparent"
         AppListEntry="none">
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>

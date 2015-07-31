@@ -9,19 +9,19 @@
 
   <Identity
     Name="Blinky"
-    Publisher="CN=AleUser"
+    Publisher="CN=Microsoft"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="d57ab936-9c60-4857-af7f-911f928e38ab" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>Blinky</DisplayName>
-    <PublisherDisplayName>AleUser</PublisherDisplayName>
+    <PublisherDisplayName>Microsoft</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
   <Dependencies>
-    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.10069.0" MaxVersionTested="10.0.10069.0" />
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
   </Dependencies>
 
   <Resources>
@@ -34,10 +34,10 @@
       EntryPoint="Blinky.App">
       <uap:VisualElements
         DisplayName="Blinky"
-        Square150x150Logo="Assets\Logo.png"
-        Square44x44Logo="Assets\SmallLogo.png"
+        Square150x150Logo="Assets\Square150x150Logo.png"
+        Square44x44Logo="Assets\Square44x44Logo.png"
         Description="Blinky"
-        BackgroundColor="#464646">
+        BackgroundColor="transparent">
         <uap:SplashScreen
           Image="Assets\SplashScreen.png" />
       </uap:VisualElements>

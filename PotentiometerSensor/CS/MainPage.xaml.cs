@@ -1,27 +1,8 @@
-﻿/*
-    Copyright(c) Microsoft Open Technologies, Inc. All rights reserved.
+﻿// Copyright (c) Microsoft. All rights reserved.
 
-    The MIT License(MIT)
-
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files(the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions :
-
-    The above copyright notice and this permission notice shall be included in
-    all copies or substantial portions of the Software.
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-    THE SOFTWARE.
-*/
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -39,41 +20,59 @@ using Windows.Devices.Gpio;
 using Windows.Devices.Spi;
 using Windows.Devices.Enumeration;
 
-
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
-
 namespace PotentiometerSensor
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class MainPage : Page
     {
         public MainPage()
         {
             this.InitializeComponent();
-            this.InitializeComponent();
-            timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(500);
-            timer.Tick += Timer_Tick;
-            timer.Start();
 
-            InitSPI();
+            /* Register for the unloaded event so we can clean up upon exit */
+            Unloaded += MainPage_Unloaded;
 
-            InitGpio();
+            /* Initialize GPIO and SPI */
+            InitAll();
         }
 
-        private async void InitSPI()
+        /* Initialize GPIO and SPI */
+        private async void InitAll()
+        {
+            if (ADC_DEVICE == AdcDevice.NONE)
+            {
+                StatusText.Text = "Please change the ADC_DEVICE variable to either MCP3002 or MCP3208";
+                return;
+            }
+
+            try
+            {
+                InitGpio();         /* Initialize GPIO to toggle the LED                          */
+                await InitSPI();    /* Initialize the SPI bus for communicating with the ADC      */
+
+            }
+            catch (Exception ex)
+            {
+                StatusText.Text = ex.Message;
+                return;
+            }
+
+            /* Now that everything is initialized, create a timer so we read data every 500mS */
+            periodicTimer = new Timer(this.Timer_Tick, null, 0, 100);
+
+            StatusText.Text = "Status: Running";
+        }
+
+        private async Task InitSPI()
         {
             try
             {
                 var settings = new SpiConnectionSettings(SPI_CHIP_SELECT_LINE);
-                settings.ClockFrequency = 500000;// 10000000;
-                settings.Mode = SpiMode.Mode0; //Mode3;
+                settings.ClockFrequency = 500000;   /* 0.5MHz clock rate                                        */
+                settings.Mode = SpiMode.Mode0;      /* The ADC expects idle-low clock polarity so we use Mode0  */
 
                 string spiAqs = SpiDevice.GetDeviceSelector(SPI_CONTROLLER_NAME);
                 var deviceInfo = await DeviceInformation.FindAllAsync(spiAqs);
-                SpiDisplay = await SpiDevice.FromIdAsync(deviceInfo[0].Id, settings);
+                SpiADC = await SpiDevice.FromIdAsync(deviceInfo[0].Id, settings);
             }
 
             /* If initialization fails, display the exception and stop running */
@@ -82,103 +81,133 @@ namespace PotentiometerSensor
                 throw new Exception("SPI Initialization Failed", ex);
             }
         }
+
         private void InitGpio()
         {
             var gpio = GpioController.GetDefault();
 
-            // Show an error if there is no GPIO controller
+            /* Show an error if there is no GPIO controller */
             if (gpio == null)
             {
-                pin = null;
-                GpioStatus.Text = "There is no GPIO controller on this device.";
-                return;
+                throw new Exception("There is no GPIO controller on this device");
             }
 
-            pin = gpio.OpenPin(LED_PIN);
-            pin.Write(GpioPinValue.High);
-            pin.SetDriveMode(GpioPinDriveMode.Output);
-            
-            GpioStatus.Text = "GPIO pin initialized correctly.";
+            ledPin = gpio.OpenPin(LED_PIN);
+
+            /* GPIO state is initially undefined, so we assign a default value before enabling as output */
+            ledPin.Write(GpioPinValue.High);        
+            ledPin.SetDriveMode(GpioPinDriveMode.Output);
         }
+
+        /* Turn on/off the LED depending on the potentiometer position    */
         private void LightLED()
         {
-            /*Uncomment if you are using mcp3208/3008*/
-            //if (res > 2048)
-            //{
-            //    pin.Write(GpioPinValue.Low);
-            //}
-            //else
-            //{
-            //    pin.Write(GpioPinValue.High);
-            //}
+            int adcResolution = 0;
 
-            /*Uncomment if you are using mcp3002*/
-
-            if (res > 1024/2)
+            switch (ADC_DEVICE)
             {
-                pin.Write(GpioPinValue.Low);
+                case AdcDevice.MCP3002:
+                    adcResolution = 1024;
+                    break;
+                case AdcDevice.MCP3208:
+                    adcResolution = 4096;
+                    break;
             }
+
+            /* Turn on LED if pot is rotated more halfway through its range */
+            if (adcValue > adcResolution / 2)
+            {
+                ledPin.Write(GpioPinValue.Low);
+            }
+            /* Otherwise turn it off                                        */
             else
             {
-                pin.Write(GpioPinValue.High);
+                ledPin.Write(GpioPinValue.High);
             }
         }
-        private void Timer_Tick(object sender, object e)
+
+        /* Read from the ADC, update the UI, and toggle the LED */
+        private void Timer_Tick(object state)
         {
-            DisplayTextBoxContents();
+            ReadADC();
             LightLED();
         }
 
-        public void DisplayTextBoxContents()
+        public void ReadADC()
         {
-            SpiDisplay.TransferFullDuplex(writeBuffer, readBuffer);
-            res = convertToInt(readBuffer);
-            textPlaceHolder.Text = res.ToString();
+            byte[] readBuffer = new byte[3]; /* Buffer to hold read data*/
+            byte[] writeBuffer = new byte[3] { 0x00, 0x00, 0x00 };
 
+            /* Setup the appropriate ADC configuration byte */
+            switch (ADC_DEVICE)
+            {
+                case AdcDevice.MCP3002:
+                    writeBuffer[0] = MCP3002_CONFIG;
+                    break;
+                case AdcDevice.MCP3208:
+                    writeBuffer[0] = MCP3208_CONFIG;
+                    break;
+            }
+
+            SpiADC.TransferFullDuplex(writeBuffer, readBuffer); /* Read data from the ADC                           */
+            adcValue = convertToInt(readBuffer);                /* Convert the returned bytes into an integer value */
+
+            /* UI updates must be invoked on the UI thread */
+            var task = this.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+            {
+                textPlaceHolder.Text = adcValue.ToString();         /* Display the value on screen                      */
+            });
         }
+
+        /* Convert the raw ADC bytes to an integer */
         public int convertToInt(byte[] data)
-        {  
-            /*Uncomment if you are using mcp3208/3008 which is 12 bits output */
-           /*
-            int result = data[1] & 0x0F;
-            result <<= 8;
-            result += data[2];
+        {
+            int result = 0;
+            switch (ADC_DEVICE)
+            {
+                case AdcDevice.MCP3002:
+                    result = data[0] & 0x03;
+                    result <<= 8;
+                    result += data[1];
+                    break;
+                case AdcDevice.MCP3208:
+                    result = data[1] & 0x0F;
+                    result <<= 8;
+                    result += data[2];
+                    break;
+            }
             return result;
-            */
-
-            /*Uncomment if you are using mcp3002*/
-            int result = data[0] & 0x03;
-            result <<= 8;
-            result += data[1];
-            return result;
-
         }
 
-        private int LEDStatus = 0;
-        private const int LED_PIN = 6;
-        private GpioPin pin;
+        private void MainPage_Unloaded(object sender, object args)
+        {
+            /* It's good practice to clean up after we're done */
+            if(SpiADC != null)
+            {
+                SpiADC.Dispose();
+            }
 
-        /*RaspBerry Pi2  Parameters*/
-        private const string SPI_CONTROLLER_NAME = "SPI0";  /* For Raspberry Pi 2, use SPI0                             */
+            if(ledPin != null)
+            {
+                ledPin.Dispose();
+            }
+        }
+        enum AdcDevice { NONE, MCP3002, MCP3208 };
+
+        /* Important! Change this to either AdcDevice.MCP3002 or AdcDevice.MCP3208 depending on which ADC you chose     */
+        private AdcDevice ADC_DEVICE = AdcDevice.NONE;
+
+        private const int LED_PIN = 4;
+        private GpioPin ledPin;
+
+        private const string SPI_CONTROLLER_NAME = "SPI0";  /* Friendly name for Raspberry Pi 2 SPI controller          */
         private const Int32 SPI_CHIP_SELECT_LINE = 0;       /* Line 0 maps to physical pin number 24 on the Rpi2        */
+        private SpiDevice SpiADC;
 
-        /*Uncomment if you are using mcp3208/3008 which is 12 bits output */
-        
-        // byte[] readBuffer = new byte[3]; /*this is defined to hold the output data*/
-        // byte[] writeBuffer = new byte[3] { 0x06, 0x00, 0x00 };//00000110 00; // It is SPI port serial input pin, and is used to load channel configuration data into the device
-        
+        private const byte MCP3002_CONFIG = 0x68; /* 01101000 channel configuration data for the MCP3002 */
+        private const byte MCP3208_CONFIG = 0x06; /* 00000110 channel configuration data for the MCP3208 */
 
-        /*Uncomment if you are using mcp3002*/
-        byte[] readBuffer = new byte[3]; /*this is defined to hold the output data*/
-        byte[] writeBuffer = new byte[3] { 0x68, 0x00, 0x00 };//01101000 00; /* It is SPI port serial input pin, and is used to load channel configuration data into the device*/
-
-        private SpiDevice SpiDisplay;
-
-        // create a timer
-        private DispatcherTimer timer;
-        int res;
-
+        private Timer periodicTimer;
+        private int adcValue;
     }
-
-
 }

@@ -10,6 +10,7 @@ using Windows.ApplicationModel.Background;
 using Windows.Devices.Gpio;
 using System.Diagnostics;
 using Windows.Foundation;
+using Windows.System.Threading;
 // The Background Application template is documented at http://go.microsoft.com/fwlink/?LinkID=533884&clcid=0x409
 
 namespace ServoMotorBasics
@@ -18,8 +19,7 @@ namespace ServoMotorBasics
     {
         BackgroundTaskDeferral deferral;
         GpioPin servoPin;
-        GpioPin forwardButton;
-        GpioPin backwardButton;
+        ThreadPoolTimer timer;
 
 
         //A pulse of 2ms moves the servo clockwise
@@ -44,53 +44,30 @@ namespace ServoMotorBasics
 
             GpioController controller = GpioController.GetDefault();
 
-            //Buttons are attached to pins 5 and 6 to control which direction the motor should run in
-            //Interrupts (ValueChanged) events are used to notify this app when the buttons are pressed
-            forwardButton = controller.OpenPin(5);
-            forwardButton.DebounceTimeout = new TimeSpan(0, 0, 0, 0, 250);
-            forwardButton.SetDriveMode(GpioPinDriveMode.Input);
-            forwardButton.ValueChanged += _forwardButton_ValueChanged;
-
-            backwardButton = controller.OpenPin(6);
-            backwardButton.SetDriveMode(GpioPinDriveMode.Input);
-            forwardButton.DebounceTimeout = new TimeSpan(0, 0, 0, 0, 250);
-            backwardButton.ValueChanged += _backgwardButton_ValueChanged;
+       
 
 
             servoPin = controller.OpenPin(13);
             servoPin.SetDriveMode(GpioPinDriveMode.Output);
 
-            
+            timer = ThreadPoolTimer.CreatePeriodicTimer(this.Tick, TimeSpan.FromSeconds(2));
            
 
             //You do not need to await this, as your goal is to have this run for the lifetime of the application
             Windows.System.Threading.ThreadPool.RunAsync(this.MotorThread, Windows.System.Threading.WorkItemPriority.High);
+
         }
 
-        private void _backgwardButton_ValueChanged(GpioPin sender, GpioPinValueChangedEventArgs args)
+        private void Tick(ThreadPoolTimer timer)
         {
-            if (backwardButton.Read() == GpioPinValue.Low) 
-            {
-                currentPulseWidth = BackwardPulseWidth;
-            }else
-            {
-                currentPulseWidth = 0;
-            }
-            
-        }
-
-        private void _forwardButton_ValueChanged(GpioPin sender, GpioPinValueChangedEventArgs args)
-        {
-            if (forwardButton.Read() == GpioPinValue.Low)
+            if (currentPulseWidth != ForwardPulseWidth)
             {
                 currentPulseWidth = ForwardPulseWidth;
-            }
-            else
+            }else
             {
-                currentPulseWidth = 0;
+                currentPulseWidth = BackwardPulseWidth;
             }
         }
-
 
         private void MotorThread(IAsyncAction action)
         {

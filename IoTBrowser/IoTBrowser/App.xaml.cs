@@ -1,26 +1,5 @@
-﻿/*
-    Copyright(c) Microsoft Open Technologies, Inc. All rights reserved.
+﻿// Copyright (c) Microsoft. All rights reserved.
 
-    The MIT License(MIT)
-
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files(the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions :
-
-    The above copyright notice and this permission notice shall be included in
-    all copies or substantial portions of the Software.
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-    THE SOFTWARE.
-*/
 
 using System;
 using System.Collections.Generic;
@@ -49,20 +28,28 @@ namespace IoTBrowser
     sealed partial class App : Application
     {
         /// <summary>
-        /// Allows tracking page views, exceptions and other telemetry through the Microsoft Application Insights service.
-        /// </summary>
-        public static Microsoft.ApplicationInsights.TelemetryClient TelemetryClient;
-
-        /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
         public App()
         {
-            TelemetryClient = new Microsoft.ApplicationInsights.TelemetryClient();
-
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+        }
+        
+        protected override void OnActivated(IActivatedEventArgs args)
+        {
+            if(args == null)
+            {
+                return;
+            }
+            // NOTE: URI protocol handling code currently not implemented. As per the manifest declaration, protocol extension has been added to this app
+            // to prevent Windows.System.Launcher.dll module failure that occurs when attempting to navigate to URLs of this type
+            if (args.Kind == ActivationKind.Protocol)
+            {
+                ProtocolActivatedEventArgs eventArgs = args as ProtocolActivatedEventArgs;
+               System.Diagnostics.Debug.WriteLine(new Uri(eventArgs.Uri.AbsoluteUri));
+            }
         }
 
         /// <summary>

@@ -1,26 +1,4 @@
-﻿/*
-    Copyright(c) Microsoft Open Technologies, Inc. All rights reserved.
-
-    The MIT License(MIT)
-
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files(the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions :
-
-    The above copyright notice and this permission notice shall be included in
-    all copies or substantial portions of the Software.
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-    THE SOFTWARE.
-*/
+﻿// Copyright (c) Microsoft. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -95,24 +73,50 @@ namespace IoTCoreDefaultApp
                 {
                     case "title":
                         par.FontSize = 28;
+                        par.Margin = new Thickness(top: 0, left: 0, right: 0, bottom: 5);
                         par.Inlines.Add(new Run { Text = value });
                         break;
                     case "subtitle":
                         par.FontSize = 11;
+                        par.Margin = new Thickness(top: 0, left: 0, right: 0, bottom: 5);
                         par.Inlines.Add(new Run { Text = value });
                         break;
                     case "h1":
                         par.FontSize = 16;
+                        par.Margin = new Thickness(top: 10, left: 0, right: 0, bottom: 10);
                         par.Inlines.Add(new Run { Text = value });
                         break;
                     case "p":
                         par.FontSize = 11;
+                        par.Margin = new Thickness(top: 0, left: 0, right: 0, bottom: 4);
                         par.Inlines.Add(new Run { Text = value });
                         break;
                     case "ul":
                         par.FontSize = 11;
+                        par.Margin = new Thickness(top: 0, left: 0, right: 0, bottom: 4);
                         value = "\u27a4 " + value;
                         par.Inlines.Add(new Run { Text = value });
+                        break;
+                    case "br":
+                        try
+                        {
+                            double fontSize = 11;
+                            double bottomMarging = 4;
+                            var size = split[split.Length - 2];
+                            if (size.Contains('x'))
+                            {
+                                var sizeSplit = size.Split('x');
+                                fontSize = int.Parse(sizeSplit[0]);
+                                bottomMarging = int.Parse(sizeSplit[1]);
+                            }
+                            par.FontSize = fontSize;
+                            par.Margin = new Thickness(top: 0, left: 0, right: 0, bottom: bottomMarging);
+                            par.Inlines.Add(new Run { Text = value });
+                        }
+                        catch (Exception)
+                        {
+                            // just ignore this entry if anything goes wrong...
+                        }
                         break;
                     case "image":
                         try
@@ -130,6 +134,7 @@ namespace IoTCoreDefaultApp
                             {
                                 par.Inlines.Add(new InlineUIContainer { Child = new Image { Source = imageSource } });
                             }
+                            par.Margin = new Thickness(top: 6, left: 0, right: 0, bottom: 10);
                         }
                         catch (Exception)
                         {

@@ -1,26 +1,5 @@
-﻿/*
-    Copyright(c) Microsoft Open Technologies, Inc. All rights reserved.
+﻿// Copyright (c) Microsoft. All rights reserved.
 
-    The MIT License(MIT)
-
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files(the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions :
-
-    The above copyright notice and this permission notice shall be included in
-    all copies or substantial portions of the Software.
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-    THE SOFTWARE.
-*/
 
 using System;
 using System.Collections.Generic;
@@ -53,6 +32,7 @@ namespace IoTCoreDefaultApp
         private SolidColorBrush redBrush = new SolidColorBrush(Windows.UI.Colors.Red);
         private SolidColorBrush grayBrush = new SolidColorBrush(Windows.UI.Colors.LightGray);
         private string docName;
+        private Windows.ApplicationModel.Resources.ResourceLoader loader;
 
         public TutorialHelloBlinkyPage()
         {
@@ -72,6 +52,9 @@ namespace IoTCoreDefaultApp
             blinkyTimer = new DispatcherTimer();
             blinkyTimer.Interval = TimeSpan.FromMilliseconds(500);
             blinkyTimer.Tick += Timer_Tick;
+
+            loader = new Windows.ApplicationModel.Resources.ResourceLoader();
+            BlinkyStartStop.Content = loader.GetString("BlinkyStart");
         }
 
         private void RootFrame_Navigated(object sender, NavigationEventArgs e)
@@ -157,13 +140,21 @@ namespace IoTCoreDefaultApp
 
         private void Start()
         {
-            var gpio = GpioController.GetDefault();
+            GpioController gpio = null;
+            try
+            {
+                gpio = GpioController.GetDefault();
+            }
+            catch (Exception)
+            {
+                // the error will be handled below
+            }
 
             // Show an error if there is no GPIO controller
             if (gpio == null)
             {
                 pin = null;
-                GpioStatus.Text = "There is no GPIO controller on this device.";
+                GpioStatus.Text = loader.GetString("NoGPIOController");
                 return;
             }
 
@@ -172,17 +163,17 @@ namespace IoTCoreDefaultApp
             // Show an error if the pin wasn't initialized properly
             if (pin == null)
             {
-                GpioStatus.Text = "There were problems initializing the GPIO pin.";
+                GpioStatus.Text = loader.GetString("ProblemsInitializingGPIOPin");
                 return;
             }
 
             pin.Write(GpioPinValue.High);
             pin.SetDriveMode(GpioPinDriveMode.Output);
 
-            GpioStatus.Text = "GPIO pin initialized correctly.";
+            GpioStatus.Text = loader.GetString("GPIOPinInitializedCorrectly");
 
             blinkyTimer.Start();
-            BlinkyStartStop.Content = "STOP";
+            BlinkyStartStop.Content = loader.GetString("BlinkyStop");
         }
 
         private void Stop()
@@ -194,7 +185,7 @@ namespace IoTCoreDefaultApp
                 pin.Dispose();
                 pin = null;
             }
-            BlinkyStartStop.Content = "START";
+            BlinkyStartStop.Content = loader.GetString("BlinkyStart");
         }
 
         private void FlipLED()
@@ -240,7 +231,7 @@ namespace IoTCoreDefaultApp
             }
             if (e.NewValue == Delay.Minimum)
             {
-                DelayText.Text = "Stopped";
+                DelayText.Text = loader.GetString("BlinkyStopped");
                 blinkyTimer.Stop();
                 TurnOffLED();
             }

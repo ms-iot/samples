@@ -6,22 +6,21 @@
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   IgnorableNamespaces="uap mp">
 
-
   <Identity
     Name="PushButton"
-    Publisher="CN=AleUser"
+    Publisher="CN=IoTTools"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="d57ab936-9c60-4857-af7f-911f928e38ab" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>PushButton</DisplayName>
-    <PublisherDisplayName>AleUser</PublisherDisplayName>
+    <PublisherDisplayName>IoTTools</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
   <Dependencies>
-    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.10069.0" MaxVersionTested="10.0.10069.0" />
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
   </Dependencies>
 
   <Resources>
@@ -34,14 +33,13 @@
       EntryPoint="PushButton.App">
       <uap:VisualElements
         DisplayName="PushButton"
-        Square150x150Logo="Assets\Logo.png"
-        Square44x44Logo="Assets\SmallLogo.png"
+        Square150x150Logo="Assets\Square150x150Logo.png"
+        Square44x44Logo="Assets\Square44x44Logo.png"
         Description="PushButton"
-        BackgroundColor="#464646">
-        <uap:SplashScreen
-          Image="Assets\SplashScreen.png" />
+        BackgroundColor="transparent">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
-
     </Application>
   </Applications>
 

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DigitalSignageConfig>
+  <!--audio does not require duration attribute. It will be played back in a loop end to end-->
+  <Audio>
+    <file path="Assets\Fhol.wav"/>
+    <file path="Assets\midnightvoyage_48k_320.mp3"/>
+  </Audio>
+  <Display>
+    <!--Video does not require duration attribute. It will be played back in a loop end to end-->
+    <!--<file path="Assets\grb.mpg"/>-->
+    <file path="Assets\IoTVision.wmv"/>
+    <!--image and webpage do require duration attribute so we know how long to show them-->
+    <file path="Assets\mad_men_poster.jpg" duration="30"/>
+    <file path="Assets\mandelbrot.png" duration="30"/>
+    <file path="Assets\MARBLES.BMP" duration="30"/>
+    <!--Webpage requires a special attribute type and its value to be webpage-->
+
+    <!--webpage URLs have to be XML escaped, e.g. below URL, & is replaced to &amp;. Not including the dot.Otherwise it will be considered as malformatted XML-->
+
+<!--
+    <file type="webpage" path="http://insights/Report?id=2b66e943-ed71-4a4d-a006-56da5008429b&amp;isPublished=true#_tab=0" duration="30"/>
+    <file path="http://10.125.148.230/test/display/3.wmv"/>
+    <file path="http://10.125.148.230/test/display/4.png"/>
+    <file path="http://10.125.148.230/test/display/5.mp4"/>
+    <file path="http://10.125.148.230/test/display/6.BMP"/>
+-->
+  </Display>
+</DigitalSignageConfig>

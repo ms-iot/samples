@@ -3,8 +3,6 @@
 <Package
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
   xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
-<<<<<<< HEAD
-<<<<<<< HEAD
   xmlns:uwp="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   xmlns:iot="http://schemas.microsoft.com/appx/manifest/iot/windows10"
   IgnorableNamespaces="uwp mp iot">
@@ -19,34 +17,11 @@
   <Properties>
     <DisplayName>PythonWeatherStation</DisplayName>
     <PublisherDisplayName>Microsoft</PublisherDisplayName>
-=======
-  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
-=======
-  xmlns:uwp="http://schemas.microsoft.com/appx/manifest/uap/windows10"
->>>>>>> d351786... Fixes python samples, adding license text and Microsoft as publisher for others
-  xmlns:iot="http://schemas.microsoft.com/appx/manifest/iot/windows10"
-  IgnorableNamespaces="uwp mp iot">
-
-  <Identity
-	  Name="PythonWeatherStation"
-	  Publisher="CN=Microsoft"
-	  Version="1.0.0.0" />
-
-  <mp:PhoneIdentity PhoneProductId="34dc1eb4-2f90-4ee3-a491-489a214f78fb" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
-
-  <Properties>
-    <DisplayName>PythonWeatherStation</DisplayName>
-<<<<<<< HEAD
-    <PublisherDisplayName>jessek</PublisherDisplayName>
->>>>>>> c992184... Adding python weather station
-=======
-    <PublisherDisplayName>Microsoft</PublisherDisplayName>
->>>>>>> d351786... Fixes python samples, adding license text and Microsoft as publisher for others
     <Logo>StoreLogo.png</Logo>
   </Properties>
 
   <Dependencies>
-    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.10069.0" MaxVersionTested="10.0.10069.0" />
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
   </Dependencies>
 
   <Resources>
@@ -55,42 +30,17 @@
 
   <Applications>
     <Application Id="App">
-<<<<<<< HEAD
-<<<<<<< HEAD
       <uwp:VisualElements
-=======
-      <uap:VisualElements
->>>>>>> c992184... Adding python weather station
-=======
-      <uwp:VisualElements
->>>>>>> d351786... Fixes python samples, adding license text and Microsoft as publisher for others
 			  DisplayName="PythonWeatherStation"
 			  Square150x150Logo="Logo.png"
 			  Square44x44Logo="SmallLogo.png"
 			  Description="PythonWeatherStation"
-<<<<<<< HEAD
-<<<<<<< HEAD
 			  BackgroundColor="#464646"
         AppListEntry="none">
         <uwp:SplashScreen Image="SplashScreen.png" />
       </uwp:VisualElements>
       <Extensions>
         <Extension Category="windows.backgroundTasks" EntryPoint="pyuwpbackgroundservice.StartupTask">
-=======
-			  ForegroundText="light"
-=======
->>>>>>> d351786... Fixes python samples, adding license text and Microsoft as publisher for others
-			  BackgroundColor="#464646"
-        AppListEntry="none">
-        <uwp:SplashScreen Image="SplashScreen.png" />
-      </uwp:VisualElements>
-      <Extensions>
-<<<<<<< HEAD
-        <Extension Category="windows.backgroundTasks" EntryPoint="pyuapbackgroundservice.StartupTask">
->>>>>>> c992184... Adding python weather station
-=======
-        <Extension Category="windows.backgroundTasks" EntryPoint="pyuwpbackgroundservice.StartupTask">
->>>>>>> d351786... Fixes python samples, adding license text and Microsoft as publisher for others
           <BackgroundTasks>
             <iot:Task Type="startup"/>
           </BackgroundTasks>
@@ -108,18 +58,8 @@
   <Extensions>
     <Extension Category="windows.activatableClass.inProcessServer">
       <InProcessServer>
-<<<<<<< HEAD
-<<<<<<< HEAD
         <Path>pyuwpbackgroundservice.dll</Path>
         <ActivatableClass ActivatableClassId="pyuwpbackgroundservice.StartupTask" ThreadingModel="both" />
-=======
-        <Path>pyuapbackgroundservice.dll</Path>
-        <ActivatableClass ActivatableClassId="pyuapbackgroundservice.StartupTask" ThreadingModel="both" />
->>>>>>> c992184... Adding python weather station
-=======
-        <Path>pyuwpbackgroundservice.dll</Path>
-        <ActivatableClass ActivatableClassId="pyuwpbackgroundservice.StartupTask" ThreadingModel="both" />
->>>>>>> d351786... Fixes python samples, adding license text and Microsoft as publisher for others
       </InProcessServer>
     </Extension>
   </Extensions>

@@ -8,7 +8,7 @@
   IgnorableNamespaces="uap mp iot">
 
   <Identity
-    Name="ServoMotorBasics"
+    Name="ServoMotorBasics-uwp"
     Publisher="CN=Microsoft"
     Version="1.0.0.0" />
 
@@ -21,7 +21,7 @@
   </Properties>
 
   <Dependencies>
-    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.10069.0" MaxVersionTested="10.0.10069.0" />
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
   </Dependencies>
 
   <Resources>
@@ -32,10 +32,10 @@
     <Application Id="App">
       <uap:VisualElements
         DisplayName="ServoMotorBasics"
-        Square150x150Logo="Assets\Logo.png"
-        Square44x44Logo="Assets\SmallLogo.png"
+        Square150x150Logo="Assets\Square150x150Logo.png"
+        Square44x44Logo="Assets\Square44x44Logo.png"
         Description="ServoMotorBasics"
-        BackgroundColor="#464646"
+        BackgroundColor="transparent"
         AppListEntry="none">
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>

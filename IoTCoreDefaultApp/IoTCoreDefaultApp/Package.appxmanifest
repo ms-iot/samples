@@ -4,7 +4,8 @@
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
   xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
-  IgnorableNamespaces="uap mp">
+  xmlns:iot="http://schemas.microsoft.com/appx/manifest/iot/windows10"
+  IgnorableNamespaces="uap mp iot">
 
   <Identity
     Name="IoTCoreDefaultApp"
@@ -20,7 +21,7 @@
   </Properties>
 
   <Dependencies>
-    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.10069.0" MaxVersionTested="10.0.10069.0" />
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
   </Dependencies>
 
   <Resources>
@@ -33,10 +34,11 @@
       EntryPoint="IoTCoreDefaultApp.App">
       <uap:VisualElements
         DisplayName="IoTCoreDefaultApp"
-        Square150x150Logo="Assets\Logo.png"
-        Square44x44Logo="Assets\SmallLogo.png"
+        Square150x150Logo="Assets\Square150x150Logo.png"
+        Square44x44Logo="Assets\Square44x44Logo.png"
         Description="IoTCoreDefaultApp"
-        BackgroundColor="#464646">
+        BackgroundColor="transparent">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
     </Application>
@@ -45,6 +47,8 @@
   <Capabilities>
     <Capability Name="internetClient" />
     <Capability Name="allJoyn"/>
+    <iot:Capability Name="systemManagement" />
+    <iot:Capability Name="lowLevelDevices" />
     <DeviceCapability Name="wiFiControl" />
   </Capabilities>
 </Package>

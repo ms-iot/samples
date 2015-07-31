@@ -6,8 +6,10 @@
     <Platform Condition=" '$(Platform)' == 'Any CPU' ">x86</Platform>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <SchemaVersion>2.0</SchemaVersion>
-    <ApplicationTypeRevision>8.2</ApplicationTypeRevision>
     <ApplicationType>Windows Store</ApplicationType>
+    <WindowsTargetPlatformVersion>10.0.10240.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.10240.0</WindowsTargetPlatformMinVersion>
+    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
     <AppContainerApplication>true</AppContainerApplication>
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <ProjectGuid>3e944b58-2349-48f5-89f7-34d205b4d27a</ProjectGuid>

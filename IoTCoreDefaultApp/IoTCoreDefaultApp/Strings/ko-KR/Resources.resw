@@ -372,6 +372,10 @@
   <data name="Tutorial.GetStarted.014.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
+  <data name="Tutorial.GetStarted.014a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetStarted.015.p" xml:space="preserve">
     <value>자세한 내용을 보려면 [코딩] 자습서를 클릭하세요.</value>
   </data>
@@ -389,6 +393,10 @@
   </data>
   <data name="Tutorial.GetStarted.020.p" xml:space="preserve">
     <value>응용프로그램을 직접 빌드할 때 언제든지 이 응용프로그램을 템플릿으로 사용하여 시작하세요.</value>
+  </data>
+  <data name="Tutorial.GetStarted.021.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.002.title" xml:space="preserve">
     <value>연결하기</value>
@@ -426,6 +434,10 @@
   <data name="Tutorial.GetConnected.015.ul" xml:space="preserve">
     <value>개발 컴퓨터를 IoT Core 장치에 연결하는 이더넷 케이블</value>
   </data>
+  <data name="Tutorial.GetConnected.015a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.016.p" xml:space="preserve">
     <value>아래의 지침에 따라 PC에서 ICS(인터넷 연결 공유)를 사용하도록 설정합니다.</value>
   </data>
@@ -444,6 +456,10 @@
   <data name="Tutorial.GetConnected.021.ul" xml:space="preserve">
     <value>[공유] 탭을 클릭하고 [다른 네트워크 사용자가 이 컴퓨터의 인터넷 연결을 통해 연결할 수 있도록 허용] 확인란을 선택합니다.</value>
   </data>
+  <data name="Tutorial.GetConnected.021a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.022.p" xml:space="preserve">
     <value>PC에서 ICS를 사용하도록 설정했으면 이제 Windows 10 IoT Core K 장치를 PC에 직접 연결할 수 있습니다. 이렇게 하려면 예비 이더넷 케이블의 한쪽 끝을 PC의 추가 이더넷 포트에 연결하고 케이블의 다른 쪽 끝을 IoT Core 장치의 이더넷 포트에 연결하면 됩니다.</value>
   </data>
@@ -453,11 +469,19 @@
   <data name="Tutorial.GetConnected.024.ul" xml:space="preserve">
     <value>네트워크 연결이 하나만 있는 경우에는 [공유] 탭을 사용할 수 없습니다.</value>
   </data>
+  <data name="Tutorial.GetConnected.024a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.025.h1" xml:space="preserve">
     <value>문제가 발생하는 경우</value>
   </data>
   <data name="Tutorial.GetConnected.026.p" xml:space="preserve">
     <value>문제를 디버그하는 데 도움을 주기 위해 몇 가지 고급 네트워크 진단 기능을 주 페이지에 추가했습니다. 지원이 더 필요하면 www.windowsondevices.com으로 이동하세요.</value>
+  </data>
+  <data name="Tutorial.GetConnected.028.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetCoding.002.title" xml:space="preserve">
     <value>코딩</value>
@@ -483,6 +507,10 @@
   <data name="Tutorial.GetCoding.009.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
+  <data name="Tutorial.GetCoding.009a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetCoding.010.h1" xml:space="preserve">
     <value>PC에서 Visual Studio 2015 설정</value>
   </data>
@@ -501,8 +529,16 @@
   <data name="Tutorial.GetCoding.016.ul" xml:space="preserve">
     <value>이제 앱을 개발할 준비가 되었습니다. 로그온하면 Windows IoT Core Watcher 응용프로그램이 자동으로 시작됩니다. 이 응용프로그램을 사용하여 앱을 배포할 사용 가능한 Windows 10 IoT Core K 장치를 찾을 수 있습니다.</value>
   </data>
+  <data name="Tutorial.GetCoding.016a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetCoding.018.p" xml:space="preserve">
     <value>네트워크에서 장치를 찾으면 www.windowsondevices.com을 방문하여 샘플 코드를 다운로드한 후 실행하고 시험해 보세요.</value>
+  </data>
+  <data name="Tutorial.GetCoding.019.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="NetworkConnectivityLevel_ConstrainedInternetAccess" xml:space="preserve">
     <value>제한된 인터넷 액세스</value>
@@ -519,5 +555,27 @@
   <data name="NoInternetConnection" xml:space="preserve">
     <value>&lt;인터넷 연결 없음&gt;</value>
     <comment>Used in the main page under "IP address"</comment>
+  </data>
+  <data name="DefaultLanguageTimeout.Text" xml:space="preserve">
+    <value>기본 언어를 자동으로 선택하는 중...</value>
+  </data>
+  <data name="BlinkyStart" xml:space="preserve">
+    <value>시작</value>
+  </data>
+  <data name="BlinkyStop" xml:space="preserve">
+    <value>중지</value>
+  </data>
+  <data name="BlinkyStopped" xml:space="preserve">
+    <value>중지됨</value>
+    <comment>This message is shown when the user turn off the slider to make the LED blink</comment>
+  </data>
+  <data name="GPIOPinInitializedCorrectly" xml:space="preserve">
+    <value>GPIO 핀이 올바르게 초기화되었습니다.</value>
+  </data>
+  <data name="NoGPIOController" xml:space="preserve">
+    <value>이 장치에 GPIO 컨트롤러가 없습니다.</value>
+  </data>
+  <data name="ProblemsInitializingGPIOPin" xml:space="preserve">
+    <value>GPIO 핀을 초기화하는 데 문제가 있습니다.</value>
   </data>
 </root>

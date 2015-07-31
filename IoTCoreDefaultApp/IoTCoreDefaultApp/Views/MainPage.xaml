@@ -103,7 +103,7 @@
 
             <Button Grid.Column="4" x:Name="SettingsButton" Style="{StaticResource ShutdownButtonStyle}" Content="{StaticResource IconSettings}" FontFamily="{StaticResource IconFontFamily}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Click="SettingsButton_Clicked" Background="Transparent" BorderThickness="0" Height="48" Width="48" />
 
-            <Button IsEnabled="False" Grid.Column="6" x:Name="ShutdownButton" Style="{StaticResource ShutdownButtonStyle}" Content="{StaticResource IconShutdown}" FontFamily="{StaticResource IconFontFamily}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Click="ShutdownButton_Clicked" Background="Transparent" BorderThickness="0" Height="48" Width="48" />
+            <Button Grid.Column="6" x:Name="ShutdownButton" Style="{StaticResource ShutdownButtonStyle}" Content="{StaticResource IconShutdown}" FontFamily="{StaticResource IconFontFamily}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Click="ShutdownButton_Clicked" Background="Transparent" BorderThickness="0" Height="48" Width="48" />
 
             <Popup Grid.Column="6" x:Name="ShutdownDropdown" HorizontalAlignment="Left" IsLightDismissEnabled="True" VerticalOffset="72" Opened="ShutdownDropdown_Opened">
                 <ListView x:Name="ShutdownListView" Background="White" ItemContainerStyle="{StaticResource IoTCoreDefaultAppShutdownListViewItemStyle}" BorderThickness="2.0" BorderBrush="{StaticResource ShutdownBorderBrush}" ItemClick="ShutdownListView_ItemClick" IsItemClickEnabled="True" IsTabStop="True" >

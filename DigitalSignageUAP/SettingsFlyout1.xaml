@@ -1,0 +1,54 @@
+﻿<!--
+    Copyright(c) Microsoft Open Technologies, Inc. All rights reserved.
+    The MIT License(MIT)
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files(the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions :
+    The above copyright notice and this permission notice shall be included in
+    all copies or substantial portions of the Software.
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+    THE SOFTWARE.
+-->
+    
+<SettingsFlyout x:Name="FlyoutStackpanel"
+    x:Class="DigitalSignageUAP.SettingsFlyout1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DigitalSignageUAP"
+    xmlns:sip="using:OnScreenKeyboardSample"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Settings"
+    d:DesignWidth="346">
+
+    <!-- This StackPanel acts as a root panel for vertical layout of the content sections -->
+    <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
+
+        <!-- The StackPanel(s) below define individual content sections -->
+
+        <!-- Content Section 1-->
+        <StackPanel Style="{StaticResource SettingsFlyoutSectionStyle}">
+
+            <!-- Section 1 header -->
+            <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="Please input the config file path here:" />
+
+            <!-- Section 1 body -->
+            <TextBox Name="textBox" FontSize="20" Margin="0,20,0,0" Height="136" TextWrapping="Wrap" Text="{Binding ElementName=SIP_TextBox, Path=OutputString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+        </StackPanel>
+        <sip:OnScreenKeyBoard x:Name="SIP_TextBox" Margin="3,0" VerticalAlignment="Top" Height="244" Width="994" Visibility="Collapsed" HorizontalAlignment="Center"/>
+        <Button x:Name="OSK_Button" Content="⌨" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="32" Click="OSK_Button_Click"/>
+
+        <!-- Define more Content Sections below as necessary -->
+
+    </StackPanel>
+</SettingsFlyout>

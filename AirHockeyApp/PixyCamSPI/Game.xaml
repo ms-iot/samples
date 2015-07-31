@@ -1,0 +1,51 @@
+﻿<!-- Copyright (c) Microsoft. All rights reserved. -->
+<Page
+    x:Class="AirHockeyApp.DiagnosticsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:AirHockeyApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Viewbox>
+        <Canvas Width="1600" Height="766" Background="Black">
+            <Canvas x:Name="mainCanvas" Width="1366" Height="766" Background="Black" Canvas.Left="117" Visibility="Visible">
+                <Ellipse x:Name="centerOfMass" Fill="#FF003AFF" Height="75" Canvas.Left="617" Stroke="White" Canvas.Top="322" Width="75"/>
+                <Ellipse x:Name="puck" Fill="#FF00FF43" Height="50" Canvas.Left="719" Stroke="White" Canvas.Top="347" Width="50"/>
+                <Slider x:Name="slider" Canvas.Left="-65" Canvas.Top="712" Width="214" Maximum="255" ValueChanged="slider_ValueChanged"/>
+                <TextBlock x:Name="brightnessTextBlock" Canvas.Left="181" TextWrapping="Wrap" Text="0" Canvas.Top="708" FontSize="26.667" Height="48" FontWeight="Light"/>
+                <Ellipse x:Name="mallet" Fill="Red" Height="50" Canvas.Left="785" Stroke="White" Canvas.Top="347" Width="50"/>
+                <Button x:Name="moveMalletButton" Content="Move Mallet" Canvas.Left="1350" Canvas.Top="34" Height="50" Width="117" Click="moveMalletButton_Click" />
+                <Button x:Name="mirrorButton" Content="Mirror" Canvas.Left="1228" Canvas.Top="34" Height="50" Width="117" Click="mirrorButton_Click"/>
+                <Canvas x:Name="textCanvas" Height="611" Width="412" Canvas.Left="-65" Canvas.Top="10">
+                    <TextBlock x:Name="outputTextBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Output" VerticalAlignment="Top" FontSize="20" FontWeight="Light" Canvas.Left="10" Canvas.Top="127"/>
+                    <TextBlock x:Name="translatedTextBlock" Canvas.Left="10" TextWrapping="Wrap" Text="Translated (X,Y)" Canvas.Top="154" FontSize="20" FontWeight="Light"/>
+                    <TextBlock x:Name="statusTextBlock" Canvas.Left="10" TextWrapping="Wrap" Text="Status Text" Canvas.Top="235" FontSize="20" FontWeight="Light"/>
+                    <TextBlock x:Name="malletLocationTextBlock" Canvas.Left="10" TextWrapping="Wrap" Text="Mallet (X,Y)" Canvas.Top="181" FontSize="20" FontWeight="Light"/>
+                    <TextBlock x:Name="centerOfMassTextBlock" Canvas.Left="10" TextWrapping="Wrap" Text="Center of Mass (X,Y)" Canvas.Top="208" FontSize="20" FontWeight="Light"/>
+                    <TextBlock x:Name="textBlock" Canvas.Left="10" TextWrapping="Wrap" Text="Diagnostics" Canvas.Top="7" FontSize="80" FontWeight="Light"/>
+                    <TextBlock x:Name="scoreTextBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Score" VerticalAlignment="Top" FontSize="20" FontWeight="Light" Canvas.Left="10" Canvas.Top="262"/>
+                </Canvas>
+                <Button x:Name="hideTextButton" Content="Hide Text" Canvas.Left="1106" Canvas.Top="34" Height="50" Width="117" Click="hideTextButton_Click" />
+            </Canvas>
+            <Canvas x:Name="gameCanvas" Width="1366" Height="766" Background="Black" Canvas.Left="117" Visibility="Collapsed">
+                <TextBlock x:Name="gameOutputTextBlock" Canvas.Left="10" TextWrapping="Wrap" Text="All Hail Jochi" Canvas.Top="257" FontSize="96" FontWeight="Light" TextAlignment="Center" Width="1346" HorizontalAlignment="Center" Visibility="Collapsed"/>
+                <Canvas Name="scoreCanvas" Visibility="Collapsed">
+                    <TextBlock x:Name="textBlock1" Canvas.Left="248" TextWrapping="Wrap" Text="You" Canvas.Top="114" FontSize="96" FontWeight="Light"/>
+                    <TextBlock x:Name="textBlock1_Copy" Canvas.Left="871" TextWrapping="Wrap" Text="Robot" Canvas.Top="114" FontSize="96" FontWeight="Light"/>
+                    <TextBlock x:Name="humanScoreTextBlock" Canvas.Left="294" TextWrapping="Wrap" Text="0" Canvas.Top="242" FontSize="96" FontWeight="Light"/>
+                    <TextBlock x:Name="robotScoreTextBlock" Canvas.Left="960" TextWrapping="Wrap" Text="0" Canvas.Top="242" FontSize="96" FontWeight="Light"/>
+                </Canvas>
+            </Canvas>
+            <Canvas Name="popUpCanvas" Background="Black" Visibility="Collapsed">
+                <TextBlock x:Name="popUpTextBlock" Canvas.Left="3" TextWrapping="Wrap" Text="All Hail Jochi" Canvas.Top="239" FontSize="96" FontWeight="Light" Width="1596" TextAlignment="Center"/>
+            </Canvas>
+            <Button x:Name="homeButton" Canvas.Left="1473" Canvas.Top="667" Height="89" Width="117" Click="homeButton_Click">
+                <Canvas Width="50" Height="50">
+                    <Image x:Name="statImage" Height="50" Width="50" Source="Assets/Icons/home_icon.png"/>
+                </Canvas>
+            </Button>
+        </Canvas>
+    </Viewbox>
+</Page>

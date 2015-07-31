@@ -20,22 +20,22 @@
   </Resources>
   
   <Dependencies>
-    <TargetPlatform Name="Windows.Universal" MinVersion="10.0.10041.0" MaxVersionTested="10.0.10041.0" />
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
   </Dependencies>
 
   <Applications>
     <Application Id="App">
       <uap:VisualElements
-        DisplayName="winuniversalnode"
+        DisplayName="nodeuwp"
         Square150x150Logo="Assets\Logo.png"
         Square44x44Logo="Assets\SmallLogo.png"
-        Description="winuniversalnode"
+        Description="nodeuwp"
         BackgroundColor="#464646"
         AppListEntry="none">
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
-        <Extension Category="windows.backgroundTasks" EntryPoint="winuniversalnode.StartupTask">
+        <Extension Category="windows.backgroundTasks" EntryPoint="nodeuwp.StartupTask">
           <BackgroundTasks>
             <iot:Task Type="startup" />
           </BackgroundTasks>
@@ -53,8 +53,8 @@
   <Extensions>
     <Extension Category="windows.activatableClass.inProcessServer">
       <InProcessServer>
-        <Path>winuniversalnode.dll</Path>
-        <ActivatableClass ActivatableClassId="winuniversalnode.StartupTask" ThreadingModel="MTA" />
+        <Path>nodeuwp.dll</Path>
+        <ActivatableClass ActivatableClassId="nodeuwp.StartupTask" ThreadingModel="MTA" />
       </InProcessServer>
     </Extension>
   </Extensions>

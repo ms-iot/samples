@@ -372,6 +372,10 @@
   <data name="Tutorial.GetStarted.014.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
+  <data name="Tutorial.GetStarted.014a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetStarted.015.p" xml:space="preserve">
     <value>詳細については、[コードを取得] チュートリアルをクリックしてください</value>
   </data>
@@ -389,6 +393,10 @@
   </data>
   <data name="Tutorial.GetStarted.020.p" xml:space="preserve">
     <value>これは、独自のアプリケーションを構築する際のテンプレートとしてご自由にお使いください</value>
+  </data>
+  <data name="Tutorial.GetStarted.021.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.002.title" xml:space="preserve">
     <value>接続</value>
@@ -426,6 +434,10 @@
   <data name="Tutorial.GetConnected.015.ul" xml:space="preserve">
     <value>開発コンピューターと IoT Core デバイスを接続するイーサネット ケーブル。</value>
   </data>
+  <data name="Tutorial.GetConnected.015a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.016.p" xml:space="preserve">
     <value>以下の手順に従って、PC のインターネット接続の共有 (ICS) を有効にします</value>
   </data>
@@ -444,6 +456,10 @@
   <data name="Tutorial.GetConnected.021.ul" xml:space="preserve">
     <value>[共有] タブをクリックし、[ネットワークのほかのユーザーに、このコンピューターのインターネット接続をとおしての接続を許可する] チェック ボックスをオンにします。</value>
   </data>
+  <data name="Tutorial.GetConnected.021a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.022.p" xml:space="preserve">
     <value>PC で ICS が有効になったので、Windows 10 IoT Core デバイスを PC に直接接続できます。接続するには、余っているイーサネット ケーブルの一方の端を PC の空いているイーサネット ポートに挿し、ケーブルのもう一方の端を IoT Core デバイスのイーサネット ポートに挿します。</value>
   </data>
@@ -453,11 +469,19 @@
   <data name="Tutorial.GetConnected.024.ul" xml:space="preserve">
     <value>ネットワーク接続が 1 つだけの場合は、[共有] タブを使用できません。</value>
   </data>
+  <data name="Tutorial.GetConnected.024a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.025.h1" xml:space="preserve">
     <value>問題が発生した場合</value>
   </data>
   <data name="Tutorial.GetConnected.026.p" xml:space="preserve">
     <value>問題をデバッグする際に役立つ高度なネットワーク診断機能をメイン ページにいくつか追加しました。サポートが必要な場合は、www.windowsondevices.com にアクセスしてください</value>
+  </data>
+  <data name="Tutorial.GetConnected.028.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetCoding.002.title" xml:space="preserve">
     <value>コードを取得</value>
@@ -483,6 +507,10 @@
   <data name="Tutorial.GetCoding.009.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
+  <data name="Tutorial.GetCoding.009a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetCoding.010.h1" xml:space="preserve">
     <value>PC での Visual Studio 2015 のセットアップ</value>
   </data>
@@ -501,8 +529,16 @@
   <data name="Tutorial.GetCoding.016.ul" xml:space="preserve">
     <value>これで、アプリを開発する準備が整いました。ログオンすると、Windows IoT Core Watcher アプリケーションが自動的に起動します。このアプリケーションを使用して、アプリの展開先として使用できる Windows 10 IoT Core デバイスを検索できます。</value>
   </data>
+  <data name="Tutorial.GetCoding.016a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetCoding.018.p" xml:space="preserve">
     <value>ネットワーク上でデバイスが見つかったら、www.windowsondevices.com にアクセスし、サンプル コードをダウンロードして、実行してみてください。</value>
+  </data>
+  <data name="Tutorial.GetCoding.019.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="NetworkConnectivityLevel_ConstrainedInternetAccess" xml:space="preserve">
     <value>制限付きインターネット アクセス</value>
@@ -519,5 +555,27 @@
   <data name="NoInternetConnection" xml:space="preserve">
     <value>&lt;インターネット接続がありません&gt;</value>
     <comment>Used in the main page under "IP address"</comment>
+  </data>
+  <data name="DefaultLanguageTimeout.Text" xml:space="preserve">
+    <value>既定の言語を自動的に選択しています...</value>
+  </data>
+  <data name="BlinkyStart" xml:space="preserve">
+    <value>開始</value>
+  </data>
+  <data name="BlinkyStop" xml:space="preserve">
+    <value>停止</value>
+  </data>
+  <data name="BlinkyStopped" xml:space="preserve">
+    <value>停止</value>
+    <comment>This message is shown when the user turn off the slider to make the LED blink</comment>
+  </data>
+  <data name="GPIOPinInitializedCorrectly" xml:space="preserve">
+    <value>GPIO ピンの初期化が正常に完了しました。</value>
+  </data>
+  <data name="NoGPIOController" xml:space="preserve">
+    <value>このデバイスには GPIO コントローラーがありません。</value>
+  </data>
+  <data name="ProblemsInitializingGPIOPin" xml:space="preserve">
+    <value>GPIO ピンの初期化で問題が発生しました。</value>
   </data>
 </root>

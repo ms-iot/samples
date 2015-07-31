@@ -27,7 +27,9 @@
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
-    <ApplicationTypeRevision>8.2</ApplicationTypeRevision>
+    <WindowsTargetPlatformVersion>10.0.10240.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.10240.0</WindowsTargetPlatformMinVersion>
+    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
     <AppxPackage>true</AppxPackage>
     <WindowsAppContainer>true</WindowsAppContainer>
     <RemoteDebugEnabled>true</RemoteDebugEnabled>
@@ -60,7 +62,7 @@
   <ItemGroup>
     <Folder Include="Assets\" />
   </ItemGroup>
-  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsUap.targets" />
+  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsUwp.targets" />
   <PropertyGroup>
     <PlatformAware>true</PlatformAware>
     <AvailablePlatforms>x86,x64,ARM</AvailablePlatforms>
@@ -68,25 +70,27 @@
   <ProjectExtensions>
     <VisualStudio>
       <FlavorProperties GUID="{00251f00-ba30-4ce4-96a2-b8a1085f37aa}" Configuration="Debug" Platform="x86">
-        <NodejsUapProjectFlavorCfg />
+        <NodejsUwpProjectFlavorCfg />
       </FlavorProperties>
       <FlavorProperties GUID="{00251f00-ba30-4ce4-96a2-b8a1085f37aa}" Configuration="Release" Platform="x86">
-        <NodejsUapProjectFlavorCfg />
+        <NodejsUwpProjectFlavorCfg />
       </FlavorProperties>
       <FlavorProperties GUID="{00251f00-ba30-4ce4-96a2-b8a1085f37aa}" Configuration="Debug" Platform="x64">
-        <NodejsUapProjectFlavorCfg />
+        <NodejsUwpProjectFlavorCfg />
       </FlavorProperties>
       <FlavorProperties GUID="{00251f00-ba30-4ce4-96a2-b8a1085f37aa}" Configuration="Release" Platform="x64">
-        <NodejsUapProjectFlavorCfg />
+        <NodejsUwpProjectFlavorCfg />
       </FlavorProperties>
       <FlavorProperties GUID="{00251f00-ba30-4ce4-96a2-b8a1085f37aa}" Configuration="Debug" Platform="ARM">
-        <NodejsUapProjectFlavorCfg>
-          <NodeExeArguments>--no-console --debug</NodeExeArguments>
-          <DebuggerMachineName>10.125.152.93</DebuggerMachineName>
-        </NodejsUapProjectFlavorCfg>
+        <NodejsUwpProjectFlavorCfg>
+          <NodeExeArguments>--debug</NodeExeArguments>
+          <DebuggerMachineName>10.125.152.143</DebuggerMachineName>
+          <ScriptArguments>
+          </ScriptArguments>
+        </NodejsUwpProjectFlavorCfg>
       </FlavorProperties>
       <FlavorProperties GUID="{00251f00-ba30-4ce4-96a2-b8a1085f37aa}" Configuration="Release" Platform="ARM">
-        <NodejsUapProjectFlavorCfg />
+        <NodejsUwpProjectFlavorCfg />
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
