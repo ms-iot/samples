@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using IoTCoreDefaultApp.Utils;
 
 namespace IoTCoreDefaultApp
 {
@@ -31,12 +32,13 @@ namespace IoTCoreDefaultApp
         public TutorialMainPage()
         {
             this.InitializeComponent();
-#if RPI || ALWAYS_SHOW_BLINKY
-            // nothing to remove
-#else
-            TutorialList.Items.Remove(HelloBlinkyGridViewItem);
-#endif
 
+#if !ALWAYS_SHOW_BLINKY
+            if (DeviceTypeInformation.Type != DeviceTypes.RPI2)
+            {
+                TutorialList.Items.Remove(HelloBlinkyGridViewItem);
+            }
+#endif
             UpdateDateTime();
 
             timer = new DispatcherTimer();
