@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using Windows.Networking;
 using Windows.Networking.Connectivity;
+using IoTCoreDefaultApp.Utils;
 
 namespace IoTCoreDefaultApp
 {
@@ -24,24 +25,33 @@ namespace IoTCoreDefaultApp
         public static string GetBoardName()
         {
             var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
-#if MBM
-            return loader.GetString("MBMName");
-#elif RPI
-            return loader.GetString("Rpi2Name");
-#else
-            return loader.GetString("GenericBoardName");
-#endif
+
+            switch (DeviceTypeInformation.Type)
+            {
+                case DeviceTypes.RPI2:
+                    return loader.GetString("Rpi2Name");
+
+                case DeviceTypes.MBM:
+                    return loader.GetString("MBMName");
+
+                default:
+                    return loader.GetString("GenericBoardName");
+            }
         }
 
         public static Uri GetBoardImageUri()
         {
-#if MBM
-            return new Uri("ms-appx:///Assets/MBMBoard.png");
-#elif RPI
-            return new Uri("ms-appx:///Assets/RaspberryPiBoard.png");
-#else
-            return new Uri("ms-appx:///Assets/GenericBoard.png");
-#endif
+            switch (DeviceTypeInformation.Type)
+            {
+                case DeviceTypes.RPI2:
+                    return new Uri("ms-appx:///Assets/RaspberryPiBoard.png");
+
+                case DeviceTypes.MBM:
+                    return new Uri("ms-appx:///Assets/MBMBoard.png");
+
+                default:
+                    return new Uri("ms-appx:///Assets/GenericBoard.png");
+            }
         }
     }
 }
