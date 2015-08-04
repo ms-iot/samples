@@ -1,4 +1,6 @@
-﻿using Windows.Security.ExchangeActiveSyncProvisioning;
+﻿// Copyright (c) Microsoft. All rights reserved.
+
+using Windows.Security.ExchangeActiveSyncProvisioning;
 
 namespace IoTCoreDefaultApp.Utils
 {
