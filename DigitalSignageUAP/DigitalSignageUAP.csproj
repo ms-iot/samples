@@ -137,7 +137,6 @@
     <Content Include="Assets\config.xml" />
     <Content Include="Assets\IoTVision.wmv" />
     <Content Include="Assets\mandelbrot.png" />
-    <Content Include="Assets\mad_men_poster.jpg" />
     <Content Include="Assets\MARBLES.BMP" />
     <Content Include="Assets\midnightvoyage_48k_320.mp3" />
     <Content Include="Assets\Fhol.wav" />
