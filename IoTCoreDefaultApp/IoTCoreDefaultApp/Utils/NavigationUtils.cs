@@ -38,15 +38,14 @@ namespace IoTCoreDefaultApp
             var newDocName = Constants.TutorialDocNames[index];
             if (newDocName == "HelloBlinky")
             {
+#if (!ALWAYS_SHOW_BLINKY)
                 if (DeviceTypeInformation.Type == DeviceTypes.RPI2)
+#endif
                 {
                     NavigationUtils.NavigateToScreen(typeof(TutorialHelloBlinkyPage), newDocName);
                     return;
                 }
-                else
-                {
-                    newDocName = Constants.TutorialDocNames[++index];
-                }
+                newDocName = Constants.TutorialDocNames[++index];
             }
 
             NavigationUtils.NavigateToScreen(typeof(TutorialContentPage), newDocName);
