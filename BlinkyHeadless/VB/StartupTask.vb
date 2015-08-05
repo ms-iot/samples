@@ -1,3 +1,5 @@
+' Copyright (c) Microsoft. All rights reserved.
+
 Imports System
 Imports System.Collections.Generic
 Imports System.Linq
