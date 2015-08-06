@@ -30,7 +30,7 @@
                 <Button x:Name="hideTextButton" Content="Hide Text" Canvas.Left="1106" Canvas.Top="34" Height="50" Width="117" Click="hideTextButton_Click" />
             </Canvas>
             <Canvas x:Name="gameCanvas" Width="1366" Height="766" Background="Black" Canvas.Left="117" Visibility="Collapsed">
-                <TextBlock x:Name="gameOutputTextBlock" Canvas.Left="10" TextWrapping="Wrap" Text="All Hail Jochi" Canvas.Top="257" FontSize="96" FontWeight="Light" TextAlignment="Center" Width="1346" HorizontalAlignment="Center" Visibility="Collapsed"/>
+                <TextBlock x:Name="gameOutputTextBlock" Canvas.Left="10" TextWrapping="Wrap" Text="Game Output Text" Canvas.Top="257" FontSize="96" FontWeight="Light" TextAlignment="Center" Width="1346" HorizontalAlignment="Center" Visibility="Collapsed"/>
                 <Canvas Name="scoreCanvas" Visibility="Collapsed">
                     <TextBlock x:Name="textBlock1" Canvas.Left="248" TextWrapping="Wrap" Text="You" Canvas.Top="114" FontSize="96" FontWeight="Light"/>
                     <TextBlock x:Name="textBlock1_Copy" Canvas.Left="871" TextWrapping="Wrap" Text="Robot" Canvas.Top="114" FontSize="96" FontWeight="Light"/>
@@ -39,7 +39,7 @@
                 </Canvas>
             </Canvas>
             <Canvas Name="popUpCanvas" Background="Black" Visibility="Collapsed">
-                <TextBlock x:Name="popUpTextBlock" Canvas.Left="3" TextWrapping="Wrap" Text="All Hail Jochi" Canvas.Top="239" FontSize="96" FontWeight="Light" Width="1596" TextAlignment="Center"/>
+                <TextBlock x:Name="popUpTextBlock" Canvas.Left="3" TextWrapping="Wrap" Text="Popup Text" Canvas.Top="239" FontSize="96" FontWeight="Light" Width="1596" TextAlignment="Center"/>
             </Canvas>
             <Button x:Name="homeButton" Canvas.Left="1473" Canvas.Top="667" Height="89" Width="117" Click="homeButton_Click">
                 <Canvas Width="50" Height="50">
