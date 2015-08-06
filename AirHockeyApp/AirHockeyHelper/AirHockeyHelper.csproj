@@ -6,8 +6,8 @@
     <ProjectGuid>{33CC81FC-C926-4732-9105-AF5B93FF2008}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AirHockeyHelper2</RootNamespace>
-    <AssemblyName>AirHockeyHelper2</AssemblyName>
+    <RootNamespace>AirHockeyHelper</RootNamespace>
+    <AssemblyName>AirHockeyHelper</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
@@ -94,7 +94,7 @@
     <Compile Include="Global.cs" />
     <Compile Include="PixyCam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Content Include="Properties\AirHockeyHelper2.rd.xml" />
+    <Content Include="Properties\AirHockeyHelper.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <SDKReference Include="WindowsIoT, Version=10.0.10240.0">

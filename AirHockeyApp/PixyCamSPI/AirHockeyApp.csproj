@@ -150,7 +150,7 @@
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AirHockeyHelper2\AirHockeyHelper.csproj">
+    <ProjectReference Include="..\AirHockeyHelper\AirHockeyHelper.csproj">
       <Project>{33cc81fc-c926-4732-9105-af5b93ff2008}</Project>
       <Name>AirHockeyHelper</Name>
     </ProjectReference>
