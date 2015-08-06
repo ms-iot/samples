@@ -17,7 +17,7 @@
                 </Canvas>
             </Button>
             <TextBlock x:Name="titleTextBlock" Canvas.Left="60" TextWrapping="Wrap" Text="Air Hockey Robot" Canvas.Top="35" FontSize="66.667" FontWeight="Light"/>
-            <TextBlock x:Name="titleTextBlock_Copy" Canvas.Left="60" TextWrapping="Wrap" Text="Industrial Automation Demo powered by Windows 10 IoT Core" Canvas.Top="129" FontSize="33.333" FontWeight="Light"/>
+            <TextBlock x:Name="titleTextBlock_Copy" Canvas.Left="60" TextWrapping="Wrap" Text="Air Hockey Demo powered by Windows 10 IoT Core" Canvas.Top="129" FontSize="33.333" FontWeight="Light"/>
             <Button x:Name="diagnosticsButton" Canvas.Left="265" Canvas.Top="224" Width="200" Height="200" FontSize="26.667" FontWeight="Light" Click="diagnosticsButton_Click" Background="#FF0030AE">
                 <Canvas Width="190" Height="190">
                     <TextBlock Text="Diagnostics" Canvas.Top="163" FontSize="20" Canvas.Left="10"/>
