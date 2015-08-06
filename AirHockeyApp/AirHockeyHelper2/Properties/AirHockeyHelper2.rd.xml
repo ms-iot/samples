@@ -25,7 +25,7 @@
     http://go.microsoft.com/fwlink/?LinkId=613100
 -->
 <Directives xmlns="http://schemas.microsoft.com/netfx/2013/01/metadata">
-  <Library Name="AirHockeyHelper2">
+  <Library Name="AirHockeyHelper">
 
   	<!-- add directives for your library here -->
 
