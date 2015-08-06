@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Windows.Devices.Enumeration;
 using Windows.Devices.Spi;
 
-namespace AirHockeyHelper2
+namespace AirHockeyHelper
 {
     public class PixyCamEventArgs : EventArgs
     {

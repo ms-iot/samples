@@ -7,7 +7,7 @@ using System;
 using System.Diagnostics;
 using Windows.Devices.Gpio;
 
-namespace AirHockeyHelper2
+namespace AirHockeyHelper
 {
     public class AccelStepper
     {

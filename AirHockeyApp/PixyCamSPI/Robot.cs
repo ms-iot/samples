@@ -3,7 +3,7 @@
 using System;
 using Windows.Devices.Gpio;
 using Windows.Foundation;
-using AirHockeyHelper2;
+using AirHockeyHelper;
 
 namespace AirHockeyApp
 {

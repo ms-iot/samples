@@ -2,7 +2,7 @@
 
 using System.Diagnostics;
 
-namespace AirHockeyHelper2
+namespace AirHockeyHelper
 {
     public class Global
     {
