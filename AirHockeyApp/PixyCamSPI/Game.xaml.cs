@@ -237,7 +237,7 @@ namespace AirHockeyApp
                 else
                 {
                     // Figure out where the mallet should move
-                    malletOffset = robot.AI.calculateMalletTargetV3(puckPosition, Global.Stopwatch.ElapsedMilliseconds);
+                    malletOffset = robot.AI.calculateMalletTarget(puckPosition, Global.Stopwatch.ElapsedMilliseconds);
                 }
 
                 if (malletOffset != CoordinateHelper.INVALID_POINT)

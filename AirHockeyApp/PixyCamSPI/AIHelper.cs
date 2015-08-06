@@ -173,7 +173,7 @@ namespace AirHockeyApp
         }
 
         // Decision-making function; given puck position, decide where we should net move the mallet
-        public Point calculateMalletTargetV3(Point currentPuckPosition, long currentTime)
+        public Point calculateMalletTarget(Point currentPuckPosition, long currentTime)
         {
             puckPosition = currentPuckPosition;
 
