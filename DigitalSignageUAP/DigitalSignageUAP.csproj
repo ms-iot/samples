@@ -135,7 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\config.xml" />
-    <Content Include="Assets\IoTVision.wmv" />>
+    <Content Include="Assets\IoTVision.wmv" />
     <Content Include="Assets\IE.png" />
     <Content Include="Assets\vision.png" />
 <Content Include="Assets\rpi2.png" />
