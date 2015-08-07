@@ -3,18 +3,22 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <ProjectGuid>{33CC81FC-C926-4732-9105-AF5B93FF2008}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{5A9BF298-C317-4CE3-99CD-4761C10BCC2F}</ProjectGuid>
+    <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AirHockeyHelper2</RootNamespace>
-    <AssemblyName>AirHockeyHelper2</AssemblyName>
+    <RootNamespace>AirHockeyApp</RootNamespace>
+    <AssemblyName>AirHockeyApp</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
+    <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
+    <UapDefaultAssetScale>100</UapDefaultAssetScale>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <AppxPackageSigningEnabled>true</AppxPackageSigningEnabled>
+    <PackageCertificateKeyFile>PixyCamSPI_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
@@ -86,20 +90,70 @@
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <Compile Include="AIHelper.cs" />
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Config.cs" />
+    <Compile Include="CoordinateHelper.cs" />
+    <Compile Include="Game.xaml.cs">
+      <DependentUpon>Game.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helper.cs" />
+    <Compile Include="MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MotorHelper.cs" />
+    <Compile Include="Robot.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccelStepper.cs" />
-    <Compile Include="Global.cs" />
-    <Compile Include="PixyCam.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Content Include="Properties\AirHockeyHelper2.rd.xml" />
+    <Content Include="Assets\Icons\diag_icon.png" />
+    <Content Include="Assets\Icons\game_icon.png" />
+    <Content Include="Assets\Icons\home_icon.png" />
+    <Content Include="Assets\Icons\mirror_icon.png" />
+    <Content Include="Assets\Icons\music_icon.png" />
+    <Content Include="Assets\Icons\statistics_icon.png" />
+    <Content Include="Assets\Icons\test_icon.png" />
+    <Content Include="Properties\Default.rd.xml" />
+    <Content Include="Assets\LockScreenLogo.scale-200.png" />
+    <Content Include="Assets\SplashScreen.scale-200.png" />
+    <Content Include="Assets\Square150x150Logo.scale-200.png" />
+    <Content Include="Assets\Square44x44Logo.scale-200.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
+    <Content Include="Assets\StoreLogo.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="Game.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <SDKReference Include="WindowsIoT, Version=10.0.10240.0">
-      <Name>Windows IoT Extensions for the UWP</Name>
+      <Name>Windows IoT Extension SDK</Name>
     </SDKReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AirHockeyHelper\AirHockeyHelper.csproj">
+      <Project>{33cc81fc-c926-4732-9105-af5b93ff2008}</Project>
+      <Name>AirHockeyHelper</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
