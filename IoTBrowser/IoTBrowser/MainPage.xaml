@@ -34,13 +34,21 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="65"></RowDefinition>
         </Grid.RowDefinitions>
+        
+        <!--Address bar-->
         <StackPanel Grid.Row="0" Orientation="Horizontal">
             <TextBox x:Name="Web_Address" FontSize="24" TextWrapping="Wrap" Text="http://www.bing.com" VerticalAlignment="Center" VerticalContentAlignment="Center" Height="54" Width="958" KeyUp="Web_Address_KeyUp"/>
             <Button x:Name="Go_Web" Content="Go!" HorizontalAlignment="Right" VerticalAlignment="Center" Height="60" Width="107" Click="Go_Web_Click"/>
         </StackPanel>
+        
+        <!--Web view control-->
         <WebView x:Name="webView" Grid.Row="1"/>
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button x:Name="Go_IoTPortal" Content="IoT Portal" VerticalAlignment="Center" Height="60" Width="120" Margin="0,0,15,0" Click="Go_IoTPortal_Click"/>
+        
+        <!--Favorites buttons-->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" >
+            <Button x:Name="Go_WOD" VerticalAlignment="Center" HorizontalAlignment="Center" Height="60" Width="120" Margin="0,0,15,0" Click="Go_WOD_Click">
+                <TextBlock Text="Windows on Devices" TextWrapping="Wrap"/>
+            </Button>
             <Button x:Name="Go_Hackster" Content="Hackster.io" VerticalAlignment="Center" Height="60" Width="120" Margin="0,0,15,0" Click="Go_Hackster_Click"/>
             <Button x:Name="Go_GitHub" Content="GitHub.com" VerticalAlignment="Center" Height="60" Width="120" Margin="0,0,15,0" Click="Go_GitHub_Click"/>
         </StackPanel>
