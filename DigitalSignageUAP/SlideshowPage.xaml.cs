@@ -235,6 +235,9 @@ namespace DigitalSignageUAP
         /// </summary>
         void PlayAudio()
         {
+            if (audioList.Count == 0)
+                return;
+
             if (audioInstance.CurrentState == MediaElementState.Paused)
             {
                 audioInstance.Play();
