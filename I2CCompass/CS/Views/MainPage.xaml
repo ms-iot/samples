@@ -1,0 +1,43 @@
+﻿<Page
+    x:Class="I2CCompass.Views.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:c="using:I2CCompass.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="Margin" Value="10" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="Margin" Value="10" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="64" />
+            <Setter Property="Margin" Value="10" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
+        <c:HeadingConverter x:Key="headingConverter" />
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="1" Text="HMC5883L Magnetometer" />
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Command="{Binding TakeSingleMeasurementCommand}" Content="Take Single Measurement" />
+            <Button Command="{Binding StartContinuousMeasurementsCommand}" Content="Start Continuous Measurements" />
+            <Button Command="{Binding StopCompassCommand}" Content="Stop Compass" />
+        </StackPanel>
+        <TextBlock Grid.Row="3" Text="{Binding CompassReading, Converter={StaticResource headingConverter}}" />
+    </Grid>
+</Page>
