@@ -28,7 +28,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="Settings"
-    d:DesignWidth="346">
+    d:DesignWidth="346"
+    Background="#FF222222">
 
     <!-- This StackPanel acts as a root panel for vertical layout of the content sections -->
     <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
@@ -39,14 +40,16 @@
         <StackPanel Style="{StaticResource SettingsFlyoutSectionStyle}">
 
             <!-- Section 1 header -->
-            <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="Please input the config file path here:" />
+            <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="Path to configuration file:" />
 
             <!-- Section 1 body -->
-            <TextBox Name="textBox" FontSize="20" Margin="0,20,0,0" Height="136" TextWrapping="Wrap" Text="{Binding ElementName=SIP_TextBox, Path=OutputString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Name="textBox" Background="#FF222222" BorderThickness="2" BorderBrush="#333333" FontSize="20" Margin="0,20,0,0" Height="136" TextWrapping="Wrap" Text="{Binding ElementName=SIP_TextBox, Path=OutputString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
         </StackPanel>
         <sip:OnScreenKeyBoard x:Name="SIP_TextBox" Margin="3,0" VerticalAlignment="Top" Height="244" Width="994" Visibility="Collapsed" HorizontalAlignment="Center"/>
-        <Button x:Name="OSK_Button" Content="⌨" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="32" Click="OSK_Button_Click"/>
+        <Button HorizontalAlignment="Center" x:Name="OSK_Button" VerticalAlignment="Center" Background="Transparent" BorderThickness="0" Padding="0, -3, 0, 0" Grid.Column="0" Tapped="OSK_Button_Click">
+            <TextBlock Canvas.Left="0" TextWrapping="Wrap" Text="&#xE765;" FontFamily="Segoe MDL2 Assets" FontSize="50" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+        </Button>
 
         <!-- Define more Content Sections below as necessary -->
 
