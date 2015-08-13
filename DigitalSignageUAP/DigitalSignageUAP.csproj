@@ -135,6 +135,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\config.xml" />
+    <Content Include="Assets\DigitalSignage.png" />
+    <Content Include="Assets\Edge.png" />
     <Content Include="Assets\IoTVision.wmv" />
     <Content Include="Assets\IE.png" />
     <Content Include="Assets\tile01.png" />
