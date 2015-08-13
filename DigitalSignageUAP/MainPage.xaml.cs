@@ -75,7 +75,7 @@ namespace DigitalSignageUAP
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        static SettingsFlyout1 flyout = new SettingsFlyout1();
+        static FlyoutSettings flyout = new FlyoutSettings();
         static bool MainPageFirstTimeLoad = true;
         string vszVisionVideoPath = "http://iot-digisign01/ds/IoTVision.wmv";
         AppServiceConnection _appServiceConnection;
@@ -204,7 +204,7 @@ namespace DigitalSignageUAP
         /// <param name="e"></param>
         private void SettingGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            flyout.ShowIndependent();
+            flyout.ShowAt(this);
         }
         
         /// <summary>
