@@ -41,7 +41,7 @@ namespace DigitalSignageUAP
     /// <summary>
     /// A customized SettingsFlyout control to set the config file path for ADMIN
     /// </summary>
-    public sealed partial class SettingsFlyout1 : SettingsFlyout
+    public sealed partial class FlyoutSettings : Flyout
     {
         bool noSettingYet = false;
         string oldConfigSetting;
@@ -49,14 +49,10 @@ namespace DigitalSignageUAP
         string configValueName = "ConfigFilePath";
         private double OriginalFlyoutWidth;
 
-        public SettingsFlyout1()
+        public FlyoutSettings()
         {
             this.InitializeComponent();
             
-            Loaded += SettingsFlyout1_Loaded;
-            Unloaded += SettingsFlyout1_Unloaded;
-
-            OriginalFlyoutWidth = this.Width;
             SIP_TextBox.RegisterEditControl(textBox);
         }
 
@@ -102,17 +98,20 @@ namespace DigitalSignageUAP
         {
             if(SIP_TextBox.Visibility == Visibility.Collapsed)
             {
-                FlyoutStackpanel.Width = SIP_TextBox.Width;
                 SIP_TextBox.Visibility = Visibility.Visible;
             }
             else
             {
-                FlyoutStackpanel.Width = OriginalFlyoutWidth;
                 SIP_TextBox.Visibility = Visibility.Collapsed;
             }
 
             /* Need to set focus so the on screen keyboard's content buffer gets updated */
             textBox.Focus(FocusState.Programmatic);
+        }
+
+        private void closeButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            FlyoutStackpanel.Hide();
         }
     }
 }
