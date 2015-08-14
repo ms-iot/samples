@@ -192,6 +192,10 @@
     <value>Raspberry Pi 2</value>
     <comment>Board name</comment>
   </data>
+  <data name="DB410Name" xml:space="preserve">
+    <value>DragonBoard 410c</value>
+    <comment>Board name</comment>
+  </data>
   <data name="SkipStep.Text" xml:space="preserve">
     <value>Ignora questo passaggio</value>
   </data>
@@ -308,7 +312,7 @@
     <value>Non occorre alcuna configurazione. È sufficiente avviare.</value>
   </data>
   <data name="TutorialBlinkyBody4.Text" xml:space="preserve">
-    <value>Puoi anche modificare la frequenza di lampeggiamento. Se vuoi chiamare i tuoi amici per ballare al ritmo della tua scheda Raspberry Pi 2, sei libero di farlo.</value>
+    <value>Puoi anche modificare la frequenza di lampeggiamento. Se vuoi chiamare i tuoi amici per ballare al ritmo della tua scheda {0}, sei libero di farlo.</value>
   </data>
   <data name="TutorialBlinkyBody5.Text" xml:space="preserve">
     <value>Dichiarazione di non responsabilità: Microsoft non si assume alcuna responsabilità per gli eventuali danni causati dall'organizzazione di un rave party usando il LED lampeggiante della scheda.</value>

@@ -192,6 +192,10 @@
     <value>Raspberry Pi 2</value>
     <comment>Board name</comment>
   </data>
+  <data name="DB410Name" xml:space="preserve">
+    <value>DragonBoard 410c</value>
+    <comment>Board name</comment>
+  </data>
   <data name="SkipStep.Text" xml:space="preserve">
     <value>Пропустить этот шаг</value>
   </data>
@@ -308,7 +312,7 @@
     <value>Установка не требуется. Просто нажмите клавишу начала.</value>
   </data>
   <data name="TutorialBlinkyBody4.Text" xml:space="preserve">
-    <value>Вы также можете изменить частоту мигания. Смело собирайте всех друзей и организуйте танцевальную вечеринку вокруг вашего Raspberry Pi 2.</value>
+    <value>Вы также можете изменить частоту мигания. Смело собирайте всех друзей и организуйте танцевальную вечеринку вокруг вашего {0}.</value>
   </data>
   <data name="TutorialBlinkyBody5.Text" xml:space="preserve">
     <value>Заявление об отказе. Майкрософт не несет ответственности за любой ущерб, который может быть вызван размещением вечеринки такого размаха с использованием маленького мигающего светодиода на плате.</value>

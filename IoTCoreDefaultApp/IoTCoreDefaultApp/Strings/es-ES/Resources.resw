@@ -192,6 +192,10 @@
     <value>Raspberry Pi 2</value>
     <comment>Board name</comment>
   </data>
+  <data name="DB410Name" xml:space="preserve">
+    <value>DragonBoard 410c</value>
+    <comment>Board name</comment>
+  </data>
   <data name="SkipStep.Text" xml:space="preserve">
     <value>Omitir este paso</value>
   </data>
@@ -308,7 +312,7 @@
     <value>No se requiere instalación. Solo tienes que presionar el botón de encendido.</value>
   </data>
   <data name="TutorialBlinkyBody4.Text" xml:space="preserve">
-    <value>También se puede cambiar la frecuencia del parpadeo. Reúne a todos tus amigos y no paréis de bailar con tu Raspberry Pi 2.</value>
+    <value>También se puede cambiar la frecuencia del parpadeo. Reúne a todos tus amigos y no paréis de bailar con tu {0}.</value>
   </data>
   <data name="TutorialBlinkyBody5.Text" xml:space="preserve">
     <value>Declinación de responsabilidades: Microsoft no se hace responsable de los daños que pueda causar el hospedaje como, por ejemplo, una enorme fiesta rave en la que se use el pequeño LED intermitente en el panel.</value>

@@ -192,6 +192,10 @@
     <value>Raspberry Pi 2</value>
     <comment>Board name</comment>
   </data>
+  <data name="DB410Name" xml:space="preserve">
+    <value>DragonBoard 410c</value>
+    <comment>Board name</comment>
+  </data>
   <data name="SkipStep.Text" xml:space="preserve">
     <value>跳过此步骤</value>
   </data>
@@ -308,7 +312,7 @@
     <value>无需设置。只需按“启动”。</value>
   </data>
   <data name="TutorialBlinkyBody4.Text" xml:space="preserve">
-    <value>你还可以更改闪烁的频率。随时随地将你的所有好友聚在一起，围绕 Raspberry Pi 2 举办舞会。</value>
+    <value>你还可以更改闪烁的频率。随时随地将你的所有好友聚在一起，围绕 {0} 举办舞会。</value>
   </data>
   <data name="TutorialBlinkyBody5.Text" xml:space="preserve">
     <value>免责声明: 对于使用此小型板载闪烁 LED 举办这样大型的狂欢派对可能造成的任何损害，Microsoft 不承担任何责任。</value>
