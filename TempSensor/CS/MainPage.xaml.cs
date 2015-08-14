@@ -81,9 +81,9 @@ namespace TempSensor
              */
 
             /*Uncomment if you are using mcp3002*/
-            int result = data[1] & 0x03;
+            int result = data[0] & 0x03;
             result <<= 8;
-            result += data[2];
+            result += data[1];
             return result;
         }
 
