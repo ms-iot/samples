@@ -4,7 +4,7 @@ using Windows.Security.ExchangeActiveSyncProvisioning;
 
 namespace IoTCoreDefaultApp.Utils
 {
-    public enum DeviceTypes { RPI2, MBM, GenericBoard, Unknown };
+    public enum DeviceTypes { RPI2, MBM, DB410, GenericBoard, Unknown };
     public static class DeviceTypeInformation
     {
         static DeviceTypes _type = DeviceTypes.Unknown;
@@ -23,6 +23,10 @@ namespace IoTCoreDefaultApp.Utils
 
                         case "MinnowBoard MAX B3 PLATFORM":
                             _type = DeviceTypes.MBM;
+                            break;
+
+                        case "SBC":
+                            _type = DeviceTypes.DB410;
                             break;
 
                         default:

@@ -192,6 +192,10 @@
     <value>Raspberry Pi 2</value>
     <comment>Board name</comment>
   </data>
+  <data name="DB410Name" xml:space="preserve">
+    <value>DragonBoard 410c</value>
+    <comment>Board name</comment>
+  </data>
   <data name="SkipStep.Text" xml:space="preserve">
     <value>Skip this step</value>
   </data>
@@ -312,7 +316,7 @@
     <value>No set up is required. Just press start.</value>
   </data>
   <data name="TutorialBlinkyBody4.Text" xml:space="preserve">
-    <value>You can also change the frequency of the blinking. Feel free to gather all of your friends and have a dance party around your Raspberry Pi 2.</value>
+    <value>You can also change the frequency of the blinking. Feel free to gather all of your friends and have a dance party around your {0}.</value>
   </data>
   <data name="TutorialBlinkyBody5.Text" xml:space="preserve">
     <value>Disclaimer: Microsoft takes no responsibility for whatever damage may be caused by hosting such a huge rave of a party using the small blinking LED on your board.</value>
@@ -338,7 +342,7 @@
     <comment>Refresh button</comment>
   </data>
   <data name="Tutorial.GetStarted.001.620x400.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetStarted.jpg</value>
+    <value>Assets/Tutorials/GetStarted-{0}.jpg</value>
     <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetStarted.002.title" xml:space="preserve">
@@ -407,7 +411,7 @@
     <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.001.620x400.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetConnected.jpg</value>
+    <value>Assets/Tutorials/GetConnected-{0}.jpg</value>
     <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.002.title" xml:space="preserve">
