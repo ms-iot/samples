@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirHockeyApp", "PixyCamSPI\AirHockeyApp.csproj", "{5A9BF298-C317-4CE3-99CD-4761C10BCC2F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirHockeyApp", "AirHockeyApp\AirHockeyApp.csproj", "{5A9BF298-C317-4CE3-99CD-4761C10BCC2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirHockeyHelper2", "AirHockeyHelper2\AirHockeyHelper2.csproj", "{33CC81FC-C926-4732-9105-AF5B93FF2008}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirHockeyHelper", "AirHockeyHelper\AirHockeyHelper.csproj", "{33CC81FC-C926-4732-9105-AF5B93FF2008}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
