@@ -119,8 +119,8 @@
     <Compile Include="OnScreenKeyboard.xaml.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RelayCommand.cs" />
-    <Compile Include="SettingsFlyout1.xaml.cs">
-      <DependentUpon>SettingsFlyout1.xaml</DependentUpon>
+    <Compile Include="FlyoutSettings.xaml.cs">
+      <DependentUpon>FlyoutSettings.xaml</DependentUpon>
     </Compile>
     <Compile Include="SlideshowPage.xaml.cs">
       <DependentUpon>SlideshowPage.xaml</DependentUpon>
@@ -135,14 +135,61 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\config.xml" />
+    <Content Include="Assets\DigitalSignage.png" />
+    <Content Include="Assets\Edge.png" />
     <Content Include="Assets\IoTVision.wmv" />
-    <Content Include="Assets\mandelbrot.png" />
-    <Content Include="Assets\mad_men_poster.jpg" />
-    <Content Include="Assets\MARBLES.BMP" />
-    <Content Include="Assets\midnightvoyage_48k_320.mp3" />
-    <Content Include="Assets\Fhol.wav" />
     <Content Include="Assets\IE.png" />
+    <Content Include="Assets\tile01.png" />
     <Content Include="Assets\vision.png" />
+    <Content Include="Assets\rpi2.png" />
+    <Content Include="Assets\3dfanparts_pic.jpg" />
+    <Content Include="Assets\final.jpg" />
+    <Content Include="Assets\hero.jpg" />
+    <Content Include="Assets\iot.original.jpg" />
+    <Content Include="Assets\LED2.jpg" />
+    <Content Include="Assets\parts.jpg" />
+    <Content Include="Assets\phone.jpg" />
+    <Content Include="Assets\rgbconnect.jpg" />
+    <Content Include="Assets\RGBPixel.jpg" />
+    <Content Include="Assets\rgbstrip_split1.jpg" />
+    <Content Include="Assets\rgbstrip_split2.jpg" />
+    <Content Include="Assets\step01.jpg" />
+    <Content Include="Assets\step02.jpg" />
+    <Content Include="Assets\step03.jpg" />
+    <Content Include="Assets\step03_2.jpg" />
+    <Content Include="Assets\step03_3.jpg" />
+    <Content Include="Assets\step04.jpg" />
+    <Content Include="Assets\step05.jpg" />
+    <Content Include="Assets\step06.jpg" />
+    <Content Include="Assets\3dfanparts.png" />
+    <Content Include="Assets\16x2LCDDiagram.png" />
+    <Content Include="Assets\AirHockeyDesign.png" />
+    <Content Include="Assets\airhockeypage.png" />
+    <Content Include="Assets\ajx_dsb1.png" />
+    <Content Include="Assets\Alljoyn_Architecture.png" />
+    <Content Include="Assets\Alljoyn_DSBArch.png" />
+    <Content Include="Assets\Alljoyn_Frameworks.png" />
+    <Content Include="Assets\breadboard_assembled_mbm.png" />
+    <Content Include="Assets\components.png" />
+    <Content Include="Assets\CP2102_Connections.png" />
+    <Content Include="Assets\Deploy.png" />
+    <Content Include="Assets\DevelopmentBoards.png" />
+    <Content Include="Assets\defaultapp_ip.png" />
+    <Content Include="Assets\drivers-overview.png" />
+    <Content Include="Assets\force_mcp3002.png" />
+    <Content Include="Assets\I2cPortExpanderDrawing_bb.png" />
+    <Content Include="Assets\I2cPortExpanderDrawing_schem.png" />
+    <Content Include="Assets\icon-hero-bg-01.png" />
+    <Content Include="Assets\ImageHelper.png" />
+    <Content Include="Assets\IoT-rp2-banner-edit.png" />
+    <Content Include="Assets\MBM_Pinout.png" />
+    <Content Include="Assets\MSConnectWOD.png" />
+    <Content Include="Assets\PortExpanderProjectPicture_480.png" />
+    <Content Include="Assets\PushButtonSample.png" />
+    <Content Include="Assets\RP2_Pinout.png" />
+    <Content Include="Assets\ShiftRegisterSampleDrawing_bb.png" />
+    <Content Include="Assets\ShiftRegisterSampleDrawing_schem.png" />
+    <Content Include="Assets\ZStick_Rpi.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -169,7 +216,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="SettingsFlyout1.xaml">
+    <Page Include="FlyoutSettings.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

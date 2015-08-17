@@ -2,17 +2,65 @@
 <DigitalSignageConfig>
   <!--audio does not require duration attribute. It will be played back in a loop end to end-->
   <Audio>
-    <file path="Assets\Fhol.wav"/>
-    <file path="Assets\midnightvoyage_48k_320.mp3"/>
   </Audio>
   <Display>
     <!--Video does not require duration attribute. It will be played back in a loop end to end-->
-    <!--<file path="Assets\grb.mpg"/>-->
     <file path="Assets\IoTVision.wmv"/>
     <!--image and webpage do require duration attribute so we know how long to show them-->
-    <file path="Assets\mad_men_poster.jpg" duration="30"/>
-    <file path="Assets\mandelbrot.png" duration="30"/>
-    <file path="Assets\MARBLES.BMP" duration="30"/>
+    <file path="Assets\vision.png" duration="30"/>
+    <file path="Assets\tile01.png" duration="30"/>
+    <file path="Assets\rpi2.png" duration="30"/>
+    <file path="Assets\3dfanparts_pic.jpg" duration="30"/>
+    <file path="Assets\arduino-rpi2.jpg" duration="30"/>
+    <file path="Assets\final.jpg" duration="30"/>
+    <file path="Assets\hero.jpg" duration="30"/>
+    <file path="Assets\iot.original.jpg" duration="30"/>
+    <file path="landinghello.jpg" duration="30"/>
+    <file path="Assets\LED2.jpg" duration="30"/>
+    <file path="Assets\parts.jpg" duration="30"/>
+    <file path="Assets\phone.jpg" duration="30"/>
+    <file path="Assets\rgbconnect.jpg" duration="30"/>
+    <file path="Assets\RGBPixel.jpg" duration="30"/>
+    <file path="Assets\rgbstrip_split1.jpg" duration="30"/>
+    <file path="Assets\rgbstrip_split2.jpg" duration="30"/>
+    <file path="Assets\step01.jpg" duration="30"/>
+    <file path="Assets\step02.jpg" duration="30"/>
+    <file path="Assets\step03.jpg" duration="30"/>
+    <file path="Assets\step03_2.jpg" duration="30"/>
+    <file path="Assets\step03_3.jpg" duration="30"/>
+    <file path="Assets\step04.jpg" duration="30"/>
+    <file path="Assets\step05.jpg" duration="30"/>
+    <file path="Assets\step06.jpg" duration="30"/>
+    <file path="Assets\3dfanparts.png" duration="30"/>
+    <file path="Assets\16x2LCDDiagram.png" duration="30"/>
+    <file path="Assets\AirHockeyDesign.png" duration="30"/>
+    <file path="Assets\airhockeypage.png" duration="30"/>
+    <file path="Assets\ajx_dsb1.png" duration="30"/>
+    <file path="Assets\Alljoyn_Architecture.png" duration="30"/>
+    <file path="Assets\Alljoyn_DSBArch.png" duration="30"/>
+    <file path="Assets\Alljoyn_Frameworks.png" duration="30"/>
+    <file path="Assets\breadboard_assembled_mbm.png" duration="30"/>
+    <file path="Assets\components.png" duration="30"/>
+    <file path="Assets\CP2102_Connections.png" duration="30"/>
+    <file path="Assets\Deploy.png" duration="30"/>
+    <file path="Assets\DevelopmentBoards.png" duration="30"/>
+    <file path="Assets\defaultapp_ip.png" duration="30"/>
+    <file path="Assets\drivers-overview.png" duration="30"/>
+    <file path="Assets\force_mcp3002.png" duration="30"/>
+    <file path="Assets\I2cPortExpanderDrawing_bb.png" duration="30"/>
+    <file path="Assets\I2cPortExpanderDrawing_schem.png" duration="30"/>
+    <file path="Assets\icon-hero-bg-01.png" duration="30"/>
+    <file path="Assets\ImageHelper.png" duration="30"/>
+    <file path="Assets\IoT-rp2-banner-edit.png" duration="30"/>
+    <file path="Assets\MBM_Pinout.png" duration="30"/>
+    <file path="Assets\MSConnectWOD.png" duration="30"/>
+    <file path="Assets\PortExpanderProjectPicture_480.png" duration="30"/>
+    <file path="Assets\PushButtonSample.png" duration="30"/>
+    <file path="Assets\RP2_Pinout.png" duration="30"/>
+    <file path="Assets\ShiftRegisterProjectPicture_480.png" duration="30"/>
+    <file path="Assets\ShiftRegisterSampleDrawing_bb.png" duration="30"/>
+    <file path="Assets\ShiftRegisterSampleDrawing_schem.png" duration="30"/>
+    <file path="Assets\ZStick_RPi.png" duration="30"/>
     <!--Webpage requires a special attribute type and its value to be webpage-->
 
     <!--webpage URLs have to be XML escaped, e.g. below URL, & is replaced to &amp;. Not including the dot.Otherwise it will be considered as malformatted XML-->

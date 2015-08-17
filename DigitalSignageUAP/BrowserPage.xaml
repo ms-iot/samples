@@ -41,7 +41,7 @@
         * Row 0 contains the back button and page title
         * Row 1 contains the rest of the page layout
     -->
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="#FF222222">
         <Grid.ChildrenTransitions>
             <TransitionCollection>
                 <EntranceThemeTransition/>
@@ -61,57 +61,29 @@
                 <ColumnDefinition Width="0"/>
                 <ColumnDefinition Width="273"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="backButton" BorderThickness="0"
-                        FontSize="30" Width="90" FontFamily="Segoe UI Symbol" Padding="0, -3, 0, 0" Grid.Column="0"  Tapped="backButton_Tapped" Margin="0,10,0,9" Height="58">
-                <Button.Content>
-                    <Canvas Width="61.3257" Height="61.3257">
-                        <Ellipse Width="53.3266" Height="53.3267" Canvas.Left="3.99951" Canvas.Top="3.99948" Stretch="Fill" StrokeThickness="2.66633" StrokeMiterLimit="2.75" Stroke="#FFFFFFFF"/>
-                        <Path Width="26.5405" Height="18.8888" Canvas.Left="17.3925" Canvas.Top="21.2186" Stretch="Fill" Fill="#FFFFFFFF" Data="F1 M 33.267,21.2186L 25.7607,28.725L 43.933,28.725L 43.9325,30.5837L 43.9325,30.7424L 43.933,32.6011L 25.7607,32.6011L 33.267,40.1074L 26.8167,40.1073L 17.3925,30.6831L 26.8567,21.2188L 33.267,21.2186 Z "/>
-                    </Canvas>
-                </Button.Content>
+            <Button x:Name="backButton" BorderThickness="0" Background="Transparent" Width="90" Height="61.3257" Padding="0, -3, 0, 0" Grid.Column="0"  Tapped="backButton_Tapped" Margin="0,10,0,9">
+                <TextBlock Canvas.Left="0" TextWrapping="Wrap" Text="&#xE72B;" FontFamily="Segoe MDL2 Assets" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
             </Button>
-            <TextBox x:Name="AddressBar" BorderThickness="2" BorderBrush="#333333" Grid.Column="1" KeyDown="AddressBar_KeyDown" FontSize="26" Text="{Binding ElementName=SIP_AddressBar, Path=OutputString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,14,0,13"/>
+            <TextBox x:Name="AddressBar" Background="#FF222222" BorderThickness="2" BorderBrush="#333333" Grid.Column="1" KeyDown="AddressBar_KeyDown" FontSize="26" Text="{Binding ElementName=SIP_AddressBar, Path=OutputString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,14,0,13"/>
             <StackPanel Grid.Column="2" Orientation="Horizontal" Grid.ColumnSpan="2">
-                <Button HorizontalAlignment="Right" x:Name="goButton" BorderThickness="0"
-                	FontSize="30" Width="90" FontFamily="Segoe UI Symbol" Padding="0, -3, 0, 0" Tapped="goButton_Tapped" Margin="0,9.5">
-                    <Canvas Width="61.3256" Height="61.3257">
-                        <TextBlock Canvas.Left="0" TextWrapping="Wrap" Text="Go" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" Margin="11,9,0,0"/>
-                        <Ellipse Width="53.3267" Height="53.3267" Canvas.Left="3.99948" Canvas.Top="3.99948" Stretch="Fill" StrokeThickness="2.66633" StrokeMiterLimit="2.75" Stroke="#FFFFFFFF"/>
-                    </Canvas>
+                <Button HorizontalAlignment="Right" x:Name="goButton" BorderThickness="0" Background="Transparent" Width="90" Height="61.3257" Padding="0, -3, 0, 0" Tapped="goButton_Tapped" Margin="0,9.5">
+                    <TextBlock Canvas.Left="0" TextWrapping="Wrap" Text="&#xE751;" FontFamily="Segoe MDL2 Assets" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
                 </Button>
-                <Button HorizontalAlignment="Right" x:Name="refreshStopButton" BorderThickness="0"
-                        FontSize="30" Width="90" FontFamily="Segoe UI Symbol" Padding="0, -3, 0, 0" Grid.Column="0" Tapped="refreshStopButtonNavigationComplete_Tapped">
-                    <Button.Content>
-                        <Canvas Width="61.3256" Height="61.3257">
-                            <Ellipse Width="53.3267" Height="53.3267" Canvas.Left="3.99948" Canvas.Top="3.99948" Stretch="Fill" StrokeThickness="2.66633" StrokeMiterLimit="2.75" Stroke="#FFFFFFFF"/>
-                            <Viewbox Width="40.2171" Height="37.9956" Canvas.Left="9.75409" Canvas.Top="10.2763">
-                                <Canvas Width="40.2171" Height="37.9956">
-                                    <Path Width="25.2415" Height="22.4527" Canvas.Left="8.04682" Canvas.Top="11.1099" Stretch="Fill" StrokeThickness="2.66633" StrokeMiterLimit="2.75" Stroke="#FFFFFFFF" Data="F1 M 13.3316,12.4431C 5.33264,19.5534 10.221,32.6629 21.3306,32.2184C 32.4402,31.7739 34.8844,18.8867 28.4409,13.7762"/>
-                                    <Path Width="10.4426" Height="10.4426" Canvas.Left="6.65479" Canvas.Top="8.99957" Stretch="Fill" Fill="#FFFFFFFF" Data="F1 M 17.0974,8.99957L 17.0974,19.4422L 6.65479,8.99957L 17.0974,8.99957 Z "/>
-                                </Canvas>
-                            </Viewbox>
-                        </Canvas>
-                    </Button.Content>
+                <Button HorizontalAlignment="Right" x:Name="refreshStopButton" BorderThickness="0" Background="Transparent" Width="90" Height="61.3257" Padding="0, -3, 0, 0" Grid.Column="0" Tapped="refreshStopButtonNavigationComplete_Tapped">
+                    <TextBlock Canvas.Left="0" TextWrapping="Wrap" Text="&#xE72C;" FontFamily="Segoe MDL2 Assets" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
                 </Button>
-                <Button HorizontalAlignment="Right" x:Name="fowrardButton" BorderThickness="0"
-                        FontSize="30" Width="90" FontFamily="Segoe UI Symbol" Padding="0, -3, 0, 0" Grid.Column="0" Tapped="ForwardButton_Tapped">
-                    <Button.Content>
-                        <Canvas Width="61.3257" Height="61.3257">
-                            <Path Width="53.3266" Height="53.3267" Canvas.Left="3.99951" Canvas.Top="3.99948" Stretch="Fill" StrokeThickness="2.66633" StrokeMiterLimit="2.75" Stroke="#FFFFFFFF" Data="F1 M 30.6628,5.33264C 44.6524,5.33264 55.993,16.6733 55.993,30.6628C 55.993,44.6522 44.6523,55.993 30.6628,55.993C 16.6734,55.993 5.33267,44.6522 5.33267,30.6628C 5.33267,16.6733 16.6733,5.33264 30.6628,5.33264 Z "/>
-                            <Path Width="26.5406" Height="18.8889" Canvas.Left="17.3927" Canvas.Top="21.2182" Stretch="Fill" Fill="#FFFFFFFF" Data="F1 M 28.0587,40.1071L 35.5651,32.6007L 17.3927,32.6007L 17.3932,30.7419L 17.3932,30.5833L 17.3927,28.7245L 35.5651,28.7245L 28.0587,21.2182L 34.5091,21.2184L 43.9333,30.6425L 34.4691,40.1069L 28.0587,40.1071 Z "/>
-                        </Canvas>
-                    </Button.Content>
+                <Button HorizontalAlignment="Right" x:Name="fowrardButton" BorderThickness="0" Background="Transparent" Width="90" Height="61.3257" Padding="0, -3, 0, 0" Grid.Column="0" Tapped="ForwardButton_Tapped" Margin="0,0,0,9" VerticalAlignment="Bottom">
+                    <TextBlock Canvas.Left="0" TextWrapping="Wrap" Text="&#xE72A;" FontFamily="Segoe MDL2 Assets" FontSize="30" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="White"/>
                 </Button>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="2">
-            <Button HorizontalAlignment="Center" x:Name="homepageButton" BorderThickness="0" Padding="0, -3, 0, 0" Grid.Column="0" Tapped="homepageButton_Tapped">
-                <Canvas Width="61.3258" Height="57.9032">
-                    <Path Width="39.9722" Height="31.3625" Canvas.Left="10.6768" Canvas.Top="22.5412" Stretch="Fill" StrokeThickness="2.66633" StrokeMiterLimit="2.75" Stroke="#FFFFFFFF" Data="F1 M 12.0099,23.8744L 12.0099,52.5706L 23.9316,52.5706L 23.9316,34.2489L 37.396,34.2489L 37.396,52.5697L 49.3158,52.5697L 49.3158,24.3159"/>
-                    <Path Width="53.3267" Height="28.2713" Canvas.Left="3.99954" Canvas.Top="3.9996" Stretch="Fill" StrokeThickness="2.66633" StrokeMiterLimit="2.75" Stroke="#FFFFFFFF" Data="F1 M 5.3327,30.9377L 30.9377,5.33276L 55.993,30.3882"/>
-                </Canvas>
+            <Button HorizontalAlignment="Center" x:Name="homepageButton" Background="Transparent" BorderThickness="0" Padding="0, -3, 0, 0" Grid.Column="0" Tapped="homepageButton_Tapped">
+                <TextBlock Canvas.Left="0" TextWrapping="Wrap" Text="&#xE80F;" FontFamily="Segoe MDL2 Assets" FontSize="50" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
             </Button>
-            <Button x:Name="OSK_Button" Content="⌨" HorizontalAlignment="Right" Margin="0,0,20,10" VerticalAlignment="Bottom" Height="65" Width="120" FontSize="48" Click="OSK_Button_Click"/>
+            <Button HorizontalAlignment="Right" x:Name="OSK_Button" Background="Transparent" BorderThickness="0" Padding="0, -3, 0, 0" Grid.Column="0" Tapped="OSK_Button_Click" Margin="0,0,20,00">
+                <TextBlock Canvas.Left="0" TextWrapping="Wrap" Text="&#xE765;" FontFamily="Segoe MDL2 Assets" FontSize="50" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+            </Button>
         </Grid>
         <Grid Grid.Row="1">
             <WebView x:Name="browser" HorizontalAlignment="Stretch" Margin="10" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollMode="Auto" NavigationCompleted="browser_NavigationCompleted"/>
