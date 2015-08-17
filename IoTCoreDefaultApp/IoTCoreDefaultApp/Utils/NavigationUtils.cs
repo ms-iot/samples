@@ -3,6 +3,7 @@
 using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using IoTCoreDefaultApp.Utils;
 
 namespace IoTCoreDefaultApp
 {
@@ -37,12 +38,17 @@ namespace IoTCoreDefaultApp
             var newDocName = Constants.TutorialDocNames[index];
             if (newDocName == "HelloBlinky")
             {
-                NavigationUtils.NavigateToScreen(typeof(TutorialHelloBlinkyPage), newDocName);
+#if (!ALWAYS_SHOW_BLINKY)
+                if (DeviceTypeInformation.Type == DeviceTypes.RPI2)
+#endif
+                {
+                    NavigationUtils.NavigateToScreen(typeof(TutorialHelloBlinkyPage), newDocName);
+                    return;
+                }
+                newDocName = Constants.TutorialDocNames[++index];
             }
-            else
-            {
-                NavigationUtils.NavigateToScreen(typeof(TutorialContentPage), newDocName);
-            }
+
+            NavigationUtils.NavigateToScreen(typeof(TutorialContentPage), newDocName);
         }
 
         public static bool IsNextTutorialButtonVisible(string docName)
