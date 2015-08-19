@@ -8,6 +8,7 @@
 
 #include <vector>
 #include <string>
+#include <sstream>
 #include <iostream>
 
 using namespace Microsoft::WRL::Wrappers;
@@ -26,6 +27,19 @@ enum class SerialStopBits {
     One,
     OnePointFive,
     Two,
+};
+
+struct SerialParamMask {
+    ULONG BaudSet : 1;
+    ULONG ParitySet : 1;
+    ULONG DataLengthSet : 1;
+    ULONG StopBitsSet : 1;
+    ULONG XonSet : 1;
+    ULONG OdsrSet : 1;
+    ULONG OctsSet : 1;
+    ULONG DtrSet : 1;
+    ULONG RtsSet : 1;
+    ULONG IdsrSet : 1;
 };
 
 class wexception
@@ -102,7 +116,7 @@ std::wstring GetFirstDevice ()
             const_cast<GUID*>(&GUID_DEVINTERFACE_COMPORT),
             nullptr,        // pDeviceID
             buf.data(),
-            buf.capacity(),
+            static_cast<ULONG>(buf.capacity()),
             CM_GET_DEVICE_INTERFACE_LIST_PRESENT);
 
     if (cr != CR_SUCCESS) {
@@ -136,7 +150,7 @@ void ListDevices ()
             const_cast<GUID*>(&GUID_DEVINTERFACE_COMPORT),
             nullptr,        // pDeviceID
             buf.data(),
-            buf.size(),
+            static_cast<ULONG>(buf.size()),
             CM_GET_DEVICE_INTERFACE_LIST_PRESENT);
 
     if ((cr != CR_SUCCESS) || (length == 0)) {
@@ -356,14 +370,14 @@ void ReadSerialWriteConsole (HANDLE serialHandle)
             bool specialCharFound;
             const WCHAR* chunkEnd = FindSpecialChar(
                     chunkBegin,
-                    bufEnd - chunkBegin,
+                    static_cast<ULONG>(bufEnd - chunkBegin),
                     &specialCharFound);
 
             DWORD charsWritten;
             if (!WriteConsole(
                     stdOut,
                     chunkBegin,
-                    chunkEnd - chunkBegin,
+                    static_cast<ULONG>(chunkEnd - chunkBegin),
                     &charsWritten,
                     NULL)) {
 
@@ -423,19 +437,206 @@ DWORD CALLBACK ReadSerialThreadProc (PVOID Param)
     return 0;
 }
 
-void RunSerialConsole (PCWSTR DevicePath, _In_opt_ PCWSTR DcbString)
+
+//
+// Parse serial connection parameters. BuildCommDCB is not available on onecore.
+//
+bool
+ParseConnectionParams (
+    int argc,
+    _In_reads_(argc) const wchar_t* argv[],
+    _Out_ DCB* DcbPtr,
+    _Out_ SerialParamMask* MaskPtr
+    )
 {
-    DCB dcb;
-    if (DcbString) {
-        if (!BuildCommDCB(DcbString, &dcb)) {
-            throw wexception(
-                L"Failed to build device control block. "
-                L"(DcbString = '%s', GetLastError() = 0x%x)",
-                DcbString,
-                GetLastError());
+    *MaskPtr = SerialParamMask();
+    DcbPtr->DCBlength = sizeof(*DcbPtr);
+
+    for (int i = 0; i < argc; ++i) {
+        std::wstring param(argv[i]);
+        std::wstring::size_type found = param.find_first_of(L'=');
+        if (found == param.npos) {
+            fwprintf(stderr, L"Expecting '=': %s", argv[i]);
+            return false;
+        }
+
+        if ((found + 1) >= param.length()) {
+            fwprintf(stderr, L"Expecting value after '=': %s", argv[i]);
+            return false;
+        }
+
+        std::wstring name = param.substr(0, found);
+        std::wstring value = param.substr(found + 1);
+
+        if (name == L"baud") {
+            // baud = <B>
+            std::wistringstream stream(value);
+            stream >> DcbPtr->BaudRate;
+            if (stream.fail()) {
+                fwprintf(stderr, L"Expecting integer value for baud: %s", param.c_str());
+                return false;
+            }
+
+            MaskPtr->BaudSet = true;
+        } else if (name == L"parity") {
+            // parity={n|e|o|m|s}
+            if (value.length() != 1) {
+                fwprintf(stderr, L"Expecting n|e|o|m|s for parity: %s", param.c_str());
+                return false;
+            }
+
+            SerialParity parity;
+            switch (value[0]) {
+            case L'n':
+                parity = SerialParity::None;
+                break;
+            case L'e':
+                parity = SerialParity::Even;
+                break;
+            case L'o':
+                parity = SerialParity::Odd;
+                break;
+            case L'm':
+                parity = SerialParity::Mark;
+                break;
+            case L's':
+                parity = SerialParity::Space;
+                break;
+            default:
+                fwprintf(stderr, L"Expecting n|e|o|m|s for parity: %s", param.c_str());
+                return false;
+            }
+
+            DcbPtr->Parity = BYTE(parity);
+            DcbPtr->fParity = TRUE;
+            MaskPtr->ParitySet = true;
+        } else if (name == L"data") {
+            // data={5|6|7|8}
+            if (value.length() != 1) {
+                fwprintf(stderr, L"Expecting 5|6|7|8 for data length: %s", param.c_str());
+                return false;
+            }
+
+            switch (value[0]) {
+            case L'5':
+            case L'6':
+            case L'7':
+            case L'8':
+                break;
+            default:
+                fwprintf(stderr, L"Expecting 5|6|7|8 for data length: %s", param.c_str());
+                return false;
+            }
+
+            DcbPtr->ByteSize = BYTE(value[0] - L'0');
+            MaskPtr->DataLengthSet = true;
+        } else if (name == L"stop") {
+            // stop={1|1.5|2}
+            SerialStopBits stopBits;
+            if (value == L"1") {
+                stopBits = SerialStopBits::One;
+            } else if (value == L"1.5") {
+                stopBits = SerialStopBits::OnePointFive;
+            } else if (value == L"2") {
+                stopBits = SerialStopBits::Two;
+            } else {
+                fwprintf(stderr, L"Expecting 1|1.5|2 for stop bits: %s", param.c_str());
+                return false;
+            }
+
+            DcbPtr->StopBits = BYTE(stopBits);
+            MaskPtr->StopBitsSet = true;
+        } else if (name == L"xon") {
+            // xon={on|off}
+            if (value == L"on") {
+                DcbPtr->fInX = TRUE;
+                DcbPtr->fOutX = TRUE;
+            } else if (value == L"off") {
+                DcbPtr->fInX = FALSE;
+                DcbPtr->fOutX = FALSE;
+            } else {
+                fwprintf(stderr, L"Expecting on|off for xon: %s", param.c_str());
+                return false;
+            }
+
+            MaskPtr->XonSet = true;
+        } else if (name == L"odsr") {
+            // odsr={on|off}
+            if (value == L"on") {
+                DcbPtr->fOutxDsrFlow = TRUE;
+            } else if (value == L"off") {
+                DcbPtr->fOutxDsrFlow = FALSE;
+            } else {
+                fwprintf(stderr, L"Expecting on|off for odsr: %s", param.c_str());
+                return false;
+            }
+
+            MaskPtr->OdsrSet = true;
+        } else if (name == L"octs") {
+            // octs={on|off}
+            if (value == L"on") {
+                DcbPtr->fOutxCtsFlow = TRUE;
+            } else if (value == L"off") {
+                DcbPtr->fOutxCtsFlow = FALSE;
+            } else {
+                fwprintf(stderr, L"Expecting on|off for octs: %s", param.c_str());
+                return false;
+            }
+
+            MaskPtr->OctsSet = true;
+        } else if (name == L"dtr") {
+            // dtr={on|off|hs}
+            if (value == L"on") {
+                DcbPtr->fDtrControl = DTR_CONTROL_ENABLE;
+            } else if (value == L"off") {
+                DcbPtr->fDtrControl = DTR_CONTROL_DISABLE;
+            } else if (value == L"hs") {
+                DcbPtr->fDtrControl = DTR_CONTROL_HANDSHAKE;
+            } else {
+                fwprintf(stderr, L"Expecting on|off|hs for dtr: %s", param.c_str());
+                return false;
+            }
+
+            MaskPtr->DtrSet = true;
+        } else if (name == L"rts") {
+            // rts={on|off|hs|tg}
+            if (value == L"on") {
+                DcbPtr->fRtsControl = RTS_CONTROL_ENABLE;
+            } else if (value == L"off") {
+                DcbPtr->fRtsControl = RTS_CONTROL_DISABLE;
+            } else if (value == L"hs") {
+                DcbPtr->fRtsControl = RTS_CONTROL_HANDSHAKE;
+            } else if (value == L"tg") {
+                DcbPtr->fRtsControl = RTS_CONTROL_TOGGLE;
+            } else {
+                fwprintf(stderr, L"Expecting on|off|hs|tg for rts: %s", param.c_str());
+                return false;
+            }
+
+            MaskPtr->RtsSet = true;
+        } else if (name == L"idsr") {
+            // idsr={on|off}
+            if (value == L"on") {
+                DcbPtr->fDsrSensitivity = TRUE;
+            } else if (value == L"off") {
+                DcbPtr->fDsrSensitivity = FALSE;
+            } else {
+                fwprintf(stderr, L"Expecting on|off for idsr: %s", param.c_str());
+                return false;
+            }
+
+            MaskPtr->IdsrSet = true;
+        } else {
+            fwprintf(stderr, L"Unrecognized parameter: %s", param.c_str());
+            return false;
         }
     }
 
+    return true;
+}
+
+void RunSerialConsole (PCWSTR DevicePath, _In_ DCB* DcbPtr, SerialParamMask ParamMask)
+{
     wprintf(L"Opening port '%s'\n", DevicePath);
 
     FileHandle serialHandle(CreateFileW(
@@ -460,13 +661,61 @@ void RunSerialConsole (PCWSTR DevicePath, _In_opt_ PCWSTR DcbString)
             GetLastError());
     }
 
-    if (DcbString) {
-        if (!SetCommState(serialHandle.Get(), &dcb)) {
-            throw wexception(
-                L"SetCommState() failed. Failed to set device to desired "
+    DCB dcb;
+    if (!GetCommState(serialHandle.Get(), &dcb)) {
+        throw wexception(
+                L"GetCommState() failed. Failed to get current device "
                 L"configuration. (GetLastError() = 0x%x)",
                 GetLastError());
-        }
+    }
+
+    if (ParamMask.BaudSet) {
+        dcb.BaudRate = DcbPtr->BaudRate;
+    }
+
+    if (ParamMask.ParitySet) {
+        dcb.Parity = DcbPtr->Parity;
+        dcb.fParity = DcbPtr->fParity;
+    }
+
+    if (ParamMask.DataLengthSet) {
+        dcb.ByteSize = DcbPtr->ByteSize;
+    }
+
+    if (ParamMask.StopBitsSet) {
+        dcb.StopBits = DcbPtr->StopBits;
+    }
+
+    if (ParamMask.XonSet) {
+        dcb.fInX = DcbPtr->fInX;
+        dcb.fOutX = DcbPtr->fOutX;
+    }
+
+    if (ParamMask.OdsrSet) {
+        dcb.fOutxDsrFlow = DcbPtr->fOutxDsrFlow;
+    }
+
+    if (ParamMask.OctsSet) {
+        dcb.fOutxCtsFlow = DcbPtr->fOutxCtsFlow;
+    }
+
+    if (ParamMask.DtrSet) {
+        dcb.fDtrControl = DcbPtr->fDtrControl;
+    }
+
+    if (ParamMask.RtsSet) {
+        dcb.fRtsControl = DcbPtr->fRtsControl;
+    }
+
+    if (ParamMask.IdsrSet) {
+        dcb.fDsrSensitivity = DcbPtr->fDsrSensitivity;
+    }
+
+    if (!SetCommState(serialHandle.Get(), &dcb)) {
+        throw wexception(
+            L"SetCommState() failed. Failed to set device to desired "
+            L"configuration. (GetLastError() = 0x%x)",
+            GetLastError());
     }
 
     auto commTimeouts = COMMTIMEOUTS();
@@ -573,10 +822,14 @@ L"    %s \\\\?\\USB#VID_FFFF&PID_0005#{86e0d1e0-8089-11d0-9ce4-08003e301f73} bau
 int __cdecl wmain (int argc, _In_reads_(argc) const wchar_t* argv[])
 {
     std::wstring devicePath;
-    std::wstring dcbString;
+
+    auto paramMask = SerialParamMask();
+    auto dcb = DCB();
+    dcb.DCBlength = sizeof(DCB);
 
     if (argc < 2) {
-        // connect to the first serial port found
+        // connect to the first serial port found in the port's
+        // current configuration
         devicePath = GetFirstDevice();
         if (devicePath.empty()) {
             fwprintf(
@@ -599,20 +852,29 @@ int __cdecl wmain (int argc, _In_reads_(argc) const wchar_t* argv[])
         }
         return 0;
     } else {
-        // first positional parameter is device path
+        // if the first positional parameter contains an '=',
+        // take the first enumerated device.
+        int optind;
         devicePath = argv[1];
+        if (devicePath.find_first_of(L'=') == devicePath.npos) {
+            optind = 2;
+        } else {
+            optind = 1;
+            devicePath = GetFirstDevice();
+        }
 
-        // combine the rest of the parameters into a DCB string
-        for (int i = 2; i < argc; ++i) {
-            dcbString += argv[i];
-            dcbString += L" ";
+        if (!ParseConnectionParams(
+                argc - optind,
+                argv + optind,
+                &dcb,
+                &paramMask)) {
+
+            return 1;
         }
     }
 
     try {
-        RunSerialConsole(
-            devicePath.c_str(),
-            dcbString.empty() ? nullptr : dcbString.c_str());
+        RunSerialConsole(devicePath.c_str(), &dcb, paramMask);
     } catch (const wexception& ex) {
         std::wcerr << L"Error: " << ex.wwhat() << L"\n";
         return 1;
