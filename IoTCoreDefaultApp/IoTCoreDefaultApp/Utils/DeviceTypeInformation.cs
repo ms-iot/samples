@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 
 using Windows.Security.ExchangeActiveSyncProvisioning;
+using System;
 
 namespace IoTCoreDefaultApp.Utils
 {
