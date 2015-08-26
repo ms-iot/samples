@@ -47,9 +47,9 @@
     <Capability Name="internetClient" />
     <Capability Name="internetClientServer" />
     <DeviceCapability Name="bluetooth.rfcomm">
-      <!--<Device Id="any">
-
-      </Device>-->
+      <Device Id="any">
+        <Function Type="name:serialPort"/>
+      </Device>
     </DeviceCapability>
   </Capabilities>
 </Package>

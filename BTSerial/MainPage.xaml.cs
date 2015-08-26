@@ -18,6 +18,7 @@ using Windows.Devices.Bluetooth.Rfcomm;
 using Windows.Networking.Sockets;
 using Windows.Storage.Streams;
 using System.Threading.Tasks;
+using Windows.Devices.Enumeration;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -31,9 +32,9 @@ namespace BTSerial
 
         // The Chat Server's custom service Uuid: 34B1CF4D-1069-4AD6-89B6-E161D79BE4D8
 
-        private Windows.Devices.Enumeration.DeviceInformationCollection deviceCollection;
-        private Windows.Devices.Enumeration.DeviceInformation selectedDevice;
-        Windows.Devices.Bluetooth.Rfcomm.RfcommDeviceService deviceService;
+        private DeviceInformationCollection deviceCollection;
+        private DeviceInformation selectedDevice;
+        private RfcommDeviceService deviceService;
 
         public string deviceName = "RNBT-76B7"; // Specify the device name to be selected; You can find the device name from the webb under bluetooth 
 
@@ -57,6 +58,7 @@ namespace BTSerial
             {
                 string device1=RfcommDeviceService.GetDeviceSelector(RfcommServiceId.SerialPort);
                 deviceCollection = await Windows.Devices.Enumeration.DeviceInformation.FindAllAsync(device1);
+               
             }
             catch (Exception exception)
             {
@@ -76,50 +78,67 @@ namespace BTSerial
                 }
             }
 
-            var deviceService= await Windows.Devices.Bluetooth.Rfcomm.RfcommDeviceService.FromIdAsync(selectedDevice.Id);
-            
-            if (deviceService != null)
+            if (selectedDevice == null)
             {
-                //connect the socket   
-                try
-                {
-                    await streamSocket.ConnectAsync(deviceService.ConnectionHostName, deviceService.ConnectionServiceName);
-                }
-                catch (Exception ex)
-                {
-                    errorStatus.Visibility = Visibility.Visible;
-                    errorStatus.Text = "Cannot connect bluetooth device:"+ex.Message;
-                }
-                          
+                errorStatus.Visibility = Visibility.Visible;
+                errorStatus.Text = "Cannot find the device specified; Please check the device name";
+                return;
             }
             else
             {
-                errorStatus.Visibility = Visibility.Visible;
-                errorStatus.Text = "Didn't find the specified bluetooth device";
+                deviceService = await RfcommDeviceService.FromIdAsync(selectedDevice.Id);
+
+                if (deviceService != null)
+                {
+                    //connect the socket   
+                    try
+                    {
+                        await streamSocket.ConnectAsync(deviceService.ConnectionHostName, deviceService.ConnectionServiceName);
+                    }
+                    catch (Exception ex)
+                    {
+                        errorStatus.Visibility = Visibility.Visible;
+                        errorStatus.Text = "Cannot connect bluetooth device:" + ex.Message;
+                    }
+
+                }
+                else
+                {
+                    errorStatus.Visibility = Visibility.Visible;
+                    errorStatus.Text = "Didn't find the specified bluetooth device";
+                }
             }
            
         }
 
         private async void SendData_Click(object sender, RoutedEventArgs e)
         {
+            if (deviceService != null)
+            {   
+                //send data
+                string sendData = messagesent.Text;
+                if (string.IsNullOrEmpty(sendData))
+                {
+                    errorStatus.Visibility = Visibility.Visible;
+                    errorStatus.Text = "Please specify the string you are going to send";
+                }
+                else
+                {
+                    DataWriter dwriter = new DataWriter(streamSocket.OutputStream);
+                    UInt32 len = dwriter.MeasureString(sendData);
+                    dwriter.WriteUInt32(len);
+                    dwriter.WriteString(sendData);
+                    await dwriter.StoreAsync();
+                    await dwriter.FlushAsync();
+                }
 
-            //send data
-            string sendData = messagesent.Text;
-            if (string.IsNullOrEmpty(sendData))
-            {
-                errorStatus.Visibility = Visibility.Visible;
-                errorStatus.Text = "Please specify the string you are going to send";
             }
             else
             {
-                DataWriter dwriter = new DataWriter(streamSocket.OutputStream);
-                UInt32 len = dwriter.MeasureString(sendData);
-                dwriter.WriteUInt32(len);
-                dwriter.WriteString(sendData);
-                await dwriter.StoreAsync();
-                await dwriter.FlushAsync();
+                errorStatus.Visibility = Visibility.Visible;
+                errorStatus.Text = "Bluetooth is not connected correctly!";
             }
-        
+       
         }
 
         private async void ReceiveData_Click(object sender, RoutedEventArgs e)
@@ -133,15 +152,29 @@ namespace BTSerial
                 return;
             }
 
-            uint stringLength = dreader.ReadUInt32();
-            uint actualStringLength = await dreader.LoadAsync(stringLength);
-            if(stringLength != actualStringLength)
-            {
-                return;
-            }
-            string text = dreader.ReadString(actualStringLength);
+            uint stringLength;
+            uint actualStringLength;
 
-            message.Text = text;
+            try
+            {
+                stringLength = dreader.ReadUInt32();
+                actualStringLength = await dreader.LoadAsync(stringLength);
+
+                if (stringLength != actualStringLength)
+                {
+                    return;
+                }
+                string text = dreader.ReadString(actualStringLength);
+
+                message.Text = text;
+
+            }
+            catch (Exception ex)
+            {
+                errorStatus.Visibility = Visibility.Visible;
+                errorStatus.Text = "Reading data from Bluetooth encountered error!"+ex.Message;
+            }
+
 
         }
     }
