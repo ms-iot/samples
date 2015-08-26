@@ -19,7 +19,7 @@
             <TextBlock x:Name="txtblock3" Text="Step3: Receive data from BT device" Margin="10,10,100,0"/>
             <Button x:Name="ReceiveDataFromBT" Click="ReceiveData_Click" Content="Receive" Margin="10,0,0,10" />
             <TextBox x:Name="message" Margin="10,10,35,10" />
-            <TextBox x:Name="errorStatus" Visibility="Visible" Margin="10,10, 35, 10"></TextBox>
+            <TextBox x:Name="errorStatus" Visibility="Collapsed" Margin="10,10, 35, 10"></TextBox>
         </StackPanel>
     </Grid>
 </Page>
