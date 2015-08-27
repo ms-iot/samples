@@ -12,7 +12,7 @@
             <TextBlock x:Name="txtblock1" Text="Step1: Connect BT Device" Margin="10,10,140,0"/>
             <Button x:Name="ConnectBT" Click="ConnectDevice_Click" Content="Connect" Margin="10,0,0,10" />
 
-            <TextBlock x:Name="txtblock2" Text="Step2: At below please write the message you are going to send" Margin="10,10,0,0"/>
+            <TextBlock x:Name="txtblock2" Text="Step2: Write the message you are going to send" Margin="10,10,0,0"/>
             <TextBox x:Name="messagesent" Margin="10,10,35,10" />          
             <Button x:Name="sendDatatoBT" Click="SendData_Click" Content="Send" Margin="10,0,0,10" />
 
