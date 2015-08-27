@@ -179,7 +179,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="1" Grid.Row="1" x:Uid="LanguageTitle" Text="Language" Style="{StaticResource SubtitleTextBlockStyle}" FontWeight="Normal" />
-            <ListBox Grid.Column="1" Grid.Row="2" x:Name="LanguageListBox" FontSize="16" Margin="0,10,0,0" Width="446" SelectionChanged="LanguageListBox_SelectionChanged" />
+            <ListBox Grid.Column="1" Grid.Row="2" x:Name="LanguageListBox" FontSize="16" HorizontalAlignment="Left" Margin="10,10,0,0" Width="446" SelectionChanged="LanguageListBox_SelectionChanged" />
         </Grid>
 
         <Grid x:Name="NetworkGrid" Grid.Column="2" Grid.Row="1" Visibility="Collapsed">
@@ -211,7 +211,7 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <TextBlock x:Uid="Wifi" Text="Wi-Fi" Style="{StaticResource BaseTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,12,0,12"/>
-                            <Button Grid.Column="2" x:Name="RefreshButton" x:Uid="Refresh" Content="Refresh" Click="RefreshButton_Click" />
+                            <Button Grid.Column="2" x:Name="RefreshButton" x:Uid="Refresh" Margin="0 15 0 0" Content="Refresh" Click="RefreshButton_Click" />
                         </Grid>
                         <ListView x:Name="WifiListView" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionMode="Single" Width="446" ItemTemplate="{StaticResource WifiInitialState}" SelectionChanged="WifiListView_SelectionChanged" ItemContainerStyle="{StaticResource WifiListViewItemStyle}"/>
                         <TextBlock x:Uid="NoNetworks" x:Name="NoWifiFoundText" Text="None found" Width="446" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed"/>
