@@ -86,7 +86,8 @@ HRESULT GpioOneWire::Dht11::Sample (GpioOneWire::Dht11Reading& Reading)
     
     endTickCount = GetTickCount64() + 10;
 
-    // capture every transition until end time is reached
+    // capture every falling edge until all bits are received or
+    // timeout occurs
     for (;;) {
         if (GetTickCount64() > endTickCount) {
             return HRESULT_FROM_WIN32(ERROR_TIMEOUT);
@@ -94,6 +95,7 @@ HRESULT GpioOneWire::Dht11::Sample (GpioOneWire::Dht11Reading& Reading)
             
         GpioPinValue value = this->pin->Read();
         if ((previousValue == GpioPinValue::High) && (value == GpioPinValue::Low)) {
+            // A falling edge was detected
             LARGE_INTEGER now;
             QueryPerformanceCounter(&now);
             
@@ -151,6 +153,8 @@ void GpioOneWire::MainPage::Page_Loaded(
     }
 
     this->dht11.Init(pin);
+    this->pullResistorText->Text = this->dht11.PullResistorRequired() ?
+        L"10k pull-up resistor required." : L"Pull-up resistor not required.";
 
     TimeSpan period = { 2 * 10000000LL };
     this->timer = ThreadPoolTimer::CreatePeriodicTimer(
@@ -203,7 +207,7 @@ void GpioOneWire::MainPage::timerElapsed (
         hr = StringCchPrintfW(
             buf,
             ARRAYSIZE(buf),
-            L"Humidity: %f",
+            L"Humidity: %.1f %%RH",
             reading.Humidity());
         if (FAILED(hr)) {
             throw ref new Exception(hr, L"Failed to print string");
@@ -214,7 +218,7 @@ void GpioOneWire::MainPage::timerElapsed (
         hr = StringCchPrintfW(
             buf,
             ARRAYSIZE(buf),
-            L"Temperature: %f",
+            L"Temperature: %.1f \u00B0C",
             reading.Temperature());
         if (FAILED(hr)) {
             throw ref new Exception(hr, L"Failed to print string");

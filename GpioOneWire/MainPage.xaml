@@ -8,10 +8,11 @@
     mc:Ignorable="d"
     Loaded="Page_Loaded">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock x:Name="titleText" HorizontalAlignment="Center" Margin="0,250,0,0" TextWrapping="Wrap" Text="Gpio OneWire Demo (DHT11 Sensor)" VerticalAlignment="Top" Height="67" FontSize="48" TextAlignment="Center"/>
-        <TextBlock x:Name="humidityText" HorizontalAlignment="Center" Margin="0,322,0,0" TextWrapping="Wrap" Text="Humidity: Not Initialized" VerticalAlignment="Top" Width="312" FontSize="26.667" Foreground="#FFC71818" TextAlignment="Center"/>
-        <TextBlock x:Name="temperatureText" HorizontalAlignment="Center" Margin="0,362,0,0" TextWrapping="Wrap" Text="Temperature: Not Initialized" VerticalAlignment="Top" Width="312" FontSize="26.667" Foreground="#FF14D125" TextAlignment="Center"/>
-        <TextBlock x:Name="statusText" HorizontalAlignment="Center" Margin="10,452,10,0" TextWrapping="Wrap" Text="Status: Initializing ..." VerticalAlignment="Top" Width="1346" FontSize="32" TextAlignment="Center"/>
-    </Grid>
+    <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBlock x:Name="titleText" FontSize="48" TextWrapping="Wrap" TextAlignment="Center">Gpio OneWire Demo (DHT11 Sensor)</TextBlock>
+        <TextBlock x:Name="pullResistorText" FontSize="22" Foreground="#777777" TextWrapping="Wrap" TextAlignment="Center" />
+        <TextBlock x:Name="humidityText" FontSize="26" Foreground="#0066bb" TextWrapping="Wrap" TextAlignment="Center">Humidity: Not Initialized</TextBlock>
+        <TextBlock x:Name="temperatureText"  FontSize="26" Foreground="#0066bb" TextWrapping="Wrap" TextAlignment="Center">Temperature: Not Initialized</TextBlock>
+        <TextBlock x:Name="statusText" FontSize="32" TextWrapping="Wrap" TextAlignment="Center">Status: Initializing ...</TextBlock>
+    </StackPanel>
 </Page>
