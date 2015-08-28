@@ -50,6 +50,11 @@ namespace GpioOneWire
 
         HRESULT Sample (_Out_ Dht11Reading& Reading);
 
+        bool PullResistorRequired ( ) const
+        {
+            return inputDriveMode != Windows::Devices::Gpio::GpioPinDriveMode::InputPullUp;
+        }
+
     private:
         Windows::Devices::Gpio::GpioPin^ pin;
         Windows::Devices::Gpio::GpioPinDriveMode inputDriveMode;
