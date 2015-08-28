@@ -207,7 +207,7 @@ void GpioOneWire::MainPage::timerElapsed (
         hr = StringCchPrintfW(
             buf,
             ARRAYSIZE(buf),
-            L"Humidity: %.1f %%RH",
+            L"Humidity: %.1f%% RH",,
             reading.Humidity());
         if (FAILED(hr)) {
             throw ref new Exception(hr, L"Failed to print string");
