@@ -15,7 +15,7 @@
 
   <Properties>
     <DisplayName>GpioOneWire</DisplayName>
-    <PublisherDisplayName>jordanrh</PublisherDisplayName>
+    <PublisherDisplayName>Microsoft</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
