@@ -43,12 +43,9 @@ HRESULT GpioOneWire::Dht11::Sample (GpioOneWire::Dht11Reading& Reading)
     LARGE_INTEGER qpf;
     QueryPerformanceFrequency(&qpf);
 
-    // convert microseconds to QPF units
+    // convert microseconds to QPC units
     const unsigned int oneThreshold = static_cast<unsigned int>(
         110LL * qpf.QuadPart / 1000000LL);
-
-    // Set pin as input pull up
-    this->pin->SetDriveMode(this->inputDriveMode);
 
     // Latch low value onto pin
     this->pin->Write(GpioPinValue::Low);
@@ -82,13 +79,12 @@ HRESULT GpioOneWire::Dht11::Sample (GpioOneWire::Dht11Reading& Reading)
     }
     
     LARGE_INTEGER prevTime = { 0 };
-    unsigned int i = 0;
-    
+
     endTickCount = GetTickCount64() + 10;
 
     // capture every falling edge until all bits are received or
     // timeout occurs
-    for (;;) {
+    for (unsigned int i = 0; i < Reading.bits.size();) {
         if (GetTickCount64() > endTickCount) {
             return HRESULT_FROM_WIN32(ERROR_TIMEOUT);
         }
@@ -108,16 +104,9 @@ HRESULT GpioOneWire::Dht11::Sample (GpioOneWire::Dht11Reading& Reading)
             
             prevTime = now;
             ++i;
-            if (i == (Reading.bits.size() + 1))
-                break;
         }
         
         previousValue = value;
-    }
-    
-    if (i != (Reading.bits.size() + 1)) {
-        // did not receive all bits
-        return HRESULT_FROM_WIN32(ERROR_IO_DEVICE);
     }
     
     if (!Reading.IsValid()) {
