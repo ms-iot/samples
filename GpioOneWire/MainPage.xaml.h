@@ -1,4 +1,5 @@
-﻿//
+﻿// Copyright (c) Microsoft. All rights reserved.
+//
 // MainPage.xaml.h
 // Declaration of the MainPage class.
 //
@@ -39,6 +40,8 @@ namespace GpioOneWire
 
     class Dht11
     {
+        enum { SAMPLE_HOLD_LOW_MILLIS = 18 };
+        
     public:
         
         Dht11 ( ) : 
@@ -60,13 +63,15 @@ namespace GpioOneWire
         Windows::Devices::Gpio::GpioPinDriveMode inputDriveMode;
     };
 
-	/// <summary>
-	/// An empty page that can be used on its own or navigated to within a Frame.
-	/// </summary>
-	public ref class MainPage sealed
-	{
-	public:
-		MainPage();
+    /// <summary>
+    /// The main page of the application - used to show samples from the DHT11.
+    /// </summary>
+    public ref class MainPage sealed
+    {
+        enum { DHT11_PIN_NUMBER = 4 };
+        
+    public:
+        MainPage();
 
     private:
         void Page_Loaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
