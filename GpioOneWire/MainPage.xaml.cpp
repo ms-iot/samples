@@ -1,4 +1,5 @@
-﻿//
+﻿// Copyright (c) Microsoft. All rights reserved.
+//
 // MainPage.xaml.cpp
 // Implementation of the MainPage class.
 //
@@ -43,7 +44,10 @@ HRESULT GpioOneWire::Dht11::Sample (GpioOneWire::Dht11Reading& Reading)
     LARGE_INTEGER qpf;
     QueryPerformanceFrequency(&qpf);
 
-    // convert microseconds to QPC units
+    // This is the threshold used to determine whether a bit is a '0' or a '1'.
+    // A '0' has a pulse time of 76 microseconds, while a '1' has a
+    // pulse time of 120 microseconds. 110 is chosen as a reasonable threshold.
+    // We convert the value to QPF units for later use.
     const unsigned int oneThreshold = static_cast<unsigned int>(
         110LL * qpf.QuadPart / 1000000LL);
 
@@ -54,20 +58,21 @@ HRESULT GpioOneWire::Dht11::Sample (GpioOneWire::Dht11Reading& Reading)
     this->pin->SetDriveMode(GpioPinDriveMode::Output);
 
     // Wait for at least 18 ms
-    Sleep(18);
+    Sleep(SAMPLE_HOLD_LOW_MILLIS);
 
     // Set pin back to input
     this->pin->SetDriveMode(this->inputDriveMode);
-    
+
     GpioPinValue previousValue = this->pin->Read();
-    
+
     // catch the first rising edge
-    ULONGLONG endTickCount = GetTickCount64() + 1;
+    const ULONG initialRisingEdgeTimeoutMillis = 1;
+    ULONGLONG endTickCount = GetTickCount64() + initialRisingEdgeTimeoutMillis;
     for (;;) {
         if (GetTickCount64() > endTickCount) {
             return HRESULT_FROM_WIN32(ERROR_TIMEOUT);
         }
-        
+
         GpioPinValue value = this->pin->Read();
         if (value != previousValue) {
             // rising edgue?
@@ -77,10 +82,11 @@ HRESULT GpioOneWire::Dht11::Sample (GpioOneWire::Dht11Reading& Reading)
             previousValue = value;
         }
     }
-    
+
     LARGE_INTEGER prevTime = { 0 };
 
-    endTickCount = GetTickCount64() + 10;
+    const ULONG sampleTimeoutMillis = 10;
+    endTickCount = GetTickCount64() + sampleTimeoutMillis;
 
     // capture every falling edge until all bits are received or
     // timeout occurs
@@ -88,38 +94,38 @@ HRESULT GpioOneWire::Dht11::Sample (GpioOneWire::Dht11Reading& Reading)
         if (GetTickCount64() > endTickCount) {
             return HRESULT_FROM_WIN32(ERROR_TIMEOUT);
         }
-            
+
         GpioPinValue value = this->pin->Read();
         if ((previousValue == GpioPinValue::High) && (value == GpioPinValue::Low)) {
             // A falling edge was detected
             LARGE_INTEGER now;
             QueryPerformanceCounter(&now);
-            
+
             if (i != 0) {
                 unsigned int difference = static_cast<unsigned int>(
                     now.QuadPart - prevTime.QuadPart);
-                Reading.bits[Reading.bits.size() - i] = 
+                Reading.bits[Reading.bits.size() - i] =
                     difference > oneThreshold;
             }
-            
+
             prevTime = now;
             ++i;
         }
-        
+
         previousValue = value;
     }
-    
+
     if (!Reading.IsValid()) {
         // checksum mismatch
         return HRESULT_FROM_WIN32(ERROR_INVALID_DATA);
     }
-    
+
     return S_OK;
 }
 
 MainPage::MainPage()
 {
-	InitializeComponent();
+    InitializeComponent();
 }
 
 void GpioOneWire::MainPage::Page_Loaded(
@@ -135,7 +141,7 @@ void GpioOneWire::MainPage::Page_Loaded(
 
     GpioPin^ pin;
     try {
-        pin = controller->OpenPin(18);
+        pin = controller->OpenPin(DHT11_PIN_NUMBER);
     } catch (Exception^ ex) {
         this->statusText->Text = L"Failed to open GPIO pin: " + ex->Message;
         return;
@@ -145,6 +151,7 @@ void GpioOneWire::MainPage::Page_Loaded(
     this->pullResistorText->Text = this->dht11.PullResistorRequired() ?
         L"10k pull-up resistor required." : L"Pull-up resistor not required.";
 
+    // Create a periodic timer to sample from the DHT11 every 2 seconds
     TimeSpan period = { 2 * 10000000LL };
     this->timer = ThreadPoolTimer::CreatePeriodicTimer(
         ref new TimerElapsedHandler(this, &MainPage::timerElapsed),
@@ -172,7 +179,7 @@ void GpioOneWire::MainPage::timerElapsed (
         if (FAILED(sensorHr)) {
             this->humidityText->Text = L"Humidity: (failed)";
             this->temperatureText->Text = L"Temperature: (failed)";
-            
+
             switch (sensorHr) {
             case __HRESULT_FROM_WIN32(ERROR_IO_DEVICE):
                 this->statusText->Text = L"Did not catch all falling edges";
@@ -203,7 +210,7 @@ void GpioOneWire::MainPage::timerElapsed (
         }
 
         this->humidityText->Text = ref new String(buf);
-        
+
         hr = StringCchPrintfW(
             buf,
             ARRAYSIZE(buf),
