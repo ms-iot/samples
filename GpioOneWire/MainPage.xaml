@@ -1,0 +1,19 @@
+﻿<!-- Copyright (c) Microsoft. All rights reserved. -->
+<Page
+    x:Class="GpioOneWire.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:GpioOneWire"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Loaded="Page_Loaded">
+
+    <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBlock x:Name="titleText" FontSize="48" TextWrapping="Wrap" TextAlignment="Center">Gpio OneWire Demo (DHT11 Sensor)</TextBlock>
+        <TextBlock x:Name="pullResistorText" FontSize="22" Foreground="#777777" TextWrapping="Wrap" TextAlignment="Center" />
+        <TextBlock x:Name="humidityText" FontSize="26" Foreground="#0066bb" TextWrapping="Wrap" TextAlignment="Center">Humidity: Not Initialized</TextBlock>
+        <TextBlock x:Name="temperatureText"  FontSize="26" Foreground="#0066bb" TextWrapping="Wrap" TextAlignment="Center">Temperature: Not Initialized</TextBlock>
+        <TextBlock x:Name="statusText" FontSize="32" TextWrapping="Wrap" TextAlignment="Center">Status: Initializing ...</TextBlock>
+    </StackPanel>
+</Page>
