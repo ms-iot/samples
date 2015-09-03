@@ -18,5 +18,25 @@
     <ClCompile Include="BlinkyApp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BlinkyApp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sbc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mbm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rpi2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
