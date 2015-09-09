@@ -1,4 +1,6 @@
-﻿#define RPI1
+﻿// Copyright (c) Microsoft. All rights reserved.
+
+#define RPI1
 
 using System;
 using System.Collections.Generic;
@@ -11,11 +13,13 @@ namespace SpeechTranslator
     class ConstantParam
     {
         public static readonly string DatamarketAccessUri = "https://datamarket.accesscontrol.windows.net/v2/OAuth2-13";
+
+        //Access token expires every 10 minutes. Renew it every 9 minutes only.
         public const int RefreshTokenDuration = 9;
 
         //Token Property
-        public static string clientid = "magicbunny888";
-        public static string clientsecret = "FVw2RUvCvP//CaBomIQliFxqWIVM8B0angjeLOZvvDE=";
+        public static string clientid = "YourAzureAccount";
+        public static string clientsecret = "YourAzureAccountClientSectet";
         public static string ApiUri = "http://api.microsofttranslator.com/v2/Http.svc/Translate?text=";
 
 #if RPI1
