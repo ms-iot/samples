@@ -303,7 +303,6 @@ namespace SpeechTranslator
                             {
                                 connStatus.Text += "Reconnection failed, Double check Host is on and try again";
                             });
-                            //throw;
                             return;
                         }
                     }                    

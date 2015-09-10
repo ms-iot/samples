@@ -23,20 +23,12 @@ namespace SpeechTranslator
         public static string ApiUri = "http://api.microsofttranslator.com/v2/Http.svc/Translate?text=";
 
 #if RPI1
-        /// <summary>
-        ///  Uncomment if you are deploying to device with the name "rpi1"
-        /// </summary>
-        /// 
 
         // Stream Socket parameters
         public static string SelfPort = "8082";
         public static string ClientPort = "8083";
         public static string ServerHostname = "speechtransrpi2";
 #else
-        /// <summary>
-        ///  Uncomment if you are deploying to device with the name "rpi2"
-        /// </summary>
-        /// 
 
         // Stream Socket parameterss
         public static string SelfPort = "8083";
