@@ -75,6 +75,7 @@ namespace DigitalSignageUAP
              * keyboard does not support inputting into browser controls 
              */
             SIP_AddressBar.RegisterEditControl(AddressBar);
+            SIP_AddressBar.RegisterHost(this);
         }
 
         /// <summary>
@@ -171,7 +172,7 @@ namespace DigitalSignageUAP
             browser.Refresh();
         }
 
-        private void RenderPage()
+        public void RenderPage()
         {
             try
             {
@@ -218,16 +219,6 @@ namespace DigitalSignageUAP
 
             /* Need to set focus so the on screen keyboard's content buffer gets updated */
             AddressBar.Focus(FocusState.Programmatic);
-        }
-
-        /* This button is currently required as a workaround for the on-screen keyboard 
-         * The soft enter key does not generate an event, and thus we don't know when
-         * to render a new page. This button allows users with the on-screen keyboard
-         * to at a mininum be able to use the browser to visit new pages
-         */
-        private void goButton_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            RenderPage();
         }
     }
 }

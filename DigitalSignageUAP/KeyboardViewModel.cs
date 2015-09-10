@@ -156,6 +156,12 @@ namespace OnScreenKeyboardSample
         /// <param name="arg">The KeyModel of the key-button that was pressed</param>
         public void ExecuteKeyPressedCommand(object arg)
         {
+            if (arg != null && arg.ToString() == "\n")
+            {
+                var webViewHost = container.GetHost() as DigitalSignageUAP.BrowserPage;
+                webViewHost.RenderPage();
+                return;
+            }
             if (container.OutputString != null)
             {
                 int currentSelectionStart = OnScreenKeyBoard.Buffer.SelectionStart;
