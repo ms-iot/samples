@@ -1,10 +1,3 @@
----
-layout: default
-title: Blinky Sample
-permalink: /en-US/win10/samples/speechtranslator.htm
-lang: en-US
----
-
 #Build the SpeechTranslator Project
 
 ###Component Lists:
