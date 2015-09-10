@@ -43,11 +43,9 @@ namespace DigitalSignageUAP
     /// </summary>
     public sealed partial class FlyoutSettings : Flyout
     {
-        bool noSettingYet = false;
         string oldConfigSetting;
         ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
         string configValueName = "ConfigFilePath";
-        private double OriginalFlyoutWidth;
 
         public FlyoutSettings()
         {
@@ -76,7 +74,6 @@ namespace DigitalSignageUAP
             if (localSettings.Values[configValueName] == null) // we don't have this configured yet
             {
                 configFileTextBoxValue = "";
-                noSettingYet = true;
             }
             else
             {
