@@ -258,7 +258,6 @@ namespace SpeechTranslator
             {
                 await writer.StoreAsync();
                 await writer.FlushAsync();
-                //  SendOutput.Text = "\"" + stringToSend + "\" sent successfully.";
             }
             catch (Exception exception)
             {
@@ -282,6 +281,7 @@ namespace SpeechTranslator
                     }
 
                     StreamSocket locsocket = new StreamSocket();
+
                     // save the soket so subsequence can use it
                     CoreApplication.Properties.Add("clientSocket", locsocket);
                     try
@@ -370,31 +370,10 @@ namespace SpeechTranslator
         }
         private async void ContinuousRecognitionSession_ResultGenerated(SpeechContinuousRecognitionSession sender, SpeechContinuousRecognitionResultGeneratedEventArgs args)
         {
-            // We may choose to discard content that has low confidence, as that could indicate that we're picking up
-            // noise via the microphone, or someone could be talking out of earshot.
-
-            // Speak it out
-
             string s = args.Result.Text;
-
-            // we add the translator here. And then translate what heard to English
-            //Translator Trans = new Translator(s, ConstantParam.from, ConstantParam.to);
-            //Translator Trans = new Translator(s, SRLang.LanguageTag, SSLang.LanguageTag);
-            //string translatedS = Trans.GetTranslatedString();
-
-            //// Second translator added to verify the end to end scenario
-            //Translator trans1 = new Translator(translatedS, ConstantParam.from1, ConstantParam.to1);
-            //string translatedS1 = trans1.GetTranslatedString();
-
-            //Make the Connection
-            //await ConnectHost();
-
             //Send the Data
             SendDataToHost(s);
 
-            //SpeechSynthesisStream stream = await synthesizer.SynthesizeTextToStreamAsync(translatedS);
-
-            // if (args.Result.Confidence==SpeechRecognitionConfidence.Medium || args.Result.Confidence == SpeechRecognitionConfidence.High)
             if (args.Result.Status == SpeechRecognitionResultStatus.Success)
             {
                 dictatedTextBuilder.Append(s + " ");
@@ -402,9 +381,6 @@ namespace SpeechTranslator
                 {
                     dictationTextBox.Text = dictatedTextBuilder.ToString();
                     btnClearText.IsEnabled = true;
-                    // we comment out PLAY here as we will play on another server
-                    //media.SetSource(stream, stream.ContentType);
-                    //media.Play();
                 });
             }
             else
@@ -424,7 +400,6 @@ namespace SpeechTranslator
         {
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                // MainPage.Current.NotifyUser("Speech recognizer state: " + args.State.ToString(), NotifyType.StatusMessage);
             });
         }
         private async void btnStartTalk_Click(object sender, RoutedEventArgs e)
@@ -473,9 +448,6 @@ namespace SpeechTranslator
             btnClearText.IsEnabled = false;
             dictatedTextBuilder.Clear();
             dictationTextBox.Text = "";
-
-            // Avoid setting focus on the text box, since it's a non-editable control.
-            //btnContinuousRecognize.Focus(FocusState.Programmatic);
         }
         private void dictationTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
