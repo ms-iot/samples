@@ -70,6 +70,8 @@ namespace OnScreenKeyboardSample
     public partial class OnScreenKeyBoard : UserControl
     {
         private static ContentBuffer _buffer;
+        private object _host;
+
         public static ContentBuffer Buffer
         {
             get
@@ -106,7 +108,20 @@ namespace OnScreenKeyboardSample
             var t = control as TextBox;
             t.SelectionChanged += Target_SelectionChanged;
             t.GotFocus += Target_GotFocus;
-            
+
+        }
+
+        public void RegisterHost(object host)
+        {
+            if (host != null)
+            {
+                _host = host;
+            }
+        }
+
+        public object GetHost()
+        {
+            return _host;
         }
 
         private void Target_SelectionChanged(object sender, RoutedEventArgs e)
