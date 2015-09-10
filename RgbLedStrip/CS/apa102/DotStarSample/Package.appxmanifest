@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="4a5f3a64-4386-4181-96a8-5d487c365bba"
-    Publisher="CN=scbrad"
+    Name="DotStarStrip"
+    Publisher="CN=Microsoft"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="4a5f3a64-4386-4181-96a8-5d487c365bba" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>DotStarStrip</DisplayName>
-    <PublisherDisplayName>scbrad</PublisherDisplayName>
+    <PublisherDisplayName>Microsoft</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
