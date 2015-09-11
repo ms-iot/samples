@@ -45,7 +45,7 @@
         </Grid.ColumnDefinitions>
 
         <!-- Header row -->
-        <Grid Grid.Column="0" Grid.ColumnSpan="5" Background="#2a2a2a">
+        <Grid Grid.Column="0" Grid.ColumnSpan="3" Background="#2a2a2a">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="100" />
