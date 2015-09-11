@@ -1,38 +1,23 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 using Windows.Media.SpeechRecognition;
 using Windows.Media.SpeechSynthesis;
 using Windows.UI.Core;
 
-// Added By Maggie
 using Windows.Networking;
 using Windows.Networking.Sockets;
 using Windows.Storage.Streams;
 using System.Text;
-
-
-
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 using Windows.ApplicationModel.Core;
-using Windows.Devices.Gpio;
 using Windows.Globalization;
 using System.Threading.Tasks;
 
+// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace SpeechTranslator
 {
@@ -131,7 +116,7 @@ namespace SpeechTranslator
                     string translatedS = Trans.GetTranslatedString();
 
                     SpeechSynthesisStream stream = await synthesizer.SynthesizeTextToStreamAsync(translatedS);
-                    var ignored = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                    var ignored = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
                         media.SetSource(stream, stream.ContentType);
                         media.Play();
@@ -148,7 +133,7 @@ namespace SpeechTranslator
                 {
                     throw;
                 }
-                var ignored = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                var ignored = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
                     StatusText.Text = "Error in Socket reading data from Remote host: " + exception.Message;
                     connected = false;
@@ -212,10 +197,10 @@ namespace SpeechTranslator
             }
 
             // Check Microphone Plugged in
-            bool permissionGained = await AudioCapturePermissions.RequestMicrophonePermission();
+            bool permissionGained = await AudioCapturePermissions.RequestMicrophoneCapture();
             if (!permissionGained)
             {
-                this.dictationTextBox.Text = "Permission to access capture resources was not given by the user, reset the application setting in Settings->Privacy->Microphone.";
+                this.dictationTextBox.Text = "Requesting Microphone Capture Fails; Make sure Microphone is plugged in";
             }
             btnStartTalk.IsEnabled = true;
         }
@@ -288,7 +273,7 @@ namespace SpeechTranslator
                     {
                         await locsocket.ConnectAsync(hostName, ConstantParam.ClientPort);
 
-                        await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                        await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                         {
                             connStatus.Text = "Connected Successfully!";
                         });
@@ -299,7 +284,7 @@ namespace SpeechTranslator
                         // If this is an unknown status it means that the error is fatal and retry will likely fail.
                         if (SocketError.GetStatus(exception.HResult) == SocketErrorStatus.Unknown)
                         {
-                            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                             {
                                 connStatus.Text += "Reconnection failed, Double check Host is on and try again";
                             });
@@ -395,12 +380,6 @@ namespace SpeechTranslator
 
         }
 
-        private async void SpeechRecognizer_StateChanged(SpeechRecognizer sender, SpeechRecognizerStateChangedEventArgs args)
-        {
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-            {
-            });
-        }
         private async void btnStartTalk_Click(object sender, RoutedEventArgs e)
         {
             if (isListening == false)
@@ -475,7 +454,7 @@ namespace SpeechTranslator
             if (connected)
             {
 
-                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
                     connStatus.Text = "Reconnected Successfully!";
                 });
@@ -483,7 +462,7 @@ namespace SpeechTranslator
             }
             else
             {
-                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
                     connStatus.Text = "Reconnection failed, Double check Host is on and try again ";
                 });

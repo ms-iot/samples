@@ -1,9 +1,6 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Media.Capture;
 
@@ -26,7 +23,7 @@ namespace SpeechTranslator
         /// </summary>
         /// <returns>true if the microphone can be accessed without any permissions problems.</returns>
         /// 
-        public async static Task<bool> RequestMicrophonePermission()
+        public async static Task<bool> RequestMicrophoneCapture()
         {
             try
             {
