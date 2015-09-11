@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
+  <Identity Name="SpeechTranslator-OnlyEnglishInput" Publisher="CN=Microsoft" Version="1.0.0.0" />
+  <mp:PhoneIdentity PhoneProductId="a202e5e5-a722-4ad3-8b57-8b5d71b7c5a6" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Properties>
+    <DisplayName>SpeechTranslator-OnlyEnglishInput</DisplayName>
+    <PublisherDisplayName>Microsoft</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
+  </Dependencies>
+  <Resources>
+    <Resource Language="x-generate" />
+  </Resources>
+  <Applications>
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="SpeechTranslator.App">
+      <uap:VisualElements DisplayName="SpeechTranslator" Square150x150Logo="Assets\Logo.png" Square44x44Logo="Assets\SmallLogo.png" Description="SpeechTranslator" BackgroundColor="#464646">
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+      </uap:VisualElements>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <Capability Name="internetClientServer" />
+    <Capability Name="privateNetworkClientServer" />
+    <DeviceCapability Name="microphone" />
+  </Capabilities>
+</Package>
