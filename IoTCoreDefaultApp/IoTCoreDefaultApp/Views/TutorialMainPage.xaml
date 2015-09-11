@@ -98,15 +98,16 @@
                 </ListView>
             </Popup>
 
-        </Grid>
-
-        <Image Grid.Row="1" Grid.Column="1" Source="ms-appx:///Assets/rpi2-tutorials.png"/>
-        <StackPanel VerticalAlignment="Bottom" Grid.Row="2" Grid.Column="1">
-            <TextBlock x:Uid="TutorialHeader" Style="{StaticResource HeaderTextBlockStyle}" TextWrapping="WrapWholeWords" />
-            <TextBlock x:Uid="TutorialTitle" Style="{StaticResource TitleTextBlockStyle}" TextWrapping="WrapWholeWords" />
-        </StackPanel>
+        </Grid>        
         
-        <GridView x:Name="TutorialList" Grid.Row="4" Grid.Column="1" ItemClick="TutorialList_ItemClick" IsItemClickEnabled="True" >
+        <GridView x:Name="TutorialList" Grid.Row="1" Grid.Column="1" ItemClick="TutorialList_ItemClick" IsItemClickEnabled="True" >
+            <GridView.Header>
+                <StackPanel VerticalAlignment="Bottom">
+                    <Image Source="ms-appx:///Assets/rpi2-tutorials.png"/>
+                    <TextBlock x:Uid="TutorialHeader" Style="{StaticResource HeaderTextBlockStyle}" TextWrapping="WrapWholeWords" />
+                    <TextBlock x:Uid="TutorialTitle" Style="{StaticResource TitleTextBlockStyle}" TextWrapping="WrapWholeWords" />
+                </StackPanel>
+            </GridView.Header>
             <GridViewItem>
                 <Grid x:Name="GetStarted">
                     <Grid.RowDefinitions>
