@@ -75,8 +75,13 @@
 			</Grid>
 
 			<Grid Grid.Row="3" HorizontalAlignment="Right">
-				<Button Grid.Column="1" x:Name="CancelButton" x:Uid="CancelButton" Click="CancelButton_Clicked" Content="Cancel" Width="120" Height="32" Visibility="Collapsed"/>
-				<Button Grid.Column="3" x:Name="NextButton" x:Uid="NextButton" Click="NextButton_Clicked" Content="Next" Width="120" Height="32"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="24" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+				<Button Grid.Column="0" x:Name="CancelButton" x:Uid="CancelButton" Click="CancelButton_Clicked" Content="Cancel" Width="120" Height="32" Visibility="Collapsed"/>
+				<Button Grid.Column="2" x:Name="NextButton" x:Uid="NextButton" Click="NextButton_Clicked" Content="Next" Width="120" Height="32"/>
 			</Grid>
 		</Grid>
     </Grid>
