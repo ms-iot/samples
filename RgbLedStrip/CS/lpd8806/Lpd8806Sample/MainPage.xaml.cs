@@ -1,4 +1,6 @@
-﻿namespace Lpd8806Sample
+﻿// Copyright (c) Microsoft. All rights reserved.
+
+namespace Lpd8806Sample
 {
     using System;
     using System.Collections.Generic;
