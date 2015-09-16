@@ -129,14 +129,18 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="120"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical">
+        <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1">
             <TextBlock x:Uid="OOBEWelcomeTitle" Style="{ThemeResource SubheaderTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <TextBlock x:Uid="OOBENetworkTitle" Text="Let's get connected" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,14,0,0"/>
-            <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,50,0,0">
+        </StackPanel>
+        <ScrollViewer Grid.Column="1" Grid.Row="2" >
+			<StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <TextBlock x:Uid="DirectConnections" Text="Direct connections" Style="{StaticResource BaseTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,12"/>
                     <TextBlock x:Uid="NoNetworks" x:Name="NoneFoundText" Text="None found" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed"/>
@@ -158,9 +162,9 @@
                     <ListView x:Name="WifiListView" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionMode="Single" Width="446" ItemTemplate="{StaticResource WifiInitialState}" SelectionChanged="WifiListView_SelectionChanged" ItemContainerStyle="{StaticResource WifiListViewItemStyle}"/>
                     <TextBlock x:Uid="NoNetworks" x:Name="NoWifiFoundText" Text="None found" Width="446" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed"/>
                 </StackPanel>
-            </ScrollViewer>
-        </StackPanel>
-        <HyperlinkButton Grid.Column="1" Grid.Row="1" x:Name="SkipButton" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="SkipButton_Clicked" HorizontalContentAlignment="Left">
+            </StackPanel>
+        </ScrollViewer>
+        <HyperlinkButton Grid.Column="1" Grid.Row="3" x:Name="SkipButton" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="SkipButton_Clicked" HorizontalContentAlignment="Left">
             <TextBlock  x:Uid="SkipStep" Text="Skip this step"/>
         </HyperlinkButton>
     </Grid>
