@@ -1,4 +1,6 @@
-﻿namespace DotStarSample
+﻿// Copyright (c) Microsoft. All rights reserved.
+
+namespace DotStarSample
 {
     using System;
     using System.Diagnostics;
