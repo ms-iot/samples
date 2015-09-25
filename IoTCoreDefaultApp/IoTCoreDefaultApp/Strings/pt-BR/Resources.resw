@@ -192,6 +192,10 @@
     <value>Raspberry Pi 2</value>
     <comment>Board name</comment>
   </data>
+  <data name="DB410Name" xml:space="preserve">
+    <value>DragonBoard 410c</value>
+    <comment>Board name</comment>
+  </data>
   <data name="SkipStep.Text" xml:space="preserve">
     <value>Ignorar este teste</value>
   </data>
@@ -308,7 +312,7 @@
     <value>Não é necessário nenhuma configuração. Basta pressionar iniciar.</value>
   </data>
   <data name="TutorialBlinkyBody4.Text" xml:space="preserve">
-    <value>A frequência da intermitência também pode ser alterada. Fique à vontade para reunir seus amigos e fazer uma festa com seu Raspberry Pi 2.</value>
+    <value>A frequência da intermitência também pode ser alterada. Fique à vontade para reunir seus amigos e fazer uma festa com seu {0}.</value>
   </data>
   <data name="TutorialBlinkyBody5.Text" xml:space="preserve">
     <value>Aviso de isenção de responsabilidade: a Microsoft não se responsabiliza por quaisquer danos que possam ocorrer pelo uso do pequeno LED piscante na placa.</value>

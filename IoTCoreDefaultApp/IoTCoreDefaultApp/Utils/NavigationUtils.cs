@@ -39,7 +39,7 @@ namespace IoTCoreDefaultApp
             if (newDocName == "HelloBlinky")
             {
 #if (!ALWAYS_SHOW_BLINKY)
-                if (DeviceTypeInformation.Type == DeviceTypes.RPI2)
+                if (DeviceTypeInformation.Type == DeviceTypes.RPI2 || DeviceTypeInformation.Type == DeviceTypes.DB410)
 #endif
                 {
                     NavigationUtils.NavigateToScreen(typeof(TutorialHelloBlinkyPage), newDocName);

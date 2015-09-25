@@ -19,6 +19,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media.Imaging;
+using IoTCoreDefaultApp.Utils;
 
 namespace IoTCoreDefaultApp
 {
@@ -121,7 +122,13 @@ namespace IoTCoreDefaultApp
                     case "image":
                         try
                         {
-                            var imageSource = new BitmapImage(new Uri("ms-appx:///" + value));
+                            var deviceType = DeviceTypeInformation.Type;
+                            if (deviceType != DeviceTypes.DB410)
+                            {
+                                deviceType = DeviceTypes.RPI2; // default to RPI2 images
+                            }
+
+                            var imageSource = new BitmapImage(new Uri("ms-appx:///" + String.Format(value, deviceType)));
                             var size = split[split.Length - 2];
                             if (size.Contains('x'))
                             {

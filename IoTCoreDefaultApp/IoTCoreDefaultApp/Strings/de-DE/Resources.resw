@@ -192,6 +192,10 @@
     <value>Raspberry Pi 2</value>
     <comment>Board name</comment>
   </data>
+  <data name="DB410Name" xml:space="preserve">
+    <value>DragonBoard 410c</value>
+    <comment>Board name</comment>
+  </data>
   <data name="SkipStep.Text" xml:space="preserve">
     <value>Schritt überspringen</value>
   </data>
@@ -309,7 +313,7 @@ programme</value>
     <value>Es ist keine Einrichtung erforderlich. Drücken Sie einfach „Start“.</value>
   </data>
   <data name="TutorialBlinkyBody4.Text" xml:space="preserve">
-    <value>Sie können die Blinkfrequenz auch ändern. Trommeln Sie alle Freunde zusammen, und veranstalten Sie eine Tanzparty rund um Ihren Raspberry Pi 2.</value>
+    <value>Sie können die Blinkfrequenz auch ändern. Trommeln Sie alle Freunde zusammen, und veranstalten Sie eine Tanzparty rund um Ihren {0}.</value>
   </data>
   <data name="TutorialBlinkyBody5.Text" xml:space="preserve">
     <value>Haftungsausschluss: Microsoft haftet nicht für Schäden, die dadurch entstehen, dass Sie große Technopartys mit der kleinen blinkenden LED auf dem Board veranstalten.</value>
