@@ -192,6 +192,10 @@
     <value>Raspberry Pi 2</value>
     <comment>Board name</comment>
   </data>
+  <data name="DB410Name" xml:space="preserve">
+    <value>DragonBoard 410c</value>
+    <comment>Board name</comment>
+  </data>
   <data name="SkipStep.Text" xml:space="preserve">
     <value>Ignorer cette étape</value>
   </data>
@@ -308,7 +312,7 @@
     <value>Aucune configuration n’est requise. Il suffit d’appuyer sur Démarrer.</value>
   </data>
   <data name="TutorialBlinkyBody4.Text" xml:space="preserve">
-    <value>Vous pouvez également modifier la fréquence du clignotement. Pourquoi ne pas rassembler tous vos amis et organiser une soirée dansante autour de votre carte Raspberry Pi 2 ?</value>
+    <value>Vous pouvez également modifier la fréquence du clignotement. Pourquoi ne pas rassembler tous vos amis et organiser une soirée dansante autour de votre carte {0} ?</value>
   </data>
   <data name="TutorialBlinkyBody5.Text" xml:space="preserve">
     <value>Clause d’exclusion de responsabilité : Microsoft se dégage de toute responsabilité pour tous dommages dus à l’ambiance de folie créée par la petite LED clignotante sur votre carte.</value>

@@ -192,6 +192,10 @@
     <value>Raspberry Pi 2</value>
     <comment>Board name</comment>
   </data>
+  <data name="DB410Name" xml:space="preserve">
+    <value>DragonBoard 410c</value>
+    <comment>Board name</comment>
+  </data>
   <data name="SkipStep.Text" xml:space="preserve">
     <value>跳過此步驟</value>
   </data>
@@ -308,7 +312,7 @@
     <value>無需設定。按下開始即可。</value>
   </data>
   <data name="TutorialBlinkyBody4.Text" xml:space="preserve">
-    <value>您也可變更閃爍的頻率。聚集您的朋友，在您的 Raspberry Pi 2 旁盡情熱舞。</value>
+    <value>您也可變更閃爍的頻率。聚集您的朋友，在您的 {0} 旁盡情熱舞。</value>
   </data>
   <data name="TutorialBlinkyBody5.Text" xml:space="preserve">
     <value>免責聲明: 對於使用電路板的小型閃爍 LED 舉辦熱舞派對可能導致的任何傷害，Microsoft 概不負責。</value>
