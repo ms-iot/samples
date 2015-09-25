@@ -27,7 +27,6 @@ namespace IoTCoreDefaultApp.Utils
                     else if (deviceInfo.SystemProductName == "SBC")
                     {
                             _type = DeviceTypes.DB410;
-                            break;
                     }
                     else
                     {

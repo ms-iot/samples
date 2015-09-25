@@ -30,59 +30,61 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{StaticResource AccentBrush}" >
-        <Grid Margin="60,120,30,20">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="*"/>
-				<RowDefinition Height="Auto"/>
-			</Grid.RowDefinitions>
+    <Grid Background="{StaticResource AccentBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="60"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="30"/>
+        </Grid.ColumnDefinitions>
 
-			<TextBlock Grid.Row="0" x:Uid="OOBEWelcomeTitle" Style="{ThemeResource SubheaderTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-			<TextBlock Grid.Row="1" x:Uid="OOBEIntro" Text="Let's get some basic stuff out of the way." Style="{ThemeResource BodyTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,14,0,0"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="120"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
 
-			<Grid Grid.Row="2">
-				<Grid>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*"/>
-						<ColumnDefinition Width="*"/>
-					</Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-						<RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-					
-					<TextBlock x:Uid="OOBELanguageSelect" Text="Choose Your Language" Style="{ThemeResource BaseTextBlockStyle}" HorizontalAlignment="Left" FontWeight="Normal" VerticalAlignment="Top" Margin="0,10,0,0"/>
-                    <ListView Grid.Row="1" x:Name="LanguagesListView" ItemContainerStyle="{ThemeResource LanguageSelectionListViewItemStyle}" Margin="0,14,20,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" SelectionMode="Single" HorizontalContentAlignment="Stretch" SelectionChanged="LanguagesListBox_SelectionChanged" />
-					
-					<StackPanel Grid.Column="1" Grid.RowSpan="2">
-						<TextBlock x:Uid="MainPageDeviceName" Style="{StaticResource BaseTextBlockStyle}" />
-						<TextBlock x:Name="DeviceName" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}" />
-						<TextBlock x:Uid="MainPageIPAddress" x:Name="IPAddressCaption" Style="{StaticResource BaseTextBlockStyle}" Margin="0,16,0,0" />
-						<TextBlock x:Name="IPAddress1" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}"/>
-						<TextBlock x:Uid="MainPageOSVersion" x:Name="OSVersionCaption" Style="{StaticResource BaseTextBlockStyle}" Margin="0,16,0,0" />
-						<TextBlock x:Name="OSVersion" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}"/>
-					</StackPanel>
+        <TextBlock Grid.Column="1" Grid.Row="1" x:Uid="OOBEWelcomeTitle" Style="{ThemeResource SubheaderTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBlock Grid.Column="1" Grid.Row="2" x:Uid="OOBEIntro" Text="Let's get some basic stuff out of the way." Style="{ThemeResource BodyTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,14,0,0"/>
 
-					<StackPanel x:Name="ChooseDefaultLanguage" Visibility="Collapsed">
-						<TextBlock x:Uid="DefaultLanguageTimeout" Text="We're choosing the default language automatically..." TextWrapping="Wrap"/>
-						<ProgressBar x:Name="DefaultLanguageProgress" Height="5" Margin="0, 10, 0, 10" Maximum="50" />
-					</StackPanel>
+        <TextBlock Grid.Column="1" Grid.Row="3" x:Uid="OOBELanguageSelect" Text="Choose Your Language" Style="{ThemeResource BaseTextBlockStyle}" HorizontalAlignment="Left" FontWeight="Normal" VerticalAlignment="Top" Margin="0,54,0,0"/>
+        <ListView Grid.Column="1" Grid.Row="4" x:Name="LanguagesListView" ItemContainerStyle="{ThemeResource LanguageSelectionListViewItemStyle}" Margin="0,14,20,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" SelectionMode="Single" HorizontalContentAlignment="Stretch" SelectionChanged="LanguagesListBox_SelectionChanged" />
 
-				</Grid>
+        <Grid Grid.Column="2" Grid.Row="4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0">
+                <TextBlock x:Uid="MainPageDeviceName" Style="{StaticResource BaseTextBlockStyle}" />
+                <TextBlock x:Name="DeviceName" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}" />
+                <TextBlock x:Uid="MainPageIPAddress" x:Name="IPAddressCaption" Style="{StaticResource BaseTextBlockStyle}" Margin="0,16,0,0" />
+                <TextBlock x:Name="IPAddress1" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}"/>
+                <TextBlock x:Uid="MainPageOSVersion" x:Name="OSVersionCaption" Style="{StaticResource BaseTextBlockStyle}" Margin="0,16,0,0" />
+                <TextBlock x:Name="OSVersion" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}"/>
+            </StackPanel>
 
-			</Grid>
+            <StackPanel x:Name="ChooseDefaultLanguage" Grid.Row="2" Visibility="Collapsed">
+                <TextBlock x:Uid="DefaultLanguageTimeout" Text="We're choosing the default language automatically..." TextWrapping="Wrap"/>
+                <ProgressBar x:Name="DefaultLanguageProgress" Height="5" Margin="0, 10, 0, 10" Maximum="50" />
+            </StackPanel>
 
-			<Grid Grid.Row="3" HorizontalAlignment="Right">
+            <Grid Grid.Row="3">
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="24" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-				<Button Grid.Column="0" x:Name="CancelButton" x:Uid="CancelButton" Click="CancelButton_Clicked" Content="Cancel" Width="120" Height="32" Visibility="Collapsed"/>
-				<Button Grid.Column="2" x:Name="NextButton" x:Uid="NextButton" Click="NextButton_Clicked" Content="Next" Width="120" Height="32"/>
-			</Grid>
-		</Grid>
+                <Button Grid.Column="1" x:Name="CancelButton" x:Uid="CancelButton" Click="CancelButton_Clicked" Content="Cancel" Width="120" Height="32" Visibility="Collapsed"/>
+                <Button Grid.Column="3" x:Name="NextButton" x:Uid="NextButton" Click="NextButton_Clicked" Content="Next" Width="120" Height="32"/>
+            </Grid>
+        </Grid>
+
     </Grid>
 </Page>
