@@ -19,6 +19,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using IoTCoreDefaultApp.Utils;
 
 namespace IoTCoreDefaultApp
 {
@@ -27,7 +28,7 @@ namespace IoTCoreDefaultApp
         private DispatcherTimer timer;
         private DispatcherTimer blinkyTimer;
         private int LEDStatus = 0;
-        private const int LED_PIN = 47; // on-board LED on the Rpi2
+        private readonly int LED_PIN = 47; // on-board LED on the Rpi2
         private GpioPin pin;
         private SolidColorBrush redBrush = new SolidColorBrush(Windows.UI.Colors.Red);
         private SolidColorBrush grayBrush = new SolidColorBrush(Windows.UI.Colors.LightGray);
@@ -42,6 +43,7 @@ namespace IoTCoreDefaultApp
             rootFrame.Navigated += RootFrame_Navigated;
             Unloaded += MainPage_Unloaded;
 
+            UpdateBoardInfo();
             UpdateDateTime();
 
             timer = new DispatcherTimer();
@@ -55,6 +57,11 @@ namespace IoTCoreDefaultApp
 
             loader = new Windows.ApplicationModel.Resources.ResourceLoader();
             BlinkyStartStop.Content = loader.GetString("BlinkyStart");
+
+            if (DeviceTypeInformation.Type == DeviceTypes.DB410)
+            {
+                LED_PIN = 115; // on-board LED on the DB410c
+            }
         }
 
         private void RootFrame_Navigated(object sender, NavigationEventArgs e)
@@ -69,6 +76,14 @@ namespace IoTCoreDefaultApp
         private void timer_Tick(object sender, object e)
         {
             UpdateDateTime();
+        }
+
+        private void UpdateBoardInfo()
+        {
+            var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
+            var boardName = DeviceInfoPresenter.GetBoardName();
+
+            TutorialBlinkyBody4.Text = String.Format(loader.GetString("TutorialBlinkyBody4/Text"), boardName);
         }
 
         private void UpdateDateTime()
