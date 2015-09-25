@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 
-using OnBoardee;
+using IoTOnboardingService;
 using System;
 using System.Globalization;
 using System.Threading.Tasks;
@@ -10,7 +10,6 @@ using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
@@ -51,9 +50,7 @@ namespace IoTCoreDefaultApp
                 ApplicationData.Current.LocalSettings.Values[Constants.HasDoneOOBEKey] = Constants.HasDoneOOBEValue;
             }
 
-            Task.Run(() => {
-                OnboardingService.Initialize();
-            });
+            Task.Run(() => OnboardingService.Start());
 
             base.OnNavigatedTo(e);
         }
