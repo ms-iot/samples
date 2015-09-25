@@ -541,9 +541,6 @@
   <data name="Tutorial.GetCoding.010.h1" xml:space="preserve">
     <value>Setting up Visual Studio 2015 on your PC</value>
   </data>
-  <data name="Tutorial.GetCoding.011.p" xml:space="preserve">
-    <value>We have created a versions file describing the supported versions of the required tools. Use this as a blueprint for installing the required tools on your PC:</value>
-  </data>
   <data name="Tutorial.GetCoding.012.ul" xml:space="preserve">
     <value>Install Windows 10</value>
   </data>
@@ -553,22 +550,9 @@
   <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
     <value>If you are planning to develop drivers, install the WDK.</value>
   </data>
-  <data name="Tutorial.GetCoding.015.ul" xml:space="preserve">
-    <value>Install the IoT tools MSI.</value>
-  </data>
-  <data name="Tutorial.GetCoding.016.ul" xml:space="preserve">
-    <value>At this point, you are ready to develop apps. Notice that the Windows IoT Core Watcher application automatically starts when you log on. It can be used to find available Windows 10 IoT Core devices to deploy apps to.</value>
-  </data>
   <data name="Tutorial.GetCoding.016a.br" xml:space="preserve">
     <value />
     <comment>Please do NOT localize this string</comment>
-  </data>
-  <data name="Tutorial.GetCoding.017.600x360.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetCoding-003.png</value>
-    <comment>Please do NOT localize this string</comment>
-  </data>
-  <data name="Tutorial.GetCoding.018.p" xml:space="preserve">
-    <value>Once you find your device on the network, visit www.windowsondevices.com to download some sample code to try and run!</value>
   </data>
   <data name="Tutorial.GetCoding.019.br" xml:space="preserve">
     <value />
