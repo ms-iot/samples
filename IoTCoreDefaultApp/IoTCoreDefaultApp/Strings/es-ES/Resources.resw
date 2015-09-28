@@ -493,9 +493,6 @@
   <data name="Tutorial.GetCoding.010.h1" xml:space="preserve">
     <value>Configuración de Visual Studio 2015 en tu PC</value>
   </data>
-  <data name="Tutorial.GetCoding.011.p" xml:space="preserve">
-    <value>Hemos creado un archivo de versiones en el que se describen las versiones admitidas de las herramientas necesarias. Usa este archivo como plan de proyecto para la instalación de las herramientas necesarias en tu PC:</value>
-  </data>
   <data name="Tutorial.GetCoding.012.ul" xml:space="preserve">
     <value>Instalar Windows 10</value>
   </data>
@@ -505,14 +502,8 @@
   <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
     <value>Si tienes previsto desarrollar controladores, instala el WDK.</value>
   </data>
-  <data name="Tutorial.GetCoding.015.ul" xml:space="preserve">
-    <value>Instala el archivo MSI de las herramientas de IoT.</value>
-  </data>
   <data name="Tutorial.GetCoding.016.ul" xml:space="preserve">
     <value>Llegado a este punto, estás listo para desarrollar aplicaciones. Observa que la aplicación Windows IoT Core Watcher se inicia automáticamente cuando inicias sesión y se puede usar para buscar dispositivos Windows 10 IoT Core disponibles en los que implementar aplicaciones.</value>
-  </data>
-  <data name="Tutorial.GetCoding.018.p" xml:space="preserve">
-    <value>Cuando encuentres tu dispositivo en la red, visita www.windowsondevices.com para descargar código de ejemplo que puedes probar y ejecutar.</value>
   </data>
   <data name="NetworkConnectivityLevel_ConstrainedInternetAccess" xml:space="preserve">
     <value>Acceso a Internet limitado</value>

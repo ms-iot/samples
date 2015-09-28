@@ -518,9 +518,6 @@
   <data name="Tutorial.GetCoding.010.h1" xml:space="preserve">
     <value>Настройка Visual Studio 2015 на компьютере</value>
   </data>
-  <data name="Tutorial.GetCoding.011.p" xml:space="preserve">
-    <value>Мы создали файл версий, в котором описаны поддерживаемые версии необходимых средств. Используйте его в качестве рекомендаций по установке требуемых средств на компьютере:</value>
-  </data>
   <data name="Tutorial.GetCoding.012.ul" xml:space="preserve">
     <value>Установите Windows 10.</value>
   </data>
@@ -530,18 +527,12 @@
   <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
     <value>Если вы планируете разрабатывать драйверы, установите WDK.</value>
   </data>
-  <data name="Tutorial.GetCoding.015.ul" xml:space="preserve">
-    <value>Установите MSI средств IoT.</value>
-  </data>
   <data name="Tutorial.GetCoding.016.ul" xml:space="preserve">
     <value>После установки всех необходимых средств вы будете готовы к разработке приложений. Обратите внимание, что приложение Windows IoT Core Watcher запускается автоматически при входе в систему. С помощью него можно находить доступные устройства с Windows 10 IoT Базовой, на которых можно развертывать приложения.</value>
   </data>
   <data name="Tutorial.GetCoding.016a.br" xml:space="preserve">
     <value />
     <comment>Please do NOT localize this string</comment>
-  </data>
-  <data name="Tutorial.GetCoding.018.p" xml:space="preserve">
-    <value>Когда устройство подключиться к сети, скачайте с сайта www.windowsondevices.com пример кода, чтобы ознакомиться с ним и запустить его!</value>
   </data>
   <data name="Tutorial.GetCoding.019.br" xml:space="preserve">
     <value />
