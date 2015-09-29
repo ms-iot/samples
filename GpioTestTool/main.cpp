@@ -131,7 +131,7 @@ void ListPins ()
             break;
         default:
             wprintf(
-                L" Pin %d: unexpected error occurred attempting to open. (hr = 0x%x)\n",
+                L"  Pin %d: unexpected error occurred attempting to open. (hr = 0x%x)\n",
                 pinNumber,
                 hr);
         }
