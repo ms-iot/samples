@@ -26,6 +26,9 @@ using namespace ABI::Windows::Devices::Gpio;
 using namespace Microsoft::WRL;
 using namespace Microsoft::WRL::Wrappers;
 
+typedef ITypedEventHandler<GpioPin *, GpioPinValueChangedEventArgs *>
+    IGpioPinValueChangedHandler;
+
 class wexception
 {
 public:
@@ -206,6 +209,15 @@ PCWSTR StringFromGpioSharingMode (GpioSharingMode value)
     }
 }
 
+PCWSTR StringFromGpioPinEdge (GpioPinEdge value)
+{
+    switch (value) {
+    case GpioPinEdge_FallingEdge: return L"Falling";
+    case GpioPinEdge_RisingEdge: return L"Rising";
+    default: return L"[Invalid GpioPinEdge value]";
+    }
+}
+
 PCWSTR Help =
     L"Commands:\n"
     L" > write 0|1                        Write pin low (0) or high (1)\n"
@@ -216,12 +228,28 @@ PCWSTR Help =
     L" > setdrivemode drive_mode          Set the pins's drive mode\n"
     L"     where drive_mode = input|output|\n"
     L"                        inputPullUp|inputPullDown\n"
+    L" > interrupt on|off                 Register or unregister for pin value\n"
+    L"                                    change events.\n"
     L" > info                             Dump information about the pin\n"
     L" > help                             Display this help message\n"
     L" > quit                             Quit\n";
 
 void ShowPrompt (_In_ IGpioPin* pin)
 {
+    auto listener = Callback<IGpioPinValueChangedHandler>([] (
+        _In_ IGpioPin* /*Pin*/,
+        _In_ IGpioPinValueChangedEventArgs* Args
+        ) -> HRESULT
+    {
+        GpioPinEdge edge;
+        Args->get_Edge(&edge);
+        wprintf(L"%s edge occurred.\n", StringFromGpioPinEdge(edge));
+        return S_OK;
+    });
+
+    auto token = EventRegistrationToken();
+    bool listenerRegistered = false;
+
     GpioPinValue outputLatch = GpioPinValue_High;
     while (std::wcin) {
         wprintf(L"> ");
@@ -290,6 +318,42 @@ void ShowPrompt (_In_ IGpioPin* pin)
             if (FAILED(hr)) {
                 wprintf(L"Failed to set drive mode. (hr = 0x%x)\n", hr);
                 continue;
+            }
+        } else if ((command == L"int") || (command == L"interrupt")) {
+            std::wstring onOrOff;
+            linestream >> onOrOff;
+            if (onOrOff == L"on") {
+                if (listenerRegistered) {
+                    wprintf(L"Interrupt listener already registered.\n");
+                    continue;
+                }
+
+                HRESULT hr = pin->add_ValueChanged(listener.Get(), &token);
+                if (FAILED(hr)) {
+                    wprintf(
+                        L"Failed to add event listener to ValueChanged event. (hr = 0x%x)\n",
+                        hr);
+                    continue;
+                }
+                listenerRegistered = true;
+            } else if (onOrOff == L"off") {
+                if (!listenerRegistered) {
+                    wprintf(L"No interrupt listener is currently registered.\n");
+                    continue;
+                }
+
+                HRESULT hr = pin->remove_ValueChanged(token);
+                if (FAILED(hr)) {
+                    wprintf(
+                        L"Failed to remove ValueChanged event. (hr = 0x%x)\n",
+                        hr);
+                    continue;
+                }
+                listenerRegistered = false;
+            } else {
+                wprintf(
+                    L"Expecting 'on' or 'off': %s. Type 'help' for usage.\n",
+                    onOrOff.c_str());
             }
         } else if ((command == L"i") || (command == L"info")) {
             int pinNumber;
