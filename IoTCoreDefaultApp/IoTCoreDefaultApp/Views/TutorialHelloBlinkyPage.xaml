@@ -128,7 +128,7 @@
                     <TextBlock x:Name="GpioStatus" Margin="10,10,10,10" TextAlignment="Center" Style="{StaticResource CaptionTextBlockStyle}" />
                 </StackPanel>
             </Grid>
-            <TextBlock x:Name="TutorialBlinkyBody4" x:Uid="TutorialBlinkyBody4" Style="{StaticResource BodyTextBlockStyle}" TextWrapping="WrapWholeWords" />
+            <TextBlock x:Uid="TutorialBlinkyBody4" Style="{StaticResource BodyTextBlockStyle}" TextWrapping="WrapWholeWords" />
             <TextBlock x:Uid="TutorialBlinkyBody5" Style="{StaticResource BodyTextBlockStyle}" TextWrapping="WrapWholeWords" Margin="0,10,0,0" />
         </StackPanel>
         
