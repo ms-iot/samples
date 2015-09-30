@@ -43,7 +43,6 @@ namespace IoTCoreDefaultApp
             rootFrame.Navigated += RootFrame_Navigated;
             Unloaded += MainPage_Unloaded;
 
-            UpdateBoardInfo();
             UpdateDateTime();
 
             timer = new DispatcherTimer();
@@ -76,14 +75,6 @@ namespace IoTCoreDefaultApp
         private void timer_Tick(object sender, object e)
         {
             UpdateDateTime();
-        }
-
-        private void UpdateBoardInfo()
-        {
-            var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
-            var boardName = DeviceInfoPresenter.GetBoardName();
-
-            TutorialBlinkyBody4.Text = String.Format(loader.GetString("TutorialBlinkyBody4/Text"), boardName);
         }
 
         private void UpdateDateTime()

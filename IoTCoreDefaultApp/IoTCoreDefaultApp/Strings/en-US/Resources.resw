@@ -316,7 +316,7 @@
     <value>No set up is required. Just press start.</value>
   </data>
   <data name="TutorialBlinkyBody4.Text" xml:space="preserve">
-    <value>You can also change the frequency of the blinking. Feel free to gather all of your friends and have a dance party around your {0}.</value>
+    <value>You can also change the frequency of the blinking. Feel free to gather all of your friends and have a dance party around your device.</value>
   </data>
   <data name="TutorialBlinkyBody5.Text" xml:space="preserve">
     <value>Disclaimer: Microsoft takes no responsibility for whatever damage may be caused by hosting such a huge rave of a party using the small blinking LED on your board.</value>
