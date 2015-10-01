@@ -16,6 +16,7 @@ namespace IoTCoreDefaultApp
     public class NetworkPresenter
     {
         private readonly static uint EthernetIanaType = 6;
+        private readonly static uint WirelessInterfaceIanaType = 71;
 
         public static string GetDirectConnectionName()
         {
@@ -244,7 +245,15 @@ namespace IoTCoreDefaultApp
                         {
                             info = new NetworkInfo();
                             networkList[hostName.IPInformation.NetworkAdapter.NetworkAdapterId] = info;
-                            info.NetworkName = profile.ProfileName;
+                            if (hostName.IPInformation.NetworkAdapter.IanaInterfaceType == WirelessInterfaceIanaType &&
+                                profile.ProfileName.Equals("Ethernet"))
+                            {
+                                info.NetworkName = "Wireless LAN Adapter";
+                            }
+                            else
+                            {
+                                info.NetworkName = profile.ProfileName;
+                            }
                             var statusTag = profile.GetNetworkConnectivityLevel().ToString();
                             info.NetworkStatus = resourceLoader.GetString("NetworkConnectivityLevel_" + statusTag);
                         }

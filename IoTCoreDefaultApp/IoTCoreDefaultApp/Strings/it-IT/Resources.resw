@@ -530,9 +530,6 @@
   <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
     <value>Se prevedi di sviluppare driver, installa il WDK.</value>
   </data>
-  <data name="Tutorial.GetCoding.016.ul" xml:space="preserve">
-    <value>A questo punto, sei pronto per sviluppare app. Tieni presente che l'applicazione Windows IoT Core Watcher viene avviata automaticamente all'accesso. Può essere usata per trovare i dispositivi Windows 10 IoT Core disponibili per la distribuzione di app.</value>
-  </data>
   <data name="Tutorial.GetCoding.016a.br" xml:space="preserve">
     <value />
     <comment>Please do NOT localize this string</comment>

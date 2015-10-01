@@ -502,9 +502,6 @@
   <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
     <value>Si tienes previsto desarrollar controladores, instala el WDK.</value>
   </data>
-  <data name="Tutorial.GetCoding.016.ul" xml:space="preserve">
-    <value>Llegado a este punto, estás listo para desarrollar aplicaciones. Observa que la aplicación Windows IoT Core Watcher se inicia automáticamente cuando inicias sesión y se puede usar para buscar dispositivos Windows 10 IoT Core disponibles en los que implementar aplicaciones.</value>
-  </data>
   <data name="NetworkConnectivityLevel_ConstrainedInternetAccess" xml:space="preserve">
     <value>Acceso a Internet limitado</value>
   </data>

@@ -530,9 +530,6 @@
   <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
     <value>若您計劃開發驅動程式，請安裝 WDK。</value>
   </data>
-  <data name="Tutorial.GetCoding.016.ul" xml:space="preserve">
-    <value>目前您已可開發 app。請注意，Windows IoT Core Watcher 應用程式會在您登入時自動啟動。您可使用它來尋找要部署 app 的可用 Windows 10 IoT 核心版裝置。</value>
-  </data>
   <data name="Tutorial.GetCoding.016a.br" xml:space="preserve">
     <value />
     <comment>Please do NOT localize this string</comment>

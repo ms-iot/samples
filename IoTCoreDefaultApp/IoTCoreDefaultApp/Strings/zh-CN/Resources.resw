@@ -530,9 +530,6 @@
   <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
     <value>如果你计划开发驱动程序，请安装 WDK。</value>
   </data>
-  <data name="Tutorial.GetCoding.016.ul" xml:space="preserve">
-    <value>此时，你已准备好开发应用。请注意，Windows IoT Core Watcher 应用程序会在你登录时自动启动。该应用程序可用于查找将应用部署到的可用 Windows 10 IoT 核心版设备。</value>
-  </data>
   <data name="Tutorial.GetCoding.016a.br" xml:space="preserve">
     <value />
     <comment>Please do NOT localize this string</comment>

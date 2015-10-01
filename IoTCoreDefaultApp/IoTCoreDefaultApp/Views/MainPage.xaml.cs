@@ -25,7 +25,6 @@ namespace IoTCoreDefaultApp
         public MainPage()
         {
             this.InitializeComponent();
-            this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
             MainPageDispatcher = Window.Current.Dispatcher;
 
             UpdateBoardInfo();
@@ -159,5 +158,6 @@ namespace IoTCoreDefaultApp
             var offset = -(ShutdownListView.ActualWidth - ShutdownButton.ActualWidth);
             ShutdownDropdown.HorizontalOffset = offset;
         }
+
     }
 }

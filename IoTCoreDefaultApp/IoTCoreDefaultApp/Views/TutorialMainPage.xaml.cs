@@ -33,7 +33,6 @@ namespace IoTCoreDefaultApp
         public TutorialMainPage()
         {
             this.InitializeComponent();
-            this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
 #if !ALWAYS_SHOW_BLINKY
             if (DeviceTypeInformation.Type != DeviceTypes.RPI2 && DeviceTypeInformation.Type != DeviceTypes.DB410)
             {

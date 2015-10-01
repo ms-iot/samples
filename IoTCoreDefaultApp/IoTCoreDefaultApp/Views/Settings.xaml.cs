@@ -28,7 +28,6 @@ namespace IoTCoreDefaultApp
         public Settings()
         {
             this.InitializeComponent();
-            this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
             visibleContent = BasicPreferencesGridView;
 
             SetupLanguages();
