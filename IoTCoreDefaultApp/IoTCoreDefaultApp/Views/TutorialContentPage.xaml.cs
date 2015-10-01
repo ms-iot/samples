@@ -31,6 +31,7 @@ namespace IoTCoreDefaultApp
         public TutorialContentPage()
         {
             this.InitializeComponent();
+
             var rootFrame = Window.Current.Content as Frame;
             rootFrame.Navigated += RootFrame_Navigated;
 

@@ -38,6 +38,7 @@ namespace IoTCoreDefaultApp
         public TutorialHelloBlinkyPage()
         {
             this.InitializeComponent();
+
             var rootFrame = Window.Current.Content as Frame;
             rootFrame.Navigated += RootFrame_Navigated;
             Unloaded += MainPage_Unloaded;

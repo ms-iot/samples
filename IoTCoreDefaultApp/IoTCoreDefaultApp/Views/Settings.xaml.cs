@@ -28,6 +28,7 @@ namespace IoTCoreDefaultApp
         public Settings()
         {
             this.InitializeComponent();
+
             visibleContent = BasicPreferencesGridView;
 
             SetupLanguages();

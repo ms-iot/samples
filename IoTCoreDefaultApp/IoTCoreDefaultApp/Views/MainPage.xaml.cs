@@ -25,6 +25,7 @@ namespace IoTCoreDefaultApp
         public MainPage()
         {
             this.InitializeComponent();
+
             MainPageDispatcher = Window.Current.Dispatcher;
 
             UpdateBoardInfo();
@@ -158,6 +159,5 @@ namespace IoTCoreDefaultApp
             var offset = -(ShutdownListView.ActualWidth - ShutdownButton.ActualWidth);
             ShutdownDropdown.HorizontalOffset = offset;
         }
-
     }
 }
