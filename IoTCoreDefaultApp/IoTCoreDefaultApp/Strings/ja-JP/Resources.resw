@@ -527,9 +527,6 @@
   <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
     <value>ドライバーを開発する場合は、WDK をインストールします。</value>
   </data>
-  <data name="Tutorial.GetCoding.016.ul" xml:space="preserve">
-    <value>これで、アプリを開発する準備が整いました。ログオンすると、Windows IoT Core Watcher アプリケーションが自動的に起動します。このアプリケーションを使用して、アプリの展開先として使用できる Windows 10 IoT Core デバイスを検索できます。</value>
-  </data>
   <data name="Tutorial.GetCoding.016a.br" xml:space="preserve">
     <value />
     <comment>Please do NOT localize this string</comment>

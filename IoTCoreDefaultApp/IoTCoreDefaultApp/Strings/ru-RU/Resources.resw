@@ -527,9 +527,6 @@
   <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
     <value>Если вы планируете разрабатывать драйверы, установите WDK.</value>
   </data>
-  <data name="Tutorial.GetCoding.016.ul" xml:space="preserve">
-    <value>После установки всех необходимых средств вы будете готовы к разработке приложений. Обратите внимание, что приложение Windows IoT Core Watcher запускается автоматически при входе в систему. С помощью него можно находить доступные устройства с Windows 10 IoT Базовой, на которых можно развертывать приложения.</value>
-  </data>
   <data name="Tutorial.GetCoding.016a.br" xml:space="preserve">
     <value />
     <comment>Please do NOT localize this string</comment>
