@@ -226,7 +226,7 @@ namespace IoTCoreDefaultApp
 
         public static async Task<IList<NetworkInfo>> GetNetworkInformation()
         {
-            var networkList = new Dictionary<string, NetworkInfo>();
+            var networkList = new Dictionary<Guid, NetworkInfo>();
             var hostNamesList = NetworkInformation.GetHostNames();
             var resourceLoader = ResourceLoader.GetForCurrentView();
 
@@ -239,10 +239,11 @@ namespace IoTCoreDefaultApp
                     if (profile != null)
                     {
                         NetworkInfo info;
-                        var found = networkList.TryGetValue(profile.ProfileName, out info);
+                        var found = networkList.TryGetValue(hostName.IPInformation.NetworkAdapter.NetworkAdapterId, out info);
                         if (!found)
                         {
                             info = new NetworkInfo();
+                            networkList[hostName.IPInformation.NetworkAdapter.NetworkAdapterId] = info;
                             info.NetworkName = profile.ProfileName;
                             var statusTag = profile.GetNetworkConnectivityLevel().ToString();
                             info.NetworkStatus = resourceLoader.GetString("NetworkConnectivityLevel_" + statusTag);
@@ -254,10 +255,6 @@ namespace IoTCoreDefaultApp
                         else
                         {
                             info.NetworkIpv6 = hostName.CanonicalName;
-                        }
-                        if (!found)
-                        {
-                            networkList[profile.ProfileName] = info;
                         }
                     }
                 }
