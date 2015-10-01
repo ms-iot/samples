@@ -1,5 +1,5 @@
 ﻿<!-- Copyright (c) Microsoft. All rights reserved. -->
-    
+
 <Page
     x:Class="SerialSample.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -14,6 +14,10 @@
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -22,42 +26,59 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" x:Name="pageTitle" Text="Serial UART Sample" Style="{StaticResource HeaderTextBlockStyle}" 
-                        IsHitTestVisible="false" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="150,10,0,30"/>
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="2" x:Name="pageTitle" Text="UART Sample" Style="{StaticResource HeaderTextBlockStyle}" 
+                        IsHitTestVisible="false" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,10,0,0"/>
 
-        <StackPanel Grid.Row="1" x:Name="ContentRoot" HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal" Margin="150,0,12,20">
-            <TextBlock Text="Select Device:" HorizontalAlignment="Left" Width="100" VerticalAlignment="Top" Margin="0,0,0,0"/>
-            <ListBox x:Name="ConnectDevices" ItemsSource="{Binding Source={StaticResource DeviceListSource}}" Height="150" Background="Gray">
+        <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Margin="10,10,0,0">
+            <TextBlock Text="Select Device:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Top" Orientation="Horizontal" Margin="10,0,0,0" Width="300" Height="80">
+            <ListBox x:Name="ConnectDevices" ItemsSource="{Binding Source={StaticResource DeviceListSource}}" Width="300" Height="80" Background="Gray">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Id}" />
                     </DataTemplate>
                 </ListBox.ItemTemplate>
-            </ListBox>                       
-        </StackPanel>
-        <StackPanel Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal" Margin="150,0,12,20">
-            <Button Name="comPortInput" Width="100" Margin="100,0,30,0" Content="Connect" Click="comPortInput_Click"/>
-            <Button Name="closeDevice" Content="Disconnect And Refresh List" Width="250" Margin="0,0,30,0" Click="closeDevice_Click"/>
+            </ListBox>
         </StackPanel>
 
-        <StackPanel Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal" Margin="150,0,12,20">
-            <TextBlock Text="Write Data:" HorizontalAlignment="Left" Width="100" VerticalAlignment="Top" Margin="0,0,0,0"/>
-            <TextBox Name="sendText" Width="300" Height="80" Margin="0,0,30,0"/>
-            <Button Name="sendTextButton" Content="WRITE" Height="30" Width="100" Margin="0,0,30,0" Click="sendTextButton_Click"/>
+        <StackPanel Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Vertical" Margin="30,0,0,0" Height="84" Width="94">
+            <Button Name="comPortInput" Content="Connect" Click="comPortInput_Click"/>
+            <Button Name="closeDevice" Margin="0,20,0,0" Content="Disconnect" Click="closeDevice_Click"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal" Margin="150,0,12,20">
-            <TextBlock Text="Read Data:" HorizontalAlignment="Left" Width="100" VerticalAlignment="Top" Margin="0,0,0,0"/>
-            <TextBox Name="rcvdText" Width="300" Height="80" Margin="0,0,30,0" TextChanged="rcvdText_TextChanged" />            
-        </StackPanel>     
+        <StackPanel Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Margin="10,10,0,0">
+            <TextBlock Text="Write Data:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        </StackPanel>
 
-        <ScrollViewer Grid.Row="5" Margin="150,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" >
+        <StackPanel Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Top" Orientation="Horizontal" Margin="10,0,0,0" Width="300" Height="80">
+            <TextBox Name="sendText" Width="300" Height="80"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal" Margin="30,0,0,0">
+            <Button Name="sendTextButton" Content="Write" Click="sendTextButton_Click"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="5" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Margin="10,10,0,0">
+            <TextBlock Text="Read Data:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="6" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Margin="10,0,0,0" Width="300" Height="80">
+            <TextBox Name="rcvdText" Width="300" Height="80" TextChanged="rcvdText_TextChanged" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,20,0,0" Width="460" Height="40">
             <TextBox
-				x:Name="status" TextWrapping="Wrap" IsReadOnly="True" Height="200" Width="600" HorizontalAlignment="Left" VerticalAlignment="Top" 
-				ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
-        </ScrollViewer>
+				x:Name="status" TextWrapping="Wrap" IsReadOnly="True" Width="460" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" 
+				ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" BorderBrush="White"/>
+        </StackPanel>
 
     </Grid>
 </Page>
