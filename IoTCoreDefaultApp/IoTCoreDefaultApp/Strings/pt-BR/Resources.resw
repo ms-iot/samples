@@ -192,6 +192,10 @@
     <value>Raspberry Pi 2</value>
     <comment>Board name</comment>
   </data>
+  <data name="DB410Name" xml:space="preserve">
+    <value>DragonBoard 410c</value>
+    <comment>Board name</comment>
+  </data>
   <data name="SkipStep.Text" xml:space="preserve">
     <value>Ignorar este teste</value>
   </data>
@@ -308,7 +312,7 @@
     <value>Não é necessário nenhuma configuração. Basta pressionar iniciar.</value>
   </data>
   <data name="TutorialBlinkyBody4.Text" xml:space="preserve">
-    <value>A frequência da intermitência também pode ser alterada. Fique à vontade para reunir seus amigos e fazer uma festa com seu Raspberry Pi 2.</value>
+    <value>A frequência da intermitência também pode ser alterada. Fique à vontade para reunir seus amigos e fazer uma festa com seu {0}.</value>
   </data>
   <data name="TutorialBlinkyBody5.Text" xml:space="preserve">
     <value>Aviso de isenção de responsabilidade: a Microsoft não se responsabiliza por quaisquer danos que possam ocorrer pelo uso do pequeno LED piscante na placa.</value>
@@ -517,9 +521,6 @@
   <data name="Tutorial.GetCoding.010.h1" xml:space="preserve">
     <value>Configurando o Visual Studio 2015 em seu computador</value>
   </data>
-  <data name="Tutorial.GetCoding.011.p" xml:space="preserve">
-    <value>Criamos um arquivo de versões que descreve as versões compatíveis das ferramentas necessárias. Use-o como um plano para instalar as ferramentas necessárias no computador:</value>
-  </data>
   <data name="Tutorial.GetCoding.012.ul" xml:space="preserve">
     <value>Instale o Windows 10</value>
   </data>
@@ -529,18 +530,9 @@
   <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
     <value>Se você planeja desenvolver drivers, instale o WDK.</value>
   </data>
-  <data name="Tutorial.GetCoding.015.ul" xml:space="preserve">
-    <value>Instale o MSI das ferramentas de IoT.</value>
-  </data>
-  <data name="Tutorial.GetCoding.016.ul" xml:space="preserve">
-    <value>Neste ponto, você está preparado para desenvolver aplicativos. Observe que o aplicativo Windows IoT Core Watcher é iniciado automaticamente quando você faz logon. Ele pode ser usado para encontrar dispositivos Windows 10 IoT Core disponíveis aos quais implantar aplicativos.</value>
-  </data>
   <data name="Tutorial.GetCoding.016a.br" xml:space="preserve">
     <value />
     <comment>Please do NOT localize this string</comment>
-  </data>
-  <data name="Tutorial.GetCoding.018.p" xml:space="preserve">
-    <value>Depois de localizar seu dispositivo na rede, visite www.windowsondevices.com e baixe algum código de exemplo para testar e executar!</value>
   </data>
   <data name="Tutorial.GetCoding.019.br" xml:space="preserve">
     <value />

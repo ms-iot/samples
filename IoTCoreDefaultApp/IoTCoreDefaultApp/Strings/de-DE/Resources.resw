@@ -192,6 +192,13 @@
     <value>Raspberry Pi 2</value>
     <comment>Board name</comment>
   </data>
+<<<<<<< HEAD
+=======
+  <data name="DB410Name" xml:space="preserve">
+    <value>DragonBoard 410c</value>
+    <comment>Board name</comment>
+  </data>
+>>>>>>> upstream/develop
   <data name="SkipStep.Text" xml:space="preserve">
     <value>Schritt überspringen</value>
   </data>
@@ -309,7 +316,11 @@ programme</value>
     <value>Es ist keine Einrichtung erforderlich. Drücken Sie einfach „Start“.</value>
   </data>
   <data name="TutorialBlinkyBody4.Text" xml:space="preserve">
+<<<<<<< HEAD
     <value>Sie können die Blinkfrequenz auch ändern. Trommeln Sie alle Freunde zusammen, und veranstalten Sie eine Tanzparty rund um Ihren Raspberry Pi 2.</value>
+=======
+    <value>Sie können die Blinkfrequenz auch ändern. Trommeln Sie alle Freunde zusammen, und veranstalten Sie eine Tanzparty rund um Ihren {0}.</value>
+>>>>>>> upstream/develop
   </data>
   <data name="TutorialBlinkyBody5.Text" xml:space="preserve">
     <value>Haftungsausschluss: Microsoft haftet nicht für Schäden, die dadurch entstehen, dass Sie große Technopartys mit der kleinen blinkenden LED auf dem Board veranstalten.</value>
@@ -518,9 +529,12 @@ programme</value>
   <data name="Tutorial.GetCoding.010.h1" xml:space="preserve">
     <value>Einrichten von Visual Studio 2015 auf Ihrem PC</value>
   </data>
+<<<<<<< HEAD
   <data name="Tutorial.GetCoding.011.p" xml:space="preserve">
     <value>Wir haben eine Versionsdatei erstellt, in der die unterstützten Versionen der benötigten Tools beschrieben sind. Benutzen Sie diese Datei als Referenz zur Installation der erforderlichen Tools auf Ihrem PC:</value>
   </data>
+=======
+>>>>>>> upstream/develop
   <data name="Tutorial.GetCoding.012.ul" xml:space="preserve">
     <value>Windows 10 installieren</value>
   </data>
@@ -530,19 +544,25 @@ programme</value>
   <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
     <value>Wenn Sie in die Treiberentwicklung einsteigen möchten, installieren Sie das WDK.</value>
   </data>
+<<<<<<< HEAD
   <data name="Tutorial.GetCoding.015.ul" xml:space="preserve">
     <value>Installieren Sie die MSI für IoT-Tools.</value>
   </data>
   <data name="Tutorial.GetCoding.016.ul" xml:space="preserve">
     <value>Sie sind jetzt bereit für die App-Entwicklung. Sobald Sie sich anmelden, wird die Windows IoT Core Watcher-Anwendung automatisch gestartet. Mit ihr können Sie verfügbare Windows 10 IoT Core-Geräte suchen, auf denen die Apps bereitgestellt werden.</value>
   </data>
+=======
+>>>>>>> upstream/develop
   <data name="Tutorial.GetCoding.016a.br" xml:space="preserve">
     <value />
     <comment>Please do NOT localize this string</comment>
   </data>
+<<<<<<< HEAD
   <data name="Tutorial.GetCoding.018.p" xml:space="preserve">
     <value>Nachdem Sie Ihr Gerät im Netzwerk gefunden haben, besuchen Sie „www.windowsondevices.com“, um Beispielcode zum Testen und Ausführen herunterzuladen!</value>
   </data>
+=======
+>>>>>>> upstream/develop
   <data name="Tutorial.GetCoding.019.br" xml:space="preserve">
     <value />
     <comment>Please do NOT localize this string</comment>

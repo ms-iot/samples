@@ -192,6 +192,10 @@
     <value>Raspberry Pi 2</value>
     <comment>Board name</comment>
   </data>
+  <data name="DB410Name" xml:space="preserve">
+    <value>DragonBoard 410c</value>
+    <comment>Board name</comment>
+  </data>
   <data name="SkipStep.Text" xml:space="preserve">
     <value>跳过此步骤</value>
   </data>
@@ -308,7 +312,7 @@
     <value>无需设置。只需按“启动”。</value>
   </data>
   <data name="TutorialBlinkyBody4.Text" xml:space="preserve">
-    <value>你还可以更改闪烁的频率。随时随地将你的所有好友聚在一起，围绕 Raspberry Pi 2 举办舞会。</value>
+    <value>你还可以更改闪烁的频率。随时随地将你的所有好友聚在一起，围绕 {0} 举办舞会。</value>
   </data>
   <data name="TutorialBlinkyBody5.Text" xml:space="preserve">
     <value>免责声明: 对于使用此小型板载闪烁 LED 举办这样大型的狂欢派对可能造成的任何损害，Microsoft 不承担任何责任。</value>
@@ -517,9 +521,6 @@
   <data name="Tutorial.GetCoding.010.h1" xml:space="preserve">
     <value>在你的电脑上设置 Visual Studio 2015</value>
   </data>
-  <data name="Tutorial.GetCoding.011.p" xml:space="preserve">
-    <value>我们已创建一个版本文件，用于描述所需工具支持的版本。请将此用作在你的电脑上安装所需工具的蓝图:</value>
-  </data>
   <data name="Tutorial.GetCoding.012.ul" xml:space="preserve">
     <value>安装 Windows 10</value>
   </data>
@@ -529,18 +530,9 @@
   <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
     <value>如果你计划开发驱动程序，请安装 WDK。</value>
   </data>
-  <data name="Tutorial.GetCoding.015.ul" xml:space="preserve">
-    <value>安装 IoT 工具 MSI。</value>
-  </data>
-  <data name="Tutorial.GetCoding.016.ul" xml:space="preserve">
-    <value>此时，你已准备好开发应用。请注意，Windows IoT Core Watcher 应用程序会在你登录时自动启动。该应用程序可用于查找将应用部署到的可用 Windows 10 IoT 核心版设备。</value>
-  </data>
   <data name="Tutorial.GetCoding.016a.br" xml:space="preserve">
     <value />
     <comment>Please do NOT localize this string</comment>
-  </data>
-  <data name="Tutorial.GetCoding.018.p" xml:space="preserve">
-    <value>在网络上找到你的设备后，请访问 www.windowsondevices.com 下载一些要尝试并运行的示例代码!</value>
   </data>
   <data name="Tutorial.GetCoding.019.br" xml:space="preserve">
     <value />

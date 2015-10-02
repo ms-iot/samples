@@ -5,7 +5,7 @@ using System;
 
 namespace IoTCoreDefaultApp.Utils
 {
-    public enum DeviceTypes { RPI2, MBM, GenericBoard, Unknown };
+    public enum DeviceTypes { RPI2, MBM, DB410, GenericBoard, Unknown };
     public static class DeviceTypeInformation
     {
         static DeviceTypes _type = DeviceTypes.Unknown;
@@ -23,6 +23,10 @@ namespace IoTCoreDefaultApp.Utils
                     else if (deviceInfo.SystemProductName.IndexOf("Raspberry", StringComparison.OrdinalIgnoreCase) >= 0)
                     {
                         _type = DeviceTypes.RPI2;
+                    }
+                    else if (deviceInfo.SystemProductName == "SBC")
+                    {
+                            _type = DeviceTypes.DB410;
                     }
                     else
                     {

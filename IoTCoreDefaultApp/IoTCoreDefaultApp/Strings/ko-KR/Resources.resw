@@ -192,6 +192,10 @@
     <value>Raspberry Pi 2</value>
     <comment>Board name</comment>
   </data>
+  <data name="DB410Name" xml:space="preserve">
+    <value>DragonBoard 410c</value>
+    <comment>Board name</comment>
+  </data>
   <data name="SkipStep.Text" xml:space="preserve">
     <value>이 단계 건너뛰기</value>
   </data>
@@ -308,7 +312,7 @@
     <value>설정은 필요하지 않습니다. [시작]을 누르기만 하세요.</value>
   </data>
   <data name="TutorialBlinkyBody4.Text" xml:space="preserve">
-    <value>깜박임의 빈도를 변경할 수도 있습니다. 언제든지 친구들을 초대하여 Raspberry Pi 2 주변에서 댄스 파티를 열 수도 있습니다.</value>
+    <value>깜박임의 빈도를 변경할 수도 있습니다. 언제든지 친구들을 초대하여 {0} 주변에서 댄스 파티를 열 수도 있습니다.</value>
   </data>
   <data name="TutorialBlinkyBody5.Text" xml:space="preserve">
     <value>통지 사항: 보드의 깜박이는 작은 LED를 이용해 대규모 파티를 주최하여 발생할 수 있는 모든 손상에 대해 Microsoft는 책임을 지지 않습니다.</value>
@@ -523,18 +527,9 @@
   <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
     <value>드라이버를 개발할 계획인 경우 WDK를 설치합니다.</value>
   </data>
-  <data name="Tutorial.GetCoding.015.ul" xml:space="preserve">
-    <value>IoT 도구 MSI를 설치합니다.</value>
-  </data>
-  <data name="Tutorial.GetCoding.016.ul" xml:space="preserve">
-    <value>이제 앱을 개발할 준비가 되었습니다. 로그온하면 Windows IoT Core Watcher 응용프로그램이 자동으로 시작됩니다. 이 응용프로그램을 사용하여 앱을 배포할 사용 가능한 Windows 10 IoT Core K 장치를 찾을 수 있습니다.</value>
-  </data>
   <data name="Tutorial.GetCoding.016a.br" xml:space="preserve">
     <value />
     <comment>Please do NOT localize this string</comment>
-  </data>
-  <data name="Tutorial.GetCoding.018.p" xml:space="preserve">
-    <value>네트워크에서 장치를 찾으면 www.windowsondevices.com을 방문하여 샘플 코드를 다운로드한 후 실행하고 시험해 보세요.</value>
   </data>
   <data name="Tutorial.GetCoding.019.br" xml:space="preserve">
     <value />

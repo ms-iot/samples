@@ -312,12 +312,26 @@ namespace BluetoothGATT
 
         private void EnableButton_Click(object sender, RoutedEventArgs e)
         {
+<<<<<<< HEAD
             enableSensor(SensorList.SelectedIndex);
+=======
+            if (SensorList.SelectedIndex >= 0)
+            { 
+                enableSensor(SensorList.SelectedIndex);
+            }
+>>>>>>> upstream/develop
         }
 
         private void DisableButton_Click(object sender, RoutedEventArgs e)
         {
+<<<<<<< HEAD
             disableSensor(SensorList.SelectedIndex);
+=======
+            if (SensorList.SelectedIndex >= 0)
+            {
+                disableSensor(SensorList.SelectedIndex);
+            }
+>>>>>>> upstream/develop
         }
 
         // ---------------------------------------------------

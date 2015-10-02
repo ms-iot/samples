@@ -16,6 +16,10 @@ namespace IoTCoreDefaultApp
     public class NetworkPresenter
     {
         private readonly static uint EthernetIanaType = 6;
+<<<<<<< HEAD:IoTCoreDefaultApp/IoTCoreDefaultApp/Presenters/NetworkPresenter.cs
+=======
+        private readonly static uint WirelessInterfaceIanaType = 71;
+>>>>>>> upstream/develop:IoTCoreDefaultApp/IoTCoreDefaultApp/Presenters/NetworkPresenter.cs
 
         public static string GetDirectConnectionName()
         {
@@ -226,7 +230,11 @@ namespace IoTCoreDefaultApp
 
         public static async Task<IList<NetworkInfo>> GetNetworkInformation()
         {
+<<<<<<< HEAD:IoTCoreDefaultApp/IoTCoreDefaultApp/Presenters/NetworkPresenter.cs
             var networkList = new Dictionary<string, NetworkInfo>();
+=======
+            var networkList = new Dictionary<Guid, NetworkInfo>();
+>>>>>>> upstream/develop:IoTCoreDefaultApp/IoTCoreDefaultApp/Presenters/NetworkPresenter.cs
             var hostNamesList = NetworkInformation.GetHostNames();
             var resourceLoader = ResourceLoader.GetForCurrentView();
 
@@ -239,11 +247,28 @@ namespace IoTCoreDefaultApp
                     if (profile != null)
                     {
                         NetworkInfo info;
+<<<<<<< HEAD:IoTCoreDefaultApp/IoTCoreDefaultApp/Presenters/NetworkPresenter.cs
                         var found = networkList.TryGetValue(profile.ProfileName, out info);
                         if (!found)
                         {
                             info = new NetworkInfo();
                             info.NetworkName = profile.ProfileName;
+=======
+                        var found = networkList.TryGetValue(hostName.IPInformation.NetworkAdapter.NetworkAdapterId, out info);
+                        if (!found)
+                        {
+                            info = new NetworkInfo();
+                            networkList[hostName.IPInformation.NetworkAdapter.NetworkAdapterId] = info;
+                            if (hostName.IPInformation.NetworkAdapter.IanaInterfaceType == WirelessInterfaceIanaType &&
+                                profile.ProfileName.Equals("Ethernet"))
+                            {
+                                info.NetworkName = "Wireless LAN Adapter";
+                            }
+                            else
+                            {
+                                info.NetworkName = profile.ProfileName;
+                            }
+>>>>>>> upstream/develop:IoTCoreDefaultApp/IoTCoreDefaultApp/Presenters/NetworkPresenter.cs
                             var statusTag = profile.GetNetworkConnectivityLevel().ToString();
                             info.NetworkStatus = resourceLoader.GetString("NetworkConnectivityLevel_" + statusTag);
                         }
@@ -255,10 +280,13 @@ namespace IoTCoreDefaultApp
                         {
                             info.NetworkIpv6 = hostName.CanonicalName;
                         }
+<<<<<<< HEAD:IoTCoreDefaultApp/IoTCoreDefaultApp/Presenters/NetworkPresenter.cs
                         if (!found)
                         {
                             networkList[profile.ProfileName] = info;
                         }
+=======
+>>>>>>> upstream/develop:IoTCoreDefaultApp/IoTCoreDefaultApp/Presenters/NetworkPresenter.cs
                     }
                 }
             }
