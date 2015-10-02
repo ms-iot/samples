@@ -192,10 +192,6 @@
     <value>Raspberry Pi 2</value>
     <comment>Board name</comment>
   </data>
-  <data name="DB410Name" xml:space="preserve">
-    <value>DragonBoard 410c</value>
-    <comment>Board name</comment>
-  </data>
   <data name="SkipStep.Text" xml:space="preserve">
     <value>Omitir este paso</value>
   </data>
@@ -220,7 +216,7 @@
     <comment>Field label</comment>
   </data>
   <data name="NetworkConnected.Text" xml:space="preserve">
-    <value>Conectado</value>
+    <value>Conectada</value>
   </data>
   <data name="NetworkPreferences.Text" xml:space="preserve">
     <value>Red y Wi-Fi</value>
