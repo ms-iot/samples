@@ -192,10 +192,6 @@
     <value>Raspberry Pi 2</value>
     <comment>Board name</comment>
   </data>
-  <data name="DB410Name" xml:space="preserve">
-    <value>DragonBoard 410c</value>
-    <comment>Board name</comment>
-  </data>
   <data name="SkipStep.Text" xml:space="preserve">
     <value>Omitir este paso</value>
   </data>
@@ -220,7 +216,7 @@
     <comment>Field label</comment>
   </data>
   <data name="NetworkConnected.Text" xml:space="preserve">
-    <value>Conectado</value>
+    <value>Conectada</value>
   </data>
   <data name="NetworkPreferences.Text" xml:space="preserve">
     <value>Red y Wi-Fi</value>
@@ -501,9 +497,6 @@
   </data>
   <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
     <value>Si tienes previsto desarrollar controladores, instala el WDK.</value>
-  </data>
-  <data name="Tutorial.GetCoding.016.ul" xml:space="preserve">
-    <value>Llegado a este punto, estás listo para desarrollar aplicaciones. Observa que la aplicación Windows IoT Core Watcher se inicia automáticamente cuando inicias sesión y se puede usar para buscar dispositivos Windows 10 IoT Core disponibles en los que implementar aplicaciones.</value>
   </data>
   <data name="NetworkConnectivityLevel_ConstrainedInternetAccess" xml:space="preserve">
     <value>Acceso a Internet limitado</value>
