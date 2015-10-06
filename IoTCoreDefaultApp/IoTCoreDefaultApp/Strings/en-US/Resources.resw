@@ -192,13 +192,10 @@
     <value>Raspberry Pi 2</value>
     <comment>Board name</comment>
   </data>
-<<<<<<< HEAD
-=======
   <data name="DB410Name" xml:space="preserve">
     <value>DragonBoard 410c</value>
     <comment>Board name</comment>
   </data>
->>>>>>> upstream/develop
   <data name="SkipStep.Text" xml:space="preserve">
     <value>Skip this step</value>
   </data>
@@ -319,11 +316,7 @@
     <value>No set up is required. Just press start.</value>
   </data>
   <data name="TutorialBlinkyBody4.Text" xml:space="preserve">
-<<<<<<< HEAD
-    <value>You can also change the frequency of the blinking. Feel free to gather all of your friends and have a dance party around your Raspberry Pi 2.</value>
-=======
     <value>You can also change the frequency of the blinking. Feel free to gather all of your friends and have a dance party around your device.</value>
->>>>>>> upstream/develop
   </data>
   <data name="TutorialBlinkyBody5.Text" xml:space="preserve">
     <value>Disclaimer: Microsoft takes no responsibility for whatever damage may be caused by hosting such a huge rave of a party using the small blinking LED on your board.</value>
@@ -349,11 +342,7 @@
     <comment>Refresh button</comment>
   </data>
   <data name="Tutorial.GetStarted.001.620x400.image" xml:space="preserve">
-<<<<<<< HEAD
-    <value>Assets/Tutorials/GetStarted.jpg</value>
-=======
     <value>Assets/Tutorials/GetStarted-{0}.jpg</value>
->>>>>>> upstream/develop
     <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetStarted.002.title" xml:space="preserve">
@@ -422,11 +411,7 @@
     <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.001.620x400.image" xml:space="preserve">
-<<<<<<< HEAD
-    <value>Assets/Tutorials/GetConnected.jpg</value>
-=======
     <value>Assets/Tutorials/GetConnected-{0}.jpg</value>
->>>>>>> upstream/develop
     <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.002.title" xml:space="preserve">
@@ -560,12 +545,6 @@
   <data name="Tutorial.GetCoding.010.h1" xml:space="preserve">
     <value>Setting up Visual Studio 2015 on your PC</value>
   </data>
-<<<<<<< HEAD
-  <data name="Tutorial.GetCoding.011.p" xml:space="preserve">
-    <value>We have created a versions file describing the supported versions of the required tools. Use this as a blueprint for installing the required tools on your PC:</value>
-  </data>
-=======
->>>>>>> upstream/develop
   <data name="Tutorial.GetCoding.012.ul" xml:space="preserve">
     <value>Install Windows 10</value>
   </data>
@@ -575,29 +554,10 @@
   <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
     <value>If you are planning to develop drivers, install the WDK.</value>
   </data>
-<<<<<<< HEAD
-  <data name="Tutorial.GetCoding.015.ul" xml:space="preserve">
-    <value>Install the IoT tools MSI.</value>
-  </data>
-  <data name="Tutorial.GetCoding.016.ul" xml:space="preserve">
-    <value>At this point, you are ready to develop apps. Notice that the Windows IoT Core Watcher application automatically starts when you log on. It can be used to find available Windows 10 IoT Core devices to deploy apps to.</value>
-  </data>
-=======
->>>>>>> upstream/develop
   <data name="Tutorial.GetCoding.016a.br" xml:space="preserve">
     <value />
     <comment>Please do NOT localize this string</comment>
   </data>
-<<<<<<< HEAD
-  <data name="Tutorial.GetCoding.017.600x360.image" xml:space="preserve">
-    <value>Assets/Tutorials/GetCoding-003.png</value>
-    <comment>Please do NOT localize this string</comment>
-  </data>
-  <data name="Tutorial.GetCoding.018.p" xml:space="preserve">
-    <value>Once you find your device on the network, visit www.windowsondevices.com to download some sample code to try and run!</value>
-  </data>
-=======
->>>>>>> upstream/develop
   <data name="Tutorial.GetCoding.019.br" xml:space="preserve">
     <value />
     <comment>Please do NOT localize this string</comment>

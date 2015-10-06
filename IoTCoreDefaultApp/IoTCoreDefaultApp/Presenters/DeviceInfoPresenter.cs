@@ -34,12 +34,9 @@ namespace IoTCoreDefaultApp
                 case DeviceTypes.MBM:
                     return loader.GetString("MBMName");
 
-<<<<<<< HEAD
-=======
                 case DeviceTypes.DB410:
                     return loader.GetString("DB410Name");
 
->>>>>>> upstream/develop
                 default:
                     return loader.GetString("GenericBoardName");
             }
@@ -55,12 +52,9 @@ namespace IoTCoreDefaultApp
                 case DeviceTypes.MBM:
                     return new Uri("ms-appx:///Assets/MBMBoard.png");
 
-<<<<<<< HEAD
-=======
                 case DeviceTypes.DB410:
                     return new Uri("ms-appx:///Assets/DB410Board.png");
 
->>>>>>> upstream/develop
                 default:
                     return new Uri("ms-appx:///Assets/GenericBoard.png");
             }
