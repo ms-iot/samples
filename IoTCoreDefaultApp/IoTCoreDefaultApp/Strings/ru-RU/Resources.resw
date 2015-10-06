@@ -174,7 +174,7 @@
     <value>Далее</value>
   </data>
   <data name="NoNetworks.Text" xml:space="preserve">
-    <value>Не найдены</value>
+    <value>Ничего не найдено</value>
   </data>
   <data name="OOBEIntro.Text" xml:space="preserve">
     <value>Давайте разделаемся с некоторыми основными материалами.</value>
@@ -190,6 +190,10 @@
   </data>
   <data name="Rpi2Name" xml:space="preserve">
     <value>Raspberry Pi 2</value>
+    <comment>Board name</comment>
+  </data>
+  <data name="DB410Name" xml:space="preserve">
+    <value>DragonBoard 410c</value>
     <comment>Board name</comment>
   </data>
   <data name="SkipStep.Text" xml:space="preserve">
@@ -372,6 +376,10 @@
   <data name="Tutorial.GetStarted.014.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
+  <data name="Tutorial.GetStarted.014a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetStarted.015.p" xml:space="preserve">
     <value>Чтобы получить дополнительные сведения, выберите руководство "Кодирование"</value>
   </data>
@@ -389,6 +397,10 @@
   </data>
   <data name="Tutorial.GetStarted.020.p" xml:space="preserve">
     <value>Смело используйте все это как шаблон, чтобы приступить к созданию собственного приложения</value>
+  </data>
+  <data name="Tutorial.GetStarted.021.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.002.title" xml:space="preserve">
     <value>Подключение</value>
@@ -429,6 +441,10 @@
   <data name="Tutorial.GetConnected.015.ul" xml:space="preserve">
     <value>Кабель Ethernet для подключения компьютера, на котором ведется разработка, к устройству с IoT Базовой.</value>
   </data>
+  <data name="Tutorial.GetConnected.015a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.016.p" xml:space="preserve">
     <value>Чтобы включить на компьютере общий доступ к подключению Интернета, следуйте приведенным ниже инструкциям</value>
   </data>
@@ -447,17 +463,29 @@
   <data name="Tutorial.GetConnected.021.ul" xml:space="preserve">
     <value>Откройте вкладку "Общий доступ" и установите флажок "Разрешить другим пользователям сети использовать подключение к Интернету данного компьютера".</value>
   </data>
+  <data name="Tutorial.GetConnected.021a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.022.p" xml:space="preserve">
     <value>После включения общего доступа к подключению Интернета на компьютере к нему можно напрямую подключить устройство с Windows 10 IoT Базовой: вставьте один конец свободного кабеля Ethernet в дополнительный порт Ethernet на компьютере, а другой — в порт Ethernet на устройстве с IoT Базовой.</value>
   </data>
   <data name="Tutorial.GetConnected.024.ul" xml:space="preserve">
     <value>Вкладка "Общий доступ" будет недоступна, если у вас только одно сетевое подключение.</value>
   </data>
+  <data name="Tutorial.GetConnected.024a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.025.h1" xml:space="preserve">
     <value>Возникли проблемы?</value>
   </data>
   <data name="Tutorial.GetConnected.026.p" xml:space="preserve">
     <value>Мы добавили на главную страницу расширенные средства сетевой диагностики, чтобы вы могли отладить ошибки. Дополнительную поддержку можно получить на сайте www.windowsondevices.com</value>
+  </data>
+  <data name="Tutorial.GetConnected.028.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetCoding.002.title" xml:space="preserve">
     <value>Кодирование</value>
@@ -483,6 +511,10 @@
   <data name="Tutorial.GetCoding.009.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
+  <data name="Tutorial.GetCoding.009a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetCoding.010.h1" xml:space="preserve">
     <value>Настройка Visual Studio 2015 на компьютере</value>
   </data>
@@ -494,6 +526,14 @@
   </data>
   <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
     <value>Если вы планируете разрабатывать драйверы, установите WDK.</value>
+  </data>
+  <data name="Tutorial.GetCoding.016a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetCoding.019.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="NetworkConnectivityLevel_ConstrainedInternetAccess" xml:space="preserve">
     <value>Ограниченный доступ к Интернету</value>

@@ -192,6 +192,13 @@
     <value>Raspberry Pi 2</value>
     <comment>Board name</comment>
   </data>
+<<<<<<< HEAD
+=======
+  <data name="DB410Name" xml:space="preserve">
+    <value>DragonBoard 410c</value>
+    <comment>Board name</comment>
+  </data>
+>>>>>>> upstream/develop
   <data name="SkipStep.Text" xml:space="preserve">
     <value>Omitir este paso</value>
   </data>
@@ -216,7 +223,7 @@
     <comment>Field label</comment>
   </data>
   <data name="NetworkConnected.Text" xml:space="preserve">
-    <value>Conectada</value>
+    <value>Conectado</value>
   </data>
   <data name="NetworkPreferences.Text" xml:space="preserve">
     <value>Red y Wi-Fi</value>
@@ -308,7 +315,11 @@
     <value>No se requiere instalación. Solo tienes que presionar el botón de encendido.</value>
   </data>
   <data name="TutorialBlinkyBody4.Text" xml:space="preserve">
+<<<<<<< HEAD
+    <value>También se puede cambiar la frecuencia del parpadeo. Reúne a todos tus amigos y no paréis de bailar con tu Raspberry Pi 2.</value>
+=======
     <value>También se puede cambiar la frecuencia del parpadeo. Reúne a todos tus amigos y no paréis de bailar con tu {0}.</value>
+>>>>>>> upstream/develop
   </data>
   <data name="TutorialBlinkyBody5.Text" xml:space="preserve">
     <value>Declinación de responsabilidades: Microsoft no se hace responsable de los daños que pueda causar el hospedaje como, por ejemplo, una enorme fiesta rave en la que se use el pequeño LED intermitente en el panel.</value>
@@ -489,6 +500,12 @@
   <data name="Tutorial.GetCoding.010.h1" xml:space="preserve">
     <value>Configuración de Visual Studio 2015 en tu PC</value>
   </data>
+<<<<<<< HEAD
+  <data name="Tutorial.GetCoding.011.p" xml:space="preserve">
+    <value>Hemos creado un archivo de versiones en el que se describen las versiones admitidas de las herramientas necesarias. Usa este archivo como plan de proyecto para la instalación de las herramientas necesarias en tu PC:</value>
+  </data>
+=======
+>>>>>>> upstream/develop
   <data name="Tutorial.GetCoding.012.ul" xml:space="preserve">
     <value>Instalar Windows 10</value>
   </data>
@@ -498,6 +515,18 @@
   <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
     <value>Si tienes previsto desarrollar controladores, instala el WDK.</value>
   </data>
+<<<<<<< HEAD
+  <data name="Tutorial.GetCoding.015.ul" xml:space="preserve">
+    <value>Instala el archivo MSI de las herramientas de IoT.</value>
+  </data>
+  <data name="Tutorial.GetCoding.016.ul" xml:space="preserve">
+    <value>Llegado a este punto, estás listo para desarrollar aplicaciones. Observa que la aplicación Windows IoT Core Watcher se inicia automáticamente cuando inicias sesión y se puede usar para buscar dispositivos Windows 10 IoT Core disponibles en los que implementar aplicaciones.</value>
+  </data>
+  <data name="Tutorial.GetCoding.018.p" xml:space="preserve">
+    <value>Cuando encuentres tu dispositivo en la red, visita www.windowsondevices.com para descargar código de ejemplo que puedes probar y ejecutar.</value>
+  </data>
+=======
+>>>>>>> upstream/develop
   <data name="NetworkConnectivityLevel_ConstrainedInternetAccess" xml:space="preserve">
     <value>Acceso a Internet limitado</value>
   </data>

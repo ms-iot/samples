@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="IoTCoreHeader.Text" xml:space="preserve">
-    <value>Windows 10 IoT Core</value>
+    <value>Windows 10 IoT Core K</value>
     <comment>The Operating System Name</comment>
   </data>
   <data name="GenericBoardName" xml:space="preserve">
@@ -186,10 +186,14 @@
     <value>연결하기</value>
   </data>
   <data name="OOBEWelcomeTitle.Text" xml:space="preserve">
-    <value>Windows 10 IoT Core 시작</value>
+    <value>Windows 10 IoT Core K 시작</value>
   </data>
   <data name="Rpi2Name" xml:space="preserve">
     <value>Raspberry Pi 2</value>
+    <comment>Board name</comment>
+  </data>
+  <data name="DB410Name" xml:space="preserve">
+    <value>DragonBoard 410c</value>
     <comment>Board name</comment>
   </data>
   <data name="SkipStep.Text" xml:space="preserve">
@@ -276,7 +280,7 @@
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialGetStartedDescription.Text" xml:space="preserve">
-    <value> Windows 10 IoT Core 소개</value>
+    <value> Windows 10 IoT Core K 소개</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialGetStartedTitle.Text" xml:space="preserve">
@@ -284,7 +288,7 @@
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialHeader.Text" xml:space="preserve">
-    <value>Windows 10 IoT Core 활용 방법</value>
+    <value>Windows 10 IoT Core K 활용 방법</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialHelloBlinkyDescription.Text" xml:space="preserve">
@@ -337,13 +341,13 @@
     <value>시작</value>
   </data>
   <data name="Tutorial.GetStarted.003.subtitle" xml:space="preserve">
-    <value>Windows 10 IoT Core 시작</value>
+    <value>Windows 10 IoT Core K 시작</value>
   </data>
   <data name="Tutorial.GetStarted.004.h1" xml:space="preserve">
     <value>소개</value>
   </data>
   <data name="Tutorial.GetStarted.005.p" xml:space="preserve">
-    <value>축하합니다! 보드 설정이 완료되었습니다. 이제 장치 개발을 돕도록 설계된 가벼운 운영 체제인 Windows 10 IoT Core를 살펴보세요. IoT Core를 사용하면 즉시 장치를 연결하여 실행하는 데 필요한 모든 도구가 Windows에서 제공됩니다. 여러분의 아이디어를 가능한 한 빨리 실현하도록 도와드리겠습니다.</value>
+    <value>축하합니다! 보드 설정이 완료되었습니다. 이제 장치 개발을 돕도록 설계된 가벼운 운영 체제인 Windows 10 IoT Core K를 살펴보세요. IoT Core K를 사용하면 즉시 장치를 연결하여 실행하는 데 필요한 모든 도구가 Windows에서 제공됩니다. 여러분의 아이디어를 가능한 한 빨리 실현하도록 도와드리겠습니다.</value>
   </data>
   <data name="Tutorial.GetStarted.006.p" xml:space="preserve">
     <value>자세한 내용을 알아보고 자습서, 설명서 및 도움말을 살펴보려면 www.windowsondevices.com을 방문하세요.</value>
@@ -352,7 +356,7 @@
     <value>코딩하는 방법</value>
   </data>
   <data name="Tutorial.GetStarted.008.p" xml:space="preserve">
-    <value>Windows 10 IoT Core는 PC 기능을 활용하여 프로젝트를 빌드합니다.</value>
+    <value>Windows 10 IoT Core K는 PC 기능을 활용하여 프로젝트를 빌드합니다.</value>
   </data>
   <data name="Tutorial.GetStarted.009.p" xml:space="preserve">
     <value>모든 코딩은 Visual Studio를 통해 원격으로 수행됩니다. 테스트하려거나 출시 준비가 된 경우 장치에 코드를 쉽게 푸시할 수 있습니다.</value>
@@ -372,6 +376,10 @@
   <data name="Tutorial.GetStarted.014.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
+  <data name="Tutorial.GetStarted.014a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetStarted.015.p" xml:space="preserve">
     <value>자세한 내용을 보려면 [코딩] 자습서를 클릭하세요.</value>
   </data>
@@ -379,7 +387,7 @@
     <value>시작 단추의 위치</value>
   </data>
   <data name="Tutorial.GetStarted.017.p" xml:space="preserve">
-    <value>Windows 10 IoT Core는 매우 가볍게 설계되었으며, 응용프로그램을 빌드한 후에 표시되지 않습니다. 따라서 셸과 시작 단추가 없습니다. 개발자가 모든 단추, 탐색 및 UI를 만들어야 합니다.</value>
+    <value>Windows 10 IoT Core K는 매우 가볍게 설계되었으며, 응용프로그램을 빌드한 후에 표시되지 않습니다. 따라서 셸과 시작 단추가 없습니다. 개발자가 모든 단추, 탐색 및 UI를 만들어야 합니다.</value>
   </data>
   <data name="Tutorial.GetStarted.018.p" xml:space="preserve">
     <value>하지만 걱정하지 마세요. 언제든지 도와드리겠습니다.</value>
@@ -389,6 +397,10 @@
   </data>
   <data name="Tutorial.GetStarted.020.p" xml:space="preserve">
     <value>응용프로그램을 직접 빌드할 때 언제든지 이 응용프로그램을 템플릿으로 사용하여 시작하세요.</value>
+  </data>
+  <data name="Tutorial.GetStarted.021.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.002.title" xml:space="preserve">
     <value>연결하기</value>
@@ -426,6 +438,10 @@
   <data name="Tutorial.GetConnected.015.ul" xml:space="preserve">
     <value>개발 컴퓨터를 IoT Core 장치에 연결하는 이더넷 케이블</value>
   </data>
+  <data name="Tutorial.GetConnected.015a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.016.p" xml:space="preserve">
     <value>아래의 지침에 따라 PC에서 ICS(인터넷 연결 공유)를 사용하도록 설정합니다.</value>
   </data>
@@ -444,8 +460,12 @@
   <data name="Tutorial.GetConnected.021.ul" xml:space="preserve">
     <value>[공유] 탭을 클릭하고 [다른 네트워크 사용자가 이 컴퓨터의 인터넷 연결을 통해 연결할 수 있도록 허용] 확인란을 선택합니다.</value>
   </data>
+  <data name="Tutorial.GetConnected.021a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.022.p" xml:space="preserve">
-    <value>PC에서 ICS를 사용하도록 설정했으면 이제 Windows 10 IoT Core 장치를 PC에 직접 연결할 수 있습니다. 이렇게 하려면 예비 이더넷 케이블의 한쪽 끝을 PC의 추가 이더넷 포트에 연결하고 케이블의 다른 쪽 끝을 IoT Core 장치의 이더넷 포트에 연결하면 됩니다.</value>
+    <value>PC에서 ICS를 사용하도록 설정했으면 이제 Windows 10 IoT Core K 장치를 PC에 직접 연결할 수 있습니다. 이렇게 하려면 예비 이더넷 케이블의 한쪽 끝을 PC의 추가 이더넷 포트에 연결하고 케이블의 다른 쪽 끝을 IoT Core 장치의 이더넷 포트에 연결하면 됩니다.</value>
   </data>
   <data name="Tutorial.GetConnected.023.p" xml:space="preserve">
     <value>참고:</value>
@@ -453,17 +473,25 @@
   <data name="Tutorial.GetConnected.024.ul" xml:space="preserve">
     <value>네트워크 연결이 하나만 있는 경우에는 [공유] 탭을 사용할 수 없습니다.</value>
   </data>
+  <data name="Tutorial.GetConnected.024a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.025.h1" xml:space="preserve">
     <value>문제가 발생하는 경우</value>
   </data>
   <data name="Tutorial.GetConnected.026.p" xml:space="preserve">
     <value>문제를 디버그하는 데 도움을 주기 위해 몇 가지 고급 네트워크 진단 기능을 주 페이지에 추가했습니다. 지원이 더 필요하면 www.windowsondevices.com으로 이동하세요.</value>
   </data>
+  <data name="Tutorial.GetConnected.028.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetCoding.002.title" xml:space="preserve">
     <value>코딩</value>
   </data>
   <data name="Tutorial.GetCoding.003.subtitle" xml:space="preserve">
-    <value>Windows 10 IoT Core는 PC 기능을 활용하여 프로젝트를 빌드합니다.</value>
+    <value>Windows 10 IoT Core K는 PC 기능을 활용하여 프로젝트를 빌드합니다.</value>
   </data>
   <data name="Tutorial.GetCoding.004.p" xml:space="preserve">
     <value>모든 코딩은 Visual Studio를 통해 원격으로 수행됩니다. 테스트하려거나 출시 준비가 된 경우 장치에 코드를 쉽게 푸시할 수 있습니다.</value>
@@ -483,6 +511,10 @@
   <data name="Tutorial.GetCoding.009.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
+  <data name="Tutorial.GetCoding.009a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetCoding.010.h1" xml:space="preserve">
     <value>PC에서 Visual Studio 2015 설정</value>
   </data>
@@ -494,6 +526,14 @@
   </data>
   <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
     <value>드라이버를 개발할 계획인 경우 WDK를 설치합니다.</value>
+  </data>
+  <data name="Tutorial.GetCoding.016a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetCoding.019.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="NetworkConnectivityLevel_ConstrainedInternetAccess" xml:space="preserve">
     <value>제한된 인터넷 액세스</value>
