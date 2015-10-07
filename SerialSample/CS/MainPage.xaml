@@ -76,8 +76,8 @@
 
         <StackPanel Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,20,0,0" Width="460" Height="40">
             <TextBox
-				x:Name="status" TextWrapping="Wrap" IsReadOnly="True" Width="460" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" 
-				ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" BorderBrush="White"/>
+                x:Name="status" TextWrapping="Wrap" IsReadOnly="True" Width="460" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" BorderBrush="White"/>
         </StackPanel>
 
     </Grid>
