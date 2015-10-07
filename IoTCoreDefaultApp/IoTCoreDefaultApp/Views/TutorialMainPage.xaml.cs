@@ -17,7 +17,6 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using IoTCoreDefaultApp.Utils;
 
@@ -40,29 +39,29 @@ namespace IoTCoreDefaultApp
                 TutorialList.Items.Remove(HelloBlinkyGridViewItem);
             }
 #endif
-            UpdateBoardInfo();
-            UpdateDateTime();
+            this.NavigationCacheMode = NavigationCacheMode.Enabled;
 
-            timer = new DispatcherTimer();
-            timer.Tick += timer_Tick;
-            timer.Interval = TimeSpan.FromSeconds(30);
-            timer.Start();
+            this.DataContext = LanguageManager.GetInstance();
+
+            this.Loaded += (sender, e) =>
+            {
+                UpdateDateTime();
+
+                timer = new DispatcherTimer();
+                timer.Tick += timer_Tick;
+                timer.Interval = TimeSpan.FromSeconds(30);
+                timer.Start();
+            };
+            this.Unloaded += (sender, e) =>
+            {
+                timer.Stop();
+                timer = null;
+            };
         }
 
         private void timer_Tick(object sender, object e)
         {
             UpdateDateTime();
-        }
-
-        private void UpdateBoardInfo()
-        {
-            if (DeviceTypeInformation.Type == DeviceTypes.DB410)
-            {
-                TutorialsImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/DB410-tutorials.png"));
-                GetStartedImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/Tutorials/GetStarted-DB410.jpg"));
-                HelloBlinkyTileImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/Tutorials/HelloBlinkyTile-DB410.jpg"));
-                GetConnectedImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/Tutorials/GetConnected-DB410.jpg"));
-            }
         }
 
         private void UpdateDateTime()

@@ -2,13 +2,12 @@
 
 
 using System;
+using Windows.ApplicationModel.Resources.Core;
 using Windows.Devices.WiFi;
 using Windows.Security.Credentials;
-using Windows.System.Threading;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -31,12 +30,19 @@ namespace IoTCoreDefaultApp
 
             visibleContent = BasicPreferencesGridView;
 
-            SetupLanguages();
+            this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
+
+            this.DataContext = LanguageManager.GetInstance();
+
+            this.Loaded += (sender, e) =>
+            {
+                SetupLanguages();
+            };
         }
 
         private void SetupLanguages()
         {
-            languageManager = new LanguageManager();
+            languageManager = LanguageManager.GetInstance();
 
             LanguageListBox.ItemsSource = languageManager.LanguageDisplayNames;
             LanguageListBox.SelectedItem = LanguageManager.GetCurrentLanguageDisplayName();
@@ -56,6 +62,11 @@ namespace IoTCoreDefaultApp
         private void LanguageListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var listBox = sender as ListBox;
+            if (listBox.SelectedItem == null)
+            {
+                return;
+            }
+
             if (!languageManager.UpdateLanguage(listBox.SelectedItem as string))
             {
                 // just exit if the language has not changed
@@ -65,15 +76,8 @@ namespace IoTCoreDefaultApp
             // reload
             if (this.Frame != null)
             {
-                Type type = this.Frame.CurrentSourcePageType;
-                try
-                {
-                    this.Frame.Navigate(type);
-                    this.Frame.BackStack.Remove(this.Frame.BackStack[this.Frame.BackStack.Count - 1]);
-                }
-                catch
-                {
-                }
+                ResourceContext.GetForCurrentView().Reset();
+                LanguageManager.GetInstance().OnPropertyChanged("Item[]");
             }
         }
 

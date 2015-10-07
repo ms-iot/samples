@@ -19,7 +19,6 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media.Imaging;
-using IoTCoreDefaultApp.Utils;
 
 namespace IoTCoreDefaultApp
 {
@@ -35,12 +34,24 @@ namespace IoTCoreDefaultApp
             var rootFrame = Window.Current.Content as Frame;
             rootFrame.Navigated += RootFrame_Navigated;
 
-            UpdateDateTime();
+            this.NavigationCacheMode = NavigationCacheMode.Enabled;
 
-            timer = new DispatcherTimer();
-            timer.Tick += timer_Tick;
-            timer.Interval = TimeSpan.FromSeconds(30);
-            timer.Start();
+            this.DataContext = LanguageManager.GetInstance();
+
+            this.Loaded += (sender, e) =>
+            {
+                UpdateDateTime();
+
+                timer = new DispatcherTimer();
+                timer.Tick += timer_Tick;
+                timer.Interval = TimeSpan.FromSeconds(30);
+                timer.Start();
+            };
+            this.Unloaded += (sender, e) =>
+            {
+                timer.Stop();
+                timer = null;
+            };
         }
 
         private void RootFrame_Navigated(object sender, NavigationEventArgs e)
@@ -122,13 +133,7 @@ namespace IoTCoreDefaultApp
                     case "image":
                         try
                         {
-                            var deviceType = DeviceTypeInformation.Type;
-                            if (deviceType != DeviceTypes.DB410)
-                            {
-                                deviceType = DeviceTypes.RPI2; // default to RPI2 images
-                            }
-
-                            var imageSource = new BitmapImage(new Uri("ms-appx:///" + String.Format(value, deviceType)));
+                            var imageSource = new BitmapImage(new Uri("ms-appx:///" + value));
                             var size = split[split.Length - 2];
                             if (size.Contains('x'))
                             {

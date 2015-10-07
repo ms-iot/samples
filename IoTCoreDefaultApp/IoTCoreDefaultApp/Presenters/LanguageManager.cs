@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Windows.Globalization;
 using Windows.System;
@@ -9,7 +10,7 @@ using Windows.System.UserProfile;
 
 namespace IoTCoreDefaultApp
 {
-    public class LanguageManager
+    public class LanguageManager : INotifyPropertyChanged
     {
         private Dictionary<string, string> displayNameToLanguageMap;
         public IReadOnlyList<string> LanguageDisplayNames
@@ -18,7 +19,7 @@ namespace IoTCoreDefaultApp
             set;
         }
 
-        public LanguageManager()
+        private LanguageManager()
         {
             displayNameToLanguageMap = ApplicationLanguages.ManifestLanguages.Select(tag =>
             {
@@ -27,6 +28,17 @@ namespace IoTCoreDefaultApp
             }).ToDictionary(keyitem => keyitem.Key, valueItem => valueItem.Value);
 
             LanguageDisplayNames = displayNameToLanguageMap.Keys.ToList();
+        }
+
+
+        private static LanguageManager _LanguageManager = null;
+        public static LanguageManager GetInstance()
+        {
+            if (_LanguageManager == null)
+            {
+                _LanguageManager = new LanguageManager();
+            }
+            return _LanguageManager;
         }
 
         public bool UpdateLanguage(string displayName)
@@ -65,6 +77,27 @@ namespace IoTCoreDefaultApp
 
             return lang.NativeName;
         }
+
+        public string this[string key]
+        {
+            get
+            {
+                var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+                var localized = resourceLoader.GetString(key);
+                return localized;
+            }
+        }
+
+        public void OnPropertyChanged(string property)
+        {
+            var eventInst = PropertyChanged;
+            if (eventInst != null)
+            {
+                eventInst.Invoke(this, new PropertyChangedEventArgs(property));
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
     }
 }

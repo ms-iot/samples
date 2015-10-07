@@ -19,7 +19,6 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using IoTCoreDefaultApp.Utils;
 
 namespace IoTCoreDefaultApp
 {
@@ -28,7 +27,7 @@ namespace IoTCoreDefaultApp
         private DispatcherTimer timer;
         private DispatcherTimer blinkyTimer;
         private int LEDStatus = 0;
-        private readonly int LED_PIN = 47; // on-board LED on the Rpi2
+        private const int LED_PIN = 47; // on-board LED on the Rpi2
         private GpioPin pin;
         private SolidColorBrush redBrush = new SolidColorBrush(Windows.UI.Colors.Red);
         private SolidColorBrush grayBrush = new SolidColorBrush(Windows.UI.Colors.LightGray);
@@ -43,24 +42,26 @@ namespace IoTCoreDefaultApp
             rootFrame.Navigated += RootFrame_Navigated;
             Unloaded += MainPage_Unloaded;
 
-            UpdateDateTime();
+            this.NavigationCacheMode = NavigationCacheMode.Enabled;
 
-            timer = new DispatcherTimer();
-            timer.Tick += timer_Tick;
-            timer.Interval = TimeSpan.FromSeconds(30);
-            timer.Start();
+            this.DataContext = LanguageManager.GetInstance();
 
-            blinkyTimer = new DispatcherTimer();
-            blinkyTimer.Interval = TimeSpan.FromMilliseconds(500);
-            blinkyTimer.Tick += Timer_Tick;
-
-            loader = new Windows.ApplicationModel.Resources.ResourceLoader();
-            BlinkyStartStop.Content = loader.GetString("BlinkyStart");
-
-            if (DeviceTypeInformation.Type == DeviceTypes.DB410)
+            this.Loaded += (sender, e) =>
             {
-                LED_PIN = 115; // on-board LED on the DB410c
-            }
+                UpdateDateTime();
+
+                timer = new DispatcherTimer();
+                timer.Tick += timer_Tick;
+                timer.Interval = TimeSpan.FromSeconds(30);
+                timer.Start();
+
+                blinkyTimer = new DispatcherTimer();
+                blinkyTimer.Interval = TimeSpan.FromMilliseconds(500);
+                blinkyTimer.Tick += Timer_Tick;
+
+                loader = new Windows.ApplicationModel.Resources.ResourceLoader();
+                BlinkyStartStop.Content = loader.GetString("BlinkyStart");
+            };
         }
 
         private void RootFrame_Navigated(object sender, NavigationEventArgs e)
