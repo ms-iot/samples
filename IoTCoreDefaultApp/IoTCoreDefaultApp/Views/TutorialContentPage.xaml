@@ -64,7 +64,7 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="1" FontFamily="{StaticResource IoTIconFontFamily}" FontSize="24" Text="{StaticResource IconPrototypingBoard}" TextAlignment="Center"/>
-                    <TextBlock Grid.Row="2" x:Uid="DeviceInfo" Style="{StaticResource CaptionTextBlockStyle}" TextAlignment="Center" Margin="0,5,0,0"/>
+                    <TextBlock Grid.Row="2" Text="{Binding [DeviceInfoText]}" Style="{StaticResource CaptionTextBlockStyle}" TextAlignment="Center" Margin="0,5,0,0"/>
                 </Grid>
             </Button>
 
@@ -76,7 +76,7 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="1" FontFamily="{StaticResource IconFontFamily}" FontSize="24" Text="{StaticResource IconEducation}" TextAlignment="Center"/>
-                <TextBlock Grid.Row="2" x:Uid="Tutorials" Style="{StaticResource CaptionTextBlockStyle}" TextAlignment="Center" Margin="0,5,0,0"/>
+                <TextBlock Grid.Row="2" Text="{Binding [TutorialsText]}" Style="{StaticResource CaptionTextBlockStyle}" TextAlignment="Center" Margin="0,5,0,0"/>
             </Grid>
 
             <TextBlock Grid.Column="2" x:Name="CurrentTime" HorizontalAlignment="Right" Style="{StaticResource IoTCoreDefaultAppBodyTextBlockStyle}" VerticalAlignment="Center" Padding="0,0,14,0"/>
@@ -88,10 +88,10 @@
             <Popup Grid.Column="6" x:Name="ShutdownDropdown" HorizontalAlignment="Left" IsLightDismissEnabled="True" VerticalOffset="72" Opened="ShutdownDropdown_Opened">
                 <ListView x:Name="ShutdownListView" Background="White" ItemContainerStyle="{StaticResource IoTCoreDefaultAppShutdownListViewItemStyle}" BorderThickness="2.0" BorderBrush="{StaticResource ShutdownBorderBrush}" ItemClick="ShutdownListView_ItemClick" IsItemClickEnabled="True" IsTabStop="True" >
                     <ListViewItem HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Height="40" Margin="0,5,0,0" >
-                        <TextBlock x:Name="ShutdownOption" x:Uid="ShutdownText" Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource IoTCoreDefaultAppDarkBodyTextBlockStyle}" Margin="20,0,20,0"/>
+                        <TextBlock x:Name="ShutdownOption" Text="{Binding [ShutdownText]}" Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource IoTCoreDefaultAppDarkBodyTextBlockStyle}" Margin="20,0,20,0"/>
                     </ListViewItem>
                     <ListViewItem HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Height="40" Margin="0,0,0,5" >
-                        <TextBlock x:Name="RestartOption" x:Uid="RestartText" Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource IoTCoreDefaultAppDarkBodyTextBlockStyle}" Margin="20,0,20,0"/>
+                        <TextBlock x:Name="RestartOption" Text="{Binding [RestartText]}" Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource IoTCoreDefaultAppDarkBodyTextBlockStyle}" Margin="20,0,20,0"/>
                     </ListViewItem>
                 </ListView>
             </Popup>
@@ -100,7 +100,7 @@
 
         <Button Grid.Row="2" x:Name="BackButton" Content="{StaticResource IconBack}" Background="Transparent" BorderThickness="0" BorderBrush="Transparent"  FontFamily="{StaticResource IconFontFamily}" FontSize="24" Click="BackButton_Clicked" Margin="24,0,0,0" Height="48" Width="48" VerticalAlignment="Top"/>
 
-        <Button Grid.Row="2" Grid.Column="2" x:Uid="NextButton" x:Name="NextButton" FontSize="20" Content="Next" Background="Transparent" BorderThickness="0" BorderBrush="Transparent"  Click="NextButton_Clicked" Margin="0,0,0,24" VerticalAlignment="Bottom" HorizontalAlignment="Center" Visibility="Collapsed" />
+        <Button Grid.Row="2" Grid.Column="2" Content="{Binding [NextButtonContent]}" x:Name="NextButton" FontSize="20" Background="Transparent" BorderThickness="0" BorderBrush="Transparent"  Click="NextButton_Clicked" Margin="0,0,0,24" VerticalAlignment="Bottom" HorizontalAlignment="Center" Visibility="Collapsed" />
 
         <ScrollViewer Grid.Row="2" Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
             <RichTextBlock x:Name="TutorialRichText" FontFamily="Segoe UI Light" />

@@ -40,13 +40,25 @@ namespace IoTCoreDefaultApp
                 TutorialList.Items.Remove(HelloBlinkyGridViewItem);
             }
 #endif
-            UpdateBoardInfo();
-            UpdateDateTime();
+            this.NavigationCacheMode = NavigationCacheMode.Enabled;
 
-            timer = new DispatcherTimer();
-            timer.Tick += timer_Tick;
-            timer.Interval = TimeSpan.FromSeconds(30);
-            timer.Start();
+            this.DataContext = LanguageManager.GetInstance();
+
+            this.Loaded += (sender, e) =>
+            {
+                UpdateBoardInfo();
+                UpdateDateTime();
+
+                timer = new DispatcherTimer();
+                timer.Tick += timer_Tick;
+                timer.Interval = TimeSpan.FromSeconds(30);
+                timer.Start();
+            };
+            this.Unloaded += (sender, e) =>
+            {
+                timer.Stop();
+                timer = null;
+            };
         }
 
         private void timer_Tick(object sender, object e)
