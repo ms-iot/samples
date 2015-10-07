@@ -192,6 +192,10 @@
     <value>Raspberry Pi 2</value>
     <comment>Board name</comment>
   </data>
+  <data name="DB410Name" xml:space="preserve">
+    <value>DragonBoard 410c</value>
+    <comment>Board name</comment>
+  </data>
   <data name="SkipStep.Text" xml:space="preserve">
     <value>Schritt überspringen</value>
   </data>
@@ -309,7 +313,7 @@ programme</value>
     <value>Es ist keine Einrichtung erforderlich. Drücken Sie einfach „Start“.</value>
   </data>
   <data name="TutorialBlinkyBody4.Text" xml:space="preserve">
-    <value>Sie können die Blinkfrequenz auch ändern. Trommeln Sie alle Freunde zusammen, und veranstalten Sie eine Tanzparty rund um Ihren {0}.</value>
+    <value>Sie können die Blinkfrequenz auch ändern. Trommeln Sie alle Freunde zusammen, und veranstalten Sie eine Tanzparty rund um Ihr Gerät.</value>
   </data>
   <data name="TutorialBlinkyBody5.Text" xml:space="preserve">
     <value>Haftungsausschluss: Microsoft haftet nicht für Schäden, die dadurch entstehen, dass Sie große Technopartys mit der kleinen blinkenden LED auf dem Board veranstalten.</value>
@@ -333,6 +337,10 @@ programme</value>
   <data name="Refresh.Content" xml:space="preserve">
     <value>Aktualisieren</value>
     <comment>Refresh button</comment>
+  </data>
+  <data name="Tutorial.GetStarted.001.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetStarted-{0}.jpg</value>
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetStarted.002.title" xml:space="preserve">
     <value>Erste Schritte</value>
@@ -390,6 +398,10 @@ programme</value>
   </data>
   <data name="Tutorial.GetStarted.020.p" xml:space="preserve">
     <value>Verwenden Sie dieses Beispiel als Ausgangsbasis für die Entwicklung einer eigenen Anwendung.</value>
+  </data>
+  <data name="Tutorial.GetConnected.001.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetConnected-{0}.jpg</value>
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.002.title" xml:space="preserve">
     <value>Verbindung herstellen</value>
