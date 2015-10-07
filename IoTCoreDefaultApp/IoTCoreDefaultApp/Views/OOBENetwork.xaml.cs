@@ -29,8 +29,17 @@ namespace IoTCoreDefaultApp
         {
             this.InitializeComponent();
             OOBENetworkPageDispatcher = Window.Current.Dispatcher;
-            SetupNetwork();
+
             NetworkInformation.NetworkStatusChanged += NetworkInformation_NetworkStatusChanged;
+
+            this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
+
+            this.DataContext = LanguageManager.GetInstance();
+
+            this.Loaded += (sender, e) =>
+            {
+                SetupNetwork();
+            };
         }
 
         private void SetupNetwork()
