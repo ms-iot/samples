@@ -67,7 +67,7 @@ namespace SerialSample
         /// - Get the selected device index and use Id to create the SerialDevice object
         /// - Configure default settings for the serial port
         /// - Create the ReadCancellationTokenSource token
-        /// - Add text to rcvdText textbox to invoke rcvdText_TextChanged event
+        /// - Start listening on the serial port input
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -99,13 +99,12 @@ namespace SerialSample
                 serialPort.DataBits = 8;
 
                 // Display configured settings
-                status.Text = "Serial port configured successfully!\n ----- Properties ----- \n";
-                status.Text += "BaudRate: " + serialPort.BaudRate.ToString() + "\n";
-                status.Text += "DataBits: " + serialPort.DataBits.ToString() + "\n";
-                status.Text += "Handshake: " + serialPort.Handshake.ToString() + "\n";
-                status.Text += "Parity: " + serialPort.Parity.ToString() + "\n";
-                status.Text += "StopBits: " + serialPort.StopBits.ToString() + "\n";                            
-                    
+                status.Text = "Serial port configured successfully: ";
+                status.Text += serialPort.BaudRate + "-";
+                status.Text += serialPort.DataBits + "-";
+                status.Text += serialPort.Parity.ToString() + "-";
+                status.Text += serialPort.StopBits;
+
                 // Set the RcvdText field to invoke the TextChanged callback
                 // The callback launches an async Read task to wait for data
                 rcvdText.Text = "Waiting for data...";
@@ -115,6 +114,8 @@ namespace SerialSample
 
                 // Enable 'WRITE' button to allow sending data
                 sendTextButton.IsEnabled = true;
+
+                Listen();
             }
             catch (Exception ex)
             {
@@ -182,8 +183,8 @@ namespace SerialSample
                 UInt32 bytesWritten = await storeAsyncTask;
                 if (bytesWritten > 0)
                 {                    
-                    status.Text = sendText.Text + '\n';
-                    status.Text += "Bytes written successfully!";
+                    status.Text = sendText.Text + ", ";
+                    status.Text += "bytes written successfully!";
                 }
                 sendText.Text = "";
             }
@@ -194,20 +195,24 @@ namespace SerialSample
         }
 
         /// <summary>
-        /// rcvdText_TextChanged: Action to take when text is entered in the 'Read Data' textbox
         /// - Create a DataReader object
         /// - Create an async task to read from the SerialDevice InputStream
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void rcvdText_TextChanged(object sender, TextChangedEventArgs e)
+        private async void Listen()
         {
             try
             {
                 if (serialPort != null)
                 {
                     dataReaderObject = new DataReader(serialPort.InputStream);
-                    await ReadAsync(ReadCancellationTokenSource.Token);
+
+                    // keep reading the serial input
+                    while (true)
+                    {
+                        await ReadAsync(ReadCancellationTokenSource.Token);
+                    }
                 }
             }
             catch (Exception ex)
@@ -258,7 +263,7 @@ namespace SerialSample
             if (bytesRead > 0)
             {
                 rcvdText.Text = dataReaderObject.ReadString(bytesRead);
-                status.Text = "\nBytes read successfully!";
+                status.Text = "bytes read successfully!";
             }            
         }
 
