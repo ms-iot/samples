@@ -33,9 +33,6 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="72"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="36"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -45,7 +42,7 @@
         </Grid.ColumnDefinitions>
 
         <!-- Header row -->
-        <Grid Grid.Column="0" Grid.ColumnSpan="5" Background="#2a2a2a">
+        <Grid Grid.Column="0" Grid.ColumnSpan="3" Background="#2a2a2a">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="100" />
@@ -100,13 +97,15 @@
 
         </Grid>
 
-        <Image Grid.Row="1" Grid.Column="1" Source="ms-appx:///Assets/rpi2-tutorials.png"/>
-        <StackPanel VerticalAlignment="Bottom" Grid.Row="2" Grid.Column="1">
-            <TextBlock Text="{Binding [TutorialHeaderText]}" Style="{StaticResource HeaderTextBlockStyle}" TextWrapping="WrapWholeWords" />
-            <TextBlock Text="{Binding [TutorialTitleText]}" Style="{StaticResource TitleTextBlockStyle}" TextWrapping="WrapWholeWords" />
-        </StackPanel>
-        
-        <GridView x:Name="TutorialList" Grid.Row="4" Grid.Column="1" ItemClick="TutorialList_ItemClick" IsItemClickEnabled="True" >
+        <GridView x:Name="TutorialList" Grid.Row="1" Grid.Column="1" ItemClick="TutorialList_ItemClick" IsItemClickEnabled="True" >
+            <GridView.Header>
+                <StackPanel VerticalAlignment="Bottom">
+                    <Image x:Name="TutorialsImage" Grid.Row="1" Grid.Column="1" Source="ms-appx:///Assets/rpi2-tutorials.png"/>
+                    <TextBlock Text="{Binding [TutorialHeaderText]}" Style="{StaticResource HeaderTextBlockStyle}" TextWrapping="WrapWholeWords" />
+                    <TextBlock Text="{Binding [TutorialTitleText]}" Style="{StaticResource TitleTextBlockStyle}" TextWrapping="WrapWholeWords" />
+                </StackPanel>
+            </GridView.Header>
+
             <GridViewItem>
                 <Grid x:Name="GetStarted">
                     <Grid.RowDefinitions>
@@ -122,8 +121,8 @@
                         <ColumnDefinition Width="4"/>
                         <ColumnDefinition Width="4"/>
                     </Grid.ColumnDefinitions>
-                        
-                    <Image Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Source="ms-appx:///Assets/Tutorials/GetStarted.jpg" Width="317"/>
+
+                    <Image x:Name="GetStartedImage" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Source="ms-appx:///Assets/Tutorials/GetStarted-RPI2.jpg" Width="317"/>
                     <StackPanel VerticalAlignment="Bottom" Grid.Row="2" Grid.Column="2">
                         <TextBlock Text="{Binding [TutorialGetStartedTitleText]}" Style="{StaticResource BodyTextBlockStyle}" TextWrapping="WrapWholeWords" />
                         <TextBlock Text="{Binding [TutorialGetStartedDescriptionText]}" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}" TextWrapping="WrapWholeWords" />
@@ -146,7 +145,7 @@
                         <ColumnDefinition Width="4"/>
                     </Grid.ColumnDefinitions>
 
-                    <Image Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Source="ms-appx:///Assets/Tutorials/HelloBlinkyTile.jpg" Width="317"/>
+                    <Image x:Name="HelloBlinkyTileImage" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Source="ms-appx:///Assets/Tutorials/HelloBlinkyTile-RPI2.jpg" Width="317"/>
                     <StackPanel VerticalAlignment="Bottom" Grid.Row="2" Grid.Column="2">
                         <TextBlock Text="{Binding [TutorialHelloBlinkyTitleText]}" Style="{StaticResource BodyTextBlockStyle}" TextWrapping="WrapWholeWords" />
                         <TextBlock Text="{Binding [TutorialHelloBlinkyDescriptionText]}" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}" TextWrapping="WrapWholeWords" />
@@ -169,7 +168,7 @@
                         <ColumnDefinition Width="4"/>
                     </Grid.ColumnDefinitions>
 
-                    <Image Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Source="ms-appx:///Assets/Tutorials/GetConnected.jpg" Width="317"/>
+                    <Image x:Name="GetConnectedImage" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Source="ms-appx:///Assets/Tutorials/GetConnected-RPI2.jpg" Width="317"/>
                     <StackPanel VerticalAlignment="Bottom" Grid.Row="2" Grid.Column="2">
                         <TextBlock Text="{Binding [TutorialGetConnectedTitleText]}" Style="{StaticResource BodyTextBlockStyle}" TextWrapping="WrapWholeWords" />
                         <TextBlock Text="{Binding [TutorialGetConnectedDescriptionText]}" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}" TextWrapping="WrapWholeWords" />

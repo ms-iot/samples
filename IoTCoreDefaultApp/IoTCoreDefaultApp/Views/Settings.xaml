@@ -166,34 +166,26 @@
             </ListViewItem>
         </ListView>
 
-        <Grid x:Name="BasicPreferencesGridView" Grid.Column="2" Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="24"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="40"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="80"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding [LanguageTitleText]}" Style="{StaticResource SubtitleTextBlockStyle}" FontWeight="Normal" />
-            <ListBox Grid.Column="1" Grid.Row="2" x:Name="LanguageListBox" FontSize="16" Margin="0,10,0,0" Width="446" SelectionChanged="LanguageListBox_SelectionChanged" />
-        </Grid>
+        <ScrollViewer x:Name="BasicPreferencesGridView" Grid.Column="2" Grid.Row="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="24"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="40"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding [LanguageTitleText]}" Style="{StaticResource SubtitleTextBlockStyle}" FontWeight="Normal" />
+                <ListBox Grid.Column="1" Grid.Row="2" x:Name="LanguageListBox" FontSize="16" Margin="0,10,0,0" Width="446" SelectionChanged="LanguageListBox_SelectionChanged" />
+            </Grid>
+        </ScrollViewer>
 
-        <Grid x:Name="NetworkGrid" Grid.Column="2" Grid.Row="1" Visibility="Collapsed">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="24"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-            <Grid.RowDefinitions>
-                <RowDefinition Height="85"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical">
+        <ScrollViewer  x:Name="NetworkGrid" Grid.Column="2" Grid.Row="1" Visibility="Collapsed">
+            <StackPanel Margin="24,85,0,0" Orientation="Vertical">
                 <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,25,0,0">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <TextBlock Text="{Binding [DirectConnectionsText]}" Style="{StaticResource BaseTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,12"/>
@@ -218,6 +210,6 @@
                     </StackPanel>
                 </ScrollViewer>
             </StackPanel>
-        </Grid>
+        </ScrollViewer>
     </Grid>
 </Page>

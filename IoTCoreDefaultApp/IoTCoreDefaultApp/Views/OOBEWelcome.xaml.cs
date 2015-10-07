@@ -83,13 +83,13 @@ namespace IoTCoreDefaultApp
         {
             languageManager = LanguageManager.GetInstance();
 
-            LanguagesListBox.ItemsSource = languageManager.LanguageDisplayNames;
-            LanguagesListBox.SelectedItem = LanguageManager.GetCurrentLanguageDisplayName();
+            LanguagesListView.ItemsSource = languageManager.LanguageDisplayNames;
+            LanguagesListView.SelectedItem = LanguageManager.GetCurrentLanguageDisplayName();
         }
 
         private bool SetPreferences()
         {
-            var selectedLanguage = LanguagesListBox.SelectedItem as string;
+            var selectedLanguage = LanguagesListView.SelectedItem as string;
             return languageManager.UpdateLanguage(selectedLanguage);
         }
 
