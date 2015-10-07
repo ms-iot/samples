@@ -192,6 +192,10 @@
     <value>Raspberry Pi 2</value>
     <comment>Board name</comment>
   </data>
+  <data name="DB410Name" xml:space="preserve">
+    <value>DragonBoard 410c</value>
+    <comment>Board name</comment>
+  </data>
   <data name="SkipStep.Text" xml:space="preserve">
     <value>Ignorar este teste</value>
   </data>
@@ -308,7 +312,7 @@
     <value>Não é necessário nenhuma configuração. Basta pressionar iniciar.</value>
   </data>
   <data name="TutorialBlinkyBody4.Text" xml:space="preserve">
-    <value>A frequência da intermitência também pode ser alterada. Fique à vontade para reunir seus amigos e fazer uma festa com seu {0}.</value>
+    <value>A frequência da intermitência também pode ser alterada. Fique à vontade para reunir seus amigos e fazer uma festa com seu dispositivo.</value>
   </data>
   <data name="TutorialBlinkyBody5.Text" xml:space="preserve">
     <value>Aviso de isenção de responsabilidade: a Microsoft não se responsabiliza por quaisquer danos que possam ocorrer pelo uso do pequeno LED piscante na placa.</value>
@@ -332,6 +336,10 @@
   <data name="Refresh.Content" xml:space="preserve">
     <value>Atualizar</value>
     <comment>Refresh button</comment>
+  </data>
+  <data name="Tutorial.GetStarted.001.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetStarted-{0}.jpg</value>
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetStarted.002.title" xml:space="preserve">
     <value>Introdução</value>
@@ -389,6 +397,10 @@
   </data>
   <data name="Tutorial.GetStarted.020.p" xml:space="preserve">
     <value>Sinta-se à vontade para usar este aplicativo como modelo inicial ao compilar seu próprio aplicativo</value>
+  </data>
+  <data name="Tutorial.GetConnected.001.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetConnected-{0}.jpg</value>
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.002.title" xml:space="preserve">
     <value>Conecte-se</value>

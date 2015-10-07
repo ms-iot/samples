@@ -192,6 +192,10 @@
     <value>Raspberry Pi 2</value>
     <comment>Board name</comment>
   </data>
+  <data name="DB410Name" xml:space="preserve">
+    <value>DragonBoard 410c</value>
+    <comment>Board name</comment>
+  </data>
   <data name="SkipStep.Text" xml:space="preserve">
     <value>Ignora questo passaggio</value>
   </data>
@@ -308,7 +312,7 @@
     <value>Non occorre alcuna configurazione. È sufficiente avviare.</value>
   </data>
   <data name="TutorialBlinkyBody4.Text" xml:space="preserve">
-    <value>Puoi anche modificare la frequenza di lampeggiamento. Se vuoi chiamare i tuoi amici per ballare al ritmo della tua scheda {0}, sei libero di farlo.</value>
+    <value>Puoi anche modificare la frequenza di lampeggiamento. Se vuoi chiamare i tuoi amici per ballare al ritmo del tuo dispositivo, sei libero di farlo.</value>
   </data>
   <data name="TutorialBlinkyBody5.Text" xml:space="preserve">
     <value>Dichiarazione di non responsabilità: Microsoft non si assume alcuna responsabilità per gli eventuali danni causati dall'organizzazione di un rave party usando il LED lampeggiante della scheda.</value>
@@ -332,6 +336,10 @@
   <data name="Refresh.Content" xml:space="preserve">
     <value>Aggiorna</value>
     <comment>Refresh button</comment>
+  </data>
+  <data name="Tutorial.GetStarted.001.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetStarted-{0}.jpg</value>
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetStarted.002.title" xml:space="preserve">
     <value>Per iniziare</value>
@@ -389,6 +397,10 @@
   </data>
   <data name="Tutorial.GetStarted.020.p" xml:space="preserve">
     <value>Usa questa applicazione come modello per iniziare a sviluppare la tua</value>
+  </data>
+  <data name="Tutorial.GetConnected.001.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetConnected-{0}.jpg</value>
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.002.title" xml:space="preserve">
     <value>Collegati</value>
