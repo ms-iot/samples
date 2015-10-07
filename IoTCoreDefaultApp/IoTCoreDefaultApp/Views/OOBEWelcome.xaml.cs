@@ -3,7 +3,6 @@
 
 using System;
 using System.Globalization;
-using Windows.ApplicationModel.Resources.Core;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -123,7 +122,7 @@ namespace IoTCoreDefaultApp
 
         private void LanguagesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-			SetPreferences();
+            SetPreferences();
         }
 
         private void UpdateBoardInfo()

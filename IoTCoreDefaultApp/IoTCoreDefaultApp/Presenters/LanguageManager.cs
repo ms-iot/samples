@@ -50,16 +50,16 @@ namespace IoTCoreDefaultApp
             {
                 ApplicationLanguages.PrimaryLanguageOverride = newLang;
 
-				// Refresh the resources in new language
-				ResourceContext.GetForCurrentView().Reset();
+                // Refresh the resources in new language
+                ResourceContext.GetForCurrentView().Reset();
 
-				// Where seems to be some delay between when this is reset and when
-				// we can start re-evaluating the resources.  Without a pause, sometimes
-				// the first resource remains the previous language.
-				new System.Threading.ManualResetEvent(false).WaitOne(100);
+                // Where seems to be some delay between when this is reset and when
+                // we can start re-evaluating the resources.  Without a pause, sometimes
+                // the first resource remains the previous language.
+                new System.Threading.ManualResetEvent(false).WaitOne(100);
 
-				OnPropertyChanged("Item[]");
-				return true;
+                OnPropertyChanged("Item[]");
+                return true;
             }
             return false;
         }

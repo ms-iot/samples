@@ -2,7 +2,6 @@
 
 
 using System;
-using Windows.ApplicationModel.Resources.Core;
 using Windows.Devices.WiFi;
 using Windows.Security.Credentials;
 using Windows.UI.Core;
@@ -67,7 +66,7 @@ namespace IoTCoreDefaultApp
                 return;
             }
 
-			languageManager.UpdateLanguage(listBox.SelectedItem as string);
+            languageManager.UpdateLanguage(listBox.SelectedItem as string);
         }
 
 

@@ -4,15 +4,12 @@ using IoTOnboardingService;
 using System;
 using System.Globalization;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Resources;
-using Windows.ApplicationModel.Resources.Core;
 using Windows.Networking.Connectivity;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
