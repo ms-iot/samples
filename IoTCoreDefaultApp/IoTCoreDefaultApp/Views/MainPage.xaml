@@ -172,18 +172,18 @@
                     <TextBlock Grid.Row="0" x:Name="BoardName" Style="{StaticResource SubheaderTextBlockStyle}" Foreground="{StaticResource AccentBrush}" Text="IoTCore Device"/>
 
                     <StackPanel Grid.Row="2">
-                        <TextBlock Text="{Binding [MainPageDeviceNameText]}" Style="{StaticResource BaseTextBlockStyle}" />
+						<TextBlock Text="{Binding [MainPageDeviceNameText]}" Style="{StaticResource BaseTextBlockStyle}" />
                         <TextBlock x:Name="DeviceName" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}" />
-                        <TextBlock Text="{Binding [MainPageNetworkText]}" x:Name="NetworkNameCaption" Style="{StaticResource BaseTextBlockStyle}" Margin="0,16,0,0" />
+						<TextBlock Text="{Binding [MainPageNetworkText]}" x:Name="NetworkNameCaption" Style="{StaticResource BaseTextBlockStyle}" Margin="0,16,0,0" />
                         <TextBlock x:Name="NetworkName1" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}" />
-                        <TextBlock Text="{Binding [MainPageIPAddressText]}" x:Name="IPAddressCaption" Style="{StaticResource BaseTextBlockStyle}" Margin="0,16,0,0" />
+						<TextBlock Text="{Binding [MainPageIPAddressText]}" x:Name="IPAddressCaption" Style="{StaticResource BaseTextBlockStyle}" Margin="0,16,0,0" />
                         <TextBlock x:Name="IPAddress1" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}"/>
-                        <TextBlock Text="{Binding [MainPageOSVersionText]}" x:Name="OSVersionCaption" Style="{StaticResource BaseTextBlockStyle}" Margin="0,16,0,0" />
+						<TextBlock Text="{Binding [MainPageOSVersionText]}" x:Name="OSVersionCaption" Style="{StaticResource BaseTextBlockStyle}" Margin="0,16,0,0" />
                         <TextBlock x:Name="OSVersion" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}"/>
                     </StackPanel>
 
                     <StackPanel Grid.Row="4">
-                        <TextBlock Text="{Binding [ConnectedDevicesText]}" Style="{StaticResource BaseTextBlockStyle}" />
+						<TextBlock Text="{Binding [ConnectedDevicesText]}" Style="{StaticResource BaseTextBlockStyle}" />
                         <ItemsControl x:Name="ConnectedDevices" Foreground="{StaticResource PaleTextBrush}" />
                     </StackPanel>
 

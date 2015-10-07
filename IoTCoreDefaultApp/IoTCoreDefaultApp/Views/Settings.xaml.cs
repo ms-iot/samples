@@ -67,18 +67,7 @@ namespace IoTCoreDefaultApp
                 return;
             }
 
-            if (!languageManager.UpdateLanguage(listBox.SelectedItem as string))
-            {
-                // just exit if the language has not changed
-                return;
-            }
-
-            // reload
-            if (this.Frame != null)
-            {
-                ResourceContext.GetForCurrentView().Reset();
-                LanguageManager.GetInstance().OnPropertyChanged("Item[]");
-            }
+			languageManager.UpdateLanguage(listBox.SelectedItem as string);
         }
 
 

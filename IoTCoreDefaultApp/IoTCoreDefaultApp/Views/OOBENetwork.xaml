@@ -164,7 +164,7 @@
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>
-        <HyperlinkButton Grid.Column="1" Grid.Row="1" x:Name="SkipButton" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="SkipButton_Clicked" HorizontalContentAlignment="Left">
+		<HyperlinkButton Grid.Column="1" Grid.Row="3" x:Name="SkipButton" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="SkipButton_Clicked" HorizontalContentAlignment="Left">
             <TextBlock Text="{Binding [SkipStepText]}"/>
         </HyperlinkButton>
     </Grid>

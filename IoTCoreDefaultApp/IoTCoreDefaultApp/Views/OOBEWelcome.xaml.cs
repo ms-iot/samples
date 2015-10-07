@@ -87,10 +87,10 @@ namespace IoTCoreDefaultApp
             LanguagesListView.SelectedItem = LanguageManager.GetCurrentLanguageDisplayName();
         }
 
-        private bool SetPreferences()
+        private void SetPreferences()
         {
             var selectedLanguage = LanguagesListView.SelectedItem as string;
-            return languageManager.UpdateLanguage(selectedLanguage);
+            languageManager.UpdateLanguage(selectedLanguage);
         }
 
         private void CancelButton_Clicked(object sender, RoutedEventArgs e)
@@ -123,18 +123,7 @@ namespace IoTCoreDefaultApp
 
         private void LanguagesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (!SetPreferences())
-            {
-                // just exit if the language has not changed
-                return;
-            }
-
-            // reload
-            if (this.Frame != null)
-            {
-                ResourceContext.GetForCurrentView().Reset();
-                LanguageManager.GetInstance().OnPropertyChanged("Item[]");
-            }
+			SetPreferences();
         }
 
         private void UpdateBoardInfo()

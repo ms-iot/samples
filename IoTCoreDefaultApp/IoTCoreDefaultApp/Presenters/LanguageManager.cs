@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Windows.ApplicationModel.Resources.Core;
 using Windows.Globalization;
 using Windows.System;
 using Windows.System.UserProfile;
@@ -48,7 +49,17 @@ namespace IoTCoreDefaultApp
             if (currentLang != newLang)
             {
                 ApplicationLanguages.PrimaryLanguageOverride = newLang;
-                return true;
+
+				// Refresh the resources in new language
+				ResourceContext.GetForCurrentView().Reset();
+
+				// Where seems to be some delay between when this is reset and when
+				// we can start re-evaluating the resources.  Without a pause, sometimes
+				// the first resource remains the previous language.
+				new System.Threading.ManualResetEvent(false).WaitOne(100);
+
+				OnPropertyChanged("Item[]");
+				return true;
             }
             return false;
         }
