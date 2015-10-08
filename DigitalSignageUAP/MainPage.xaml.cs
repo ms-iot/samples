@@ -27,6 +27,10 @@ using Windows.UI.Xaml.Navigation;
 using Windows.ApplicationModel.AppService;
 using Windows.Foundation.Collections;
 using Windows.UI.Core;
+using Windows.System.Profile;
+using Windows.UI.ViewManagement;
+using Windows.Graphics.Display;
+using Windows.Foundation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -91,7 +95,29 @@ namespace DigitalSignageUAP
 
         public MainPage()
         {
-            this.InitializeComponent();
+            
+            Rect bounds = ApplicationView.GetForCurrentView().VisibleBounds;
+            double scaleFactor = DisplayInformation.GetForCurrentView().RawPixelsPerViewPixel;
+            Size size = new Size(bounds.Width * scaleFactor, bounds.Height * scaleFactor);
+
+
+            //string resourceName = string.Format("ms-appx:///MainPage.DigitalSignageUAP-{0}x{1}.xaml", size.Width, size.Height);
+            string resourceName;
+
+            if (size.Width >= 1920 && size.Height >= 1080) resourceName = "ms-appx:///MainPage.DigitalSignageUAP-1920x1080.xaml";
+            else if (size.Width >= 1680 && size.Height >= 1050) resourceName = "ms-appx:///MainPage.DigitalSignageUAP-1680x1050.xaml";
+            else if (size.Width >= 1600 && size.Height >= 1200) resourceName = "ms-appx:///MainPage.DigitalSignageUAP-1600x1200.xaml";
+            else if (size.Width >= 1360 && size.Height >= 768) resourceName = "ms-appx:///MainPage.DigitalSignageUAP-1360x768.xaml";
+            else if (size.Width >= 1280 && size.Height >= 1024) resourceName = "ms-appx:///MainPage.DigitalSignageUAP-1280x1024.xaml";
+            else if (size.Width >= 1024 && size.Height >= 768) resourceName = "ms-appx:///MainPage.DigitalSignageUAP-1024x768.xaml";
+            else if (size.Width >= 720 && size.Height >= 480) resourceName = "ms-appx:///MainPage.DigitalSignageUAP-720x480.xaml";
+            else resourceName = "ms-appx:///MainPage.DigitalSignageUAP-640x480.xaml";
+
+            this.InitializeComponent(new Uri(resourceName, UriKind.Absolute));
+            
+
+
+
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
 
             VisionVideoAcceptMouseEventTimer.Interval = VisionVideoAcceptInputTimeSpan;
