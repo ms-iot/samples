@@ -48,9 +48,25 @@ void printMessageLine(LPCSTR msg, DWORDLONG value)
     cout << right << value << endl;
 }
 
+void checkInput()
+{
+	for (;;)
+	{
+		char character;
+		cin.get(character);
+		if (character == 'q')
+		{
+			ExitProcess(0);
+		}
+	}
+}
+
 int main(int argc, char **argv)
 {
-    printMessageLine("Starting to monitor memory consumption!");
+	printMessageLine("Starting to monitor memory consumption! Press enter to start monitoring");
+	printMessageLine("You can press q and enter at anytime to exit");
+	cin.get();
+	std::thread inputThread(checkInput);
     for (;;)
     {
         MEMORYSTATUSEX statex;
