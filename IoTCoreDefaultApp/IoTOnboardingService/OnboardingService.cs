@@ -237,7 +237,7 @@ namespace IoTOnboardingService
             return Task.Run(() =>
             {
                 // make sure a valid value is provided for auth type
-                if (!Enum.IsDefined(typeof(AuthType), (AuthType)interfaceMemberAuthType))
+                if (!Enum.IsDefined(typeof(AuthType), interfaceMemberAuthType))
                 {
                     return OnboardingConfigureWifiResult.CreateFailureResult(AllJoynStatus.InvalidArgument3);
                 }
@@ -408,7 +408,7 @@ namespace IoTOnboardingService
         }
 
         // As defined here https://allseenalliance.org/developers/learn/base-services/onboarding/interface-14-02
-        private enum AuthType
+        private enum AuthType : short
         {
             WPA2_AUTO = -3,
             WPA_AUTO = -2,
