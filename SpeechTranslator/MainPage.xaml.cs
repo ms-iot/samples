@@ -38,12 +38,16 @@ namespace SpeechTranslator
         public StreamSocket clientSocket;
         private bool connected = false;
 
+        // Language specific area begins - move to configuration rather than hardcode
         public static Language en_lang = new Language("en-US");
-        public static Language ch_lang = new Language("zh-CN");
+        public static Language ch_lang = new Language("it"); //zh-CN
+        public static string synLangStr = "it"; //zh
+        private string InLang = "en";
+        private string outLang = "it";  //zh-CHS
+        // Language specific area ends - move to configuration rather than hardcode
 
-        public static Language InputLang=en_lang;
+        public static Language InputLang = en_lang;
         public static Language OutputLang = ch_lang;
-        public static string synLangStr = "zh";
 
         private SpeechRecognizer speechRecognizer;
         private SpeechSynthesizer synthesizer;
@@ -110,8 +114,6 @@ namespace SpeechTranslator
                     // Display the string.
                     string text = reader.ReadString(actualStringLength);
 
-                    string InLang ="en";
-                    string outLang = "zh-CHS";
                     Translator Trans = new Translator(text, InLang, outLang);
                     string translatedS = Trans.GetTranslatedString();
 
