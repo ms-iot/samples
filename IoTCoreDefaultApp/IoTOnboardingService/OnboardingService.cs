@@ -315,7 +315,7 @@ namespace IoTOnboardingService
                     {
                         case NetworkAuthenticationType.Open80211:
                             {
-                                listItem.Value2 = (short)AuthType.Any;
+                                listItem.Value2 = (short)AuthType.Open;
                                 break;
                             }
                         case NetworkAuthenticationType.Wpa:
@@ -408,7 +408,7 @@ namespace IoTOnboardingService
         }
 
         // As defined here https://allseenalliance.org/developers/learn/base-services/onboarding/interface-14-02
-        private enum AuthType
+        private enum AuthType : short
         {
             WPA2_AUTO = -3,
             WPA_AUTO = -2,
