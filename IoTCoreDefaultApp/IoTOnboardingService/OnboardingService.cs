@@ -237,7 +237,7 @@ namespace IoTOnboardingService
             return Task.Run(() =>
             {
                 // make sure a valid value is provided for auth type
-                if (!Enum.IsDefined(typeof(AuthType), interfaceMemberAuthType))
+                if (!Enum.IsDefined(typeof(AuthType), (AuthType)interfaceMemberAuthType))
                 {
                     return OnboardingConfigureWifiResult.CreateFailureResult(AllJoynStatus.InvalidArgument3);
                 }
@@ -315,7 +315,7 @@ namespace IoTOnboardingService
                     {
                         case NetworkAuthenticationType.Open80211:
                             {
-                                listItem.Value2 = (short)AuthType.Any;
+                                listItem.Value2 = (short)AuthType.Open;
                                 break;
                             }
                         case NetworkAuthenticationType.Wpa:
