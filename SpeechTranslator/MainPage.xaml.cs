@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 
 using System;
+using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -57,7 +58,8 @@ namespace SpeechTranslator
         public MainPage()
         {
             this.InitializeComponent();
-            startListener();
+            PopulateLanguageDropdown();
+            //startListener();
             InitRecogAndSyn();
 
         }
@@ -199,7 +201,7 @@ namespace SpeechTranslator
             var voices = SpeechSynthesizer.AllVoices;
             foreach (VoiceInformation voice in voices)
             {
-                if (voice.Language.Contains(synLangStr))
+                if (voice.Language.Contains(synLangStr))  //fix this!
                 {
                     synthesizer.Voice = voice;
                     break;
@@ -217,7 +219,6 @@ namespace SpeechTranslator
 
         private async void SendDataToHost(string dataToBeSent)
         {
-            await Translator(dataToBeSent);
             return;
 
             await ConnectHost();
@@ -288,7 +289,7 @@ namespace SpeechTranslator
 
                         await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                         {
-                            connStatus.Text = "Connected Successfully!";
+                            //connStatus.Text = "Connected Successfully!";
                         });
                         connected = true;
                     }
@@ -299,7 +300,7 @@ namespace SpeechTranslator
                         {
                             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                             {
-                                connStatus.Text += "Reconnection failed, Double check Host is on and try again";
+                                //connStatus.Text += "Reconnection failed, Double check Host is on and try again";
                             });
                             return;
                         }
@@ -369,9 +370,10 @@ namespace SpeechTranslator
         {
             string s = args.Result.Text;
             //Send the Data
-            SendDataToHost(s);
+            //SendDataToHost(s);
+            await Translator( s );
 
-            if (args.Result.Status == SpeechRecognitionResultStatus.Success)
+            if( args.Result.Status == SpeechRecognitionResultStatus.Success)
             {
                 dictatedTextBuilder.Append(s + " ");
                 await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
@@ -468,8 +470,8 @@ namespace SpeechTranslator
             {
 
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    connStatus.Text = "Reconnected Successfully!";
+                {   
+                    //connStatus.Text = "Reconnected Successfully!";
                 });
                
             }
@@ -477,7 +479,7 @@ namespace SpeechTranslator
             {
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
-                    connStatus.Text = "Reconnection failed, Double check Host is on and try again ";
+                    //connStatus.Text = "Reconnection failed, Double check Host is on and try again ";
                 });
                
                 return;
@@ -498,6 +500,50 @@ namespace SpeechTranslator
 
                 ((ScrollViewer)obj).ChangeView(0.0f, ((ScrollViewer)obj).ExtentHeight, 1.0f);
                 break;
+            }
+        }
+
+        /// <summary>
+        /// Look up the supported languages for this speech recognition scenario, 
+        /// that are installed on this machine, and populate a dropdown with a list.
+        /// </summary>
+        private void PopulateLanguageDropdown()
+        {
+            Language defaultLanguage = SpeechRecognizer.SystemSpeechLanguage;
+            IEnumerable<Language> supportedLanguages = SpeechRecognizer.SupportedGrammarLanguages;
+            foreach (Language lang in supportedLanguages)
+            {
+                ComboBoxItem item = new ComboBoxItem();
+                item.Tag = lang;
+                item.Content = lang.DisplayName;
+
+                cbLanguageSelection.Items.Add(item);
+                if (lang.LanguageTag == defaultLanguage.LanguageTag)
+                {
+                    item.IsSelected = true;
+                    cbLanguageSelection.SelectedItem = item;
+                }
+            }
+        }
+
+        private async void cbLanguageSelection_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(speechRecognizer != null)
+            {
+                ComboBoxItem item = (ComboBoxItem)(cbLanguageSelection.SelectedItem);
+                Language newLanguage = (Language)item.Tag;
+                if(speechRecognizer.CurrentLanguage != newLanguage)
+                {
+                    try
+                    {
+                        await InitializeRecognizer(newLanguage);
+                    }
+                    catch(Exception exception)
+                    {
+                        var messageDialog = new Windows.UI.Popups.MessageDialog(exception.Message, "Exception");
+                        await messageDialog.ShowAsync();
+                    }
+                }
             }
         }
     }

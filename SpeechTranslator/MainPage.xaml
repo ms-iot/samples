@@ -48,12 +48,8 @@
             <StackPanel Orientation="Vertical" Margin="0,350,0,10">
                 <StackPanel>
                     <StackPanel Orientation="Vertical" Margin="0,0,0,0">
-                        <TextBlock Text="Host Connection Status:" Margin="0,0,150,0" />
-                        <TextBox x:Name="connStatus" Height="16" Margin="0,0,150,0"/>
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
-                            <TextBlock Text="If Connection error, Click Reconnect" VerticalAlignment="Center" Margin="0,5,10,0"/>
-                            <Button Content="Reconnect" Click="btnReConnect_Click" Margin="5,5,0,0"></Button>
-                        </StackPanel>
+                        <TextBlock Text="Language: " Margin="0,0,150,0"/>
+                        <ComboBox x:Name="cbLanguageSelection" SelectionChanged="cbLanguageSelection_SelectionChanged" Margin="0,0,150,10" Width="186"/>
                         <TextBlock Text="Original msg Received:" FontSize="16" Height="20"  Margin="0,10,150,0" />
                         <TextBox x:Name="originalmsg" Margin="0,0,0,0" IsReadOnly="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" Height="55" TextChanged="ReceivedMsgTextBox_TextChanged"/>
                         <TextBlock Text="Translated msg:" FontSize="16" Height="20"  Margin="0,10,150,0" />

@@ -13,8 +13,11 @@ namespace SpeechTranslator
         public const int RefreshTokenDuration = 9;
 
         //Token Property
-        public static string clientid = "YourAzureAccount";
-        public static string clientsecret = "YourAzureAccountClientSectet";
+        public static string clientid = "x";
+        public static string clientsecret = "x";
+
+        //public static string clientid = "YourAzureAccount";
+        //public static string clientsecret = "YourAzureAccountClientSectet";
         public static string ApiUri = "http://api.microsofttranslator.com/v2/Http.svc/Translate?text=";
 
 #if RPI1
