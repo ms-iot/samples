@@ -114,18 +114,9 @@ namespace SpeechTranslator
                     // Display the string.
                     string text = reader.ReadString(actualStringLength);
 
-                    Translator Trans = new Translator(text, InLang, outLang);
-                    string translatedS = Trans.GetTranslatedString();
 
-                    SpeechSynthesisStream stream = await synthesizer.SynthesizeTextToStreamAsync(translatedS);
-                    var ignored = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                    {
-                        media.SetSource(stream, stream.ContentType);
-                        media.Play();
-                        originalmsg.Text = text;
-                        ReceivedText.Text = translatedS;
-                        ReceivedText.FontSize = 20;
-                    });
+
+                    await Translator(text);
                 }
             }
             catch (Exception exception)
@@ -144,6 +135,23 @@ namespace SpeechTranslator
                 });
             }
         }
+
+        private async Task Translator(string text)
+        {
+            Translator Trans = new Translator(text, InLang, outLang);
+            string translatedS = Trans.GetTranslatedString();
+
+            SpeechSynthesisStream stream = await synthesizer.SynthesizeTextToStreamAsync(translatedS);
+            var ignored = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                media.SetSource(stream, stream.ContentType);
+                media.Play();
+                originalmsg.Text = text;
+                ReceivedText.Text = translatedS;
+                ReceivedText.FontSize = 20;
+            });
+        }
+
         public async void InitRecogAndSyn()
         {
             await InitializeRecognizer(en_lang);
@@ -209,6 +217,9 @@ namespace SpeechTranslator
 
         private async void SendDataToHost(string dataToBeSent)
         {
+            await Translator(dataToBeSent);
+            return;
+
             await ConnectHost();
             // If the connection was not setup still, we return instead of continuing to send data which will break the code.
             if (!connected)
