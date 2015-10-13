@@ -47,7 +47,8 @@ class wexception
 public:
     explicit wexception (const std::wstring& Msg) : msg(Msg) { }
 
-    wexception (const wchar_t* Msg, ...) {
+    wexception (const wchar_t* Msg, ...)
+    {
         HRESULT hr;
         WCHAR buf[512];
 
@@ -332,9 +333,14 @@ void ReadSerialWriteConsole (HANDLE serialHandle)
                 &bytesRead,
                 &overlapped) && (GetLastError() != ERROR_IO_PENDING)) {
 
+            DWORD error = GetLastError();
+            if (error == ERROR_OPERATION_ABORTED) {
+                return; // error is due to application exit
+            }
+            
             throw wexception(
                 L"Failed to read from serial device. (GetLastError = 0x%x)",
-                GetLastError());
+                error);
         }
 
         if (!GetOverlappedResult(
@@ -342,11 +348,16 @@ void ReadSerialWriteConsole (HANDLE serialHandle)
                 &overlapped,
                 &bytesRead,
                 TRUE)) {
+            
+            DWORD error = GetLastError();
+            if (error == ERROR_OPERATION_ABORTED) {
+                return; // error is due to application exit
+            }
 
             throw wexception(
                 L"GetOverlappedResult() for ReadFile() failed. "
                 L"(GetLastError() = 0x%x)",
-                GetLastError());
+                error);
         }
 
         WCHAR wbuf[ARRAYSIZE(buf)];
