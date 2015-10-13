@@ -51,13 +51,9 @@ namespace SpeechTranslator
 
         private static uint HResultPrivacyStatementDeclined = 0x80045509;
 
-        //private Settings settings = new Settings();
-
         public MainPage()
         {
             this.InitializeComponent();
-
-            //settings.Load("");
 
             PopulateLanguageDropdown();
             InitRecogAndSyn();
@@ -97,6 +93,14 @@ namespace SpeechTranslator
             speechLanguage = speechLanguage ??
                              SpeechRecognizer.SupportedGrammarLanguages.FirstOrDefault(
                                  l => l.LanguageTag != recognizerLanguage.LanguageTag);
+
+            if (speechLanguage == null)
+            {
+                checkError.Visibility = Visibility.Visible;
+                errorCheck.Visibility = Visibility.Visible;
+                errorCheck.Text = "No alternate languages installed";
+                return;
+            }
 
             voiceMatchLanguageCode = Abbreviated(speechLanguage.LanguageTag);
             inLanguageSpecificCode = recognizerLanguage.LanguageTag;
