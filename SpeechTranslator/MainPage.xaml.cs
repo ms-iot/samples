@@ -102,6 +102,7 @@ namespace SpeechTranslator
                 return;
             }
 
+            //Set recognition and spoken languages based on choice and alternates
             voiceMatchLanguageCode = Abbreviated(speechLanguage.LanguageTag);
             inLanguageSpecificCode = recognizerLanguage.LanguageTag;
             outLanguageSpecificCode = speechLanguage.LanguageTag;
@@ -150,7 +151,7 @@ namespace SpeechTranslator
             var voices = SpeechSynthesizer.AllVoices;
             foreach (VoiceInformation voice in voices)
             {
-                if (voice.Language.Contains(voiceMatchLanguageCode))  //fix this!
+                if (voice.Language.Contains(voiceMatchLanguageCode)) 
                 {
                     synthesizer.Voice = voice;
                     break;
