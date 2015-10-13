@@ -23,6 +23,10 @@
   <Capabilities>
     <Capability Name="internetClientServer" />
     <Capability Name="privateNetworkClientServer" />
+    <Capability Name="internetClient" />
+    <uap:Capability Name="phoneCall" />
+    <uap:Capability Name="musicLibrary" />
     <DeviceCapability Name="microphone" />
+    <DeviceCapability Name="webcam" />
   </Capabilities>
 </Package>

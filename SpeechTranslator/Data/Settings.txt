@@ -1,0 +1,15 @@
+﻿language=English-Italian
+
+[English-Italian]
+host_general_language=en
+host_specific_language=en-US
+foreign_general_language=it
+foreign_specific_language=it
+foreign_specific_language_recognition=it
+
+[English-Chinese]
+host_general_language=en
+host_specific_language=en-US
+foreign_general_language=zh
+foreign_specific_language=zh-CN
+foreign_specific_language_recognition=zh-CH
