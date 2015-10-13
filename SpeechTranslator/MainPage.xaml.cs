@@ -264,6 +264,8 @@ namespace SpeechTranslator
         {
             if( speechRecognizer.State == SpeechRecognizerState.Idle )
             {
+                errorCheck.Text = string.Empty;
+
                 StartTalkButtonText.Text = "Stop Talk";
                 try
                 {
