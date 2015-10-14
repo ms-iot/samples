@@ -2,24 +2,27 @@
 
 using System;
 using System.Threading.Tasks;
-
-
 using System.Net;
 using System.IO;
 
 namespace SpeechTranslator
 {
-    class Translator
+    public class TranslatorManager
     {
         private string originalString;
         private string translated;
 
-        public Translator(string s, string from, string to)
+        public TranslatorManager()
         {
-            this.originalString = s;
-            AdmAuthentication admAuth = new AdmAuthentication(ConstantParam.clientid, ConstantParam.clientsecret);
-            Task<AdmAccessToken> admToken = admAuth.GetAccessToken();
-            this.translated = TranslateMethod("Bearer" + " " + admToken.Result.access_token, this.originalString, from, to);
+        }
+
+        public async Task<string> Translate( string text, string from, string to )
+        {
+            this.originalString = text;
+            AdmAuthentication admAuth = new AdmAuthentication( ConstantParam.clientid, ConstantParam.clientsecret );
+            AdmAccessToken admToken = await admAuth.GetAccessToken();
+            this.translated = await TranslateMethod( "Bearer" + " " + admToken.access_token, this.originalString, from, to );
+            return this.translated;
         }
 
         public string GetTranslatedString()
@@ -27,7 +30,7 @@ namespace SpeechTranslator
             return this.translated;
         }
 
-        public static string TranslateMethod(string authToken, string originalS, string from, string to)
+        public async static Task<string> TranslateMethod(string authToken, string originalS, string from, string to)
         {
             string text = originalS; 
             string transuri = ConstantParam.ApiUri + System.Net.WebUtility.UrlEncode(text) + "&from=" + from + "&to=" + to;
@@ -37,15 +40,14 @@ namespace SpeechTranslator
             httpWebRequest.Headers["Authorization"] = authToken;
             string trans;
 
-            Task<WebResponse> response = httpWebRequest.GetResponseAsync();
+            WebResponse response = await httpWebRequest.GetResponseAsync();
 
-            using (Stream stream = response.Result.GetResponseStream())
+            using (Stream stream = response.GetResponseStream())
             {
                 System.Runtime.Serialization.DataContractSerializer dcs = new System.Runtime.Serialization.DataContractSerializer(Type.GetType("System.String"));
 
                 trans = (string)dcs.ReadObject(stream);
                 return trans;
-
             }
         }
     }

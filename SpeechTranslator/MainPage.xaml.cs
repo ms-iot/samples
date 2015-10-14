@@ -45,22 +45,39 @@ namespace SpeechTranslator
         private SpeechSynthesizer synthesizer;
 
         private static uint HResultPrivacyStatementDeclined = 0x80045509;
+        private TranslatorManager translator;
+        private string toSpeak;
 
         public MainPage()
         {
             this.InitializeComponent();
+            translator = new TranslatorManager();
 
             PopulateLanguageDropdown();
             InitRecogAndSyn();
         }
 
-        private async Task Translator(string text)
+        private async Task Translate(string text)
         {
-            Translator Trans = new Translator(text, inLanguageSpecificCode, outLanguageSpecificCode);
-            string translatedS = Trans.GetTranslatedString();
+            var translatedS = string.Empty;
+            try
+            {
+                translatedS = await translator.Translate( text, inLanguageSpecificCode, outLanguageSpecificCode );
+            }
+            catch (Exception e)
+            {
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    checkError.Visibility = Visibility.Visible;
+                    errorCheck.Visibility = Visibility.Visible;
+                    errorCheck.Text = "Translation: " + e.Message;
+                } );
+
+                return;
+            }
 
             SpeechSynthesisStream stream = await synthesizer.SynthesizeTextToStreamAsync(translatedS);
-            var ignored = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            var ignored2 = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 media.SetSource(stream, stream.ContentType);
                 media.Play();
@@ -168,27 +185,26 @@ namespace SpeechTranslator
                 {
                     await dispatcher.RunAsync(CoreDispatcherPriority.Normal,async ()=>
                     {
+                        await StopRecognition();
                         checkError.Visibility = Visibility.Visible;
                         errorCheck.Visibility = Visibility.Visible;
                         errorCheck.Text = "Automatic Time out of Dictation";
                         dictationTextBox.Text = dictatedTextBuilder.ToString();
-
-                        await StopRecognition();
                     });
                 }
                 else
                 {
                     await dispatcher.RunAsync(CoreDispatcherPriority.Normal,async ()=> {
+                        await StopRecognition();
+
                         checkError.Visibility = Visibility.Visible;
                         errorCheck.Visibility = Visibility.Visible;
                         errorCheck.Text = "Continuous Recognition Completed:"+args.Status.ToString();
-
-                        await StopRecognition();
                     });
                 }
             }
-   
         }
+
         /// <summary>
         /// Handle events fired when a result is generated. Check for high to medium confidence, and then append the
         /// string to the end of the stringbuffer, and replace the content of the textbox with the string buffer, to
@@ -240,7 +256,7 @@ namespace SpeechTranslator
                 });
             }
 
-            await Translator( s );
+            this.toSpeak = s;
         }
 
         private async void btnStartTalk_Click(object sender, RoutedEventArgs e)
@@ -278,6 +294,7 @@ namespace SpeechTranslator
                         var messageDialog = new Windows.UI.Popups.MessageDialog( ex.Message, "Exception" );
                         await messageDialog.ShowAsync();
                     }
+
                     isListening = false;
                     StartTalkButtonText.Text = "Start Talk";
                 }
@@ -292,6 +309,12 @@ namespace SpeechTranslator
             {
                 await speechRecognizer.ContinuousRecognitionSession.StopAsync();
                 dictationTextBox.Text = dictatedTextBuilder.ToString();
+            }
+
+            if (!string.IsNullOrWhiteSpace(this.toSpeak))
+            {
+                await Translate( this.toSpeak );
+                this.toSpeak = string.Empty;
             }
         }
 
