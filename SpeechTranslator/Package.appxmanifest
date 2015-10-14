@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="SpeechTranslator-OnlyEnglishInput" Publisher="CN=Microsoft" Version="1.0.0.0" />
+  <Identity Name="SpeechTranslator-Multilingual" Publisher="CN=Microsoft" Version="1.0.2.0" />
   <mp:PhoneIdentity PhoneProductId="a202e5e5-a722-4ad3-8b57-8b5d71b7c5a6" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>SpeechTranslator-OnlyEnglishInput</DisplayName>
+    <DisplayName>SpeechTranslator-Multilingual</DisplayName>
     <PublisherDisplayName>Microsoft</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -23,6 +23,10 @@
   <Capabilities>
     <Capability Name="internetClientServer" />
     <Capability Name="privateNetworkClientServer" />
+    <Capability Name="internetClient" />
+    <uap:Capability Name="phoneCall" />
+    <uap:Capability Name="musicLibrary" />
     <DeviceCapability Name="microphone" />
+    <DeviceCapability Name="webcam" />
   </Capabilities>
 </Package>

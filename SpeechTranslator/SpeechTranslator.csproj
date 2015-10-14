@@ -20,6 +20,10 @@
     <PackageCertificateKeyFile>SpeechTranslator_TemporaryKey.pfx</PackageCertificateKeyFile>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxBundle>Always</AppxBundle>
+    <AppxBundlePlatforms>arm</AppxBundlePlatforms>
+    <PackageCertificateThumbprint>388246B2FE7053350055782D9825A22DD6E7492B</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
@@ -96,6 +100,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="project.json" />
+    <None Include="SpeechTranslator_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdmAuthentication.cs" />
@@ -108,7 +113,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Translator.cs" />
+    <Compile Include="TranslatorManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

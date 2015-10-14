@@ -1,0 +1,2 @@
+MainPackage=C:\CODE\git\JG\samples\SpeechTranslator\bin\ARM\Release\SpeechTranslator_1.0.1.0_ARM.appx
+ResourcePack=C:\CODE\git\JG\samples\SpeechTranslator\bin\ARM\Release\SpeechTranslator_1.0.1.0_scale-100.appx

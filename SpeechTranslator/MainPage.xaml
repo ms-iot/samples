@@ -30,6 +30,8 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="0,0,0,-70">
         <Grid x:Name="RootGrid" Margin="12,0,12,12">
             <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top">
+                <TextBlock Text="Recognition Language: " Margin="0,20,150,0"/>
+                <ComboBox x:Name="cbLanguageSelection" SelectionChanged="cbLanguageSelection_SelectionChanged" Margin="0,0,150,10" Width="186"/>
                     <StackPanel Orientation="Horizontal">
                         <Button x:Name="btnStartTalk" Click="btnStartTalk_Click"  IsEnabled="False" Margin="10,10,0,0" >
                             <StackPanel Orientation="Horizontal">
@@ -42,18 +44,13 @@
                     <TextBlock Margin="0,14.5,0,0" Text="Message Recognized" TextWrapping="Wrap" Style="{StaticResource SubheaderTextBlockStyle}" />
                     <TextBox x:Name="dictationTextBox" Margin="0,14.5,0,0" IsReadOnly="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" Height="120" TextChanged="dictationTextBox_TextChanged"/>
                     <TextBlock x:Name="checkError" Text="Speech Recog Status:" Margin="0,10,10,5" Visibility="Collapsed"></TextBlock>
-                    <TextBox x:Name="errorCheck" FontSize="16" Height="Auto" Margin="0,0,0,0" Visibility="Collapsed"/>
-                    <TextBlock x:Name="hlOpenPrivacySettings" Visibility="Collapsed" TextWrapping="WrapWholeWords" Margin="0,10,0,0">The speech recognition privacy settings have not been accepted. <Hyperlink Click="openPrivacySettings_Click">Open Privacy Settings</Hyperlink> to review the privacy policy and enable personalization.</TextBlock>
-                </StackPanel>
-            <StackPanel Orientation="Vertical" Margin="0,350,0,10">
+                <TextBox x:Name="errorCheck" FontSize="16" Height="Auto" Margin="0,0,0,0" Visibility="Collapsed"/>
+                <TextBlock x:Name="hlOpenPrivacySettings" Visibility="Collapsed" TextWrapping="WrapWholeWords" Margin="0,10,0,0">The speech recognition privacy settings have not been accepted. <Hyperlink Click="openPrivacySettings_Click">Open Privacy Settings</Hyperlink> to review the privacy policy and enable personalization.</TextBlock>
+            </StackPanel>
+            
+            <StackPanel Orientation="Vertical" Margin="0,500,0,10">
                 <StackPanel>
                     <StackPanel Orientation="Vertical" Margin="0,0,0,0">
-                        <TextBlock Text="Host Connection Status:" Margin="0,0,150,0" />
-                        <TextBox x:Name="connStatus" Height="16" Margin="0,0,150,0"/>
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
-                            <TextBlock Text="If Connection error, Click Reconnect" VerticalAlignment="Center" Margin="0,5,10,0"/>
-                            <Button Content="Reconnect" Click="btnReConnect_Click" Margin="5,5,0,0"></Button>
-                        </StackPanel>
                         <TextBlock Text="Original msg Received:" FontSize="16" Height="20"  Margin="0,10,150,0" />
                         <TextBox x:Name="originalmsg" Margin="0,0,0,0" IsReadOnly="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" Height="55" TextChanged="ReceivedMsgTextBox_TextChanged"/>
                         <TextBlock Text="Translated msg:" FontSize="16" Height="20"  Margin="0,10,150,0" />
