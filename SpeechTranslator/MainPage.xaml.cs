@@ -219,8 +219,6 @@ namespace SpeechTranslator
         private async void ContinuousRecognitionSession_ResultGenerated(SpeechContinuousRecognitionSession sender, SpeechContinuousRecognitionResultGeneratedEventArgs args)
         {
             string s = args.Result.Text;
-            //Send the Data
-            //SendDataToHost(s);
 
             if( args.Result.Status == SpeechRecognitionResultStatus.Success)
             {
