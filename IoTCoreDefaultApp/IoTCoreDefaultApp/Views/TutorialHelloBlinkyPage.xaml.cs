@@ -39,28 +39,35 @@ namespace IoTCoreDefaultApp
         {
             this.InitializeComponent();
 
-            var rootFrame = Window.Current.Content as Frame;
-            rootFrame.Navigated += RootFrame_Navigated;
-            Unloaded += MainPage_Unloaded;
-
-            UpdateDateTime();
-
-            timer = new DispatcherTimer();
-            timer.Tick += timer_Tick;
-            timer.Interval = TimeSpan.FromSeconds(30);
-            timer.Start();
-
-            blinkyTimer = new DispatcherTimer();
-            blinkyTimer.Interval = TimeSpan.FromMilliseconds(500);
-            blinkyTimer.Tick += Timer_Tick;
-
-            loader = new Windows.ApplicationModel.Resources.ResourceLoader();
-            BlinkyStartStop.Content = loader.GetString("BlinkyStart");
-
             if (DeviceTypeInformation.Type == DeviceTypes.DB410)
             {
                 LED_PIN = 115; // on-board LED on the DB410c
             }
+
+            var rootFrame = Window.Current.Content as Frame;
+            rootFrame.Navigated += RootFrame_Navigated;
+            Unloaded += MainPage_Unloaded;
+
+            this.NavigationCacheMode = NavigationCacheMode.Enabled;
+
+            this.DataContext = LanguageManager.GetInstance();
+
+            this.Loaded += (sender, e) =>
+            {
+                UpdateDateTime();
+
+                timer = new DispatcherTimer();
+                timer.Tick += timer_Tick;
+                timer.Interval = TimeSpan.FromSeconds(30);
+                timer.Start();
+
+                blinkyTimer = new DispatcherTimer();
+                blinkyTimer.Interval = TimeSpan.FromMilliseconds(500);
+                blinkyTimer.Tick += Timer_Tick;
+
+                loader = new Windows.ApplicationModel.Resources.ResourceLoader();
+                BlinkyStartStop.Content = loader.GetString("BlinkyStart");
+            };
         }
 
         private void RootFrame_Navigated(object sender, NavigationEventArgs e)

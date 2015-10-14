@@ -35,20 +35,45 @@ namespace IoTCoreDefaultApp
             var rootFrame = Window.Current.Content as Frame;
             rootFrame.Navigated += RootFrame_Navigated;
 
-            UpdateDateTime();
+            this.NavigationCacheMode = NavigationCacheMode.Enabled;
 
-            timer = new DispatcherTimer();
-            timer.Tick += timer_Tick;
-            timer.Interval = TimeSpan.FromSeconds(30);
-            timer.Start();
+            var languageManager = LanguageManager.GetInstance();
+            this.DataContext = languageManager;
+
+            languageManager.PropertyChanged += (sender, e) =>
+            {
+                // If the language manager updates the 
+                // language, the current content needs to
+                // be reloaded.
+                if (e.PropertyName == "Item[]")
+                {
+                    Dispatcher.RunAsync(CoreDispatcherPriority.Low, () => { LoadDocument(docName); });
+                }
+            };
+
+            this.Loaded += (sender, e) =>
+            {
+                UpdateDateTime();
+
+                timer = new DispatcherTimer();
+                timer.Tick += timer_Tick;
+                timer.Interval = TimeSpan.FromSeconds(30);
+                timer.Start();
+            };
+            this.Unloaded += (sender, e) =>
+            {
+                timer.Stop();
+                timer = null;
+            };
         }
 
-        private void RootFrame_Navigated(object sender, NavigationEventArgs e)
+        private async void RootFrame_Navigated(object sender, NavigationEventArgs e)
         {
-            docName = e.Parameter as string;
-            if (docName != null)
+            var newDocName = e.Parameter as string;
+            if (docName != newDocName && newDocName != null)
             {
-                LoadDocument(docName);
+                docName = newDocName;
+                Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>{ LoadDocument(docName); });
                 NextButton.Visibility = (NavigationUtils.IsNextTutorialButtonVisible(docName) ? Visibility.Visible : Visibility.Collapsed);
             }
         }

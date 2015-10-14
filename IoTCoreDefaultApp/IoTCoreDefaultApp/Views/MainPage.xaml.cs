@@ -22,25 +22,38 @@ namespace IoTCoreDefaultApp
         private ConnectedDevicePresenter connectedDevicePresenter;
         private OnboardingService OnboardingService;
 
+            
         public MainPage()
         {
             this.InitializeComponent();
 
             MainPageDispatcher = Window.Current.Dispatcher;
 
-            UpdateBoardInfo();
-            UpdateNetworkInfo();
-            UpdateDateTime();
-            UpdateConnectedDevices();
-
             NetworkInformation.NetworkStatusChanged += NetworkInformation_NetworkStatusChanged;
 
-            timer = new DispatcherTimer();
-            timer.Tick += timer_Tick;
-            timer.Interval = TimeSpan.FromSeconds(30);
-            timer.Start();
-
             OnboardingService = new OnboardingService();
+
+            this.NavigationCacheMode = NavigationCacheMode.Enabled;
+
+            this.DataContext = LanguageManager.GetInstance();
+
+            this.Loaded += (sender, e) => 
+            {
+                UpdateBoardInfo();
+                UpdateNetworkInfo();
+                UpdateDateTime();
+                UpdateConnectedDevices();
+
+                timer = new DispatcherTimer();
+                timer.Tick += timer_Tick;
+                timer.Interval = TimeSpan.FromSeconds(30);
+                timer.Start();
+            };
+            this.Unloaded += (sender, e) =>
+            {
+                timer.Stop();
+                timer = null;
+            };
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

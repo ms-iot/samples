@@ -71,7 +71,7 @@ namespace SerialSampleCpp
         void comPortInput_Click(Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
         void sendTextButton_Click(Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
         void closeDevice_Click(Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
-        void rcvdText_TextChanged(Object^ sender, Windows::UI::Xaml::Controls::TextChangedEventArgs^ e);
+        void Listen();
 
         void ListAvailablePorts(void);
         void CancelReadTask(void);

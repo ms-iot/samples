@@ -139,6 +139,7 @@
     <Content Include="Assets\config.xml" />
     <Content Include="Assets\DigitalSignage.png" />
     <Content Include="Assets\Edge.png" />
+    <Content Include="Assets\hero_square.jpg" />
     <Content Include="Assets\IoTVision.wmv" />
     <Content Include="Assets\IE.png" />
     <Content Include="Assets\tile01.png" />
@@ -207,6 +208,38 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="BrowserPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainPage.DigitalSignageUAP-1024x768.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainPage.DigitalSignageUAP-1280x1024.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainPage.DigitalSignageUAP-1360x768.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainPage.DigitalSignageUAP-1600x1200.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainPage.DigitalSignageUAP-1680x1050.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainPage.DigitalSignageUAP-1920x1080.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainPage.DigitalSignageUAP-640x480.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainPage.DigitalSignageUAP-720x480.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

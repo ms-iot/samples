@@ -31,7 +31,7 @@ namespace ShiftRegister
 
         private const int SRCLK_PIN = 18; // GPIO 18 is pin 12 on RPI2 header
         private GpioPin shiftRegisterClock;
-        private const int SER_PIN = 4; // GPIO 4 is pin 7 on the RPI2 header
+        private const int SER_PIN = 27; // GPIO 27 is pin 13 on the RPI2 header
         private GpioPin serial;
         private const int RCLK_PIN = 5; // GPIO 5 is pin 29 on RPI2 header
         private GpioPin registerClock;
