@@ -35,16 +35,11 @@ namespace SpeechTranslator
         private bool isListening=false;
         private StringBuilder dictatedTextBuilder = new StringBuilder();
 
-        // Language specific area begins - move to configuration rather than hardcode
+        // defaults before device language scanning occurs
         public static Language host_language = new Language("en-US");
-        public static Language foreign_language = new Language("it"); //zh-CN
-        public static string voiceMatchLanguageCode = "it"; //zh
+        public static string voiceMatchLanguageCode = "en";
         private string inLanguageSpecificCode = "en";
-        private string outLanguageSpecificCode = "it";  //zh-CHS
-        // Language specific area ends - move to configuration rather than hardcode
-
-        public static Language InputLang = host_language;
-        public static Language OutputLang = foreign_language;
+        private string outLanguageSpecificCode = "en"; 
 
         private SpeechRecognizer speechRecognizer;
         private SpeechSynthesizer synthesizer;
@@ -106,9 +101,6 @@ namespace SpeechTranslator
             voiceMatchLanguageCode = Abbreviated(speechLanguage.LanguageTag);
             inLanguageSpecificCode = recognizerLanguage.LanguageTag;
             outLanguageSpecificCode = speechLanguage.LanguageTag;
-
-            InputLang = recognizerLanguage;
-            OutputLang = speechLanguage;
 
             if (speechRecognizer != null)
             {
