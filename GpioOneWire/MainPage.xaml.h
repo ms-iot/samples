@@ -14,25 +14,27 @@ namespace GpioOneWire
         bool IsValid ( ) const
         {
             unsigned long long value = this->bits.to_ullong();
-            unsigned int checksum = 
+            unsigned int checksum =
                 ((value >> 32) & 0xff) +
                 ((value >> 24) & 0xff) +
                 ((value >> 16) & 0xff) +
                 ((value >> 8) & 0xff);
-            
+
             return (checksum & 0xff) == (value & 0xff);
         }
-    
+
         double Humidity ( ) const
         {
             unsigned long long value = this->bits.to_ullong();
-            return ((value >> 32) & 0xff) + ((value >> 24) & 0xff) / 10.0;
+            return (((value >> 24) & 0xff00) + ((value >> 24) & 0xff)) / 10.0;
         }
-    
+
         double Temperature ( ) const
         {
             unsigned long long value = this->bits.to_ullong();
-            return ((value >> 16) & 0xff) + ((value >> 8) & 0xff) / 10.0;
+            double temp = (((value >> 8) & 0x7f00) + ((value >> 8) & 0xff)) / 10.0;
+            if ((value >> 16) & 0x80) temp = -temp;
+            return temp;
         }
 
         std::bitset<40> bits;
@@ -41,10 +43,10 @@ namespace GpioOneWire
     class Dht11
     {
         enum { SAMPLE_HOLD_LOW_MILLIS = 18 };
-        
+
     public:
-        
-        Dht11 ( ) : 
+
+        Dht11 ( ) :
             pin(nullptr),
             inputDriveMode(Windows::Devices::Gpio::GpioPinDriveMode::Input)
         { }
@@ -69,7 +71,7 @@ namespace GpioOneWire
     public ref class MainPage sealed
     {
         enum { DHT11_PIN_NUMBER = 4 };
-        
+
     public:
         MainPage();
 

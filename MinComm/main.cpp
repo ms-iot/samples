@@ -752,9 +752,9 @@ void RunSerialConsole (PCWSTR DevicePath, _In_ DCB* DcbPtr, SerialParamMask Para
 
     auto commTimeouts = COMMTIMEOUTS();
     {
-        commTimeouts.ReadIntervalTimeout = MAXDWORD;
-        commTimeouts.ReadTotalTimeoutConstant = MAXDWORD - 1;
-        commTimeouts.ReadTotalTimeoutMultiplier = MAXDWORD;
+        commTimeouts.ReadIntervalTimeout = 10;
+        commTimeouts.ReadTotalTimeoutConstant = 0;
+        commTimeouts.ReadTotalTimeoutMultiplier = 0;
         commTimeouts.WriteTotalTimeoutConstant = 0;
         commTimeouts.WriteTotalTimeoutMultiplier = 0;
     }
