@@ -56,8 +56,8 @@ void checkInput(HANDLE exitEvent)
         cin.get(character);
         if (character == 'q')
         {
-			SetEvent(exitEvent);
-			break;
+            SetEvent(exitEvent);
+            break;
         }
     }
 }
@@ -67,12 +67,12 @@ int main(int argc, char **argv)
     printMessageLine("Starting to monitor memory consumption! Press enter to start monitoring");
     printMessageLine("You can press q and enter at anytime to exit");
     cin.get();
-	HANDLE exitEvent = ::CreateEvent(NULL, FALSE, FALSE, NULL);
-	if (NULL == exitEvent)
-	{
-		printMessageLine("Failed to create exitEvent.");
-		return -1;
-	}
+    HANDLE exitEvent = ::CreateEvent(NULL, FALSE, FALSE, NULL);
+    if (NULL == exitEvent)
+    {
+        printMessageLine("Failed to create exitEvent.");
+        return -1;
+    }
     std::thread inputThread(checkInput, exitEvent);
     for (;;)
     {
@@ -113,13 +113,13 @@ int main(int argc, char **argv)
 
         }
 
-		if (WAIT_OBJECT_0 == ::WaitForSingleObject(exitEvent, 100))
-		{
-			break;
-		}
+        if (WAIT_OBJECT_0 == ::WaitForSingleObject(exitEvent, 100))
+        {
+            break;
+        }
     }
 
-	inputThread.join();
-	::CloseHandle(exitEvent);
+    inputThread.join();
+    ::CloseHandle(exitEvent);
     printMessageLine("No longer monitoring memory consumption!");
 }
