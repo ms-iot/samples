@@ -56,7 +56,7 @@ void checkInput(HANDLE exitEvent)
         cin.get(character);
         if (character == 'q')
         {
-            SetEvent(exitEvent);
+            ::SetEvent(exitEvent);
             break;
         }
     }
