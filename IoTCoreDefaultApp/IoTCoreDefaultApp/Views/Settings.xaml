@@ -138,6 +138,40 @@
                 <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" x:Name="CancelButton" Content="Cancel" Width="120" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="CancelButton_Clicked" Margin="130,0,0,0"/>
             </Grid>
         </DataTemplate>
+
+
+        <DataTemplate x:Key="ResultsListViewTemplate">
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*" MinWidth="100"/>
+                </Grid.ColumnDefinitions>
+                <!--<Border Grid.Column="0" Height="40" Width="40" Margin="5" VerticalAlignment="Top">
+                    <Image Source="{Binding Path=GlyphBitmapImage}"
+                           Stretch="UniformToFill"/>
+                </Border>-->
+                <Border Grid.Column="1" Margin="5">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Name:" Margin="0,0,5,0"/>
+                            <TextBlock Text="{Binding Path=Name}" FontWeight="Bold" TextWrapping="WrapWholeWords"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Id:" Margin="0,0,5,0"/>
+                            <TextBlock Text="{Binding Path=Id}" TextWrapping="Wrap"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="CanPair:" Margin="0,0,5,0"/>
+                            <TextBlock Text="{Binding Path=CanPair}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="IsPaired:" Margin="0,0,5,0"/>
+                            <TextBlock Text="{Binding Path=IsPaired}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </DataTemplate>
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -146,7 +180,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="320"/>
+            <ColumnDefinition Width="240"/>
             <ColumnDefinition Width="2"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
@@ -158,12 +192,15 @@
 
         <Rectangle Grid.Column="1" Grid.Row="1" Fill="Gray" Width="auto" Height="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
-        <ListView Grid.Column="0" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="#1a1a1a" SelectionMode="Single" IsItemClickEnabled="True" ItemClick="ListView_ItemClick" >
+        <ListView x:Name="SettingsChoice" Grid.Column="0" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="#1a1a1a" SelectionMode="Single" IsItemClickEnabled="True" ItemClick="SettingsChoice_ItemClick" >
             <ListViewItem HorizontalAlignment="Stretch" IsSelected="True" Height="48">
                 <TextBlock x:Name="PreferencesListViewItem" Text="{Binding [SettingsPreferencesText]}" />
             </ListViewItem>
             <ListViewItem HorizontalAlignment="Stretch" Height="48">
                 <TextBlock x:Name="NetworkListViewItem" Text="{Binding [NetworkPreferencesText]}" />
+            </ListViewItem>
+            <ListViewItem HorizontalAlignment="Stretch" Height="48">
+                <TextBlock x:Name="BluetoothListViewItem" Text="{Binding [BluetoothPreferencesText]}" />
             </ListViewItem>
         </ListView>
 
@@ -178,7 +215,8 @@
                     <RowDefinition Height="80"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="117*"/>
+                    <RowDefinition Height="172*"/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding [LanguageTitleText]}" Style="{StaticResource SubtitleTextBlockStyle}" FontWeight="Normal" />
 				<ListBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" x:Name="LanguageListBox" FontSize="16" Margin="0,10,0,0" Width="446" SelectionChanged="LanguageListBox_SelectionChanged" />
@@ -208,6 +246,81 @@
                         </Grid>
                         <ListView x:Name="WifiListView" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionMode="Single" Width="446" ItemTemplate="{StaticResource WifiInitialState}" SelectionChanged="WifiListView_SelectionChanged" ItemContainerStyle="{StaticResource WifiListViewItemStyle}"/>
                         <TextBlock Text="{Binding [NoNetworksText]}" x:Name="NoWifiFoundText" Width="446" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </StackPanel>
+        </ScrollViewer>
+
+        <ScrollViewer  x:Name="BluetoothGrid" Grid.Column="2" Grid.Row="1" Visibility="Collapsed">
+            <StackPanel Margin="24,85,0,0" Orientation="Vertical">
+                <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="0,25,0,0">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                        <StackPanel x:Name="PairedDevicesStackPanel" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <Border Width="44" Height="32">
+                                <TextBlock Text="{StaticResource ResourceKey=IconBluetooth}" FontSize="24" FontFamily="{StaticResource IconFontFamily}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </Border>
+                            <TextBlock x:Uid="BluetoothDevices" Style="{StaticResource BodyTextBlockStyle}" Text="Bluetooth Devices" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <TextBlock Margin="0,0,0,2" Text="Select supported pairing ceremonies:" />
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox x:Name="confirmOnlyOption" Content="ConfirmOnly" Style="{StaticResource IoTCoreDefaultAppCheckBoxStyle}" IsChecked="True"/>
+                            <CheckBox x:Name="displayPinOption" Content="DisplayPin" Style="{StaticResource IoTCoreDefaultAppCheckBoxStyle}" IsChecked="True"/>
+                            <CheckBox x:Name="providePinOption" Content="ProvidePin" Style="{StaticResource IoTCoreDefaultAppCheckBoxStyle}" IsChecked="True"/>
+                            <CheckBox x:Name="confirmPinMatchOption" Content="ConfirmPinMatch" Style="{StaticResource IoTCoreDefaultAppCheckBoxStyle}" IsChecked="True"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="64" VerticalAlignment="Top">
+                            <Button x:Name="startWatcherButton"
+                                Margin="0,0,5,10"
+                                Click="StartWatcherButton_Click">
+                                Start Watcher
+                            </Button>
+
+                            <Button x:Name="stopWatcherButton"
+                                Margin="0,0,5,10"
+                                IsEnabled="False"
+                                Click="StopWatcherButton_Click">
+                                Stop Watcher
+                            </Button>
+                            <Button x:Name="pairButton"
+                                Margin="0,0,5,10"
+                                Click="PairButton_Click"
+                                IsEnabled="False">
+                                <Button.Flyout>
+                                    <Flyout Placement="Top">
+                                        <StackPanel>
+                                            <TextBlock x:Name="PinLabelTextBox" TextWrapping="Wrap" Width="150" />
+                                            <TextBox x:Name="PinEntryTextBox" TextWrapping="Wrap" Text="" Height="4" KeyDown="PinEntryTextBox_KeyDown"/>
+                                        </StackPanel>
+                                    </Flyout>
+                                </Button.Flyout>
+                                Pair Selected Device
+                            </Button>
+                            <Button x:Name="unpairButton"
+                                Margin="0,0,5,10"
+                                IsEnabled="False" Click="unpairButton_Click">
+                                Unpair Selected Device
+                            </Button>
+                        </StackPanel>
+
+                        <StackPanel x:Name="confirmationPanel"  Orientation="Horizontal"  Height="88" HorizontalAlignment="Stretch">
+                            <RelativePanel>
+                                <TextBlock x:Name="confirmationText" Width="480" TextAlignment="Center" VerticalAlignment="Stretch" Margin="0,0,0,2" Text="" TextWrapping="WrapWholeWords" RelativePanel.AlignLeftWithPanel="True" />
+                                <Button x:Name="yesButton" Margin="0,0,5,10" Click="YesButton_Click" Width="44" RelativePanel.RightOf="confirmationText" >Yes</Button>
+                                <Button x:Name="noButton" Margin="0,0,5,10" Click="NoButton_Click" Width="44" RelativePanel.RightOf="confirmationText" RelativePanel.Below="yesButton" >No</Button>
+                            </RelativePanel>
+                        </StackPanel>
+
+                        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,15,0" >
+                            <Border BorderBrush="AntiqueWhite" BorderThickness="1">
+                                <ListView x:Name="bluetoothDeviceListView"
+                                  HorizontalAlignment="Stretch"
+                                  HorizontalContentAlignment="Stretch"
+                                  ItemTemplate="{StaticResource ResultsListViewTemplate}"
+                                  ItemsSource="{Binding Path=bluetoothDeviceCollection}"
+                                  SelectionChanged="ResultsListView_SelectionChanged">
+                                </ListView>
+                            </Border>
+                        </StackPanel>
                     </StackPanel>
                 </ScrollViewer>
             </StackPanel>
