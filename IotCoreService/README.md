@@ -10,7 +10,7 @@ This sample creates a simple shared host service for Windows 10 IoT Core.
 5. Restart your device.
 6. Query your service by running `sc query IotCoreService`.  Given the configuration we've set up, you should see output like this:
 
-{% highlight sh %}
+```
     SERVICE_NAME: iotcoreservice
             TYPE               : 20  WIN32_SHARE_PROCESS
             STATE              : 2  START_PENDING
@@ -19,7 +19,7 @@ This sample creates a simple shared host service for Windows 10 IoT Core.
             SERVICE_EXIT_CODE  : 0  (0x0)
             CHECKPOINT         : 0x0
             WAIT_HINT          : 0x7d0
-{% endhighlight %}
+```
 
 7. At this point, ServiceMain has been called.  There is no functionality presently in ServiceMain, but you can consult the [MSDN documentation](https://msdn.microsoft.com/en-us/library/windows/desktop/ms687414(v=vs.85).aspx) to add functionality as desired!
 8. To stop your service, run `ConfigureIotCoreService.bat remove` to remove the service configuration and restart your device.
