@@ -30,46 +30,56 @@ namespace RGBLED
                 return;
             }
 
-            // take the first 3 available GPIO pins
             var deviceModel = GetDeviceModel();
-            var pins = new List<GpioPin>(3);
-            for (int pinNumber = 0; pinNumber < gpio.PinCount; pinNumber++)
+            if (deviceModel == DeviceModel.RaspberryPi2)
             {
-                // ignore pins used for onboard LEDs
-                switch (deviceModel)
-                {
-                    case DeviceModel.RaspberryPi2:
-                        if (pinNumber == 35 || pinNumber == 47)
-                            continue;
-                        break;
-                    case DeviceModel.DragonBoard410:
-                        if (pinNumber == 21 || pinNumber == 120)
-                            continue;
-                        break;
-                }
+                // Use pin numbers compatible with documentation
+                const int RPI2_RED_LED_PIN = 5;
+                const int RPI2_GREEN_LED_PIN = 13;
+                const int RPI2_BLUE_LED_PIN = 6;
 
-                GpioPin pin;
-                GpioOpenStatus status;
-                if (gpio.TryOpenPin(pinNumber, GpioSharingMode.Exclusive, out pin, out status))
+                redpin = gpio.OpenPin(RPI2_RED_LED_PIN);
+                greenpin = gpio.OpenPin(RPI2_GREEN_LED_PIN);
+                bluepin = gpio.OpenPin(RPI2_BLUE_LED_PIN);
+            }
+            else
+            {
+                // take the first 3 available GPIO pins
+                var pins = new List<GpioPin>(3);
+                for (int pinNumber = 0; pinNumber < gpio.PinCount; pinNumber++)
                 {
-                    pins.Add(pin);
-                    if (pins.Count == 3)
+                    // ignore pins used for onboard LEDs
+                    switch (deviceModel)
                     {
-                        break;
+                        case DeviceModel.DragonBoard410:
+                            if (pinNumber == 21 || pinNumber == 120)
+                                continue;
+                            break;
+                    }
+
+                    GpioPin pin;
+                    GpioOpenStatus status;
+                    if (gpio.TryOpenPin(pinNumber, GpioSharingMode.Exclusive, out pin, out status))
+                    {
+                        pins.Add(pin);
+                        if (pins.Count == 3)
+                        {
+                            break;
+                        }
                     }
                 }
+
+                if (pins.Count != 3)
+                {
+                    GpioStatus.Text = "Could not find 3 available pins. This sample requires 3 GPIO pins.";
+                    return;
+                }
+
+                redpin = pins[0];
+                greenpin = pins[1];
+                bluepin = pins[2];
             }
-
-            if (pins.Count != 3)
-            {
-                GpioStatus.Text = "Could not find 3 available pins. This sample requires 3 GPIO pins.";
-                return;
-            }
-
-            redpin = pins[0];
-            greenpin = pins[1];
-            bluepin = pins[2];
-
+            
             redpin.Write(GpioPinValue.High);
             redpin.SetDriveMode(GpioPinDriveMode.Output);
             greenpin.Write(GpioPinValue.High);
