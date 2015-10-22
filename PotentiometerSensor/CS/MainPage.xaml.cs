@@ -205,7 +205,7 @@ namespace PotentiometerSensor
         }
         enum AdcDevice { NONE, MCP3002, MCP3208, MCP3008};
 
-        /* Important! Change this to either AdcDevice.MCP3002 or AdcDevice.MCP3208 depending on which ADC you chose     */
+        /* Important! Change this to either AdcDevice.MCP3002, AdcDevice.MCP3208 or AdcDevice.MCP3008 depending on which ADC you chose     */
         private AdcDevice ADC_DEVICE = AdcDevice.NONE;
 
         private const int LED_PIN = 4; // Use pin 12 if you are using DragonBoard
