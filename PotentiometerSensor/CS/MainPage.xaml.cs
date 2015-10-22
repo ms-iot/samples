@@ -40,7 +40,7 @@ namespace PotentiometerSensor
         {
             if (ADC_DEVICE == AdcDevice.NONE)
             {
-                StatusText.Text = "Please change the ADC_DEVICE variable to either MCP3002 or MCP3208";
+                StatusText.Text = "Please change the ADC_DEVICE variable to either MCP3002 or MCP3208, or MCP3008";
                 return;
             }
 
