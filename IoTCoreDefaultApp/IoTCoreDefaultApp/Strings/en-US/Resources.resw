@@ -641,7 +641,7 @@
     <comment>Format string for message displayed when pairing attempt succeeds</comment>
   </data>
   <data name="BluetoothStartedWatching" xml:space="preserve">
-    <value>Watching for Bluetooth devices</value>
+    <value>Your device is searching for and can be discovered by other Bluetooth devices</value>
     <comment>Message display when "Start Watcher" button is pressed</comment>
   </data>
   <data name="BluetoothStoppedWatching" xml:space="preserve">
@@ -659,5 +659,42 @@
   <data name="PinLabelTextBox.Text" xml:space="preserve">
     <value>Enter PIN:</value>
     <comment>Message on flyout control for PIN entry for ProvidePin ceremony</comment>
+  </data>
+  <data name="BluetoothPairButtonContent" xml:space="preserve">
+    <value>Pair</value>
+    <comment>Text displayed on the button to pair Bluetooth list item</comment>
+  </data>
+  <data name="BluetoothUnpairButtonContent" xml:space="preserve">
+    <value>Unpair</value>
+    <comment>Text displayed on the button to unpair Bluetooth list item</comment>
+  </data>
+  <data name="BluetoothDeviceStatePairedText" xml:space="preserve">
+    <value>Paired</value>
+  </data>
+  <data name="BluetoothDeviceStateReadyToPairText" xml:space="preserve">
+    <value>Ready to pair</value>
+  </data>
+  <data name="BluetoothManageDevicesText" xml:space="preserve">
+    <value>Manage Bluetooth Devices</value>
+  </data>
+  <data name="BluetoothWatcherToggleLabel" xml:space="preserve">
+    <value>Bluetooth</value>
+    <comment>Label text for Bluetooth watcher toggle switch</comment>
+  </data>
+  <data name="BluetoothNoDeviceAvailableFormat" xml:space="preserve">
+    <value>No usable Bluetooth adapter can be found on this computer:
+{0}</value>
+    <comment>Message displayed on systems which do not have a Bluetooth adapter. The new line before {0} is deliberate and should be kept</comment>
+  </data>
+  <data name="BluetoothEnterPINText" xml:space="preserve">
+    <value>Enter the PIN:</value>
+  </data>
+  <data name="BluetoothDeviceStateUnknownText" xml:space="preserve">
+    <value>Unknown state</value>
+  </data>
+  <data name="BluetoothInboundPairingRequestFormat" xml:space="preserve">
+    <value>Inbound request: {0}
+{1}</value>
+    <comment>Format for message displayed when an inbounbd pairing request is received</comment>
   </data>
 </root>

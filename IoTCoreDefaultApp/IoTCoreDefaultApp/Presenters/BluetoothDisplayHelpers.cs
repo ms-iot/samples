@@ -56,6 +56,9 @@ namespace IoTCoreDefaultApp
     public class BluetoothDeviceInformationDisplay : INotifyPropertyChanged
     {
         private DeviceInformation deviceInfo;
+        private static string pairingPairedStateString = GetResourceString("BluetoothDeviceStatePairedText");
+        private static string pairingReadyToPairStateString = GetResourceString("BluetoothDeviceStateReadyToPairText");
+        private static string pairingUnknownStateString = GetResourceString("BluetoothDeviceStateUnknownText");
 
         public BluetoothDeviceInformationDisplay(DeviceInformation deviceInfoIn)
         {
@@ -68,6 +71,15 @@ namespace IoTCoreDefaultApp
             get
             {
                 return deviceInfo.Kind;
+            }
+        }
+
+        public string IdWithoutProtocolPrefix
+        {
+            get
+            {
+                // Trim of the repeated protocol XXX#XXXkjhdskjhsdgjg
+                return deviceInfo.Id.Substring(deviceInfo.Id.IndexOf("#") + 1);
             }
         }
 
@@ -109,6 +121,41 @@ namespace IoTCoreDefaultApp
             }
         }
 
+        public string DevicePairingStateText
+        {
+            get
+            {
+                if (!deviceInfo.Pairing.IsPaired && deviceInfo.Pairing.CanPair)
+                {
+                    return pairingReadyToPairStateString ;
+                }
+                else if (deviceInfo.Pairing.IsPaired)
+                {
+                    return pairingPairedStateString;
+                }
+                else
+                {
+                    return pairingUnknownStateString;
+                }
+            }
+        }
+
+        public Windows.UI.Xaml.Visibility PairButtonVisiblilty
+        {
+            get
+            {
+                return (!deviceInfo.Pairing.IsPaired && deviceInfo.Pairing.CanPair) ? Windows.UI.Xaml.Visibility.Visible : Windows.UI.Xaml.Visibility.Collapsed;
+            }
+        }
+
+        public Windows.UI.Xaml.Visibility UnpairButtonVisiblilty
+        {
+            get
+            {
+                return deviceInfo.Pairing.IsPaired ? Windows.UI.Xaml.Visibility.Visible : Windows.UI.Xaml.Visibility.Collapsed;
+            }
+        }
+
         public IReadOnlyDictionary<string, object> Properties
         {
             get
@@ -140,7 +187,9 @@ namespace IoTCoreDefaultApp
             OnPropertyChanged("DeviceInformation");
             OnPropertyChanged("CanPair");
             OnPropertyChanged("IsPaired");
-
+            OnPropertyChanged("DevicePairingStateText");
+            OnPropertyChanged("PairButtonVisiblilty");
+            OnPropertyChanged("UnpairButtonVisiblilty");
             UpdateGlyphBitmapImage();
         }
 
@@ -162,6 +211,19 @@ namespace IoTCoreDefaultApp
             {
                 handler(this, new PropertyChangedEventArgs(name));
             }
+        }
+
+        /// <summary>
+        /// Return the named resource string
+        /// </summary>
+        /// <param name="resourceName"></param>
+        /// <returns>A string containing the requested resource string value</returns>
+        internal static string GetResourceString(string resourceName)
+        {
+            string theResourceString = "##Failed to get resource string##";
+            var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+            theResourceString = resourceLoader.GetString(resourceName);
+            return theResourceString;
         }
     }
 
