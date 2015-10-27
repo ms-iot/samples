@@ -107,7 +107,7 @@ namespace IoTCoreDefaultApp
         private async void App_InboundPairingRequested(object sender, InboundPairingEventArgs inboundArgs)
         {
             // Ignore the inbound if pairing is already in progress
-            if (inProgressPairButton != null)
+            if (inProgressPairButton == null)
             {
                 await MainPage.Current.UIThreadDispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
@@ -668,7 +668,10 @@ namespace IoTCoreDefaultApp
             pairingRequestedHandlerArgs = args;
 
             // Save the deferral away and complete it where necessary.
-            deferral = args.GetDeferral();
+            if (args.PairingKind != DevicePairingKinds.DisplayPin)
+            {
+                deferral = args.GetDeferral();
+            }
 
             string confirmationMessage;
 
@@ -810,10 +813,6 @@ namespace IoTCoreDefaultApp
         private DevicePairingKinds GetSelectedCeremonies()
         {
             DevicePairingKinds ceremonySelection = DevicePairingKinds.ConfirmOnly | DevicePairingKinds.DisplayPin | DevicePairingKinds.ProvidePin | DevicePairingKinds.ConfirmPinMatch;
-            //if (confirmOnlyOption.IsChecked.HasValue && (bool)confirmOnlyOption.IsChecked) ceremonySelection |= DevicePairingKinds.ConfirmOnly;
-            //if (displayPinOption.IsChecked.HasValue && (bool)displayPinOption.IsChecked) ceremonySelection |= DevicePairingKinds.DisplayPin;
-            //if (providePinOption.IsChecked.HasValue && (bool)providePinOption.IsChecked) ceremonySelection |= DevicePairingKinds.ProvidePin;
-            //if (confirmPinMatchOption.IsChecked.HasValue && (bool)confirmPinMatchOption.IsChecked) ceremonySelection |= DevicePairingKinds.ConfirmPinMatch;
             return ceremonySelection;
         }
 
@@ -823,14 +822,7 @@ namespace IoTCoreDefaultApp
         /// <param name="selectedCeremonies"></param>
         private void SetSelectedCeremonies(int selectedCeremonies)
         {
-            //int i = selectedCeremonies & (int)DevicePairingKinds.ConfirmOnly;
-            //confirmOnlyOption.IsChecked = (i != 0);
-            //i = selectedCeremonies & (int)DevicePairingKinds.DisplayPin;
-            //displayPinOption.IsChecked = (i != 0);
-            //i = selectedCeremonies & (int)DevicePairingKinds.ProvidePin;
-            //providePinOption.IsChecked = (i != 0);
-            //i = selectedCeremonies & (int)DevicePairingKinds.ConfirmPinMatch;
-            //confirmPinMatchOption.IsChecked = (i != 0);
+            // Currently a no-op, but would be used icop[f checkboxes are added to restrict ceremony types
         }
 
         private async void RegisterForInboundPairingRequests()
