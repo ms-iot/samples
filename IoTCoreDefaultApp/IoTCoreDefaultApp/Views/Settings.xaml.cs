@@ -822,7 +822,7 @@ namespace IoTCoreDefaultApp
         /// <param name="selectedCeremonies"></param>
         private void SetSelectedCeremonies(int selectedCeremonies)
         {
-            // Currently a no-op, but would be used icop[f checkboxes are added to restrict ceremony types
+            // Currently a no-op, but would be used if checkboxes are added to restrict ceremony types
         }
 
         private async void RegisterForInboundPairingRequests()
