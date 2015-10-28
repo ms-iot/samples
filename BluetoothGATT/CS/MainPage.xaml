@@ -168,6 +168,7 @@
         </Style>
     </Page.Resources>
 
+    <ScrollViewer VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto">
     <Grid Background="#FF1E1D42" HorizontalAlignment="Center" VerticalAlignment="Center">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="4*"/>
@@ -176,7 +177,7 @@
         <StackPanel Background="#FF1E1D42" Grid.ColumnSpan="2">
             <TextBlock FontSize="35" Foreground="White" Margin="10" Text="BLE GATT Sample"/>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                <Button x:Name="StartButton" Content="Pair and Connect" Background="#CCFFFFFF" Click="StartButton_Click" Margin="10,0,0,0" Style="{StaticResource ButtonStyleGATT}" IsEnabled="True">
+                    <Button x:Name="PairButton" Content="Pair and Connect" Background="#CCFFFFFF" Click="PairButton_Click" Margin="10,0,0,0" Style="{StaticResource ButtonStyleGATT}" IsEnabled="True">
                     <Button.Flyout>
                         <Flyout Placement="Bottom">
                             <StackPanel>
@@ -186,7 +187,8 @@
                         </Flyout>
                     </Button.Flyout>
                 </Button>
-                <TextBlock x:Name="UserOut" Foreground="White" VerticalAlignment="Center" Margin="10,0,0,0">Click to Pair and Connect</TextBlock>
+                    <Button x:Name="UnpairButton" Content="Unpair Selected Device" Background="#CCFFFFFF" Click="UnpairButton_Click" Margin="10,0,0,0" Style="{StaticResource ButtonStyleGATT}" IsEnabled="False">
+                    </Button>
             </StackPanel>
 
             <ScrollViewer VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto" Height="80" Background="#FFF3E4E4" Margin="10,0,10,10">
@@ -204,6 +206,12 @@
                     </StackPanel>
                 </StackPanel>
             </ScrollViewer>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock  x:Name="UserOutLabel" Foreground="White" VerticalAlignment="Center" Margin="10,0,0,0">Message:</TextBlock>
+                    <TextBlock x:Name="UserOut" Foreground="White" VerticalAlignment="Center" Margin="30,0,0,0">
+                	<Run Text="Click to Pair and Connect"/>
+                    </TextBlock>
+                </StackPanel>               
 
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                 <ComboBox x:Name="SensorList" ItemsSource="{Binding}" PlaceholderText="Select a Sensor" Margin="10,0,0,0">
@@ -285,4 +293,5 @@
             </Grid>
         </StackPanel>
     </Grid>
+    </ScrollViewer>
 </Page>
