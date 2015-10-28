@@ -132,6 +132,7 @@ namespace BluetoothGATT
                         if (deviceInfoDisp.Id == deviceInfoUpdate.Id)
                         {
                             deviceInfoDisp.Update(deviceInfoUpdate);
+                            UpdatePairingButtons();
                             break;
                         }
                     }
@@ -161,10 +162,7 @@ namespace BluetoothGATT
             {
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
                 {
-                    UserOut.Text = "Found " + ResultCollection.Count.ToString() + " Bluetooth LE Devices";
-                    //Bluetooth watcher expires in 30 seconds currently, Stop and Start again to keep detecting devices
-                    StopWatcher();
-                    StartWatcher();
+                    UserOut.Text = "Found " + ResultCollection.Count.ToString() + " Bluetooth LE Devices";                                     
                 });
             });
 
@@ -197,7 +195,8 @@ namespace BluetoothGATT
         // Setup
         // Saves GATT service object in array
         private async Task<bool> init()
-        {
+        {          
+            
             // Retrieve instances of the GATT services that we will use
             for (int i = 0; i < NUM_SENSORS; i++)
             {
@@ -208,9 +207,11 @@ namespace BluetoothGATT
                     BLE_GUID = new Guid("F000AA" + i + "0-0451-4000-B000-000000000000");
                 else
                     BLE_GUID = new Guid("0000FFE0-0000-1000-8000-00805F9B34FB");
+                 
+
 
                 // Retrieving and saving GATT services
-                var services = await DeviceInformation.FindAllAsync(GattDeviceService.GetDeviceSelectorFromUuid(BLE_GUID), null);
+                var services = await DeviceInformation.FindAllAsync(GattDeviceService.GetDeviceSelectorFromUuid(BLE_GUID), null);                
                 if(services != null && services.Count > 0)
                 {
                     if (services[0].IsEnabled)
@@ -448,24 +449,38 @@ namespace BluetoothGATT
             PairButton.IsEnabled = false;
 
             DeviceInformationDisplay deviceInfoDisp = resultsListView.SelectedItem as DeviceInformationDisplay;
+            bool paired = true;
+            if (deviceInfoDisp.IsPaired != true)
+            {
+                paired = false;
+                DevicePairingKinds ceremoniesSelected = DevicePairingKinds.ConfirmOnly | DevicePairingKinds.DisplayPin | DevicePairingKinds.ProvidePin | DevicePairingKinds.ConfirmPinMatch;
+                DevicePairingProtectionLevel protectionLevel = DevicePairingProtectionLevel.Default;
 
-            DevicePairingKinds ceremoniesSelected = DevicePairingKinds.ConfirmOnly | DevicePairingKinds.DisplayPin | DevicePairingKinds.ProvidePin | DevicePairingKinds.ConfirmPinMatch;
-            DevicePairingProtectionLevel protectionLevel = DevicePairingProtectionLevel.Default;
+                // Specify custom pairing with all ceremony types and protection level EncryptionAndAuthentication
+                DeviceInformationCustomPairing customPairing = deviceInfoDisp.DeviceInformation.Pairing.Custom;
 
-            // Specify custom pairing with all ceremony types and protection level EncryptionAndAuthentication
-            DeviceInformationCustomPairing customPairing = deviceInfoDisp.DeviceInformation.Pairing.Custom;
+                customPairing.PairingRequested += PairingRequestedHandler;
+                DevicePairingResult result = await customPairing.PairAsync(ceremoniesSelected, protectionLevel);
+                customPairing.PairingRequested -= PairingRequestedHandler;
 
-            customPairing.PairingRequested += PairingRequestedHandler;
-            DevicePairingResult result = await customPairing.PairAsync(ceremoniesSelected, protectionLevel);
-            customPairing.PairingRequested -= PairingRequestedHandler;
+                if (result.Status == DevicePairingResultStatus.Paired)
+                {
+                    paired = true;
+                }
+                else
+                {
+                    UserOut.Text = "Pairing Failed " + result.Status.ToString();
+                }
+                UpdatePairingButtons();
+            }           
 
-            if (result.Status == DevicePairingResultStatus.Paired)
+            if (paired)
             {
                 // device is paired, set up the sensor Tag            
                 UserOut.Text = "Setting up SensorTag";
 
                 //It takes sometime for the services to be up and running, waiting for now
-                await Task.Delay(TimeSpan.FromSeconds(40));
+                await Task.Delay(TimeSpan.FromSeconds(8));
 
                 bool okay = await init();
                 if (okay)
@@ -480,12 +495,7 @@ namespace BluetoothGATT
                 {
                     UserOut.Text = "Something went wrong!";
                 }
-            }
-            else
-            {
-                UserOut.Text = "Pairing Failed " + result.Status.ToString();
-            }
-            UpdatePairingButtons();
+            }            
         }
 
         private void ResultsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -613,7 +623,6 @@ namespace BluetoothGATT
 
         private void pinEntryTextBox_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
-
             if (e.Key == Windows.System.VirtualKey.Enter && pinEntryTextBox.Text != "")
             {
                 //  Close the flyout and save the PIN the user entered
@@ -650,17 +659,6 @@ namespace BluetoothGATT
         private void UpdatePairingButtons()
         {
             DeviceInformationDisplay deviceInfoDisp = (DeviceInformationDisplay)resultsListView.SelectedItem;
-
-            if (null != deviceInfoDisp &&
-                deviceInfoDisp.DeviceInformation.Pairing.CanPair &&
-                !deviceInfoDisp.DeviceInformation.Pairing.IsPaired)
-            {
-                PairButton.IsEnabled = true;
-            }
-            else
-            {
-                PairButton.IsEnabled = false;
-            }
 
             if (null != deviceInfoDisp &&
                 deviceInfoDisp.DeviceInformation.Pairing.IsPaired)
