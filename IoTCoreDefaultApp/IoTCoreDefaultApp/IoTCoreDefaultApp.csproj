@@ -28,7 +28,6 @@
     </SccAuxPath>
     <SccProvider>
     </SccProvider>
-    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundlePlatforms>x86</AppxBundlePlatforms>
     <AppxBundle>Never</AppxBundle>
   </PropertyGroup>
