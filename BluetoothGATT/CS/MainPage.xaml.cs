@@ -98,7 +98,7 @@ namespace BluetoothGATT
             //aqsFilter = "System.Devices.Aep.ProtocolId:=\"{e0cbf06c-cd8b-4647-bb8a-263b43f0f974}\"" + " AND System.Devices.Aep.CanPair:=System.StructuredQueryType.Boolean#True";
 
             //for bluetooth LE Devices
-            aqsFilter = "System.Devices.Aep.ProtocolId:=\"{bb7bb05e-5972-42b5-94fc-76eaa7084d49}\"" + " AND System.Devices.Aep.CanPair:=System.StructuredQueryType.Boolean#True";
+            aqsFilter = "System.Devices.Aep.ProtocolId:=\"{bb7bb05e-5972-42b5-94fc-76eaa7084d49}\"";
 
             deviceWatcher = DeviceInformation.CreateWatcher(
                 aqsFilter,
@@ -456,8 +456,8 @@ namespace BluetoothGATT
             DeviceInformationCustomPairing customPairing = deviceInfoDisp.DeviceInformation.Pairing.Custom;
 
             customPairing.PairingRequested += PairingRequestedHandler;
-
             DevicePairingResult result = await customPairing.PairAsync(ceremoniesSelected, protectionLevel);
+            customPairing.PairingRequested -= PairingRequestedHandler;
 
             if (result.Status == DevicePairingResultStatus.Paired)
             {
@@ -484,23 +484,13 @@ namespace BluetoothGATT
             else
             {
                 UserOut.Text = "Pairing Failed " + result.Status.ToString();
-            }        
+            }
+            UpdatePairingButtons();
         }
 
         private void ResultsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            DeviceInformationDisplay deviceInfoDisp = (DeviceInformationDisplay)resultsListView.SelectedItem;
-
-            if (null != deviceInfoDisp &&
-                true == deviceInfoDisp.DeviceInformation.Pairing.CanPair &&
-                false == deviceInfoDisp.DeviceInformation.Pairing.IsPaired)
-            {
-                PairButton.IsEnabled = true;
-            }
-            else
-            {
-                PairButton.IsEnabled = false;
-            }
+            UpdatePairingButtons();
         }
 
         private async void PairingRequestedHandler(DeviceInformationCustomPairing sender,
