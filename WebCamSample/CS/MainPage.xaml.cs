@@ -194,8 +194,7 @@ namespace WebCamSample
             catch (Exception ex)
             {
                 status.Text = "Unable to initialize camera for audio/video mode: " + ex.Message;
-                SetInitButtonVisibility(Action.ENABLE);
-            }
+                }
         }
 
         /// <summary>
@@ -424,9 +423,31 @@ namespace WebCamSample
         /// </summary>
         /// <param name="currentCaptureObject"></param>
         /// <param name="currentFailure"></param>
-        private void mediaCapture_Failed(MediaCapture currentCaptureObject, MediaCaptureFailedEventArgs currentFailure)
+        private async void mediaCapture_Failed(MediaCapture currentCaptureObject, MediaCaptureFailedEventArgs currentFailure)
         {
-            status.Text = currentFailure.Message;
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
+            {
+                try
+                {
+                    status.Text = "MediaCaptureFailed: " + currentFailure.Message;
+
+                    if (isRecording)
+                    {
+                        await mediaCapture.StopRecordAsync();
+                        status.Text += "\n Recording Stopped";
+                    }
+                }
+                catch (Exception)
+                {
+                }
+                finally
+                {
+                    SetInitButtonVisibility(Action.DISABLE);
+                    SetVideoButtonVisibility(Action.DISABLE);
+                    SetAudioButtonVisibility(Action.DISABLE);
+                    status.Text += "\nCheck if camera is diconnected. Try re-launching the app";                    
+                }
+            });            
         }
 
         /// <summary>

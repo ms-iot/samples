@@ -48,6 +48,8 @@ namespace SpeechTranslator
         private TranslatorManager translator;
         private string toSpeak;
 
+        public bool IsReadyToRecognize => speechRecognizer != null;
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -144,7 +146,6 @@ namespace SpeechTranslator
             speechRecognizer.ContinuousRecognitionSession.Completed += ContinuousRecognitionSession_Completed;
             speechRecognizer.ContinuousRecognitionSession.ResultGenerated += ContinuousRecognitionSession_ResultGenerated;
             speechRecognizer.HypothesisGenerated += SpeechRecognizer_HypothesisGenerated;
-
         }
         public async Task InitializeSynthesizer()
         {
@@ -173,8 +174,6 @@ namespace SpeechTranslator
             {
                 this.dictationTextBox.Text = "Requesting Microphone Capture Fails; Make sure Microphone is plugged in";
             }
-
-            btnStartTalk.IsEnabled = true;
         }
 
         private async void ContinuousRecognitionSession_Completed(SpeechContinuousRecognitionSession sender, SpeechContinuousRecognitionCompletedEventArgs args)
