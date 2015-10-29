@@ -120,8 +120,7 @@ namespace BluetoothGATT
                 // Since we have the collection databound to a UI element, we need to update the collection on the UI thread.
                 await this.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
                 {
-                    ResultCollection.Add(new DeviceInformationDisplay(deviceInfo));
-                    UserOut.Text = "Found " + ResultCollection.Count.ToString() + " Bluetooth LE Devices";
+                    ResultCollection.Add(new DeviceInformationDisplay(deviceInfo));                    
                 });
             });
             deviceWatcher.Added += handlerAdded;
@@ -171,7 +170,8 @@ namespace BluetoothGATT
             {
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
                 {
-                    UserOut.Text = "Found " + ResultCollection.Count.ToString() + " Bluetooth LE Devices";                                     
+                    string dbg = "Found " + ResultCollection.Count.ToString() + " Bluetooth LE Devices";
+                    Debug.WriteLine(dbg);                                 
                 });
             });
 
@@ -275,8 +275,7 @@ namespace BluetoothGATT
         // Setup
         // Saves GATT service object in array
         private async Task<bool> init()
-        {          
-            
+        {  
             // Retrieve instances of the GATT services that we will use
             for (int i = 0; i < NUM_SENSORS; i++)
             {
@@ -286,8 +285,7 @@ namespace BluetoothGATT
                 if (i < 6)
                     BLE_GUID = new Guid("F000AA" + i + "0-0451-4000-B000-000000000000");
                 else
-                    BLE_GUID = new Guid("0000FFE0-0000-1000-8000-00805F9B34FB");
-                 
+                    BLE_GUID = new Guid("0000FFE0-0000-1000-8000-00805F9B34FB");                 
 
 
                 // Retrieving and saving GATT services
