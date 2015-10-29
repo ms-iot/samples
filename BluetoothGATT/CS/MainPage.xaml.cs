@@ -68,7 +68,7 @@ namespace BluetoothGATT
         {
             get;
             private set;
-        }
+        }        
 
         public MainPage()
         {
@@ -91,11 +91,10 @@ namespace BluetoothGATT
 
         ~MainPage()
         {
-            StopWatcher();
-
-            StopBLEWatcher();
+            StopWatcher();            
         }
 
+        //Watcher for Bluetooth LE Devices based on the Protocol ID
         private void StartWatcher()
         {            
             string aqsFilter;                       
@@ -103,11 +102,7 @@ namespace BluetoothGATT
             ResultCollection.Clear();
 
             // Request the IsPaired property so we can display the paired status in the UI
-            string[] requestedProperties = { "System.Devices.Aep.IsPaired" };
-
-            // Get the device selector chosen by the UI, then 'AND' it with the 'CanPair' property            
-            //For bluetooth devices
-            //aqsFilter = "System.Devices.Aep.ProtocolId:=\"{e0cbf06c-cd8b-4647-bb8a-263b43f0f974}\"" + " AND System.Devices.Aep.CanPair:=System.StructuredQueryType.Boolean#True";
+            string[] requestedProperties = { "System.Devices.Aep.IsPaired" };            
 
             //for bluetooth LE Devices
             aqsFilter = "System.Devices.Aep.ProtocolId:=\"{bb7bb05e-5972-42b5-94fc-76eaa7084d49}\"";
@@ -184,7 +179,7 @@ namespace BluetoothGATT
             
             deviceWatcher.Start();            
         }
-
+        
         private void StopWatcher()
         {
             if (null != deviceWatcher)
@@ -206,6 +201,7 @@ namespace BluetoothGATT
             }            
         }
 
+        //Watcher for Bluetooth LE Services
         private void StartBLEWatcher()
         {              
             // Hook up handlers for the watcher events before starting the watcher
@@ -215,6 +211,7 @@ namespace BluetoothGATT
                 {
                     Debug.WriteLine("OnAdded");                    
 
+                    //Initialize the sensors once the BLE services are available
                     bool okay = await init();
                     if (okay)
                     {
@@ -519,9 +516,6 @@ namespace BluetoothGATT
             activeCharacteristics[sensor] = null;
         }
 
-
-
-
         // ---------------------------------------------------
         //             Pairing Process Handlers and Functions -- Begin
         // ---------------------------------------------------
@@ -721,7 +715,7 @@ namespace BluetoothGATT
             UnpairButton.IsEnabled = false;
             DeviceUnpairingResult dupr = await deviceInfoDisp.DeviceInformation.Pairing.UnpairAsync();
 
-            UserOut.Text = "Unpairing result = " + dupr.Status.ToString();            
+            UserOut.Text = "Unpairing result = " + dupr.Status.ToString();
 
             UpdatePairingButtons();
         }
