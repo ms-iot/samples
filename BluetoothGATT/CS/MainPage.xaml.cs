@@ -20,6 +20,9 @@ using Windows.Devices.Enumeration;
 // Required APIs for buffer manipulation & async operations
 using Windows.Storage.Streams;
 using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text;
 
 namespace BluetoothGATT
 {
@@ -50,7 +53,12 @@ namespace BluetoothGATT
         private TypedEventHandler<DeviceWatcher, DeviceInformationUpdate> handlerUpdated = null;
         private TypedEventHandler<DeviceWatcher, DeviceInformationUpdate> handlerRemoved = null;
         private TypedEventHandler<DeviceWatcher, Object> handlerEnumCompleted = null;
-        
+
+        private DeviceWatcher blewatcher = null;
+        private TypedEventHandler<DeviceWatcher, DeviceInformation> OnBLEAdded = null;
+        private TypedEventHandler<DeviceWatcher, DeviceInformationUpdate> OnBLEUpdated = null;
+        private TypedEventHandler<DeviceWatcher, DeviceInformationUpdate> OnBLERemoved = null;
+
         string pinUserEntered;
         Windows.UI.Xaml.Controls.Primitives.FlyoutBase savedPairButtonFlyout;
         DevicePairingRequestedEventArgs pairingRequestedHandlerArgs;
@@ -76,12 +84,16 @@ namespace BluetoothGATT
 
             DataContext = this;
 
-            StartWatcher();
+            //Start Watcher for pairable/paired devices
+            StartWatcher();    
+           
         }
 
         ~MainPage()
         {
             StopWatcher();
+
+            StopBLEWatcher();
         }
 
         private void StartWatcher()
@@ -140,6 +152,8 @@ namespace BluetoothGATT
             });
             deviceWatcher.Updated += handlerUpdated;
 
+            
+
             handlerRemoved = new TypedEventHandler<DeviceWatcher, DeviceInformationUpdate>(async (watcher, deviceInfoUpdate) =>
             {
                 // Since we have the collection databound to a UI element, we need to update the collection on the UI thread.
@@ -192,6 +206,75 @@ namespace BluetoothGATT
             }            
         }
 
+        private void StartBLEWatcher()
+        {              
+            // Hook up handlers for the watcher events before starting the watcher
+            OnBLEAdded = new TypedEventHandler<DeviceWatcher, DeviceInformation>(async (watcher, deviceInfo) =>
+            {
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Low, async () =>
+                {
+                    Debug.WriteLine("OnAdded");                    
+
+                    bool okay = await init();
+                    if (okay)
+                    {
+                        for (int i = 0; i < NUM_SENSORS; i++)
+                        {
+                            enableSensor(i);
+                        }
+                        UserOut.Text = "Sensors on!";
+                    }
+                    else
+                    {
+                        UserOut.Text = "Something went wrong!";
+                    }
+                    StopBLEWatcher();                   
+                });
+            });
+            
+
+            OnBLEUpdated = new TypedEventHandler<DeviceWatcher, DeviceInformationUpdate>(async (watcher, deviceInfoUpdate) =>
+            {
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                {
+                    Debug.WriteLine("OnUpdated");
+                    Debug.WriteLine(deviceInfoUpdate.Id);
+                });
+            });
+           
+
+            OnBLERemoved = new TypedEventHandler<DeviceWatcher, DeviceInformationUpdate>(async (watcher, deviceInfoUpdate) =>
+            {
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                {
+                    Debug.WriteLine("OnRemoved");
+
+                });
+            });
+
+            blewatcher = DeviceInformation.CreateWatcher(GattDeviceService.GetDeviceSelectorFromUuid(GattServiceUuids.GenericAccess));
+            blewatcher.Added += OnBLEAdded;
+            blewatcher.Updated += OnBLEUpdated;
+            blewatcher.Removed += OnBLERemoved;
+            blewatcher.Start();
+        }
+    
+        private void StopBLEWatcher()
+        {
+            if (null != blewatcher)
+            {                
+                blewatcher.Added -= OnBLEAdded;
+                blewatcher.Updated -= OnBLEUpdated;
+                blewatcher.Removed -= OnBLERemoved;                
+
+                if (DeviceWatcherStatus.Started == blewatcher.Status ||
+                    DeviceWatcherStatus.EnumerationCompleted == blewatcher.Status)
+                {
+                    blewatcher.Stop();
+                }
+            }
+        }
+
         // Setup
         // Saves GATT service object in array
         private async Task<bool> init()
@@ -216,16 +299,15 @@ namespace BluetoothGATT
                 {
                     if (services[0].IsEnabled)
                     {
-                        GattDeviceService service = await GattDeviceService.FromIdAsync(services[0].Id);
-                        if(service.Device.ConnectionStatus == BluetoothConnectionStatus.Connected)
+                        GattDeviceService service = await GattDeviceService.FromIdAsync(services[0].Id);                        
+                        if(service != null)
                         {
                             serviceList[i] = service;
                         }
                         else
                         {
                             return false;
-                        }
-                             
+                        }                             
                     }
                     else
                     {
@@ -479,23 +561,11 @@ namespace BluetoothGATT
                 // device is paired, set up the sensor Tag            
                 UserOut.Text = "Setting up SensorTag";
 
-                //It takes sometime for the services to be up and running, waiting for now
-                await Task.Delay(TimeSpan.FromSeconds(8));
+                //Start watcher for Bluetooth LE Services
+                StartBLEWatcher();
+            }
 
-                bool okay = await init();
-                if (okay)
-                {
-                    for (int i = 0; i < NUM_SENSORS; i++)
-                    {
-                        enableSensor(i);
-                    }
-                    UserOut.Text = "Sensors on!";
-                }
-                else
-                {
-                    UserOut.Text = "Something went wrong!";
-                }
-            }            
+            PairButton.IsEnabled = true;
         }
 
         private void ResultsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -659,6 +729,7 @@ namespace BluetoothGATT
         private void UpdatePairingButtons()
         {
             DeviceInformationDisplay deviceInfoDisp = (DeviceInformationDisplay)resultsListView.SelectedItem;
+            
 
             if (null != deviceInfoDisp &&
                 deviceInfoDisp.DeviceInformation.Pairing.IsPaired)
