@@ -96,6 +96,19 @@ namespace IoTCoreDefaultApp
             bluetoothConfirmPinMatchFormatString = BluetoothDeviceInformationDisplay.GetResourceString("BluetoothConfirmPinMatchFormat");
             // Handle inbound pairing requests
             App.InboundPairingRequested += App_InboundPairingRequested;
+
+            object oToggleSwitch = this.FindName("BluetoothWatcherToggle");
+            if (oToggleSwitch != null)
+            {
+                var watcherToggle = oToggleSwitch as ToggleSwitch;
+                if (watcherToggle.IsOn)
+                {
+                    if (deviceWatcher == null  ||  (DeviceWatcherStatus.Stopped == deviceWatcher.Status) )
+                    {
+                        StartWatcher();
+                    }
+                }
+            }
         }
 
 
@@ -462,7 +475,7 @@ namespace IoTCoreDefaultApp
 
             handlerEnumCompleted = new TypedEventHandler<DeviceWatcher, Object>(async (watcher, obj) =>
             {
-                await MainPage.Current.UIThreadDispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                 await MainPage.Current.UIThreadDispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
                 {
                     // Finished enumerating
                 });
@@ -480,7 +493,6 @@ namespace IoTCoreDefaultApp
 
             // Start the Device Watcher
             deviceWatcher.Start();
-            //stopWatcherButton.IsEnabled = true;
         }
 
         /// <summary>
@@ -605,7 +617,8 @@ namespace IoTCoreDefaultApp
         private async void PairButton_Click(object sender, RoutedEventArgs e)
         {
             // Use the pair button on the bluetoothDeviceListView.SelectedItem to get the data context
-            BluetoothDeviceInformationDisplay deviceInfoDisp = ((Button)sender).DataContext as BluetoothDeviceInformationDisplay;
+            BluetoothDeviceInformationDisplay deviceInfoDisp =
+                ((Button) sender).DataContext as BluetoothDeviceInformationDisplay;
             string formatString = BluetoothDeviceInformationDisplay.GetResourceString("BluetoothAttemptingToPairFormat");
             string confirmationMessage = string.Format(formatString, deviceInfoDisp.Name, deviceInfoDisp.Id);
             DisplayMessagePanel(confirmationMessage, MessageType.InformationalMessage);
@@ -640,15 +653,19 @@ namespace IoTCoreDefaultApp
             else
             {
                 formatString = BluetoothDeviceInformationDisplay.GetResourceString("BluetoothPairingFailureFormat");
-                confirmationMessage = string.Format(formatString, result.Status.ToString(), deviceInfoDisp.Name, deviceInfoDisp.Id);
+                confirmationMessage = string.Format(formatString, result.Status.ToString(), deviceInfoDisp.Name,
+                    deviceInfoDisp.Id);
             }
             // Display the result of the pairing attempt
             DisplayMessagePanel(confirmationMessage, MessageType.InformationalMessage);
 
-            // Clear any devices in the listand stop and restart the watcher to ensure state is reflected in list
-            bluetoothDeviceObservableCollection.Clear();
-            StopWatcher();
-            StartWatcher();
+            // If the watcher toggle is on, clear any devices in the list and stop and restart the watcher to ensure state is reflected in list
+            if (BluetoothWatcherToggle.IsOn)
+            {
+                bluetoothDeviceObservableCollection.Clear();
+                StopWatcher();
+                StartWatcher();
+            }
 
             // Re-enable the pair button
             inProgressPairButton = null;
@@ -752,10 +769,18 @@ namespace IoTCoreDefaultApp
             // Display the result of the pairing attempt
             DisplayMessagePanel(confirmationMessage, MessageType.InformationalMessage);
 
-            // Clear any devices in the listand stop and restart the watcher to ensure state is reflected in list
-            bluetoothDeviceObservableCollection.Clear();
-            StopWatcher();
-            StartWatcher();
+            // If the watcher toggle is on, clear any devices in the list and stop and restart the watcher to ensure state is reflected in list
+            if (BluetoothWatcherToggle.IsOn)
+            {
+                bluetoothDeviceObservableCollection.Clear();
+                StopWatcher();
+                StartWatcher();
+            }
+            else
+            {
+                // If the watcher is off this is an inbound request so just clear the list
+                bluetoothDeviceObservableCollection.Clear();
+            }
 
             // Re-enable the unpair button
             unpairButton.IsEnabled = true;
