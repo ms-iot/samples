@@ -666,6 +666,11 @@ namespace IoTCoreDefaultApp
                 StopWatcher();
                 StartWatcher();
             }
+            else
+            {
+                // If the watcher is off this is an inbound request so just clear the list
+                bluetoothDeviceObservableCollection.Clear();
+            }
 
             // Re-enable the pair button
             inProgressPairButton = null;
