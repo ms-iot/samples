@@ -29,7 +29,7 @@
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png">
         </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
-      </uap:VisualElementsDisplayName>
+      </uap:VisualElements>
     </Application>
   </Applications>
   <Capabilities>
@@ -40,4 +40,4 @@
     <DeviceCapability Name="wiFiControl" />
     <DeviceCapability Name="bluetooth.rfcomm" />
   </Capabilities>
-</Packagexmlns>
+</Package>
