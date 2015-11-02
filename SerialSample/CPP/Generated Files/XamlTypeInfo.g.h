@@ -13,25 +13,20 @@ namespace XamlTypeInfo
 {
     namespace InfoProvider
     {
-
-
         ref class XamlTypeInfoProvider sealed
         {
-        internal:
-            ::Windows::UI::Xaml::Markup::IXamlType^ CreateXamlType(::Platform::String^ typeName);
-            ::Windows::UI::Xaml::Markup::IXamlMember^ CreateXamlMember(::Platform::String^ longMemberName);
-
+        public:
             ::Windows::UI::Xaml::Markup::IXamlType^ GetXamlTypeByName(::Platform::String^ typeName);
             ::Windows::UI::Xaml::Markup::IXamlType^ GetXamlTypeByType(::Windows::UI::Xaml::Interop::TypeName t);
             ::Windows::UI::Xaml::Markup::IXamlMember^ GetMemberByLongName(::Platform::String^ longMemberName);
+            void AddOtherProvider(::Windows::UI::Xaml::Markup::IXamlMetadataProvider^ otherProvider);
 
         private:
             std::map<::Platform::String^, ::Platform::WeakReference> _xamlTypes;
             std::map<::Platform::String^, ::Windows::UI::Xaml::Markup::IXamlMember^> _xamlMembers;
+            ::Windows::UI::Xaml::Markup::IXamlType^ CreateXamlType(::Platform::String^ typeName);
+            ::Windows::UI::Xaml::Markup::IXamlMember^ CreateXamlMember(::Platform::String^ longMemberName);
 
-        public:
-            void AddOtherProvider(::Windows::UI::Xaml::Markup::IXamlMetadataProvider^ otherProvider);
-        private:
             ::Platform::Collections::Vector<::Windows::UI::Xaml::Markup::IXamlMetadataProvider^>^ _otherProviders;
             property ::Platform::Collections::Vector<::Windows::UI::Xaml::Markup::IXamlMetadataProvider^>^ OtherProviders
             {
@@ -137,7 +132,7 @@ namespace XamlTypeInfo
         ref class XamlUserType sealed : public [::Platform::Metadata::RuntimeClassName] ::Windows::UI::Xaml::Markup::IXamlType
         {
         internal:
-            XamlUserType(::XamlTypeInfo::InfoProvider::XamlTypeInfoProvider^ provider, ::Platform::String^ fullName, ::Windows::UI::Xaml::Markup::IXamlType^ baseType);
+            XamlUserType(::XamlTypeInfo::InfoProvider::XamlTypeInfoProvider^ provider, ::Platform::String^ fullName, ::Windows::UI::Xaml::Markup::IXamlType^ baseType);            
 
         public:
             // --- Interface methods ----
@@ -169,6 +164,7 @@ namespace XamlTypeInfo
             virtual property bool IsArray 
             { 
                 bool get();
+                internal: void set(bool value);
             }
 
             virtual property bool IsCollection 
@@ -189,16 +185,19 @@ namespace XamlTypeInfo
             virtual property bool IsMarkupExtension 
             { 
                 bool get();
+                internal: void set(bool value);
             }
 
             virtual property bool IsEnum 
             { 
                 bool get();
+                internal: void set(bool value);
             }
 
             virtual property bool IsBindable
             { 
                 bool get();
+                internal: void set(bool value);
             }
 
             virtual property ::Windows::UI::Xaml::Markup::IXamlMember^ ContentProperty 
@@ -227,11 +226,13 @@ namespace XamlTypeInfo
             property bool IsReturnTypeStub
             { 
                 bool get();
+                internal: void set(bool value);
             }
 
             property bool IsLocalType
             {
                 bool get();
+                internal:  void set(bool value);
             }
 
         internal:
@@ -246,15 +247,21 @@ namespace XamlTypeInfo
             property ::Windows::UI::Xaml::Interop::TypeKind KindOfType;
             property StringConverterFn FromStringConverter;
 
-            void SetContentPropertyName(::Platform::String^ contentPropertyName);
-            void SetIsArray();
-            void SetIsMarkupExtension();
-            void SetIsEnum();
-            void SetIsBindable();
-            void SetIsReturnTypeStub();
-            void SetIsLocalType();
-            void SetItemTypeName(::Platform::String^ itemTypeName);
-            void SetKeyTypeName(::Platform::String^ keyTypeName);
+            property ::Platform::String^ ContentPropertyName
+            {
+                void set(::Platform::String^ value);
+            }
+
+            property ::Platform::String^ ItemTypeName
+            {
+                void set(::Platform::String^ value);
+            }
+
+            property ::Platform::String^ KeyTypeName
+            {
+                void set(::Platform::String^ value);
+            }
+
             void AddMemberName(::Platform::String^ shortName);
             void AddEnumValue(::Platform::String^ name, ::Platform::Object^ value);
             uint32 CreateEnumUIntFromString(::Platform::String^ input);
@@ -262,32 +269,24 @@ namespace XamlTypeInfo
         private:
             ::XamlTypeInfo::InfoProvider::XamlTypeInfoProvider^ _provider;
             ::Windows::UI::Xaml::Markup::IXamlType^ _baseType;
-            bool _isArray;
-            bool _isConstructible;
-            bool _isDictionary;
-            bool _isMarkupExtension;
-            bool _isEnum;
-            bool _isBindable;
-            bool _isReturnTypeStub;
-            bool _isLocalType;
-
             ::Platform::String^ _contentPropertyName;
             ::Platform::String^ _itemTypeName;
             ::Platform::String^ _keyTypeName;
             ::Platform::String^ _fullName;
             std::map<::Platform::String^, ::Platform::String^> _memberNames;
             std::map<std::wstring, ::Platform::Object^> _enumValues;
+            bool _isArray = false;
+            bool _isMarkupExtension = false;
+            bool _isEnum = false;
+            bool _isBindable = false;
+            bool _isReturnTypeStub = false;
+            bool _isLocalType = false;
         };
 
         ref class XamlMember sealed : public ::Windows::UI::Xaml::Markup::IXamlMember
         {
         internal:
             XamlMember(::XamlTypeInfo::InfoProvider::XamlTypeInfoProvider^ provider, ::Platform::String^ name, ::Platform::String^ typeName);
-
-            void SetIsAttachable();
-            void SetIsDependencyProperty();
-            void SetIsReadOnly();
-            void SetTargetTypeName(::Platform::String^ targetTypeName);
 
             typedef ::Platform::Object^ (*PropertyGetterFn)(::Platform::Object^ instance);
             typedef void (*PropertySetterFn)(::Platform::Object^ instance, ::Platform::Object^ value);
@@ -299,16 +298,19 @@ namespace XamlTypeInfo
             virtual property bool IsAttachable
             { 
                 bool get();
+                internal: void set(bool value);
             }
 
             virtual property bool IsDependencyProperty 
             { 
                 bool get();
+                internal: void set(bool value);
             }
 
             virtual property bool IsReadOnly
             { 
                 bool get();
+                internal: void set(bool value);
             }
 
             virtual property ::Platform::String^ Name
@@ -328,6 +330,12 @@ namespace XamlTypeInfo
 
             virtual ::Platform::Object^ GetValue(::Platform::Object^ instance);
             virtual void SetValue(::Platform::Object^ instance, ::Platform::Object^ value);
+
+        internal:
+            virtual property ::Platform::String^ TargetTypeName
+            {
+                void set(::Platform::String^ value);
+            }
 
         private:
             bool _isAttachable;

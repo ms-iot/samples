@@ -21,7 +21,6 @@ namespace Windows {
         namespace Xaml {
             namespace Controls {
                 ref class TextBlock;
-                ref class StackPanel;
                 ref class TextBox;
                 ref class Button;
                 ref class ListBox;
@@ -47,11 +46,10 @@ namespace SerialSampleCpp
     
         private: ::Windows::UI::Xaml::Data::CollectionViewSource^ DeviceListSource;
         private: ::Windows::UI::Xaml::Controls::TextBlock^ pageTitle;
-        private: ::Windows::UI::Xaml::Controls::StackPanel^ ContentRoot;
         private: ::Windows::UI::Xaml::Controls::TextBox^ status;
         private: ::Windows::UI::Xaml::Controls::TextBox^ rcvdText;
-        private: ::Windows::UI::Xaml::Controls::TextBox^ sendText;
         private: ::Windows::UI::Xaml::Controls::Button^ sendTextButton;
+        private: ::Windows::UI::Xaml::Controls::TextBox^ sendText;
         private: ::Windows::UI::Xaml::Controls::Button^ comPortInput;
         private: ::Windows::UI::Xaml::Controls::Button^ closeDevice;
         private: ::Windows::UI::Xaml::Controls::ListBox^ ConnectDevices;
