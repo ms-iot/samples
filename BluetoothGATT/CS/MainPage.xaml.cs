@@ -59,10 +59,9 @@ namespace BluetoothGATT
         private TypedEventHandler<DeviceWatcher, DeviceInformationUpdate> OnBLEUpdated = null;
         private TypedEventHandler<DeviceWatcher, DeviceInformationUpdate> OnBLERemoved = null;
 
-        string pinUserEntered;
-        Windows.UI.Xaml.Controls.Primitives.FlyoutBase savedPairButtonFlyout;
-        DevicePairingRequestedEventArgs pairingRequestedHandlerArgs;
-        Deferral pairingRequestDeferral;
+        TaskCompletionSource<string> providePinTaskSrc;
+        TaskCompletionSource<bool> confirmPinTaskSrc;        
+        
         private enum MessageType { YesNoMessage, OKMessage };
         public ObservableCollection<DeviceInformationDisplay> ResultCollection
         {
@@ -72,12 +71,8 @@ namespace BluetoothGATT
 
         public MainPage()
         {
-            this.InitializeComponent();
-
-            // Save the flyout so it doesn't pop up unless we want it
-            savedPairButtonFlyout = PairButton.Flyout;
-            PairButton.Flyout = null;                    
-
+            this.InitializeComponent();     
+              
             UserOut.Text = "Select the Sensor for Pairing";
 
             ResultCollection = new ObservableCollection<DeviceInformationDisplay>();
@@ -85,8 +80,7 @@ namespace BluetoothGATT
             DataContext = this;
 
             //Start Watcher for pairable/paired devices
-            StartWatcher();    
-           
+            StartWatcher();            
         }
 
         ~MainPage()
@@ -209,7 +203,7 @@ namespace BluetoothGATT
             {
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Low, async () =>
                 {
-                    Debug.WriteLine("OnAdded");                    
+                    Debug.WriteLine("OnAdded");             
 
                     //Initialize the sensors once the BLE services are available
                     bool okay = await init();
@@ -565,49 +559,48 @@ namespace BluetoothGATT
             UpdatePairingButtons();
         }
 
-        private async void PairingRequestedHandler(DeviceInformationCustomPairing sender,
-                                     DevicePairingRequestedEventArgs args)
+        private async void PairingRequestedHandler(
+             DeviceInformationCustomPairing sender,
+             DevicePairingRequestedEventArgs args)
         {
-            // Save the args for use in ProvidePin case
-            pairingRequestedHandlerArgs = args;
-
-            // Save the deferral away and complete it as necessary.
-            if (args.PairingKind != DevicePairingKinds.DisplayPin)
-            {
-                pairingRequestDeferral = args.GetDeferral();
-            }
-
             switch (args.PairingKind)
             {
                 case DevicePairingKinds.ConfirmOnly:
-                    // If users chooses "Yes" to confirmation dialog then call accept, otherwise don’t. If accept isn’t call, the async operation will completed with a failure.
-                    await Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
-                    {
-                        string confirmationMessage = "You have requested to pair with the chosen device";
-                        DisplayConfirmationPanelAndComplete(confirmationMessage, MessageType.OKMessage);
-                    });                   break;
+                    // Windows itself will pop the confirmation dialog as part of "consent" if this is running on Desktop or Mobile
+                    // If this is an App for 'Windows IoT Core' where there is no Windows Consent UX, you may want to provide your own confirmation.
+                    args.Accept();
+                    break;
 
                 case DevicePairingKinds.DisplayPin:
                     // We just show the PIN on this side. The ceremony is actually completed when the user enters the PIN
-                    // on the target device
+                    // on the target device. We automatically except here since we can't really "cancel" the operation
+                    // from this side.
+                    args.Accept();
+
+                    // No need for a deferral since we don't need any decision from the user
+                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
-                        await Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
-                        {
-                            string confirmationMessage = "Please enter this PIN on the device you are pairing with: " + args.Pin;
-                            DisplayConfirmationPanelAndComplete(confirmationMessage, MessageType.OKMessage);
-                        });
-                    }
+                        ShowPairingPanel(
+                            "Please enter this PIN on the device you are pairing with: " + args.Pin,
+                            args.PairingKind);
+
+                    });
                     break;
 
                 case DevicePairingKinds.ProvidePin:
                     // A PIN may be shown on the target device and the user needs to enter the matching PIN on 
-                    // this Windows device.
-                    await Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                    // this Windows device. Get a deferral so we can perform the async request to the user.
+                    var collectPinDeferral = args.GetDeferral();
+
+                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                     {
-                        // Reattach the flyout
-                        PairButton.Flyout = savedPairButtonFlyout;
-                        pinEntryTextBox.Text = "";
-                        PairButton.Flyout.ShowAt(PairButton);
+                        string pin = await GetPinFromUserAsync();
+                        if (!string.IsNullOrEmpty(pin))
+                        {
+                            args.Accept(pin);
+                        }
+
+                        collectPinDeferral.Complete();
                     });
                     break;
 
@@ -615,97 +608,124 @@ namespace BluetoothGATT
                     // We show the PIN here and the user responds with whether the PIN matches what they see
                     // on the target device. Response comes back and we set it on the PinComparePairingRequestedData
                     // then complete the deferral.
-                    await Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                    var displayMessageDeferral = args.GetDeferral();
+
+                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                     {
-                        string confirmationMessage = "Does the PIN shown on the device you are trying to pair with match " + args.Pin + " ?";
-                        DisplayConfirmationPanelAndComplete(confirmationMessage, MessageType.YesNoMessage);
+                        bool accept = await GetUserConfirmationAsync(args.Pin);
+                        if (accept)
+                        {
+                            args.Accept();
+                        }
+
+                        displayMessageDeferral.Complete();
                     });
                     break;
             }
-
-            // Deferral completion, if requested, has been done in DisplayMessageDialogAndComplete or the Flyout PIN input handler
         }
 
-        private async void DisplayConfirmationPanelAndComplete(string confirmationMessage, MessageType messageType)
+        private void ShowPairingPanel(string text, DevicePairingKinds pairingKind)
         {
-            // Use UI thread
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
-            {
+            pairingPanel.Visibility = Visibility.Collapsed;
+            pinEntryTextBox.Visibility = Visibility.Collapsed;
+            okButton.Visibility = Visibility.Collapsed;
+            yesButton.Visibility = Visibility.Collapsed;
+            noButton.Visibility = Visibility.Collapsed;
+            pairingTextBlock.Text = text;
 
-                confirmationText.Text = confirmationMessage;
-                if (messageType == MessageType.OKMessage)
-                {
-                    yesButton.Content = "OK";
-                    noButton.Visibility = Visibility.Collapsed;
-                }
-                else
-                {
-                    yesButton.Content = "Yes";
+            switch (pairingKind)
+            {
+                case DevicePairingKinds.ConfirmOnly:
+                case DevicePairingKinds.DisplayPin:
+                    // Don't need any buttons
+                    break;
+                case DevicePairingKinds.ProvidePin:
+                    pinEntryTextBox.Text = "";
+                    pinEntryTextBox.Visibility = Visibility.Visible;
+                    okButton.Visibility = Visibility.Visible;
+                    break;
+                case DevicePairingKinds.ConfirmPinMatch:
+                    yesButton.Visibility = Visibility.Visible;
                     noButton.Visibility = Visibility.Visible;
-                }
+                    break;
+            }
 
-                confirmationText.Visibility = Visibility.Visible;
-                confirmationPanel.Visibility = Visibility.Visible;
-            });
+            pairingPanel.Visibility = Visibility.Visible;
         }
 
-
-        private void YesButton_Click(object sender, RoutedEventArgs e)
+        private void HidePairingPanel()
         {
-            // Use the pairing
-            if (pairingRequestedHandlerArgs != null)
-            {
-                pairingRequestedHandlerArgs.Accept();
-                pairingRequestedHandlerArgs = null;
-            }
-
-            // Complete the deferral here
-            if (pairingRequestDeferral != null)
-            {
-                pairingRequestDeferral.Complete();
-                pairingRequestDeferral = null;
-            }
-
-            confirmationText.Visibility = Visibility.Collapsed;
-            confirmationPanel.Visibility = Visibility.Collapsed;
+            pairingPanel.Visibility = Visibility.Collapsed;
+            pairingTextBlock.Text = "";
         }
 
-        private void NoButton_Click(object sender, RoutedEventArgs e)
+        private async Task<string> GetPinFromUserAsync()
         {
-            // Complete the deferral here
-            if (pairingRequestDeferral != null)
-            {
-                pairingRequestDeferral.Complete();
-                pairingRequestDeferral = null;
-            }
+            HidePairingPanel();
+            CompleteProvidePinTask(); // Abandon any previous pin request.
 
-            confirmationText.Visibility = Visibility.Collapsed;
-            confirmationPanel.Visibility = Visibility.Collapsed;
+            ShowPairingPanel(
+                "Please enter the PIN shown on the device you're pairing with",
+                DevicePairingKinds.ProvidePin);
+
+            providePinTaskSrc = new TaskCompletionSource<string>();
+
+            return await providePinTaskSrc.Task;
         }
 
-        private void pinEntryTextBox_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+        // If pin is not provided, then any pending pairing request is abandoned.
+        private void CompleteProvidePinTask(string pin = null)
         {
-            if (e.Key == Windows.System.VirtualKey.Enter && pinEntryTextBox.Text != "")
+            if (providePinTaskSrc != null)
             {
-                //  Close the flyout and save the PIN the user entered
-                pinUserEntered = pinEntryTextBox.Text;
-                PairButton.Flyout.Hide();
-
-                // Use the pin
-                if (pairingRequestedHandlerArgs != null)
-                {
-                    pairingRequestedHandlerArgs.Accept(pinUserEntered);
-                    pairingRequestedHandlerArgs = null;
-                }
-
-                // Complete the deferral here
-                if (pairingRequestDeferral != null)
-                {
-                    pairingRequestDeferral.Complete();
-                    pairingRequestDeferral = null;
-                }
+                providePinTaskSrc.SetResult(pin);
+                providePinTaskSrc = null;
             }
         }
+
+        private async Task<bool> GetUserConfirmationAsync(string pin)
+        {
+            HidePairingPanel();
+            CompleteConfirmPinTask(false); // Abandon any previous request.
+
+            ShowPairingPanel(
+                "Does the following PIN match the one shown on the device you are pairing?: " + pin,
+                DevicePairingKinds.ConfirmPinMatch);
+
+            confirmPinTaskSrc = new TaskCompletionSource<bool>();
+
+            return await confirmPinTaskSrc.Task;
+        }
+
+        // If pin is not provided, then any pending pairing request is abandoned.
+        private void CompleteConfirmPinTask(bool accept)
+        {
+            if (confirmPinTaskSrc != null)
+            {
+                confirmPinTaskSrc.SetResult(accept);
+                confirmPinTaskSrc = null;
+            }
+        }
+
+        private void okButton_Click(object sender, RoutedEventArgs e)
+        {
+            // OK button is only used for the ProvidePin scenario
+            CompleteProvidePinTask(pinEntryTextBox.Text);
+            HidePairingPanel();
+        }
+
+        private void yesButton_Click(object sender, RoutedEventArgs e)
+        {
+            CompleteConfirmPinTask(true);
+            HidePairingPanel();
+        }
+
+        private void noButton_Click(object sender, RoutedEventArgs e)
+        {
+            CompleteConfirmPinTask(false);
+            HidePairingPanel();
+        }
+
         private async void UnpairButton_Click(object sender, RoutedEventArgs e)
         {
             DeviceInformationDisplay deviceInfoDisp = resultsListView.SelectedItem as DeviceInformationDisplay;

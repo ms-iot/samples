@@ -169,129 +169,130 @@
     </Page.Resources>
 
     <ScrollViewer VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto">
-    <Grid Background="#FF1E1D42" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="4*"/>
-            <ColumnDefinition Width="7*"/>
-        </Grid.ColumnDefinitions>
-        <StackPanel Background="#FF1E1D42" Grid.ColumnSpan="2">
-            <TextBlock FontSize="35" Foreground="White" Margin="10" Text="BLE GATT Sample"/>
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                    <Button x:Name="PairButton" Content="Pair and Connect" Background="#CCFFFFFF" Click="PairButton_Click" Margin="10,0,0,0" Style="{StaticResource ButtonStyleGATT}" IsEnabled="True">
-                    <Button.Flyout>
-                        <Flyout Placement="Bottom">
-                            <StackPanel>
-                                <TextBlock x:Name="pinLabelTextBox" TextWrapping="Wrap" Text="Enter PIN: (00000)" Width="150" />
-                                <TextBox x:Name="pinEntryTextBox" TextWrapping="Wrap" Text="" Height="4" KeyDown="pinEntryTextBox_KeyDown"/>
-                            </StackPanel>
-                        </Flyout>
-                    </Button.Flyout>
-                </Button>
-                    <Button x:Name="UnpairButton" Content="Unpair Selected Device" Background="#CCFFFFFF" Click="UnpairButton_Click" Margin="10,0,0,0" Style="{StaticResource ButtonStyleGATT}" IsEnabled="False">
-                    </Button>
-            </StackPanel>
+        <Grid Background="#FF1E1D42" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="7*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Background="#FF1E1D42" Grid.ColumnSpan="2">
+                <TextBlock FontSize="35" Foreground="White" Margin="10" Text="BLE GATT Sample"/>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <Button x:Name="PairButton" Content="Pair and Connect" Background="#CCFFFFFF" Click="PairButton_Click" Margin="10,0,0,0" Style="{StaticResource ButtonStyleGATT}" IsEnabled="True"></Button>
+                    <Button x:Name="UnpairButton" Content="Unpair Selected Device" Background="#CCFFFFFF" Click="UnpairButton_Click" Margin="10,0,0,0" Style="{StaticResource ButtonStyleGATT}" IsEnabled="False"></Button>                    
+                </StackPanel>
 
-            <ScrollViewer VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto" Height="80" Background="#FFF3E4E4" Margin="10,0,10,10">
-                <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,15,0">
-                    <Border BorderBrush="AntiqueWhite" BorderThickness="1">
-                        <ListView x:Name="resultsListView"
+                <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Border x:Name="pairingPanel" BorderThickness="1" BorderBrush="AntiqueWhite" Margin="10,0,0,10" Visibility="Collapsed">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock x:Name="pairingTextBlock" Foreground ="White" Margin="0,0,0,2" TextWrapping="WrapWholeWords"/>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBox x:Name="pinEntryTextBox" Foreground ="White" MinWidth="100" Margin="2" Visibility="Collapsed" />
+                                <Button x:Name="okButton"  Style="{StaticResource ButtonStyleGATT}" Margin="2" Click="okButton_Click" Visibility="Collapsed">OK</Button>
+                                <Button x:Name="yesButton" Style="{StaticResource ButtonStyleGATT}" Margin="2" Click="yesButton_Click" Visibility="Collapsed">Yes</Button>
+                                <Button x:Name="noButton"  Style="{StaticResource ButtonStyleGATT}" Margin="2" Click="noButton_Click" Visibility="Collapsed">No</Button>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+
+                <ScrollViewer VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto" Height="80" Background="#FFF3E4E4" Margin="10,0,10,10">
+                    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,15,0">
+                        <Border BorderBrush="AntiqueWhite" BorderThickness="1">
+                            <ListView x:Name="resultsListView"
                 				ItemTemplate="{StaticResource ResultsListViewTemplate}"
                 				ItemsSource="{Binding ResultCollection}"
-                				SelectionChanged="ResultsListView_SelectionChanged"/>
-                    </Border>
-                    <TextBlock x:Name="confirmationText" HorizontalAlignment="Right" Margin="0,0,0,2" Text="" Visibility="Collapsed"/>
-                    <StackPanel x:Name="confirmationPanel"  Orientation="Horizontal" HorizontalAlignment="Right" Visibility="Collapsed">
-                        <Button x:Name="yesButton" Margin="0,0,5,10" Click="YesButton_Click" Width="150" >Yes</Button>
-                        <Button x:Name="noButton" Margin="0,0,5,10" Click="NoButton_Click" Width="150" >No</Button>
+                				SelectionChanged="ResultsListView_SelectionChanged" >
+                            </ListView>
+                        </Border>
                     </StackPanel>
-                </StackPanel>
-            </ScrollViewer>
-                <StackPanel Orientation="Horizontal">
+                </ScrollViewer>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                     <TextBlock  x:Name="UserOutLabel" Foreground="White" VerticalAlignment="Center" Margin="10,0,0,0">Message:</TextBlock>
                     <TextBlock x:Name="UserOut" Foreground="White" VerticalAlignment="Center" Margin="30,0,0,0">
                 	<Run Text="Click to Pair and Connect"/>
                     </TextBlock>
-                </StackPanel>               
+                </StackPanel>
 
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                <ComboBox x:Name="SensorList" ItemsSource="{Binding}" PlaceholderText="Select a Sensor" Margin="10,0,0,0">
-                    <ComboBoxItem>IR Temperature</ComboBoxItem>
-                    <ComboBoxItem>Accelerometer</ComboBoxItem>
-                    <ComboBoxItem>Humidity</ComboBoxItem>
-                    <ComboBoxItem>Magnetometer</ComboBoxItem>
-                    <ComboBoxItem>Barometer</ComboBoxItem>
-                    <ComboBoxItem>Gyroscope</ComboBoxItem>
-                    <ComboBoxItem>Key Press</ComboBoxItem>
-                </ComboBox>
-                <Button x:Name="EnableButton" Content="Enable" Background="#CCFFFFFF" Click="EnableButton_Click" Margin="10,0,0,0"/>
-                <Button x:Name="DisableButton" Content="Disable" Background="#CCFFFFFF" Click="DisableButton_Click" Margin="10,0,0,0"/>
-            </StackPanel>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <StackPanel Grid.Row="0" Grid.Column="0" Padding="5,0,0,0">
-                    <TextBlock x:Name="IRTitle" Foreground="White" FontSize="18">IR Temp (C)</TextBlock>
-                    <TextBlock x:Name="ObjTempOut" Foreground="White">IR:</TextBlock>
-                    <TextBlock x:Name="AmbTempOut" Foreground="White">Chip:</TextBlock>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <ComboBox x:Name="SensorList" ItemsSource="{Binding}" PlaceholderText="Select a Sensor" Margin="10,0,0,0">
+                        <ComboBoxItem>IR Temperature</ComboBoxItem>
+                        <ComboBoxItem>Accelerometer</ComboBoxItem>
+                        <ComboBoxItem>Humidity</ComboBoxItem>
+                        <ComboBoxItem>Magnetometer</ComboBoxItem>
+                        <ComboBoxItem>Barometer</ComboBoxItem>
+                        <ComboBoxItem>Gyroscope</ComboBoxItem>
+                        <ComboBoxItem>Key Press</ComboBoxItem>
+                    </ComboBox>
+                    <Button x:Name="EnableButton" Content="Enable" Background="#CCFFFFFF" Click="EnableButton_Click" Margin="10,0,0,0"/>
+                    <Button x:Name="DisableButton" Content="Disable" Background="#CCFFFFFF" Click="DisableButton_Click" Margin="10,0,0,0"/>
                 </StackPanel>
-                <StackPanel Grid.Row="0" Grid.Column="1">
-                    <TextBlock x:Name="GyroTitle" Foreground="White" FontSize="18">Gyroscope (degrees/s)</TextBlock>
-                    <TextBlock x:Name="GyroXOut" Foreground="White">X:</TextBlock>
-                    <TextBlock x:Name="GyroYOut" Foreground="White">Y:</TextBlock>
-                    <TextBlock x:Name="GyroZOut" Foreground="White">Z:</TextBlock>
-                </StackPanel>
-                <StackPanel Grid.Row="1" Grid.Column="0" Padding="5,0,0,0">
-                    <TextBlock x:Name="HumidTitle" Foreground="White" FontSize="18">Humidity (%)</TextBlock>
-                    <TextBlock x:Name="HumidOut" Foreground="White">N/A</TextBlock>
-                </StackPanel>
-                <StackPanel Grid.Row="1" Grid.Column="1">
-                    <TextBlock x:Name="MagnoTitle" Foreground="White" FontSize="18">Magnetometer (uT)</TextBlock>
-                    <TextBlock x:Name="MagnoXOut" Foreground="White">X:</TextBlock>
-                    <TextBlock x:Name="MagnoYOut" Foreground="White">Y:</TextBlock>
-                    <TextBlock x:Name="MagnoZOut" Foreground="White">Z:</TextBlock>
-                </StackPanel>
-                <StackPanel Grid.Row="2" Grid.Column="0" Padding="5,0,0,0">
-                    <TextBlock x:Name="BaroTitle" Foreground="White" FontSize="18">Barometer (hPa)</TextBlock>
-                    <TextBlock x:Name="BaroOut" Foreground="White">N/A</TextBlock>
-                </StackPanel>
-                <StackPanel Grid.Row="2" Grid.Column="1" Grid.RowSpan="2">
-                    <TextBlock x:Name="AccelTitle" Foreground="White" FontSize="18">Accelerometer (g)</TextBlock>
-                    <TextBlock x:Name="AccelXOut" Foreground="White">X:</TextBlock>
-                    <TextBlock x:Name="AccelYOut" Foreground="White">Y:</TextBlock>
-                    <TextBlock x:Name="AccelZOut" Foreground="White">Z:</TextBlock>
-                    <Grid Height="180" Width="180" Margin="0,10,0,0">
-                        <TextBlock Foreground="White" Canvas.ZIndex="1" Margin="0" HorizontalAlignment="Center">+Y</TextBlock>
-                        <TextBlock Foreground="White" Canvas.ZIndex="1" Margin="0" HorizontalAlignment="Right" VerticalAlignment="Center">+X</TextBlock>
-                        <Rectangle StrokeThickness="5" Width="90" Height="90" Stroke="Black"/>
-                        <Rectangle StrokeThickness="5" Width="180" Height="180" Stroke="Black"/>
-                        <Rectangle Height="10" Width="10" Fill="Red" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Rectangle.RenderTransform>
-                                <TranslateTransform x:Name="RecTranslateTransform" />
-                            </Rectangle.RenderTransform>
-                        </Rectangle>
-                    </Grid>
-                </StackPanel>
-                <StackPanel Grid.Row="3" Grid.Column="0" Padding="5,0,0,0">
-                    <TextBlock x:Name="KeyTitle" Foreground="White" FontSize="18">Key Press</TextBlock>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
-                        <Border x:Name="KeyLOut" Width="80" Height="80" BorderBrush="Black" BorderThickness="5" Background="Red">
-                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40">L</TextBlock>
-                        </Border>
-                        <Border x:Name="KeyROut" Width="80" Height="80" BorderBrush="Black" BorderThickness="5" Background="Red">
-                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40">R</TextBlock>
-                        </Border>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Row="0" Grid.Column="0" Padding="5,0,0,0">
+                        <TextBlock x:Name="IRTitle" Foreground="White" FontSize="18">IR Temp (C)</TextBlock>
+                        <TextBlock x:Name="ObjTempOut" Foreground="White">IR:</TextBlock>
+                        <TextBlock x:Name="AmbTempOut" Foreground="White">Chip:</TextBlock>
                     </StackPanel>
-                </StackPanel>
-            </Grid>
-        </StackPanel>
-    </Grid>
+                    <StackPanel Grid.Row="0" Grid.Column="1">
+                        <TextBlock x:Name="GyroTitle" Foreground="White" FontSize="18">Gyroscope (degrees/s)</TextBlock>
+                        <TextBlock x:Name="GyroXOut" Foreground="White">X:</TextBlock>
+                        <TextBlock x:Name="GyroYOut" Foreground="White">Y:</TextBlock>
+                        <TextBlock x:Name="GyroZOut" Foreground="White">Z:</TextBlock>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="0" Padding="5,0,0,0">
+                        <TextBlock x:Name="HumidTitle" Foreground="White" FontSize="18">Humidity (%)</TextBlock>
+                        <TextBlock x:Name="HumidOut" Foreground="White">N/A</TextBlock>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="1">
+                        <TextBlock x:Name="MagnoTitle" Foreground="White" FontSize="18">Magnetometer (uT)</TextBlock>
+                        <TextBlock x:Name="MagnoXOut" Foreground="White">X:</TextBlock>
+                        <TextBlock x:Name="MagnoYOut" Foreground="White">Y:</TextBlock>
+                        <TextBlock x:Name="MagnoZOut" Foreground="White">Z:</TextBlock>
+                    </StackPanel>
+                    <StackPanel Grid.Row="2" Grid.Column="0" Padding="5,0,0,0">
+                        <TextBlock x:Name="BaroTitle" Foreground="White" FontSize="18">Barometer (hPa)</TextBlock>
+                        <TextBlock x:Name="BaroOut" Foreground="White">N/A</TextBlock>
+                    </StackPanel>
+                    <StackPanel Grid.Row="2" Grid.Column="1" Grid.RowSpan="2">
+                        <TextBlock x:Name="AccelTitle" Foreground="White" FontSize="18">Accelerometer (g)</TextBlock>
+                        <TextBlock x:Name="AccelXOut" Foreground="White">X:</TextBlock>
+                        <TextBlock x:Name="AccelYOut" Foreground="White">Y:</TextBlock>
+                        <TextBlock x:Name="AccelZOut" Foreground="White">Z:</TextBlock>
+                        <Grid Height="180" Width="180" Margin="0,10,0,0">
+                            <TextBlock Foreground="White" Canvas.ZIndex="1" Margin="0" HorizontalAlignment="Center">+Y</TextBlock>
+                            <TextBlock Foreground="White" Canvas.ZIndex="1" Margin="0" HorizontalAlignment="Right" VerticalAlignment="Center">+X</TextBlock>
+                            <Rectangle StrokeThickness="5" Width="90" Height="90" Stroke="Black"/>
+                            <Rectangle StrokeThickness="5" Width="180" Height="180" Stroke="Black"/>
+                            <Rectangle Height="10" Width="10" Fill="Red" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Rectangle.RenderTransform>
+                                    <TranslateTransform x:Name="RecTranslateTransform" />
+                                </Rectangle.RenderTransform>
+                            </Rectangle>
+                        </Grid>
+                    </StackPanel>
+                    <StackPanel Grid.Row="3" Grid.Column="0" Padding="5,0,0,0">
+                        <TextBlock x:Name="KeyTitle" Foreground="White" FontSize="18">Key Press</TextBlock>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+                            <Border x:Name="KeyLOut" Width="80" Height="80" BorderBrush="Black" BorderThickness="5" Background="Red">
+                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40">L</TextBlock>
+                            </Border>
+                            <Border x:Name="KeyROut" Width="80" Height="80" BorderBrush="Black" BorderThickness="5" Background="Red">
+                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40">R</TextBlock>
+                            </Border>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </Grid>
     </ScrollViewer>
 </Page>
