@@ -113,7 +113,10 @@ namespace DigitalSignageUAP
 
         private void CoreWindow_KeyDown(CoreWindow sender, KeyEventArgs args)
         {
-            if (AcceptUserInputTimer.IsEnabled == false && (videoInstance.Visibility == Visibility.Visible || audioInstance.Visibility == Visibility.Visible))
+            if (AcceptUserInputTimer.IsEnabled == false &&
+                (videoInstance.Visibility == Visibility.Visible ||
+                 audioInstance.Visibility == Visibility.Visible ||
+                 imageInstance.Visibility == Visibility.Visible))
             {
                 audioInstance.Visibility = Visibility.Collapsed;
                 imageInstance.Visibility = Visibility.Collapsed;
