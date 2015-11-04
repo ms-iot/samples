@@ -1,0 +1,4 @@
+LIBRARY                   IotCoreService.dll
+
+EXPORTS
+ServiceMain               

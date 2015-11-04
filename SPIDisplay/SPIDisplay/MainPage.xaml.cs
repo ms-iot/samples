@@ -39,6 +39,11 @@ namespace SPIDisplay
         private const Int32 DATA_COMMAND_PIN = 22;          /* We use GPIO 22 since it's conveniently near the SPI pins */
         private const Int32 RESET_PIN = 23;                 /* We use GPIO 23 since it's conveniently near the SPI pins */
 
+        /* Uncomment for DragonBoard 410c */
+        //private const string SPI_CONTROLLER_NAME = "SPI0";  /* For DragonBoard, use SPI0                                */
+        //private const Int32 SPI_CHIP_SELECT_LINE = 0;       /* Line 0 maps to physical pin number 12 on the DragonBoard */
+        //private const Int32 DATA_COMMAND_PIN = 12;          /* We use GPIO 12 since it's conveniently near the SPI pins */
+        //private const Int32 RESET_PIN = 69;                 /* We use GPIO 69 since it's conveniently near the SPI pins */
 
         /* This sample is intended to be used with the following OLED display: http://www.adafruit.com/product/938 */
         private const UInt32 SCREEN_WIDTH_PX = 128;                         /* Number of horizontal pixels on the display */

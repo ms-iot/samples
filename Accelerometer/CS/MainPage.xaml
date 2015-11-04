@@ -10,10 +10,14 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock x:Name="Title" HorizontalAlignment="Center" Margin="0,250,0,0" TextWrapping="Wrap" Text="ADXL345 Accelerometer Data" VerticalAlignment="Top" Height="67" Width="640" FontSize="48" TextAlignment="Center"/>
-        <TextBlock x:Name="Text_X_Axis" HorizontalAlignment="Center" Margin="0,322,0,0" TextWrapping="Wrap" Text="X Axis: Not Initialized" VerticalAlignment="Top" Width="312" FontSize="26.667" Foreground="#FFC71818" TextAlignment="Center"/>
-        <TextBlock x:Name="Text_Y_Axis" HorizontalAlignment="Center" Margin="0,362,0,0" TextWrapping="Wrap" Text="Y Axis: Not Initialized" VerticalAlignment="Top" Width="312" FontSize="26.667" Foreground="#FF14D125" TextAlignment="Center"/>
-        <TextBlock x:Name="Text_Z_Axis" HorizontalAlignment="Center" Margin="0,407,0,0" TextWrapping="Wrap" Text="Z Axis: Not Initialized" VerticalAlignment="Top" Width="312" FontSize="26.667" Foreground="#FF1352C1" TextAlignment="Center"/>
-        <TextBlock x:Name="Text_Status" HorizontalAlignment="Center" Margin="0,452,0,0" TextWrapping="Wrap" Text="Status: Initializing ..." VerticalAlignment="Top" Width="1346" FontSize="32" TextAlignment="Center"/>
+        <Viewbox>
+            <StackPanel HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center">
+                <TextBlock x:Name="Title" HorizontalAlignment="Center" Margin="0,0,0,0" TextWrapping="Wrap" Text="ADXL345 Accelerometer Data" VerticalAlignment="Top" Height="67" Width="640" FontSize="48" TextAlignment="Center"/>
+                <TextBlock x:Name="Text_X_Axis" HorizontalAlignment="Center" Margin="0,10,0,0" TextWrapping="Wrap" Text="X Axis: Not Initialized" VerticalAlignment="Top" Width="312" FontSize="26.667" Foreground="#FFC71818" TextAlignment="Center"/>
+                <TextBlock x:Name="Text_Y_Axis" HorizontalAlignment="Center" Margin="0,10,0,0" TextWrapping="Wrap" Text="Y Axis: Not Initialized" VerticalAlignment="Top" Width="312" FontSize="26.667" Foreground="#FF14D125" TextAlignment="Center"/>
+                <TextBlock x:Name="Text_Z_Axis" HorizontalAlignment="Center" Margin="0,10,0,0" TextWrapping="Wrap" Text="Z Axis: Not Initialized" VerticalAlignment="Top" Width="312" FontSize="26.667" Foreground="#FF1352C1" TextAlignment="Center"/>
+                <TextBlock x:Name="Text_Status" HorizontalAlignment="Center" Margin="0,10,0,0" TextWrapping="Wrap" Text="Status: Initializing ..." VerticalAlignment="Top" Width="1004" FontSize="32" TextAlignment="Center"/>
+            </StackPanel>
+        </Viewbox>
     </Grid>
 </Page>
