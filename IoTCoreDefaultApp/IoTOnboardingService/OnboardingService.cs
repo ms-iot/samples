@@ -329,7 +329,11 @@ namespace IoTOnboardingService
                                 break;
                             }
                     }
-                    availableNetworks.Add(listItem);
+
+                    if (availableNetworks.Find(x => x.Value1 == listItem.Value1 && x.Value2 == listItem.Value2) == null)
+                    {
+                        availableNetworks.Add(listItem);
+                    }
                 }
 
                 return OnboardingGetScanInfoResult.CreateSuccessResult(0, availableNetworks);
