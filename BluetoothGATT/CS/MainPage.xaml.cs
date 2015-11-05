@@ -2,7 +2,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using Windows.Foundation;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -17,6 +20,9 @@ using Windows.Devices.Enumeration;
 // Required APIs for buffer manipulation & async operations
 using Windows.Storage.Streams;
 using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text;
 
 namespace BluetoothGATT
 {
@@ -40,15 +46,230 @@ namespace BluetoothGATT
         const int GYROSCOPE = 5;
         const int KEYS = 6;
 
+        private DeviceWatcher deviceWatcher = null;
+
+        //Handlers for device detection
+        private TypedEventHandler<DeviceWatcher, DeviceInformation> handlerAdded = null;
+        private TypedEventHandler<DeviceWatcher, DeviceInformationUpdate> handlerUpdated = null;
+        private TypedEventHandler<DeviceWatcher, DeviceInformationUpdate> handlerRemoved = null;
+        private TypedEventHandler<DeviceWatcher, Object> handlerEnumCompleted = null;
+
+        private DeviceWatcher blewatcher = null;
+        private TypedEventHandler<DeviceWatcher, DeviceInformation> OnBLEAdded = null;
+        private TypedEventHandler<DeviceWatcher, DeviceInformationUpdate> OnBLEUpdated = null;
+        private TypedEventHandler<DeviceWatcher, DeviceInformationUpdate> OnBLERemoved = null;
+
+        TaskCompletionSource<string> providePinTaskSrc;
+        TaskCompletionSource<bool> confirmPinTaskSrc;        
+        
+        private enum MessageType { YesNoMessage, OKMessage };
+        public ObservableCollection<DeviceInformationDisplay> ResultCollection
+        {
+            get;
+            private set;
+        }        
+
         public MainPage()
         {
-            this.InitializeComponent();
+            this.InitializeComponent();     
+              
+            UserOut.Text = "Select the Sensor for Pairing";
+
+            ResultCollection = new ObservableCollection<DeviceInformationDisplay>();
+
+            DataContext = this;
+
+            //Start Watcher for pairable/paired devices
+            StartWatcher();            
+        }
+
+        ~MainPage()
+        {
+            StopWatcher();            
+        }
+
+        //Watcher for Bluetooth LE Devices based on the Protocol ID
+        private void StartWatcher()
+        {            
+            string aqsFilter;                       
+
+            ResultCollection.Clear();
+
+            // Request the IsPaired property so we can display the paired status in the UI
+            string[] requestedProperties = { "System.Devices.Aep.IsPaired" };            
+
+            //for bluetooth LE Devices
+            aqsFilter = "System.Devices.Aep.ProtocolId:=\"{bb7bb05e-5972-42b5-94fc-76eaa7084d49}\"";
+
+            deviceWatcher = DeviceInformation.CreateWatcher(
+                aqsFilter,
+                requestedProperties,
+                DeviceInformationKind.AssociationEndpoint
+                );
+
+            // Hook up handlers for the watcher events before starting the watcher
+
+            handlerAdded = new TypedEventHandler<DeviceWatcher, DeviceInformation>(async (watcher, deviceInfo) =>
+            {
+                // Since we have the collection databound to a UI element, we need to update the collection on the UI thread.
+                await this.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                {
+                    ResultCollection.Add(new DeviceInformationDisplay(deviceInfo));                    
+                });
+            });
+            deviceWatcher.Added += handlerAdded;
+
+            handlerUpdated = new TypedEventHandler<DeviceWatcher, DeviceInformationUpdate>(async (watcher, deviceInfoUpdate) =>
+            {
+                // Since we have the collection databound to a UI element, we need to update the collection on the UI thread.
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                {
+                    // Find the corresponding updated DeviceInformation in the collection and pass the update object
+                    // to the Update method of the existing DeviceInformation. This automatically updates the object
+                    // for us.
+                    foreach (DeviceInformationDisplay deviceInfoDisp in ResultCollection)
+                    {
+                        if (deviceInfoDisp.Id == deviceInfoUpdate.Id)
+                        {
+                            deviceInfoDisp.Update(deviceInfoUpdate);
+                            UpdatePairingButtons();
+                            break;
+                        }
+                    }
+                });
+            });
+            deviceWatcher.Updated += handlerUpdated;
+
+            
+
+            handlerRemoved = new TypedEventHandler<DeviceWatcher, DeviceInformationUpdate>(async (watcher, deviceInfoUpdate) =>
+            {
+                // Since we have the collection databound to a UI element, we need to update the collection on the UI thread.
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                {
+                    // Find the corresponding DeviceInformation in the collection and remove it
+                    foreach (DeviceInformationDisplay deviceInfoDisp in ResultCollection)
+                    {
+                        if (deviceInfoDisp.Id == deviceInfoUpdate.Id)
+                        {
+                            ResultCollection.Remove(deviceInfoDisp);
+                            break;
+                        }
+                    }                  
+                });
+            });
+            deviceWatcher.Removed += handlerRemoved;
+
+            handlerEnumCompleted = new TypedEventHandler<DeviceWatcher, Object>(async (watcher, obj) =>
+            {
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                {
+                    string dbg = "Found " + ResultCollection.Count.ToString() + " Bluetooth LE Devices";
+                    Debug.WriteLine(dbg);                                 
+                });
+            });
+
+            deviceWatcher.EnumerationCompleted += handlerEnumCompleted;            
+            
+            deviceWatcher.Start();            
+        }
+        
+        private void StopWatcher()
+        {
+            if (null != deviceWatcher)
+            {
+                // First unhook all event handlers except the stopped handler. This ensures our
+                // event handlers don't get called after stop, as stop won't block for any "in flight" 
+                // event handler calls.  We leave the stopped handler as it's guaranteed to only be called
+                // once and we'll use it to know when the query is completely stopped. 
+                deviceWatcher.Added -= handlerAdded;
+                deviceWatcher.Updated -= handlerUpdated;
+                deviceWatcher.Removed -= handlerRemoved;
+                deviceWatcher.EnumerationCompleted -= handlerEnumCompleted;
+
+                if (DeviceWatcherStatus.Started == deviceWatcher.Status ||
+                    DeviceWatcherStatus.EnumerationCompleted == deviceWatcher.Status)
+                {
+                    deviceWatcher.Stop();
+                }
+            }            
+        }
+
+        //Watcher for Bluetooth LE Services
+        private void StartBLEWatcher()
+        {              
+            // Hook up handlers for the watcher events before starting the watcher
+            OnBLEAdded = new TypedEventHandler<DeviceWatcher, DeviceInformation>(async (watcher, deviceInfo) =>
+            {
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Low, async () =>
+                {
+                    Debug.WriteLine("OnAdded");             
+
+                    //Initialize the sensors once the BLE services are available
+                    bool okay = await init();
+                    if (okay)
+                    {
+                        for (int i = 0; i < NUM_SENSORS; i++)
+                        {
+                            enableSensor(i);
+                        }
+                        UserOut.Text = "Sensors on!";
+                    }
+                    else
+                    {
+                        UserOut.Text = "Something went wrong!";
+                    }
+                    StopBLEWatcher();                   
+                });
+            });
+            
+
+            OnBLEUpdated = new TypedEventHandler<DeviceWatcher, DeviceInformationUpdate>(async (watcher, deviceInfoUpdate) =>
+            {
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                {
+                    Debug.WriteLine("OnUpdated");
+                    Debug.WriteLine(deviceInfoUpdate.Id);
+                });
+            });
+           
+
+            OnBLERemoved = new TypedEventHandler<DeviceWatcher, DeviceInformationUpdate>(async (watcher, deviceInfoUpdate) =>
+            {
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                {
+                    Debug.WriteLine("OnRemoved");
+
+                });
+            });
+
+            blewatcher = DeviceInformation.CreateWatcher(GattDeviceService.GetDeviceSelectorFromUuid(GattServiceUuids.GenericAccess));
+            blewatcher.Added += OnBLEAdded;
+            blewatcher.Updated += OnBLEUpdated;
+            blewatcher.Removed += OnBLERemoved;
+            blewatcher.Start();
+        }
+    
+        private void StopBLEWatcher()
+        {
+            if (null != blewatcher)
+            {                
+                blewatcher.Added -= OnBLEAdded;
+                blewatcher.Updated -= OnBLEUpdated;
+                blewatcher.Removed -= OnBLERemoved;                
+
+                if (DeviceWatcherStatus.Started == blewatcher.Status ||
+                    DeviceWatcherStatus.EnumerationCompleted == blewatcher.Status)
+                {
+                    blewatcher.Stop();
+                }
+            }
         }
 
         // Setup
         // Saves GATT service object in array
         private async Task<bool> init()
-        {
+        {  
             // Retrieve instances of the GATT services that we will use
             for (int i = 0; i < NUM_SENSORS; i++)
             {
@@ -58,24 +279,24 @@ namespace BluetoothGATT
                 if (i < 6)
                     BLE_GUID = new Guid("F000AA" + i + "0-0451-4000-B000-000000000000");
                 else
-                    BLE_GUID = new Guid("0000FFE0-0000-1000-8000-00805F9B34FB");
+                    BLE_GUID = new Guid("0000FFE0-0000-1000-8000-00805F9B34FB");                 
+
 
                 // Retrieving and saving GATT services
-                var services = await DeviceInformation.FindAllAsync(GattDeviceService.GetDeviceSelectorFromUuid(BLE_GUID), null);
+                var services = await DeviceInformation.FindAllAsync(GattDeviceService.GetDeviceSelectorFromUuid(BLE_GUID), null);                
                 if(services != null && services.Count > 0)
                 {
                     if (services[0].IsEnabled)
                     {
-                        GattDeviceService service = await GattDeviceService.FromIdAsync(services[0].Id);
-                        if(service.Device.ConnectionStatus == BluetoothConnectionStatus.Connected)
+                        GattDeviceService service = await GattDeviceService.FromIdAsync(services[0].Id);                        
+                        if(service != null)
                         {
                             serviceList[i] = service;
                         }
                         else
                         {
                             return false;
-                        }
-                             
+                        }                             
                     }
                     else
                     {
@@ -287,33 +508,260 @@ namespace BluetoothGATT
             activeCharacteristics[sensor] = null;
         }
 
-
         // ---------------------------------------------------
-        //             Button Click Handlers
+        //             Pairing Process Handlers and Functions -- Begin
         // ---------------------------------------------------
 
-        private async void StartButton_Click(object sender, RoutedEventArgs e)
+        private async void PairButton_Click(object sender, RoutedEventArgs e)
         {
-            UserOut.Text = "Setting up SensorTag";
-            bool okay = await init();
-            if (okay)
+            PairButton.IsEnabled = false;
+
+            DeviceInformationDisplay deviceInfoDisp = resultsListView.SelectedItem as DeviceInformationDisplay;
+            bool paired = true;
+            if (deviceInfoDisp.IsPaired != true)
             {
-                for (int i = 0; i < NUM_SENSORS; i++)
+                paired = false;
+                DevicePairingKinds ceremoniesSelected = DevicePairingKinds.ConfirmOnly | DevicePairingKinds.DisplayPin | DevicePairingKinds.ProvidePin | DevicePairingKinds.ConfirmPinMatch;
+                DevicePairingProtectionLevel protectionLevel = DevicePairingProtectionLevel.Default;
+
+                // Specify custom pairing with all ceremony types and protection level EncryptionAndAuthentication
+                DeviceInformationCustomPairing customPairing = deviceInfoDisp.DeviceInformation.Pairing.Custom;
+
+                customPairing.PairingRequested += PairingRequestedHandler;
+                DevicePairingResult result = await customPairing.PairAsync(ceremoniesSelected, protectionLevel);
+                customPairing.PairingRequested -= PairingRequestedHandler;
+
+                if (result.Status == DevicePairingResultStatus.Paired)
                 {
-                    enableSensor(i);
+                    paired = true;
                 }
-                UserOut.Text = "Sensors on!";
+                else
+                {
+                    UserOut.Text = "Pairing Failed " + result.Status.ToString();
+                }
+                UpdatePairingButtons();
+            }           
+
+            if (paired)
+            {
+                // device is paired, set up the sensor Tag            
+                UserOut.Text = "Setting up SensorTag";
+
+                //Start watcher for Bluetooth LE Services
+                StartBLEWatcher();
+            }
+
+            PairButton.IsEnabled = true;
+        }
+
+        private void ResultsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UpdatePairingButtons();
+        }
+
+        private async void PairingRequestedHandler(
+             DeviceInformationCustomPairing sender,
+             DevicePairingRequestedEventArgs args)
+        {
+            switch (args.PairingKind)
+            {
+                case DevicePairingKinds.ConfirmOnly:
+                    // Windows itself will pop the confirmation dialog as part of "consent" if this is running on Desktop or Mobile
+                    // If this is an App for 'Windows IoT Core' where there is no Windows Consent UX, you may want to provide your own confirmation.
+                    args.Accept();
+                    break;
+
+                case DevicePairingKinds.DisplayPin:
+                    // We just show the PIN on this side. The ceremony is actually completed when the user enters the PIN
+                    // on the target device. We automatically except here since we can't really "cancel" the operation
+                    // from this side.
+                    args.Accept();
+
+                    // No need for a deferral since we don't need any decision from the user
+                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    {
+                        ShowPairingPanel(
+                            "Please enter this PIN on the device you are pairing with: " + args.Pin,
+                            args.PairingKind);
+
+                    });
+                    break;
+
+                case DevicePairingKinds.ProvidePin:
+                    // A PIN may be shown on the target device and the user needs to enter the matching PIN on 
+                    // this Windows device. Get a deferral so we can perform the async request to the user.
+                    var collectPinDeferral = args.GetDeferral();
+
+                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                    {
+                        string pin = await GetPinFromUserAsync();
+                        if (!string.IsNullOrEmpty(pin))
+                        {
+                            args.Accept(pin);
+                        }
+
+                        collectPinDeferral.Complete();
+                    });
+                    break;
+
+                case DevicePairingKinds.ConfirmPinMatch:
+                    // We show the PIN here and the user responds with whether the PIN matches what they see
+                    // on the target device. Response comes back and we set it on the PinComparePairingRequestedData
+                    // then complete the deferral.
+                    var displayMessageDeferral = args.GetDeferral();
+
+                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                    {
+                        bool accept = await GetUserConfirmationAsync(args.Pin);
+                        if (accept)
+                        {
+                            args.Accept();
+                        }
+
+                        displayMessageDeferral.Complete();
+                    });
+                    break;
+            }
+        }
+
+        private void ShowPairingPanel(string text, DevicePairingKinds pairingKind)
+        {
+            pairingPanel.Visibility = Visibility.Collapsed;
+            pinEntryTextBox.Visibility = Visibility.Collapsed;
+            okButton.Visibility = Visibility.Collapsed;
+            yesButton.Visibility = Visibility.Collapsed;
+            noButton.Visibility = Visibility.Collapsed;
+            pairingTextBlock.Text = text;
+
+            switch (pairingKind)
+            {
+                case DevicePairingKinds.ConfirmOnly:
+                case DevicePairingKinds.DisplayPin:
+                    // Don't need any buttons
+                    break;
+                case DevicePairingKinds.ProvidePin:
+                    pinEntryTextBox.Text = "";
+                    pinEntryTextBox.Visibility = Visibility.Visible;
+                    okButton.Visibility = Visibility.Visible;
+                    break;
+                case DevicePairingKinds.ConfirmPinMatch:
+                    yesButton.Visibility = Visibility.Visible;
+                    noButton.Visibility = Visibility.Visible;
+                    break;
+            }
+
+            pairingPanel.Visibility = Visibility.Visible;
+        }
+
+        private void HidePairingPanel()
+        {
+            pairingPanel.Visibility = Visibility.Collapsed;
+            pairingTextBlock.Text = "";
+        }
+
+        private async Task<string> GetPinFromUserAsync()
+        {
+            HidePairingPanel();
+            CompleteProvidePinTask(); // Abandon any previous pin request.
+
+            ShowPairingPanel(
+                "Please enter the PIN shown on the device you're pairing with",
+                DevicePairingKinds.ProvidePin);
+
+            providePinTaskSrc = new TaskCompletionSource<string>();
+
+            return await providePinTaskSrc.Task;
+        }
+
+        // If pin is not provided, then any pending pairing request is abandoned.
+        private void CompleteProvidePinTask(string pin = null)
+        {
+            if (providePinTaskSrc != null)
+            {
+                providePinTaskSrc.SetResult(pin);
+                providePinTaskSrc = null;
+            }
+        }
+
+        private async Task<bool> GetUserConfirmationAsync(string pin)
+        {
+            HidePairingPanel();
+            CompleteConfirmPinTask(false); // Abandon any previous request.
+
+            ShowPairingPanel(
+                "Does the following PIN match the one shown on the device you are pairing?: " + pin,
+                DevicePairingKinds.ConfirmPinMatch);
+
+            confirmPinTaskSrc = new TaskCompletionSource<bool>();
+
+            return await confirmPinTaskSrc.Task;
+        }
+
+        // If pin is not provided, then any pending pairing request is abandoned.
+        private void CompleteConfirmPinTask(bool accept)
+        {
+            if (confirmPinTaskSrc != null)
+            {
+                confirmPinTaskSrc.SetResult(accept);
+                confirmPinTaskSrc = null;
+            }
+        }
+
+        private void okButton_Click(object sender, RoutedEventArgs e)
+        {
+            // OK button is only used for the ProvidePin scenario
+            CompleteProvidePinTask(pinEntryTextBox.Text);
+            HidePairingPanel();
+        }
+
+        private void yesButton_Click(object sender, RoutedEventArgs e)
+        {
+            CompleteConfirmPinTask(true);
+            HidePairingPanel();
+        }
+
+        private void noButton_Click(object sender, RoutedEventArgs e)
+        {
+            CompleteConfirmPinTask(false);
+            HidePairingPanel();
+        }
+
+        private async void UnpairButton_Click(object sender, RoutedEventArgs e)
+        {
+            DeviceInformationDisplay deviceInfoDisp = resultsListView.SelectedItem as DeviceInformationDisplay;
+
+            UnpairButton.IsEnabled = false;
+            DeviceUnpairingResult dupr = await deviceInfoDisp.DeviceInformation.Pairing.UnpairAsync();
+
+            UserOut.Text = "Unpairing result = " + dupr.Status.ToString();
+
+            UpdatePairingButtons();
+        }
+
+        private void UpdatePairingButtons()
+        {
+            DeviceInformationDisplay deviceInfoDisp = (DeviceInformationDisplay)resultsListView.SelectedItem;
+            
+
+            if (null != deviceInfoDisp &&
+                deviceInfoDisp.DeviceInformation.Pairing.IsPaired)
+            {
+                UnpairButton.IsEnabled = true;
             }
             else
             {
-                UserOut.Text = "Something went wrong!";
+                UnpairButton.IsEnabled = false;
             }
         }
+
+        // ---------------------------------------------------
+        //             Pairing Process Handlers and Functions -- End
+        // ---------------------------------------------------
 
         private void EnableButton_Click(object sender, RoutedEventArgs e)
         {
             if (SensorList.SelectedIndex >= 0)
-            { 
+            {
                 enableSensor(SensorList.SelectedIndex);
             }
         }
@@ -323,7 +771,7 @@ namespace BluetoothGATT
             if (SensorList.SelectedIndex >= 0)
             {
                 disableSensor(SensorList.SelectedIndex);
-            }
+            }            
         }
 
         // ---------------------------------------------------
@@ -510,6 +958,6 @@ namespace BluetoothGATT
                 else
                     KeyLOut.Background = new SolidColorBrush(Colors.Red);
             });
-        }
+        }      
     }
 }
