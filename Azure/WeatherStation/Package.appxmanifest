@@ -8,14 +8,14 @@
 
   <Identity
     Name="47d77310-4819-4b33-aabc-2324f2167015"
-    Publisher="CN=arturl"
+    Publisher="CN=MSFT"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="47d77310-4819-4b33-aabc-2324f2167015" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>WeatherDataReporter</DisplayName>
-    <PublisherDisplayName>arturl</PublisherDisplayName>
+    <PublisherDisplayName>Microsoft</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

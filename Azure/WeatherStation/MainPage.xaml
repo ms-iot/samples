@@ -7,7 +7,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    <Grid>
+        <Grid.Background>
+            <SolidColorBrush Color="{ThemeResource SystemBaseMediumHighColor}"/>
+        </Grid.Background>
+        <ListView x:Name="listView" Margin="20" SelectionMode="None" FontSize="18.667" Foreground="White" BorderThickness="1" HorizontalContentAlignment="Left" Background="#FFD0D0D0"/>
     </Grid>
 </Page>
