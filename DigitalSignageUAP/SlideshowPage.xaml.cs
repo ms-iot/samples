@@ -113,8 +113,14 @@ namespace DigitalSignageUAP
 
         private void CoreWindow_KeyDown(CoreWindow sender, KeyEventArgs args)
         {
-            if (AcceptUserInputTimer.IsEnabled == false)
+            if (AcceptUserInputTimer.IsEnabled == false &&
+                (videoInstance.Visibility == Visibility.Visible ||
+                 audioInstance.Visibility == Visibility.Visible ||
+                 imageInstance.Visibility == Visibility.Visible))
             {
+                audioInstance.Visibility = Visibility.Collapsed;
+                imageInstance.Visibility = Visibility.Collapsed;
+                videoInstance.Visibility = Visibility.Collapsed;
                 this.Frame.Navigate(typeof(MainPage));
             }
         }
@@ -137,6 +143,9 @@ namespace DigitalSignageUAP
         {
             if (AcceptUserInputTimer.IsEnabled == false)
             {
+                audioInstance.Visibility = Visibility.Collapsed;
+                imageInstance.Visibility = Visibility.Collapsed;
+                videoInstance.Visibility = Visibility.Collapsed;
                 this.Frame.Navigate(typeof(MainPage));
             }
         }
@@ -153,6 +162,9 @@ namespace DigitalSignageUAP
         /// <param name="e"></param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            videoInstance.Visibility = Visibility.Visible;
+            audioInstance.Visibility = Visibility.Visible;
+            imageInstance.Visibility = Visibility.Visible;
             base.OnNavigatedTo(e);
         }
 
@@ -171,6 +183,9 @@ namespace DigitalSignageUAP
         /// <param name="command"></param>
         void InvalidConfigDialogCommandInvokeHandler(IUICommand command)
         {
+            audioInstance.Visibility = Visibility.Collapsed;
+            imageInstance.Visibility = Visibility.Collapsed;
+            videoInstance.Visibility = Visibility.Collapsed;
             this.Frame.Navigate(typeof(MainPage));
         }
 
@@ -220,8 +235,9 @@ namespace DigitalSignageUAP
                 {
                     audioInstance.Pause();
                     videoInstance.Source = new Uri(currentDO.file.Path);
-                    videoInstance.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                    audioInstance.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                     imageInstance.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    videoInstance.Visibility = Windows.UI.Xaml.Visibility.Visible;
                     videoInstance.Play();
                 }
             }
@@ -240,11 +256,15 @@ namespace DigitalSignageUAP
 
             if (audioInstance.CurrentState == MediaElementState.Paused)
             {
+                videoInstance.Visibility = Visibility.Collapsed;
+                audioInstance.Visibility = Visibility.Visible;
                 audioInstance.Play();
             }
             else if (audioInstance.CurrentState != MediaElementState.Playing)
             {
                 audioInstance.Source = new System.Uri(((DisplayObject)audioList[currentIndexOfAudio]).file.Path);
+                videoInstance.Visibility = Visibility.Collapsed;
+                audioInstance.Visibility = Visibility.Visible;
                 audioInstance.Play();
                 currentIndexOfAudio = (++currentIndexOfAudio) % audioList.Count;
             }

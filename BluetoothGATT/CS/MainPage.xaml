@@ -8,92 +8,291 @@
     mc:Ignorable="d"
     Background="#FF1E1D42">
 
-    <Grid Background="#FF1E1D42" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <StackPanel Background="#FF1E1D42">
-            <TextBlock FontSize="35" Foreground="White" Margin="10" Text="BLE GATT Sample"/>
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                <Button x:Name="StartButton" Content="Start" Background="#CCFFFFFF" Click="StartButton_Click" Margin="10,0,0,0"/>
-                <TextBlock x:Name="UserOut" Foreground="White" VerticalAlignment="Center" Margin="10,0,0,0">Press start to connect</TextBlock>
-            </StackPanel>
-            
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                <ComboBox x:Name="SensorList" ItemsSource="{Binding}" PlaceholderText="Select a Sensor" Margin="10,0,0,0">
-                    <ComboBoxItem>IR Temperature</ComboBoxItem>
-                    <ComboBoxItem>Accelerometer</ComboBoxItem>
-                    <ComboBoxItem>Humidity</ComboBoxItem>
-                    <ComboBoxItem>Magnetometer</ComboBoxItem>
-                    <ComboBoxItem>Barometer</ComboBoxItem>
-                    <ComboBoxItem>Gyroscope</ComboBoxItem>
-                    <ComboBoxItem>Key Press</ComboBoxItem>
-                </ComboBox>
-                <Button x:Name="EnableButton" Content="Enable" Background="#CCFFFFFF" Click="EnableButton_Click" Margin="10,0,0,0"/>
-                <Button x:Name="DisableButton" Content="Disable" Background="#CCFFFFFF" Click="DisableButton_Click" Margin="10,0,0,0"/>
-            </StackPanel>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="100"/>
-                    <RowDefinition Height="100"/>
-                    <RowDefinition Height="100"/>
-                    <RowDefinition Height="180"/>
-                </Grid.RowDefinitions>
+    <Page.Resources>
+        <DataTemplate x:Key="ResultsListViewTemplate">
+            <Grid Margin="5">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="180"/>
-                    <ColumnDefinition Width="180"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*" MinWidth="100"/>
                 </Grid.ColumnDefinitions>
-                <StackPanel Grid.Row="0" Grid.Column="0" Padding="5,0,0,0">
-                    <TextBlock x:Name="IRTitle" Foreground="White" FontSize="18">IR Temp (C)</TextBlock>
-                    <TextBlock x:Name="ObjTempOut" Foreground="White">IR:</TextBlock>
-                    <TextBlock x:Name="AmbTempOut" Foreground="White">Chip:</TextBlock>
+                <Border Grid.Column="0" Height="40" Width="40" Margin="5" VerticalAlignment="Top">
+                    <Image Source="{Binding Path=GlyphBitmapImage}"
+                           Stretch="UniformToFill"/>
+                </Border>
+                <Border Grid.Column="1" Margin="5">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Name:" Margin="0,0,5,0"/>
+                            <TextBlock Text="{Binding Path=Name}" FontWeight="Bold" TextWrapping="WrapWholeWords"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Id:" Margin="0,0,5,0"/>
+                            <TextBlock Text="{Binding Path=Id}" TextWrapping="Wrap"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="CanPair:" Margin="0,0,5,0"/>
+                            <TextBlock Text="{Binding Path=CanPair}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="IsPaired:" Margin="0,0,5,0"/>
+                            <TextBlock Text="{Binding Path=IsPaired}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </DataTemplate>
+        <Style x:Key="ButtonStyleGATT" TargetType="Button">
+            <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundBaseLowBrush}"/>
+            <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
+            <Setter Property="BorderBrush" Value="{ThemeResource SystemControlForegroundTransparentBrush}"/>
+            <Setter Property="BorderThickness" Value="{ThemeResource ButtonBorderThemeThickness}"/>
+            <Setter Property="Padding" Value="8,4,8,4"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
+            <Setter Property="UseSystemFocusVisuals" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid x:Name="RootGrid" Background="{TemplateBinding Background}">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal">
+                                        <VisualState.Setters>
+                                            <Setter Target="ContentPresenter.(ContentPresenter.BorderBrush)">
+                                                <Setter.Value>
+                                                    <SolidColorBrush Color="White"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Target="ContentPresenter.(ContentPresenter.Foreground)">
+                                                <Setter.Value>
+                                                    <SolidColorBrush Color="White"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Target="ContentPresenter.(ContentPresenter.Background)">
+                                                <Setter.Value>
+                                                    <SolidColorBrush Color="#FF242272"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </VisualState.Setters>
+                                        <Storyboard>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="PointerOver">
+                                        <VisualState.Setters>
+                                            <Setter Target="ContentPresenter.(ContentPresenter.Background)">
+                                                <Setter.Value>
+                                                    <SolidColorBrush Color="#FF4F4E7A"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Target="ContentPresenter.(ContentPresenter.BorderBrush)">
+                                                <Setter.Value>
+                                                    <SolidColorBrush Color="White"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </VisualState.Setters>
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <SolidColorBrush Color="White"/>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <VisualState.Setters>
+                                            <Setter Target="ContentPresenter.(ContentPresenter.Background)">
+                                                <Setter.Value>
+                                                    <SolidColorBrush Color="#FF59578B"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Target="ContentPresenter.(ContentPresenter.BorderBrush)">
+                                                <Setter.Value>
+                                                    <SolidColorBrush Color="White"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </VisualState.Setters>
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="RootGrid">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <SolidColorBrush Color="White"/>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <PointerDownThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled">
+                                        <VisualState.Setters>
+                                            <Setter Target="ContentPresenter.(ContentPresenter.Background)">
+                                                <Setter.Value>
+                                                    <SolidColorBrush Color="#FF1E1D42"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Target="ContentPresenter.(ContentPresenter.BorderBrush)">
+                                                <Setter.Value>
+                                                    <SolidColorBrush Color="White"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </VisualState.Setters>
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="RootGrid">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlBackgroundBaseLowBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <SolidColorBrush Color="#FF9B9B9B"/>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <ContentPresenter x:Name="ContentPresenter" AutomationProperties.AccessibilityView="Raw" BorderThickness="{TemplateBinding BorderThickness}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" Content="{TemplateBinding Content}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <ScrollViewer VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto">
+        <Grid Background="#FF1E1D42" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="7*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Background="#FF1E1D42" Grid.ColumnSpan="2">
+                <TextBlock FontSize="35" Foreground="White" Margin="10" Text="BLE GATT Sample"/>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <Button x:Name="PairButton" Content="Pair and Connect" Background="#CCFFFFFF" Click="PairButton_Click" Margin="10,0,0,0" Style="{StaticResource ButtonStyleGATT}" IsEnabled="True"></Button>
+                    <Button x:Name="UnpairButton" Content="Unpair Selected Device" Background="#CCFFFFFF" Click="UnpairButton_Click" Margin="10,0,0,0" Style="{StaticResource ButtonStyleGATT}" IsEnabled="False"></Button>                    
                 </StackPanel>
-                <StackPanel Grid.Row="0" Grid.Column="1">
-                    <TextBlock x:Name="GyroTitle" Foreground="White" FontSize="18">Gyroscope (degrees/s)</TextBlock>
-                    <TextBlock x:Name="GyroXOut" Foreground="White">X:</TextBlock>
-                    <TextBlock x:Name="GyroYOut" Foreground="White">Y:</TextBlock>
-                    <TextBlock x:Name="GyroZOut" Foreground="White">Z:</TextBlock>
+
+                <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Border x:Name="pairingPanel" BorderThickness="1" BorderBrush="AntiqueWhite" Margin="10,0,0,10" Visibility="Collapsed">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock x:Name="pairingTextBlock" Foreground ="White" Margin="0,0,0,2" TextWrapping="WrapWholeWords"/>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBox x:Name="pinEntryTextBox" Foreground ="White" MinWidth="100" Margin="2" Visibility="Collapsed" />
+                                <Button x:Name="okButton"  Style="{StaticResource ButtonStyleGATT}" Margin="2" Click="okButton_Click" Visibility="Collapsed">OK</Button>
+                                <Button x:Name="yesButton" Style="{StaticResource ButtonStyleGATT}" Margin="2" Click="yesButton_Click" Visibility="Collapsed">Yes</Button>
+                                <Button x:Name="noButton"  Style="{StaticResource ButtonStyleGATT}" Margin="2" Click="noButton_Click" Visibility="Collapsed">No</Button>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
                 </StackPanel>
-                <StackPanel Grid.Row="1" Grid.Column="0" Padding="5,0,0,0">
-                    <TextBlock x:Name="HumidTitle" Foreground="White" FontSize="18">Humidity (%)</TextBlock>
-                    <TextBlock x:Name="HumidOut" Foreground="White">N/A</TextBlock>
-                </StackPanel>
-                <StackPanel Grid.Row="1" Grid.Column="1">
-                    <TextBlock x:Name="MagnoTitle" Foreground="White" FontSize="18">Magnetometer (uT)</TextBlock>
-                    <TextBlock x:Name="MagnoXOut" Foreground="White">X:</TextBlock>
-                    <TextBlock x:Name="MagnoYOut" Foreground="White">Y:</TextBlock>
-                    <TextBlock x:Name="MagnoZOut" Foreground="White">Z:</TextBlock>
-                </StackPanel>
-                <StackPanel Grid.Row="2" Grid.Column="0" Padding="5,0,0,0">
-                    <TextBlock x:Name="BaroTitle" Foreground="White" FontSize="18">Barometer (hPa)</TextBlock>
-                    <TextBlock x:Name="BaroOut" Foreground="White">N/A</TextBlock>
-                </StackPanel>
-                <StackPanel Grid.Row="2" Grid.Column="1" Grid.RowSpan="2">
-                    <TextBlock x:Name="AccelTitle" Foreground="White" FontSize="18">Accelerometer (g)</TextBlock>
-                    <TextBlock x:Name="AccelXOut" Foreground="White">X:</TextBlock>
-                    <TextBlock x:Name="AccelYOut" Foreground="White">Y:</TextBlock>
-                    <TextBlock x:Name="AccelZOut" Foreground="White">Z:</TextBlock>
-                    <Grid Height="180" Width="180" Margin="0,10,0,0">
-                        <TextBlock Foreground="White" Canvas.ZIndex="1" Margin="0" HorizontalAlignment="Center">+Y</TextBlock>
-                        <TextBlock Foreground="White" Canvas.ZIndex="1" Margin="0" HorizontalAlignment="Right" VerticalAlignment="Center">+X</TextBlock>
-                        <Rectangle StrokeThickness="5" Width="90" Height="90" Stroke="Black"/>
-                        <Rectangle StrokeThickness="5" Width="180" Height="180" Stroke="Black"/>
-                        <Rectangle Height="10" Width="10" Fill="Red" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Rectangle.RenderTransform>
-                                <TranslateTransform x:Name="RecTranslateTransform" />
-                            </Rectangle.RenderTransform>
-                        </Rectangle>
-                    </Grid>
-                </StackPanel>
-                <StackPanel Grid.Row="3" Grid.Column="0" Padding="5,0,0,0">
-                    <TextBlock x:Name="KeyTitle" Foreground="White" FontSize="18">Key Press</TextBlock>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
-                        <Border x:Name="KeyLOut" Width="80" Height="80" BorderBrush="Black" BorderThickness="5" Background="Red">
-                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40">L</TextBlock>
-                        </Border>
-                        <Border x:Name="KeyROut" Width="80" Height="80" BorderBrush="Black" BorderThickness="5" Background="Red">
-                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40">R</TextBlock>
+
+
+                <ScrollViewer VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto" Height="80" Background="#FFF3E4E4" Margin="10,0,10,10">
+                    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,15,0">
+                        <Border BorderBrush="AntiqueWhite" BorderThickness="1">
+                            <ListView x:Name="resultsListView"
+                				ItemTemplate="{StaticResource ResultsListViewTemplate}"
+                				ItemsSource="{Binding ResultCollection}"
+                				SelectionChanged="ResultsListView_SelectionChanged" >
+                            </ListView>
                         </Border>
                     </StackPanel>
+                </ScrollViewer>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <TextBlock  x:Name="UserOutLabel" Foreground="White" VerticalAlignment="Center" Margin="10,0,0,0">Message:</TextBlock>
+                    <TextBlock x:Name="UserOut" Foreground="White" VerticalAlignment="Center" Margin="30,0,0,0">
+                	<Run Text="Click to Pair and Connect"/>
+                    </TextBlock>
                 </StackPanel>
-            </Grid>
-        </StackPanel>
-    </Grid>
+
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <ComboBox x:Name="SensorList" ItemsSource="{Binding}" PlaceholderText="Select a Sensor" Margin="10,0,0,0">
+                        <ComboBoxItem>IR Temperature</ComboBoxItem>
+                        <ComboBoxItem>Accelerometer</ComboBoxItem>
+                        <ComboBoxItem>Humidity</ComboBoxItem>
+                        <ComboBoxItem>Magnetometer</ComboBoxItem>
+                        <ComboBoxItem>Barometer</ComboBoxItem>
+                        <ComboBoxItem>Gyroscope</ComboBoxItem>
+                        <ComboBoxItem>Key Press</ComboBoxItem>
+                    </ComboBox>
+                    <Button x:Name="EnableButton" Content="Enable" Background="#CCFFFFFF" Click="EnableButton_Click" Margin="10,0,0,0"/>
+                    <Button x:Name="DisableButton" Content="Disable" Background="#CCFFFFFF" Click="DisableButton_Click" Margin="10,0,0,0"/>
+                </StackPanel>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Row="0" Grid.Column="0" Padding="5,0,0,0">
+                        <TextBlock x:Name="IRTitle" Foreground="White" FontSize="18">IR Temp (C)</TextBlock>
+                        <TextBlock x:Name="ObjTempOut" Foreground="White">IR:</TextBlock>
+                        <TextBlock x:Name="AmbTempOut" Foreground="White">Chip:</TextBlock>
+                    </StackPanel>
+                    <StackPanel Grid.Row="0" Grid.Column="1">
+                        <TextBlock x:Name="GyroTitle" Foreground="White" FontSize="18">Gyroscope (degrees/s)</TextBlock>
+                        <TextBlock x:Name="GyroXOut" Foreground="White">X:</TextBlock>
+                        <TextBlock x:Name="GyroYOut" Foreground="White">Y:</TextBlock>
+                        <TextBlock x:Name="GyroZOut" Foreground="White">Z:</TextBlock>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="0" Padding="5,0,0,0">
+                        <TextBlock x:Name="HumidTitle" Foreground="White" FontSize="18">Humidity (%)</TextBlock>
+                        <TextBlock x:Name="HumidOut" Foreground="White">N/A</TextBlock>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="1">
+                        <TextBlock x:Name="MagnoTitle" Foreground="White" FontSize="18">Magnetometer (uT)</TextBlock>
+                        <TextBlock x:Name="MagnoXOut" Foreground="White">X:</TextBlock>
+                        <TextBlock x:Name="MagnoYOut" Foreground="White">Y:</TextBlock>
+                        <TextBlock x:Name="MagnoZOut" Foreground="White">Z:</TextBlock>
+                    </StackPanel>
+                    <StackPanel Grid.Row="2" Grid.Column="0" Padding="5,0,0,0">
+                        <TextBlock x:Name="BaroTitle" Foreground="White" FontSize="18">Barometer (hPa)</TextBlock>
+                        <TextBlock x:Name="BaroOut" Foreground="White">N/A</TextBlock>
+                    </StackPanel>
+                    <StackPanel Grid.Row="2" Grid.Column="1" Grid.RowSpan="2">
+                        <TextBlock x:Name="AccelTitle" Foreground="White" FontSize="18">Accelerometer (g)</TextBlock>
+                        <TextBlock x:Name="AccelXOut" Foreground="White">X:</TextBlock>
+                        <TextBlock x:Name="AccelYOut" Foreground="White">Y:</TextBlock>
+                        <TextBlock x:Name="AccelZOut" Foreground="White">Z:</TextBlock>
+                        <Grid Height="180" Width="180" Margin="0,10,0,0">
+                            <TextBlock Foreground="White" Canvas.ZIndex="1" Margin="0" HorizontalAlignment="Center">+Y</TextBlock>
+                            <TextBlock Foreground="White" Canvas.ZIndex="1" Margin="0" HorizontalAlignment="Right" VerticalAlignment="Center">+X</TextBlock>
+                            <Rectangle StrokeThickness="5" Width="90" Height="90" Stroke="Black"/>
+                            <Rectangle StrokeThickness="5" Width="180" Height="180" Stroke="Black"/>
+                            <Rectangle Height="10" Width="10" Fill="Red" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Rectangle.RenderTransform>
+                                    <TranslateTransform x:Name="RecTranslateTransform" />
+                                </Rectangle.RenderTransform>
+                            </Rectangle>
+                        </Grid>
+                    </StackPanel>
+                    <StackPanel Grid.Row="3" Grid.Column="0" Padding="5,0,0,0">
+                        <TextBlock x:Name="KeyTitle" Foreground="White" FontSize="18">Key Press</TextBlock>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+                            <Border x:Name="KeyLOut" Width="80" Height="80" BorderBrush="Black" BorderThickness="5" Background="Red">
+                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40">L</TextBlock>
+                            </Border>
+                            <Border x:Name="KeyROut" Width="80" Height="80" BorderBrush="Black" BorderThickness="5" Background="Red">
+                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40">R</TextBlock>
+                            </Border>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
 </Page>

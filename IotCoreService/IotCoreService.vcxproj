@@ -27,7 +27,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{243E8ED0-58CF-4322-BB7D-D52E70352608}</ProjectGuid>
+    <ProjectGuid>{4250D2C7-6DA9-455D-BCD9-A7FBC1C234C3}</ProjectGuid>
     <SccProjectName>SAK</SccProjectName>
     <SccAuxPath>SAK</SccAuxPath>
     <SccLocalPath>SAK</SccLocalPath>
