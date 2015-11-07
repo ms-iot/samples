@@ -26,7 +26,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" 
-    DataContext="{Binding RelativeSource={RelativeSource Self}}" Width="1680" Height="1050">
+    DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="0,0,0,-70">
         <Grid.ColumnDefinitions>
