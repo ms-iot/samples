@@ -1,0 +1,39 @@
+﻿<Page
+    x:Class="ProcessLauncherSample.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0">Command:</TextBlock>
+            <TextBox Grid.Row="1" HorizontalAlignment="Stretch" Name="cmd" Text="SampleConsoleApplication.exe"></TextBox>
+            <TextBlock Grid.Row="2">Arguments:</TextBlock>
+            <TextBox Grid.Row="3" HorizontalAlignment="Stretch" Name="args" Text="-Arg1 Arg2"></TextBox>
+            <Button Grid.Row="4" Click="Button_Click"  HorizontalAlignment="Stretch">Run Command</Button>
+            <TextBox Grid.Row="5" HorizontalAlignment="Stretch" Name="ProcessExitCode" IsReadOnly="True"></TextBox>
+            <TextBlock Grid.Row="6">Standard Output</TextBlock>
+            <ScrollViewer Grid.Row="7" HorizontalAlignment="Stretch">
+                <TextBox Name="StdOutputText" TextWrapping="NoWrap" IsReadOnly="True" AcceptsReturn="True" FontFamily="Courier New" FontSize="12" Background="LightGray" Foreground="DarkBlue"></TextBox>
+            </ScrollViewer>
+            <TextBlock Grid.Row="8">Standard Error</TextBlock>
+            <ScrollViewer Grid.Row="9" HorizontalAlignment="Stretch">
+                <TextBox Name="StdErrorText" TextWrapping="NoWrap" IsReadOnly="True" AcceptsReturn="True" FontFamily="Courier New" FontSize="12" Background="LightGray" Foreground="Red"></TextBox>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</Page>
