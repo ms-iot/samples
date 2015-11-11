@@ -163,16 +163,17 @@ Concurrency::task<void> MainPage::ReadAsync(Concurrency::cancellation_token canc
         {
             rcvdText->Text = _dataReaderObject->ReadString(bytesRead);
             status->Text = "bytes read successfully!";
-
-            /*
-            Dynamically generate repeating tasks via "recursive" task creation - "recursively" call Listen() at the end of the continuation chain.
-            The "recursive" call is not true recursion. It will not accumulate stack since every recursive is made in a new task.
-            */
-
-            // start listening again after done with this chunk of incoming data
-            Listen();
         }
-    });
+
+
+        /*
+        Dynamically generate repeating tasks via "recursive" task creation - "recursively" call Listen() at the end of the continuation chain.
+        The "recursive" call is not true recursion. It will not accumulate stack since every recursive is made in a new task.
+        */
+
+        // start listening again after done with this chunk of incoming data
+        Listen();
+    } );
 }
 
 /// <summary>
