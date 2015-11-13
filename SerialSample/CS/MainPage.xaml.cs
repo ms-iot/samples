@@ -97,6 +97,7 @@ namespace SerialSample
                 serialPort.Parity = SerialParity.None;
                 serialPort.StopBits = SerialStopBitCount.One;
                 serialPort.DataBits = 8;
+                serialPort.Handshake = SerialHandshake.None;
 
                 // Display configured settings
                 status.Text = "Serial port configured successfully: ";
