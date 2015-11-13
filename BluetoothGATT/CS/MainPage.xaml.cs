@@ -48,6 +48,8 @@ namespace BluetoothGATT
 
         private DeviceWatcher deviceWatcher = null;
 
+        private DeviceInformationDisplay deviceInfoConnected = null;
+
         //Handlers for device detection
         private TypedEventHandler<DeviceWatcher, DeviceInformation> handlerAdded = null;
         private TypedEventHandler<DeviceWatcher, DeviceInformationUpdate> handlerUpdated = null;
@@ -214,6 +216,8 @@ namespace BluetoothGATT
                             enableSensor(i);
                         }
                         UserOut.Text = "Sensors on!";
+                        DisableButton.IsEnabled = true;
+                        EnableButton.IsEnabled = true;
                     }
                     else
                     {
@@ -514,44 +518,48 @@ namespace BluetoothGATT
 
         private async void PairButton_Click(object sender, RoutedEventArgs e)
         {
-            PairButton.IsEnabled = false;
-
             DeviceInformationDisplay deviceInfoDisp = resultsListView.SelectedItem as DeviceInformationDisplay;
-            bool paired = true;
-            if (deviceInfoDisp.IsPaired != true)
+            
+            if (deviceInfoDisp != null)
             {
-                paired = false;
-                DevicePairingKinds ceremoniesSelected = DevicePairingKinds.ConfirmOnly | DevicePairingKinds.DisplayPin | DevicePairingKinds.ProvidePin | DevicePairingKinds.ConfirmPinMatch;
-                DevicePairingProtectionLevel protectionLevel = DevicePairingProtectionLevel.Default;
-
-                // Specify custom pairing with all ceremony types and protection level EncryptionAndAuthentication
-                DeviceInformationCustomPairing customPairing = deviceInfoDisp.DeviceInformation.Pairing.Custom;
-
-                customPairing.PairingRequested += PairingRequestedHandler;
-                DevicePairingResult result = await customPairing.PairAsync(ceremoniesSelected, protectionLevel);
-                customPairing.PairingRequested -= PairingRequestedHandler;
-
-                if (result.Status == DevicePairingResultStatus.Paired)
+                PairButton.IsEnabled = false;
+                bool paired = true;
+                if (deviceInfoDisp.IsPaired != true)
                 {
-                    paired = true;
+                    paired = false;
+                    DevicePairingKinds ceremoniesSelected = DevicePairingKinds.ConfirmOnly | DevicePairingKinds.DisplayPin | DevicePairingKinds.ProvidePin | DevicePairingKinds.ConfirmPinMatch;
+                    DevicePairingProtectionLevel protectionLevel = DevicePairingProtectionLevel.Default;
+
+                    // Specify custom pairing with all ceremony types and protection level EncryptionAndAuthentication
+                    DeviceInformationCustomPairing customPairing = deviceInfoDisp.DeviceInformation.Pairing.Custom;
+
+                    customPairing.PairingRequested += PairingRequestedHandler;
+                    DevicePairingResult result = await customPairing.PairAsync(ceremoniesSelected, protectionLevel);
+                    customPairing.PairingRequested -= PairingRequestedHandler;
+
+                    if (result.Status == DevicePairingResultStatus.Paired)
+                    {
+                        paired = true;
+                    }
+                    else
+                    {
+                        UserOut.Text = "Pairing Failed " + result.Status.ToString();
+                    }
+                    UpdatePairingButtons();
                 }
-                else
+
+                if (paired)
                 {
-                    UserOut.Text = "Pairing Failed " + result.Status.ToString();
+                    // device is paired, set up the sensor Tag            
+                    UserOut.Text = "Setting up SensorTag";
+
+                    deviceInfoConnected = deviceInfoDisp;
+
+                    //Start watcher for Bluetooth LE Services
+                    StartBLEWatcher();
                 }
-                UpdatePairingButtons();
-            }           
-
-            if (paired)
-            {
-                // device is paired, set up the sensor Tag            
-                UserOut.Text = "Setting up SensorTag";
-
-                //Start watcher for Bluetooth LE Services
-                StartBLEWatcher();
-            }
-
-            PairButton.IsEnabled = true;
+                PairButton.IsEnabled = true;
+            }            
         }
 
         private void ResultsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -735,13 +743,19 @@ namespace BluetoothGATT
 
             UserOut.Text = "Unpairing result = " + dupr.Status.ToString();
 
+            if (deviceInfoConnected == deviceInfoDisp)
+            {
+                EnableButton.IsEnabled = false;
+                DisableButton.IsEnabled = false;
+            }
+
             UpdatePairingButtons();
+            
         }
 
         private void UpdatePairingButtons()
         {
-            DeviceInformationDisplay deviceInfoDisp = (DeviceInformationDisplay)resultsListView.SelectedItem;
-            
+            DeviceInformationDisplay deviceInfoDisp = (DeviceInformationDisplay)resultsListView.SelectedItem;            
 
             if (null != deviceInfoDisp &&
                 deviceInfoDisp.DeviceInformation.Pairing.IsPaired)
