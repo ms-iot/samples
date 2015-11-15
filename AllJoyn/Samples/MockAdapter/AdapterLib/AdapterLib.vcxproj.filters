@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="MockDevices.cpp" />
+    <ClCompile Include="AdapterConfig.cpp" />
+    <ClCompile Include="MockAdapter.cpp" />
+    <ClCompile Include="MockAdapterDevice.cpp" />
+    <ClCompile Include="ControlPanelHandlers.cpp" />
+    <ClCompile Include="MockLampDevice.cpp" />
+    <ClCompile Include="LSFHandler.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="BfiDefinitions.h" />
+    <ClInclude Include="MockDevices.h" />
+    <ClInclude Include="AdapterConfig.h" />
+    <ClInclude Include="MockAdapter.h" />
+    <ClInclude Include="MockAdapterDevice.h" />
+    <ClInclude Include="ControlPanelHandlers.h" />
+    <ClInclude Include="MockLampConsts.h" />
+    <ClInclude Include="LSFHandler.h" />
+    <ClInclude Include="MockLampDevice.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="DimmableLight.jpg" />
+    <Image Include="Light.bmp" />
+    <Image Include="Thermometer.png" />
+  </ItemGroup>
+</Project>

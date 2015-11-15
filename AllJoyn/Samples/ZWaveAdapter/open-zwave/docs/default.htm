@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Introduction</title>
+<link href="images+css/OpenZWave.css" rel="stylesheet" type="text/css">
+</head>
+<body bgcolor="#FFFFFF">
+<div class=Section1>
+<div id="Main">
+  <table width="700" height="100" border=0 cellpadding=0 cellspacing=0>
+    <tr>
+      <td class=Heading1 width=250 valign=top><img src="images+css/image003.gif" alt=Logo width=134 height=55> </td>
+      <td class=Heading1 width=445 valign=top> Introduction </td>
+    </tr>
+  </table>
+  <table width="700" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td><p class="Heading2"><strong>Purpose</strong></p>
+        <p class=BodyText>OpenZWave is a library which provides an API for applications to access and control a Z-Wave controller connected to the PC via a serial or HID connection.<br />
+          <br />
+</p></td>
+    </tr>
+  </table>
+  <table width="700" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td><p class="Heading2">Documentation</p>
+        <p class="BodyText">Although the project is still in too early a stage to produce user documentation, the source code for OpenZWave and OpenZWaveDotNet contains comments that can be converted into HTML documentation.</p>
+        <p class="BodyText">Instructions for how to generate this documentation, as well as other links to information that may be useful to developers using OpenZWave may be found here: <a href="general/Index.htm">OpenZWave Documents</a><br />
+          <br />
+        </p>
+      </td>
+    </tr>
+  </table>
+  <table width="700" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td><p class="Heading2">Project Directory Structure</p></td>
+    </tr>
+  </table>
+  <table width="700" border=0 cellpadding=0 cellspacing=0>
+    <tr>
+      <td valign=top class="TableText">&nbsp;</td>
+      <td valign=top class="TableText">&nbsp;</td>
+    </tr>
+    <tr>
+      <td width=151 valign=top class="TableText">config</td>
+      <td width=432 valign=top class="TableText">XML files that provide device- and manufacturer-specific information, as well as the Z-Wave command class codes.</td>
+    </tr>
+    <tr>
+      <td width=151 valign=top class="TableText">cpp</td>
+      <td width=432 valign=top class="TableText">The OpenZWave library project.</td>
+    </tr>
+    <tr>
+      <td width=151 valign=top class="TableText">&nbsp;&nbsp;cpp/build</td>
+      <td width=432 valign=top class="TableText">Makefiles and Visual Studio project/solution files for building the library under linux, Mac and Windows (VS2008 and VS2010).</td>
+    </tr>
+    <tr>
+      <td width=151 valign=top class="TableText">&nbsp;&nbsp;cpp/examples</td>
+      <td width=432 valign=top class="TableText">A minimal console application (MinOZW) that can be built under linux, Mac and Windows. It is a useful example of how to start up the library and can be used to generate a log file (OZWlog.txt) to diagnose startup or other problems with the library and/or Z-Wave devices.</td>
+    </tr>
+    <tr>
+      <td width=151 valign=top class="TableText">&nbsp;&nbsp;cpp/hidapi</td>
+      <td width=432 valign=top class="TableText">Files related to implementation of a &quot;Human Interface Device&quot; (HID) connection between the PC and the Z-Wave controller. While many controllers use a serial interface, others (the ThinkStick, for example) use HID via USB.</td>
+    </tr>
+    <tr>
+      <td width=151 valign=top class="TableText">&nbsp;&nbsp;cpp/lib</td>
+      <td width=432 valign=top class="TableText">Essentially empty.</td>
+    </tr>
+    <tr>
+      <td width=151 valign=top class="TableText">&nbsp;&nbsp;cpp/src</td>
+      <td width=432 valign=top class="TableText">The source code for the OpenZWave Library. The top-level code is in this directory; subdirectories contain files to implement the command classes, the value classes and platform-specific code (linux, Mac and Windows).</td>
+    </tr>
+    <tr>
+      <td width=151 valign=top class="TableText">&nbsp;&nbsp;cpp/tinyxml</td>
+      <td width=432 valign=top class="TableText">The TinyXML class code. TinyXML is used to read and write XML files for persistent storage.</td>
+    </tr>
+    <tr>
+      <td width=151 valign=top class="TableText">documents</td>
+      <td width=432 valign=top class="TableText">Draft documentation for the library and example applications.</td>
+    </tr>
+    <tr>
+      <td width=151 valign=top class="TableText">dotnet</td>
+      <td width=432 valign=top class="TableText">A .NET wrapper for the OpenZWave library.</td>
+    </tr>
+    <tr>
+      <td width=151 valign=top class="TableText">&nbsp;&nbsp;dotnet/build</td>
+      <td width=432 valign=top class="TableText">Project/Solution files for building OpenZWaveDotNet under VS2008 and VS2010.</td>
+    </tr>
+    <tr>
+      <td width=151 valign=top class="TableText">&nbsp;&nbsp;dotnet/examples</td>
+      <td width=432 valign=top class="TableText">Code for OZWForm, a .NET application that demonstrates use of OpenZWaveDotNet to connect to a controller, read information about nodes, process notifications, etc.</td>
+    </tr>
+    <tr>
+      <td width=151 valign=top class="TableText">&nbsp;&nbsp;dotnet/src</td>
+      <td width=432 valign=top class="TableText">The OpenZWaveDotNet wrapper code.</td>
+    </tr>
+    <tr>
+      <td width=151 valign=top class="TableText">license</td>
+      <td width=432 valign=top class="TableText">License documents.</td>
+    </tr>
+  </table>
+  </div><!--Main -->
+  <div id="Footer" class="FooterText"><br />
+<br />
+
+   DRAFT&nbsp;&nbsp;&nbsp;Last updated 2011/02/17
+  </div><!--footer -->
+</div>
+</body>
+</html>

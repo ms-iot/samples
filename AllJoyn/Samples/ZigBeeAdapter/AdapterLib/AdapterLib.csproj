@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{5254F40C-CD4C-48F9-9C55-8040F071F1B4}</ProjectGuid>
+    <OutputType>winmdobj</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AdapterLib</RootNamespace>
+    <AssemblyName>AdapterLib</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <AllowCrossPlatformRetargeting>false</AllowCrossPlatformRetargeting>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <PlatformTarget>ARM</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <PlatformTarget>ARM</PlatformTarget>
+    <OutputPath>bin\ARM\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <None Include="project.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdapterHelper.cs" />
+    <Compile Include="AdapterSignal.cs" />
+    <Compile Include="ATCommands\AO_Command.cs" />
+    <Compile Include="ATCommands\HV_Command.cs" />
+    <Compile Include="ATCommands\MY_Command.cs" />
+    <Compile Include="ATCommands\NT_Command.cs" />
+    <Compile Include="ATCommands\SH_Command.cs" />
+    <Compile Include="ATCommands\SL_Command.cs" />
+    <Compile Include="ATCommands\VR_Command.cs" />
+    <Compile Include="ATCommands\XBeeATCommand.cs" />
+    <Compile Include="Logger.cs" />
+    <Compile Include="LSFHandler.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SerialController.cs" />
+    <Compile Include="XBeeModule.cs" />
+    <Compile Include="ZigBeeAdapter.cs" />
+    <Compile Include="ZigBeeAdapterValue.cs" />
+    <Compile Include="ZigBeeDevice.cs" />
+    <Compile Include="ZigBeeEndPoint.cs" />
+    <Compile Include="ZigBeeStandard\ZclClusters\AlarmCluster.cs" />
+    <Compile Include="ZigBeeStandard\ZclClusters\BasicCluster.cs" />
+    <Compile Include="ZigBeeStandard\ZclClusters\ColorControlCluster.cs" />
+    <Compile Include="ZigBeeStandard\ZclClusters\DoorLockCluster.cs" />
+    <Compile Include="ZigBeeStandard\ZclClusters\IASZoneCluster.cs" />
+    <Compile Include="ZigBeeStandard\ZclClusters\LevelControlCluster.cs" />
+    <Compile Include="ZigBeeStandard\ZclClusters\OnOffCluster.cs" />
+    <Compile Include="ZigBeeStandard\ZclClusters\PowerConfigurationCluster.cs" />
+    <Compile Include="ZigBeeStandard\ZclClusters\RelativeHumidityCluster.cs" />
+    <Compile Include="ZigBeeStandard\ZclClusters\TemperatureCluster.cs" />
+    <Compile Include="ZigBeeStandard\ZclClusters\ZclAttribute.cs" />
+    <Compile Include="ZigBeeStandard\ZclClusters\ZclCluster.cs" />
+    <Compile Include="ZigBeeStandard\ZclClusters\ZclClusterFactory.cs" />
+    <Compile Include="ZigBeeStandard\ZclClusters\ZclCommand.cs" />
+    <Compile Include="ZigBeeStandard\ZclClusters\ZclDiscoverAttributes.cs" />
+    <Compile Include="ZigBeeStandard\ZclClusters\ZclHelper.cs" />
+    <Compile Include="ZigBeeStandard\ZclClusters\ZclReportAttributes.cs" />
+    <Compile Include="ZigBeeStandard\ZclClusters\ZclServerCommand.cs" />
+    <Compile Include="ZigBeeStandard\ZclClusters\ZclValue.cs" />
+    <Compile Include="ZigBeeStandard\ZdoCommands\ActiveEndPoints.cs" />
+    <Compile Include="ZigBeeStandard\ZdoCommands\DeviceAnnce.cs" />
+    <Compile Include="ZigBeeStandard\ZdoCommands\ManagementLeave.cs" />
+    <Compile Include="ZigBeeStandard\ZdoCommands\ManagementLQI.cs" />
+    <Compile Include="ZigBeeStandard\ZdoCommands\SimpleDescriptor.cs" />
+    <Compile Include="ZigBeeStandard\ZdoCommands\ZdoHelper.cs" />
+    <Compile Include="ZigBeeStandard\ZigBeeCommand.cs" />
+    <Compile Include="ZigBeeStandard\ZigBeeProfileLibrary.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Platform\BridgeRT\BridgeRT.vcxproj">
+      <Project>{2783a617-8e1d-40d1-9684-dfaeb8dd5406}</Project>
+      <Name>BridgeRT</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
+    <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

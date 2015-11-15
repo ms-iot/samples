@@ -1,0 +1,9 @@
+Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: open-zwave
+Upstream-Contact: Mal Lansell <openzwave@lansell.org>
+Source: http://groups.google.com/group/openzwave
+
+Files: *
+Copyright: 2010 Mal Lansell <openzwave@lansell.org>
+License: LGPL-3+
+ /usr/share/common-licenses/LGPL-3.0

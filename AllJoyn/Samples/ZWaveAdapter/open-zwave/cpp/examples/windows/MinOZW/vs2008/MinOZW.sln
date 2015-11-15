@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MinOZW", "MinOZW.vcproj", "{22847D76-B1CF-4921-8B7A-61E248412C4A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{497F9828-DEC2-4C80-B9E0-AD066CCB587C} = {497F9828-DEC2-4C80-B9E0-AD066CCB587C}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenZWave", "..\..\..\..\build\windows\vs2008\OpenZWave.vcproj", "{497F9828-DEC2-4C80-B9E0-AD066CCB587C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		DLL_Debug|Win32 = DLL_Debug|Win32
+		DLL_Release|Win32 = DLL_Release|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{22847D76-B1CF-4921-8B7A-61E248412C4A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{22847D76-B1CF-4921-8B7A-61E248412C4A}.Debug|Win32.Build.0 = Debug|Win32
+		{22847D76-B1CF-4921-8B7A-61E248412C4A}.DLL_Debug|Win32.ActiveCfg = DLL_Debug|Win32
+		{22847D76-B1CF-4921-8B7A-61E248412C4A}.DLL_Debug|Win32.Build.0 = DLL_Debug|Win32
+		{22847D76-B1CF-4921-8B7A-61E248412C4A}.DLL_Release|Win32.ActiveCfg = DLL_Release|Win32
+		{22847D76-B1CF-4921-8B7A-61E248412C4A}.DLL_Release|Win32.Build.0 = DLL_Release|Win32
+		{22847D76-B1CF-4921-8B7A-61E248412C4A}.Release|Win32.ActiveCfg = Release|Win32
+		{22847D76-B1CF-4921-8B7A-61E248412C4A}.Release|Win32.Build.0 = Release|Win32
+		{497F9828-DEC2-4C80-B9E0-AD066CCB587C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{497F9828-DEC2-4C80-B9E0-AD066CCB587C}.Debug|Win32.Build.0 = Debug|Win32
+		{497F9828-DEC2-4C80-B9E0-AD066CCB587C}.DLL_Debug|Win32.ActiveCfg = DLL_Debug|Win32
+		{497F9828-DEC2-4C80-B9E0-AD066CCB587C}.DLL_Debug|Win32.Build.0 = DLL_Debug|Win32
+		{497F9828-DEC2-4C80-B9E0-AD066CCB587C}.DLL_Release|Win32.ActiveCfg = DLL_Release|Win32
+		{497F9828-DEC2-4C80-B9E0-AD066CCB587C}.DLL_Release|Win32.Build.0 = DLL_Release|Win32
+		{497F9828-DEC2-4C80-B9E0-AD066CCB587C}.Release|Win32.ActiveCfg = Release|Win32
+		{497F9828-DEC2-4C80-B9E0-AD066CCB587C}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

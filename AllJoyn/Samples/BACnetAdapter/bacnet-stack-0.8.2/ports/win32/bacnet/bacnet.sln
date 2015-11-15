@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C++ Express 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bacnet", "bacnet.vcproj", "{966C8DD2-C0ED-4B7F-8EFB-1F64F2453D6A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{966C8DD2-C0ED-4B7F-8EFB-1F64F2453D6A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{966C8DD2-C0ED-4B7F-8EFB-1F64F2453D6A}.Debug|Win32.Build.0 = Debug|Win32
+		{966C8DD2-C0ED-4B7F-8EFB-1F64F2453D6A}.Release|Win32.ActiveCfg = Release|Win32
+		{966C8DD2-C0ED-4B7F-8EFB-1F64F2453D6A}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

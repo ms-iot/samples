@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resources">
+      <UniqueIdentifier>110bc46c-a154-46bb-ae90-9379c0116db6</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="Bridge.cpp" />
+    <ClCompile Include="AllJoynFileTransfer.cpp" />
+    <ClCompile Include="CspAdapter.cpp" />
+    <ClCompile Include="CspBridge.cpp" />
+    <ClCompile Include="ConfigManager.cpp" />
+    <ClCompile Include="BridgeDevice.cpp" />
+    <ClCompile Include="BridgeAuthHandler.cpp" />
+    <ClCompile Include="DeviceProperty.cpp" />
+    <ClCompile Include="PropertyInterface.cpp" />
+    <ClCompile Include="AllJoynProperty.cpp" />
+    <ClCompile Include="DeviceMain.cpp" />
+    <ClCompile Include="DeviceMethod.cpp" />
+    <ClCompile Include="AllJoynHelper.cpp" />
+    <ClCompile Include="DeviceSignal.cpp" />
+    <ClCompile Include="BridgeConfig.cpp" />
+    <ClCompile Include="AllJoynAbout.cpp" />
+    <ClCompile Include="BridgeLog.cpp" />
+    <ClCompile Include="ControlPanel.cpp" />
+    <ClCompile Include="Widget.cpp" />
+    <ClCompile Include="WidgetContainer.cpp" />
+    <ClCompile Include="WidgetAction.cpp" />
+    <ClCompile Include="WidgetProperty.cpp" />
+    <ClCompile Include="WidgetPropertySwitch.cpp" />
+    <ClCompile Include="WidgetPropertyTextBox.cpp" />
+    <ClCompile Include="WidgetPropertyLabel.cpp" />
+    <ClCompile Include="WidgetSignalHandler.cpp" />
+    <ClCompile Include="AllJoynAboutIcon.cpp" />
+    <ClCompile Include="LampDetails.cpp" />
+    <ClCompile Include="LampParameters.cpp" />
+    <ClCompile Include="LampService.cpp" />
+    <ClCompile Include="LampState.cpp" />
+    <ClCompile Include="LSF.cpp" />
+    <ClCompile Include="LSFSignalHandler.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="Bridge.h" />
+    <ClInclude Include="AllJoynFileTransfer.h" />
+    <ClInclude Include="CspAdapter.h" />
+    <ClInclude Include="CspBridge.h" />
+    <ClInclude Include="ConfigManager.h" />
+    <ClInclude Include="BridgeDevice.h" />
+    <ClInclude Include="BridgeAuthHandler.h" />
+    <ClInclude Include="DeviceProperty.h" />
+    <ClInclude Include="PropertyInterface.h" />
+    <ClInclude Include="AllJoynProperty.h" />
+    <ClInclude Include="DeviceMain.h" />
+    <ClInclude Include="DeviceMethod.h" />
+    <ClInclude Include="AllJoynHelper.h" />
+    <ClInclude Include="DeviceSignal.h" />
+    <ClInclude Include="AdapterDefinitions.h" />
+    <ClInclude Include="BridgeConfig.h" />
+    <ClInclude Include="DsbServiceNames.h" />
+    <ClInclude Include="IAdapter.h" />
+    <ClInclude Include="AllJoynAbout.h" />
+    <ClInclude Include="BridgeLog.h" />
+    <ClInclude Include="ControlPanel.h" />
+    <ClInclude Include="Widget.h" />
+    <ClInclude Include="WidgetContainer.h" />
+    <ClInclude Include="WidgetAction.h" />
+    <ClInclude Include="WidgetConsts.h" />
+    <ClInclude Include="WidgetProperty.h" />
+    <ClInclude Include="WidgetPropertySwitch.h" />
+    <ClInclude Include="WidgetPropertyTextBox.h" />
+    <ClInclude Include="WidgetPropertyLabel.h" />
+    <ClInclude Include="IControlPanelHandler.h" />
+    <ClInclude Include="WidgetSignalHandler.h" />
+    <ClInclude Include="AdapterConstants.h" />
+    <ClInclude Include="AllJoynAboutIcon.h" />
+    <ClInclude Include="ILSFHandler.h" />
+    <ClInclude Include="LampDetails.h" />
+    <ClInclude Include="LampParameters.h" />
+    <ClInclude Include="LampService.h" />
+    <ClInclude Include="LampState.h" />
+    <ClInclude Include="LSF.h" />
+    <ClInclude Include="LSFConsts.h" />
+    <ClInclude Include="LSFSignalHandler.h" />
+    <ClInclude Include="LSFEnums.h" />
+  </ItemGroup>
+</Project>

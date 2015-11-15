@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<!DOCTYPE CodeBlocks_project_file>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="1"/>
+	<Project>
+		<Option title="BVLC Unit Test"/>
+		<Option makefile="Makefile"/>
+		<Option makefile_is_custom="0"/>
+		<Option compiler="2"/>
+		<Build>
+			<Target title="default">
+				<Option output="C:\code\bacnet-stack\bbmd.exe"/>
+				<Option working_dir="."/>
+				<Option object_output=".objs"/>
+				<Option deps_output=".deps"/>
+				<Option type="1"/>
+				<Option compiler="2"/>
+				<Option projectResourceIncludeDirsRelation="1"/>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-w-aus"/>
+			<Add option="-w-sig"/>
+			<Add option="-DTEST;TEST_BBMD;BACDL_BIP=1;TSM_ENABLED=1"/>
+			<Add directory="."/>
+			<Add directory="demo\handler"/>
+			<Add directory="demo\object"/>
+			<Add directory="ports\win32"/>
+			<Add directory="test"/>
+		</Compiler>
+		<Linker>
+			<Add library="..\..\BCC55\Lib\import32.lib"/>
+			<Add library="..\..\BCC55\Lib\cw32mt.lib"/>
+		</Linker>
+		<Unit filename="bacdcode.c">
+			<Option compilerVar="CC"/>
+			<Option target="default"/>
+		</Unit>
+		<Unit filename="bacdcode.h">
+			<Option compilerVar=""/>
+			<Option compile="0"/>
+			<Option link="0"/>
+			<Option target="default"/>
+		</Unit>
+		<Unit filename="bacdef.h">
+			<Option compilerVar=""/>
+			<Option compile="0"/>
+			<Option link="0"/>
+			<Option target="default"/>
+		</Unit>
+		<Unit filename="bacenum.h">
+			<Option compilerVar=""/>
+			<Option compile="0"/>
+			<Option link="0"/>
+			<Option target="default"/>
+		</Unit>
+		<Unit filename="bacstr.c">
+			<Option compilerVar="CC"/>
+			<Option target="default"/>
+		</Unit>
+		<Unit filename="bacstr.h">
+			<Option compilerVar=""/>
+			<Option compile="0"/>
+			<Option link="0"/>
+			<Option target="default"/>
+		</Unit>
+		<Unit filename="bigend.c">
+			<Option compilerVar="CC"/>
+			<Option target="default"/>
+		</Unit>
+		<Unit filename="bigend.h">
+			<Option compilerVar=""/>
+			<Option compile="0"/>
+			<Option link="0"/>
+			<Option target="default"/>
+		</Unit>
+		<Unit filename="bvlc.c">
+			<Option compilerVar="CC"/>
+			<Option target="default"/>
+		</Unit>
+		<Unit filename="bvlc.h">
+			<Option compilerVar=""/>
+			<Option compile="0"/>
+			<Option link="0"/>
+			<Option target="default"/>
+		</Unit>
+		<Unit filename="test\ctest.c">
+			<Option compilerVar="CC"/>
+			<Option target="default"/>
+		</Unit>
+		<Unit filename="test\ctest.h">
+			<Option compilerVar=""/>
+			<Option compile="0"/>
+			<Option link="0"/>
+			<Option target="default"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

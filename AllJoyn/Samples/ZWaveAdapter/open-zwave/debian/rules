@@ -1,0 +1,40 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE=1
+PACKAGE=$(shell dh_listpackages)
+
+ifndef DESTDIR 
+DESTDIR=$(CURDIR)/debian/tmp/
+endif
+
+DEBVERS := $(shell dpkg-parsechangelog | sed -n -e 's/^Version: //p')
+VERSION := $(shell echo '$(DEBVERS)' | sed -e 's/^[\[:digit:]]*://' -e 's/[-].*//')
+MAJOR := $(shell echo '$(VERSION)' | awk -F . {'print $$1'})
+MINOR := $(shell echo '$(VERSION)' | awk -F . {'print $$2'})
+REV := $(shell echo '$(VERSION)' | awk -F . {'print $$3'})
+DEB_HOST_ARCH := $(shell dpkg-architecture -qDEB_HOST_ARCH)
+DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+LIBDIR := /usr/lib/$(DEB_HOST_MULTIARCH)/
+DISTRIBUTION := $(shell (lsb_release -cs))
+
+%:
+	dh $@ --with quilt 
+
+override_dh_gen_control:
+ifeq ($(DISTRIBUTION),wheezy)
+	dh_gencontrol -- -Vdist:Depends="libudev0"
+else
+	dh_gencontrol -- -Vdist:Depends="libudev1"
+endif
+
+override_dh_auto_build:
+	VERSION_MAJ=$(MAJOR) VERSION_MIN=$(MINOR) VERSION_REV=$(REV) PREFIX=/usr SYSCONFDIR=/etc/openzwave instlibdir=$(LIBDIR) make
+override_dh_auto_install:
+	install -d $(DESTDIR)/etc/openzwave/
+	install -d $(DESTDIR)/usr/include/openzwave/
+	install -d $(DESTDIR)/$(LIBDIR)/pkg-config/
+	install -d $(DESTDIR)/usr/share/doc/
+	install -d $(DESTDIR)/usr/bin/
+	VERSION_MAJ=$(MAJOR) VERSION_MIN=$(MINOR) VERSION_REV=$(REV) DESTDIR=$(DESTDIR) PREFIX=/usr sysconfdir=/etc/openzwave instlibdir=$(LIBDIR) make install
+	strip --strip-unneeded $(DESTDIR)/$(LIBDIR)/libopenzwave.so.$(MAJOR).$(MINOR)
+	strip --strip-unneeded $(DESTDIR)/usr/bin/MinOZW

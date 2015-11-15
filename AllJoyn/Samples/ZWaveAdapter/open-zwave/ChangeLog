@@ -1,0 +1,268 @@
+Version 1.3
+ - Fixed Issue 383 - Update Remotec ZXT-120 Config file thanks to yy.bendavid & gizmocuz (Alex)
+ - Fixed Issue 392 - Add Qubino ZMNHJA2 Config file thanks to nicoserveur (Alex)
+ - Fixed Issue 394 - Add 2GIG CT100 USA version device thanks to mldkfa (Alex)
+ - Fixed Issue 387 - Add Zipato RFID Config file thanks to jeanfrancois.auger (Alex)
+ - Fixed Issue 391 - Update zwave.key keyfob config thanks to gizmocuz (Alex)
+ - Fixed Issue 397 - Update remotec ZXT-120 config thanks to gizmocuz (Alex)
+ - Fixed Issue 396 - Add Z-Wave.me RaZberry thanks to steph10200 (Alex)
+ - Fixed Issue 398 - Add Z-Wave.me USB Stick thanks to ugo.viti (Alex)
+ - Fixed Issue 389 - Add Evolve LRM-AS/LSM-15 Config file thanks to Gwmullin (Alex)
+ - Fixed Issue 386 - Add Duwi and Z-Wave.Me Config files thanks to pim.vanderhaven (Alex)
+ - Fixed Issue 401 - Add Toon/Quby devices (Alex)
+ - Added new manufacturers and new devices (Alex)
+ - Add Wenzhou TSP01 Config file thanks to Jan (Alex)
+ - Standardize some of the Logging Messages so its easier to parse (Justin)
+ - Implemented Issue 325 - Add a GetChangeVerfied method to the Manager and Value classes to
+   determine if a Value is checked upon refresh from a device (Justin)
+ - Fixed issue 350 - FreeBSD Makefile updates and a few patches (Justin)
+ - Fixed issue 395 - Clear the ListItems Vector before populating with new
+   values (Justin)
+ - Fixed issue 402 - Clean vers.cpp when we issue a make clean (Justin)
+ - Fixed issue 405 - Add new ID's for Fibaro FGD211 and FGS221 (Justin)
+ - Fixed issue 406 - Add Remotec ZFM-80 (Justin)
+ - Fixed issue 410 - Add Vision ZP3102 (Justin)
+ - Fixed issue 412 - Updated Zipato RGB Bulb Config (Justin)
+ - Fixed Issue 343 - Add Exceptions instead of Exit for some fatal errors 
+   Also, add Exceptions if any of the GetValue or SetValue calls in the
+   Manager class are passed invalid ValueID's (Justin)
+ - Fixed duplicate Vision devices and added a missing id for ZP3102 (Alex)
+ - Fixed Issue 417 - Add Z-Wave.Me ZME_UZB1 USB Stick thanks to Ugo (Alex)
+ - Add new Aeon Repeater device (Alex)
+ - Fixed a crash in the LogFile Class when the destructor was called
+   (Justin)
+ - Fix Issue 426 - Upon restarts of OZW, we restarted the entire discovery
+   process again (Justin)
+ - Fix a off by 1 issue with the Security CC that was causing the
+   Assoication Set Failures on Secured Devices. (Justin)
+ - Added Aeon Labs Smart Energy Switch V2 that supports the Security CC but
+   doesn't support the Basic CC - Related to issue 427 (Justin)
+ - Fixed issue 420 - Dotnet Patch from scopollif. (Justin)
+ - Fixed issue 415 - add 2Gig CT101 Thermostat (Justin)
+ - Started Implementing the Central Scene CC - With a good start by
+   tmartinez69009 - We still need to figure out the Capabilities decode -
+   Issue 367 (Justin)
+ - Fixed issue 425 - Bail out of Decrypting Packets if they are too short
+   (Justin)
+ - Fixed Fibaro FGD211 device config, removed automatic association for group 1&2 (Alex) 
+ - Updated Z-Wave.Me device list thanks to Willem (Alex)
+ - Fixed Issue 431 - Update Fibaro fgrgbwm441 config thanks to Piotr (Alex)
+ - Fixed Issue 433 - Update Fibaro fgwpe config thanks to Piotr (Alex)
+ - Fixed Issue 439 - Update Fibaro FGMS001 config thanks to Jug (Alex)
+ - Fixed Issue 434 - Update Fibaro fgbs001 config thanks to Piotr (Alex)
+ - Fixed Issue 436 - Update Fibaro fgd211 config thanks to Piotr (Alex)
+ - Fixed Issue 437 - Update Qubino ZMNHDA2 config thanks to Piotr (Alex)
+ - Added Aeon Siren Gen5 device thanks to Alle (Alex) 
+ - Added GE 12724 3-Way Dimmer Switch device thanks to Dax (Alex)
+ - Added additional Fibaro FGBS001 device id thanks to Stef (Alex)
+ - Added ConnectHome CH-201 device thanks to Tehnoinstyle (Alex)
+ - Detect if the Controller Supports SUC - If not, Dont try to become a SUC
+   when starting up (Justin)
+ - Add Sigma Designs UZB Z-Wave USB Adapter (Justin)
+ - Make sure LogLevels parsed are within range (Justin)
+ - Fix IntervalBetweenPolls always being false regardless of Options.xml
+   setting. (Justin)
+ - Make sure we refresh all UserCodes upto the first available slot unless
+   RefreshAllUserCodes is true in Options.xml (Justin)
+ - Added Qubino ZMNHIA2 device thanks to Paul (Alex)
+ - Fixed Issue 444 - Added Aeon Aeon Labs Micro Smart Energy Dimmer thanks
+   to yy (Alex)
+ - Fixed Issue 430 - Spelling Mistake (Justin)
+ - Add Support for CommandClasses that are marked as Controlling (versus
+   Controlled) to be able to still query the Device for Data. This is needed
+   for the CentralScene CC which is implemented as Controlling on most
+   devices (Justin)
+ - CentralScene CC should be able to query for number of Scene's supported.
+   Needs further testing with other devices (only BeNext at the moment is
+   tested) (Justin)
+ - When refreshing the ConfigParams on a device, place the messages in the
+   MsgQueue_Query queue rather tha the MsgQueue_Send queue. This should help
+   the "responsiveness" of OZW during startup if a user sends a message and
+   there is a big backlog in the Send Queue (Justin)
+ - Fixed issue 452 - Fix the ValueID for Door_Lock index to report correct
+   status. (Justin)
+ - Fixed issue 448 - Dont request Basic Get if we have a mapped Class during
+   startup (Justin)
+ - Added Everspring HAN02 device thanks to lookwhatthecat (Alex)
+ - Fixed issue 453 - Don't crash if we skip notifications due to invalid
+   ValueID's (Justin)
+ - Fixed issue 456 - Added NorthQ NQ-9021 device thanks to manu (Alex)
+ - Fixed issue 455 - Fixed Fibaro FGD211 device config thanks to Wouter (Alex)
+ - Fixed Popp 123580 Plug-in Dimmer device config thanks to Tom (Alex)
+ - Fixed issue 457 - Added zwave.me KFOB-S device thanks to Tony (Alex)
+ - Updated BeNext TagReader device config thanks to Rob (Alex)
+ - Added Philio PST02-1B device thanks to Thaui (Alex)
+ - Updated BeNext TagReader device config (Alex)
+ - Fixed issue 449 - Update Wenzhou TZ67 device config thanks to bas (Alex)
+ - Fixed issue 367 - Implement CentralScene with lots of testing by
+   TMartinez (Justin)
+ - Update our Mutex's to use Scoped Locks instead. This saves us from having
+   to track Lock/Unlocks. Implemented for the m_nodeMutex in the
+   DriverClass. We should also port the Polling and Send Mutex's as well.
+   This fixes issue 451 (Justin)
+ - Fixed issue 459 - Alarm Class Version 2 (Justin)
+ - Fix DoorLockLogging Class not saving the Max Number of records (Justin)
+ - Fixed issue 470 - Qubino ZMNHDA2 device update thanks to kvervloesem (Alex)
+ - Fixed Issue 462 - Fix Builds on FreeBSD - From Stromnet (Justin)
+ - Added Vision Z-Wave USB Stick device thanks to GizMoCuz (Alex)
+ - Fixed issue 469 - Added Fibaro Smoke Detector FGSD-002 thanks to tmartine (Alex)
+ - Fix LogImpl crash if no filename was configured (pull req 488) (Stromnet)
+ - Update Fibaro Smoke Sensor device, interview process wouldn't complete (Alex)
+ - Fixed issue 464 - Added/Updated Polycontrol keypad/doorlock devices thanks to santal (Alex)
+ - Fixed issue 495 - Added Fibaro FGD211 device thanks to nechry (Alex)
+ - Fixed issue 496 - Added Aeon-Labs Z-Stick Gen5 thanks to nechry (Alex)
+ - Don't kill Notifications for ValueAdded and ValueRemoved as they might
+   not exist right then (Justin)
+ - Pull Request #516 - Add Philio PST02-1C thanks to Ugoviti (Justin)
+ - Pull Request #517 - Add Aeon Labs Gen5 thanks to Ugoviti (Justin)
+ - Pull Request #515 - Add Widom USB104 Universal Relay Switch thanks to Ugoviti (Justin)
+ - Pull Request #508 - Update Fibaro FGFS101 Association Groups thanks to Nechry (Justin)
+ - Pull Request #504 - CRC16Encap CC Support from xs4 (Justin)
+ - Pull Request #522 - Dragon Tech In wall dimmer from Stevejbauer (Justin)
+ - Fix Issue #523 - Add Wenzhou Door/Window Sensor from whiteduck22 (Justin)
+ - Pull Request #534 - Add Aeon Labs Recessed Door Sensor Gen5 from xxv (Justin)
+ - Pull Request #532 - Fix Aeon Labs DoorWindow Sensor Config from Nechry (Justin)
+ - Pull Request #529 - Updated Config for the Zipato MiniKeyPad from Nechry (Justin)
+ - Pull Request #528 and #527 - Add Aeon Labs Key Fob Gen5 Config from Nechry (Justin)
+ - Add new ID's for BeNext Energy Switch from Rob (Justin)
+ - Depreciate the ControllerCommand method in the Manager class and replace with direct 
+   function calls (Justin)
+ - Pull Request #538 and #541 - Add SwiidInter to manufacturer_specific from Nechry (Justin)
+ - Pull Request #545 - Add Philio PST02-A 4 in 1 MultiSensor from Nechry (Justin)
+ - Pull Request #546 - Update Philio PST02-A Config from Nechry (Justin)
+ - Pull Request #547 & #549 - New Config File for Philio PST02-B from Nechry (Justin)
+ - Pull Request #548 - Update Config file for Philio PST02-C from Nechry (Justin)
+ - Pull Request #550 - Config File for Vision zd2102 from Ugoviti (Justin)
+ - Fix a crash when dumping the Queue to the Log, reported by Gizmocuz (Justin)
+ - Pull Request #555 - Update the dotNet wrapper and OZWForm to use the new
+   Manager Methods that replace the BeginControllerCommand Method. From
+   JKlessens (Justin) 
+ - Pull Request #564 - Add Cooper Configs from Stevejbauer (Justin)
+ - Pull Request #561 - Add Version String Method from Ikkemaniac (Justin)
+ - Pull Request #562 - Fix Windows Build Event with wrong directory from douglasbeck (Justin)
+ - Pull Request #567 and Issue 566 - Add Fibaro FGS221 from Nechry and
+   DanielLast (Justin)
+ - Pull Request #574 - Add Fibaro FGS212 Config from Nechry (Justin)
+ - Pull Request #576 - Fix up Qubino ZMNHBA2 Help from DavZero (Justin)
+ - Pull Request #578 - Add NodOn SmartPlug, Swiid SwiidPlug and update
+   ZME_064435 Config fron Nechry (Justin)
+ - Pull Request #580 - Add zwave.me Razberry ZWave+ adapter from Nechry
+   (Justin)
+ - Pull Request #581 - Update Zipato Minikeypad from Nechry (Justin)
+ - Fixed issue #352 - Security Rewrite (Justin)
+ - Fixed issue #467 - Fixed Aeon Labs Multisensor Gen5 (Justin)
+ - Fixed issue #471 - Fixed Vision ZD2102 (Justin)
+ - Fixed issue #472 - Fixed Aeon Labs Siren Gen5 (Justin)
+ - Fixed issue #473 - Fixed Philio PST02-1C Slim Multisensor (Justin)
+ - Fixed issue #540 - Depreciate the BeginControllerCommand Method for
+   dedicated methods in the Manager Class - Applications should update their
+   code to use the new API instead. (Justin)
+ - Pull Request #587 - Add Zwave.me ZME_WALLC-S Secure Wall Controller from
+   xs4 (Justin)
+ - Fixed issue #586 - Compile Error on newer GCC's (Justin)
+ - Fixed issue #568 - Compile Error on new OSX (Justin)
+ - Update the device_classes.xml with the latest known mappings (Justin)
+ - Enable NWI when adding nodes if HighPower is also enabled (Justin)
+ - Pull Request #596 - Aeotec Z-Stick Gen5 and GE 12722 on/Off Relay from
+   SpudGunMan (Justin)
+ - Pull Request #595 - Aeotec Smart Switch Gen5 Config Updates from Gert
+   Boer and Nechry (Justin)
+ - Pull Request #594 - Aeotec Minimote Config Updates from Nechry (Justin)
+ - Update Aeon Labs to Aeotec as thats their Retail name (Justin)
+ - Pull Request #598 - Update Config Files for Fibaro FGS212 and FGS222 from
+   Nechry (Justin)
+
+Version 1.2 
+ - Released on 15/10/14
+
+Version 1.1
+ - Fixed Command Class Recieved Message Counter when we are handling a
+   MultiInstanceMessageEncap Message (Justin)
+ - Fixed Issue 310 - Unbalanced Lock/Release in Manager::IsNodeFailed and
+   Manager::GetNodeQueryStage (Justin)
+ - For Sleeping Devices - Do Not automatically add WakeUp Class to these
+   devices if they advertise themselves as FrequentListening. This matches
+   the Logic in the QueryStage functions where we skip querying the Device
+   for Wakeup Configuration if its set as FLiRS. Needs some testing (Justin)
+ - Options.xml file can now live in both the System Config Path
+   (/etc/openzwave for example) or the Local Application Path. Local
+   Options.xml will override any System Options.xml (Justin)
+ - Updated the Include Paths so we only have to specify the top level src
+   directory for GCC, and the rest of the headers are specified as subdirs.
+   Based on work started by Svente Karisson (Justin)
+ - A few fixes for Windows Calls and various casts required to eliminate
+   warnings (Svente Karisson)
+ - Add a Error String if we fail to parse our Options.xml files (Justin)
+ - Added a Complete Door Lock Command Class (Justin)
+ - Change the Logic in the UserCode Command Class to only retrive UserCodes
+   upto the first available slot (Justin)
+ - Add a ValueButton to the UserCode class to refresh all UserCodes (Justin)
+ - Fixed Issue 301 - Updated Aeon Recessed Door Sensor (Justin)
+ - Fixed Issue 302 - New ID for Aeon Labs Door/Window Sensor (Justin)
+ - Fixed Issue 306 & 304 - Updated Fibaro FGMS Config File (Justin)
+ - Fixed Issue 308 - Add Zenzhou TZ65D Dual Wall Dimmer (Justin)
+ - Fixed Issue 309 - Add Config File for ZWave.Me Flush Mountable Switch (Justin)
+ - Fixed Issue 311 - Add Vision Siren (Justin)
+ - Fixed Issue 314 - Updated Fibaro RGBW Config File (Justin)
+ - Fixed Issue 318 - Updated Fibaro Wall Plug Config File (Justin)
+ - Fixed Issue 321 - Updated Fibaro FGRM222 Config File (Justin)
+ - Fixed Issue 324 - New Config file for Aeon Labs MiniMote (Justin)
+ - Added ZWave.Me iTemp Config file thanks to Willem Burgers (Justin)
+ - Added new id for Aeon Labs Micro Smart Engergy Illuminator G2 thanks to
+   jmeyer (Justin)
+ - Fixed Issue 329 - Update Fibaro FGD211 Config File (Alex)
+ - Fixed Issue 330 - Update Fibaro FGS211 Config File (Alex)
+ - Fixed Issue 331 - Update Fibaro RGBWM441 Config File (Alex)
+ - Add new id for GE Duplex Receptacle (Alex) 
+ - Add 18 new ids for Vision devices (Alex)
+ - Add Device Qees RETO Plug-in Switch Plus Config File (Alex)
+ - Implement DoorLockLogging Command Class (Justin)
+ - Implement Security Command Class (Justin)
+ - Add a additional ID for Vision ZM1701 Deadbolt without Handle (Justin)
+ - Add a ID and Config file for Assa Abloy Real Living Cap-Touch Deadbolt
+   (Justin)
+ - Implement the TimeParameters Command Class (Justin)
+ - Fix up AssumeAwake Option for the Wakeup Class (Justin)
+ - Update BeNext Tag Reader Config File (Alex)
+ - Fixed Issue 335 - Update zwave.me KeyFob Config File (Alex)
+ - Fixed Issue 336 - Update Aeon Labs DoorSensor Config File (Alex)
+ - Fixed Issue 337 - Update Aeon Labs Multi Sensor Config File (Alex)
+ - Fixed Issue 338 - Update Aeon Labs Multi Sensor Config File (Alex)
+ - Fixed Issue 339 - Update Fibaro Door Opening Sensor Config File (Alex)
+ - Fixed Issue 340 - Add Remotec ZRC-100 Remote Control (Alex)
+ - Fixed Issue 301 - Add Philio PAN04-1 Relay Insert (Alex)
+ - Fixed Issue 341 - Corrected directory/filename errors in manufacturer xml (Alex)
+ - Fixed Issue 342 - Added 4 Qubino devices thanks to jeanfrancois (Alex) 
+ - Fixed Issue 345 - Added new ids for Fibaro FGK101 and FGBS001 (Alex)
+ - Fixed Issue 351 - Added new ids for Vision VS6301 and updated Product Name (Justin)
+ - Fixed Issue 348 - Typo in Config Index Number for zwave.me ZME_06436 (Justin)
+ - Fix Several Warnings/Initilizers etc (Justin)
+ - Fixed Issue 357 - Fixed Qubino manufacturer id from 345 (dec) to 159 (hex) (Alex)
+ - Fixed Issue 356 - New ID for Fibaro FGMS001 (Alex) 
+ - Do Not Open and Close the Log file on each message. Close it during the
+   Destructor (Justin)
+ - Race Condition in the RemoveDriver call and Notifications. Add a new
+   Notification about the Driver being removed, and by default turn off
+   NodeRemoved/ValueRemoved Notifications from being sent if the Driver is
+   being unloaded. WARNING: If you call any manager functions that require
+   the Driver after recieving this message, there is a high probability your
+   application will crash with a SegV (Justin)
+ - Fixed Issue 361 - Update Qubino ZMNHDA2 Config File, proper endpoint mapping (Alex)
+ - Fixed Issue 359 - Update Qubino ZMNHBA2 Config File, fixed invalid group 4 (Alex)
+ - Fixed Issue 360 - Add Config File for Popp 123658 (Alex)
+ - Fixed Issue 364 - Update Schlagelink iTemp Config File, removed invalid char (Alex)
+ - Fixed Issue 365 - Add Config File for Popp 123601 Plug-in Switch thanks to tony.b.hansson (Alex)
+ - Fixed Issue 366 - Add Config File for Popp 123580 Plug-in Dimmer thanks to tony.b.hansson (Alex)
+ - Fixed Issue 363 - Added new id for Schlagelink iTemp thanks to steph10200 (Alex)
+ - Fixed Issue 370 - Fixed Config File for zwave.me 06433 thanks to geilername (Alex)
+ - Fixed Issue 368 - Bounds Checking on our String Arrays (Justin)
+ - Fixed Issue 362 - Fix Mapping between ValueGenre Names and Enum's. This
+   might require you to delete your zwcfg_*.xml file if you encounter
+   problems (Justin)
+ - Fixed Issue 371 - Double ReleaseNodes on Invalid Node in GetNodeStatistics (Justin)
+ - Fixed Issue 372 - Mutex Unlocking in the Driver::isPolled method (Justin)
+ - Remove tinyxml.h include from our headers so we don't have to distribute
+   the TinyXML header files (Justin)
+ - Remove the hidapi.h include from our headers so we don't have to
+   distribute the hidapi header files (Justin)
+ - Fixed Issue 375 - Add Ecolink Garage Door Sensor - (Justin)

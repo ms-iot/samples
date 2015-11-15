@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="COV Unit Test" />
+		<Option pch_mode="0" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="default">
+				<Option output="C:\code\bacnet-stack\cov.exe" prefix_auto="0" extension_auto="0" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option projectResourceIncludeDirsRelation="1" />
+			</Target>
+		</Build>
+		<VirtualTargets>
+			<Add alias="All" targets="default;" />
+		</VirtualTargets>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-g" />
+			<Add option="-DBACDL_TEST" />
+			<Add option="-DBIG_ENDIAN=0" />
+			<Add option="-DTEST" />
+			<Add option="-DTEST_COV" />
+			<Add directory="test" />
+			<Add directory="demo\object" />
+			<Add directory="." />
+		</Compiler>
+		<Unit filename="bacapp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="bacapp.h" />
+		<Unit filename="bacdcode.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="bacdcode.h" />
+		<Unit filename="bacdef.h" />
+		<Unit filename="bacenum.h" />
+		<Unit filename="bacstr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="bacstr.h" />
+		<Unit filename="bactext.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="bactext.h" />
+		<Unit filename="cov.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="cov.h" />
+		<Unit filename="datetime.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="datetime.h" />
+		<Unit filename="indtext.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="indtext.h" />
+		<Unit filename="test\ctest.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="test\ctest.h" />
+		<Extensions>
+			<code_completion />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

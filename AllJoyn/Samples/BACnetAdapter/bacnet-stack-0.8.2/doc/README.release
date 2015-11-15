@@ -1,0 +1,41 @@
+SourceForge Release Checklist for the BACnet Embedded Stack Project
+written by Steve Karg (using a similar doc by Kim Gräsman as a guide)
+
+Verify that the test build is clean. Test code with clean directory.
+ 
+Get a clean build (no warnings or errors).
+ 
+The program must be functional (it works).
+    
+Clean up the object files and binaries to prepare for tar
+$ make clean
+     
+Make the source code look the same
+$ ./indent.sh
+$ ./comment.sh
+$ ./fixup.sh
+     
+Verify that the code compiles and runs the demos without error or
+warnings:
+$ make all
+$ demo/server 123 (etc)
+Verify that the unit tests compile and pass:
+$ ./unittest.sh
+$ cat test.log | grep Failed
+
+Commit any changes to subversion.
+$ svn commit
+$ svn update
+
+Run the release script:
+$ ./release.sh 0.0.0
+
+Go to file manager at http://sourceforge.net/projects/bacnet/
+  Admin -> File Manager
+  Tag the files for the various platforms
+  Tag the ChangeLog as release notes.
+  
+Update the website (if necessary)
+Add release notes under What's New on SourceForge.
+The release notes should include project details
+for someone unfamiliar with the project or BACnet.

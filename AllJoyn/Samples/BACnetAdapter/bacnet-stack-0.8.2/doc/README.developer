@@ -1,0 +1,163 @@
+This BACnet stack is service driven. It handles the services (BACnet requests
+like WhoIs, I-Am, ReadProperty, etc) to/from the network layer to functions that
+handle the application layer. There are a bunch of functions that facilitate
+encoding and decoding to/from the network message data to/from something
+meaningful in the program.
+
+A BACnet device is supposed to support, at a minimum, ReadProperty service
+(server) and a single Device Object. This even applies to a BACnet client on a
+PC that is used for reading other BACnet devices.
+
+There are a number of core files that you will need. Services such as
+ReadProperty, I-Am, and Reject are consided core files. After determining
+which services you want in your device, add files to your project or makefile
+from the following BACnet services (messages) provided by this BACnet stack:
+
+    * abort.c - BACnet Abort service encode/decode
+    * bacerror.c - BACnet Error service encode/decode
+    * reject.c - BACnet Reject service encode/decode
+    * arf.c - AtomicReadFile service encode/decode
+    * awf.c - AtomicWriteFile service encode/decode
+    * rp.c - BACnet ReadProperty service encode/decode
+    * rpm.c - ReadPropertyMultiple service encode/decode
+    * iam.c - I-Am service encode/decode
+    * whois.c - WhoIs service encode/decode
+    * wp.c - WriteProperty service encode/decode
+    * wpm.c - WritePropertyMultiple service encode/decode
+    * dcc.c - DeviceCommunicationControl service encode/decode
+    * ihave.c - I-Have service encode/decode
+    * rd.c - ReinitializedDevice service encode/decode
+    * timesync.c - TimeSynchronization service encode/decode
+    * whohas.c - WhoHas service encode/decode
+    * event.c - EventNotification service encode/decode
+    * get_alarm_sum.c - GetAlarmSummary service encode/decode
+    * getevent.c - GetEventInformation service encode/decode
+    * lso.c - LifeSafetyOperation service encode/decode
+    * ptransfer.c - PrivateTransfer service encode/deco
+    * readrange.c - ReadRange service encode/decode
+
+Adding additional services is a matter of adding the encoding and decoding for
+the service into/from meaningful data, and I like to add unit testing, a demo
+handler and send function, as well as a demo command line example.
+
+For each service that you add to your project or makefile, you will need to 
+add a handler and possibly a sending function.  There are example handlers 
+and send functions for all the services that the stack supports:
+
+    * demo/handler/h_alarm_ack.c - Alarm ACK service handler example
+    * demo/handler/h_arf.c - AtomicReadFile service handler example
+    * demo/handler/h_arf_a.c - AtomicReadFile ACK service handler example
+    * demo/handler/h_awf.c - AtomicWriteFile service handler example
+    * demo/handler/h_ccov.c - ConfirmedCOVNotification service handler example
+    * demo/handler/h_cov.c - SubscribeCOV service handler example
+    * demo/handler/h_dcc.c - DeviceCommuncationControl service handler example
+    * demo/handler/h_get_alarm_sum.c - GetAlarmSummary service handler example
+    * demo/handler/h_get_event.c - GetEventInformation service handler example
+    * demo/handler/h_iam.c - I-Am service handler example
+    * demo/handler/h_ihave.c - I-Have service handler example
+    * demo/handler/h_lso.c - LifeSafetyOperation service handler example
+    * demo/handler/h_pt.c - PrivateTransfer service handler example
+    * demo/handler/h_pt_a.c - PrivateTransfer ACK service handler example
+    * demo/handler/h_rp.c - ReadProperty service handler example
+    * demo/handler/h_rp_a.c - ReadProperty ACK service handler example
+    * demo/handler/h_rpm.c - ReadPropertyMultiple service handler example
+    * demo/handler/h_rpm_a.c - ReadPropertyMultiple ACK service handler example
+    * demo/handler/h_rr.c - ReadRange service handler example
+    * demo/handler/h_rr_a.c - ReadRange ACK service handler example
+    * demo/handler/h_ts.c - TimeSynchronization service handler example
+    * demo/handler/h_ucov.c - UnconfirmedCOV service handler example
+    * demo/handler/h_upt.c - UnconfirmedPrivateTransfer service handler example
+    * demo/handler/h_whohas.c - WhoHas service handler example
+    * demo/handler/h_whois.c - Who-Is service handler example
+    * demo/handler/h_wp.c - WriteProperty ACK service handler example
+    * demo/handler/h_wpm.c - WritePropertyMultiple service handler example
+    * demo/handler/h_noserv.c - unrecognized service handler example
+
+The BACnet stack also includes files for handling client functionality, which
+requires Confirmed messages, and utilizes something called binding. Binding is a
+way of acquiring a Device Object Instance's MAC address by sending a broadcast
+Who-Is to that Device Object and waiting for the I-Am from that Device Object.
+When the I-Am arrives, the MAC address can be stored and used to send unicast
+messages to that Device Object and its member objects or properties. Here are
+the files that handle BACnet binding:
+
+    * address.c - This module is used to handle the address binding that occurs
+in BACnet. A device id is bound to a MAC address. The normal method is using
+Who-Is, and binding with the data from I-Am. This is needed for client
+functionality.
+    * tsm.c - Transaction State Machine handles resending messages if a timeout
+occurs, and is needed for client functionality. The transaction state machine is
+used for Confirmed messages and segmentation. For confirmed messages, it
+automatically (via tsm_timer_milliseconds) handles the retries and the timeout.
+It uses the InvokeID as the unique key (although officially it should be the
+combination of InvokeID, DeviceID, and service). So if you tried to send a
+confirmed request to a device that was taken offline, you would see the retry go
+out after every apdu_timeout until apdu retries had completed. Then the
+transaction would self-delete (free). The stack as it is written (and most
+stacks are written this way) has a limited amount of transactions, and if you
+are sending alot of confirmed data, it can be a bottleneck if they are not freed
+in a timely manner.
+
+This BACnet stack includes a number of example objects. The reason that they are
+examples is because your device and its objects and their properties will
+undoubtedly be unique to your product. The example objects in this BACnet stack
+are the same and contiguous for each object represented - but this is not
+required. This stack does not include an example of every type of BACnet object
+or property - but have no fear! Adding a new object type is mostly just a matter
+of adding all the data encoding/decoding for that object for each service and
+property supported. When a new object is added, it must also add some API hooks
+in the Device Object, since the Device Object contains an object list. The
+example object files in the BACnet stack include:
+
+    * demo/object/ai.c - analog input object demo
+    * demo/object/ao.c - analog output object demo
+    * demo/object/av.c - analog value object demo
+    * demo/object/bacfile.c - File object demo
+    * demo/object/device.c - device object demo
+    * demo/object/bi.c - binary input object demo
+    * demo/object/bo.c - binary output object demo
+    * demo/object/bv.c - binary value object demo
+    * demo/object/lc.c - load control object demo
+    * demo/object/lsp.c - life safety point object demo
+    * demo/object/mso.c - multi-step output object demo
+
+The BACnet stack includes a number of core files that handle the service 
+packets that come in from the datalink layer. The core files include:
+
+    * apdu.c - handles dispatching the services to the proper handlers
+    * bacdcode.c - primitive BACnet datatype encoding and decoding
+    * bacint.c - primitive BACnet integer datatype encoding and decoding
+    * bacreal.c - primitive BACnet REAL datatype encoding and decoding
+    * bacstr.c - primative BACnet string datatype encoding and decoding
+    * bacapp.c - application data encoding and decoding
+    * npdu.c - encoding and decoding of the NPDU layer data
+    * demo/handler/h_npdu.c - handles dispatching of the network message
+            to the apdu dispatcher.
+
+The DataLink Layer controls orderly access to the physical medium. 
+The stack currently supports one datalink layer at a time, and uses a 
+macro defined in config.h or your makefile/project to choose the macro 
+functions defined in datalink.h. The following files are used for the 
+datalink handling in this BACnet stack, and may have to be developed for 
+your particular hardware:
+
+    * bip.c - BACnet/IP functionality - depends on bip_init.c in port/xx
+    * dllmstp.c - MS/TP datalink layer, also in port/xx
+    * mstp.c - MS/TP master and receive state machine
+    * crc.c - computes CRC checksum for MS/TP
+    * ringbuf.c - MS/TP ring buffer used for testing
+    * arcnet.c - ARCNET datalink layer functionality, in port/xx
+    * ethernet.c - BACnet Ethernet datalink layer functionality, in port/xx
+
+There are a dozen demonstration applications in the demo directory, 
+along with many demonstation objects and handlers. All the demos accept 
+command line options and have been tested under Win32 and Linux. 
+There is a makefile in the respective demo directory for Linux and 
+for Borland C++ compilers, and a master makefile at the root level 
+(Makefile=Linux, makefile.b32=Borland).
+
+The simplest demonstration is to run demo/server/bacserv on one PC (or 
+virtual PC), and run the other client demonstration applications one 
+at time on another PC (or virtual PC). Monitor the network communcations 
+using Wireshark protocol analyzer, or test the BACnet server using 
+BACnet Visual Test Shell VTS3.

@@ -1,0 +1,30 @@
+# use glob syntax.
+syntax: glob
+
+*.o
+*.exe
+*.bak
+*~
+*.dep
+*.orig
+*.hex
+*.map
+*.bin
+*.out
+*.sim
+*.dbgdt
+*.dni
+*.jlink
+*.wsdt
+*.config
+*.pbd
+*.ewd
+*.d
+*.r90
+*.r90
+*.s90
+*.pbi
+*.cap
+*.pcapng
+*.pcap
+*.patch
