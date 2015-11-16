@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="GenerateTemplate; Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
@@ -29,18 +29,20 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\x86\$(Configuration)</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DeployExtension>False</DeployExtension>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\x86\$(Configuration)</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DeployExtension>False</DeployExtension>
   </PropertyGroup>
   <ItemGroup>
     <!--
@@ -66,7 +68,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
-
   <Target Name="GenerateTemplate">
     <CallTarget Targets="ExportTemplate" RunEachTargetSeparately="true" />
     <CallTarget Targets="ZipTemplate" RunEachTargetSeparately="true" />
@@ -123,17 +124,14 @@
       <ToZipConsole Include="$(OutputPath)\Staged\BlankConsoleApplicationCpp\*.*" />
       <ToZipWiring Include="$(OutputPath)\Staged\WiringAppCpp\*.*" />
     </ItemGroup>
-
     <Zip Files="@(ToZipBSCpp)" WorkingDirectory="$(OutputPath)\Staged\BackgroundServiceCpp" ZipFileName="ProjectTemplates\VC\Windows\Windows IoT Core\BackgroundSericeCpp.zip" />
     <Zip Files="@(ToZipBSCs)" WorkingDirectory="$(OutputPath)\Staged\BackgroundServiceCsharp" ZipFileName="ProjectTemplates\CSharp\Windows\Windows IoT Core\BackgroundServiceCsharp.zip" />
     <Zip Files="@(ToZipBSJs)" WorkingDirectory="$(OutputPath)\Staged\BackgroundServiceJs" ZipFileName="ProjectTemplates\JavaScript\Windows\Windows IoT Core\BackgroundServiceJs.zip" />
     <Zip Files="@(ToZipBSVb)" WorkingDirectory="$(OutputPath)\Staged\BackgroundServiceVb" ZipFileName="ProjectTemplates\VisualBasic\Windows\Windows IoT Core\BackgroundServiceVb.zip" />
     <Zip Files="@(ToZipConsole)" WorkingDirectory="$(OutputPath)\Staged\BlankConsoleApplicationCpp" ZipFileName="ProjectTemplates\VC\Windows\Windows IoT Core\BlankConsoleApplicationCpp.zip" />
     <Zip Files="@(ToZipWiring)" WorkingDirectory="$(OutputPath)\Staged\WiringAppCpp" ZipFileName="ProjectTemplates\VC\Windows\Windows IoT Core\WiringApplication.zip" />
-
   </Target>
   <Target Name="CleanTemplate">
     <RemoveDir Directories="$(OutputPath)\Staged" />
   </Target>
-
 </Project>
