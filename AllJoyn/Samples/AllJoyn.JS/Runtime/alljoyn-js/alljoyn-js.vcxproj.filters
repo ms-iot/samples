@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <DUKTAPE_DIST Condition="'$(DUKTAPE_DIST)' == ''">$(ProjectDir)..\..\External\duktape</DUKTAPE_DIST>
+    <ALLSEEN_DIST Condition="'$(ALLSEEN_DIST)' == ''">$(ProjectDir)..\..\External\allseen</ALLSEEN_DIST>
+  </PropertyGroup>  
+  <ItemGroup>
+    <Filter Include="alljoyn-js">
+      <UniqueIdentifier>{21ef26e7-7592-404c-9ce7-8da714a36c57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="alljoyn-js\win32">
+      <UniqueIdentifier>{c0c4010c-76f7-4a70-b271-eb7d318105d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base_tcl">
+      <UniqueIdentifier>{35f21c1e-7158-4264-910a-8451e8fadb66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base_tcl\services_common">
+      <UniqueIdentifier>{e04181fa-40d0-4315-a5ce-d68fc4332aab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base_tcl\services_common\src">
+      <UniqueIdentifier>{6b9417af-8d9e-4d90-8e97-a2c7169d1185}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base_tcl\notification">
+      <UniqueIdentifier>{20120f28-3ff7-4766-8936-b4c85d6bd606}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base_tcl\notification\src">
+      <UniqueIdentifier>{b3facb6b-8e54-42f2-bb7c-92dbc75e9093}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base_tcl\notification\src\NotificationCommon">
+      <UniqueIdentifier>{f49e246e-31b9-4491-9bca-50e9777bb3d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base_tcl\notification\src\NotificationProducer">
+      <UniqueIdentifier>{0f27ae09-4ff0-4a42-bfc8-c7f82e979e6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base_tcl\config">
+      <UniqueIdentifier>{966952d3-91eb-4cd8-bf6c-ff101b552807}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base_tcl\config\src">
+      <UniqueIdentifier>{fb0ac43d-53a1-4649-8e66-b9a0355731e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base_tcl\contropanel">
+      <UniqueIdentifier>{eecdcbd8-5c9e-467f-a880-a6052d974b16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base_tcl\contropanel\src">
+      <UniqueIdentifier>{277ae9a7-1e1d-428a-a3fe-e238d71b4bc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base_tcl\contropanel\src\CPSControllee">
+      <UniqueIdentifier>{26c19044-12df-468d-94fe-d35be896e961}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base_tcl\contropanel\src\CPSControllee\Common">
+      <UniqueIdentifier>{595861de-0221-4d60-9f4c-2d3d0cd47df1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base_tcl\contropanel\src\CPSControllee\Widgets">
+      <UniqueIdentifier>{7887d45c-a905-45d6-8da5-b29b5e343ee3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="duktape">
+      <UniqueIdentifier>{3fedadda-9e43-4251-be7a-394871225d34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="duktape\src">
+      <UniqueIdentifier>{eb30ddf8-1abe-4e05-afac-daf6e670d222}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs.c">
+      <Filter>alljoyn-js</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_attach.c">
+      <Filter>alljoyn-js</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_cmdline.c">
+      <Filter>alljoyn-js</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_console.c">
+      <Filter>alljoyn-js</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_cps.c">
+      <Filter>alljoyn-js</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_ctrlpanel.c">
+      <Filter>alljoyn-js</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_debugger.c">
+      <Filter>alljoyn-js</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_extstr.c">
+      <Filter>alljoyn-js</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_handlers.c">
+      <Filter>alljoyn-js</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_heap.c">
+      <Filter>alljoyn-js</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_io.c">
+      <Filter>alljoyn-js</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_marshal.c">
+      <Filter>alljoyn-js</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_msgloop.c">
+      <Filter>alljoyn-js</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_notif.c">
+      <Filter>alljoyn-js</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_obs_stubs.c">
+      <Filter>alljoyn-js</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_propstore.c">
+      <Filter>alljoyn-js</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_services.c">
+      <Filter>alljoyn-js</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_sessions.c">
+      <Filter>alljoyn-js</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_tables.c">
+      <Filter>alljoyn-js</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_timer.c">
+      <Filter>alljoyn-js</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_translations.c">
+      <Filter>alljoyn-js</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_unmarshal.c">
+      <Filter>alljoyn-js</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_util.c">
+      <Filter>alljoyn-js</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\win32\ajs_main.c">
+      <Filter>alljoyn-js\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\win32\ajs_malloc.c">
+      <Filter>alljoyn-js\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_storage_default.c">
+      <Filter>alljoyn-js</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\win32\ajs_stubs.c">
+      <Filter>alljoyn-js\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\services\base_tcl\controlpanel\src\CPSControllee\Widgets\ActionWidget.c">
+      <Filter>base_tcl\contropanel\src\CPSControllee\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\services\base_tcl\controlpanel\src\CPSControllee\Common\BaseWidget.c">
+      <Filter>base_tcl\contropanel\src\CPSControllee\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\services\base_tcl\config\src\ConfigService.c">
+      <Filter>base_tcl\config\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\services\base_tcl\controlpanel\src\CPSControllee\Common\ConstraintList.c">
+      <Filter>base_tcl\contropanel\src\CPSControllee\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\services\base_tcl\controlpanel\src\CPSControllee\Common\ConstraintRange.c">
+      <Filter>base_tcl\contropanel\src\CPSControllee\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\services\base_tcl\controlpanel\src\CPSControllee\Widgets\ContainerWidget.c">
+      <Filter>base_tcl\contropanel\src\CPSControllee\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\services\base_tcl\controlpanel\src\CPSControllee\Common\ControlMarshalUtil.c">
+      <Filter>base_tcl\contropanel\src\CPSControllee\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\services\base_tcl\controlpanel\src\CPSControllee\ControlPanelInterfaces.c">
+      <Filter>base_tcl\contropanel\src\CPSControllee</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\services\base_tcl\controlpanel\src\CPSControllee\ControlPanelService.c">
+      <Filter>base_tcl\contropanel\src\CPSControllee</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\services\base_tcl\controlpanel\src\CPSControllee\Common\DateTimeUtil.c">
+      <Filter>base_tcl\contropanel\src\CPSControllee\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\services\base_tcl\controlpanel\src\CPSControllee\Widgets\DialogWidget.c">
+      <Filter>base_tcl\contropanel\src\CPSControllee\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\services\base_tcl\controlpanel\src\CPSControllee\Common\HttpControl.c">
+      <Filter>base_tcl\contropanel\src\CPSControllee\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\services\base_tcl\controlpanel\src\CPSControllee\Widgets\LabelWidget.c">
+      <Filter>base_tcl\contropanel\src\CPSControllee\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\services\base_tcl\notification\src\NotificationCommon\NotificationCommon.c">
+      <Filter>base_tcl\notification\src\NotificationCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\services\base_tcl\notification\src\NotificationProducer\NotificationProducer.c">
+      <Filter>base_tcl\notification\src\NotificationProducer</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\services\base_tcl\controlpanel\src\CPSControllee\Widgets\PropertyWidget.c">
+      <Filter>base_tcl\contropanel\src\CPSControllee\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\services\base_tcl\services_common\src\ServicesCommon.c">
+      <Filter>base_tcl\services_common\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\services\base_tcl\services_common\src\ServicesHandlers.c">
+      <Filter>base_tcl\services_common\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(DUKTAPE_DIST)\src\duktape.c">
+      <Filter>duktape\src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs.h">
+      <Filter>alljoyn-js</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_cmdline.h">
+      <Filter>alljoyn-js</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_ctrlpanel.h">
+      <Filter>alljoyn-js</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_debugger.h">
+      <Filter>alljoyn-js</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_duk.h">
+      <Filter>alljoyn-js</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_heap.h">
+      <Filter>alljoyn-js</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_io.h">
+      <Filter>alljoyn-js</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_propstore.h">
+      <Filter>alljoyn-js</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_services.h">
+      <Filter>alljoyn-js</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_target.h">
+      <Filter>alljoyn-js</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_translations.h">
+      <Filter>alljoyn-js</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_util.h">
+      <Filter>alljoyn-js</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ALLSEEN_DIST)\core\alljoyn-js\win32\duk_custom.h">
+      <Filter>alljoyn-js\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="$(DUKTAPE_DIST)\src\duktape.h">
+      <Filter>duktape\src</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="62">
+  <logicalFolder name="root" displayName="root" projectFiles="true">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <itemPath>../stdbool.h</itemPath>
+      <itemPath>../stdint.h</itemPath>
+      <itemPath>../rs485.h</itemPath>
+      <itemPath>../mstp.h</itemPath>
+      <itemPath>../../../include/bits.h</itemPath>
+      <itemPath>../../../include/abort.h</itemPath>
+      <itemPath>../../../include/apdu.h</itemPath>
+      <itemPath>../../../include/bacaddr.h</itemPath>
+      <itemPath>../../../include/bacapp.h</itemPath>
+      <itemPath>../../../include/bacdcode.h</itemPath>
+      <itemPath>../../../include/bacdef.h</itemPath>
+      <itemPath>../../../include/bacenum.h</itemPath>
+      <itemPath>../../../include/bacerror.h</itemPath>
+      <itemPath>../../../include/bacint.h</itemPath>
+      <itemPath>../../../include/bacprop.h</itemPath>
+      <itemPath>../../../include/bacreal.h</itemPath>
+      <itemPath>../../../include/bacstr.h</itemPath>
+      <itemPath>../../../include/bigend.h</itemPath>
+      <itemPath>../../../include/config.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="LinkerScript"
+                   displayName="Linker Files"
+                   projectFiles="true">
+      <itemPath>../18F6720.lkr</itemPath>
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <itemPath>../../../src/abort.c</itemPath>
+      <itemPath>../../../src/bacapp.c</itemPath>
+      <itemPath>../../../src/bacdcode.c</itemPath>
+      <itemPath>../../../src/bacerror.c</itemPath>
+      <itemPath>../../../src/bacstr.c</itemPath>
+      <itemPath>../../../src/crc.c</itemPath>
+      <itemPath>../../../src/dcc.c</itemPath>
+      <itemPath>../../../src/iam.c</itemPath>
+      <itemPath>../../../src/rd.c</itemPath>
+      <itemPath>../../../src/reject.c</itemPath>
+      <itemPath>../../../src/rp.c</itemPath>
+      <itemPath>../../../src/whois.c</itemPath>
+      <itemPath>../../../demo/handler/h_dcc.c</itemPath>
+      <itemPath>../../../demo/handler/h_rd.c</itemPath>
+      <itemPath>../main.c</itemPath>
+      <itemPath>../dlmstp.c</itemPath>
+      <itemPath>../device.c</itemPath>
+      <itemPath>../rs485.c</itemPath>
+      <itemPath>../isr.c</itemPath>
+      <itemPath>../../../src/datetime.c</itemPath>
+      <itemPath>../../../demo/handler/txbuf.c</itemPath>
+      <itemPath>../../../demo/handler/h_whois.c</itemPath>
+      <itemPath>../mstp.c</itemPath>
+      <itemPath>../bv.c</itemPath>
+      <itemPath>../ai.c</itemPath>
+      <itemPath>../bi.c</itemPath>
+      <itemPath>../av.c</itemPath>
+      <itemPath>../../../src/wp.c</itemPath>
+      <itemPath>../../../demo/handler/h_npdu.c</itemPath>
+      <itemPath>../../../demo/handler/s_iam.c</itemPath>
+      <itemPath>../../../src/bacreal.c</itemPath>
+      <itemPath>../../../src/bacint.c</itemPath>
+      <itemPath>../../../src/npdu.c</itemPath>
+      <itemPath>../apdu.c</itemPath>
+      <itemPath>../../../demo/handler/noserv.c</itemPath>
+      <itemPath>../../../src/fifo.c</itemPath>
+      <itemPath>../../../demo/handler/h_rp.c</itemPath>
+      <itemPath>../../../demo/handler/h_wp.c</itemPath>
+      <itemPath>../../../src/bacaddr.c</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceRootList>
+    <Elem>../</Elem>
+  </sourceRootList>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="default" type="2">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <targetDevice>PIC18F6720</targetDevice>
+        <targetHeader></targetHeader>
+        <targetPluginBoard></targetPluginBoard>
+        <platformTool>ICD3PlatformTool</platformTool>
+        <languageToolchain>C18</languageToolchain>
+        <languageToolchainVersion>3.40</languageToolchainVersion>
+        <platform>2</platform>
+      </toolsSet>
+      <compileType>
+        <linkerTool>
+          <linkerLibItems>
+          </linkerLibItems>
+        </linkerTool>
+        <loading>
+          <useAlternateLoadableFile>false</useAlternateLoadableFile>
+          <alternateLoadableFile></alternateLoadableFile>
+        </loading>
+      </compileType>
+      <makeCustomizationType>
+        <makeCustomizationPreStepEnabled>false</makeCustomizationPreStepEnabled>
+        <makeCustomizationPreStep></makeCustomizationPreStep>
+        <makeCustomizationPostStepEnabled>false</makeCustomizationPostStepEnabled>
+        <makeCustomizationPostStep></makeCustomizationPostStep>
+        <makeCustomizationPutChecksumInUserID>false</makeCustomizationPutChecksumInUserID>
+        <makeCustomizationEnableLongLines>false</makeCustomizationEnableLongLines>
+        <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>
+      </makeCustomizationType>
+      <C18>
+        <property key="code-model" value="ms"/>
+        <property key="data-model" value="oa-"/>
+        <property key="default-char-unsigned" value="false"/>
+        <property key="enable-all-optimizations" value="true"/>
+        <property key="enable-int-promotion" value="false"/>
+        <property key="enable-multi-bank-stack-model" value="false"/>
+        <property key="enable-ob" value="true"/>
+        <property key="enable-od" value="true"/>
+        <property key="enable-om" value="true"/>
+        <property key="enable-on" value="true"/>
+        <property key="enable-op" value="true"/>
+        <property key="enable-opa" value="true"/>
+        <property key="enable-or" value="true"/>
+        <property key="enable-os" value="true"/>
+        <property key="enable-ot" value="true"/>
+        <property key="enable-ou" value="true"/>
+        <property key="enable-ow" value="true"/>
+        <property key="extra-include-directories"
+                  value="..\;..\..\..\include;..\..\..\demo\object"/>
+        <property key="optimization-master" value="Enable all"/>
+        <property key="preprocessor-macros"
+                  value="PRINT_ENABLED=0;BACDL_MSTP=1;BIG_ENDIAN=0;MAX_APDU=50;MAX_TSM_TRANSACTIONS=0;BACAPP_MINIMAL"/>
+        <property key="procedural-abstraction-passes" value="0"/>
+        <property key="storage-class" value="sca"/>
+        <property key="verbose" value="false"/>
+        <property key="warning-level" value="2"/>
+      </C18>
+      <C18-AS>
+        <property key="cross.reference.file" value=""/>
+        <property key="default.radix" value="HEX"/>
+        <property key="enable.case.sensitivity" value="true"/>
+        <property key="hex.output.format" value="INHX32"/>
+        <property key="preprocessor.macros" value=""/>
+        <property key="warning.level" value="0"/>
+      </C18-AS>
+      <C18-LD>
+        <property key="cod-file" value="false"/>
+        <property key="extra-lib-directories" value=""/>
+        <property key="hex-output-format" value="INHX32"/>
+        <property key="map-file" value=""/>
+      </C18-LD>
+      <C18LanguageToolchain>
+        <property key="extended-mode" value="false"/>
+        <property key="extended-mode-mcc18" value="false"/>
+        <property key="extended-mode-mpasm" value="false"/>
+        <property key="extended-mode-mplink" value="false"/>
+        <property key="stack-analysis" value="false"/>
+        <property key="stack-analysis-mcc18" value="false"/>
+        <property key="stack-analysis-mplink" value="false"/>
+      </C18LanguageToolchain>
+      <ICD3PlatformTool>
+        <property key="tracecontrol.disablemacros" value="true"/>
+        <property key="tracecontrol.medium" value="0"/>
+        <property key="tracecontrol.select" value="0"/>
+      </ICD3PlatformTool>
+    </conf>
+  </confs>
+</configurationDescriptor>

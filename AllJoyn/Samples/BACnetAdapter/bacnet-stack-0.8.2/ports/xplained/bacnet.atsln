@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "bacnet", "bacnet.cproj", "{EA031B72-CE11-41CC-BFDC-00625D02A537}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Debug-XPLAINED|AVR = Debug-XPLAINED|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EA031B72-CE11-41CC-BFDC-00625D02A537}.Debug|AVR.ActiveCfg = Debug|AVR
+		{EA031B72-CE11-41CC-BFDC-00625D02A537}.Debug|AVR.Build.0 = Debug|AVR
+		{EA031B72-CE11-41CC-BFDC-00625D02A537}.Debug-XPLAINED|AVR.ActiveCfg = Debug-XPLAINED|AVR
+		{EA031B72-CE11-41CC-BFDC-00625D02A537}.Debug-XPLAINED|AVR.Build.0 = Debug-XPLAINED|AVR
+		{EA031B72-CE11-41CC-BFDC-00625D02A537}.Release|AVR.ActiveCfg = Release|AVR
+		{EA031B72-CE11-41CC-BFDC-00625D02A537}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

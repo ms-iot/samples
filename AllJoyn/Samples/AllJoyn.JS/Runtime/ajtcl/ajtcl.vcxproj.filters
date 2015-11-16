@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ALLSEEN_DIST Condition="'$(ALLSEEN_DIST)' == ''">$(ProjectDir)..\..\External\allseen</ALLSEEN_DIST>
+  </PropertyGroup>
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{b7c59368-c203-4563-bc02-18c38e62b103}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="target">
+      <UniqueIdentifier>{9d31d252-e058-4bf2-9f0d-d0b71dea84cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="target\win32">
+      <UniqueIdentifier>{e157d57f-3b7f-416f-979b-b66167cfb002}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="malloc">
+      <UniqueIdentifier>{b7d0a385-f918-43b0-bc4d-49d42f3aa68d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external">
+      <UniqueIdentifier>{c6728338-1da7-494f-a5f4-819275aca60a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\sha2">
+      <UniqueIdentifier>{43a29084-afca-4a86-8902-764889b3d9f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="crypto">
+      <UniqueIdentifier>{a7de41de-7b63-4e82-950c-9cca94b40b75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="crypto\ecc">
+      <UniqueIdentifier>{ef05f29f-f706-4fd3-a7c7-fa62ddde2d46}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\crypto\ecc\aj_crypto_sha2.c">
+      <Filter>crypto\ecc</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\crypto\ecc\aj_crypto_ecc.c">
+      <Filter>crypto\ecc</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\crypto\aj_sw_crypto.c">
+      <Filter>crypto</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\malloc\aj_malloc.c">
+      <Filter>malloc</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\external\sha2\sha2.c">
+      <Filter>external\sha2</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_about.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_ardp.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_authentication.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_bufio.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_bus.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_cert.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_connect.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_crc16.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_creds.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_crypto.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_debug.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_disco.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_guid.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_helper.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_init.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_introspect.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_link_timeout.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_msg.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_nvram.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_peer.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_serial.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_serial_rx.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_serial_tx.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_std.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_util.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\target\win32\aj_net.c">
+      <Filter>target\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\target\win32\aj_target_crypto.c">
+      <Filter>target\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\target\win32\aj_target_nvram.c">
+      <Filter>target\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\target\win32\aj_target_util.c">
+      <Filter>target\win32</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(ALLSEEN_DIST)\core\ajtcl\malloc\aj_malloc.h">
+      <Filter>malloc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ALLSEEN_DIST)\core\ajtcl\external\sha2\sha2.h">
+      <Filter>external\sha2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ALLSEEN_DIST)\core\ajtcl\target\win32\aj_target.h">
+      <Filter>target\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ALLSEEN_DIST)\core\ajtcl\target\win32\aj_target_nvram.h">
+      <Filter>target\win32</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<BridgeConfig>
+  <Settings>
+    <Bridge>
+       <KEYX></KEYX>
+    </Bridge>
+    <Device>
+       <DefaultVisibility>true</DefaultVisibility>
+       <KEYX></KEYX>
+       <USERNAME></USERNAME>
+       <PASSWORD></PASSWORD>
+       <ECDHEECDSAPRIVATEKEY></ECDHEECDSAPRIVATEKEY>
+       <ECDHEECDSACERTCHAIN></ECDHEECDSACERTCHAIN>
+    </Device>
+  </Settings>
+    <AdapterDevices>
+    </AdapterDevices>
+</BridgeConfig>

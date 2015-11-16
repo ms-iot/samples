@@ -1,0 +1,103 @@
+.\" Process this file with
+.\" groff -man -Tascii bacwi.1
+.\" Contact <skarg@users.sourceforge.net> to correct errors or ommissions
+.TH bacwi 1 "May 2008" "0.4.5" "BACnet Stack at SourceForge Tool Manual"
+.SH NAME
+bacwi \- send BACnet WhoIs service request to BACnet devices
+.SH SYNOPSIS
+
+.B bacwi device-instance | device-instance-min device-instance-max
+
+.SH DESCRIPTION
+.B bacwi uses the BACnet WhoIs service request to elicit
+an I-Am service response from one or more BACnet devices
+on the network.  I-Am responses include a Device Object-Identifier,
+a Vendor-Identifier, a Max-APDU size, and segmentation information.
+By its nature, I-Am responses include the source address and 
+any network layer information necessary to communicate with the
+device.
+
+.SH OPTIONS
+.IP device-instance
+Device object instance number that you are trying to
+send a Who-Is service request.  The value should be in
+the range of 0 to 4194303.  A range of values can also be
+specified by using a minimum value and a maximum value
+option.
+
+.IP "device-instance-min"
+For specifying a range of Device object instance numbers,
+this is the starting value.
+
+.IP "device-instance-max"
+For specifying a range of Device object instance numbers,
+this is the ending value.
+
+.SH FILES
+.I address_cache
+.RS
+A cache that is read for static binding. See
+.BR address_cache (5)
+for further details.
+.SH ENVIRONMENT
+.IP BACNET_IP_PORT
+If non-null, the number of the UDP port for BACnet/IP datalink.
+The default UDP port number is 47808 (0xBAC0).
+.IP BACNET_IFACE
+If non-null, the device name for the datalink.
+The default is "eth0".
+.IP BACNET_BBMD_PORT
+If non-null, the number of the UDP port that the BBMD is using.
+The default UDP port number is 47808 (0xBAC0).
+Used for BACnet/IP datalink only.
+.IP BACNET_BBMD_TIMETOLIVE
+If non-null, the number of seconds used in the Foreign Device
+Registration.  A 16-bit unsigned value of 0 to 65535 is expected.
+The default number of seconds is 65535 (0xFFFF).
+Used for BACnet/IP datalink only.
+.IP BACNET_BBMD_ADDRESS
+If non-null, the IP address of the BBMD that is handling the
+Foreign Device Registration.  If this environment variable is
+missing or NULL, then Foreign Device Registration does not occur.
+Used for BACnet/IP datalink only.
+.IP BACNET_MAX_INFO_FRAMES
+If non-null, the Max-Info-Frames value between 1 and 255.
+The default number of frames is 1.
+Used for BACnet MS/TP datalink only.
+.IP BACNET_MAX_MASTER
+If non-null, the Max-Master value between 1 and 127.
+The default Max-Master is 127.
+Used for BACnet MS/TP datalink only.
+.IP BACNET_MSTP_BAUD
+If non-null, a value baud rate of 9600, 19200, 38400, 57600,
+and 115200.  
+The default baud rate is 9600.
+Used for BACnet MS/TP datalink only.
+.IP BACNET_MSTP_MAC
+If non-null, the MS/TP MAC address value between 0 and 127.
+The default MAC address is 0.
+Used for BACnet MS/TP datalink only.
+.SH DIAGNOSTICS
+The following diagnostics may be issued on stderr:
+
+device-instance=x - it must be less than 4194304
+object-type=x - it must be less than 1024
+object-instance=x - it must be less than 4194304
+property=%u - it must be less than 4194304
+.SH BUGS
+No bugs are known to exist at this time.
+.SH AUTHOR
+Steve Karg <skarg@users.sourceforge.net>
+.SH "SEE ALSO"
+.BR bacarf (1),
+.BR bacawf (1),
+.BR bacdcc (1),
+.BR bacepics (1),
+.BR bacrd (1),
+.BR bacrp (1),
+.BR bacserv (1),
+.BR bacts (1),
+.BR bacucov (1),
+.BR bacwh (1),
+.BR bacwp (1),
+.BR address_cache (5)

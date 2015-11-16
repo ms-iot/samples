@@ -1,0 +1,316 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <DUKTAPE_DIST Condition="'$(DUKTAPE_DIST)' == ''">$(ProjectDir)..\..\External\duktape</DUKTAPE_DIST>
+    <ALLSEEN_DIST Condition="'$(ALLSEEN_DIST)' == ''">$(ProjectDir)..\..\External\allseen</ALLSEEN_DIST>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|ARM">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM">
+      <Configuration>Release</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_attach.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_cmdline.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_console.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_cps.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_ctrlpanel.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_debugger.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_extstr.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_handlers.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_heap.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_io.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_marshal.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_msgloop.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_notif.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_obs_stubs.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_propstore.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_services.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_sessions.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_storage_default.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_tables.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_timer.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_translations.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_unmarshal.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_util.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\win32\ajs_main.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\win32\ajs_malloc.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\alljoyn-js\win32\ajs_stubs.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\services\base_tcl\config\src\ConfigService.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\services\base_tcl\controlpanel\src\CPSControllee\Common\BaseWidget.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\services\base_tcl\controlpanel\src\CPSControllee\Common\ConstraintList.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\services\base_tcl\controlpanel\src\CPSControllee\Common\ConstraintRange.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\services\base_tcl\controlpanel\src\CPSControllee\Common\ControlMarshalUtil.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\services\base_tcl\controlpanel\src\CPSControllee\Common\DateTimeUtil.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\services\base_tcl\controlpanel\src\CPSControllee\Common\HttpControl.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\services\base_tcl\controlpanel\src\CPSControllee\ControlPanelInterfaces.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\services\base_tcl\controlpanel\src\CPSControllee\ControlPanelService.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\services\base_tcl\controlpanel\src\CPSControllee\Widgets\ActionWidget.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\services\base_tcl\controlpanel\src\CPSControllee\Widgets\ContainerWidget.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\services\base_tcl\controlpanel\src\CPSControllee\Widgets\DialogWidget.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\services\base_tcl\controlpanel\src\CPSControllee\Widgets\LabelWidget.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\services\base_tcl\controlpanel\src\CPSControllee\Widgets\PropertyWidget.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\services\base_tcl\notification\src\NotificationCommon\NotificationCommon.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\services\base_tcl\notification\src\NotificationProducer\NotificationProducer.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\services\base_tcl\services_common\src\ServicesCommon.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\services\base_tcl\services_common\src\ServicesHandlers.c" />
+    <ClCompile Include="$(DUKTAPE_DIST)\src\duktape.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs.h" />
+    <ClInclude Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_cmdline.h" />
+    <ClInclude Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_ctrlpanel.h" />
+    <ClInclude Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_debugger.h" />
+    <ClInclude Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_duk.h" />
+    <ClInclude Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_heap.h" />
+    <ClInclude Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_io.h" />
+    <ClInclude Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_propstore.h" />
+    <ClInclude Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_services.h" />
+    <ClInclude Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_target.h" />
+    <ClInclude Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_translations.h" />
+    <ClInclude Include="$(ALLSEEN_DIST)\core\alljoyn-js\ajs_util.h" />
+    <ClInclude Include="$(ALLSEEN_DIST)\core\alljoyn-js\win32\duk_custom.h" />
+    <ClInclude Include="$(DUKTAPE_DIST)\src\duktape.h" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{1f4151be-c46a-488b-8e46-520496517c68}</ProjectGuid>
+    <Keyword>StaticLibrary</Keyword>
+    <ProjectName>alljoyn-js</ProjectName>
+    <RootNamespace>alljoyn_js</RootNamespace>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
+    <AppContainerApplication>true</AppContainerApplication>
+    <ApplicationType>Windows Store</ApplicationType>
+    <WindowsTargetPlatformVersion>10.0.10240.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.10240.0</WindowsTargetPlatformMinVersion>
+    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ALLSEEN_DIST)\core\alljoyn-js;$(ALLSEEN_DIST)\core\alljoyn-js\win32;$(ALLSEEN_DIST)\core\ajtcl\inc;$(ALLSEEN_DIST)\core\ajtcl\target\win32;$(ALLSEEN_DIST)\services\base_tcl\config\inc;$(ALLSEEN_DIST)\services\base_tcl\services_common\inc;$(ALLSEEN_DIST)\services\base_tcl\notification\inc;$(ALLSEEN_DIST)\services\base_tcl\controlpanel\inc;$(ALLSEEN_DIST)\services\base_tcl\onboarding\inc;$(ALLSEEN_DIST)\services\base_tcl\sample_apps\inc;$(DUKTAPE_DIST)\src;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>CONFIG_SERVICE;NOTIFICATION_SERVICE_PRODUCER;CONTROLPANEL_SERVICE;ONBOARDING_SERVICE;DUK_OPT_DPRINT_COLORS;DUK_OPT_DEBUG_BUFSIZE=256;DUK_OPT_HAVE_CUSTOM_H;DUK_OPT_NO_FILE_IO;DUK_OPT_FORCE_ALIGN=4;DDUK_OPT_LIGHTFUNC_BUILTINS;DDUK_OPT_FASTINT;DUK_OPT_INTERRUPT_COUNTER;"DUK_OPT_EXEC_TIMEOUT_CHECK(u)=AJS_ExecTimeoutCheck(u)";_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile />
+      <PrecompiledHeaderOutputFile />
+      <DisableSpecificWarnings>28204;4267;4806;4018;4996;4551;4700;4703</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+    </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ALLSEEN_DIST)\core\alljoyn-js;$(ALLSEEN_DIST)\core\alljoyn-js\win32;$(ALLSEEN_DIST)\core\ajtcl\inc;$(ALLSEEN_DIST)\core\ajtcl\target\win32;$(ALLSEEN_DIST)\services\base_tcl\config\inc;$(ALLSEEN_DIST)\services\base_tcl\services_common\inc;$(ALLSEEN_DIST)\services\base_tcl\notification\inc;$(ALLSEEN_DIST)\services\base_tcl\controlpanel\inc;$(ALLSEEN_DIST)\services\base_tcl\onboarding\inc;$(ALLSEEN_DIST)\services\base_tcl\sample_apps\inc;$(DUKTAPE_DIST)\src;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>CONFIG_SERVICE;NOTIFICATION_SERVICE_PRODUCER;CONTROLPANEL_SERVICE;ONBOARDING_SERVICE;DUK_OPT_DPRINT_COLORS;DUK_OPT_DEBUG_BUFSIZE=256;DUK_OPT_HAVE_CUSTOM_H;DUK_OPT_NO_FILE_IO;DUK_OPT_FORCE_ALIGN=4;DDUK_OPT_LIGHTFUNC_BUILTINS;DDUK_OPT_FASTINT;DUK_OPT_INTERRUPT_COUNTER;"DUK_OPT_EXEC_TIMEOUT_CHECK(u)=AJS_ExecTimeoutCheck(u)";NDEBUG;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile />
+      <PrecompiledHeaderOutputFile />
+      <DisableSpecificWarnings>28204;4267;4806;4018;4996;4551;4700;4703</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+    </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|arm'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ALLSEEN_DIST)\core\alljoyn-js;$(ALLSEEN_DIST)\core\alljoyn-js\win32;$(ALLSEEN_DIST)\core\ajtcl\inc;$(ALLSEEN_DIST)\core\ajtcl\target\win32;$(ALLSEEN_DIST)\services\base_tcl\config\inc;$(ALLSEEN_DIST)\services\base_tcl\services_common\inc;$(ALLSEEN_DIST)\services\base_tcl\notification\inc;$(ALLSEEN_DIST)\services\base_tcl\controlpanel\inc;$(ALLSEEN_DIST)\services\base_tcl\onboarding\inc;$(ALLSEEN_DIST)\services\base_tcl\sample_apps\inc;$(DUKTAPE_DIST)\src;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>CONFIG_SERVICE;NOTIFICATION_SERVICE_PRODUCER;CONTROLPANEL_SERVICE;ONBOARDING_SERVICE;DUK_OPT_DPRINT_COLORS;DUK_OPT_DEBUG_BUFSIZE=256;DUK_OPT_HAVE_CUSTOM_H;DUK_OPT_NO_FILE_IO;DUK_OPT_FORCE_ALIGN=4;DDUK_OPT_LIGHTFUNC_BUILTINS;DDUK_OPT_FASTINT;DUK_OPT_INTERRUPT_COUNTER;"DUK_OPT_EXEC_TIMEOUT_CHECK(u)=AJS_ExecTimeoutCheck(u)";DUK_F_32BIT_PTRS;_ARM_WINAPI_PARTITION_DESKTOP_SDK_AVAILABLE=1;%(ClCompile.PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile />
+      <PrecompiledHeaderOutputFile />
+      <DisableSpecificWarnings>28204;4267;4806;4018;4996;4551;4700;4703</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+    </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|arm'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ALLSEEN_DIST)\core\alljoyn-js;$(ALLSEEN_DIST)\core\alljoyn-js\win32;$(ALLSEEN_DIST)\core\ajtcl\inc;$(ALLSEEN_DIST)\core\ajtcl\target\win32;$(ALLSEEN_DIST)\services\base_tcl\config\inc;$(ALLSEEN_DIST)\services\base_tcl\services_common\inc;$(ALLSEEN_DIST)\services\base_tcl\notification\inc;$(ALLSEEN_DIST)\services\base_tcl\controlpanel\inc;$(ALLSEEN_DIST)\services\base_tcl\onboarding\inc;$(ALLSEEN_DIST)\services\base_tcl\sample_apps\inc;$(DUKTAPE_DIST)\src;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>CONFIG_SERVICE;NOTIFICATION_SERVICE_PRODUCER;CONTROLPANEL_SERVICE;ONBOARDING_SERVICE;DUK_OPT_DPRINT_COLORS;DUK_OPT_DEBUG_BUFSIZE=256;DUK_OPT_HAVE_CUSTOM_H;DUK_OPT_NO_FILE_IO;DUK_OPT_FORCE_ALIGN=4;DDUK_OPT_LIGHTFUNC_BUILTINS;DDUK_OPT_FASTINT;DUK_OPT_INTERRUPT_COUNTER;"DUK_OPT_EXEC_TIMEOUT_CHECK(u)=AJS_ExecTimeoutCheck(u)";NDEBUG;DUK_F_32BIT_PTRS;_ARM_WINAPI_PARTITION_DESKTOP_SDK_AVAILABLE=1;%(ClCompile.PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile />
+      <PrecompiledHeaderOutputFile />
+      <DisableSpecificWarnings>28204;4267;4806;4018;4996;4551;4700;4703</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+    </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ALLSEEN_DIST)\core\alljoyn-js;$(ALLSEEN_DIST)\core\alljoyn-js\win32;$(ALLSEEN_DIST)\core\ajtcl\inc;$(ALLSEEN_DIST)\core\ajtcl\target\win32;$(ALLSEEN_DIST)\services\base_tcl\config\inc;$(ALLSEEN_DIST)\services\base_tcl\services_common\inc;$(ALLSEEN_DIST)\services\base_tcl\notification\inc;$(ALLSEEN_DIST)\services\base_tcl\controlpanel\inc;$(ALLSEEN_DIST)\services\base_tcl\onboarding\inc;$(ALLSEEN_DIST)\services\base_tcl\sample_apps\inc;$(DUKTAPE_DIST)\src;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>CONFIG_SERVICE;NOTIFICATION_SERVICE_PRODUCER;CONTROLPANEL_SERVICE;ONBOARDING_SERVICE;DUK_OPT_DPRINT_COLORS;DUK_OPT_DEBUG_BUFSIZE=256;DUK_OPT_HAVE_CUSTOM_H;DUK_OPT_NO_FILE_IO;DUK_OPT_FORCE_ALIGN=4;DDUK_OPT_LIGHTFUNC_BUILTINS;DDUK_OPT_FASTINT;DUK_OPT_INTERRUPT_COUNTER;"DUK_OPT_EXEC_TIMEOUT_CHECK(u)=AJS_ExecTimeoutCheck(u)";_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile />
+      <PrecompiledHeaderOutputFile />
+      <DisableSpecificWarnings>28204;4267;4806;4018;4996;4551;4700;4703</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+    </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ALLSEEN_DIST)\core\alljoyn-js;$(ALLSEEN_DIST)\core\alljoyn-js\win32;$(ALLSEEN_DIST)\core\ajtcl\inc;$(ALLSEEN_DIST)\core\ajtcl\target\win32;$(ALLSEEN_DIST)\services\base_tcl\config\inc;$(ALLSEEN_DIST)\services\base_tcl\services_common\inc;$(ALLSEEN_DIST)\services\base_tcl\notification\inc;$(ALLSEEN_DIST)\services\base_tcl\controlpanel\inc;$(ALLSEEN_DIST)\services\base_tcl\onboarding\inc;$(ALLSEEN_DIST)\services\base_tcl\sample_apps\inc;$(DUKTAPE_DIST)\src;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>CONFIG_SERVICE;NOTIFICATION_SERVICE_PRODUCER;CONTROLPANEL_SERVICE;ONBOARDING_SERVICE;DUK_OPT_DPRINT_COLORS;DUK_OPT_DEBUG_BUFSIZE=256;DUK_OPT_HAVE_CUSTOM_H;DUK_OPT_NO_FILE_IO;DUK_OPT_FORCE_ALIGN=4;DDUK_OPT_LIGHTFUNC_BUILTINS;DDUK_OPT_FASTINT;DUK_OPT_INTERRUPT_COUNTER;"DUK_OPT_EXEC_TIMEOUT_CHECK(u)=AJS_ExecTimeoutCheck(u)";NDEBUG;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile />
+      <PrecompiledHeaderOutputFile />
+      <DisableSpecificWarnings>28204;4267;4806;4018;4996;4551;4700;4703</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+    </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,13 @@
+BACnet Stack 
+Developer Build
+
+This BACnet Stack is designed as a library for an embedded product.  
+However, there are a number of example applications in the demo/ directory
+that show how it can be used for client and server applications.
+
+The demos can be built using makefiles in the root directory, or by
+using individual makefiles in the demo directories.
+
+Launch the demo/server/bacserv example.  Use the client demos to query
+the server.  Note that the server should be on a different computer or
+virtual machine.

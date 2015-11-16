@@ -1,0 +1,138 @@
+========== Using Subversion to get the BACnet Stack source code ==========
+To check out the trunk from the subversion repository,
+use "svn co", e.g.
+
+    svn checkout https://svn.code.sf.net/p/bacnet/code/trunk/bacnet-stack/
+
+    or for the stable releases:
+
+    svn checkout https://svn.code.sf.net/p/bacnet/code/tags/bacnet-stack-0-7-1/
+
+for Anonymous checkout, use http vs. https.
+
+========== Configure your Subversion Client for EOL properties ==========
+Committers need to properly configure their svn client so that
+the appropriate subversion properties are set on newly added files.
+One of the most important properties is the eol-style property
+that configures OS-specific line-endings for text files.
+
+Add the configuration text below to your subversion client
+configuration file that is normally in the following location:
+
+Windows: %USERPROFILE%\Application Data\Subversion\config
+or %appdata%\subversion\config
+or Click the 'edit' button for 'Subversion configuration file' in
+the TortoiseSVN settings dialog under General.
+
+Linux:   ~/.subversion/config or /etc/subversion/config
+
+Warning: Make sure the settings are merged into the appropriate
+section if it already exists, as duplicate section names can
+cause problems.
+
+[auto-props]
+### The format of the entries is:
+###   file-name-pattern = propname[=value][;propname[=value]...]
+### The file-name-pattern can contain wildcards (such as '*' and
+### '?').  All entries which match will be applied to the file.
+### Note that auto-props functionality must be enabled, which
+### is typically done by setting the 'enable-auto-props' option.
+*.c = svn:eol-style=native
+*.cpp = svn:eol-style=native
+*.h = svn:eol-style=native
+*.dsp = svn:eol-style=CRLF
+*.dsw = svn:eol-style=CRLF
+*.sh = svn:executable;svn:eol-style=native
+*.cmd = svn:mime-type=text/plain;svn:eol-style=CRLF
+*.bat = svn:mime-type=text/plain;svn:eol-style=CRLF
+Makefile = svn:eol-style=native
+*.obj = svn:mime-type=application/octet-stream
+*.bin = svn:mime-type=application/octet-stream
+*.bmp = svn:mime-type=image/bmp
+*.class = svn:mime-type=application/java
+*.doc = svn:mime-type=application/msword
+*.exe = svn:mime-type=application/octet-stream
+*.gif = svn:mime-type=image/gif
+*.gz = svn:mime-type=application/x-gzip
+*.jar = svn:mime-type=application/java-archive
+*.jelly = svn:mime-type=text/plain;svn:eol-style=native
+*.jpg = svn:mime-type=image/jpeg
+*.jpeg = svn:mime-type=image/jpeg
+*.pdf = svn:mime-type=application/pdf
+*.png = svn:mime-type=image/png
+*.tgz = svn:mime-type=application/octet-stream
+*.tif = svn:mime-type=image/tiff
+*.tiff = svn:mime-type=image/tiff
+*.zip = svn:mime-type=application/zip
+*.txt = svn:mime-type=text/plain;svn:eol-style=native
+*.xml = svn:mime-type=text/xml;svn:eol-style=native
+*.ent = svn:mime-type=text/plain;svn:eol-style=native
+*.dtd = svn:mime-type=text/plain;svn:eol-style=native
+*.vsl = svn:mime-type=text/plain;svn:eol-style=native
+*.xsd = svn:mime-type=text/xml;svn:eol-style=native
+*.xsl = svn:mime-type=text/xml;svn:eol-style=native
+*.wsdl = svn:mime-type=text/xml;svn:eol-style=native
+*.htm = svn:mime-type=text/html;svn:eol-style=native
+*.html = svn:mime-type=text/html;svn:eol-style=native
+*.css = svn:mime-type=text/css;svn:eol-style=native
+*.js = svn:mime-type=text/plain;svn:eol-style=native
+*.jsp = svn:mime-type=text/plain;svn:eol-style=native
+*.txt = svn:mime-type=text/plain;svn:eol-style=native
+*.java = svn:mime-type=text/plain;svn:eol-style=native
+*.properties = svn:mime-type=text/plain;svn:eol-style=native
+*.sql = svn:mime-type=text/plain;svn:eol-style=native
+*.sln = svn:eol-style=CRLF
+*.vcproj = svn:eol-style=CRLF
+
+To test the properties of a file:
+$ svn proplist
+
+If a file slips into subversion without the eol-style property set,
+you can periodically run:
+$ svn propset svn:eol-style native *
+$ svn commit -m "changed eol-style"
+
+========== BACnet Stack source code management workflow  ==========
+From http://stackoverflow.com/questions/16142/what-do-branch-tag-and-trunk-really-mean
+Paraphrased and copied from gregmac:
+
+We are working on what will be 1.0.0 in trunk. Once 1.0.0 is finished,
+branch trunk into a new "bacnet-stack-1.0.0" branch,
+and create a "1.0.0" tag.  Work on what will eventually be 1.1.0 continues
+in trunk.
+
+When you come across some bugs in the code, fix them in the trunk.
+Then merge the fixes over to the 1.0.0 branch. You may also get bug
+reports for 1.0.0, and fix the bugs in the 1.0.0 branch, and then merge
+them back to trunk. Sometimes a bug can only be fixed in 1.0.0 because
+it is obsolete in 1.1.0. It doesn't really matter, the only thing is
+you want to make sure that you don't release 1.1.0 with the same bugs
+that have been fixed in 1.0.0. Once you find enough bugs
+(or maybe one critical bug), you decide to do a 1.0.1 release.
+So you make a tag "1.0.1" from the 1.0.0 branch, and release the code.
+At this point, trunk sill contains what will be 1.1.0, and
+the "1.0.0" branch contains 1.0.1 code. The next time you release an
+update to 1.0.0, it would be 1.0.2.
+
+Eventually you are almost ready to release 1.1.0, but you want to do
+a beta first. In this case, you likely do a "1.1.0" branch, and
+a "1.1beta1" tag. Now, work on what will be 1.2.0 (or 2.0.0 maybe)
+continues in trunk, but work on 1.1.0 continues in the "1.1.0" branch.
+Once you release 1.1.0 final, you do a "1.1.0" tag from the "1.1.0" branch.
+
+You can also continue to maintain 1.0.0 if you'd like, porting bug fixes
+between all 3 branches (1.0.0, 1.1.0, and trunk). The important take
+away is that for every main version of the software you are maintaining,
+you have a branch that contains the latest version of code for that version.
+
+Another use of branches is for features. This is where you branch trunk
+(or one of your release branches) and work on a new feature in isolation.
+Once the feature is completed, you merge it back in and remove the branch.
+The idea of this is when you're working on something disruptive
+(that would hold up or interfere with other people from doing their work),
+something experimental (that may not even make it in), or possibly just
+something that takes a long time (and you're afraid if it holding up a
+1.2.0 release when you're ready to branch 1.2.0 from trunk), you can do
+it in isolation in branch. Generally you keep it up to date with trunk by
+merging changes into it all the time, which makes it easier to re-integrate
+(merge back to trunk) when you're finished.

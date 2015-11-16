@@ -1,0 +1,82 @@
+Minimal Install Guide for OpenZWave!
+
+For Unix's (including Mac, bsd's etc)
+=================
+execute Make in the Top Level Directory
+make
+
+Libraries to link to (Static and Dynamic) will be in top level directory as
+well (but you can change that as detailed below with LIBDIR)
+
+To Install:
+make install
+
+Some Options you can set:
+"BUILD=(release|debug)" - Build a Release or Debug Version of the Library
+(Release is default)
+
+"PREFIX=(path)" - Prefix to install the shared library into - Defaults to
+/usr/local
+
+"LIBDIR=/tmp" - Path to place the libraries into after complication. A poor
+mans "make install" for simple Applications.
+
+To use the options, specify them on the commandline when executing make eg:
+"BUILD=debug PREFIX=/opt/local make"
+
+What Gets installed:
+When make install is called the following happens:
+
+* Documentation:
+	if you have DoxyGen, API documentation is installed into
+	(PREFIX)/share/doc/openzwave-(version)/
+
+* Shared Libary (libopenzwave.so.*):
+	The Shared Library is installed into either (prefix)/lib64 (on 64
+	bit platforms) or (prefix)/lib/ on 32 bit platforms)
+
+* Header Files:
+	Installed into (prefix)/include/openzwave/
+
+* pkg-config file:
+	Installed into (prefix)/lib(64)/pkgconfig/libopenzwave.pc
+
+* Config files and Device Databases (manufacturer_specific.xml et al)
+	Installed into (prefix)/etc/openzwave/
+
+* MinOZW example program:
+	Installed into (prefix)/bin/ directory
+
+The Static Version of the library is never installed, but will be created in
+cpp/lib directory after a successfull make.
+
+Windows Versions
+================
+
+Visual Studio Solution Files and Mingw32 Makefiles are present in
+cpp/build/windows/. Select the correct Visual Studio or Mingw32 directory
+depending on the versions you have. 
+
+(Note, if building DLL's on Windows (currently a option in the vs2010
+solution) - You have to ensure you application is compiled with exactly the
+same compiler options and versions as OpenZWave - Otherwise strange things
+might happen)
+
+For the .NET dll, the solution files exist in the dotnet/build/ directory
+
+Sample Programs
+===============
+
+For all platforms, there is a simple example program that will print out
+events as they happen on your ZWave network. This sample is called MinOZW
+and you can find the source in the cpp/examples directory. By default, these
+examples are built during the Make Install Stage. If you want compile them
+separately, you can use the "make examples" target.
+
+For the .NET wrapper, there is a OZWForm application in
+dotnet/examples/OZWForm/. Please read the README file in that directory for
+further instructions
+
+
+
+

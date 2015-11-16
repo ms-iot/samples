@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="dlmstp" />
+		<Option makefile="makefile" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin\Debug\dlmstp" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Debug\" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin\Release\dlmstp" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Release\" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+			<Add option="-DBACDL_MSTP" />
+			<Add option="-DTEST_DLMSTP=1" />
+			<Add option="-DMAX_APDU=50" />
+			<Add option="-DMAX_TSM_TRANSACTIONS=16" />
+			<Add option="-DMAX_ADDRESS_CACHE=16" />
+			<Add option="-DPRINT_ENABLED=1" />
+			<Add option="-DCRC_USE_TABLE" />
+			<Add directory="." />
+			<Add directory="..\..\include" />
+			<Add directory="..\..\demo\handler" />
+			<Add directory="..\..\demo\object" />
+		</Compiler>
+		<Linker>
+			<Add library="winmm" />
+		</Linker>
+		<Unit filename="..\..\include\bacaddr.h" />
+		<Unit filename="..\..\include\bacdef.h" />
+		<Unit filename="..\..\include\bacint.h" />
+		<Unit filename="..\..\include\crc.h" />
+		<Unit filename="..\..\include\datalink.h" />
+		<Unit filename="..\..\include\dlmstp.h" />
+		<Unit filename="..\..\include\indtext.h" />
+		<Unit filename="..\..\include\mstp.h" />
+		<Unit filename="..\..\include\mstptext.h" />
+		<Unit filename="..\..\include\npdu.h" />
+		<Unit filename="dlmstp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="rs485.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="rs485.h" />
+		<Unit filename="..\..\src\bacaddr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\bacint.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\crc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\indtext.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\mstp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\mstptext.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\npdu.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
