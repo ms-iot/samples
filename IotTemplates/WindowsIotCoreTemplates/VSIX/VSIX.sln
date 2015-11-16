@@ -1,11 +1,10 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSIX", "VSIX.csproj", "{B220EE7C-4144-4519-A6D8-23FB9DCE83EA}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{53FB4F76-1628-415B-A329-ACFEAB628DBD}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", "..\.build", "{0A1D534D-E8C3-4212-97E7-6FD9974C3343}"
 	ProjectSection(SolutionItems) = preProject
 		Build.proj = Build.proj
 		.build\MSBuild.Community.Tasks.dll = .build\MSBuild.Community.Tasks.dll
