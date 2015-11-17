@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="GenerateTemplate; Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
@@ -57,6 +57,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Content Include="extension.pkgdef">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
@@ -107,7 +111,7 @@
     <BlankConsoleCppSourceFiles Include="..\ProjectTemplates\BlankConsoleApplicationCpp\*.*" />
     <WiringAppCpp Include="..\ProjectTemplates\WiringAppCpp\*.*" />
     <WiringAppCpp Include="..\ProjectTemplates\Common\*.*" />
-    <WiringAppCppPackages Include="..\ProjectTemplates\WiringAppCpp\Packages\*.*" />
+    <WiringAppCppPackages Include="..\ProjectTemplates\WiringAppCpp\NugetPackages\*.*" />
   </ItemGroup>
   <Target Name="ExportTemplate">
     <Copy SourceFiles="@(BackgroundServiceCppSourceFiles)" DestinationFolder="$(OutputPath)\Staged\BackgroundServiceCpp" />
@@ -116,7 +120,7 @@
     <Copy SourceFiles="@(BackgroundServiceVbSourceFiles)" DestinationFolder="$(OutputPath)\Staged\BackgroundServiceVb" />
     <Copy SourceFiles="@(BlankConsoleCppSourceFiles)" DestinationFolder="$(OutputPath)\Staged\BlankConsoleApplicationCpp" />
     <Copy SourceFiles="@(WiringAppCpp)" DestinationFolder="$(OutputPath)\Staged\WiringAppCpp" />
-    <Copy SourceFiles="@(WiringAppCppPackages)" DestinationFolder="$(OutputPath)\Staged\WiringAppCpp\Packages" />
+    <Copy SourceFiles="@(WiringAppCppPackages)" DestinationFolder="$(OutputPath)\Staged\WiringAppCpp\NugetPackages" />
   </Target>
   <Target Name="ZipTemplate">
     <ItemGroup>
