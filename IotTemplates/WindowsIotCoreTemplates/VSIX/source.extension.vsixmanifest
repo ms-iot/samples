@@ -5,11 +5,9 @@
     <DisplayName>Windows IoT Core Project Templates</DisplayName>
     <Description xml:space="preserve">This package contains project templates for Windows IoT Core Applications</Description>
     <License>License.rtf</License>
-    <!--
     <Icon>icon.png</Icon>
     <PreviewImage>preview.png</PreviewImage>
-    -->
-  </Metadata>
+</Metadata>
   <Installation AllUsers="true">
     <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[14.0]" />
   </Installation>
