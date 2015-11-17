@@ -8,17 +8,17 @@ Imports Windows.ApplicationModel.Background
 ' The Background Application template is documented at http://go.microsoft.com/fwlink/?LinkID=533884&clcid=0x409
 
 Public NotInheritable Class StartupTask
-	Implements IBackgroundTask
+    Implements IBackgroundTask
 
-	Public Sub Run(taskInstance As IBackgroundTaskInstance) Implements IBackgroundTask.Run
+    Public Sub Run(taskInstance As IBackgroundTaskInstance) Implements IBackgroundTask.Run
 
-		' 
-		' TODO: Insert code to perform background work
-		'
-		' If you start any asynchronous methods here, prevent the task
-		' from closing prematurely by using BackgroundTaskDeferral as
-		' described in http://aka.ms/backgroundtaskdeferral
-		'
+        ' 
+        ' TODO: Insert code to perform background work
+        '
+        ' If you start any asynchronous methods here, prevent the task
+        ' from closing prematurely by using BackgroundTaskDeferral as
+        ' described in http://aka.ms/backgroundtaskdeferral
+        '
 
-	End Sub
+    End Sub
 End Class

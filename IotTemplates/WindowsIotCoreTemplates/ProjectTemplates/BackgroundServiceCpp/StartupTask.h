@@ -4,7 +4,7 @@
 
 namespace $safeprojectname$
 {
-	[Windows::Foundation::Metadata::WebHostHidden]
+    [Windows::Foundation::Metadata::WebHostHidden]
     public ref class StartupTask sealed : public Windows::ApplicationModel::Background::IBackgroundTask
     {
     public:
