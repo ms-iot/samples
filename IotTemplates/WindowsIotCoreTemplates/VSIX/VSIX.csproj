@@ -111,6 +111,7 @@
     <BlankConsoleCppSourceFiles Include="..\ProjectTemplates\BlankConsoleApplicationCpp\*.*" />
     <WiringAppCpp Include="..\ProjectTemplates\WiringAppCpp\*.*" />
     <WiringAppCpp Include="..\ProjectTemplates\Common\*.*" />
+    <WiringAppCppPackages Include="..\ProjectTemplates\WiringAppCpp\Packages\*.*" />
   </ItemGroup>
   <Target Name="ExportTemplate">
     <Copy SourceFiles="@(BackgroundServiceCppSourceFiles)" DestinationFolder="$(OutputPath)\Staged\BackgroundServiceCpp" />
@@ -119,6 +120,7 @@
     <Copy SourceFiles="@(BackgroundServiceVbSourceFiles)" DestinationFolder="$(OutputPath)\Staged\BackgroundServiceVb" />
     <Copy SourceFiles="@(BlankConsoleCppSourceFiles)" DestinationFolder="$(OutputPath)\Staged\BlankConsoleApplicationCpp" />
     <Copy SourceFiles="@(WiringAppCpp)" DestinationFolder="$(OutputPath)\Staged\WiringAppCpp" />
+    <Copy SourceFiles="@(WiringAppCppPackages)" DestinationFolder="$(OutputPath)\Staged\WiringAppCpp\Packages" />
   </Target>
   <Target Name="ZipTemplate">
     <ItemGroup>
@@ -127,7 +129,7 @@
       <ToZipBSJs Include="$(OutputPath)\Staged\BackgroundServiceJs\*.*" />
       <ToZipBSVb Include="$(OutputPath)\Staged\BackgroundServiceVb\*.*" />
       <ToZipConsole Include="$(OutputPath)\Staged\BlankConsoleApplicationCpp\*.*" />
-      <ToZipWiring Include="$(OutputPath)\Staged\WiringAppCpp\*.*" />
+      <ToZipWiring Include="$(OutputPath)\Staged\WiringAppCpp\**\*.*" />
     </ItemGroup>
     <Zip Files="@(ToZipBSCpp)" WorkingDirectory="$(OutputPath)\Staged\BackgroundServiceCpp" ZipFileName="ProjectTemplates\VC\Windows\Windows IoT Core\BackgroundSericeCpp.zip" />
     <Zip Files="@(ToZipBSCs)" WorkingDirectory="$(OutputPath)\Staged\BackgroundServiceCsharp" ZipFileName="ProjectTemplates\CSharp\Windows\Windows IoT Core\BackgroundServiceCsharp.zip" />
