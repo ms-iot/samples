@@ -101,11 +101,16 @@
   </Target>
   <ItemGroup>
     <BackgroundServiceCppSourceFiles Include="..\ProjectTemplates\BackgroundServiceCpp\*.*" />
+    <BackgroundServiceCppSourceFiles Include="..\ProjectTemplates\Common\*.*" />
     <BackgroundServiceCsSourceFiles Include="..\ProjectTemplates\BackgroundServiceCsharp\*.*" />
+    <BackgroundServiceCsSourceFiles Include="..\ProjectTemplates\Common\*.*" />
     <BackgroundServiceJsSourceFiles Include="..\ProjectTemplates\BackgroundServiceJs\*.*" />
+    <BackgroundServiceJsSourceFiles Include="..\ProjectTemplates\Common\*.*" />
     <BackgroundServiceVbSourceFiles Include="..\ProjectTemplates\BackgroundServiceVb\*.*" />
+    <BackgroundServiceVbSourceFiles Include="..\ProjectTemplates\Common\*.*" />
     <BlankConsoleCppSourceFiles Include="..\ProjectTemplates\BlankConsoleApplicationCpp\*.*" />
     <WiringAppCpp Include="..\ProjectTemplates\WiringAppCpp\*.*" />
+    <WiringAppCpp Include="..\ProjectTemplates\Common\*.*" />
   </ItemGroup>
   <Target Name="ExportTemplate">
     <Copy SourceFiles="@(BackgroundServiceCppSourceFiles)" DestinationFolder="$(OutputPath)\Staged\BackgroundServiceCpp" />
