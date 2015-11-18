@@ -10,14 +10,12 @@ SETLOCAL
 :: Variable setup
 ::
 :: Example:
-:: set installtype={Add | Update}
 :: set defaultappx=defappxname
 :: set defaultappxid=defaultappxid
 :: set dependencylist=depappx1name depappx2name
 :: set tempappx=tempappxname (optional)
 :: set tempappxid=tempappxid (optional)
 :: ---------------------------------------------------------------------
-set installtype=Add 
 set defaultappx=MainAppx_1.0.0.0_Win32_Debug
 ::set defaultappx=MainAppx_1.0.2.0_Win32_Debug
 set defaultappxid=bfa3eb48-79d5-4245-9bfe-6d2ffeef846d_q8jky9dv1tcdg!App
