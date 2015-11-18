@@ -12,7 +12,7 @@ SETLOCAL
 :: Example:
 :: set defaultappx=defappxname
 :: set certslist=cert1name cert2name
-:: set tempappx=DeployAppxTask (optional)
+:: set taskname=DeployAppxTask (optional)
 :: ---------------------------------------------------------------------
 set defaultappx=MainAppx_1.0.0.0_Win32_Debug
 ::set defaultappx=MainAppx_1.0.2.0_Win32_Debug
