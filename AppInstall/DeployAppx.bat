@@ -52,7 +52,7 @@ if %errorlevel%==0 (
     iotstartup.exe add headed DefaultApp_cw5n1h2txyewy!App
 )
 
-goto :INSTALLAPPX
+ping -n 4 localhost > nul:
 
 ::
 :: Install defaultappx

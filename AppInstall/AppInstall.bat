@@ -108,6 +108,7 @@ if %errorlevel% == 0 (
 ::
 :: Create Scheduled Task to Deploy Appx
 ::
+set taskname=DeployAppxTask
 echo Creating Scheduled Task "%taskname%" for Appx Installation.
 del /Q %systemdrive%\data\users\defaultaccount\appdata\local\temp\%taskname%_deploy_done.txt 2> nul:
 del /Q %systemdrive%\data\users\defaultaccount\appdata\local\temp\%defaultappx%_result.txt 2> nul:
