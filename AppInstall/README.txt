@@ -12,8 +12,6 @@ To install your appx on an IoT device please do the following:
 	- Set defaultappx = your appx's file name
 	- Set defaultappxid = your appx's Id
 	- Set dependencylist = your appx's dependency names. You can add multiple dependency names, separate by a space.
-	- Set tempappx = your temp appx's file name. This is optional. If you would like to provide your own temp appx that runs in the foreground during appx installation/update you can provide it here.
-	- Set tempappxid = your temp appx's file name. If you would like to provide your own temp appx that runs in the foreground during appx installation/update you can provide it here.
 
 3. Place your files in the followind directories:
 	- c:\windows\appinstall: Your Appx, Dependency Appx(s), Temp appx (optional), Certificat(s), AppInstall.bat , DeployApp.bat 
