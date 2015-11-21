@@ -10,15 +10,13 @@ SETLOCAL
 :: Variable setup
 ::
 :: Example:
-:: set defaultappx=defappxname
-:: set certslist=cert1name cert2name
-:: set tempappx=DeployAppxTask (optional)
+:: set defaultappx=defappxname (Name only. No need for .appx extension)
+:: set certslist=cert1name cert2name (Name only. No need for .cer extension. You can delimit mutliple certificates with a space.)
 :: ---------------------------------------------------------------------
 set defaultappx=MainAppx_1.0.0.0_Win32_Debug
+set certslist=MainAppx_1.0.0.0_Win32_Debug
 ::set defaultappx=MainAppx_1.0.2.0_Win32_Debug
-set certslist=MainAppx_1.0.0.0_Win32_Debug TempApp_1.0.0.0_Win32_Debug
-::set certslist=MainAppx_1.0.2.0_Win32_Debug TempApp_1.0.0.0_Win32_Debug
-set taskname=DeployAppxTask
+::set certslist=MainAppx_1.0.2.0_Win32_Debug
 
 ::
 :: Get Appx Family Name
@@ -110,6 +108,7 @@ if %errorlevel% == 0 (
 ::
 :: Create Scheduled Task to Deploy Appx
 ::
+set taskname=DeployAppxTask
 echo Creating Scheduled Task "%taskname%" for Appx Installation.
 del /Q %systemdrive%\data\users\defaultaccount\appdata\local\temp\%taskname%_deploy_done.txt 2> nul:
 del /Q %systemdrive%\data\users\defaultaccount\appdata\local\temp\%defaultappx%_result.txt 2> nul:
@@ -141,7 +140,6 @@ if %errorlevel% == 0 (
 setlocal
 set ITER=0
 :CHECK_FOR_FILE
-::if NOT EXIST c:\dep\tempppppp.txt (
 if NOT EXIST %systemdrive%\data\users\defaultaccount\appdata\local\temp\%taskname%_deploy_done.txt (
     set /A ITER=ITER+1
     if "%ITER%" == "50" (
