@@ -6,15 +6,15 @@ void setup()
 {
     // put your setup code here, to run once:
 
-    pinMode(GPIO_5, OUTPUT);
+    pinMode(GPIO5, OUTPUT);
 }
 
 void loop()
 {
     // put your main code here, to run repeatedly:
 
-    digitalWrite(GPIO_5, LOW);
+    digitalWrite(GPIO5, LOW);
     delay(500);
-    digitalWrite(GPIO_5, HIGH);
+    digitalWrite(GPIO5, HIGH);
     delay(500);
 }
