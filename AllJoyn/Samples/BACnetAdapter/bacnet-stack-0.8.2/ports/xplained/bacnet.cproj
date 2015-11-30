@@ -1,0 +1,825 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>6.2</ProjectVersion>
+    <ToolchainName>com.Atmel.AVRGCC8.C</ToolchainName>
+    <ProjectGuid>{ea031b72-ce11-41cc-bfdc-00625d02a537}</ProjectGuid>
+    <avrdevice>ATxmega256A3BU</avrdevice>
+    <avrdeviceseries>xmegaau</avrdeviceseries>
+    <OutputType>Executable</OutputType>
+    <Language>C</Language>
+    <OutputFileName>$(MSBuildProjectName)</OutputFileName>
+    <OutputFileExtension>.elf</OutputFileExtension>
+    <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
+    <AssemblyName>XMEGA_A3BU_XPLAINED_DEMO1</AssemblyName>
+    <Name>BACnet XPLAINED</Name>
+    <RootNamespace>XMEGA_A3BU_XPLAINED_DEMO1</RootNamespace>
+    <ToolchainFlavour>Native</ToolchainFlavour>
+    <KeepTimersRunning>true</KeepTimersRunning>
+    <OverrideVtor>false</OverrideVtor>
+    <OverrideVtorValue>exception_table</OverrideVtorValue>
+    <eraseonlaunchrule>0</eraseonlaunchrule>
+    <ProgFlashFromRam>true</ProgFlashFromRam>
+    <RamSnippetAddress>0x20000000</RamSnippetAddress>
+    <CacheFlash>true</CacheFlash>
+    <UncachedRange />
+    <BootSegment>2</BootSegment>
+    <AsfFrameworkConfig>
+      <framework-data>
+  <options>
+    <option id="common.boards" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="common.services.basic.clock" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="common.services.basic.gpio" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="xmega.drivers.adc" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="xmega.drivers.ioport" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="xmega.drivers.nvm" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="xmega.drivers.pmic" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="xmega.drivers.rtc32" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="xmega.drivers.tc" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="xmega.drivers.usart" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="xmega.drivers.wdt" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="xmega.services.pwm" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="common.services.basic.serial" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="common.drivers.nvm" value="Add" config="no_extmem" content-id="Atmel.ASF" />
+    <option id="common.services.ioport" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="common.utils.stdio.stdio_serial" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="xmega.services.timeout" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="xmega.applications.xmega_a3bu_xplained_demo" value="Add" config="" content-id="Atmel.ASF" />
+  </options>
+  <configurations>
+    <configuration key="config.gfx_mono.display" value="c12832_a1z" default="c12832_a1z" content-id="Atmel.ASF" />
+    <configuration key="config.spi_master_type" value="usart_spi" default="usart_spi" content-id="Atmel.ASF" />
+    <configuration key="config.common.services.usb.class.device" value="cdc" default="cdc" content-id="Atmel.ASF" />
+    <configuration key="config.xmega.drivers.usb.device.sleepmgr" value="with_sleepmgr" default="with_sleepmgr" content-id="Atmel.ASF" />
+  </configurations>
+  <files>
+    <file path="ASF/common/boards/board.h" framework="" version="" source="common/boards/board.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/common/services/clock/genclk.h" framework="" version="" source="common/services/clock/genclk.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/common/services/clock/osc.h" framework="" version="" source="common/services/clock/osc.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/common/services/clock/pll.h" framework="" version="" source="common/services/clock/pll.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/common/services/clock/sysclk.h" framework="" version="" source="common/services/clock/sysclk.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/common/services/clock/xmega/osc.h" framework="" version="" source="common/services/clock/xmega/osc.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/common/services/clock/xmega/pll.h" framework="" version="" source="common/services/clock/xmega/pll.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/common/services/clock/xmega/sysclk.c" framework="" version="" source="common/services/clock/xmega/sysclk.c" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/common/services/clock/xmega/sysclk.h" framework="" version="" source="common/services/clock/xmega/sysclk.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/common/services/delay/delay.h" framework="" version="" source="common/services/delay/delay.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/common/services/delay/xmega/cycle_counter.h" framework="" version="" source="common/services/delay/xmega/cycle_counter.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/common/services/gpio/gpio.h" framework="" version="" source="common/services/gpio/gpio.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/common/services/gpio/xmega_gpio/xmega_gpio.h" framework="" version="" source="common/services/gpio/xmega_gpio/xmega_gpio.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/common/services/ioport/ioport.h" framework="" version="" source="common/services/ioport/ioport.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/common/services/ioport/xmega/ioport.h" framework="" version="" source="common/services/ioport/xmega/ioport.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/common/services/ioport/xmega/ioport_compat.c" framework="" version="" source="common/services/ioport/xmega/ioport_compat.c" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/common/services/ioport/xmega/ioport_compat.h" framework="" version="" source="common/services/ioport/xmega/ioport_compat.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/common/services/sleepmgr/sleepmgr.h" framework="" version="" source="common/services/sleepmgr/sleepmgr.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/common/services/sleepmgr/xmega/sleepmgr.c" framework="" version="" source="common/services/sleepmgr/xmega/sleepmgr.c" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/common/services/sleepmgr/xmega/sleepmgr.h" framework="" version="" source="common/services/sleepmgr/xmega/sleepmgr.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/common/utils/interrupt.h" framework="" version="" source="common/utils/interrupt.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/common/utils/interrupt/interrupt_avr8.h" framework="" version="" source="common/utils/interrupt/interrupt_avr8.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/common/utils/make/Makefile.avr.in" framework="" version="" source="common/utils/make/Makefile.avr.in" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/common/utils/parts.h" framework="" version="" source="common/utils/parts.h" changed="False" content-id="Atmel.ASF" />
+    <file path="adc_sensors.c" framework="" version="" source="xmega/applications/xmega_a3bu_xplained_demo/adc_sensors.c" changed="False" content-id="Atmel.ASF" />
+    <file path="adc_sensors.h" framework="" version="" source="xmega/applications/xmega_a3bu_xplained_demo/adc_sensors.h" changed="False" content-id="Atmel.ASF" />
+    <file path="config/conf_adc.h" framework="" version="" source="xmega/applications/xmega_a3bu_xplained_demo/atxmega256a3bu_xmega_a3bu_xplained/conf_adc.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/xmega/applications/xmega_a3bu_xplained_demo/atxmega256a3bu_xmega_a3bu_xplained/conf_application.h" framework="" version="" source="xmega/applications/xmega_a3bu_xplained_demo/atxmega256a3bu_xmega_a3bu_xplained/conf_application.h" changed="False" content-id="Atmel.ASF" />
+    <file path="config/conf_board.h" framework="" version="" source="xmega/applications/xmega_a3bu_xplained_demo/atxmega256a3bu_xmega_a3bu_xplained/conf_board.h" changed="False" content-id="Atmel.ASF" />
+    <file path="config/conf_clock.h" framework="" version="" source="xmega/applications/xmega_a3bu_xplained_demo/atxmega256a3bu_xmega_a3bu_xplained/conf_clock.h" changed="False" content-id="Atmel.ASF" />
+    <file path="config/conf_rtc32.h" framework="" version="" source="xmega/applications/xmega_a3bu_xplained_demo/atxmega256a3bu_xmega_a3bu_xplained/conf_rtc32.h" changed="False" content-id="Atmel.ASF" />
+    <file path="config/conf_sleepmgr.h" framework="" version="" source="xmega/applications/xmega_a3bu_xplained_demo/atxmega256a3bu_xmega_a3bu_xplained/conf_sleepmgr.h" changed="False" content-id="Atmel.ASF" />
+    <file path="bitmaps.c" framework="" version="" source="xmega/applications/xmega_a3bu_xplained_demo/bitmaps.c" changed="False" content-id="Atmel.ASF" />
+    <file path="bitmaps.h" framework="" version="" source="xmega/applications/xmega_a3bu_xplained_demo/bitmaps.h" changed="False" content-id="Atmel.ASF" />
+    <file path="cdc.c" framework="" version="" source="xmega/applications/xmega_a3bu_xplained_demo/cdc.c" changed="False" content-id="Atmel.ASF" />
+    <file path="cdc.h" framework="" version="" source="xmega/applications/xmega_a3bu_xplained_demo/cdc.h" changed="False" content-id="Atmel.ASF" />
+    <file path="date_time.c" framework="" version="" source="xmega/applications/xmega_a3bu_xplained_demo/date_time.c" changed="False" content-id="Atmel.ASF" />
+    <file path="date_time.h" framework="" version="" source="xmega/applications/xmega_a3bu_xplained_demo/date_time.h" changed="False" content-id="Atmel.ASF" />
+    <file path="keyboard.c" framework="" version="" source="xmega/applications/xmega_a3bu_xplained_demo/keyboard.c" changed="False" content-id="Atmel.ASF" />
+    <file path="keyboard.h" framework="" version="" source="xmega/applications/xmega_a3bu_xplained_demo/keyboard.h" changed="False" content-id="Atmel.ASF" />
+    <file path="lightsensor.c" framework="" version="" source="xmega/applications/xmega_a3bu_xplained_demo/lightsensor.c" changed="False" content-id="Atmel.ASF" />
+    <file path="lightsensor.h" framework="" version="" source="xmega/applications/xmega_a3bu_xplained_demo/lightsensor.h" changed="False" content-id="Atmel.ASF" />
+    <file path="main.c" framework="" version="" source="xmega/applications/xmega_a3bu_xplained_demo/main.c" changed="False" content-id="Atmel.ASF" />
+    <file path="ntc_sensor.c" framework="" version="" source="xmega/applications/xmega_a3bu_xplained_demo/ntc_sensor.c" changed="False" content-id="Atmel.ASF" />
+    <file path="ntc_sensor.h" framework="" version="" source="xmega/applications/xmega_a3bu_xplained_demo/ntc_sensor.h" changed="False" content-id="Atmel.ASF" />
+    <file path="production_date.c" framework="" version="" source="xmega/applications/xmega_a3bu_xplained_demo/production_date.c" changed="False" content-id="Atmel.ASF" />
+    <file path="production_date.h" framework="" version="" source="xmega/applications/xmega_a3bu_xplained_demo/production_date.h" changed="False" content-id="Atmel.ASF" />
+    <file path="qtouch/libavrxmega6g1-4qt-k-0rs.a" framework="" version="" source="xmega/applications/xmega_a3bu_xplained_demo/qtouch/libavrxmega6g1-4qt-k-0rs.a" changed="False" content-id="Atmel.ASF" />
+    <file path="qtouch/license.txt" framework="" version="" source="xmega/applications/xmega_a3bu_xplained_demo/qtouch/license.txt" changed="False" content-id="Atmel.ASF" />
+    <file path="qtouch/qt_asm_xmega.s" framework="" version="" source="xmega/applications/xmega_a3bu_xplained_demo/qtouch/qt_asm_xmega.s" changed="False" content-id="Atmel.ASF" />
+    <file path="qtouch/touch.c" framework="" version="" source="xmega/applications/xmega_a3bu_xplained_demo/qtouch/touch.c" changed="False" content-id="Atmel.ASF" />
+    <file path="qtouch/touch_api.h" framework="" version="" source="xmega/applications/xmega_a3bu_xplained_demo/qtouch/touch_api.h" changed="False" content-id="Atmel.ASF" />
+    <file path="qtouch/touch_qt_config.h" framework="" version="" source="xmega/applications/xmega_a3bu_xplained_demo/qtouch/touch_qt_config.h" changed="False" content-id="Atmel.ASF" />
+    <file path="timezone.c" framework="" version="" source="xmega/applications/xmega_a3bu_xplained_demo/timezone.c" changed="False" content-id="Atmel.ASF" />
+    <file path="timezone.h" framework="" version="" source="xmega/applications/xmega_a3bu_xplained_demo/timezone.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/xmega/boards/xmega_a3bu_xplained/init.c" framework="" version="" source="xmega/boards/xmega_a3bu_xplained/init.c" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/xmega/boards/xmega_a3bu_xplained/led.h" framework="" version="" source="xmega/boards/xmega_a3bu_xplained/led.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/xmega/boards/xmega_a3bu_xplained/xmega_a3bu_xplained.h" framework="" version="" source="xmega/boards/xmega_a3bu_xplained/xmega_a3bu_xplained.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/xmega/drivers/adc/adc.c" framework="" version="" source="xmega/drivers/adc/adc.c" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/xmega/drivers/adc/adc.h" framework="" version="" source="xmega/drivers/adc/adc.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/xmega/drivers/adc/xmega_aau/adc_aau.c" framework="" version="" source="xmega/drivers/adc/xmega_aau/adc_aau.c" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/xmega/drivers/cpu/ccp.h" framework="" version="" source="xmega/drivers/cpu/ccp.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/xmega/drivers/cpu/ccp.s" framework="" version="" source="xmega/drivers/cpu/ccp.s" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/xmega/drivers/cpu/xmega_reset_cause.h" framework="" version="" source="xmega/drivers/cpu/xmega_reset_cause.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/xmega/drivers/nvm/nvm.c" framework="" version="" source="xmega/drivers/nvm/nvm.c" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/xmega/drivers/nvm/nvm.h" framework="" version="" source="xmega/drivers/nvm/nvm.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/xmega/drivers/nvm/nvm_asm.s" framework="" version="" source="xmega/drivers/nvm/nvm_asm.s" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/xmega/drivers/pmic/pmic.h" framework="" version="" source="xmega/drivers/pmic/pmic.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/xmega/drivers/rtc32/rtc32.c" framework="" version="" source="xmega/drivers/rtc32/rtc32.c" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/xmega/drivers/rtc32/rtc32.h" framework="" version="" source="xmega/drivers/rtc32/rtc32.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/xmega/drivers/sleep/sleep.h" framework="" version="" source="xmega/drivers/sleep/sleep.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/xmega/drivers/tc/tc.c" framework="" version="" source="xmega/drivers/tc/tc.c" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/xmega/drivers/tc/tc.h" framework="" version="" source="xmega/drivers/tc/tc.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/xmega/utils/assembler.h" framework="" version="" source="xmega/utils/assembler.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/xmega/utils/assembler/gas.h" framework="" version="" source="xmega/utils/assembler/gas.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/xmega/utils/bit_handling/clz_ctz.h" framework="" version="" source="xmega/utils/bit_handling/clz_ctz.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/xmega/utils/compiler.h" framework="" version="" source="xmega/utils/compiler.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/xmega/utils/preprocessor/mrepeat.h" framework="" version="" source="xmega/utils/preprocessor/mrepeat.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/xmega/utils/preprocessor/preprocessor.h" framework="" version="" source="xmega/utils/preprocessor/preprocessor.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/xmega/utils/preprocessor/stringz.h" framework="" version="" source="xmega/utils/preprocessor/stringz.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/xmega/utils/preprocessor/tpaste.h" framework="" version="" source="xmega/utils/preprocessor/tpaste.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/xmega/utils/progmem.h" framework="" version="" source="xmega/utils/progmem.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/xmega/utils/status_codes.h" framework="" version="" source="xmega/utils/status_codes.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/xmega/drivers/wdt/wdt.c" framework="" version="3.8.1" source="xmega\drivers\wdt\wdt.c" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/xmega/drivers/wdt/wdt.h" framework="" version="3.8.1" source="xmega\drivers\wdt\wdt.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/xmega/drivers/usart/usart.c" framework="" version="3.8.1" source="xmega\drivers\usart\usart.c" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/xmega/drivers/usart/usart.h" framework="" version="3.8.1" source="xmega\drivers\usart\usart.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/xmega/services/pwm/pwm.c" framework="" version="3.8.1" source="xmega\services\pwm\pwm.c" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/xmega/services/pwm/pwm.h" framework="" version="3.8.1" source="xmega\services\pwm\pwm.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/common/drivers/nvm/xmega/xmega_nvm.c" framework="" version="3.8.1" source="common\drivers\nvm\xmega\xmega_nvm.c" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/common/drivers/nvm/common_nvm.h" framework="" version="3.8.1" source="common\drivers\nvm\common_nvm.h" changed="False" content-id="Atmel.ASF" />
+    <file path="Config/conf_nvm.h" framework="" version="3.8.1" source="common\drivers\nvm\xmega\module_config\conf_nvm.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/common/services/serial/usart_serial.c" framework="" version="3.8.1" source="common\services\serial\usart_serial.c" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/common/services/serial/xmega_usart/usart_serial.h" framework="" version="3.8.1" source="common\services\serial\xmega_usart\usart_serial.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/common/services/serial/serial.h" framework="" version="3.8.1" source="common\services\serial\serial.h" changed="False" content-id="Atmel.ASF" />
+    <file path="Config/conf_usart_serial.h" framework="" version="3.8.1" source="common\services\serial\xmega_usart\module_config\conf_usart_serial.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/common/utils/stdio/read.c" framework="" version="3.8.1" source="common\utils\stdio\read.c" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/common/utils/stdio/write.c" framework="" version="3.8.1" source="common\utils\stdio\write.c" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/common/utils/stdio/stdio_serial/stdio_serial.h" framework="" version="3.8.1" source="common\utils\stdio\stdio_serial\stdio_serial.h" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/xmega/services/timeout/timeout.c" framework="" version="3.8.1" source="xmega\services\timeout\timeout.c" changed="False" content-id="Atmel.ASF" />
+    <file path="ASF/xmega/services/timeout/timeout.h" framework="" version="3.8.1" source="xmega\services\timeout\timeout.h" changed="False" content-id="Atmel.ASF" />
+    <file path="Config/conf_timeout.h" framework="" version="3.8.1" source="xmega\services\timeout\module_config_rtc32\conf_timeout.h" changed="False" content-id="Atmel.ASF" />
+  </files>
+  <documentation help="http://asf.atmel.com/docs/3.8.1/xmega.applications.xmega_a3bu_xplained_demo.xmega_a3bu_xplained/html/index.html" />
+  <offline-documentation help="" />
+  <dependencies>
+    <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.10.1" />
+  </dependencies>
+  <project id="xmega.applications.xmega_a3bu_xplained_demo.xmega_a3bu_xplained" value="Add" config="" content-id="Atmel.ASF" />
+  <board id="board.xmega_a3bu_xplained" value="Add" config="" content-id="Atmel.ASF" />
+</framework-data>
+    </AsfFrameworkConfig>
+    <avrtool>com.atmel.avrdbg.tool.jtagice3plus</avrtool>
+    <avrtoolinterface>JTAG</avrtoolinterface>
+    <com_atmel_avrdbg_tool_jtagicemk3>
+      <ToolType>com.atmel.avrdbg.tool.jtagicemk3</ToolType>
+      <ToolName>JTAGICE3</ToolName>
+      <ToolNumber>J30200019449</ToolNumber>
+      <StimuliFile>
+      </StimuliFile>
+      <Channel>
+        <host>127.0.0.1</host>
+        <port>1572</port>
+        <ssl>False</ssl>
+      </Channel>
+      <ToolOptions>
+        <InterfaceName>JTAG</InterfaceName>
+        <InterfaceProperties>
+          <JtagDbgClock>0</JtagDbgClock>
+          <SwdClock>249000</SwdClock>
+          <JtagProgClock>7500000</JtagProgClock>
+          <IspClock>125000</IspClock>
+          <JtagInChain>false</JtagInChain>
+          <JtagEnableExtResetOnStartSession>false</JtagEnableExtResetOnStartSession>
+          <JtagDevicesBefore>0</JtagDevicesBefore>
+          <JtagDevicesAfter>0</JtagDevicesAfter>
+          <JtagInstrBitsBefore>0</JtagInstrBitsBefore>
+          <JtagInstrBitsAfter>0</JtagInstrBitsAfter>
+          <PdiClock>4000000</PdiClock>
+          <AWireMaxBaud>7500000</AWireMaxBaud>
+        </InterfaceProperties>
+      </ToolOptions>
+    </com_atmel_avrdbg_tool_jtagicemk3>
+    <preserveEEPROM>true</preserveEEPROM>
+    <com_atmel_avrdbg_tool_jtagice3plus>
+      <ToolOptions>
+        <InterfaceProperties>
+          <JtagDbgClock>7500000</JtagDbgClock>
+        </InterfaceProperties>
+        <InterfaceName>JTAG</InterfaceName>
+      </ToolOptions>
+      <ToolType>com.atmel.avrdbg.tool.jtagice3plus</ToolType>
+      <ToolNumber>J30200019449</ToolNumber>
+      <ToolName>JTAGICE3</ToolName>
+    </com_atmel_avrdbg_tool_jtagice3plus>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <ToolchainSettings>
+      <AvrGcc>
+  <avrgcc.common.optimization.RelaxBranches>True</avrgcc.common.optimization.RelaxBranches>
+  <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
+  <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
+  <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
+  <avrgcc.common.outputfiles.srec>True</avrgcc.common.outputfiles.srec>
+  <avrgcc.common.outputfiles.usersignatures>False</avrgcc.common.outputfiles.usersignatures>
+  <avrgcc.compiler.symbols.DefSymbols><ListValues>
+  <Value>IOPORT_XMEGA_COMPAT</Value>
+  <Value>BACDL_MSTP</Value>
+  <Value>MAX_APDU=128</Value>
+  <Value>MAX_TSM_TRANSACTIONS=1</Value>
+  <Value>MSTP_PDU_PACKET_COUNT=2</Value>
+  <Value>BACNET_VENDOR_ID=293</Value>
+  <Value>MAX_ADDRESS_CACHE=32</Value>
+  <Value>MAX_ANALOG_INPUTS=8</Value>
+  <Value>BOARD=XMEGA_A3BU_XPLAINED</Value>
+  <Value>NDEBUG</Value>
+</ListValues></avrgcc.compiler.symbols.DefSymbols>
+  <avrgcc.compiler.directories.IncludePaths><ListValues><Value>..</Value><Value>../config</Value><Value>../ASF/xmega/drivers/rtc32</Value><Value>../ASF/xmega/drivers/pmic</Value><Value>../ASF/xmega/boards/xmega_a3bu_xplained</Value><Value>../ASF/xmega/utils/preprocessor</Value><Value>../ASF/common/utils</Value><Value>../ASF/common/services/sleepmgr</Value><Value>../ASF/xmega/drivers/sleep</Value><Value>../ASF/common/services/gpio</Value><Value>../ASF/xmega/drivers/tc</Value><Value>../ASF/xmega/drivers/adc</Value><Value>../ASF/xmega/drivers/cpu</Value><Value>../ASF/common/boards</Value><Value>../ASF/common/services/ioport</Value><Value>../ASF/xmega/drivers/nvm</Value><Value>../ASF/xmega/boards</Value><Value>../ASF/xmega/utils</Value><Value>../ASF/xmega/drivers/wdt</Value><Value>../ASF/common/services/clock</Value><Value>../ASF/common/services/delay</Value><Value>../ASF/xmega/drivers/usart</Value><Value>../ASF/xmega/services/pwm</Value><Value>../ASF/common/drivers/nvm</Value><Value>../ASF/common/services/serial/xmega_usart</Value><Value>../ASF/common/services/serial</Value><Value>../ASF/common/utils/stdio/stdio_serial</Value><Value>../ASF/xmega/services/timeout</Value><Value>../../../include</Value><Value>../../../demo/object</Value></ListValues></avrgcc.compiler.directories.IncludePaths>
+  <avrgcc.compiler.optimization.OtherFlags>-fdata-sections</avrgcc.compiler.optimization.OtherFlags>
+  <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
+  <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
+  <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
+  <avrgcc.compiler.miscellaneous.OtherFlags>-std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax</avrgcc.compiler.miscellaneous.OtherFlags>
+  <avrgcc.linker.libraries.Libraries><ListValues><Value>libm</Value></ListValues></avrgcc.linker.libraries.Libraries>
+  <avrgcc.linker.miscellaneous.LinkerFlags>-Wl,--relax -Wl,--section-start=.BOOT=0x40000</avrgcc.linker.miscellaneous.LinkerFlags>
+  <avrgcc.assembler.general.AssemblerFlags>-mrelax -DBOARD=XMEGA_A3BU_XPLAINED -DIOPORT_XMEGA_COMPAT</avrgcc.assembler.general.AssemblerFlags>
+  <avrgcc.assembler.general.IncludePaths><ListValues><Value>../ASF/xmega/drivers/rtc32</Value><Value>../ASF/xmega/drivers/pmic</Value><Value>../ASF/xmega/boards/xmega_a3bu_xplained</Value><Value>../ASF/xmega/drivers/nvm</Value><Value>../ASF/xmega/utils/preprocessor</Value><Value>../ASF/common/utils</Value><Value>../ASF/common/services/sleepmgr</Value><Value>../ASF/xmega/drivers/sleep</Value><Value>../ASF/common/services/gpio</Value><Value>../ASF/xmega/drivers/tc</Value><Value>../ASF/xmega/drivers/adc</Value><Value>../ASF/xmega/drivers/cpu</Value><Value>../ASF/common/boards</Value><Value>../ASF/common/services/ioport</Value><Value>../ASF/xmega/boards</Value><Value>../ASF/xmega/utils</Value><Value>../ASF/common/services/clock</Value><Value>../ASF/common/services/delay</Value><Value>../ASF/xmega/drivers/wdt</Value><Value>../ASF/xmega/drivers/usart</Value><Value>../config</Value><Value>.</Value><Value>../ASF/xmega/services/pwm</Value><Value>../ASF/common/drivers/nvm</Value><Value>../ASF/common/services/serial/xmega_usart</Value><Value>../ASF/common/services/serial</Value><Value>../ASF/common/utils/stdio/stdio_serial</Value><Value>../ASF/xmega/services/timeout</Value></ListValues></avrgcc.assembler.general.IncludePaths>
+  <avrgcc.compiler.optimization.level>Optimize for size (-Os)</avrgcc.compiler.optimization.level>
+</AvrGcc>
+    </ToolchainSettings>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <ToolchainSettings>
+      <AvrGcc>
+  <avrgcc.common.optimization.RelaxBranches>True</avrgcc.common.optimization.RelaxBranches>
+  <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
+  <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
+  <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
+  <avrgcc.common.outputfiles.srec>True</avrgcc.common.outputfiles.srec>
+  <avrgcc.common.outputfiles.usersignatures>False</avrgcc.common.outputfiles.usersignatures>
+  <avrgcc.compiler.symbols.DefSymbols><ListValues>
+  <Value>IOPORT_XMEGA_COMPAT</Value>
+  <Value>BACDL_MSTP</Value>
+  <Value>MAX_APDU=128</Value>
+  <Value>MAX_TSM_TRANSACTIONS=1</Value>
+  <Value>MSTP_PDU_PACKET_COUNT=2</Value>
+  <Value>BACNET_VENDOR_ID=293</Value>
+  <Value>MAX_ADDRESS_CACHE=32</Value>
+  <Value>MAX_ANALOG_INPUTS=8</Value>
+  <Value>DEBUG</Value>
+</ListValues></avrgcc.compiler.symbols.DefSymbols>
+  <avrgcc.compiler.directories.IncludePaths><ListValues><Value>..</Value><Value>../config</Value><Value>../ASF/xmega/drivers/rtc32</Value><Value>../ASF/xmega/drivers/pmic</Value><Value>../ASF/xmega/boards/xmega_a3bu_xplained</Value><Value>../ASF/xmega/utils/preprocessor</Value><Value>../ASF/common/utils</Value><Value>../ASF/common/services/sleepmgr</Value><Value>../ASF/xmega/drivers/sleep</Value><Value>../ASF/common/services/gpio</Value><Value>../ASF/xmega/drivers/tc</Value><Value>../ASF/xmega/drivers/adc</Value><Value>../ASF/xmega/drivers/cpu</Value><Value>../ASF/common/boards</Value><Value>../ASF/common/services/ioport</Value><Value>../ASF/xmega/drivers/nvm</Value><Value>../ASF/xmega/boards</Value><Value>../ASF/xmega/utils</Value><Value>../ASF/xmega/drivers/wdt</Value><Value>../ASF/common/services/clock</Value><Value>../ASF/common/services/delay</Value><Value>../ASF/xmega/drivers/usart</Value><Value>../ASF/xmega/services/pwm</Value><Value>../ASF/common/drivers/nvm</Value><Value>../ASF/common/services/serial/xmega_usart</Value><Value>../ASF/common/services/serial</Value><Value>../ASF/common/utils/stdio/stdio_serial</Value><Value>../ASF/xmega/services/timeout</Value><Value>../../../include</Value><Value>../../../demo/object</Value></ListValues></avrgcc.compiler.directories.IncludePaths>
+  <avrgcc.compiler.optimization.OtherFlags>-fdata-sections</avrgcc.compiler.optimization.OtherFlags>
+  <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
+  <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
+  <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
+  <avrgcc.compiler.miscellaneous.OtherFlags>-std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax</avrgcc.compiler.miscellaneous.OtherFlags>
+  <avrgcc.linker.libraries.Libraries><ListValues><Value>libm</Value></ListValues></avrgcc.linker.libraries.Libraries>
+  <avrgcc.linker.miscellaneous.LinkerFlags>-Wl,--relax -Wl,--section-start=.BOOT=0x40000</avrgcc.linker.miscellaneous.LinkerFlags>
+  <avrgcc.assembler.general.AssemblerFlags>-mrelax -DBOARD=XMEGA_A3BU_XPLAINED -DIOPORT_XMEGA_COMPAT</avrgcc.assembler.general.AssemblerFlags>
+  <avrgcc.assembler.general.IncludePaths><ListValues><Value>../ASF/xmega/drivers/rtc32</Value><Value>../ASF/xmega/drivers/pmic</Value><Value>../ASF/xmega/boards/xmega_a3bu_xplained</Value><Value>../ASF/xmega/drivers/nvm</Value><Value>../ASF/xmega/utils/preprocessor</Value><Value>../ASF/common/utils</Value><Value>../ASF/common/services/sleepmgr</Value><Value>../ASF/xmega/drivers/sleep</Value><Value>../ASF/common/services/gpio</Value><Value>../ASF/xmega/drivers/tc</Value><Value>../ASF/xmega/drivers/adc</Value><Value>../ASF/xmega/drivers/cpu</Value><Value>../ASF/common/boards</Value><Value>../ASF/common/services/ioport</Value><Value>../ASF/xmega/boards</Value><Value>../ASF/xmega/utils</Value><Value>../ASF/common/services/clock</Value><Value>../ASF/common/services/delay</Value><Value>../ASF/xmega/drivers/wdt</Value><Value>../ASF/xmega/drivers/usart</Value><Value>../config</Value><Value>.</Value><Value>../ASF/xmega/services/pwm</Value><Value>../ASF/common/drivers/nvm</Value><Value>../ASF/common/services/serial/xmega_usart</Value><Value>../ASF/common/services/serial</Value><Value>../ASF/common/utils/stdio/stdio_serial</Value><Value>../ASF/xmega/services/timeout</Value></ListValues></avrgcc.assembler.general.IncludePaths>
+  <avrgcc.compiler.optimization.DebugLevel>Maximum (-g3)</avrgcc.compiler.optimization.DebugLevel>
+  <avrgcc.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcc.assembler.debugging.DebugLevel>
+</AvrGcc>
+    </ToolchainSettings>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug-XPLAINED' ">
+    <OutputPath>bin\Debug-XPLAINED\</OutputPath>
+    <ToolchainSettings>
+      <AvrGcc>
+  <avrgcc.common.optimization.RelaxBranches>False</avrgcc.common.optimization.RelaxBranches>
+  <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
+  <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
+  <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
+  <avrgcc.common.outputfiles.srec>True</avrgcc.common.outputfiles.srec>
+  <avrgcc.common.outputfiles.usersignatures>False</avrgcc.common.outputfiles.usersignatures>
+  <avrgcc.compiler.symbols.DefSymbols><ListValues>
+  <Value>IOPORT_XMEGA_COMPAT</Value>
+  <Value>BACDL_MSTP</Value>
+  <Value>MAX_APDU=128</Value>
+  <Value>MAX_TSM_TRANSACTIONS=1</Value>
+  <Value>MSTP_PDU_PACKET_COUNT=2</Value>
+  <Value>BACNET_VENDOR_ID=293</Value>
+  <Value>MAX_ADDRESS_CACHE=32</Value>
+  <Value>MAX_ANALOG_INPUTS=8</Value>
+  <Value>BOARD=XMEGA_A3BU_XPLAINED</Value>
+  <Value>CONF_BOARD_ENABLE_RS485_XPLAINED</Value>
+  <Value>DEBUG</Value>
+</ListValues></avrgcc.compiler.symbols.DefSymbols>
+  <avrgcc.compiler.directories.IncludePaths><ListValues><Value>..</Value><Value>../config</Value><Value>../ASF/xmega/drivers/rtc32</Value><Value>../ASF/xmega/drivers/pmic</Value><Value>../ASF/xmega/boards/xmega_a3bu_xplained</Value><Value>../ASF/xmega/utils/preprocessor</Value><Value>../ASF/common/utils</Value><Value>../ASF/common/services/sleepmgr</Value><Value>../ASF/xmega/drivers/sleep</Value><Value>../ASF/common/services/gpio</Value><Value>../ASF/xmega/drivers/tc</Value><Value>../ASF/xmega/drivers/adc</Value><Value>../ASF/xmega/drivers/cpu</Value><Value>../ASF/common/boards</Value><Value>../ASF/common/services/ioport</Value><Value>../ASF/xmega/drivers/nvm</Value><Value>../ASF/xmega/boards</Value><Value>../ASF/xmega/utils</Value><Value>../ASF/xmega/drivers/wdt</Value><Value>../ASF/common/services/clock</Value><Value>../ASF/common/services/delay</Value><Value>../ASF/xmega/drivers/usart</Value><Value>../ASF/xmega/services/pwm</Value><Value>../ASF/common/drivers/nvm</Value><Value>../ASF/common/services/serial/xmega_usart</Value><Value>../ASF/common/services/serial</Value><Value>../ASF/common/utils/stdio/stdio_serial</Value><Value>../ASF/xmega/services/timeout</Value><Value>../../../include</Value><Value>../../../demo/object</Value></ListValues></avrgcc.compiler.directories.IncludePaths>
+  <avrgcc.compiler.optimization.OtherFlags>-fdata-sections</avrgcc.compiler.optimization.OtherFlags>
+  <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
+  <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
+  <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
+  <avrgcc.compiler.miscellaneous.OtherFlags>-std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax</avrgcc.compiler.miscellaneous.OtherFlags>
+  <avrgcc.linker.libraries.Libraries><ListValues><Value>libm</Value></ListValues></avrgcc.linker.libraries.Libraries>
+  <avrgcc.linker.miscellaneous.LinkerFlags>-Wl,--relax -Wl,--section-start=.BOOT=0x40000</avrgcc.linker.miscellaneous.LinkerFlags>
+  <avrgcc.assembler.general.AssemblerFlags>-mrelax -DBOARD=XMEGA_A3BU_XPLAINED -DIOPORT_XMEGA_COMPAT</avrgcc.assembler.general.AssemblerFlags>
+  <avrgcc.assembler.general.IncludePaths><ListValues><Value>../ASF/xmega/drivers/rtc32</Value><Value>../ASF/xmega/drivers/pmic</Value><Value>../ASF/xmega/boards/xmega_a3bu_xplained</Value><Value>../ASF/xmega/drivers/nvm</Value><Value>../ASF/xmega/utils/preprocessor</Value><Value>../ASF/common/utils</Value><Value>../ASF/common/services/sleepmgr</Value><Value>../ASF/xmega/drivers/sleep</Value><Value>../ASF/common/services/gpio</Value><Value>../ASF/xmega/drivers/tc</Value><Value>../ASF/xmega/drivers/adc</Value><Value>../ASF/xmega/drivers/cpu</Value><Value>../ASF/common/boards</Value><Value>../ASF/common/services/ioport</Value><Value>../ASF/xmega/boards</Value><Value>../ASF/xmega/utils</Value><Value>../ASF/common/services/clock</Value><Value>../ASF/common/services/delay</Value><Value>../ASF/xmega/drivers/wdt</Value><Value>../ASF/xmega/drivers/usart</Value><Value>../config</Value><Value>.</Value><Value>../ASF/xmega/services/pwm</Value><Value>../ASF/common/drivers/nvm</Value><Value>../ASF/common/services/serial/xmega_usart</Value><Value>../ASF/common/services/serial</Value><Value>../ASF/common/utils/stdio/stdio_serial</Value><Value>../ASF/xmega/services/timeout</Value></ListValues></avrgcc.assembler.general.IncludePaths>
+  <avrgcc.compiler.optimization.DebugLevel>Maximum (-g3)</avrgcc.compiler.optimization.DebugLevel>
+  <avrgcc.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcc.assembler.debugging.DebugLevel>
+</AvrGcc>
+    </ToolchainSettings>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="ASF\" />
+    <Folder Include="ASF\common\" />
+    <Folder Include="ASF\common\boards\" />
+    <Folder Include="ASF\common\drivers\" />
+    <Folder Include="ASF\common\drivers\nvm\" />
+    <Folder Include="ASF\common\drivers\nvm\xmega\" />
+    <Folder Include="ASF\common\services\" />
+    <Folder Include="ASF\common\services\clock\" />
+    <Folder Include="ASF\common\services\clock\xmega\" />
+    <Folder Include="ASF\common\services\delay\" />
+    <Folder Include="ASF\common\services\delay\xmega\" />
+    <Folder Include="ASF\common\services\gpio\" />
+    <Folder Include="ASF\common\services\gpio\xmega_gpio\" />
+    <Folder Include="ASF\common\services\ioport\" />
+    <Folder Include="ASF\common\services\ioport\xmega\" />
+    <Folder Include="ASF\common\services\serial\" />
+    <Folder Include="ASF\common\services\serial\xmega_usart\" />
+    <Folder Include="ASF\common\services\sleepmgr\" />
+    <Folder Include="ASF\common\services\sleepmgr\xmega\" />
+    <Folder Include="ASF\common\utils\" />
+    <Folder Include="ASF\common\utils\interrupt\" />
+    <Folder Include="ASF\common\utils\make\" />
+    <Folder Include="ASF\common\utils\stdio\" />
+    <Folder Include="ASF\common\utils\stdio\stdio_serial\" />
+    <Folder Include="ASF\xmega\" />
+    <Folder Include="ASF\xmega\boards\" />
+    <Folder Include="ASF\xmega\boards\xmega_a3bu_xplained\" />
+    <Folder Include="ASF\xmega\drivers\" />
+    <Folder Include="ASF\xmega\drivers\adc\" />
+    <Folder Include="ASF\xmega\drivers\adc\xmega_aau\" />
+    <Folder Include="ASF\xmega\drivers\cpu\" />
+    <Folder Include="ASF\xmega\drivers\nvm\" />
+    <Folder Include="ASF\xmega\drivers\pmic\" />
+    <Folder Include="ASF\xmega\drivers\rtc32\" />
+    <Folder Include="ASF\xmega\drivers\sleep\" />
+    <Folder Include="ASF\xmega\drivers\tc\" />
+    <Folder Include="ASF\xmega\drivers\usart\" />
+    <Folder Include="ASF\xmega\drivers\wdt\" />
+    <Folder Include="ASF\xmega\services\" />
+    <Folder Include="ASF\xmega\services\pwm\" />
+    <Folder Include="ASF\xmega\services\timeout\" />
+    <Folder Include="ASF\xmega\utils\" />
+    <Folder Include="ASF\xmega\utils\assembler\" />
+    <Folder Include="ASF\xmega\utils\bit_handling\" />
+    <Folder Include="ASF\xmega\utils\preprocessor\" />
+    <Folder Include="bacnet-stack\" />
+    <Folder Include="config\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ASF\common\drivers\nvm\common_nvm.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="..\..\src\lighting.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\lighting.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\proplist.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\proplist.c</Link>
+    </Compile>
+    <Compile Include="adc-hdw.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ai.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ASF\common\drivers\nvm\xmega\xmega_nvm.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="ASF\common\services\serial\serial.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="ASF\common\services\serial\usart_serial.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="ASF\common\services\serial\xmega_usart\usart_serial.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="ASF\common\utils\stdio\read.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="ASF\common\utils\stdio\stdio_serial\stdio_serial.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="ASF\common\utils\stdio\write.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ASF\xmega\drivers\nvm\nvm.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ASF\xmega\drivers\nvm\nvm.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ASF\xmega\drivers\nvm\nvm_asm.s">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ASF\xmega\drivers\usart\usart.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="ASF\xmega\drivers\usart\usart.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="ASF\xmega\drivers\wdt\wdt.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="ASF\xmega\drivers\wdt\wdt.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="ASF\xmega\services\pwm\pwm.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="ASF\xmega\services\pwm\pwm.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="ASF\xmega\services\timeout\timeout.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="ASF\xmega\services\timeout\timeout.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="..\..\demo\handler\s_cov.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\s_cov.c</Link>
+    </Compile>
+    <Compile Include="..\..\demo\handler\s_rp.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\s_rp.c</Link>
+    </Compile>
+    <Compile Include="..\..\demo\handler\s_whois.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\s_whois.c</Link>
+    </Compile>
+    <Compile Include="..\..\demo\handler\s_wp.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\s_wp.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\cov.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\cov.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\tsm.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\tsm.c</Link>
+    </Compile>
+    <Compile Include="bacnet.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="bname.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="config\conf_nvm.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="config\conf_usart_serial.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="config\conf_timeout.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="device.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="dlmstp.c">
+      <SubType>compile</SubType>
+      <CustomCompilationSetting Condition="'$(Configuration)' == 'Debug'">
+      </CustomCompilationSetting>
+    </Compile>
+    <Compile Include="..\..\demo\handler\h_dcc.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\h_dcc.c</Link>
+    </Compile>
+    <Compile Include="..\..\demo\handler\h_npdu.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\h_npdu.c</Link>
+    </Compile>
+    <Compile Include="..\..\demo\handler\h_rd.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\h_rd.c</Link>
+    </Compile>
+    <Compile Include="..\..\demo\handler\h_rp.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\h_rp.c</Link>
+    </Compile>
+    <Compile Include="..\..\demo\handler\h_rpm.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\h_rpm.c</Link>
+    </Compile>
+    <Compile Include="..\..\demo\handler\h_whohas.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\h_whohas.c</Link>
+    </Compile>
+    <Compile Include="..\..\demo\handler\h_whois.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\h_whois.c</Link>
+    </Compile>
+    <Compile Include="..\..\demo\handler\h_wp.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\h_wp.c</Link>
+    </Compile>
+    <Compile Include="..\..\demo\handler\noserv.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\noserv.c</Link>
+    </Compile>
+    <Compile Include="..\..\demo\handler\s_iam.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\s_iam.c</Link>
+    </Compile>
+    <Compile Include="..\..\demo\handler\s_ihave.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\s_ihave.c</Link>
+    </Compile>
+    <Compile Include="..\..\demo\handler\txbuf.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\txbuf.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\abort.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\abort.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\apdu.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\apdu.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\bacaddr.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\bacaddr.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\bacapp.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\bacapp.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\bacdcode.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\bacdcode.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\bacerror.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\bacerror.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\bacint.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\bacint.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\bacreal.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\bacreal.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\bacstr.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\bacstr.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\crc.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\crc.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\dcc.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\dcc.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\fifo.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\fifo.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\iam.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\iam.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\ihave.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\ihave.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\memcopy.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\memcopy.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\npdu.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\npdu.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\rd.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\rd.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\reject.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\reject.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\ringbuf.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\ringbuf.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\rp.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\rp.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\rpm.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\rpm.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\version.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\version.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\whohas.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\whohas.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\whois.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\whois.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\wp.c">
+      <SubType>compile</SubType>
+      <Link>bacnet-stack\wp.c</Link>
+    </Compile>
+    <None Include="asf.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="config\conf_rtc32.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="config\conf_sleepmgr.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="config\conf_adc.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="config\conf_board.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="config\conf_clock.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\common\services\clock\sysclk.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\common\utils\make\Makefile.avr.in">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\common\boards\board.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\common\services\ioport\ioport.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\common\services\clock\pll.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\xmega\utils\preprocessor\mrepeat.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\xmega\boards\xmega_a3bu_xplained\led.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\xmega\utils\bit_handling\clz_ctz.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\xmega\utils\compiler.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\xmega\utils\preprocessor\preprocessor.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\xmega\drivers\cpu\xmega_reset_cause.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\xmega\drivers\tc\tc.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\xmega\drivers\cpu\ccp.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\common\services\gpio\xmega_gpio\xmega_gpio.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\xmega\utils\assembler.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\xmega\drivers\adc\adc.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\common\services\sleepmgr\xmega\sleepmgr.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\xmega\utils\assembler\gas.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\xmega\utils\preprocessor\stringz.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\xmega\drivers\pmic\pmic.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\xmega\boards\xmega_a3bu_xplained\xmega_a3bu_xplained.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\xmega\drivers\sleep\sleep.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\common\utils\interrupt\interrupt_avr8.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\common\services\clock\xmega\osc.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\xmega\utils\status_codes.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\common\utils\interrupt.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\common\services\clock\genclk.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\common\services\ioport\xmega\ioport.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\common\services\delay\xmega\cycle_counter.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\common\services\clock\xmega\pll.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\common\services\delay\delay.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\common\utils\parts.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\common\services\sleepmgr\sleepmgr.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\xmega\drivers\rtc32\rtc32.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\common\services\ioport\xmega\ioport_compat.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\common\services\clock\xmega\sysclk.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\common\services\clock\osc.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="ASF\common\services\clock\xmega\sysclk.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="ASF\common\services\gpio\gpio.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="ASF\common\services\ioport\xmega\ioport_compat.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ASF\common\services\sleepmgr\xmega\sleepmgr.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ASF\xmega\boards\xmega_a3bu_xplained\init.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ASF\xmega\drivers\adc\adc.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ASF\xmega\drivers\adc\xmega_aau\adc_aau.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ASF\xmega\drivers\cpu\ccp.s">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ASF\xmega\drivers\rtc32\rtc32.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ASF\xmega\drivers\tc\tc.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="ASF\xmega\utils\progmem.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ASF\xmega\utils\preprocessor\tpaste.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="led.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="main.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="nvmdata.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="rs485.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stack.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="timer.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="timer1.c">
+      <SubType>compile</SubType>
+    </Compile>
+  </ItemGroup>
+  <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
+</Project>

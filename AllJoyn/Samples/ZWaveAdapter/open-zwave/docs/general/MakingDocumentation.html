@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Creating OpenZWave Documentation</title>
+<link href="../images+css/OpenZWave.css" rel="stylesheet" type="text/css" /></head>
+<body bgcolor="#FFFFFF">
+<div class="Section1">
+<div id="Main">
+  <table width="700" height="100" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td class=Heading1 width="250" valign="top"><a href="../default.htm"><img src="../images+css/image003.gif" alt="Logo" width="134" height="55" border="0" /></a> </td>
+      <td class=Heading1 width="445" valign="top">Creating OpenZWave<br />
+        Documentation </td>
+    </tr>
+  </table>
+  <table width="700" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td class="BodyText"><p class="Heading2">Introduction</p>
+        <p class="BodyText">OpenZWave is still under development, and new features, bug fixes and interface changes are being made on a frequent basis.&nbsp; So it's premature to focus too much energy on producing user documentation at this point.&nbsp; However, several users have asked whether there is documentation available. </p>
+        <p class="BodyText">So here is a guide to producing your own version of the documentation (such as it is).</p>
+        <p class="Heading2"><strong>Doxygen-style comments </strong></p>
+        <p class="BodyText">Much of the source code for the OpenZWave library and the OpenZWaveDotNet wrapper has been documented via comments in the .h header files associated with these projects.&nbsp; So, if you're working with OpenZWave in a development environment (which most users will be, since only source code is available at this point), you can find many functions documented  in these files.</p>
+        <p class="BodyText">The format of the comments is designed to allow an external program, called Doxygen, to produce documentation (for example, a series of .html files) by scanning the project files, interpreting these comments and producing the .html code to organize and display the documentation in a sensible manner. So, to produce the most up-to-date copy of the documentation, a user can run Doxygen on the project folder in question (OpenZWave or OpenZWaveDotNet).</p>
+        <p class="Heading2"><strong>Getting and Using Doxygen</strong></p>
+        <p class="BodyText"> The Doxygen program can be downloaded from <a href="http://www.doxygen.org" target="_blank">http://www.doxygen.org</a>.&nbsp; Versions of Doxygen are available for Windows, linux and Mac operating systems (as well as source code).</p>
+        <p class="BodyText">Once Doxygen has been downloaded and installed you can produce documentation by running Doxywizard.exe.&nbsp; If you're new to Doxygen, here are some <a href="DoxygenStepByStep.html">step-by-step instructions</a> for creating OpenZWave documentation. </p>
+        <p class="Heading2">Other Documentation Sources </p>
+        <p class="BodyText">In addition to the documentation that can be generated with Doxygen, there are a variety of other sources of information on OpenZWave and on the ZWave protocol more generally.&nbsp;Some of these are linked <a href="Index.htm">here</a>. </p>
+        <p class="BodyText"> </p>
+        <p class="BodyText">&nbsp;</p></td>
+    </tr>
+  </table>
+  </div><!--Main -->
+  <div id="Footer" class="FooterText"><br />
+<br />
+
+   DRAFT&nbsp;&nbsp;&nbsp;Last updated 2011/02/17
+  </div><!--footer -->
+</div>
+</body>
+</html>

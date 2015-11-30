@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_workspace_file>
+	<Workspace title="Workspace">
+		<Project filename="..\lib\bacnet.cbp" />
+		<Project filename="server\bacserv.cbp" />
+		<Project filename="epics\bacepics.cbp" />
+		<Project filename="readprop\bacrp.cbp" />
+		<Project filename="..\ports\win32\bacnet.cbp" />
+		<Project filename="..\ports\win32\rs485.cbp" active="1" />
+	</Workspace>
+</CodeBlocks_workspace_file>

@@ -1,0 +1,285 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ALLSEEN_DIST Condition="'$(ALLSEEN_DIST)' == ''">$(ProjectDir)..\..\External\allseen</ALLSEEN_DIST>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|ARM">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM">
+      <Configuration>Release</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{9fa725b1-32b9-4916-8e18-08f498f4fb68}</ProjectGuid>
+    <Keyword>StaticLibrary</Keyword>
+    <ProjectName>ajtcl</ProjectName>
+    <RootNamespace>ajtcl</RootNamespace>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
+    <WindowsTargetPlatformVersion>10.0.10240.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.10240.0</WindowsTargetPlatformMinVersion>
+    <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
+    <AppContainerApplication>true</AppContainerApplication>
+    <ApplicationType>Windows Store</ApplicationType>
+    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <OutputPath>bin\Win32\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <OutputPath>bin\ARM\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v140</PlatformToolset>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+    <OutputPath>bin\Win32\Release\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v140</PlatformToolset>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+    <OutputPath>bin\ARM\Release\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v140</PlatformToolset>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+    <OutputPath>bin\x64\Release\</OutputPath>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <SDLCheck>true</SDLCheck>
+      <PrecompiledHeaderFile />
+      <PrecompiledHeaderOutputFile />
+      <PreprocessorDefinitions>AJ_NVRAM_SIZE=64000;AJ_NUM_REPLY_CONTEXTS=8;AJ_DEBUG_RESTRICT=3;_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;_UNICODE;UNICODE;_DEBUG;_ITERATOR_DEBUG_LEVEL=2;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ALLSEEN_DIST)\core\ajtcl\inc;$(ALLSEEN_DIST)\core\ajtcl\target\win32;$(ALLSEEN_DIST)\core\ajtcl\crypto\ecc;$(ALLSEEN_DIST)\core\ajtcl\external\sha2;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4244;4267;4047;4018;4003;4005;4703</DisableSpecificWarnings>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <SDLCheck>true</SDLCheck>
+      <PrecompiledHeaderFile />
+      <PrecompiledHeaderOutputFile />
+      <PreprocessorDefinitions>AJ_NVRAM_SIZE=64000;AJ_NUM_REPLY_CONTEXTS=8;_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;_UNICODE;UNICODE;NDEBUG;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ALLSEEN_DIST)\core\ajtcl\inc;$(ALLSEEN_DIST)\core\ajtcl\target\win32;$(ALLSEEN_DIST)\core\ajtcl\crypto\ecc;$(ALLSEEN_DIST)\core\ajtcl\external\sha2;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4244;4267;4047;4018;4003;4005;4703</DisableSpecificWarnings>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|arm'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ALLSEEN_DIST)\core\ajtcl\inc;$(ALLSEEN_DIST)\core\ajtcl\target\win32;$(ALLSEEN_DIST)\core\ajtcl\crypto\ecc;$(ALLSEEN_DIST)\core\ajtcl\external\sha2;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <CompileAs>Default</CompileAs>
+      <DisableSpecificWarnings>4244;4267;4047;4018;4003;4005;4703</DisableSpecificWarnings>
+      <PrecompiledHeaderFile />
+      <PreprocessorDefinitions>AJ_NVRAM_SIZE=64000;AJ_NUM_REPLY_CONTEXTS=8;AJ_DEBUG_RESTRICT=3;_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;_ARM_WINAPI_PARTITION_DESKTOP_SDK_AVAILABLE=1;%(ClCompile.PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderOutputFile />
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|arm'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ALLSEEN_DIST)\core\ajtcl\inc;$(ALLSEEN_DIST)\core\ajtcl\target\win32;$(ALLSEEN_DIST)\core\ajtcl\crypto\ecc;$(ALLSEEN_DIST)\core\ajtcl\external\sha2;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <CompileAs>Default</CompileAs>
+      <DisableSpecificWarnings>4244;4267;4047;4018;4003;4005;4703</DisableSpecificWarnings>
+      <PrecompiledHeaderFile />
+      <PreprocessorDefinitions>AJ_NVRAM_SIZE=64000;AJ_NUM_REPLY_CONTEXTS=8;_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;_ARM_WINAPI_PARTITION_DESKTOP_SDK_AVAILABLE=1;%(ClCompile.PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderOutputFile />
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ALLSEEN_DIST)\core\ajtcl\inc;$(ALLSEEN_DIST)\core\ajtcl\target\win32;$(ALLSEEN_DIST)\core\ajtcl\crypto\ecc;$(ALLSEEN_DIST)\core\ajtcl\external\sha2;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <CompileAs>Default</CompileAs>
+      <DisableSpecificWarnings>4244;4267;4047;4018;4003;4005;4703</DisableSpecificWarnings>
+      <PrecompiledHeaderFile />
+      <PreprocessorDefinitions>AJ_NVRAM_SIZE=64000;AJ_NUM_REPLY_CONTEXTS=8;AJ_DEBUG_RESTRICT=3;_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderOutputFile />
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ALLSEEN_DIST)\core\ajtcl\inc;$(ALLSEEN_DIST)\core\ajtcl\target\win32;$(ALLSEEN_DIST)\core\ajtcl\crypto\ecc;$(ALLSEEN_DIST)\core\ajtcl\external\sha2;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <CompileAs>Default</CompileAs>
+      <DisableSpecificWarnings>4244;4267;4047;4018;4003;4005;4703</DisableSpecificWarnings>
+      <PrecompiledHeaderFile />
+      <PreprocessorDefinitions>AJ_NVRAM_SIZE=64000;AJ_NUM_REPLY_CONTEXTS=8;_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderOutputFile />
+    </ClCompile>
+    <Link>
+      <SubSystem>WIndows</SubSystem>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="$(ALLSEEN_DIST)\core\ajtcl\external\sha2\sha2.h" />
+    <ClInclude Include="$(ALLSEEN_DIST)\core\ajtcl\malloc\aj_malloc.h" />
+    <ClInclude Include="$(ALLSEEN_DIST)\core\ajtcl\target\win32\aj_target.h" />
+    <ClInclude Include="$(ALLSEEN_DIST)\core\ajtcl\target\win32\aj_target_nvram.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\crypto\aj_sw_crypto.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\crypto\ecc\aj_crypto_ecc.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\crypto\ecc\aj_crypto_sha2.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\external\sha2\sha2.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\malloc\aj_malloc.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_about.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_ardp.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_authentication.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_bufio.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_bus.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_cert.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_connect.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_crc16.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_creds.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_crypto.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_debug.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_disco.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_guid.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_helper.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_init.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_introspect.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_link_timeout.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_msg.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_nvram.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_peer.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_serial.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_serial_rx.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_serial_tx.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_std.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\src\aj_util.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\target\win32\aj_net.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\target\win32\aj_target_crypto.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\target\win32\aj_target_nvram.c" />
+    <ClCompile Include="$(ALLSEEN_DIST)\core\ajtcl\target\win32\aj_target_util.c" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

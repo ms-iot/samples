@@ -5,6 +5,7 @@ using org.alljoyn.Onboarding;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Resources;
 using Windows.Devices.AllJoyn;
 using Windows.Devices.Enumeration;
 using Windows.Devices.WiFi;
@@ -20,8 +21,9 @@ namespace IoTOnboardingService
     {
         private static ushort _onboardingInterfaceVersion = 1412;
         private static ushort _iconInterfaceVersion = 1412;
+        private static string _onboardingInstanceIdSettingName = "OnboardingInstanceId";
 
-        private OnboardingConfig _config;
+        private string _onboardingInstanceId;
         private OnboardingProducer _onboardingProducer;
         private IconProducer _iconProducer;
         private AllJoynBusAttachment _busAttachment;
@@ -43,11 +45,26 @@ namespace IoTOnboardingService
 
         private StorageFile _iconFile;
 
+        private ResourceLoader _resourceLoader;
+
         public OnboardingService()
         {
+            _resourceLoader = ResourceLoader.GetForCurrentView("IoTOnboardingService/Resources");
+
             _state = OnboardingState.NotConfigured;
             _stateLock = new object();
-            _config = new OnboardingConfig();
+
+            var settings = ApplicationData.Current.LocalSettings.Values;
+            if (settings.ContainsKey(_onboardingInstanceIdSettingName))
+            {
+                _onboardingInstanceId = settings[_onboardingInstanceIdSettingName] as string;
+            }
+            else
+            {
+                var guid = Guid.NewGuid();
+                _onboardingInstanceId = guid.GetHashCode().ToString("X8");
+                settings[_onboardingInstanceIdSettingName] = _onboardingInstanceId;
+            }
         }
 
         public async void Start()
@@ -55,8 +72,6 @@ namespace IoTOnboardingService
             try
             {
                 _iconFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///IoTOnboardingService/icon72x72.png"));
-
-                await _config.InitAsync();
 
                 var connectionProfiles = NetworkInformation.GetConnectionProfiles();
                 foreach (var profile in connectionProfiles)
@@ -73,14 +88,15 @@ namespace IoTOnboardingService
 
                 if (_softAccessPoint == null)
                 {
-                    _softAccessPoint = new OnboardingAccessPoint(_config.Ssid, _config.Password);
+                    _softAccessPoint = new OnboardingAccessPoint(string.Format(_resourceLoader.GetString("SoftApSsidTemplate"), _onboardingInstanceId), _resourceLoader.GetString("SoftApPassword"));
                 }
 
                 if (_busAttachment == null)
                 {
                     _busAttachment = new AllJoynBusAttachment();
-                    _busAttachment.AboutData.DefaultDescription = _config.DefaultDescription;
-                    _busAttachment.AboutData.DefaultManufacturer = _config.DefaultManufacturer;
+                    _busAttachment.AboutData.DefaultDescription = string.Format(_resourceLoader.GetString("DefaultDescriptionTemplate"), _onboardingInstanceId);
+                    _busAttachment.AboutData.DefaultManufacturer = _resourceLoader.GetString("DefaultManufacturer");
+                    _busAttachment.AboutData.ModelNumber = _resourceLoader.GetString("ModelNumber");
 
                     _onboardingProducer = new OnboardingProducer(_busAttachment);
                     _onboardingProducer.Service = this;
@@ -153,6 +169,7 @@ namespace IoTOnboardingService
             {
                 _softAccessPoint.Stop();
                 _wlanAdapter = null;
+                _wlanAdapterId = null;
 
                 _onboardingProducer.Stop();
                 _iconProducer.Stop();
@@ -298,7 +315,7 @@ namespace IoTOnboardingService
                     {
                         case NetworkAuthenticationType.Open80211:
                             {
-                                listItem.Value2 = (short)AuthType.Any;
+                                listItem.Value2 = (short)AuthType.Open;
                                 break;
                             }
                         case NetworkAuthenticationType.Wpa:
@@ -312,7 +329,11 @@ namespace IoTOnboardingService
                                 break;
                             }
                     }
-                    availableNetworks.Add(listItem);
+
+                    if (availableNetworks.Find(x => x.Value1 == listItem.Value1 && x.Value2 == listItem.Value2) == null)
+                    {
+                        availableNetworks.Add(listItem);
+                    }
                 }
 
                 return OnboardingGetScanInfoResult.CreateSuccessResult(0, availableNetworks);
@@ -391,7 +412,7 @@ namespace IoTOnboardingService
         }
 
         // As defined here https://allseenalliance.org/developers/learn/base-services/onboarding/interface-14-02
-        private enum AuthType
+        private enum AuthType : short
         {
             WPA2_AUTO = -3,
             WPA_AUTO = -2,

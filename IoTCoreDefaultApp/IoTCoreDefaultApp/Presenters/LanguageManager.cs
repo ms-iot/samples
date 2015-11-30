@@ -2,14 +2,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using Windows.ApplicationModel.Resources.Core;
 using Windows.Globalization;
 using Windows.System;
 using Windows.System.UserProfile;
 
 namespace IoTCoreDefaultApp
 {
-    public class LanguageManager
+    public class LanguageManager : INotifyPropertyChanged
     {
         private Dictionary<string, string> displayNameToLanguageMap;
         public IReadOnlyList<string> LanguageDisplayNames
@@ -18,7 +20,7 @@ namespace IoTCoreDefaultApp
             set;
         }
 
-        public LanguageManager()
+        private LanguageManager()
         {
             displayNameToLanguageMap = ApplicationLanguages.ManifestLanguages.Select(tag =>
             {
@@ -29,6 +31,17 @@ namespace IoTCoreDefaultApp
             LanguageDisplayNames = displayNameToLanguageMap.Keys.ToList();
         }
 
+
+        private static LanguageManager _LanguageManager = null;
+        public static LanguageManager GetInstance()
+        {
+            if (_LanguageManager == null)
+            {
+                _LanguageManager = new LanguageManager();
+            }
+            return _LanguageManager;
+        }
+
         public bool UpdateLanguage(string displayName)
         {
             var currentLang = ApplicationLanguages.PrimaryLanguageOverride;
@@ -36,6 +49,16 @@ namespace IoTCoreDefaultApp
             if (currentLang != newLang)
             {
                 ApplicationLanguages.PrimaryLanguageOverride = newLang;
+
+                // Refresh the resources in new language
+                ResourceContext.GetForCurrentView().Reset();
+
+                // Where seems to be some delay between when this is reset and when
+                // we can start re-evaluating the resources.  Without a pause, sometimes
+                // the first resource remains the previous language.
+                new System.Threading.ManualResetEvent(false).WaitOne(100);
+
+                OnPropertyChanged("Item[]");
                 return true;
             }
             return false;
@@ -65,6 +88,27 @@ namespace IoTCoreDefaultApp
 
             return lang.NativeName;
         }
+
+        public string this[string key]
+        {
+            get
+            {
+                var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+                var localized = resourceLoader.GetString(key);
+                return localized;
+            }
+        }
+
+        public void OnPropertyChanged(string property)
+        {
+            var eventInst = PropertyChanged;
+            if (eventInst != null)
+            {
+                eventInst.Invoke(this, new PropertyChangedEventArgs(property));
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
     }
 }

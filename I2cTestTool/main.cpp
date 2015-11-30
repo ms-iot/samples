@@ -44,7 +44,7 @@ I2cDevice^ MakeDevice (int slaveAddress, _In_opt_ String^ friendlyName)
         aqs = I2cDevice::GetDeviceSelector();
 
     auto dis = concurrency::create_task(DeviceInformation::FindAllAsync(aqs)).get();
-    if (dis->Size != 1) {
+    if (dis->Size < 1) {
         throw wexception(L"I2C bus not found");
     }
 

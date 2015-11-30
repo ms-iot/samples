@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE CodeBlocks_project_file>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="1"/>
+	<Project>
+		<Option title="Console application"/>
+		<Option makefile="rd.mak"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="0"/>
+		<Build>
+			<Target title="default">
+				<Option output="C:\code\bacnet-stack\rd.exe"/>
+				<Option working_dir="."/>
+				<Option object_output=".objs"/>
+				<Option deps_output=".deps"/>
+				<Option type="1"/>
+				<Option compiler="0"/>
+				<Option projectResourceIncludeDirsRelation="1"/>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall"/>
+			<Add option="-pg"/>
+			<Add option="-g"/>
+			<Add option="-DTEST"/>
+			<Add option="-DTEST_REINITIALIZE_DEVICE"/>
+			<Add directory="test"/>
+		</Compiler>
+		<Linker>
+			<Add option="-pg -lgmon"/>
+		</Linker>
+		<Unit filename="bacdcode.c">
+			<Option compilerVar="CC"/>
+			<Option target="default"/>
+		</Unit>
+		<Unit filename="bacstr.c">
+			<Option compilerVar="CC"/>
+			<Option target="default"/>
+		</Unit>
+		<Unit filename="bigend.c">
+			<Option compilerVar="CC"/>
+			<Option target="default"/>
+		</Unit>
+		<Unit filename="rd.c">
+			<Option compilerVar="CC"/>
+			<Option target="default"/>
+			<Breakpoint line="171" enabled="1" pass="0" />
+			<Breakpoint line="167" enabled="1" pass="0" />
+			<Breakpoint line="83" enabled="1" pass="0" />
+			<Breakpoint line="60" enabled="1" pass="0" />
+		</Unit>
+		<Unit filename="test\ctest.c">
+			<Option compilerVar="CC"/>
+			<Option target="default"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

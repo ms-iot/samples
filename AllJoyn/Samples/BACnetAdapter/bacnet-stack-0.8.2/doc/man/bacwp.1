@@ -1,0 +1,167 @@
+.\" Process this file with
+.\" groff -man -Tascii bacwp.1
+.\" Contact <skarg@users.sourceforge.net> to correct errors or ommissions
+.TH bacwp 1 "Sept 16 2011" "0.7.0" "BACnet Stack at SourceForge Tool Manual"
+.SH NAME
+bacwp \- send BACnet WriteProperty service request to a BACnet device
+.SH SYNOPSIS
+
+.B bacwp device-instance object-type object-instance property priority index tag value [tag value...]
+
+.SH DESCRIPTION
+.B bacrp uses the BACnet WriteProperty service request to write
+a property value to a BACnet device on the network.  WhoIs and 
+I-Am are used for device binding. A simple Ack or error message
+is returned to stdio.
+
+.SH OPTIONS
+.IP device-instance
+Device object instance number that you are trying to
+send a WriteProperty service request.  The value should be in
+the range of 0 to 4194303.
+
+.IP "object-type"
+The object type is the integer value of the enumeration
+BACNET_OBJECT_TYPE in bacenum.h.  It is the object
+that you are writing.  For example if you were
+writing Analog Output 2, the object-type would be 1.
+
+.IP "object-instance"
+This is the object instance number of the object that
+you are writing.  For example, if you were writing
+Analog Output 2, the object-instance would be 2.
+
+.IP "property"
+The property is an integer value of the enumeration
+BACNET_PROPERTY_ID in bacenum.h.  It is the property
+you are writing.  For example, if you were writing the
+Present Value property, the property is 85.
+
+.IP "priority"
+
+This parameter is used for setting the priority of the
+write. If Priority 0 is given, no priority is sent.  The BACnet 
+standard states that the value is written at the lowest 
+priority (16) if the object property supports priorities
+when no priority is sent.
+
+.IP "index"
+This integer parameter is the index number of an array.
+If the property is a BACnetARRAY and writable, individual 
+elements can be written. If this parameter value is -1, 
+it is omitted when writing to the property.
+
+.IP "tag"
+Tag is the integer value of the enumeration BACNET_APPLICATION_TAG 
+in bacenum.h.  It is the data type of the value that you are
+writing.  For example, if you were writing a REAL value, you would 
+use a tag of 4.
+Context tags are created using two tags in a row.  The context tag
+is preceded by a C.  Ctag tag. C2 4 creates a context 2 tagged REAL.
+
+.IP "value"
+The value is an ASCII representation of some type of data that you
+are writing.  It is encoded using the tag information provided.  For
+example, if you were writing a REAL value of 100.0, you would use 
+100.0 as the value.  If you were writing an Object-Identifier such
+as Device object 1, you would use 8:1 as the value.  If you were
+writing a Boolean, a value of 0 would indicate false, and a non-zero 
+value would indicate true.  
+
+
+.SH BACnet Tags
+Here is a brief overview of BACnet property and tags:
+Certain properties are expected to be written with certain 
+application tags, so you probably need to know which ones to use
+with each property of each object.  It is almost safe to say that
+given a property and an object and a table, the tag could be looked
+up automatically.  There may be a few exceptions to this, such as
+the Any property type in the schedule object and the Present Value
+accepting REAL, BOOLEAN, NULL, etc.  Perhaps it would be simpler for
+the demo to use this kind of table - but I also wanted to be able
+to do negative testing by passing the wrong tag and have the server
+return a reject message.
+
+.SH EXAMPLES
+If you want send a value of 100 to the Present-Value in
+Analog Output 0 of Device 123 at priority 16,
+send the following command:
+$ bacwp 123 1 0 85 16 -1 4 100
+To send a relinquish command to the same object:
+$ bacwp 123 1 0 85 16 -1 0 0
+
+.SH FILES
+.I address_cache
+.RS
+A cache that is read for static binding. See
+.BR address_cache (5)
+for further details.
+.SH ENVIRONMENT
+.IP BACNET_IP_PORT
+If non-null, the number of the UDP port for BACnet/IP datalink.
+The default UDP port number is 47808 (0xBAC0).
+.IP BACNET_IFACE
+If non-null, the device name for the datalink.
+The default is "eth0".
+.IP BACNET_BBMD_PORT
+If non-null, the number of the UDP port that the BBMD is using.
+The default UDP port number is 47808 (0xBAC0).
+Used for BACnet/IP datalink only.
+.IP BACNET_BBMD_TIMETOLIVE
+If non-null, the number of seconds used in the Foreign Device
+Registration.  A 16-bit unsigned value of 0 to 65535 is expected.
+The default number of seconds is 65535 (0xFFFF).
+Used for BACnet/IP datalink only.
+.IP BACNET_BBMD_ADDRESS
+If non-null, the IP address of the BBMD that is handling the
+Foreign Device Registration.  If this environment variable is
+missing or NULL, then Foreign Device Registration does not occur.
+Used for BACnet/IP datalink only.
+.IP BACNET_MAX_INFO_FRAMES
+If non-null, the Max-Info-Frames value between 1 and 255.
+The default number of frames is 1.
+Used for BACnet MS/TP datalink only.
+.IP BACNET_MAX_MASTER
+If non-null, the Max-Master value between 1 and 127.
+The default Max-Master is 127.
+Used for BACnet MS/TP datalink only.
+.IP BACNET_MSTP_BAUD
+If non-null, a value baud rate of 9600, 19200, 38400, 57600,
+and 115200.  
+The default baud rate is 9600.
+Used for BACnet MS/TP datalink only.
+.IP BACNET_MSTP_MAC
+If non-null, the MS/TP MAC address value between 0 and 127.
+The default MAC address is 0.
+Used for BACnet MS/TP datalink only.
+
+.SH DIAGNOSTICS
+The following diagnostics may be issued on stderr:
+
+device-instance=x - it must be less than 4194304
+object-type=x - it must be less than 1024
+object-instance=x - it must be less than 4194304
+property=x - it must be less than 4194304
+Error: not enough tag-value pairs
+Error: tag=x - it must be less than 15
+Error: unable to parse the tag value
+Error: Exceeded 64 tag-value pairs.
+Error: TSM Timeout!
+Error: APDU Timeout!
+
+.SH BUGS
+No bugs are known to exist at this time.
+.SH AUTHOR
+Steve Karg <skarg@users.sourceforge.net>
+.SH "SEE ALSO"
+.BR bacarf (1),
+.BR bacawf (1),
+.BR bacdcc (1),
+.BR bacepics (1),
+.BR bacrd (1),
+.BR bacrp (1),
+.BR bacserv (1),
+.BR bacts (1),
+.BR bacucov (1),
+.BR bacwh (1),
+.BR address_cache (5)

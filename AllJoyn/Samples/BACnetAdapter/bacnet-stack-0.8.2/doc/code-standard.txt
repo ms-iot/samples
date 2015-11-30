@@ -1,0 +1,235 @@
+This software runs on many platforms, and can be compiled with a number of
+different compilers; here are some rules for writing code that will work
+on multiple platforms.
+
+Regarding tabs, indenting, and code style, we run:
+$ indent -kr -nut -nlp -ip4 -cli4 -bfda -nbc -nbbo -c0 -cd0 -cp0 -di0 -l79 filename.c
+on the code prior to releasing it.  This ensures a standard look and feel
+to the code regardless of the authors preferred style.  You may certainly
+adjust the code to your preferred style using an indent tool.  We use the
+script indent.sh to adjust all the .c and .h files.
+
+For variable names, separate words within the variables by underscores.
+Do not use capital letters as separators. Consider how much harder
+IcantReadThis is on the eyes versus I_can_read_this.
+
+Variable and function names are defined with the first words being
+descriptive of broad ideas, and later words narrowing down to specifics.
+For instance: Universe_Galaxy_System_Planet. Consider the following names:
+Timer_0_Data, Timer_0_Overflow, and Timer_0_Capture. This convention
+quickly narrows variables to particular segments of the program.
+Never assume that a verb must be first, as often seen when naming functions.
+Open_Serial_Port and Close_Serial_Port do a much poorer job of grouping
+than the better alternative of Serial_Port_Open and Serial_Port_Close.
+
+Don't use C++-style comments (comments beginning with "//" and running
+to the end of the line) for modules that are written in C.  The module
+may run through C rather than C++ compilers, and not all C compilers
+support C++-style comments (GCC does, but IBM's C compiler for AIX, for
+example, doesn't do so by default).  Note: there is an application
+called usr/bin/ccmtcnvt in the liwc package that converts the C++
+comments to C comments.  There is a script utilizing ccmtcnvt called
+comment.sh created for this project that searches all the c and h files
+for C++ headers and converts them.
+
+Don't initialize variables in their declaration with non-constant
+values. Not all compilers support this. E.g. don't use
+	uint32_t i = somearray[2];
+use
+	uint32_t i;
+	i = somearray[2];
+instead.
+
+Don't use zero-length arrays; not all compilers support them.  If an
+array would have no members, just leave it out.
+
+Don't declare variables in the middle of executable code; not all C
+compilers support that.  Variables should be declared at the beginning
+of a function or compound statement, or outside a function
+
+Don't use "inline"; not all compilers support it.
+
+Use the C99 stdint.h and stdbool.h definitions for declaring variables
+when needed.  If they are not defined for your compiler, put those files
+into the ports directory for your compiler with the proper definitions.
+Sometimes scalable code should just use an int or unsigned declaration.
+8-bit unsigned  = uint8_t
+8-bit signed    = int8_t
+16-bit unsigned = uint16_t
+16-bit signed   = int16_t
+32-bit unsigned = uint32_t
+32-bit signed   = int32_t
+boolean         = bool
+
+Don't use "long" to mean "signed 32-bit integer", and don't use
+"unsigned long" to mean "unsigned 32-bit integer"; "long"s are 64 bits
+long on many platforms.  Use "int32_t" for signed 32-bit integers and use
+"uint32_t" for unsigned 32-bit integers.
+
+Don't use "long" to mean "signed 64-bit integer" and don't use "unsigned
+long" to mean "unsigned 64-bit integer"; "long"s are 32 bits long on
+many other platforms.  Don't use "long long" or "unsigned long long",
+either, as not all platforms support them; use "int64_t" or "uint64_t",
+which need to be defined as the appropriate types for 64-bit signed and
+unsigned integers.
+
+Don't use a label without a statement following it.  For example,
+something such as
+
+	if (...) {
+
+		...
+
+	done:
+	}
+
+will not work with all compilers - you have to do
+
+	if (...) {
+
+		...
+
+	done:
+		;
+	}
+
+with some statements, even if it's a null statement, after the label.
+
+Don't use "bzero()", "bcopy()", or "bcmp()"; instead, use the ANSI C
+routines
+
+	"memset()" (with zero as the second argument, so that it sets
+	all the bytes to zero);
+
+	"memcpy()" or "memmove()" (note that the first and second
+	arguments to "memcpy()" are in the reverse order to the
+	arguments to "bcopy()"; note also that "bcopy()" is typically
+	guaranteed to work on overlapping memory regions, while
+	"memcpy()" isn't, so if you may be copying from one region to a
+	region that overlaps it, use "memmove()", not "memcpy()" - but
+	"memcpy()" might be faster as a result of not guaranteeing
+	correct operation on overlapping memory regions);
+
+	and "memcmp()" (note that "memcmp()" returns 0, 1, or -1, doing
+	an ordered comparison, rather than just returning 0 for "equal"
+	and 1 for "not equal", as "bcmp()" does).
+
+Not all platforms necessarily have "bzero()"/"bcopy()"/"bcmp()", and
+those that do might not declare them in the header file on which they're
+declared on your platform.
+
+Don't use "index()" or "rindex()"; instead, use the ANSI C equivalents,
+"strchr()" and "strrchr()".  Not all platforms necessarily have
+"index()" or "rindex()", and those that do might not declare them in the
+header file on which they're declared on your platform.
+
+Don't fetch data from packets by getting a pointer to data in the
+packet, casting that pointer to a pointer to a structure,
+and dereferencing that pointer.  That pointer won't necessarily be aligned
+on the proper boundary, which can cause crashes on some platforms (even
+if it doesn't crash on an x86-based PC). This means that you cannot
+safely cast it to any data type other than a pointer to "char",
+"unsigned char", "uint8_t", or other one-byte data types.  You cannot,
+for example, safely cast it to a pointer to a structure, and then access
+the structure members directly; on some systems, unaligned accesses to
+integral data types larger than 1 byte, and floating-point data types,
+cause a trap, which will, at best, result in the OS slowly performing an
+unaligned access for you, and will, on at least some platforms, cause
+the program to be terminated.
+
+The data in a packet is not necessarily in the byte order of
+the machine on which this software is running. Make use of
+big_endian() which returns non-zero on big_endian machines.
+
+Use "ntohs()", "ntohl()", "htons()", or "htonl()" only in the ports
+directories since the header files required to define or declare
+them differ between platforms.  There are some common functions in
+the bacdcode library for converting to and from long and short.
+
+Don't put a comma after the last element of an enum - some compilers may
+either warn about it (producing extra noise) or refuse to accept it.
+
+When opening a file with "fopen()", "freopen()", or "fdopen()", if the
+file contains ASCII text, use "r", "w", "a", and so on as the open mode
+- but if it contains binary data, use "rb", "wb", and so on.  On
+Windows, if a file is opened in a text mode, writing a byte with the
+value of octal 12 (newline) to the file causes two bytes, one with the
+value octal 15 (carriage return) and one with the value octal 12, to be
+written to the file, and causes bytes with the value octal 15 to be
+discarded when reading the file (to translate between C's UNIX-style
+lines that end with newline and Windows' DEC-style lines that end with
+carriage return/line feed).
+
+In addition, that also means that when opening or creating a binary
+file, you must use "open()" (with O_CREAT and possibly O_TRUNC if the
+file is to be created if it doesn't exist), and OR in the O_BINARY flag.
+That flag is not present on most, if not all, UNIX systems, so you must
+also do
+
+	#ifndef O_BINARY
+	#define O_BINARY	0
+	#endif
+
+to properly define it for UNIX (it's not necessary on UNIX).
+
+Don't use forward declarations of static arrays without a specified size
+in a fashion such as this:
+
+	static const value_string foo_vals[];
+
+		...
+
+	static const value_string foo_vals[] = {
+		{ 0,		"Red" },
+		{ 1,		"Green" },
+		{ 2,		"Blue" },
+		{ 0,		NULL }
+	};
+
+as some compilers will reject the first of those statements.  Instead,
+initialize the array at the point at which it's first declared, so that
+the size is known.
+
+Don't put declarations in the middle of a block; put them before all
+code.  Not all compilers support declarations in the middle of code,
+such as
+
+	int i;
+
+	i = foo();
+
+	int j;
+
+For #define names and enum member names, prefix the names with a tag so
+as to avoid collisions with other names - this might be more of an issue
+on Windows, as it appears to #define names such as DELETE and
+OPTIONAL.
+
+Don't use "variadic macros", such as
+
+	#define DBG(format, args...)	fprintf(stderr, format, ## args)
+
+as not all C compilers support them.  Use macros that take a fixed
+number of arguments, such as
+
+	#define DBG0(format)		fprintf(stderr, format)
+	#define DBG1(format, arg1)	fprintf(stderr, format, arg1)
+	#define DBG2(format, arg1, arg2) fprintf(stderr, format, arg1, arg2)
+
+		...
+
+or something such as
+
+	#define DBG(args)		printf args
+
+Instead of tmpnam(), use mkstemp(). tmpnam is insecure and should
+not be used any more. Note: mkstemp does not accept NULL as a parameter.
+
+Try to write code portably whenever possible, however; note that
+there are some routines in the software that are platform-dependent
+implementations.  The platform independent API is declared in the
+header file, and the dependent routine is placed in a ports directory.
+
+Reference: The cross platform aspect of this coding standard is based
+on the developer coding standard for Ethereal/Wireshark and has been
+modified by Steve Karg for this project.  Thank you, Ethereal/Wireshark!

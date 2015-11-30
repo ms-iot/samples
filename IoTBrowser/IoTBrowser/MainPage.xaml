@@ -34,23 +34,39 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="65"></RowDefinition>
         </Grid.RowDefinitions>
-        
+
         <!--Address bar-->
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <TextBox x:Name="Web_Address" FontSize="24" TextWrapping="Wrap" Text="http://www.bing.com" VerticalAlignment="Center" VerticalContentAlignment="Center" Height="54" Width="958" KeyUp="Web_Address_KeyUp"/>
-            <Button x:Name="Go_Web" Content="Go!" HorizontalAlignment="Right" VerticalAlignment="Center" Height="60" Width="107" Click="Go_Web_Click"/>
-        </StackPanel>
-        
+        <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility ="Auto" VerticalScrollBarVisibility="Auto">
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="10"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Column="0" x:Name="Web_Address" FontSize="24" TextWrapping="Wrap" Text="http://www.bing.com" VerticalAlignment="Center" VerticalContentAlignment="Center" KeyUp="Web_Address_KeyUp"/>
+                <Button Grid.Column="2" x:Name="Go_Web" Content="Go!" HorizontalAlignment="Right" VerticalAlignment="Center" Height="60" Width="100" Click="Go_Web_Click"/>
+            </Grid>
+        </ScrollViewer>
+
         <!--Web view control-->
         <WebView x:Name="webView" Grid.Row="1"/>
-        
+
         <!--Favorites buttons-->
-        <StackPanel Grid.Row="2" Orientation="Horizontal" >
-            <Button x:Name="Go_WOD" VerticalAlignment="Center" HorizontalAlignment="Center" Height="60" Width="120" Margin="0,0,15,0" Click="Go_WOD_Click">
-                <TextBlock Text="Windows on Devices" TextWrapping="Wrap"/>
-            </Button>
-            <Button x:Name="Go_Hackster" Content="Hackster.io" VerticalAlignment="Center" Height="60" Width="120" Margin="0,0,15,0" Click="Go_Hackster_Click"/>
-            <Button x:Name="Go_GitHub" Content="GitHub.com" VerticalAlignment="Center" Height="60" Width="120" Margin="0,0,15,0" Click="Go_GitHub_Click"/>
-        </StackPanel>
+        <ScrollViewer Grid.Row="2" HorizontalAlignment="Center" HorizontalScrollBarVisibility ="Auto" VerticalScrollBarVisibility="Auto">
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"></ColumnDefinition>
+                    <ColumnDefinition Width="15"></ColumnDefinition>
+                    <ColumnDefinition Width="120"></ColumnDefinition>
+                    <ColumnDefinition Width="15"></ColumnDefinition>
+                    <ColumnDefinition Width="120"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" x:Name="Go_WOD" VerticalAlignment="Center" HorizontalAlignment="Center" Height="60" Width="120" Click="Go_WOD_Click">
+                    <TextBlock Text="Windows on Devices" TextWrapping="Wrap"/>
+                </Button>
+                <Button Grid.Column="2" x:Name="Go_Hackster" Content="Hackster.io" VerticalAlignment="Center" Height="60" Width="120" Click="Go_Hackster_Click"/>
+                <Button Grid.Column="4" x:Name="Go_GitHub" Content="GitHub.com" VerticalAlignment="Center" Height="60" Width="120" Click="Go_GitHub_Click"/>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </Page>

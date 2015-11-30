@@ -1,0 +1,198 @@
+BACnet MS/TP Capture Tool
+
+This tool captures BACnet MS/TP packets on an RS485 serial interface,
+and saves the packets to a file in Wireshark PCAP format for
+the BACnet MS/TP dissector to read.  The filename has a date and time
+code in it, and will contain up to 65535 packets.  A new file
+will be created at each 65535 packet interval.  The tool can
+be stopped by using Control-C.  The tool can also pipe its output
+to Wireshark to be monitored in real-time.
+
+Here is a sample of the tool running (use CTRL-C to quit):
+D:\code\bacnet-stack>bin\mstpcap.exe com54 38400
+Adjusted interface name to \\.\COM54
+mstpcap: Using \\.\COM54 for capture at 38400 bps.
+mstpcap: saving capture to mstp_20110413134119.cap
+1156 packets
+==== MS/TP Frame Counts ====
+MAC     Device  Tokens  PFM     RPFM    DER     Postpd  DNER    TestReq TestRsp
+0       -       188     4       0       0       0       0       0       0
+2       -       189     0       0       0       0       0       0       0
+3       -       189     9       0       0       0       0       0       0
+7       -       189     60      0       0       0       0       0       0
+35      -       188     140     0       0       0       0       0       0
+Node Count: 5
+
+==== MS/TP Usage and Timing Maximums ====
+MAC     MaxMstr Retries Npoll   Self    Treply  Tusage  Trpfm   Tder    Tpostpd
+0       1       0       52      0       11      24      0       0       0
+2       0       0       0       0       23      0       0       0       0
+3       6       0       50      0       5       100     0       0       0
+7       34      0       52      0       5       34      0       0       0
+35      127     0       50      0       6       63      0       0       0
+Node Count: 5
+Invalid Frame Count: 0
+
+The files that are captured can also be scanned to give some statistics:
+D:\code\bacnet-stack>bin\mstpcap.exe --scan mstp_20110413134119.cap
+Scanning mstp_20110413134119.cap
+1156 packets
+==== MS/TP Frame Counts ====
+MAC     Device  Tokens  PFM     RPFM    DER     Postpd  DNER    TestReq TestRsp
+0       -       188     4       0       0       0       0       0       0
+2       -       189     0       0       0       0       0       0       0
+3       -       189     9       0       0       0       0       0       0
+7       -       189     60      0       0       0       0       0       0
+35      -       188     140     0       0       0       0       0       0
+Node Count: 5
+
+==== MS/TP Usage and Timing Maximums ====
+MAC     MaxMstr Retries Npoll   Self    Treply  Tusage  Trpfm   Tder    Tpostpd
+0       1       0       52      0       11      24      0       0       0
+2       0       0       0       0       23      0       0       0       0
+3       6       0       50      0       5       100     0       0       0
+7       34      0       52      0       5       34      0       0       0
+35      127     0       50      0       6       63      0       0       0
+Node Count: 5
+Invalid Frame Count: 0
+
+The BACnet MS/TP capture tool also includes statistics which are
+listed for any MAC addresses found passing a token,
+or any MAC address replying to a DER message.
+The statistics are emitted when Control-C is pressed, or when
+65535 packets are captured and the new file is created.
+The statistics are cleared when the new file is created.
+The statistics can be emitted from a file using the "--scan" option.
+
+The MS/TP Frame counts use the following abbreviations:
+
+Device = Device ID when an I-Am is seen in a capture (trigger with Who-Is).
+
+Tokens = number of Token frames sent from this MAC address.
+
+PFM = number of Poll-For-Master frames sent from this MAC address.
+
+RPFM = number of Reply-To-Poll-For-Master frames sent from this MAC address.
+
+DER = number of Data-Expecting-Reply frames sent from this MAC address.
+
+Postpd = number of Reply-Postponed frames sent from this MAC address.
+
+DNER = number of Data-Not-Expecting-Reply frames sent from this MAC address.
+
+TestReq = number of Test-Request frames sent from this MAC address.
+
+TestRsp = number of Test-Response frames sent from this MAC address.
+
+The MS/TP Usage and Timing Maximums use the following abbreviations:
+
+MaxMstr = highest destination MAC address during PFM
+
+Retries = number of second tokens sent to this MAC address.
+
+Npoll = number of Tokens between Poll-For-Master
+
+Self/TT = number of Tokens sent to self (Addendum 135-2008v) and
+  number of tardy tokens sent late.
+
+Treply = maximum number of milliseconds it took to reply with
+a token after receiving a token. Treply is required to be less
+than 25ms (but the mstpcap tool may not have that good of
+resolution on Windows).
+
+Tusage = the maximum number of milliseconds the
+device waits for a ReplyToPollForMaster or Token retry.
+Tusage is required to be between 20ms and 100ms.
+
+Trpfm = maximum number of milliseconds to respond to PFM with RPFM.  It is
+required to be less than 25ms.
+
+Tder = maximum number of milliseconds that a device takes to
+respond to a DataExpectingReply request.  Tder is required to be less
+than 250ms.
+
+Tpostpd = maximum number of milliseconds to respond to
+DataExpectingReply request with ReplyPostponed.  Tpostpd is
+required to be less than 250ms.
+
+==== FTDI chip RS-485 converter 76800 baud tricks ====
+
+If you are using FTDI chip in your RS485 converter, you can
+alias an existing baud rate on Windows in the FTDIPORT.INF file
+in order to acheive non-standard 76800 bps:
+HKR,,"ConfigData",1,11,00,3F,3F,27,C0,00,00,27,00,00,00,C4,09,00,00,E2,04,00,00,71,02,00,00,38,41,00,00,9C,80,00,00,4E,C0,00,00,34,00,00,00,1A,00,00,00,0D,00,00,00,06,40,00,00,03,80,00,00,00,00,00,00,D0,80,00,00
+
+replace the 10,27,00,00 => divisor = 10000, rate = 300 bps alias
+
+hex values    actual
+-----------   ---------
+27,C0,00,00 - 76923 bps => divisor=39.125
+27,00,00,00 - 76677 bps => divisor=39.000
+
+Windows XP (from koby3101)
+1) Plug in and locate your USB/RSS85 in Device Manager under ports. Right click
+on it and select Properties. Click Details tab and from the drop down select
+Device Instance Id.
+
+2) Click Start, Run and then type regedit.
+Follow this path in the registry
+HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Enum\FTDIBUS
+
+Locate the folder that has the same name as what you found earlier Device Instance
+Id in step 1. Click on 0000 folder and then Device Parameters. On the right
+side you will see ConfigData. Right click and select Modify Binary Data.
+Locate the 10 27 which in my case were in 5th and 6th position and replace with
+27 C0.
+
+This will make the RS485 go to 76800 baud (76923 baud) baud when you ask it
+to be 300 baud.
+
+So to capture at 76800 baud type: mstpcap.exe COM2 300
+
+Linux (used with Debian Lenny and Fedora 15)
+http://www.connecttech.com/KnowledgeDatabase/kdb309.htm
+As root:
+Change USB so I can use it later as normal user:
+# chmod 777 /dev/ttyUSB0  -
+Print current info about the device:
+# setserial /dev/ttyUSB0 –a
+/dev/ttyUSB0, Line 0, UART: unknown, Port: 0x0000, IRQ: 0
+       Baud_base: 24000000, close_delay: 0, divisor: 0
+       closing_wait: infinte
+       Flags: spd_normal low_latency
+
+Make custom speed:
+# setserial /dev/ttyUSB0 spd_cust
+24000000/312 gives 76923 baudrate:
+# setserial /dev/ttyUSB0 divisor 312
+Print to make sure changes got applied:
+# setserial /dev/ttyUSB0 –a
+/dev/ttyUSB0, Line 0, UART: unknown, Port: 0x0000, IRQ: 0
+       Baud_base: 24000000, close_delay: 0, divisor: 312
+       closing_wait: infinte
+       Flags: spd_cust low_latency
+
+Now as normal user running the mstpcap which uses the default 38400 baud it
+will actually capture at 76800 baud. (76923)
+
+Just navigate (cd bin) to bin folder in the project and type:
+
+$ ./mstpcap
+
+==== Named Pipe direct to Wireshark ====
+
+Use the named pipe option to send the capture output directly to Wireshark.
+On Windows, use \\.\pipe\wireshark as the name, and set that name as the
+interface name in Wireshark.  On Linux, the named pipe name can be just about
+any file name, such as /tmp/wireshark.  See:
+http://wiki.wireshark.org/CaptureSetup/Pipes
+
+==== EXTCAP direct from Wireshark ====
+
+To use extcap, run Wireshark and go to the About-dialog.
+Find a tab located there named "Folders".
+Locate the extcap search path.
+Copy the mstpcap.exe to that folder, which may not exist.
+Restart Wireshark, and look for "BACnet MS/TP on COMx" interfaces.
+Configure the interface to change baud rate.
+Capture directly from the interface.

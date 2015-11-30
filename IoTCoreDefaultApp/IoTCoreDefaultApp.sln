@@ -2,14 +2,24 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.22823.1
+
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoTCoreDefaultApp", "IoTCoreDefaultApp\IoTCoreDefaultApp.csproj", "{7BBB6CA3-2480-4F57-A4BC-D2D5ED9CD6D9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{17D9A54E-091E-4FEA-A947-1E260358ADE0} = {17D9A54E-091E-4FEA-A947-1E260358ADE0}
+		{E3B0785F-7A90-45E5-9D0B-A96D0A615BB1} = {E3B0785F-7A90-45E5-9D0B-A96D0A615BB1}
+		{29C5A19B-4FB3-48C7-AC7F-D6A145143E56} = {29C5A19B-4FB3-48C7-AC7F-D6A145143E56}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "org.alljoyn.Onboarding", "org.alljoyn.Onboarding\org.alljoyn.Onboarding.vcxproj", "{29C5A19B-4FB3-48C7-AC7F-D6A145143E56}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "org.alljoyn.Icon", "org.alljoyn.Icon\org.alljoyn.Icon.vcxproj", "{17D9A54E-091E-4FEA-A947-1E260358ADE0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoTOnboardingService", "IoTOnboardingService\IoTOnboardingService.csproj", "{E3B0785F-7A90-45E5-9D0B-A96D0A615BB1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{17D9A54E-091E-4FEA-A947-1E260358ADE0} = {17D9A54E-091E-4FEA-A947-1E260358ADE0}
+		{29C5A19B-4FB3-48C7-AC7F-D6A145143E56} = {29C5A19B-4FB3-48C7-AC7F-D6A145143E56}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

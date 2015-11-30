@@ -1,0 +1,151 @@
+FAQ - Frequently Asked Questions about the BACnet Stack
+
+Q-1: Do you know the typical footprint of the stack (MS/TP use)?
+
+A-1a: It fits on a PIC18F6720 (128K bytes flash 3840 bytes RAM) and there is lots of room for the application - see ports/pic18f6720 project. In one device with 8 Binary Value objects, 8 Binary Input objects, 1 Analog Input object, and supporting ReadProperty, WriteProperty, DeviceCommunicationControl, TimeSync, ReinitializeDevice, Who-Is, I-Am services, the BACnet stack used about 32K words of the code space.
+
+A-1b: It fits on a ATmega168 (16K bytes flash, 1024 bytes RAM) - see ports/atmega168 project. The BACnet Capabilities include WhoIs, I-Am, ReadProperty, and WriteProperty support. The BACnet objects include a Device object, 10 Binary Value objects, and 10 Analog Value objects. An LED is controlled by Binary Value object instance 0. All required object properties can be retrieved using ReadProperty. The Present_Value property of the Analog Value and Binary Value objects can be written using WriteProperty. The Object_Identifier, Object_Name, Max_Info_Frames, Max_Master, and baud rate (property 9600) of the Device object can be written using WriteProperty.
+
+With full optimization, the statistics on the demo are: IAR Atmel AVR C/C++ Compiler V5.10A/W32
+12 732 bytes of CODE memory (+ 36 range fill )
+955 bytes of DATA memory (+ 24 absolute ) (includes CStack=512)
+
+avr-gcc (GCC) 4.2.2 (WinAVR 20071221rc1)
+Program: 15790 bytes (96.4% Full)
+Data: 414 bytes (40.4% Full) (does not include CStack=0×262)
+
+A-1c: It fits easily on an ATmega644p (64K bytes flash, 4096 bytes RAM) - see ports/bdk-atxx4-mstp/ project. The BACnet Capabilities of an Application Specific Controller include WhoIs, I-Am, WhoHas, I-Have, ReadProperty, ReadPropertyMultiple, WriteProperty, and DeviceCommunicationControl support. The BACnet objects include a Device object, 2 Analog Input objects, 2 Analog Value objects, 5 Binary Input objects, and 2 Binary Output objects. Two LEDs are controlled by Binary Output objects. All required object properties can be retrieved using ReadProperty or ReadPropertyMultiple. Most of the Present_Value properties of the objects can be written.  The Object_Identifier, Object_Name, Max_Info_Frames, Max_Master, and baud rate (property 9600) of the Device object can be written using WriteProperty.  The APDU size is 256 bytes.
+
+With full optimization, the statistics on this port are:
+avr-gcc (GCC) 4.3.4
+Program (.text+.data): 34172 bytes (52.1% Full)
+Data (.data+.bss+.noinit):  2501 (61.1% Full) (not including CStack=1594 bytes)
+CStack usage (from painting): 772 bytes
+
+IAR C/C++ Compiler V5.40.2.50249/W32 for Atmel AVR
+IAR Universal Linker V4.61L/W32
+ 28 770 bytes of CODE memory (+             8 range fill )
+  3 250 bytes of DATA memory (+ 44 absolute ) (includes CStack=1024)
+
+Q-2: The homepage used to say that the MS/TP code does not work. Still true?
+
+A-2: MS/TP works correctly as of the 0.2.6 release. I spent a several days correcting it while working on the RTOS-32 port, and then a full day fine-tuning it while working on the PIC18F6720 that I used at the 2006 BACnet International Plugfest. I also successfully used MS/TP with the 0.4.0 release at the 2007 BACnet International Plugfest on an Atmel AVR ATmega168.
+
+Q-3: Does the stack have some specific requirements regarding the hardware (e.g. non-volatile memory, 32-bit CPU, ...)?
+
+A-3: Not really. The specific stuff is in the ports/ directory, and that is expected to be modified by the end user if necessary. Big Endian and Little Endian used to be automatic, but that took up too much code space, so there is a BIG_ENDIAN define in the makefile. Most of the variables are defined using the ANSI C-99 uint8_t, uint16_t, uint32_t, int8_t, int16_t, int32_t from stdint.h, along with bool from stdbool.h. Most of the APDU size returns are int.
+
+Q-4: Does the stack have some specific requirements regarding OS? What OS features are used (threads, timers, semaphors, events, mutexes...)?
+
+A-4: No, I did not use any OS features (except for the the ports to specific OS's: port/rtos32/, port/win32/ and port/linux/ which uses some tasks or threads for the MS/TP datalink layer or sockets for the BACnet/IP layers). Since my target was embedded, I kept every thing single-threaded (but multithread safe except where noted) to keep it easy to follow and easy to implement in a microcontroller just running a main() loop.
+
+Q-5: What is the difference between the two datalink layers BACnet/IP and BACnet Ethernet? In BACnet/IP, is the MAC address needed?
+
+A-5: The BACnet/IP datalink layer uses the BACnet Virtual Link Control (BVLC) for networking using UDP/IP. The IPv4 address (x.x.x.x) and the port number (0xBAC0) is stored as the MAC address. IPv6 will utilize a virtual MAC address which will be the Device ID. See Annex J or bip.c in the BACnet stack.
+
+BACnet Ethernet uses the Ethernet MAC address, and communicates using the IEEE 802.2/802.3 (see ANSI/ASHRAE 135-2004-7 Data Link/Physical Layers: ISO 8802-3 ("Ethernet") LAN). See ethernet.c in the port/linux/ directory of the BACnet stack.
+
+Q-6: What do I need to do to learn about BACnet? Can this project help?
+
+A-6: Open source projects are great since they allow you to look over the internals of a program or library. However, sometimes you just want to see something work. I created about a dozen example applications for testing. One of the applications is demo/server/bacserv that acts like a BACnet server device. Run it on one PC or hardware platform, and then use the other example applications on another PC to interact with it. Monitor the BACnet network activity with the WireShark protocol analyzer. Modify the example applications - "Take chances, make mistakes, get messy." Have fun! Join the BACnet developers mailing list and ask lots of questions so others can learn and help too!
+
+Q-7: The stack is working fine with demo/server/bacserv. But in the WireShark protocol analyzer, I am able to see only 'Who-Is' and 'I -Am' query/responses. The ReadProperty query/responses are not there in the capture viewer. Why?
+
+A-7: If you are only able to see broadcast messages like Who-Is and I-Am, then you are probably networking using an Ethernet switch (bridge) to connect WireShark to the devices. The Ethernet switch (bridge) actually routes the unicast messages between ports and does not send them to all ports (unless configured to do so). If you use an Ethernet Hub or run WireShark from one of the devices under test, you will then see the ReadProperty messages.
+
+Q-8: I intend to write a little program to implement the comunication between Bacnet devices and tcp/ip devices, but not use PAD and BACnet/IP. Can I do that in a standard way?
+
+A-8: You describe what the BACnet committee just published recently: Addendum 135-2004c, BACnet Web Services, which has been approved by ASHRAE and ANSI.
+
+I don't have web services implemented in the BACnet stack at SourceForge, but you could certainly use the stack do so.
+
+Q-9: How do I create the required objects (analog inputs, analog outputs, binary inputs, binary outputs) to support the hardware on my board?
+
+A-9: See the example application demo/server for an example of a server application with objects included. The simple answer is that they exist in the Device object in the Object_List property. Every BACnet device is required to have a Device Object, and one of the required properties is the Object_List property.
+
+The example objects are in demo/object and those that are included in the device are in demo/object/device.c as defined in 5 locations in the file. For each object type:
+
+       1. #include the header file for the object
+       2. Device_Object_List_Count() needs to include a call to a count function from the object type.
+       3. Device_Object_List_Identifier() needs to include some code to get the object instance for each object.
+       4. Device_Valid_Object_Id() needs to get the object name for each object.
+       5. PROP_PROTOCOL_OBJECT_TYPES_SUPPORTED needs to set a bit for each object type supported.
+
+Additionally, for each service that interacts with objects, you will need to include handling for that object. See demo/handler/h_rp.c to see how the different objects are accessed for the ReadProperty service. See demo/handler/h_wp.c to see how the different objects are accessed for the WriteProperty service. If those are the only services that you are going to use, then most of the work has been done other than selecting which object types you are going to support.
+
+As for how many of what object, see the individual object files for examples of how that works (see demo/object directory). Also note that there are optional properties of some objects that may or may not have an example included in this demo code. For example, a Binary Value object optionally includes a Priority_Array. There is an example in the demo/object that includes a Priority_Array, and an example in ports/pic18f6720 that does not have the Priority_Array.
+
+You can read/write to the properties using demo/readprop and demo/writeprop example client applications that run under Windows or Linux command line.
+
+Q-10: Since each Device object must have an object identifier that is unique internetwork-wide, how is this ID determined?
+
+A-10: Device object instance number is normally configured on site after the device is installed. Therefore, the Device object instance number should be configurable between 0 and 4194303 inclusive (see bacdef.h for BACNET_MAX_INSTANCE). If your hardware does not have any user interface, you can have the device default to 4194303 and implement WriteProperty service to the Object_Identifier of the Device object. You could also have some other method for configuring the Device Object instance number such as an RS-232 terminal interface or HTTP screen configuration like a home internet router.
+
+Note that 4194303 is known as "unconfigured" and is not really a valid device instance number. Also, all devices are required to respond with their own Device object instance number when 4194303 is requested.
+
+Q-11: For the objects supported by the device, they are required to be unique within the BACnet device that maintains them. Can I start with an object instance number of 0 or 1 and increment accordingly for each new object created within the device?
+
+A-11: For each object type, you can create any object instance numbers between 0 and 4194302 inclusive. How you choose to number them is up to you.
+
+In the example object in demo/object/ I numbered them sequentially starting at 0. If you do choose to use some other numbering scheme, be sure to update the Index_To_Instance(), Valid_Instance(), Count(), and Name() functions of each object type to correctly handle your numbering scheme.
+
+Q-12: For the object names, do you really use AV-## or ANALOG VALUE # in your system? All of our AV values have unique names like "ACTIVE_ALARM", "REVISION", "DUCT_STATIC".
+
+A-12: As long as your names are unique in your device (i.e. no duplicate names) you can use your names. In the demo objects, I just use "AV-1" or "ANALOG VALUE 1" as the Object_Name where 1 is the object instance number. Update the Name() function for each object type if you change from the default names.
+
+Q-13: I need to have about 100 Analog Value objects and 100 Binary Value objects in my device. When I try to define over 15 objects I get a memory error from the PIC compiler. What is the problem?
+
+A-13: If you are using the unmodified Analog Value or Binary Value objects from demo/objects, they include a priority array. That means that each object has 16 Present_Values stored for each object, plus an Out_Of_Service status. Each object would consume about 17 bytes. 15*17=255 bytes. Limit for udata = 255 bytes on the PIC using the Microchip compiler.
+
+Output and value objects are not required to have Out_Of_Service writable. Value objects are not required to have a priority array. If you need or want to have priority arrays for your objects, then you might consider storing the Binary Value object Present_Value in some smaller form (currently it is stored as enumeration which consumes a byte on a PIC). There are Binary Value and Analog Value object examples that do not include a priority array in the ports/pic18f6720/ directory.
+
+Q-14: What do I have to do to reduce the size of the firmware made from this BACnet stack?
+
+A-14: Here are the things that you can do to shrink the firmware size:
+
+       1. For MS/TP, change the state machine to use a fixed memory structure rather than a pointer to a structure. Some microcontroller compilers generate more code when having to dereference the structure. This limits you to a single MS/TP datalink.
+       2. Remove unused services by
+              * remove the service C file from the makefile
+              * remove the function call to setup the service
+              * remove the service handler
+       3. Remove unnecessary objects by:
+              * Remove the demo/object C file from the makefile
+              * remove function calls to the demo/object C file.
+              * Change the number of objects that you have.
+              * Only a Device object is required.
+              * Update the Device object PROP_PROTOCOL_OBJECT_TYPES_SUPPORTED
+       4. Remove unused function calls by:
+              * #if 0 and #endif around the unused functions (especially in bacdcode.c)
+              * Compile and Link. If the linker fails, then that function was needed.
+              * Some compilers, like GCC, have garbage collection for unused functions and code. If enabled, the linker will eliminate the unused functions and code. Use the GCC compiler and linker directive to enable this feature.
+
+Q-15: I have downloaded the BACnet stack but can't get demo/server to work. I am using a single computer. In one console window I run demo/server/bacserv. In another console window I run demo/whois/bacwi. When I capture packets with WireShark, I see the I-Am broadcast packet being sent by demo/server/bacserv when it starts. I also see the Who-Is broadcast packet sent by demo/whois/bacwi. But demo/server/bacserv never receives any message. How do I make it work?
+
+A-15: This is a common issue with BACnet/IP. The server application binds to the BACnet/IP UDP port 47808 on that computer, and therefore, the client application is unable to receive broadcast messages on port 47808 since those packets are only going to the server application.
+
+The correct solution is to use BVLC (BACnet Virtual Link Control) where the client applications use BACnet Foreign Device Registration, and some application (probably the server) runs a BBMD (BACnet Broadcast Management Device).
+
+You can do one of the following:
+
+   1. Use QEMU or Bochs or VMWare or some other virtual machine to simulate another computer, and run server or client on a virtual computer.
+   2. Use the BACnet/IP BACnet Virtual Link Control (BVLC) features. The client demo applications are configured to use environment variables to establish a BBMD connection as a foreign device. Set the BACNET_BBMD_PORT and BACNET_BBMD_ADDRESS of the BBMD, and use a non-standard BACNET_IP_PORT value. Note that the demo/server application is configured as a BBMD, and there are helper scripts /bin/bvlc.sh or bin/bvlc.bat to assist.
+   3. Write npdu router code to route from BACnet/IP to another datalink layer. Make server application on one datalink layer and make client applications on another datalink layer.
+   4. Add external BACnet router or BACnet devices. Run a BACnet demo/server on another PC.
+
+Q-16: My Linux computer doesn't use eth0 for for the BACnet connection. My Windows computer has more than one network connnection. How can I choose the interface to use for the demo applications?
+
+A-16: Set the environment variable BACNET_IFACE. For Windows, set BACNET_IFACE=169.254.119.240 or whatever the address of the interface returned by ipconfig command. For Linux, use BACNET_IFACE=eth0 or whatever the name of the interface returned by the ifconfig command. Setting the environment variable under Windows can be done on the command line:
+
+> set BACNET_IFACE=169.254.119.240
+
+Setting the environment variable under Linux can be done from the command line:
+
+$ BACNET_IFACE=ath0
+$ export BACNET_IFACE
+
+Q-17: I need to communicate with an MS/TP Slave Node. Can I configure the demo applications to use a static address binding?
+
+A-17: Yes, static address binding is supported as of version 0.4.3. Use a file called address_cache (which is defined in src/address.c). The file format is record based as follows:
+;DeviceID MAC SNET SADR MAX-APDU
+4194302 05 0 0 50
+55555 C0:A8:00:18:BA:C0 26001 19 50

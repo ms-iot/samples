@@ -29,22 +29,23 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel Margin="10,0,10,100"> 
-            <Button x:Name="btn1" Content="Start Capturing" Click="startCapture" Margin="10,50,0,0"></Button>
-            <Button x:Name="btn2" Content="End Capturing" Click="stopCapture" Margin="10, 20,0,0"/>
-            <Button x:Name="btn3" Content="Play Captured Video" Click="playVideo" Margin="10, 20, 0,20"/>
-            <TextBox Text="Video Preview Window:" Margin="10,10,0,5" TextAlignment="Center" BorderThickness="0"/>
-            <CaptureElement Name="capturePreview" Height="300" Margin="10,10,0,10" Width="300"/>
-            <TextBox Text="Video Review Window" Margin="10,10,0,5" TextAlignment="Center" BorderThickness="0"/>
+        <StackPanel Margin="10,0,10,20">
+            <Button x:Name="btn1" Content="Start Capturing" Click="startCapture" Margin="10,10,0,0"></Button>
+            <Button x:Name="btn2" Content="End Capturing" Click="stopCapture" Margin="10, 10,0,0"/>
+            <Button x:Name="btn3" Content="Play Captured Video" Click="playVideo" Margin="10, 10, 0,0"/>
+            <TextBox Text="Video Preview Window:" Margin="0,0,0,5" TextAlignment="Center" BorderThickness="0"/>
+            <CaptureElement Name="capturePreview" Height="120" Margin="10,0,0,10" Width="120"/>
+            <TextBox Text="Video Review Window" Margin="10,0,0,5" TextAlignment="Center" BorderThickness="0"/>
             <MediaElement Name="media"
                           AutoPlay="True" 
                           AreTransportControlsEnabled="False"
-                          Height="300"
-                          Width="300"
-                          Margin="10,10,0,10"
+                          Height="120"
+                          Width="120"
+                          Margin="0,10,0,10"
                           >
             </MediaElement>
         </StackPanel>
-        
+
+
     </Grid>
 </Page>

@@ -47,7 +47,8 @@ class wexception
 public:
     explicit wexception (const std::wstring& Msg) : msg(Msg) { }
 
-    wexception (const wchar_t* Msg, ...) {
+    wexception (const wchar_t* Msg, ...)
+    {
         HRESULT hr;
         WCHAR buf[512];
 
@@ -93,6 +94,27 @@ PCWSTR StringFromSerialStopBits (SerialStopBits StopBits)
     case SerialStopBits::OnePointFive: return L"1.5";
     case SerialStopBits::Two: return L"2";
     default: return L"[invalid serial stop bits]";
+    }
+}
+
+PCWSTR StringFromDtrControl (DWORD DtrControl)
+{
+    switch (DtrControl) {
+    case DTR_CONTROL_ENABLE: return L"on";
+    case DTR_CONTROL_DISABLE: return L"off";
+    case DTR_CONTROL_HANDSHAKE: return L"handshake";
+    default: return L"[invalid DtrControl value]";
+    }
+}
+
+PCWSTR StringFromRtsControl (DWORD RtsControl)
+{
+    switch (RtsControl) {
+    case RTS_CONTROL_ENABLE: return L"on";
+    case RTS_CONTROL_DISABLE: return L"off";
+    case RTS_CONTROL_HANDSHAKE: return L"handshake";
+    case RTS_CONTROL_TOGGLE: return L"toggle";
+    default: return L"[invalid RtsControl value]";
     }
 }
 
@@ -332,9 +354,14 @@ void ReadSerialWriteConsole (HANDLE serialHandle)
                 &bytesRead,
                 &overlapped) && (GetLastError() != ERROR_IO_PENDING)) {
 
+            DWORD error = GetLastError();
+            if (error == ERROR_OPERATION_ABORTED) {
+                return; // error is due to application exit
+            }
+
             throw wexception(
                 L"Failed to read from serial device. (GetLastError = 0x%x)",
-                GetLastError());
+                error);
         }
 
         if (!GetOverlappedResult(
@@ -343,10 +370,15 @@ void ReadSerialWriteConsole (HANDLE serialHandle)
                 &bytesRead,
                 TRUE)) {
 
+            DWORD error = GetLastError();
+            if (error == ERROR_OPERATION_ABORTED) {
+                return; // error is due to application exit
+            }
+
             throw wexception(
                 L"GetOverlappedResult() for ReadFile() failed. "
                 L"(GetLastError() = 0x%x)",
-                GetLastError());
+                error);
         }
 
         WCHAR wbuf[ARRAYSIZE(buf)];
@@ -720,9 +752,9 @@ void RunSerialConsole (PCWSTR DevicePath, _In_ DCB* DcbPtr, SerialParamMask Para
 
     auto commTimeouts = COMMTIMEOUTS();
     {
-        commTimeouts.ReadIntervalTimeout = MAXDWORD;
-        commTimeouts.ReadTotalTimeoutConstant = MAXDWORD - 1;
-        commTimeouts.ReadTotalTimeoutMultiplier = MAXDWORD;
+        commTimeouts.ReadIntervalTimeout = 10;
+        commTimeouts.ReadTotalTimeoutConstant = 0;
+        commTimeouts.ReadTotalTimeoutMultiplier = 0;
         commTimeouts.WriteTotalTimeoutConstant = 0;
         commTimeouts.WriteTotalTimeoutMultiplier = 0;
     }
@@ -741,14 +773,26 @@ void RunSerialConsole (PCWSTR DevicePath, _In_ DCB* DcbPtr, SerialParamMask Para
     }
 
     wprintf(
-        L"        baud = %d\n"
-        L"      parity = %s\n"
-        L"   data bits = %d\n"
-        L"   stop bits = %s\n",
+        L"                    baud = %d\n"
+        L"                  parity = %s\n"
+        L"               data bits = %d\n"
+        L"               stop bits = %s\n"
+        L"   XON/XOFF flow control = %s\n"
+        L" output DSR flow control = %s\n"
+        L" output CTS flow control = %s\n"
+        L"             DTR control = %s\n"
+        L"             RTS control = %s\n"
+        L" DSR circuit sensitivity = %s\n",
         actualDcb.BaudRate,
         StringFromSerialParity(SerialParity(actualDcb.Parity)),
         actualDcb.ByteSize,
-        StringFromSerialStopBits(SerialStopBits(actualDcb.StopBits)));
+        StringFromSerialStopBits(SerialStopBits(actualDcb.StopBits)),
+        (actualDcb.fInX && actualDcb.fOutX) ? L"on" : L"off",
+        actualDcb.fOutxDsrFlow ? L"on" : L"off",
+        actualDcb.fOutxCtsFlow ? L"on" : L"off",
+        StringFromDtrControl(actualDcb.fDtrControl),
+        StringFromRtsControl(actualDcb.fRtsControl),
+        actualDcb.fDsrSensitivity ? L"on" : L"off");
 
     wprintf(L" =====================   Connected - hit ctrl+c to exit   =====================\n");
 
@@ -780,12 +824,9 @@ L"  baud=<B>             Specifies the transmission rate in bits per second.\n"
 L"  parity={n|e|o|m|s}   Specifies how the system uses the parity bit to check\n"
 L"                       for transmission errors. The abbreviations stand for\n"
 L"                       none, even, odd, mark, and space.\n"
-L"                       The default value is e.\n"
 L"  data={5|6|7|8}       Specifies the number of data bits in a character.\n"
-L"                       The default value is 7.\n"
 L"  stop={1|1.5|2}       Specifies the number of stop bits that define the end of\n"
-L"                       a character. If the baud rate is 110, the default value\n"
-L"                       is 2. Otherwise, the default value is 1.\n"
+L"                       a character.\n"
 L"  xon={on|off}         Specifies whether the xon or xoff protocol for data-flow\n"
 L"                       control is on or off.\n"
 L"  odsr={on|off}        Specifies whether output handshaking that uses the\n"
@@ -799,12 +840,13 @@ L"                       set to on, off, handshake, or toggle.\n"
 L"  idsr={on|off}        Specifies whether the DSR circuit sensitivity is on\n"
 L"                       or off.\n"
 L"\n"
-L"See documentation for the Mode command on Technet for more information on the\n"
-L"connection parameters:\n"
-L"  https://technet.microsoft.com/en-us/library/cc732236.aspx)\n"
+L"Parameters that are not specified will default to the port's current\n"
+L"configuration. For more information on the connection parameters, see the\n"
+L"Technet documentation for the Mode command:\n"
+L"  https://technet.microsoft.com/en-us/library/cc732236.aspx\n"
 L"\n"
 L"Examples:\n"
-L"  Connect to the first serial port found in the port's default configuration:\n"
+L"  Connect to the first serial port found in the port's current configuration:\n"
 L"    %s\n"
 L"\n"
 L"  List all serial ports on the system:\n"

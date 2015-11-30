@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:iot="http://schemas.microsoft.com/appx/manifest/iot/windows10" IgnorableNamespaces="uap mp iot">
+  <Identity Name="ZigBeeHeadedAdapterApp" Publisher="CN=default" Version="1.0.0.0" />
+  <mp:PhoneIdentity PhoneProductId="e3adf3a4-09fb-41f4-86f7-a99e44ab7dce" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Properties>
+    <DisplayName>ZigBeeHeadedAdapterApp</DisplayName>
+    <PublisherDisplayName>default</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
+  </Dependencies>
+  <Resources>
+    <Resource Language="x-generate" />
+  </Resources>
+  <Applications>
+    <Application Id="ZigBeeHeadedAdapterApp" Executable="$targetnametoken$.exe" EntryPoint="HeadedAdapterApp.App">
+      <uap:VisualElements 
+		DisplayName="ZigBeeHeadedAdapterApp" 
+		Square150x150Logo="Assets\Square150x150Logo.png" 
+		Square44x44Logo="Assets\Square44x44Logo.png" 
+		Description="ZigBeeHeadedAdapterApp" 
+		BackgroundColor="#464646">
+		<uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+      </uap:VisualElements>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <Capability Name="allJoyn" />
+    <Capability Name="internetClient" />
+    <DeviceCapability Name="serialcommunication" >
+      <Device Id="any">
+        <Function Type="name:serialPort"/>
+      </Device>
+    </DeviceCapability>
+  </Capabilities>
+</Package>
