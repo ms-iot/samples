@@ -132,6 +132,8 @@ publish/
 
 # NuGet Packages
 *.nupkg
+!IotTemplates/WindowsIotCoreTemplates/ProjectTemplates/WiringAppCpp/NugetPackages/*.nupkg
+
 # The packages folder can be ignored because of Package Restore
 **/packages/*
 # except build/, which is used as an MSBuild target.
@@ -191,3 +193,11 @@ lib.zip/
 # NuGet 3.0 generated files
 project.lock.json
 SpeechTranslator/.vs/config/applicationhost.config
+
+# IOT project templates generated zip files
+IotTemplates/WindowsIotCoreTemplates/VSIX/ProjectTemplates/JavaScript/Windows/Windows IoT Core/BackgroundServiceJs.zip
+IotTemplates/WindowsIotCoreTemplates/VSIX/ProjectTemplates/VC/Windows/Windows IoT Core/BackgroundSericeCpp.zip
+IotTemplates/WindowsIotCoreTemplates/VSIX/ProjectTemplates/VC/Windows/Windows IoT Core/BlankConsoleApplicationCpp.zip
+IotTemplates/WindowsIotCoreTemplates/VSIX/ProjectTemplates/VisualBasic/Windows/Windows IoT Core/BackgroundServiceVb.zip
+IotTemplates/WindowsIotCoreTemplates/VSIX/ProjectTemplates/VC/Windows/Windows IoT Core/WiringApplication.zip
+IotTemplates/WindowsIotCoreTemplates/VSIX/ProjectTemplates/CSharp/Windows/Windows IoT Core/BackgroundServiceCsharp.zip
