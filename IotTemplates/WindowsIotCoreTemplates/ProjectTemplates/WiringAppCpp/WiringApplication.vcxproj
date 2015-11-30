@@ -124,7 +124,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <IncludePath>$(SolutionDir)packages\Microsoft.IoT.Lightning.1.0.0-alpha\build\native\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)packages\Microsoft.IoT.Lightning.1.0.2-alpha\build\native\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
 
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
