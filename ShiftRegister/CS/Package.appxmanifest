@@ -8,14 +8,14 @@
 
   <Identity
     Name="9ce66351-bda8-4cd8-9452-6a7c3c9f5eb7"
-    Publisher="CN=IoTTools"
+    Publisher="CN=MSFT"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="9ce66351-bda8-4cd8-9452-6a7c3c9f5eb7" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>ShiftRegister</DisplayName>
-    <PublisherDisplayName>IoTTools</PublisherDisplayName>
+    <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

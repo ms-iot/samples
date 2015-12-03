@@ -1,15 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package
-   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
-   xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
-   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
-   xmlns:iot="http://schemas.microsoft.com/appx/manifest/iot/windows10"
-   IgnorableNamespaces="uap mp iot">
-  <Identity Name="IoTCoreDefaultApp" Publisher="CN=admin" Version="1.1.0.0" />
-  <mp:PhoneIdentity PhoneProductId="6803bb24-895c-48b4-915c-13e4ea5d023e" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:iot="http://schemas.microsoft.com/appx/manifest/iot/windows10"
+  IgnorableNamespaces="uap mp iot">
+
+  <Identity
+    Name="IoTCoreDefaultApp"
+    Publisher="CN=MSFT"
+    Version="1.0.0.0" />
+
+  <mp:PhoneIdentity PhoneProductId="6803bb24-895c-48b4-915c-13e4ea5d023e" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+
   <Properties>
     <DisplayName>IoTCoreDefaultApp</DisplayName>
-    <PublisherDisplayName>Test</PublisherDisplayName>
+    <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>

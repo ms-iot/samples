@@ -8,14 +8,14 @@
 
   <Identity
     Name="bc92112e-2368-400b-943a-70c048c7d6ce"
-    Publisher="CN=IoTTools"
+    Publisher="CN=MSFT"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="bc92112e-2368-400b-943a-70c048c7d6ce" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>HeadedAdapterApp</DisplayName>
-    <PublisherDisplayName>IoTTools</PublisherDisplayName>
+    <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

@@ -8,14 +8,14 @@
 
   <Identity
     Name="SerialSampleCpp"
-    Publisher="CN=Microsoft"
+    Publisher="CN=MSFT"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="cd998154-ee37-4074-b7bb-dfabc4cb73d7" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>SerialSampleCpp</DisplayName>
-    <PublisherDisplayName>CN=Microsoft</PublisherDisplayName>
+    <PublisherDisplayName>CN=MSFT</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

@@ -8,14 +8,14 @@
 
   <Identity
     Name="BlinkyWebService"
-    Publisher="CN=IoTTools"
+    Publisher="CN=MSFT"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="9e06b37f-dd91-4ec6-bc3a-19e70989b5e1" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>BlinkyWebService</DisplayName>
-    <PublisherDisplayName>Test</PublisherDisplayName>
+    <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

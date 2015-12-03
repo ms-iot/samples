@@ -8,14 +8,14 @@
 
   <Identity
     Name="WebServer"
-    Publisher="CN=IoTTools"
+    Publisher="CN=MSFT"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="8fdb9bc1-d06d-4286-8e2c-a4dff10ad183" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>WebServer</DisplayName>
-    <PublisherDisplayName>Test</PublisherDisplayName>
+    <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

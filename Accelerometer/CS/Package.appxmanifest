@@ -8,14 +8,14 @@
 
   <Identity
     Name="6b970cdc-1e41-44a0-b4c5-af6e175e6bfe"
-    Publisher="CN=IoTTools"
+    Publisher="CN=MSFT"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="6b970cdc-1e41-44a0-b4c5-af6e175e6bfe" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>Accelerometer</DisplayName>
-    <PublisherDisplayName>IoTTools</PublisherDisplayName>
+    <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

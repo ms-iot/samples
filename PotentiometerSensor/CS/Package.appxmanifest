@@ -8,14 +8,14 @@
 
   <Identity
     Name="59b0fb39-8b10-4137-887e-f3dc3c9caaa1"
-    Publisher="CN=magli"
+    Publisher="CN=MSFT"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="59b0fb39-8b10-4137-887e-f3dc3c9caaa1" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>PotentiometerSensor</DisplayName>
-    <PublisherDisplayName>magli</PublisherDisplayName>
+    <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
