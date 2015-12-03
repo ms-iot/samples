@@ -26,15 +26,13 @@ namespace GpioOneWire
         double Humidity ( ) const
         {
             unsigned long long value = this->bits.to_ullong();
-            return (((value >> 24) & 0xff00) + ((value >> 24) & 0xff)) / 10.0;
+            return ((value >> 32) & 0xff) + ((value >> 24) & 0xff) / 10.0;
         }
 
         double Temperature ( ) const
         {
             unsigned long long value = this->bits.to_ullong();
-            double temp = (((value >> 8) & 0x7f00) + ((value >> 8) & 0xff)) / 10.0;
-            if ((value >> 16) & 0x80) temp = -temp;
-            return temp;
+            return ((value >> 16) & 0xff) + ((value >> 8) & 0xff) / 10.0;
         }
 
         std::bitset<40> bits;
