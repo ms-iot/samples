@@ -224,8 +224,8 @@
                         <ComboBoxItem>Gyroscope</ComboBoxItem>
                         <ComboBoxItem>Key Press</ComboBoxItem>
                     </ComboBox>
-                    <Button x:Name="EnableButton" Content="Enable" Background="#CCFFFFFF" Click="EnableButton_Click" Margin="10,0,0,0"/>
-                    <Button x:Name="DisableButton" Content="Disable" Background="#CCFFFFFF" Click="DisableButton_Click" Margin="10,0,0,0"/>
+                    <Button x:Name="EnableButton" Content="Enable" Background="#CCFFFFFF" Click="EnableButton_Click" Margin="10,0,0,0" IsEnabled="False"/>
+                    <Button x:Name="DisableButton" Content="Disable" Background="#CCFFFFFF" Click="DisableButton_Click" Margin="10,0,0,0" IsEnabled="False"/>
                 </StackPanel>
                 <Grid>
                     <Grid.RowDefinitions>
