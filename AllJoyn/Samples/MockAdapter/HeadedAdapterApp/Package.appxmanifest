@@ -9,14 +9,14 @@
 
   <Identity
     Name="MockHeadedAdapterApp"
-    Publisher="CN=default"
+    Publisher="CN=MSFT"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="2f2ed69b-c369-4755-a904-c612ee832aa2" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>MockHeadedAdapterApp</DisplayName>
-    <PublisherDisplayName>default</PublisherDisplayName>
+    <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

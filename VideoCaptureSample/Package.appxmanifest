@@ -8,14 +8,14 @@
 
   <Identity
     Name="e1605aae-076d-406b-964c-ce0b1606532f"
-    Publisher="CN=Microsoft"
+    Publisher="CN=MSFT"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="e1605aae-076d-406b-964c-ce0b1606532f" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>VideoCaptureSample</DisplayName>
-    <PublisherDisplayName>Microsoft</PublisherDisplayName>
+    <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

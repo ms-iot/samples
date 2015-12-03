@@ -9,14 +9,14 @@
 
   <Identity
     Name="HeadlessAdapterApp"
-    Publisher="CN=IoTTools"
+    Publisher="CN=MSFT"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="0493b0e9-cdcb-4fe0-a193-62285777b0d9" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>HeadlessAdapterApp</DisplayName>
-    <PublisherDisplayName>IoTTools</PublisherDisplayName>
+    <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

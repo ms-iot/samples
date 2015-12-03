@@ -9,14 +9,14 @@
 
   <Identity
     Name="ServoMotorBasics-uwp"
-    Publisher="CN=Microsoft"
+    Publisher="CN=MSFT"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="84e29246-b4f1-4a75-b324-3e6d8ccc0e7f" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>ServoMotorBasics</DisplayName>
-    <PublisherDisplayName>Microsoft</PublisherDisplayName>
+    <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

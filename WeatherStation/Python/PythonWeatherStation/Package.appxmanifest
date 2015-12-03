@@ -9,14 +9,14 @@
 
   <Identity
 	  Name="PythonWeatherStation"
-	  Publisher="CN=Microsoft"
+	  Publisher="CN=MSFT"
 	  Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="34dc1eb4-2f90-4ee3-a491-489a214f78fb" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>PythonWeatherStation</DisplayName>
-    <PublisherDisplayName>Microsoft</PublisherDisplayName>
+    <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>StoreLogo.png</Logo>
   </Properties>
 

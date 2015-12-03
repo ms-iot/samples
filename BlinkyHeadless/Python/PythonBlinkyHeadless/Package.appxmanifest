@@ -9,14 +9,14 @@
 
   <Identity
 	  Name="PythonBlinkyHeadless"
-	  Publisher="CN=Microsoft"
+	  Publisher="CN=MSFT"
 	  Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="424e5b1f-0060-4bb4-8079-b767bd8e6cab" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>PythonBlinkyHeadless</DisplayName>
-    <PublisherDisplayName>Microsoft</PublisherDisplayName>
+    <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>StoreLogo.png</Logo>
   </Properties>
 

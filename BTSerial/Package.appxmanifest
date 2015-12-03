@@ -8,14 +8,14 @@
 
   <Identity
     Name="fe63927b-8437-4885-a503-05d7658a5b33"
-    Publisher="CN=Microsoft"
+    Publisher="CN=MSFT"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="fe63927b-8437-4885-a503-05d7658a5b33" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>BTSerial</DisplayName>
-    <PublisherDisplayName>Microsoft</PublisherDisplayName>
+    <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

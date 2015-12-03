@@ -9,14 +9,14 @@
 
   <Identity
 	  Name="PythonBlinkyServer"
-	  Publisher="CN=Microsoft"
+	  Publisher="CN=MSFT"
 	  Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="ac22653a-2e90-4cd2-9c01-4148645a1baf" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>PythonBlinkyServer</DisplayName>
-    <PublisherDisplayName>Microsoft</PublisherDisplayName>
+    <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>StoreLogo.png</Logo>
   </Properties>
 
