@@ -10,8 +10,8 @@ SETLOCAL
 :: Variable setup
 ::
 :: Example:
-:: set defaultappx=defappxname (name only. no need for .appx extension)
-:: set defaultappxid=defaultappxid
+:: set defaultappx=defappxname (Name only. no need for .appx extension)
+:: set defaultappxid=defaultappxid  (You can find your app's id by checking your app's Package.appxmanifest)
 :: set dependencylist=depappx1name depappx2name (Name only. No need for .appx extension. You can delimit mutliple dependency appxs with a space.)
 :: ---------------------------------------------------------------------
 set defaultappx=MainAppx_1.0.0.0_x86
