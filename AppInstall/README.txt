@@ -14,7 +14,7 @@ To install your appx on an IoT device please do the following:
 	- Set dependencylist = your appx's dependency names. (Name only. No need for .cer extension. You can delimit mutliple certificates with a space.)
 
 3. Place your files in the followind directories:
-	- c:\windows\appinstall: Your Appx, Dependency Appx(s), Temp appx (optional), Certificat(s), AppInstall.bat , DeployApp.bat 
+	- c:\windows\appinstall: Your Appx, Dependency Appx(s), Temp appx (optional), Certificate(s), AppInstall.bat , DeployApp.bat 
 	- c:\windows\system32: OemCustomization.cmd
 		
     You can do this by either:    
