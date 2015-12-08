@@ -17,15 +17,32 @@ namespace IoTCoreDefaultApp
 {
     public sealed partial class MainPage : Page
     {
+        public static MainPage Current;
         private CoreDispatcher MainPageDispatcher;
         private DispatcherTimer timer;
         private ConnectedDevicePresenter connectedDevicePresenter;
         private OnboardingService OnboardingService;
 
-            
+        public CoreDispatcher UIThreadDispatcher
+        {
+            get
+            {
+                return MainPageDispatcher;
+            }
+
+            set
+            {
+                MainPageDispatcher = value;
+            }
+        }
+
         public MainPage()
         {
             this.InitializeComponent();
+
+            // This is a static public property that allows downstream pages to get a handle to the MainPage instance
+            // in order to call methods that are in this class.
+            Current = this;
 
             MainPageDispatcher = Window.Current.Dispatcher;
 

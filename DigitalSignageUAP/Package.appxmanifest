@@ -8,14 +8,14 @@
 
   <Identity
     Name="DigitalSignageUAP"
-    Publisher="CN=Microsoft.IoT.Client"
+    Publisher="CN=MSFT"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="b8bc1b5c-3570-44e2-9cd1-42b5d4f486a1" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>DigitalSignageUAP</DisplayName>
-    <PublisherDisplayName>Microsoft IoT Client</PublisherDisplayName>
+    <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

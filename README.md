@@ -3,19 +3,19 @@ Windows 10 IoT Core Samples
 
 ##Welcome to the Windows 10 IoT Core Samples
 
-These samples have been validated on Windows IoT Core Insider Preview (10.0.10556.0):
+These samples have been validated on Windows IoT Core November Update (10.0.10586.0):
 
-* [Raspberry Pi 2](http://go.microsoft.com/fwlink/?LinkID=625104)
+* [Raspberry Pi 2](http://go.microsoft.com/fwlink/?LinkId=691711)
 
-* [MinnowBoard Max](http://go.microsoft.com/fwlink/?LinkID=625103)
+* [MinnowBoard Max](http://go.microsoft.com/fwlink/?LinkId=691712)
 
-* [DragonBoard 410c](http://go.microsoft.com/fwlink/?LinkId=657684)
+* [DragonBoard 410c](http://go.microsoft.com/fwlink/?LinkId=691713)
 
 These samples have been validated using these tools:
 
-* [Visual Studio 2015](https://www.visualstudio.com/vs-2015-product-editions)
+* [Visual Studio 2015](http://go.microsoft.com/fwlink/?LinkID=534599)
 
-* [Windows 10 SDK Developer Preview](https://dev.windows.com/en-us/downloads/windows-10-developer-preview)
+* [Visual Studio 2015 Update 1](http://go.microsoft.com/fwlink/?LinkID=691134)
 
 
 Please download, build, deploy, and contribute!!  For more information and descriptions about the samples found here, see the samples tab [here](http://ms-iot.github.io/content/en-US/win10/StartCoding.htm)
