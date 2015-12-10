@@ -62,7 +62,7 @@ namespace IoTCoreDefaultApp
                 timer.Start();
 
                 blinkyTimer = new DispatcherTimer();
-                blinkyTimer.Interval = TimeSpan.FromMilliseconds(100);
+                blinkyTimer.Interval = TimeSpan.FromMilliseconds(500);
                 blinkyTimer.Tick += Timer_Tick;
 
                 loader = new Windows.ApplicationModel.Resources.ResourceLoader();
