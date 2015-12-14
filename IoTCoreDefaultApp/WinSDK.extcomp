@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ExternalComponent Include="th2_release">
+      <Project>$/Xbox/XES/SDKs/Win10</Project>
+      <Version>10586</Version>
+    </ExternalComponent>
+  </ItemGroup>
+</Project>
