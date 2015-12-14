@@ -39,7 +39,7 @@ void ListI2cControllers ()
     using namespace Windows::Devices::Enumeration;
     using namespace Platform::Collections;
 
-    String^ friendlyNameProperty = 
+    String^ friendlyNameProperty =
         L"System.DeviceInterface.Spb.ControllerFriendlyName";
     auto properties = ref new Vector<String^>();
     properties->Append(friendlyNameProperty);
@@ -50,7 +50,7 @@ void ListI2cControllers ()
         std::wcout << L"There are no I2C controllers on this system.\n";
         return;
     }
-    
+
     wprintf(L"  FriendlyName DeviceId\n");
     for (const auto& di : dis) {
         wprintf(
@@ -325,9 +325,14 @@ void PrintUsage (PCWSTR name)
         L"                 I2C controller.\n"
         L"\n"
         L"Examples:\n"
-        L"  %s 0x57\n"
-        L"  %s 0x57 I2C1\n"
-        L"  %s -list\n",
+        L"  List available I2C controllers and exit:\n"
+        L"    %s -list\n"
+        L"\n"
+        L"  Open connection on the first enumerated controller to slave address 0x57:\n"
+        L"    %s 0x57\n"
+        L"\n"
+        L"  Open connection on I2C1 to slave address 0x57:\n"
+        L"    %s 0x57 I2C1\n",
         name,
         name,
         name,
@@ -342,16 +347,16 @@ int main (Platform::Array<Platform::String^>^ args)
         PrintUsage(args->get(0)->Data());
         return 1;
     }
-    
+
     {
         PCWSTR arg = args->get(optind)->Data();
         if (!_wcsicmp(arg, L"-h") || !_wcsicmp(arg, L"/h") ||
             !_wcsicmp(arg, L"-?") || !_wcsicmp(arg, L"/?")) {
-            
+
             PrintUsage(args->get(0)->Data());
             return 0;
         }
-        
+
         if (!_wcsicmp(arg, L"-l") || !_wcsicmp(arg, L"-list")) {
             ListI2cControllers();
             return 0;
