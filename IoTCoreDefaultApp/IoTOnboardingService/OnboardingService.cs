@@ -31,7 +31,6 @@ namespace IoTOnboardingService
         private OnboardingAccessPoint _softAccessPoint;
 
         private DeviceWatcher _deviceWatcher;
-        private WiFiAdapter _wlanAdapter;
         private string _wlanAdapterId;
 
         private string _personalApSsid;
@@ -144,12 +143,11 @@ namespace IoTOnboardingService
             }
         }
 
-        private async void HandleAdapterAdded(DeviceWatcher sender, DeviceInformation information)
+        private void HandleAdapterAdded(DeviceWatcher sender, DeviceInformation information)
         {
             if (_wlanAdapterId == null)
             {
                 _wlanAdapterId = information.Id;
-                _wlanAdapter = await WiFiAdapter.FromIdAsync(_wlanAdapterId);
 
                 lock (_stateLock)
                 {
@@ -168,7 +166,6 @@ namespace IoTOnboardingService
             if (_wlanAdapterId != null && _wlanAdapterId == information.Id)
             {
                 _softAccessPoint.Stop();
-                _wlanAdapter = null;
                 _wlanAdapterId = null;
 
                 _onboardingProducer.Stop();
@@ -176,7 +173,7 @@ namespace IoTOnboardingService
             }
         }
 
-        private async void ConnectToNetwork(WiFiAvailableNetwork network)
+        private async void ConnectToNetwork(WiFiAdapter adapter, WiFiAvailableNetwork network)
         {
             lock (_stateLock)
             {
@@ -186,11 +183,11 @@ namespace IoTOnboardingService
             WiFiConnectionResult connectionResult;
             if (network.SecuritySettings.NetworkAuthenticationType == NetworkAuthenticationType.Open80211)
             {
-                connectionResult = await _wlanAdapter.ConnectAsync(network, WiFiReconnectionKind.Automatic);
+                connectionResult = await adapter.ConnectAsync(network, WiFiReconnectionKind.Automatic);
             }
             else
             {
-                connectionResult = await _wlanAdapter.ConnectAsync(network, WiFiReconnectionKind.Automatic, new PasswordCredential { Password = _personalApPassword });
+                connectionResult = await adapter.ConnectAsync(network, WiFiReconnectionKind.Automatic, new PasswordCredential { Password = _personalApPassword });
             }
 
             lock (_stateLock)
@@ -262,15 +259,16 @@ namespace IoTOnboardingService
 
         public IAsyncOperation<OnboardingConnectResult> ConnectAsync(AllJoynMessageInfo info)
         {
-            return Task.Run(() =>
+            return Task.Run(async () =>
             {
                 // Find the network with the specified Ssid
-                foreach (var network in _wlanAdapter.NetworkReport.AvailableNetworks)
+                var adapter = await WiFiAdapter.FromIdAsync(_wlanAdapterId);
+                foreach (var network in adapter.NetworkReport.AvailableNetworks)
                 {
                     if (network.Ssid == _personalApSsid)
                     {
                         _softAccessPoint?.Stop();
-                        this.ConnectToNetwork(network);
+                        this.ConnectToNetwork(adapter, network);
                     }
                 }
                 return OnboardingConnectResult.CreateSuccessResult();
@@ -286,7 +284,8 @@ namespace IoTOnboardingService
                 {
                     if (_state == OnboardingState.ConfiguredValidated || _state == OnboardingState.ConfiguredValidating)
                     {
-                        _wlanAdapter.Disconnect();
+                        var adapter = WiFiAdapter.FromIdAsync(_wlanAdapterId).AsTask().Result;
+                        adapter.Disconnect();
                     }
                     _state = OnboardingState.NotConfigured;
                     _personalApSsid = null;
@@ -304,10 +303,11 @@ namespace IoTOnboardingService
         {
             return Task.Run(async () =>
             {
-                await _wlanAdapter.ScanAsync();
+                var adapter = await WiFiAdapter.FromIdAsync(_wlanAdapterId);
+                await adapter.ScanAsync();
 
                 var availableNetworks = new List<OnboardingScanListItem>();
-                foreach (var network in _wlanAdapter.NetworkReport.AvailableNetworks)
+                foreach (var network in adapter.NetworkReport.AvailableNetworks)
                 {
                     var listItem = new OnboardingScanListItem { Value1 = network.Ssid };
 
