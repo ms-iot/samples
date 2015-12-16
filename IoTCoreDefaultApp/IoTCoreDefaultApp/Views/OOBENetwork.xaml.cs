@@ -20,7 +20,7 @@ namespace IoTCoreDefaultApp
     /// </summary>
     public sealed partial class OOBENetwork : Page
     {
-        private NetworkPresenter networkPresenter;
+        private NetworkPresenter networkPresenter = new NetworkPresenter();
         private CoreDispatcher OOBENetworkPageDispatcher;
         private bool Automatic = true;
         private string CurrentPassword = string.Empty;
@@ -74,9 +74,7 @@ namespace IoTCoreDefaultApp
 
         private async void SetupWifi()
         {
-            networkPresenter = new NetworkPresenter();
-
-            if (await NetworkPresenter.WifiIsAvailable())
+            if (await networkPresenter.WifiIsAvailable())
             {
                 var networks = await networkPresenter.GetAvailableNetworks();
 

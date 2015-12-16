@@ -221,7 +221,7 @@ namespace IoTCoreDefaultApp
         {
             networkPresenter = new NetworkPresenter();
 
-            if (await NetworkPresenter.WifiIsAvailable())
+            if (await networkPresenter.WifiIsAvailable())
             {
                 var networks = await networkPresenter.GetAvailableNetworks();
 
