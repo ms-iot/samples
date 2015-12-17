@@ -56,7 +56,7 @@
                 </Border>
                 <StackPanel Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0">
                     <TextBlock Text="{Binding Ssid}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}"/>
-                    <TextBlock Text="{Binding  ElementName='rootPage', Path=DataContext[ConnectedText]}" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding  ElementName='rootPage', Path=DataContext[NetworkConnectedText]}" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 </StackPanel>
             </Grid>
         </DataTemplate>

@@ -120,7 +120,26 @@ namespace IoTCoreDefaultApp
 
             try
             {
+                bool fInit = false;
                 EnumAdaptersCompleted.WaitOne();
+                foreach (var adapter in WiFiAdapters)
+                {
+                    if (adapter.Value == null)
+                    {
+                        // New Adapter plugged-in which requires Initialization
+                        fInit = true;
+                    }
+                }
+
+                if (fInit)
+                {
+                    List<String> WiFiAdaptersID = new List<string>(WiFiAdapters.Keys);
+                    for (int i = 0; i < WiFiAdaptersID.Count; i++)
+                    {
+                        string id = WiFiAdaptersID[i];
+                        WiFiAdapters[id] = await WiFiAdapter.FromIdAsync(id);
+                    }
+                }
                 return (WiFiAdapters.Count > 0);
             }
             catch (Exception)
@@ -138,25 +157,26 @@ namespace IoTCoreDefaultApp
 
             networkNameToInfo = new Dictionary<WiFiAvailableNetwork, WiFiAdapter>();
 
-            foreach (var adapter in WiFiAdapters)
+            List<WiFiAdapter> WiFiAdaptersList = new List<WiFiAdapter>(WiFiAdapters.Values);
+            foreach (var adapter in WiFiAdaptersList)
             {
-                if (adapter.Value == null)
+                if (adapter == null)
                 {
                     return false;
                 }
 
-                await adapter.Value.ScanAsync();
+                await adapter.ScanAsync();
 
-                if (adapter.Value.NetworkReport == null)
+                if (adapter.NetworkReport == null)
                 {
                     continue;
                 }
 
-                foreach (var network in adapter.Value.NetworkReport.AvailableNetworks)
+                foreach (var network in adapter.NetworkReport.AvailableNetworks)
                 {
                     if (!HasSsid(networkNameToInfo, network.Ssid))
                     {
-                        networkNameToInfo[network] = adapter.Value;
+                        networkNameToInfo[network] = adapter;
                     }
                 }
             }

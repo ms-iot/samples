@@ -14,6 +14,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -26,7 +27,7 @@ namespace IoTCoreDefaultApp
     {
         private LanguageManager languageManager;
         private UIElement visibleContent;
-        private NetworkPresenter networkPresenter;
+        private NetworkPresenter networkPresenter = new NetworkPresenter();
         private bool Automatic = true;
         private string CurrentPassword = string.Empty;
         // Device watcher
@@ -219,8 +220,6 @@ namespace IoTCoreDefaultApp
 
         private async void SetupWifi()
         {
-            networkPresenter = new NetworkPresenter();
-
             if (await networkPresenter.WifiIsAvailable())
             {
                 var networks = await networkPresenter.GetAvailableNetworks();
@@ -232,7 +231,7 @@ namespace IoTCoreDefaultApp
 
                     if (connectedNetwork != null)
                     {
-                        SwitchToItemState(connectedNetwork, WifiConnectedState, true);
+                        var item = SwitchToItemState(connectedNetwork, WifiConnectedState, true);
                     }
 
                     NoWifiFoundText.Visibility = Visibility.Collapsed;
