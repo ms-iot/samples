@@ -48,7 +48,14 @@ namespace IoTCoreDefaultApp
             for(int i = 0; i < WiFiAdaptersID.Count; i++)
             {
                 string id = WiFiAdaptersID[i];
-                WiFiAdapters[id] = await WiFiAdapter.FromIdAsync(id);
+                try
+                {
+                    WiFiAdapters[id] = await WiFiAdapter.FromIdAsync(id);
+                }
+                catch (Exception)
+                {
+                    WiFiAdapters.Remove(id);
+                }
             }
             EnumAdaptersCompleted.Set();
         }
@@ -111,6 +118,36 @@ namespace IoTCoreDefaultApp
 
         private static WiFiAccessStatus? accessStatus;
 
+        // Call this method before accessing WiFiAdapters Dictionary
+        private async Task UpdateAdapters()
+        {
+            bool fInit = false;
+            foreach (var adapter in WiFiAdapters)
+            {
+                if (adapter.Value == null)
+                {
+                    // New Adapter plugged-in which requires Initialization
+                    fInit = true;
+                }
+            }
+
+            if (fInit)
+            {
+                List<String> WiFiAdaptersID = new List<string>(WiFiAdapters.Keys);
+                for (int i = 0; i < WiFiAdaptersID.Count; i++)
+                {
+                    string id = WiFiAdaptersID[i];
+                    try
+                    {
+                        WiFiAdapters[id] = await WiFiAdapter.FromIdAsync(id);
+                    }
+                    catch (Exception)
+                    {
+                        WiFiAdapters.Remove(id);
+                    }
+                }
+            }
+        }
         public async Task<bool> WifiIsAvailable()
         {
             if ((await TestAccess()) == false)
@@ -120,26 +157,8 @@ namespace IoTCoreDefaultApp
 
             try
             {
-                bool fInit = false;
                 EnumAdaptersCompleted.WaitOne();
-                foreach (var adapter in WiFiAdapters)
-                {
-                    if (adapter.Value == null)
-                    {
-                        // New Adapter plugged-in which requires Initialization
-                        fInit = true;
-                    }
-                }
-
-                if (fInit)
-                {
-                    List<String> WiFiAdaptersID = new List<string>(WiFiAdapters.Keys);
-                    for (int i = 0; i < WiFiAdaptersID.Count; i++)
-                    {
-                        string id = WiFiAdaptersID[i];
-                        WiFiAdapters[id] = await WiFiAdapter.FromIdAsync(id);
-                    }
-                }
+                await UpdateAdapters();
                 return (WiFiAdapters.Count > 0);
             }
             catch (Exception)
@@ -156,7 +175,6 @@ namespace IoTCoreDefaultApp
             }
 
             networkNameToInfo = new Dictionary<WiFiAvailableNetwork, WiFiAdapter>();
-
             List<WiFiAdapter> WiFiAdaptersList = new List<WiFiAdapter>(WiFiAdapters.Values);
             foreach (var adapter in WiFiAdaptersList)
             {
