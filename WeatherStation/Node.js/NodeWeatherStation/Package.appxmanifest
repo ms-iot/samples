@@ -5,13 +5,13 @@
   xmlns:iot="http://schemas.microsoft.com/appx/manifest/iot/windows10"
   IgnorableNamespaces="uap mp iot">
 
-  <Identity Name="7ca6b32c-479a-4fdb-9e71-b47471abc643" Publisher="CN=Microsoft" Version="1.0.0.0" />
+  <Identity Name="7ca6b32c-479a-4fdb-9e71-b47471abc643" Publisher="CN=MSFT" Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="7ca6b32c-479a-4fdb-9e71-b47471abc643" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>NodeWeatherStation</DisplayName>
-    <PublisherDisplayName>Microsoft</PublisherDisplayName>
+    <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

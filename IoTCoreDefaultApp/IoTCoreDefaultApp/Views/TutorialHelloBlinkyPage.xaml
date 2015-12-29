@@ -79,7 +79,7 @@
                 <TextBlock Grid.Row="2" Text="{Binding [TutorialsText]}" Style="{StaticResource CaptionTextBlockStyle}" TextAlignment="Center" Margin="0,5,0,0"/>
             </Grid>
 
-            <TextBlock Grid.Column="2" x:Name="CurrentTime" HorizontalAlignment="Right" Style="{StaticResource IoTCoreDefaultAppBodyTextBlockStyle}" VerticalAlignment="Center" Padding="0,0,14,0"/>
+            <TextBlock Grid.Column="2" x:Name="CurrentTime" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Right" Style="{StaticResource IoTCoreDefaultAppBodyTextBlockStyle}" VerticalAlignment="Center" Padding="0,0,14,0"/>
 
             <Button Grid.Column="4" x:Name="SettingsButton" Style="{StaticResource ShutdownButtonStyle}" Content="{StaticResource IconSettings}" FontFamily="{StaticResource IconFontFamily}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Click="SettingsButton_Clicked" Background="Transparent" BorderThickness="0" Height="48" Width="48"/>
 

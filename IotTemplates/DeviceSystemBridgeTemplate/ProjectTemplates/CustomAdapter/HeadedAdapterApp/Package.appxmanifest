@@ -9,14 +9,14 @@
 
   <Identity
     Name="HeadedAdapterApp"
-    Publisher="CN=default"
+    Publisher="CN=MSFT"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="9110ce97-64b4-466f-bf66-a8613ea945c2" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>HeadedAdapterApp</DisplayName>
-    <PublisherDisplayName>default</PublisherDisplayName>
+    <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

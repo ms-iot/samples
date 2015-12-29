@@ -76,7 +76,6 @@ namespace I2cPortExpander
             }
             
             var i2cSettings = new I2cConnectionSettings(PORT_EXPANDER_I2C_ADDRESS);
-            i2cSettings.BusSpeed = I2cBusSpeed.FastMode;
             i2cPortExpander = await I2cDevice.FromIdAsync(i2cDeviceControllers[0].Id, i2cSettings);
             if (i2cPortExpander == null)
             {

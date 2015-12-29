@@ -8,6 +8,7 @@
 //
 
 #include <ppltasks.h>
+#include <collection.h>
 #include <string>
 #include <vector>
 #include <sstream>
@@ -32,6 +33,32 @@ public:
 private:
     std::wstring msg_;
 };
+
+void ListSpiControllers ()
+{
+    using namespace Windows::Devices::Enumeration;
+    using namespace Platform::Collections;
+
+    String^ friendlyNameProperty =
+        L"System.DeviceInterface.Spb.ControllerFriendlyName";
+    auto properties = ref new Vector<String^>();
+    properties->Append(friendlyNameProperty);
+    auto dis = concurrency::create_task(DeviceInformation::FindAllAsync(
+            SpiDevice::GetDeviceSelector(),
+            properties)).get();
+    if (dis->Size < 1) {
+        std::wcout << L"There are no SPI controllers on this system.\n";
+        return;
+    }
+
+    wprintf(L"  FriendlyName DeviceId\n");
+    for (const auto& di : dis) {
+        wprintf(
+            L"  %12s %s\n",
+            ((String^)di->Properties->Lookup(friendlyNameProperty))->Data(),
+            di->Id->Data());
+    }
+}
 
 SpiDevice^ MakeDevice (
     String^ friendlyName,
@@ -248,9 +275,10 @@ void PrintUsage (PCWSTR name)
 {
     wprintf(
         L"SpiTestTool: Command line SPI testing utility\n"
-        L"Usage: %s [-n FriendlyName] [-c ChipSelectLine] [-m Mode] "
+        L"Usage: %s [-list] [-n FriendlyName] [-c ChipSelectLine] [-m Mode] "
         L"[-d DataBitLength] [-f ClockFrequency]\n"
         L"\n"
+        L"  -list           List available SPI controllers and exit.\n"
         L"  FriendlyName    The friendly name of the SPI controller over which\n"
         L"                  you wish to communicate. This parameter is\n"
         L"                  optional and defaults to the first enumerated SPI\n"
@@ -265,8 +293,21 @@ void PrintUsage (PCWSTR name)
         L"                  optional and defaults to 4Mhz.\n"
         L"\n"
         L"Examples:\n"
-        L"  %s\n"
-        L"  %s -n SPI1 -m 2\n",
+        L"  Connect to the first SPI controller found with default settings\n"
+        L"  (ChipSelectLine=0, Mode=0, DataBitLength=8, Frequency=4Mhz):\n"
+        L"    %s\n"
+        L"\n"
+        L"  List available SPI controllers and exit:\n"
+        L"    %s -list\n"
+        L"\n"
+        L"  Connect to SPI1 in mode 2, with default speed (4Mhz) and chip\n"
+        L"  select line (0):\n"
+        L"    %s -n SPI1 -m 2\n"
+        L"\n"
+        L"  Connect to chip select 1 on SPI1 in mode 2 at 1Mhz:\n"
+        L"    %s -c 1 -n SPI1 -m 2 -f 1000000\n",
+        name,
+        name,
         name,
         name,
         name);
@@ -282,6 +323,18 @@ int main (Platform::Array<Platform::String^>^ args)
 
     for (unsigned int optind = 1; optind < args->Length; optind += 2) {
         PCWSTR arg1 = args->get(optind)->Data();
+        if (!_wcsicmp(arg1, L"-h") || !_wcsicmp(arg1, L"/h") ||
+            !_wcsicmp(arg1, L"-?") || !_wcsicmp(arg1, L"/?")) {
+
+            PrintUsage(args->get(0)->Data());
+            return 0;
+        }
+
+        if (!_wcsicmp(arg1, L"-l") || !_wcsicmp(arg1, L"-list")) {
+            ListSpiControllers();
+            return 0;
+        }
+
         if (arg1[0] != L'-') {
             std::wcerr << L"Unexpected positional parameter: " << arg1 << L"\n";
             return 1;
@@ -290,11 +343,6 @@ int main (Platform::Array<Platform::String^>^ args)
         if (args->get(optind)->Length() != 2) {
             std::wcerr << L"Invalid option format: " << arg1 << L"\n";
             return 1;
-        }
-
-        if (arg1[1] == L'h') {
-            PrintUsage(args->get(0)->Data());
-            return 0;
         }
 
         if ((optind + 1) >= args->Length) {

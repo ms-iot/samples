@@ -9,14 +9,14 @@
 
   <Identity
     Name="ZWaveHeadlessAdapterApp"
-    Publisher="CN=default"
+    Publisher="CN=MSFT"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="b30ec12a-4235-4b90-adda-a535437c2b02" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>ZWaveHeadlessAdapterApp</DisplayName>
-    <PublisherDisplayName>default</PublisherDisplayName>
+    <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

@@ -9,14 +9,14 @@
 
   <Identity
     Name="WeatherStationVB-uwp"
-    Publisher="CN=Microsoft"
+    Publisher="CN=MSFT"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="720287ff-5e1f-45d0-a3a8-2dd911b16440" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>WeatherStationVB</DisplayName>
-    <PublisherDisplayName>Microsoft</PublisherDisplayName>
+    <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

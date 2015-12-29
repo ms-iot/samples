@@ -48,6 +48,8 @@ namespace BluetoothGATT
 
         private DeviceWatcher deviceWatcher = null;
 
+        private DeviceInformationDisplay DeviceInfoConnected = null;
+
         //Handlers for device detection
         private TypedEventHandler<DeviceWatcher, DeviceInformation> handlerAdded = null;
         private TypedEventHandler<DeviceWatcher, DeviceInformationUpdate> handlerUpdated = null;
@@ -214,6 +216,8 @@ namespace BluetoothGATT
                             enableSensor(i);
                         }
                         UserOut.Text = "Sensors on!";
+                        DisableButton.IsEnabled = true;
+                        EnableButton.IsEnabled = true;
                     }
                     else
                     {
@@ -514,44 +518,48 @@ namespace BluetoothGATT
 
         private async void PairButton_Click(object sender, RoutedEventArgs e)
         {
-            PairButton.IsEnabled = false;
-
             DeviceInformationDisplay deviceInfoDisp = resultsListView.SelectedItem as DeviceInformationDisplay;
-            bool paired = true;
-            if (deviceInfoDisp.IsPaired != true)
+            
+            if (deviceInfoDisp != null)
             {
-                paired = false;
-                DevicePairingKinds ceremoniesSelected = DevicePairingKinds.ConfirmOnly | DevicePairingKinds.DisplayPin | DevicePairingKinds.ProvidePin | DevicePairingKinds.ConfirmPinMatch;
-                DevicePairingProtectionLevel protectionLevel = DevicePairingProtectionLevel.Default;
-
-                // Specify custom pairing with all ceremony types and protection level EncryptionAndAuthentication
-                DeviceInformationCustomPairing customPairing = deviceInfoDisp.DeviceInformation.Pairing.Custom;
-
-                customPairing.PairingRequested += PairingRequestedHandler;
-                DevicePairingResult result = await customPairing.PairAsync(ceremoniesSelected, protectionLevel);
-                customPairing.PairingRequested -= PairingRequestedHandler;
-
-                if (result.Status == DevicePairingResultStatus.Paired)
+                PairButton.IsEnabled = false;
+                bool paired = true;
+                if (deviceInfoDisp.IsPaired != true)
                 {
-                    paired = true;
+                    paired = false;
+                    DevicePairingKinds ceremoniesSelected = DevicePairingKinds.ConfirmOnly | DevicePairingKinds.DisplayPin | DevicePairingKinds.ProvidePin | DevicePairingKinds.ConfirmPinMatch;
+                    DevicePairingProtectionLevel protectionLevel = DevicePairingProtectionLevel.Default;
+
+                    // Specify custom pairing with all ceremony types and protection level EncryptionAndAuthentication
+                    DeviceInformationCustomPairing customPairing = deviceInfoDisp.DeviceInformation.Pairing.Custom;
+
+                    customPairing.PairingRequested += PairingRequestedHandler;
+                    DevicePairingResult result = await customPairing.PairAsync(ceremoniesSelected, protectionLevel);
+                    customPairing.PairingRequested -= PairingRequestedHandler;
+
+                    if (result.Status == DevicePairingResultStatus.Paired)
+                    {
+                        paired = true;
+                    }
+                    else
+                    {
+                        UserOut.Text = "Pairing Failed " + result.Status.ToString();
+                    }
+                    UpdatePairingButtons();
                 }
-                else
+
+                if (paired)
                 {
-                    UserOut.Text = "Pairing Failed " + result.Status.ToString();
+                    // device is paired, set up the sensor Tag            
+                    UserOut.Text = "Setting up SensorTag";
+
+                    DeviceInfoConnected = deviceInfoDisp;
+
+                    //Start watcher for Bluetooth LE Services
+                    StartBLEWatcher();
                 }
-                UpdatePairingButtons();
-            }           
-
-            if (paired)
-            {
-                // device is paired, set up the sensor Tag            
-                UserOut.Text = "Setting up SensorTag";
-
-                //Start watcher for Bluetooth LE Services
-                StartBLEWatcher();
-            }
-
-            PairButton.IsEnabled = true;
+                PairButton.IsEnabled = true;
+            }            
         }
 
         private void ResultsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -735,13 +743,20 @@ namespace BluetoothGATT
 
             UserOut.Text = "Unpairing result = " + dupr.Status.ToString();
 
+            if (DeviceInfoConnected.Id == deviceInfoDisp.Id)
+            {
+                EnableButton.IsEnabled = false;
+                DisableButton.IsEnabled = false;
+                DeviceInfoConnected = null;
+            }
+
             UpdatePairingButtons();
+            
         }
 
         private void UpdatePairingButtons()
         {
-            DeviceInformationDisplay deviceInfoDisp = (DeviceInformationDisplay)resultsListView.SelectedItem;
-            
+            DeviceInformationDisplay deviceInfoDisp = (DeviceInformationDisplay)resultsListView.SelectedItem;            
 
             if (null != deviceInfoDisp &&
                 deviceInfoDisp.DeviceInformation.Pairing.IsPaired)
@@ -877,42 +892,45 @@ namespace BluetoothGATT
         // Algorithm taken from http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Barometric_Pressure_Sensor_2
         async void pressureChanged(GattCharacteristic sender, GattValueChangedEventArgs eventArgs)
         {
-            UInt16 c3 = (UInt16)(((UInt16)baroCalibrationData[5] << 8) + (UInt16)baroCalibrationData[4]);
-            UInt16 c4 = (UInt16)(((UInt16)baroCalibrationData[7] << 8) + (UInt16)baroCalibrationData[6]);
-            Int16 c5 = (Int16)(((UInt16)baroCalibrationData[9] << 8) + (UInt16)baroCalibrationData[8]);
-            Int16 c6 = (Int16)(((UInt16)baroCalibrationData[11] << 8) + (UInt16)baroCalibrationData[10]);
-            Int16 c7 = (Int16)(((UInt16)baroCalibrationData[13] << 8) + (UInt16)baroCalibrationData[12]);
-            Int16 c8 = (Int16)(((UInt16)baroCalibrationData[15] << 8) + (UInt16)baroCalibrationData[14]);
-
-            byte[] bArray = new byte[eventArgs.CharacteristicValue.Length];
-            DataReader.FromBuffer(eventArgs.CharacteristicValue).ReadBytes(bArray);
-
-            Int64 s, o, p, val;
-            UInt16 Pr = (UInt16)(((UInt16)bArray[3] << 8) + (UInt16)bArray[2]);
-            Int16 Tr = (Int16)(((UInt16)bArray[1] << 8) + (UInt16)bArray[0]);
-
-            // Sensitivity
-            s = (Int64)c3;
-            val = (Int64)c4 * Tr;
-            s += (val >> 17);
-            val = (Int64)c5 * Tr * Tr;
-            s += (val >> 34);
-
-            // Offset
-            o = (Int64)c6 << 14;
-            val = (Int64)c7 * Tr;
-            o += (val >> 3);
-            val = (Int64)c8 * Tr * Tr;
-            o += (val >> 19);
-
-            // Pressure (Pa)
-            p = ((Int64)(s * Pr) + o) >> 14;
-            double pres = (double)p / 100;
-
-            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+            if (baroCalibrationData != null)
             {
-                BaroOut.Text = pres.ToString();
-            });
+                UInt16 c3 = (UInt16)(((UInt16)baroCalibrationData[5] << 8) + (UInt16)baroCalibrationData[4]);
+                UInt16 c4 = (UInt16)(((UInt16)baroCalibrationData[7] << 8) + (UInt16)baroCalibrationData[6]);
+                Int16 c5 = (Int16)(((UInt16)baroCalibrationData[9] << 8) + (UInt16)baroCalibrationData[8]);
+                Int16 c6 = (Int16)(((UInt16)baroCalibrationData[11] << 8) + (UInt16)baroCalibrationData[10]);
+                Int16 c7 = (Int16)(((UInt16)baroCalibrationData[13] << 8) + (UInt16)baroCalibrationData[12]);
+                Int16 c8 = (Int16)(((UInt16)baroCalibrationData[15] << 8) + (UInt16)baroCalibrationData[14]);
+
+                byte[] bArray = new byte[eventArgs.CharacteristicValue.Length];
+                DataReader.FromBuffer(eventArgs.CharacteristicValue).ReadBytes(bArray);
+
+                Int64 s, o, p, val;
+                UInt16 Pr = (UInt16)(((UInt16)bArray[3] << 8) + (UInt16)bArray[2]);
+                Int16 Tr = (Int16)(((UInt16)bArray[1] << 8) + (UInt16)bArray[0]);
+
+                // Sensitivity
+                s = (Int64)c3;
+                val = (Int64)c4 * Tr;
+                s += (val >> 17);
+                val = (Int64)c5 * Tr * Tr;
+                s += (val >> 34);
+
+                // Offset
+                o = (Int64)c6 << 14;
+                val = (Int64)c7 * Tr;
+                o += (val >> 3);
+                val = (Int64)c8 * Tr * Tr;
+                o += (val >> 19);
+
+                // Pressure (Pa)
+                p = ((Int64)(s * Pr) + o) >> 14;
+                double pres = (double)p / 100;
+
+                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                {
+                    BaroOut.Text = pres.ToString();
+                });
+            }            
         }
 
         // Gyroscope change handler

@@ -5,13 +5,13 @@
   xmlns:iot="http://schemas.microsoft.com/appx/manifest/iot/windows10"
   IgnorableNamespaces="uap mp iot">
 
-  <Identity Name="5e0394db-b132-49e0-8ab2-fda016d8e37b" Publisher="CN=Microsoft" Version="1.0.0.0" />
+  <Identity Name="5e0394db-b132-49e0-8ab2-fda016d8e37b" Publisher="CN=MSFT" Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="5e0394db-b132-49e0-8ab2-fda016d8e37b" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>NodeBlinkyServer</DisplayName>
-    <PublisherDisplayName>Microsoft</PublisherDisplayName>
+    <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

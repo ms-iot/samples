@@ -17,15 +17,32 @@ namespace IoTCoreDefaultApp
 {
     public sealed partial class MainPage : Page
     {
+        public static MainPage Current;
         private CoreDispatcher MainPageDispatcher;
         private DispatcherTimer timer;
         private ConnectedDevicePresenter connectedDevicePresenter;
         private OnboardingService OnboardingService;
 
-            
+        public CoreDispatcher UIThreadDispatcher
+        {
+            get
+            {
+                return MainPageDispatcher;
+            }
+
+            set
+            {
+                MainPageDispatcher = value;
+            }
+        }
+
         public MainPage()
         {
             this.InitializeComponent();
+
+            // This is a static public property that allows downstream pages to get a handle to the MainPage instance
+            // in order to call methods that are in this class.
+            Current = this;
 
             MainPageDispatcher = Window.Current.Dispatcher;
 
@@ -105,7 +122,7 @@ namespace IoTCoreDefaultApp
         private void UpdateDateTime()
         {
             var t = DateTime.Now;
-            this.CurrentTime.Text = t.ToString("t", CultureInfo.CurrentCulture);
+            this.CurrentTime.Text = t.ToString("t", CultureInfo.CurrentCulture) + Environment.NewLine + t.ToString("d", CultureInfo.CurrentCulture);
         }
 
         private async void UpdateNetworkInfo()

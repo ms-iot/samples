@@ -9,14 +9,14 @@
 
   <Identity
     Name="BACnetHeadedAdapterApp"
-    Publisher="CN=default"
+    Publisher="CN=MSFT"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="4d5303c5-5111-43fc-b466-4d88f126a115" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>BACnetHeadedAdapterApp</DisplayName>
-    <PublisherDisplayName>default</PublisherDisplayName>
+    <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

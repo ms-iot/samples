@@ -8,14 +8,14 @@
 
   <Identity
     Name="BluetoothGATT"
-    Publisher="CN=IoTTools"
+    Publisher="CN=MSFT"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="f21a452f-f92e-401a-bce0-cf0173835522" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>BluetoothGATT</DisplayName>
-    <PublisherDisplayName>IoTTools</PublisherDisplayName>
+    <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

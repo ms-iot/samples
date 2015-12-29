@@ -11,8 +11,8 @@
     <AssemblyName>IoTCoreDefaultApp</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10545.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
     <FileAlignment>512</FileAlignment>
@@ -28,6 +28,8 @@
     </SccAuxPath>
     <SccProvider>
     </SccProvider>
+    <AppxBundlePlatforms>x86</AppxBundlePlatforms>
+    <AppxBundle>Never</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
@@ -103,7 +105,7 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="WindowsIoT, Version=10.0.10240.0">
+    <SDKReference Include="WindowsIoT, Version=10.0.10586.0">
       <Name>Windows IoT Extension SDK</Name>
     </SDKReference>
   </ItemGroup>
@@ -111,6 +113,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Presenters\BluetoothDisplayHelpers.cs" />
     <Compile Include="Presenters\ConnectedDevicePresenter.cs" />
     <Compile Include="Presenters\DeviceInfoPresenter.cs" />
     <Compile Include="Presenters\LanguageManager.cs" />

@@ -4,6 +4,7 @@
 using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.Devices.Enumeration;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -13,17 +14,52 @@ using Windows.UI.Xaml.Navigation;
 
 namespace IoTCoreDefaultApp
 {
+    public class InboundPairingEventArgs
+    {
+        public InboundPairingEventArgs(DeviceInformation di)
+        {
+            DeviceInfo = di;
+        }
+        public DeviceInformation DeviceInfo
+        {
+            get;
+            private set;
+        }
+    }
+    // Callback handler delegate type for Inbound pairing requests
+    public delegate void InboundPairingRequestedHandler(object sender, InboundPairingEventArgs inboundArgs);
+
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
     sealed partial class App : Application
     {
+        // Handler for Inbound pairing requests
+        public static event InboundPairingRequestedHandler InboundPairingRequested;
+
+        // Don't try and make discoverable if this has already been done
+        private static bool isDiscoverable = false;
+
+        public static bool IsBluetoothDiscoverable
+        {
+            get
+            {
+                return isDiscoverable;
+            }
+
+            set
+            {
+                isDiscoverable = value;
+            }
+        }
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
         public App()
         {
+            // System.Diagnostics.Debugger.Break();
             this.InitializeComponent();
             this.Suspending += OnSuspending;
         }
@@ -36,12 +72,12 @@ namespace IoTCoreDefaultApp
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
 
-/*#if DEBUG
-            if (System.Diagnostics.Debugger.IsAttached)
-            {
-                this.DebugSettings.EnableFrameRateCounter = true;
-            }
-#endif*/
+            /*#if DEBUG
+                        if (System.Diagnostics.Debugger.IsAttached)
+                        {
+                            this.DebugSettings.EnableFrameRateCounter = true;
+                        }
+            #endif*/
 
             Frame rootFrame = Window.Current.Content as Frame;
 
@@ -85,6 +121,40 @@ namespace IoTCoreDefaultApp
             }
             // Ensure the current window is active
             Window.Current.Activate();
+        }
+
+        protected override void OnActivated(IActivatedEventArgs args)
+        {
+            // Spot if we are being activated due to inbound pairing request
+            if (args.Kind == ActivationKind.DevicePairing)
+            {
+                // Ensure the main app loads first
+                OnLaunched(null);
+
+                // Get the arguments, which give information about the device which wants to pair with this app
+                var devicePairingArgs = (DevicePairingActivatedEventArgs)args;
+                var di = devicePairingArgs.DeviceInformation;
+
+                // Automatically switch to Bluetooth Settings page
+                NavigationUtils.NavigateToScreen(typeof(Settings));
+
+                int bluetoothSettingsIndex = 2;
+                Frame rootFrame = Window.Current.Content as Frame;
+                ListView settingsListView = null;
+                settingsListView = (rootFrame.Content as FrameworkElement).FindName("SettingsChoice") as ListView;
+                settingsListView.Focus(FocusState.Programmatic);
+                bluetoothSettingsIndex = Math.Min(bluetoothSettingsIndex, settingsListView.Items.Count - 1);
+                settingsListView.SelectedIndex = bluetoothSettingsIndex;
+                // Appropriate Bluetooth Listview grid content is forced by App_InboundPairingRequested call to SwitchToSelectedSettings
+
+                // Fire the event letting subscribers know there's a new inbound request.
+                // In this case Scenario should be subscribed.
+                if (InboundPairingRequested != null)
+                {
+                    InboundPairingEventArgs inboundEventArgs = new InboundPairingEventArgs(di);
+                    InboundPairingRequested(this, inboundEventArgs);
+                }
+            }
         }
 
         /// <summary>

@@ -8,14 +8,14 @@
 
   <Identity
     Name="6d58bf85-1f51-4bbb-8319-02bdb69f5fc8"
-    Publisher="CN=nicolasg"
+    Publisher="CN=MSFT"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="6d58bf85-1f51-4bbb-8319-02bdb69f5fc8" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>AdapterLibTest</DisplayName>
-    <PublisherDisplayName>nicolasg</PublisherDisplayName>
+    <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

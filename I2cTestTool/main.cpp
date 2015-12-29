@@ -8,6 +8,7 @@
 //
 
 #include <ppltasks.h>
+#include <collection.h>
 #include <string>
 #include <vector>
 #include <sstream>
@@ -33,6 +34,32 @@ private:
     std::wstring msg_;
 };
 
+void ListI2cControllers ()
+{
+    using namespace Windows::Devices::Enumeration;
+    using namespace Platform::Collections;
+
+    String^ friendlyNameProperty =
+        L"System.DeviceInterface.Spb.ControllerFriendlyName";
+    auto properties = ref new Vector<String^>();
+    properties->Append(friendlyNameProperty);
+    auto dis = concurrency::create_task(DeviceInformation::FindAllAsync(
+            I2cDevice::GetDeviceSelector(),
+            properties)).get();
+    if (dis->Size < 1) {
+        std::wcout << L"There are no I2C controllers on this system.\n";
+        return;
+    }
+
+    wprintf(L"  FriendlyName DeviceId\n");
+    for (const auto& di : dis) {
+        wprintf(
+            L"  %12s %s\n",
+            ((String^)di->Properties->Lookup(friendlyNameProperty))->Data(),
+            di->Id->Data());
+    }
+}
+
 I2cDevice^ MakeDevice (int slaveAddress, _In_opt_ String^ friendlyName)
 {
     using namespace Windows::Devices::Enumeration;
@@ -45,7 +72,7 @@ I2cDevice^ MakeDevice (int slaveAddress, _In_opt_ String^ friendlyName)
 
     auto dis = concurrency::create_task(DeviceInformation::FindAllAsync(aqs)).get();
     if (dis->Size < 1) {
-        throw wexception(L"I2C bus not found");
+        throw wexception(L"I2C controller not found");
     }
 
     String^ id = dis->GetAt(0)->Id;
@@ -287,8 +314,9 @@ void PrintUsage (PCWSTR name)
 {
     wprintf(
         L"I2cTestTool: Command line I2C testing utility\n"
-        L"Usage: %s SlaveAddress [FriendlyName]\n"
+        L"Usage: %s [-list] SlaveAddress [FriendlyName]\n"
         L"\n"
+        L"  -list          List available I2C controllers and exit.\n"
         L"  SlaveAddress   The slave address of the device with which you\n"
         L"                 wish to communicate. This is a required parameter.\n"
         L"  FriendlyName   The friendly name of the I2C controller over\n"
@@ -297,8 +325,15 @@ void PrintUsage (PCWSTR name)
         L"                 I2C controller.\n"
         L"\n"
         L"Examples:\n"
-        L"  %s 0x57\n"
-        L"  %s 0x57 I2C1\n",
+        L"  List available I2C controllers and exit:\n"
+        L"    %s -list\n"
+        L"\n"
+        L"  Open connection on the first enumerated controller to slave address 0x57:\n"
+        L"    %s 0x57\n"
+        L"\n"
+        L"  Open connection on I2C1 to slave address 0x57:\n"
+        L"    %s 0x57 I2C1\n",
+        name,
         name,
         name,
         name);
@@ -307,15 +342,25 @@ void PrintUsage (PCWSTR name)
 int main (Platform::Array<Platform::String^>^ args)
 {
     unsigned int optind = 1;
-    if (optind < args->Length) {
-        if ((args->get(optind) == L"-h") || (args->get(optind) == L"-?")) {
-            PrintUsage(args->get(0)->Data());
-            return 0;
-        }
-    } else {
+    if (optind >= args->Length) {
         std::wcerr << L"Missing required command line parameter SlaveAddress\n\n";
         PrintUsage(args->get(0)->Data());
         return 1;
+    }
+
+    {
+        PCWSTR arg = args->get(optind)->Data();
+        if (!_wcsicmp(arg, L"-h") || !_wcsicmp(arg, L"/h") ||
+            !_wcsicmp(arg, L"-?") || !_wcsicmp(arg, L"/?")) {
+
+            PrintUsage(args->get(0)->Data());
+            return 0;
+        }
+
+        if (!_wcsicmp(arg, L"-l") || !_wcsicmp(arg, L"-list")) {
+            ListI2cControllers();
+            return 0;
+        }
     }
 
     int slaveAddress;

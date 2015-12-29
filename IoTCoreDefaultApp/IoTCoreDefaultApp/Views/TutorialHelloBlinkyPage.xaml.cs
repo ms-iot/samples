@@ -87,7 +87,7 @@ namespace IoTCoreDefaultApp
         private void UpdateDateTime()
         {
             var t = DateTime.Now;
-            this.CurrentTime.Text = t.ToString("t", CultureInfo.CurrentCulture);
+            this.CurrentTime.Text = t.ToString("t", CultureInfo.CurrentCulture) + Environment.NewLine + t.ToString("d", CultureInfo.CurrentCulture);
         }
 
         private void ShutdownButton_Clicked(object sender, RoutedEventArgs e)

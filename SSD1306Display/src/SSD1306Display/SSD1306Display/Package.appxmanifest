@@ -8,14 +8,14 @@
 
   <Identity
     Name="79faee30-f2d6-4ca6-a81f-8e79d81ea05a"
-    Publisher="CN=leona"
+    Publisher="CN=MSFT"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="79faee30-f2d6-4ca6-a81f-8e79d81ea05a" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>SSD1306Display</DisplayName>
-    <PublisherDisplayName>leona</PublisherDisplayName>
+    <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
