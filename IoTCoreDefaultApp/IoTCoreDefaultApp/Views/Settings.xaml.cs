@@ -26,7 +26,7 @@ namespace IoTCoreDefaultApp
     {
         private LanguageManager languageManager;
         private UIElement visibleContent;
-        private NetworkPresenter networkPresenter;
+        private NetworkPresenter networkPresenter = new NetworkPresenter();
         private bool Automatic = true;
         private string CurrentPassword = string.Empty;
         // Device watcher
@@ -219,9 +219,7 @@ namespace IoTCoreDefaultApp
 
         private async void SetupWifi()
         {
-            networkPresenter = new NetworkPresenter();
-
-            if (await NetworkPresenter.WifiIsAvailable())
+            if (await networkPresenter.WifiIsAvailable())
             {
                 var networks = await networkPresenter.GetAvailableNetworks();
 

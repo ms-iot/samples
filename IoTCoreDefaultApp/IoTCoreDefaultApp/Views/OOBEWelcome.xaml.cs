@@ -101,7 +101,8 @@ namespace IoTCoreDefaultApp
 
         private async void NextButton_Clicked(object sender, RoutedEventArgs e)
         {
-            var wifiAvailable = NetworkPresenter.WifiIsAvailable();
+            var networkPresenter = new NetworkPresenter();
+            var wifiAvailable = networkPresenter.WifiIsAvailable();
             SetPreferences();
             Type nextScreen;
 
