@@ -720,19 +720,19 @@ LampState::setStateParameter(_In_ alljoyn_msgarg msgArg, _Out_ State^ newState)
             }
             else
             {
-                if (strcmp(key, "Brightness") == 0)
+                if (strcmp(PROPERTY_BRIGHTNESS_STR, key)==0)
                 {
                     newState->Brightness = val;
                 }
-                else if (strcmp(key, "Hue") == 0)
+                else if (strcmp(PROPERTY_HUE_STR, key)==0)
                 {
                     newState->Hue = val;
                 }
-                else if (strcmp(key, "Saturation") == 0)
+                else if (strcmp(PROPERTY_SATURATION_STR, key)==0)
                 {
                     newState->Saturation = val;
-				}
-                else if (strcmp(key, "ColorTemp") == 0)
+                }
+                else if (strcmp(PROPERTY_COLOR_TEMP_STR, key) == 0)
                 {
                     newState->ColorTemp = val;
                 }
