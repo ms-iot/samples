@@ -44,7 +44,7 @@ namespace BlinkyWebService
         {
             // Initialize the AppServiceConnection
             appServiceConnection = new AppServiceConnection();
-            appServiceConnection.PackageFamilyName = "WebServer_hz258y3tkez3a";
+            appServiceConnection.PackageFamilyName = "WebServer_1w720vyc4ccym";
             appServiceConnection.AppServiceName = "App2AppComService";
 
             // Send a initialize request 
