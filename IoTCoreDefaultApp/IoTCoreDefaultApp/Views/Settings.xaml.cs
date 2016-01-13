@@ -66,6 +66,7 @@ namespace IoTCoreDefaultApp
             this.Loaded += (sender, e) =>
             {
                 SetupLanguages();
+                screensaverToggleSwitch.IsOn = Screensaver.IsScreensaverEnabled;
             };
         }
 
@@ -950,6 +951,12 @@ namespace IoTCoreDefaultApp
             {
                 StopWatchingAndDisplayConfirmationMessage();
             }
+        }
+
+        private void Screensaver_Toggled(object sender, RoutedEventArgs e)
+        {
+            var screensaverToggleSwitch = sender as ToggleSwitch;
+            Screensaver.IsScreensaverEnabled = screensaverToggleSwitch.IsOn;
         }
     }
 }
