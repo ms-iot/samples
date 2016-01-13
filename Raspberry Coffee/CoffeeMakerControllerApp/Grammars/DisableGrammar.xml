@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<grammar xmlns="http://www.w3.org/2001/06/grammar" xml:lang="en"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.w3.org/2001/06/grammar
+                             http://www.w3.org/TR/speech-grammar/grammar.xsd"
+         version="1.0" mode="voice" root="disable_command">
+  
+  <rule id="disable_command">
+    <ruleref uri="#verb" /> <ruleref uri="#adverb" />
+  </rule>
+  
+  <rule id="verb">
+    <one-of>
+      <item weight="10"> stop </item>
+      <item weight="10"> disable </item>
+      <item weight="2"> turn </item>
+    </one-of>
+  </rule>
+
+  <rule id="adverb">
+    <item repeat="0-1">
+      <one-of>
+        <item> off </item>
+      </one-of>
+    </item>
+  </rule>
+</grammar>
