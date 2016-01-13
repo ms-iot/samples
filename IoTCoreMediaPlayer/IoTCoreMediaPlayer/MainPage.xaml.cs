@@ -54,7 +54,7 @@ namespace IoTCoreMediaPlayer
             ".3gp2"
         };
 
-        const string NetworkFolder = ">Network (NYI)";
+        //const string NetworkFolder = ">Network (NYI)";
 
         StorageFolder currentFolder;
         StorageFile Picker_SelectedFile;
@@ -68,8 +68,6 @@ namespace IoTCoreMediaPlayer
 
             queryOptions = new QueryOptions(CommonFileQuery.OrderByName, mediaFileExtensions);
             queryOptions.FolderDepth = FolderDepth.Shallow;
-
-            Picker_Populate();
         }
 
         private void SetMainPageControlEnableState(bool isEnabled)
@@ -81,9 +79,10 @@ namespace IoTCoreMediaPlayer
             mediaElement.TransportControls.IsEnabled = isEnabled;
         }
 
-        private void Picker_Show()
+        private async void Picker_Show()
         {
             SetMainPageControlEnableState(false);
+            await Picker_Populate();
             grdPicker.Visibility = Visibility.Visible;
         }
 
@@ -93,7 +92,7 @@ namespace IoTCoreMediaPlayer
             grdPicker.Visibility = Visibility.Collapsed;
         }
 
-        private async void Picker_Populate()
+        private async Task Picker_Populate()
         {
             Picker_SelectedFile = null;
             if (currentFolder == null)
@@ -102,11 +101,13 @@ namespace IoTCoreMediaPlayer
                 lstFiles.Items.Add(">Documents");
                 lstFiles.Items.Add(">Music");
                 lstFiles.Items.Add(">Videos");
-                lstFiles.Items.Add(NetworkFolder);
+                lstFiles.Items.Add(">RemovableStorage");
+                //lstFiles.Items.Add(NetworkFolder);
             }
             else
             {
                 lstFiles.Items.Clear();
+                lstFiles.Items.Add(">..");
                 var folders = await currentFolder.GetFoldersAsync();
                 foreach (var f in folders)
                 {
@@ -118,14 +119,6 @@ namespace IoTCoreMediaPlayer
                 {
                     lstFiles.Items.Add(f.Name);
                 }
-            }
-            if (lstFiles.Items.Count > 0)
-            {
-                lblNoFiles.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                lblNoFiles.Visibility = Visibility.Visible;
             }
         }
 
@@ -145,9 +138,12 @@ namespace IoTCoreMediaPlayer
                     case ">Videos":
                         currentFolder = KnownFolders.VideosLibrary;
                         break;
-                    case NetworkFolder:
-                        // special case... NYI
-                        return false;
+                    case ">RemovableStorage":
+                        currentFolder = KnownFolders.RemovableDevices;
+                        break;
+                    //case NetworkFolder:
+                    //    // special case... NYI
+                    //    return false;
                     default:
                         throw new Exception("unexpected");
                 }
@@ -155,7 +151,11 @@ namespace IoTCoreMediaPlayer
             }
             else
             {
-                if (filename[0] == '>')
+                if (filename == ">..")
+                {
+                    await Picker_FolderUp();
+                }
+                else if (filename[0] == '>')
                 {
                     var foldername = filename.Substring(1);
                     var folder = await currentFolder.GetFolderAsync(foldername);
@@ -168,11 +168,11 @@ namespace IoTCoreMediaPlayer
                     return true;
                 }
             }
-            Picker_Populate();
+            await Picker_Populate();
             return false;
         }
 
-        async void Picker_FolderUp()
+        async Task Picker_FolderUp()
         {
             if (currentFolder == null)
             {
@@ -182,16 +182,22 @@ namespace IoTCoreMediaPlayer
             {
                 var folder = await currentFolder.GetParentAsync();
                 currentFolder = folder;
-                var breadcrumb = lblBreadcrumb.Text;
-                breadcrumb = breadcrumb.Substring(0, breadcrumb.LastIndexOf('>') - 1);
-                lblBreadcrumb.Text = breadcrumb;
+                if (currentFolder == null)
+                {
+                    lblBreadcrumb.Text = ">";
+                }
+                else
+                {
+                    var breadcrumb = lblBreadcrumb.Text;
+                    breadcrumb = breadcrumb.Substring(0, breadcrumb.LastIndexOf('>') - 1);
+                    lblBreadcrumb.Text = breadcrumb;
+                }
             }
             catch (Exception)
             {
                 currentFolder = null;
                 lblBreadcrumb.Text = ">";
             }
-            Picker_Populate();
         }
 
         async void SelectFile()
@@ -204,6 +210,7 @@ namespace IoTCoreMediaPlayer
                     txtFileName.Text = Picker_SelectedFile.Path;
                     var stream = await Picker_SelectedFile.OpenAsync(Windows.Storage.FileAccessMode.Read);
                     mediaElement.SetSource(stream, Picker_SelectedFile.ContentType);
+                    mediaElement.TransportControls.Focus(FocusState.Programmatic);
                 }
             }
             catch (Exception ex)
@@ -266,6 +273,10 @@ namespace IoTCoreMediaPlayer
                 {
                     SelectFile();
                 }
+                else
+                {
+                    lstFiles.Focus(FocusState.Keyboard);
+                }
             }
         }
 
@@ -277,12 +288,11 @@ namespace IoTCoreMediaPlayer
                 {
                     SelectFile();
                 }
+                else
+                {
+                    lstFiles.Focus(FocusState.Keyboard);
+                }
             }
-        }
-
-        private void btnUp_Click(object sender, RoutedEventArgs e)
-        {
-            Picker_FolderUp();
         }
 
         private async void btnSelect_Click(object sender, RoutedEventArgs e)
@@ -292,6 +302,10 @@ namespace IoTCoreMediaPlayer
                 if (await Picker_BrowseTo(lstFiles.SelectedItem.ToString()))
                 {
                     SelectFile();
+                }
+                else
+                {
+                    lstFiles.Focus(FocusState.Keyboard);
                 }
             }
         }

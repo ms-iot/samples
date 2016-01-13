@@ -52,21 +52,17 @@
 
             <Grid Grid.Row="0" Grid.Column="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <Button x:Name="btnUp" Grid.Column="0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Content="Up" Click="btnUp_Click" />
-                <TextBlock x:Name="lblBreadcrumb"  Grid.Column="1" VerticalAlignment="Bottom" Margin="10, 0, 0, 0" Text="> My PC" Style="{StaticResource TitleTextBlockStyle}" />
-                <Button x:Name="btnSelect" Grid.Column="2" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Content="Select" Margin="10, 0, 0, 0" Click="btnSelect_Click" />
-                <Button x:Name="btnCancel" Grid.Column="3" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Content="Cancel" Margin="10, 0, 0, 0" Click="btnCancel_Click" />
+                <TextBlock x:Name="lblBreadcrumb"  Grid.Column="0" VerticalAlignment="Bottom" Margin="10, 0, 0, 0" Text="> My PC" Style="{StaticResource TitleTextBlockStyle}" />
+                <Button x:Name="btnSelect" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Content="Select" Margin="10, 0, 0, 0" Click="btnSelect_Click" />
+                <Button x:Name="btnCancel" Grid.Column="2" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Content="Cancel" Margin="10, 0, 0, 0" Click="btnCancel_Click" />
             </Grid>
 
-            <ListView x:Name="lstFiles" Grid.Row="1" Grid.Column="1" Margin="0,20" KeyUp="lstFiles_KeyUp" DoubleTapped="lstFiles_DoubleTapped" />
-
-            <TextBlock x:Name="lblNoFiles" Grid.Row="1" Grid.Column="1" Visibility="Collapsed" Style="{StaticResource TitleTextBlockStyle}" Text="No files"  VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <ListView x:Name="lstFiles" Grid.Row="1" Grid.Column="1" Margin="0,20" KeyUp="lstFiles_KeyUp" DoubleTapped="lstFiles_DoubleTapped" IsTabStop="True" />
 
         </Grid>
 
