@@ -17,7 +17,6 @@
 
 #include "ZWaveAdapterProperty.h"
 #include "ZWaveAdapterValue.h"
-#include "Misc.h"
 #include "ZWaveAdapter.h"
 
 #include "Manager.h"
@@ -29,11 +28,11 @@
 
 #include <sstream>
 #include <string>
+#include "BridgeUtils.h"
 
 using namespace std;
 using namespace OpenZWave;
 using namespace Platform;
-using namespace DsbCommon;
 using namespace BridgeRT;
 using namespace Windows::Foundation;
 
@@ -45,7 +44,7 @@ namespace AdapterLib
     {   
     }
 
-    void ZWaveAdapterProperty::Initialize()
+    void ZWaveAdapterProperty::Initialize(ZWaveAdapter^ adapter)
     {
         //Get Command Class Info
         string cmdClassName;
@@ -74,8 +73,8 @@ namespace AdapterLib
         
         //name
         m_name = ref new String(ConvertTo<wstring>(propertyName).c_str());
-
-        std::wstring wszIfName = cAdapterPrefix + L"." + cAdapterName + L"." + ConvertTo<wstring>(propertyName);
+        std::wstring adapterPrefix(adapter->ExposedAdapterPrefix->Data());
+        std::wstring wszIfName = adapterPrefix + L"." + cAdapterName + L"." + ConvertTo<wstring>(propertyName);
         m_InterfaceHint = ref new String(wszIfName.c_str());
 
         GetAttributes();

@@ -17,13 +17,13 @@
 #pragma once
 
 #include "MockAdapterDevice.h"
-
+#include "MockAdapter.h"
 namespace AdapterLib
 {
     ref class MockLampDevice : MockAdapterDevice
     {
     internal:
-        MockLampDevice(Platform::String^ Name, Platform::Object^ ParentObject);
+        MockLampDevice(Platform::String^ Name, MockAdapter^ ParentObject);
         
         uint32 Initialize();
         

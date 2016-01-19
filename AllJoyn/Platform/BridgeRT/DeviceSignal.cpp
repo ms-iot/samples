@@ -17,7 +17,7 @@
 #include "pch.h"
 
 #include <sstream>
-
+#include "BridgeUtils.h"
 #include "DeviceMain.h"
 #include "DeviceSignal.h"
 #include "AllJoynHelper.h"
@@ -29,7 +29,7 @@ using namespace Windows::Foundation;
 
 using namespace BridgeRT;
 using namespace std;
-using namespace DsbCommon;
+
 
 DeviceSignal::DeviceSignal()
     : m_adapterSignal(nullptr)
@@ -239,7 +239,7 @@ QStatus DeviceSignal::BuildSignature()
         {
             m_parameterNames == ",";
         }
-        m_parameterNames += To_Ascii_String(signalParam->Name->Data());
+        m_parameterNames += ConvertTo<std::string>(signalParam->Name->Data());
         m_parameterNames += hint;
     }
 

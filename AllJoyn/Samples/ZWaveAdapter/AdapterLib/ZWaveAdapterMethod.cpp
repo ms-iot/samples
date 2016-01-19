@@ -14,9 +14,9 @@
 //
 
 #include "pch.h"
-
+#include "BridgeUtils.h"
 #include "ZWaveAdapterMethod.h"
-#include "Misc.h"
+#include "AdapterUtils.h"
 
 #include "Manager.h"
 #include "value_classes\ValueID.h"
@@ -25,10 +25,10 @@
 #include <sstream>
 #include <string>
 
+
 using namespace std;
 using namespace OpenZWave;
 using namespace Platform;
-using namespace DsbCommon;
 using namespace BridgeRT;
 
 namespace AdapterLib

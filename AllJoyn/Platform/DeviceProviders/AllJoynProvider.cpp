@@ -36,7 +36,7 @@ namespace DeviceProviders
         : m_aboutListener(nullptr)
         , m_busAttachment(nullptr)
         , m_busListener(nullptr)
-        , m_alljoynInitialized(false)
+        , m_allJoynInitialized(false)
         , m_weakThis(this)
     {
         DEBUG_LIFETIME_IMPL(AllJoynProvider);
@@ -52,14 +52,14 @@ namespace DeviceProviders
         QStatus status = ER_OK;
         try
         {
-            if (!m_alljoynInitialized)
+            if (!m_allJoynInitialized)
             {
                 status = alljoyn_init();
                 if (ER_OK != status)
                 {
                     goto leave;
                 }
-                m_alljoynInitialized = true;
+                m_allJoynInitialized = true;
             }
 
             if (nullptr == m_busAttachment)
@@ -140,6 +140,13 @@ namespace DeviceProviders
 
     void AllJoynProvider::Shutdown()
     {
+        bool allJoynInitialized;
+        {
+            AutoLock lock(&m_servicesLock, true);
+            allJoynInitialized = m_allJoynInitialized;
+            m_allJoynInitialized = false;
+        }
+
         if (nullptr != m_busAttachment)
         {
             alljoyn_busattachment_cancelwhoimplements_interfaces(m_busAttachment, nullptr, 0);
@@ -184,10 +191,9 @@ namespace DeviceProviders
         }
 
         // shutdown AllJoyn if necessary
-        if (m_alljoynInitialized)
+        if (allJoynInitialized)
         {
             alljoyn_shutdown();
-            m_alljoynInitialized = false;
         }
     }
 
@@ -219,6 +225,14 @@ namespace DeviceProviders
 
         if (provider != nullptr)
         {
+            {
+                AutoLock lock(&provider->m_servicesLock, true);
+                if (!provider->m_allJoynInitialized)
+                {
+                    return;
+                }
+            }
+
             auto objectDescriptionArgCopy = alljoyn_msgarg_copy(objectDescriptionArg);
             auto aboutDataArgCopy = alljoyn_msgarg_copy(aboutDataArg);
             string serviceNameString = serviceName;

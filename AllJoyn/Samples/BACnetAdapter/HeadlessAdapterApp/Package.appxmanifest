@@ -10,12 +10,12 @@
   <Identity
     Name="BACnetHeadlessAdapterApp"
     Publisher="CN=MSFT"
-    Version="1.0.0.0" />
+    Version="1.0.1.0" />
 
   <mp:PhoneIdentity PhoneProductId="f702c920-8975-428c-98d9-5be8e7cd29de" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>BACnetHeadlessAdapterApp</DisplayName>
+    <DisplayName>ms-resource:ApplicationDisplayName</DisplayName>
     <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -31,17 +31,17 @@
   <Applications>
     <Application Id="BACnetHeadlessAdapterApp">
       <uap:VisualElements
-        DisplayName="BACnetHeadlessAdapterApp"
+        DisplayName="ms-resource:ApplicationDisplayName"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="BACnetHeadlessAdapterApp"
+        Description="ms-resource:ApplicationDescription"
         BackgroundColor="#464646"
         AppListEntry="none">
 		<uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
-        <Extension Category="windows.backgroundTasks" EntryPoint="BACnetHeadlessAdapterApp.StartupTask">
+        <Extension Category="windows.backgroundTasks" EntryPoint="AdapterLib.HeadlessStartupTask">
           <BackgroundTasks>
             <iot:Task Type="startup" />
           </BackgroundTasks>

@@ -15,7 +15,7 @@
 #pragma once
 
 #include "AdapterDefinitions.h"
-#include "Misc.h"
+#include <mutex>
 
 namespace AdapterLib
 {
@@ -186,7 +186,7 @@ namespace AdapterLib
         std::vector<BridgeRT::IAdapterSignal^> signals;
 
         // Sync object
-        DsbCommon::CSLock lock;
+        std::recursive_mutex lock;
 
         //
         // Signal listener entry

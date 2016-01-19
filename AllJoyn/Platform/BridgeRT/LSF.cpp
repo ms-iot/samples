@@ -32,8 +32,34 @@ LSF::~LSF()
         {
             alljoyn_busattachment_unregisterbusobject(m_bus, m_busObject);
         }
+        if (m_pLampServiceInterface != nullptr)
+        {
+            delete m_pLampServiceInterface;
+            m_pLampServiceInterface = nullptr;
+        }
+
+        if (m_pLampParametersInterface != nullptr)
+        {
+            delete m_pLampParametersInterface;
+            m_pLampParametersInterface = nullptr;
+        }
+
+        if (m_pLampDetailsInterface != nullptr)
+        {
+            delete m_pLampDetailsInterface;
+            m_pLampDetailsInterface = nullptr;
+        }
+
+        if (m_pLampStateInterface != nullptr)
+        {
+            delete m_pLampStateInterface;
+            m_pLampStateInterface = nullptr;
+        }
+
         alljoyn_busobject_destroy(m_busObject);
         m_busObject = nullptr;
+        m_bRegistered = false;
+        m_pLightingServiceHandler = nullptr;
     }
 }
 

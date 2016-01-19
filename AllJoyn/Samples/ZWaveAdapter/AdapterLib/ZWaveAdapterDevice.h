@@ -131,7 +131,7 @@ namespace AdapterLib
     internal:
         friend ref class ZWaveAdapter;
 
-        ZWaveAdapterDevice(uint32 homeId, uint8 nodeId);
+        ZWaveAdapterDevice(ZWaveAdapter^ adapter, uint32 homeId, uint8 nodeId);
 
         void Initialize();
 
@@ -148,11 +148,7 @@ namespace AdapterLib
         Platform::Object^ GetParent()
         {
             return m_parent;
-        }
-        void SetParent(Platform::Object^ parent)
-        {
-            m_parent = parent;
-        }
+        }       
 
     private:
         std::vector<BridgeRT::IAdapterProperty^>::iterator GetProperty(const OpenZWave::ValueID& value);
@@ -171,7 +167,7 @@ namespace AdapterLib
         Platform::String^ m_description;
 
         // Parent Object
-        Platform::Object^ m_parent;
+        ZWaveAdapter^ m_parent;
 
         // Device properties
         std::vector<BridgeRT::IAdapterProperty^> m_properties;

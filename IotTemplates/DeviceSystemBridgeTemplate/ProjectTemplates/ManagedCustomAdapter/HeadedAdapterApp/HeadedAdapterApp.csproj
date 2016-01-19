@@ -11,8 +11,8 @@
     <AssemblyName>HeadedAdapterApp</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>$targetplatformversion$</TargetPlatformVersion>
+    <TargetPlatformMinVersion>$targetplatformminversion$</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
     <FileAlignment>512</FileAlignment>
@@ -95,9 +95,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -111,6 +108,7 @@
     <None Include="project.json">
       <SubType>Designer</SubType>
     </None>
+    <PRIResource Include="Resources\en-US\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
@@ -120,28 +118,30 @@
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
-    <Content Include="Properties\Default.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Page Include="MainPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
+    </ApplicationDefinition>   
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AdapterLib\AdapterLib.csproj">
-      <Project>{5254f40c-cd4c-48f9-9c55-8040f071f1b4}</Project>
-      <Name>AdapterLib</Name>
-      <Private>False</Private>
+    <ProjectReference Include="..\BackgroundHost.Headed\BackgroundHost.Headed.vcxproj">
+      <Project>{0184c325-c1df-4305-b202-324cb0413377}</Project>
+      <Name>BackgroundHost.Headed</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BackgroundHost\BackgroundHost.vcxproj">
+      <Project>{98b5350d-3b67-4109-9cd5-1a675295c461}</Project>
+      <Name>BackgroundHost</Name>
     </ProjectReference>
     <ProjectReference Include="..\BridgeRT\BridgeRT.vcxproj">
       <Project>{2783a617-8e1d-40d1-9684-dfaeb8dd5406}</Project>
       <Name>BridgeRT</Name>
-    </ProjectReference>
+    </ProjectReference>    
+    <ProjectReference Include="..\AdapterLib\AdapterLib.csproj">
+      <Project>{5254f40c-cd4c-48f9-9c55-8040f071f1b4}</Project>
+      <Name>AdapterLib</Name>
+    </ProjectReference>  
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

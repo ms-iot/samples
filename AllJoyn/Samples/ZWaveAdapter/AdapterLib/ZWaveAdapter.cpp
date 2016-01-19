@@ -14,6 +14,7 @@
 //
 
 #include "pch.h"
+#include "AdapterDefinitions.h"
 #include "ZWaveAdapter.h"
 #include "ZWaveAdapterDevice.h"
 #include "ZWaveAdapterProperty.h"
@@ -23,8 +24,10 @@
 #include "SwitchControlPanelHandler.h"
 #include "UniversalControlPanelHandler.h"
 #include "LSFHandler.h"
-#include "Misc.h"
-
+#include "BridgeUtils.h"
+#include "AdapterUtils.h"
+#include <cctype>
+#include <functional>
 //openzwave
 #include "Options.h"
 #include "Manager.h"
@@ -41,7 +44,6 @@ using namespace Windows::Devices::Enumeration;
 using namespace Concurrency;
 
 using namespace BridgeRT;
-using namespace DsbCommon;
 using namespace OpenZWave;
 using namespace std;
 using namespace concurrency;
@@ -79,7 +81,9 @@ namespace AdapterLib
         this->m_adapterName = ref new String(cAdapterName.c_str());
         // the adapter prefix must be something like "com.mycompany" (only alpha num and dots)
         // it is used by the Device System Bridge as root string for all services and interfaces it exposes
-        this->m_exposedAdapterPrefix = ref new String(cAdapterPrefix.c_str());
+        std::wstring adapterPrefix = cDomainPrefix + L"." + cVendor;
+        std::transform(adapterPrefix.begin(), adapterPrefix.end(), adapterPrefix.begin(), std::tolower);                
+        this->m_exposedAdapterPrefix = ref new String(adapterPrefix.c_str());
         this->m_exposedApplicationGuid = Platform::Guid(DSB_ZWAVE_APPLICATION_GUID);
 
         if (nullptr != package &&
@@ -107,7 +111,7 @@ namespace AdapterLib
         uint32 status = ERROR_SUCCESS;
 
         // Sync access to configuration parameters
-        AutoLock sync(&m_configLock, true);
+        AutoLock sync(m_configLock);
 
         String^ configurationXml;
         status = WIN32_FROM_HRESULT(m_adapterConfig.GetConfig(&configurationXml));
@@ -128,7 +132,7 @@ namespace AdapterLib
         uint32 status = ERROR_SUCCESS;
 
         // Sync access to configuration parameters
-        AutoLock sync(&m_configLock, true);
+        AutoLock sync(m_configLock);
 
         try
         {
@@ -244,7 +248,7 @@ namespace AdapterLib
         }
 
         {
-            AutoLock sync(&m_deviceListLock, true);
+            AutoLock sync(m_deviceListLock);
 
             //just return whatever list we have. the device will be notified as they arrive
             *DeviceListPtr = ref new AdapterDeviceVector(m_devices);
@@ -481,7 +485,7 @@ namespace AdapterLib
         try
         {
             // Sync access to listeners list
-            AutoLock sync(&m_signalLock, true);
+            AutoLock sync(m_signalLock);
 
             // We use the hash code as the signal key
             int mmapkey = Signal->GetHashCode();
@@ -517,7 +521,7 @@ namespace AdapterLib
         uint32 status = ERROR_NOT_FOUND;
 
         // Sync access to listeners list
-        AutoLock sync(&m_signalLock, true);
+        AutoLock sync(m_signalLock);
 
         // We use the hash code as the signal key
         int mmapkey = Signal->GetHashCode();
@@ -547,7 +551,7 @@ namespace AdapterLib
         uint32 status = ERROR_INVALID_HANDLE;
 
         // Sync access to listeners list
-        AutoLock sync(&m_signalLock, true);
+        AutoLock sync(m_signalLock);
 
         // We use the hash code as the signal key
         int mmapkey = Signal->GetHashCode();
@@ -581,7 +585,7 @@ namespace AdapterLib
 
             signal->AddParam(ref new ZWaveAdapterValue(
                                     Constants::DEVICE_ARRIVAL__DEVICE_HANDLE,
-                                    ref new ZWaveAdapterDevice(0, 0) //place holder
+                                    ref new ZWaveAdapterDevice(this, 0, 0) //place holder
                                     )
                              );
             m_signals.push_back(signal);
@@ -591,7 +595,7 @@ namespace AdapterLib
 
             signal->AddParam(ref new ZWaveAdapterValue(
                                     Constants::DEVICE_REMOVAL__DEVICE_HANDLE,
-                                    ref new ZWaveAdapterDevice(0, 0) //place holder
+                                    ref new ZWaveAdapterDevice(this, 0, 0) //place holder
                                     )
                             );
             m_signals.push_back(signal);
@@ -662,11 +666,11 @@ namespace AdapterLib
 
     void ZWaveAdapter::AddDevice(const uint32 homeId, const uint8 nodeId, bool bPending)
     {
-        AutoLock sync(&m_deviceListLock, true);
+        AutoLock sync(m_deviceListLock);
 
         if(bPending)
         {
-            ZWaveAdapterDevice^ device = ref new ZWaveAdapterDevice(homeId, nodeId);
+            ZWaveAdapterDevice^ device = ref new ZWaveAdapterDevice(this, homeId, nodeId);
             m_pendingDevices.push_back(device);
         }
         else
@@ -695,13 +699,12 @@ namespace AdapterLib
                     //  AEON__LIGHT_BULB__PRODUCT_ID == deviceProductId)
                     )
                 {
-                    currDevice->SetParent(this);
                     currDevice->AddLampStateChangedSignal();
                     currDevice->LightingServiceHandler = ref new LSFHandler(currDevice);
                 }
 
                 //notify the signal
-                AutoLock sync2(&m_signalLock, true);
+                AutoLock sync2(m_signalLock);
 
                 IAdapterSignal^ signal = GetSignal(Constants::DEVICE_ARRIVAL_SIGNAL);
                 if (signal != nullptr)
@@ -717,7 +720,7 @@ namespace AdapterLib
 
     void ZWaveAdapter::RemoveDevice(const uint32 homeId, const uint8 nodeId, bool bMoveToPending)
     {
-        AutoLock sync(&m_deviceListLock, true);
+        AutoLock sync(m_deviceListLock);
 
         // Remove the node from our list
         auto iter = FindDevice(m_devices, homeId, nodeId);
@@ -725,7 +728,7 @@ namespace AdapterLib
         if (iter != m_devices.end())
         {
             //notify the signal
-            AutoLock sync2(&m_signalLock, true);
+            AutoLock sync2(m_signalLock);
 
             IAdapterSignal^ signal = GetSignal(Constants::DEVICE_REMOVAL_SIGNAL);
             if (signal != nullptr)
@@ -757,8 +760,8 @@ namespace AdapterLib
 
     void ZWaveAdapter::RemoveAllDevices(uint32 homeId)
     {
-        AutoLock sync(&m_deviceListLock, true);
-        AutoLock sync2(&m_signalLock, true);
+        AutoLock sync(m_deviceListLock);
+        AutoLock sync2(m_signalLock);
 
         //remove devices from m_devices list
         auto iter = m_devices.begin();
@@ -929,7 +932,7 @@ namespace AdapterLib
                     device->UpdatePropertyValue(_notification->GetValueID());
 
                     //notify the signal
-                    AutoLock sync(&adapter->m_signalLock, true);
+                    AutoLock sync(adapter->m_signalLock);
 
                     IAdapterSignal^ signal = device->GetSignal(Constants::CHANGE_OF_VALUE_SIGNAL);
                     if (signal != nullptr)

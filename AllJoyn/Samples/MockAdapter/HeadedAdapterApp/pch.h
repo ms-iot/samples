@@ -18,5 +18,5 @@
 
 #include <collection.h>
 #include <ppltasks.h>
-
-#include "App.xaml.h"
+#include <condition_variable>
+#include <mutex>

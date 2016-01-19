@@ -23,9 +23,10 @@
 
 #include "Shlwapi.h"
 #include "alljoyn_c/AjAPI.h"
+#include "BridgeUtils.h"
 
 using namespace BridgeRT;
-using namespace DsbCommon;
+
 
 using namespace Windows::Storage;
 using namespace Platform;
@@ -158,49 +159,49 @@ QStatus AllJoynAbout::RemoveObject(_In_ alljoyn_busobject busObject, _In_ const 
 
 QStatus AllJoynAbout::SetManufacturer(_In_z_ const wchar_t* value)
 {
-    std::string stringValue = To_Ascii_String(value);
+    std::string stringValue = ConvertTo<std::string>(value);
     return alljoyn_aboutdata_setmanufacturer(m_aboutData, stringValue.c_str(), nullptr);
 }
 
 QStatus AllJoynAbout::SetDeviceName(_In_z_ const wchar_t *value)
 {
-    std::string stringValue = To_Ascii_String(value);
+    std::string stringValue = ConvertTo<std::string>(value);
     return alljoyn_aboutdata_setdevicename(m_aboutData, stringValue.c_str(), nullptr);
 }
 
 QStatus AllJoynAbout::SetSWVersion(_In_z_ const wchar_t *value)
 {
-    std::string stringValue = To_Ascii_String(value);
+    std::string stringValue = ConvertTo<std::string>(value);
     return alljoyn_aboutdata_setsoftwareversion(m_aboutData, stringValue.c_str());
 }
 
 QStatus AllJoynAbout::SetHWVersion(_In_z_ const wchar_t *value)
 {
-    std::string stringValue = To_Ascii_String(value);
+    std::string stringValue = ConvertTo<std::string>(value);
     return alljoyn_aboutdata_sethardwareversion(m_aboutData, stringValue.c_str());
 }
 
 QStatus AllJoynAbout::SetDeviceId(_In_z_ const wchar_t * value)
 {
-    std::string stringValue = To_Ascii_String(value);
+    std::string stringValue = ConvertTo<std::string>(value);
     return alljoyn_aboutdata_setdeviceid(m_aboutData, stringValue.c_str());
 }
 
 QStatus AllJoynAbout::SetModel(_In_z_ const wchar_t * value)
 {
-    std::string stringValue = To_Ascii_String(value);
+    std::string stringValue = ConvertTo<std::string>(value);
     return alljoyn_aboutdata_setmodelnumber(m_aboutData, stringValue.c_str());
 }
 
 QStatus AllJoynAbout::SetDescription(_In_z_ const wchar_t * value)
 {
-    std::string stringValue = To_Ascii_String(value);
+    std::string stringValue = ConvertTo<std::string>(value);
     return alljoyn_aboutdata_setdescription(m_aboutData, stringValue.c_str(), nullptr);
 }
 
 QStatus AllJoynAbout::SetApplicationName(_In_z_ const wchar_t *value)
 {
-    std::string stringValue = To_Ascii_String(value);
+    std::string stringValue = ConvertTo<std::string>(value);
     return alljoyn_aboutdata_setappname(m_aboutData, stringValue.c_str(), nullptr);
 }
 
@@ -394,7 +395,7 @@ QStatus AllJoynAbout::GetDeviceID(_Out_ std::string &deviceId)
     }
 
     //convert types
-    deviceId = To_Ascii_String(tempId);
+    deviceId = ConvertTo<std::string>(tempId);
 
 leave:
     return status;

@@ -16,14 +16,13 @@
 #include "pch.h"
 
 #include "ZWaveAdapterValue.h"
-#include "Misc.h"
 
 #include <string>
 
 using namespace Windows::Foundation;
 using namespace Platform;
 using namespace std;
-using namespace DsbCommon;
+
 
 namespace AdapterLib
 {

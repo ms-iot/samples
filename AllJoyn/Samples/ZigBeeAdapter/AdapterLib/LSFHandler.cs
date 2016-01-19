@@ -77,7 +77,8 @@ namespace AdapterLib
             }
         }
 
-        byte m_level = 0;
+        private const uint LIGHTLEVEL_SCALERATIO = UInt32.MaxValue/LevelControlCluster.MAX_LEVEL;
+        uint m_level = 0;
         public uint LampState_Brightness
         {
             get
@@ -221,11 +222,15 @@ namespace AdapterLib
                     attributeLevel.Read(out value) &&
                     value is byte)
                 {
-                    m_level = (byte)value;
+                    if ((byte)(m_level / LIGHTLEVEL_SCALERATIO) != (byte)value)
+                    {
+                        // set m_level only if it represents different light level internally
+                        m_level = LIGHTLEVEL_SCALERATIO * (byte)value;
+                    }
                 }
             }
 
-            return (uint)m_level;
+            return m_level;
         }
 
         void SetLevelOnDevice(uint newLevel)
@@ -248,13 +253,9 @@ namespace AdapterLib
             }
 
             // level is a byte in ZCL and a uint32 in LSF 
-            if(newLevel > LevelControlCluster.MAX_LEVEL)
-            {
-                newLevel = LevelControlCluster.MAX_LEVEL;
-            }
-            parameter.Data = (byte) newLevel;
+            parameter.Data = (byte)(newLevel / LIGHTLEVEL_SCALERATIO);
             command.Send();
-            m_level = (byte) newLevel;
+            m_level = newLevel;
         }
     }
 }

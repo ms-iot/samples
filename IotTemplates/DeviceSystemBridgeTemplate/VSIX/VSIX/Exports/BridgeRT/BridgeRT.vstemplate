@@ -13,8 +13,10 @@
     <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
   </TemplateData>
   <TemplateContent>
-    <Project TargetFileName="BridgeRT.vcxproj" File="BridgeRT.vcxproj" ReplaceParameters="false">
+    <Project TargetFileName="BridgeRT.vcxproj" File="BridgeRT.vcxproj" ReplaceParameters="true">
       <ProjectItem ReplaceParameters="false" TargetFileName="BridgeRT.vcxproj.filters">BridgeRT.vcxproj.filters</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="AdapterBridgeServiceImplementation.h">AdapterBridgeServiceImplementation.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="AdapterBridgeServiceImplementation.cpp">AdapterBridgeServiceImplementation.cpp</ProjectItem>
       <ProjectItem ReplaceParameters="false" TargetFileName="AllJoynAbout.cpp">AllJoynAbout.cpp</ProjectItem>
       <ProjectItem ReplaceParameters="false" TargetFileName="AllJoynAboutIcon.cpp">AllJoynAboutIcon.cpp</ProjectItem>
       <ProjectItem ReplaceParameters="false" TargetFileName="AllJoynFileTransfer.cpp">AllJoynFileTransfer.cpp</ProjectItem>
@@ -25,6 +27,7 @@
       <ProjectItem ReplaceParameters="false" TargetFileName="Bridge.cpp">Bridge.cpp</ProjectItem>
       <ProjectItem ReplaceParameters="false" TargetFileName="BridgeDevice.cpp">BridgeDevice.cpp</ProjectItem>
       <ProjectItem ReplaceParameters="false" TargetFileName="BridgeLog.cpp">BridgeLog.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="BridgeUtils.cpp">BridgeUtils.cpp</ProjectItem>
       <ProjectItem ReplaceParameters="false" TargetFileName="ConfigManager.cpp">ConfigManager.cpp</ProjectItem>
       <ProjectItem ReplaceParameters="false" TargetFileName="ControlPanel.cpp">ControlPanel.cpp</ProjectItem>
       <ProjectItem ReplaceParameters="false" TargetFileName="CspAdapter.cpp">CspAdapter.cpp</ProjectItem>
@@ -56,6 +59,7 @@
       <ProjectItem ReplaceParameters="false" TargetFileName="Bridge.h">Bridge.h</ProjectItem>
       <ProjectItem ReplaceParameters="false" TargetFileName="BridgeDevice.h">BridgeDevice.h</ProjectItem>
       <ProjectItem ReplaceParameters="false" TargetFileName="BridgeLog.h">BridgeLog.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="BridgeUtils.h">BridgeUtils.h</ProjectItem>
       <ProjectItem ReplaceParameters="false" TargetFileName="ConfigManager.h">ConfigManager.h</ProjectItem>
       <ProjectItem ReplaceParameters="false" TargetFileName="ControlPanel.h">ControlPanel.h</ProjectItem>
       <ProjectItem ReplaceParameters="false" TargetFileName="CspAdapter.h">CspAdapter.h</ProjectItem>
@@ -94,4 +98,8 @@
       <ProjectItem ReplaceParameters="false" TargetFileName="LSFEnums.h">LSFEnums.h</ProjectItem>
     </Project>
   </TemplateContent>
+  <WizardExtension>
+    <Assembly>Microsoft.VisualStudio.Universal.TemplateWizards, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</Assembly>
+    <FullClassName>Microsoft.VisualStudio.Universal.TemplateWizards.PlatformVersion.Wizard</FullClassName>
+  </WizardExtension>
 </VSTemplate>
