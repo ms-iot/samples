@@ -4,16 +4,12 @@
     <ApplicationDefinition Include="App.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\Platform\Common\DsbBridgeViewModel.cpp" />
     <ClCompile Include="App.xaml.cpp" />
-    <ClCompile Include="MainPage.xaml.cpp" />
     <ClCompile Include="pch.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\Platform\Common\DsbBridgeViewModel.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.xaml.h" />
-    <ClInclude Include="MainPage.xaml.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\BridgeConfig.xml" />
@@ -25,11 +21,14 @@
     <None Include="HeadedAdapterApp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="MainPage.xaml" />
-  </ItemGroup>
-  <ItemGroup>
     <Filter Include="Assets">
       <UniqueIdentifier>{9e5eaf1c-6e50-4fe8-ae20-132851de95aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{5d772cdf-185d-4943-82e3-9d01e4684a89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\en-US">
+      <UniqueIdentifier>{a69569c5-e72a-49fb-8308-6bea97de413c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -54,5 +53,10 @@
     <Image Include="Assets\LockScreenLogo.scale-200.png">
       <Filter>Assets</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Resources\en-US\Resources.resw">
+      <Filter>Resources\en-US</Filter>
+    </PRIResource>
   </ItemGroup>
 </Project>

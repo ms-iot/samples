@@ -61,7 +61,7 @@ namespace AdapterLib
         ZWaveAdapterProperty(const OpenZWave::ValueID & value);
 
         void UpdateValue();
-        void Initialize();
+        void Initialize(AdapterLib::ZWaveAdapter^ adapter);
         uint32 SetValue(Platform::Object^ data);
         ZWaveAdapterValue^ GetAttributeByName(Platform::String^ name);
 

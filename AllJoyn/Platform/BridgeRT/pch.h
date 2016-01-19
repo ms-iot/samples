@@ -19,6 +19,7 @@
 #include <collection.h>
 #include <exception>
 #include <string>
+#include <vector>
 #include <ppltasks.h>
 #include <algorithm>
 
@@ -31,9 +32,6 @@
 #include <alljoyn_c/BusListener.h>
 #include <alljoyn_c/SessionPortListener.h>
 #include <alljoyn_c/InterfaceDescription.h>
-
-#include "Misc.h"
-#include "IAdapter.h"
 
 #include <windows.h>
 #include <tchar.h>

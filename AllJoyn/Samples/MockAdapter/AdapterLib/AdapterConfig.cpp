@@ -15,6 +15,7 @@
 //
 
 #include "pch.h"
+#include "BridgeUtils.h"
 #include "AdapterConfig.h"
 
 #define ADAPTER_CONFIG_XML_FILE L"AdapterConfig.xml"

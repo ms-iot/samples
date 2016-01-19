@@ -29,19 +29,28 @@
     <Image Include="Assets\Wide310x150Logo.scale-200.png">
       <Filter>Assets</Filter>
     </Image>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{3d22f4a3-1de2-4f08-9f01-940e9588d2af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\en-US">
+      <UniqueIdentifier>{ad839dfa-db61-47a2-a139-284357e9fb79}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="StartupTask.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="StartupTask.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
   </ItemGroup>
   <ItemGroup>
     <None Include="HeadlessAdapterApp_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Resources\en-US\Resources.resw">
+      <Filter>Resources\en-US</Filter>
+    </PRIResource>
   </ItemGroup>
 </Project>

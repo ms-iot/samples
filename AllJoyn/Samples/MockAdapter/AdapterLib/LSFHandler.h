@@ -16,8 +16,6 @@
 
 #pragma once
 
-
-
 namespace AdapterLib
 {
     ref class MockAdapter;
@@ -77,10 +75,6 @@ namespace AdapterLib
             _Out_ uint32 *OutLampFaultCode
             );
 
-
-
-
-
         // ********************************************************************LampParameters Interface*********************************************************
         //
         //  The "Version" property of the LampParameters Interface.
@@ -110,10 +104,6 @@ namespace AdapterLib
         {
             uint32 get();
         }
-
-
-
-
 
         // ********************************************************************LampDetails Interface*********************************************************
         //
@@ -314,10 +304,6 @@ namespace AdapterLib
         {
             Platform::String^ get();
         }
-
-
-
-
 
         // ********************************************************************LampState Interface*********************************************************
         //

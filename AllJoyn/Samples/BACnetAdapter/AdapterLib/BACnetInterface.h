@@ -18,12 +18,13 @@
 #include <vector>
 #include <map>
 
-#include "Misc.h"
+#include "BridgeUtils.h"
 #include "Thread.h"
 #include "BACnetAdapterIoRequest.h"
 #include "BACnetNotification.h"
 #include "BACnetAdapterDevice.h"
 #include "AdapterConfig.h"
+#include "AdapterUtils.h"
 
 namespace AdapterLib
 {
@@ -269,7 +270,7 @@ namespace AdapterLib
     private:
 
         // Sync object
-        DsbCommon::CSLock lock;
+        std::recursive_mutex lock;
 
         // If interface was initialized successfully
         bool isValid;
@@ -292,8 +293,8 @@ namespace AdapterLib
         //
         // Network RX/TX threads
         //
-        DsbCommon::MemberThread<BACnetInterface> rxThread;
-        DsbCommon::MemberThread<BACnetInterface> txThread;
+        MemberThread<BACnetInterface> rxThread;
+        MemberThread<BACnetInterface> txThread;
 
         void txEnumDevices(BACnetIoRequest^ BACnetAdapterIoRequest);
         void txReadProperty(BACnetIoRequest^ BACnetAdapterIoRequest);
@@ -301,7 +302,7 @@ namespace AdapterLib
         void txSubscribeProperty(BACnetIoRequest^ BACnetAdapterIoRequest, bool IsSubscribe);
 
         // The TX thread task queue
-        DsbCommon::QueueEx<BACnetIoRequest^> txThreadWorkQueue;
+        QueueEx<BACnetIoRequest^> txThreadWorkQueue;
 
         // DSB IO request pool
         BACnetAdapterIoRequestPool adapterIoRequestPool;
@@ -311,10 +312,10 @@ namespace AdapterLib
         //
 
         // The notification thread
-        DsbCommon::MemberThread<BACnetInterface> notifyThread;
+        MemberThread<BACnetInterface> notifyThread;
 
         // The notification thread queue
-        DsbCommon::QueueEx<BACNET_EVENT_PARAMETERS^> pendingNotifications;
+        QueueEx<BACNET_EVENT_PARAMETERS^> pendingNotifications;
 
         // The notification listener
         IBACnetNotificationListener^ notificationListener;
@@ -323,7 +324,7 @@ namespace AdapterLib
         std::map<UINT32, BACnetIoRequest^> pendingStackRequests;
 
         // A lock object for pandingStackRequests
-        DsbCommon::CSLock pendingStackRequestsLock;
+        std::recursive_mutex pendingStackRequestsLock;
 
     protected private:
 

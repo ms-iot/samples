@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resources">
+      <UniqueIdentifier>f6391feb-9a86-493e-9e06-731169fda706</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ComponentModel">
+      <UniqueIdentifier>{67692159-cf02-4b3e-972c-ec44450d5768}</UniqueIdentifier>
+      <Extensions>ComponentModel\*.h</Extensions>
+    </Filter>
+    <Filter Include="ViewModels">
+      <UniqueIdentifier>{5fef702d-8573-4276-85b2-5eefdb6a01a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Models">
+      <UniqueIdentifier>{f91fb017-3c3f-4c03-a540-4b428b0675ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tasks">
+      <UniqueIdentifier>{47196770-a925-40c7-8937-3068e662125a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Views">
+      <UniqueIdentifier>{9b2cdf31-c1cc-42bf-a03a-b8f716e3eb0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\en-US">
+      <UniqueIdentifier>{14392d9b-dc5c-40aa-b4f0-26d1add0422c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="ComponentModel\DelegateCommand.cpp">
+      <Filter>ComponentModel</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentModel\BindableBase.cpp">
+      <Filter>ComponentModel</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\ServiceFailedEventArgs.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\BackgroundServiceOperationModel.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\BooleanValueConverter.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\ServiceOperationView.xaml.cpp" />
+    <ClCompile Include="ApplicationImplementation.cpp" />
+    <ClCompile Include="Tasks\HeadedBackgroundTaskImplementation.cpp">
+      <Filter>Tasks</Filter>
+    </ClCompile>
+    <ClCompile Include="ViewModels\ServiceOperationViewModel.cpp">
+      <Filter>ViewModels</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="ComponentModel\DelegateCommand.h">
+      <Filter>ComponentModel</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentModel\BindableBase.h">
+      <Filter>ComponentModel</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentModel\BindableBaseHelpers.h">
+      <Filter>ComponentModel</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\ServiceFailedEventArgs.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\IServiceOperationModel.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\BackgroundServiceOperationModel.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Tasks\HeartbeatDuration.h">
+      <Filter>Tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="Tasks\TaskProgress.h">
+      <Filter>Tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="ViewModels\ServiceOperationViewModel.h">
+      <Filter>ViewModels</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\BooleanValueConverter.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\ServiceOperationView.xaml.h" />
+    <ClInclude Include="ApplicationImplementation.h" />
+    <ClInclude Include="Resources\Resources.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Tasks\HeadedBackgroundTaskImplementation.h">
+      <Filter>Tasks</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Resources\en-US\Resources.resw">
+      <Filter>Resources\en-US</Filter>
+    </PRIResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\ServiceOperationView.xaml">
+      <Filter>Views</Filter>
+    </Page>
+  </ItemGroup>
+</Project>

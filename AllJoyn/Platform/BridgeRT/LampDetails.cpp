@@ -4,9 +4,10 @@
 #include "Bridge.h"
 #include "AllJoynHelper.h"
 #include "LSF.h"
+#include "BridgeUtils.h"
 
 using namespace BridgeRT;
-using namespace DsbCommon;
+
 using namespace std;
 
 LampDetails::LampDetails(LSF* pLightingService)
@@ -17,11 +18,13 @@ LampDetails::LampDetails(LSF* pLightingService)
 
 LampDetails::~LampDetails()
 {
-    if (m_pLightingService != nullptr)
+    if (m_lampDetailsInterface != nullptr)
     {
-        delete m_pLightingService;
-        m_pLightingService = nullptr;
+        alljoyn_busattachment_deleteinterface(m_pLightingService->GetBus(), m_lampDetailsInterface);
+        m_lampDetailsInterface = nullptr;
     }
+
+    m_pLightingService = nullptr;
 }
 
 QStatus

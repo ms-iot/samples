@@ -58,7 +58,7 @@ namespace DeviceProviders
     private:
         ~AllJoynProvider();
 
-        bool m_alljoynInitialized;
+        bool m_allJoynInitialized;
         Platform::WeakReference m_weakThis;
 
         std::map<std::string, AllJoynService ^> m_servicesMap;

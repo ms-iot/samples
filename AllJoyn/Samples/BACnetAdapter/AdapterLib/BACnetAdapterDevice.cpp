@@ -18,6 +18,7 @@
 #include "BACnetAdapterDevice.h"
 #include "BACnetInterface.h"
 #include "BfiDefinitions.h"
+#include "AdapterUtils.h"
 
 using namespace Platform;
 using namespace Platform::Collections;
@@ -25,7 +26,6 @@ using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 
 using namespace BridgeRT;
-using namespace DsbCommon;
 
 namespace AdapterLib
 {
@@ -249,7 +249,7 @@ namespace AdapterLib
                 // No translation was used for this attribute, convert the string...
                 //
 
-                std::string asciiStr = To_Ascii_String(ipv->GetString()->Data());
+                std::string asciiStr = ConvertTo<std::string>(ipv->GetString());
 
                 if (asciiStr.length() > ARRAYSIZE(BACnetValue.type.Character_String.value))
                 {
@@ -369,20 +369,25 @@ namespace AdapterLib
     // Description:
     //  The class that implements BridgeRT::IAdapterProperty.
     //
-    BACnetAdapterProperty::BACnetAdapterProperty(String^ Name, Object^ ParentObject, String^ ifHint)
+    
+    BACnetAdapterProperty::BACnetAdapterProperty(String^ Name, BridgeRT::IAdapterDevice^ ParentObject, String^ ifHint)
         : name(Name)
         , parent(ParentObject)
     {
-        std::wstring wszIfName = cAdapterPrefix + L"." + cAdapterName + L"." + ifHint->Data();
+        BACnetAdapterDevice^ adapter = dynamic_cast<BACnetAdapterDevice^>(ParentObject);
+        std::wstring adapterPrefix(adapter->Parent->ExposedAdapterPrefix->Data());
+        std::wstring wszIfName = adapterPrefix + L"." + cAdapterName + L"." + ifHint->Data();
         interfaceHint = ref new String(wszIfName.c_str());
     }
+    
 
-
-    BACnetAdapterProperty::BACnetAdapterProperty(ULONG BACnetObjectId, Object^ ParentObject, String^ ifHint)
+    BACnetAdapterProperty::BACnetAdapterProperty(ULONG BACnetObjectId, BridgeRT::IAdapterDevice^ ParentObject, String^ ifHint)
         : parent(ParentObject)
         , objectId(BACnetObjectId)
     {
-        std::wstring wszIfName = cAdapterPrefix + L"." + cAdapterName + L"." + ifHint->Data();
+        BACnetAdapterDevice^ adapter = dynamic_cast<BACnetAdapterDevice^>(ParentObject);
+        std::wstring adapterPrefix(adapter->Parent->ExposedAdapterPrefix->Data());
+        std::wstring wszIfName = adapterPrefix + L"." + cAdapterName + L"." + ifHint->Data();
         interfaceHint = ref new String(wszIfName.c_str());
     }
 
@@ -591,7 +596,7 @@ namespace AdapterLib
     // Description:
     //  The class that implements BridgeRT::IAdapterDevice.
     //
-    BACnetAdapterDevice::BACnetAdapterDevice(String^ Name, Object^ ParentObject)
+    BACnetAdapterDevice::BACnetAdapterDevice(String^ Name, BACnetAdapter^ ParentObject)
         : name(Name)
         , parent(ParentObject)
     {
@@ -599,7 +604,7 @@ namespace AdapterLib
     }
 
 
-    BACnetAdapterDevice::BACnetAdapterDevice(Object^ ParentObject)
+    BACnetAdapterDevice::BACnetAdapterDevice(BACnetAdapter^ ParentObject)
         : parent(ParentObject)
     {
         this->bacnetAdapter = dynamic_cast<BACnetAdapter^>(ParentObject);
@@ -1656,7 +1661,7 @@ namespace AdapterLib
         // Prepare signal...
         //
 
-        AutoLock sync(&this->lock, true);
+        AutoLock sync(this->lock);
 
         if (targetSignal->Name == Constants::CHANGE_OF_VALUE_SIGNAL)
         {

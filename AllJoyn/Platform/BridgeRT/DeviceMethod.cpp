@@ -20,6 +20,7 @@
 #include "DeviceMain.h"
 #include "DeviceMethod.h"
 #include "AllJoynHelper.h"
+#include "BridgeUtils.h"
 
 #include <sstream>
 
@@ -30,7 +31,7 @@ using namespace Windows::Foundation;
 
 using namespace BridgeRT;
 using namespace std;
-using namespace DsbCommon;
+
 
 DeviceMethod::DeviceMethod()
     : m_adapterMethod(nullptr),
@@ -322,7 +323,7 @@ QStatus DeviceMethod::BuildSignature(_In_ IAdapterValueVector ^valueList, _Inout
         {
             parameterNames += ",";
         }
-        parameterNames += To_Ascii_String(adapterValue->Name->Data());
+        parameterNames += ConvertTo<std::string>(adapterValue->Name->Data());
         parameterNames += hint;
     }
 

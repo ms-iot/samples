@@ -22,7 +22,7 @@
 #include "CspAdapter.h"
 
 using namespace BridgeRT;
-using namespace DsbCommon;
+
 
 CspAdapter::CspAdapter()
     : AllJoynFileTransfer(),

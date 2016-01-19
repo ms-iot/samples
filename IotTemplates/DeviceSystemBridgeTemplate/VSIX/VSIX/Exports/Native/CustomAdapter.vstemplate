@@ -24,15 +24,21 @@
 			<SolutionFolder Name="Platform">
 				<ProjectTemplateLink ProjectName="BridgeRT">
 					BridgeRT\BridgeRT.vstemplate
-				</ProjectTemplateLink>
-				<ProjectTemplateLink ProjectName="Common">
-					Common\Common.vstemplate
-				</ProjectTemplateLink>
+				</ProjectTemplateLink>				
+				<ProjectTemplateLink ProjectName="BackgroundHost">
+					BackgroundHost\BackgroundHost\BackgroundHost.vstemplate
+				</ProjectTemplateLink>				
+				<ProjectTemplateLink ProjectName="BackgroundHost.Headed">
+					BackgroundHost\BackgroundHost.Headed\BackgroundHost.Headed.vstemplate
+				</ProjectTemplateLink>				
+				<ProjectTemplateLink ProjectName="BackgroundHost.Headless">
+					BackgroundHost\BackgroundHost.Headless\BackgroundHost.Headless.vstemplate
+				</ProjectTemplateLink>				
 			</SolutionFolder>
         </ProjectCollection>
     </TemplateContent>
 	<WizardExtension>
 		<Assembly>CustomWizard, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</Assembly>
 		<FullClassName>CustomWizard.RootWizard</FullClassName>
-	</WizardExtension>
+	</WizardExtension>    
 </VSTemplate>

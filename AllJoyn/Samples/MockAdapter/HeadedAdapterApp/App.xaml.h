@@ -17,34 +17,33 @@
 #pragma once
 
 #include "App.g.h"
-#include "Thread.h"
-#include "DsbBridgeViewModel.h"
 
-namespace MockAdapter
+namespace HeadedAdapterApp
 {
-	/// <summary>
-	/// Provides application-specific behavior to supplement the default Application class.
-	/// </summary>
-	ref class App sealed
-	{
-	public:
-		App();
+    using namespace AdapterLib;
+    using namespace BackgroundHost::Headed;
+    using namespace BackgroundHost::Headed::Models;
+    using namespace Windows::ApplicationModel::Activation;
+    using namespace Windows::ApplicationModel::Core;
+    using namespace Windows::UI::Xaml;
 
-		virtual void OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEventArgs^ e) override;
-
-	private:
-#if WINAPI_FAMILY==WINAPI_FAMILY_PHONE_APP
-		Windows::UI::Xaml::Media::Animation::TransitionCollection^ _transitions;
-		Windows::Foundation::EventRegistrationToken _firstNavigatedToken;
-
-		void RootFrame_FirstNavigated(Platform::Object^ sender, Windows::UI::Xaml::Navigation::NavigationEventArgs^ e);
-#endif
-
-		void OnSuspending(Platform::Object^ sender, Windows::ApplicationModel::SuspendingEventArgs^ e);
-
-        BridgeRT::DsbBridge^ dsbBridge;
-
+    ref class App sealed
+    {
     internal:
-        static DsbCommon::DsbBridgeViewModel^ BridgeViewModel;
+        App()
+        {
+            this->InitializeComponent();
+            auto bgTaskEntryPointName = (HeadedBackgroundTask::typeid)->FullName;
+            _applicationImplementation = ref new ApplicationImplementation(bgTaskEntryPointName);
+        }
+
+    protected:
+        virtual void OnLaunched(LaunchActivatedEventArgs^ args) override
+        {
+            _applicationImplementation->OnLaunched(args);
+        }
+
+    private:
+        ApplicationImplementation^ _applicationImplementation;
     };
 }

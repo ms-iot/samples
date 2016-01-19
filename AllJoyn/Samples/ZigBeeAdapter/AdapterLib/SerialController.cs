@@ -52,6 +52,10 @@ namespace AdapterLib
             try
             {
                 string deviceId = await GetDeviceIdFromUsbVidPid();
+                if (null == deviceId)
+                {
+                    throw new InvalidOperationException("No Xbee dongle");
+                }
                 m_device = await SerialDevice.FromIdAsync(deviceId);
 
                 if (null == m_device)

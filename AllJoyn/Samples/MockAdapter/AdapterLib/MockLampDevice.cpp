@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "MockAdapter.h"
 #include "MockLampDevice.h"
 #include "MockLampConsts.h"
 
@@ -28,7 +29,7 @@ namespace AdapterLib
 
 MockLampDevice::MockLampDevice(
     Platform::String^ Name, 
-    Platform::Object^ ParentObject
+    MockAdapter^ ParentObject
     )
     : MockAdapterDevice(Name, ParentObject)
     , m_lampState(nullptr)

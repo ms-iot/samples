@@ -11,7 +11,7 @@
     <AssemblyName>AdapterLibTest</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
+    <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
@@ -264,6 +264,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Platform\BackgroundHost\BackgroundHost\BackgroundHost.vcxproj">
+      <Project>{98b5350d-3b67-4109-9cd5-1a675295c461}</Project>
+      <Name>BackgroundHost</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Platform\BridgeRT\BridgeRT.vcxproj">
       <Project>{2783a617-8e1d-40d1-9684-dfaeb8dd5406}</Project>
       <Name>BridgeRT</Name>

@@ -27,11 +27,12 @@ LampService::LampService(LSF* pLightingService)
 //**************************************************************************************************************************************
 LampService::~LampService()
 {
-    if (m_pLightingService != nullptr)
+    if (m_lampServiceInterface != nullptr)
     {
-        delete m_pLightingService;
-        m_pLightingService = nullptr;
+        alljoyn_busattachment_deleteinterface(m_pLightingService->GetBus(), m_lampServiceInterface);
+        m_lampServiceInterface = nullptr;
     }
+    m_pLightingService = nullptr;
 }
 
 QStatus 
