@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resources">
+      <UniqueIdentifier>bb6c256b-c367-48d3-bc32-c3b4250e9fef</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="TypeConversionHelpers.cpp" />
+    <ClCompile Include="IconWatcher.cpp" />
+    <ClCompile Include="IconSignals.cpp" />
+    <ClCompile Include="IconServiceEventArgs.cpp" />
+    <ClCompile Include="IconServiceEventAdapter.cpp" />
+    <ClCompile Include="IconProducer.cpp" />
+    <ClCompile Include="IconConsumer.cpp" />
+    <ClCompile Include="AllJoynHelpers.cpp" />
+    <ClCompile Include="AllJoynBusObjectManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="TypeConversionHelpers.h" />
+    <ClInclude Include="IIconService.h" />
+    <ClInclude Include="IconWatcher.h" />
+    <ClInclude Include="IconStructures.h" />
+    <ClInclude Include="IconSignals.h" />
+    <ClInclude Include="IconServiceEventArgs.h" />
+    <ClInclude Include="IconServiceEventAdapter.h" />
+    <ClInclude Include="IconProducer.h" />
+    <ClInclude Include="IconMethodResults.h" />
+    <ClInclude Include="IconEventArgs.h" />
+    <ClInclude Include="IconConsumer.h" />
+    <ClInclude Include="AllJoynHelpers.h" />
+    <ClInclude Include="AllJoynBusObjectManager.h" />
+  </ItemGroup>
+</Project>
