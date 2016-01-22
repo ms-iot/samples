@@ -15,7 +15,7 @@
 
   <Properties>
     <DisplayName>WeatherDataReporter</DisplayName>
-    <PublisherDisplayName>Microsoft</PublisherDisplayName>
+    <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
