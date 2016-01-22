@@ -35,12 +35,12 @@
         <TextBlock Grid.Row="0" Grid.ColumnSpan="2" x:Name="pageTitle" Text="UART Sample" Style="{StaticResource HeaderTextBlockStyle}" 
                         IsHitTestVisible="false" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,10,0,0"/>
 
-        <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Margin="10,10,0,0">
+        <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Margin="70,10,0,0">
             <TextBlock Text="Select Device:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Top" Orientation="Horizontal" Margin="10,0,0,0" Width="300" Height="80">
-            <ListBox x:Name="ConnectDevices" ItemsSource="{Binding Source={StaticResource DeviceListSource}}" Width="300" Height="80" Background="Gray">
+        <StackPanel Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Top" Orientation="Horizontal" Margin="70,0,0,0" Width="400" Height="80">
+            <ListBox x:Name="ConnectDevices" ScrollViewer.HorizontalScrollMode="Enabled" ScrollViewer.HorizontalScrollBarVisibility="Visible" ItemsSource="{Binding Source={StaticResource DeviceListSource}}" Width="400" Height="80" Background="Gray">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Id}" />
@@ -54,11 +54,11 @@
             <Button Name="closeDevice" Margin="0,20,0,0" Content="Disconnect" Click="closeDevice_Click"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Margin="10,10,0,0">
+        <StackPanel Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Margin="70,10,0,0">
             <TextBlock Text="Write Data:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Top" Orientation="Horizontal" Margin="10,0,0,0" Width="300" Height="80">
+        <StackPanel Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Top" Orientation="Horizontal" Margin="70,0,0,0" Width="300" Height="80">
             <TextBox Name="sendText" Width="300" Height="80"/>
         </StackPanel>
 
@@ -66,15 +66,15 @@
             <Button Name="sendTextButton" Content="Write" Click="sendTextButton_Click"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="5" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Margin="10,10,0,0">
+        <StackPanel Grid.Row="5" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Margin="70,10,0,0">
             <TextBlock Text="Read Data:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="6" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Margin="10,0,0,0" Width="300" Height="80">
+        <StackPanel Grid.Row="6" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Margin="70,0,0,0" Width="300" Height="80">
             <TextBox Name="rcvdText" Width="300" Height="80"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,20,0,0" Width="460" Height="40">
+        <StackPanel Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="70,20,0,0" Width="460" Height="40">
             <TextBox
                 x:Name="status" TextWrapping="Wrap" IsReadOnly="True" Width="460" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" 
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" BorderBrush="White"/>

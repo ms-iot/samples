@@ -8,14 +8,14 @@
 
   <Identity
     Name="59eafd16-30a1-4649-a182-989e530dba94"
-    Publisher="CN=rene"
+    Publisher="CN=MSFT"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="59eafd16-30a1-4649-a182-989e530dba94" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>I2CCompass</DisplayName>
-    <PublisherDisplayName>rene</PublisherDisplayName>
+    <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

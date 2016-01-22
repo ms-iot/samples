@@ -1,0 +1,14 @@
+*.out
+*.map
+*.obj
+*.exe
+*.exp
+*.lib
+*.suo
+*.pdb
+*.sdf
+*.vcxproj.user
+*.opensdf
+
+/External/*
+!/External/clone.cmd

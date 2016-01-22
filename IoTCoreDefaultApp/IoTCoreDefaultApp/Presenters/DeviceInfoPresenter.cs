@@ -25,21 +25,31 @@ namespace IoTCoreDefaultApp
         public static string GetBoardName()
         {
             var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
+            string boardName;
 
             switch (DeviceTypeInformation.Type)
             {
                 case DeviceTypes.RPI2:
-                    return loader.GetString("Rpi2Name");
+                    boardName = DeviceTypeInformation.ProductName;
+                    if (string.IsNullOrEmpty(boardName))
+                    {
+                        boardName = loader.GetString("Rpi2Name");
+                    }
+                    break;
 
                 case DeviceTypes.MBM:
-                    return loader.GetString("MBMName");
+                    boardName = loader.GetString("MBMName");
+                    break;
 
                 case DeviceTypes.DB410:
-                    return loader.GetString("DB410Name");
+                    boardName = loader.GetString("DB410Name");
+                    break;
 
                 default:
-                    return loader.GetString("GenericBoardName");
+                    boardName = loader.GetString("GenericBoardName");
+                    break;
             }
+            return boardName;
         }
 
         public static Uri GetBoardImageUri()

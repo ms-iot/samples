@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <GlobalAssemblyInfo>Properties\AssemblyVersion.cs</GlobalAssemblyInfo>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Version">
+    <VersionMajor>1</VersionMajor>
+    <VersionMinor>0</VersionMinor>
+    <VersionInfoProductName>Core</VersionInfoProductName>
+  </PropertyGroup>
+
+  <!-- 
+  This is used by the build system to control where to binplace build output.
+  Every solution should produce a directory under bin.
+  -->
+  <Choose>
+    <When Condition="'$(OutputSubDir)' != ''" />
+    <When Condition="'$(SolutionName)' != ''" >
+      <PropertyGroup>
+        <OutputSubDir>bin\$(SolutionName)</OutputSubDir>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <OutputSubDir>bin</OutputSubDir>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+</Project>

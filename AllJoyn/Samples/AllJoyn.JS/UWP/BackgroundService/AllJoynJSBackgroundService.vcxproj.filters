@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Assets">
+      <UniqueIdentifier>823ace23-fe9b-4add-992f-8350caea5a72</UniqueIdentifier>
+      <Extensions>bmp;fbx;gif;jpg;jpeg;tga;tiff;tif;png</Extensions>
+    </Filter>
+    <Image Include="Assets\LockScreenLogo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SplashScreen.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Square44x44Logo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Square150x150Logo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Wide310x150Logo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Filter Include="WinRT">
+      <UniqueIdentifier>{1fd3f9d0-bf92-48e7-9e7b-2709f3e712c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WinRT\io">
+      <UniqueIdentifier>{4d52464f-4ea5-4e53-a6bf-e53ae138053f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WinRT\crypto">
+      <UniqueIdentifier>{03cf308a-cdf9-43cf-a119-f745411ae3bc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="StartupTask.cpp" />
+    <ClCompile Include="..\WinRT\crypto\cryptoImpl.cpp">
+      <Filter>WinRT\crypto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\WinRT\io\io_gpio.c">
+      <Filter>WinRT\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\WinRT\io\io_i2c.c">
+      <Filter>WinRT\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\WinRT\io\io_info.c">
+      <Filter>WinRT\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\WinRT\io\io_spi.c">
+      <Filter>WinRT\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\WinRT\io\io_stubs.c">
+      <Filter>WinRT\io</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="StartupTask.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest" />
+  </ItemGroup>
+</Project>

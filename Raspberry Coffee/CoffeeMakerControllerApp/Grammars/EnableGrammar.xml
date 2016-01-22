@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<grammar xmlns="http://www.w3.org/2001/06/grammar" xml:lang="en"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.w3.org/2001/06/grammar
+                             http://www.w3.org/TR/speech-grammar/grammar.xsd"
+         version="1.0" mode="voice" root="command">
+  
+  <rule id="command">
+    <ruleref uri="#action" /> <ruleref uri="#object" />
+  </rule>
+  
+  <rule id="action">
+    <one-of>
+      <item weight="10"> make </item>
+      <item weight="2"> start </item>
+    </one-of>
+  </rule>
+  
+  <rule id="object">
+    <item repeat="0-1">
+      <one-of>
+        <item> some </item>
+        <item> the </item>
+      </one-of>
+    </item>
+
+    <one-of>
+      <item> coffee </item>
+    </one-of>
+  </rule>
+</grammar>

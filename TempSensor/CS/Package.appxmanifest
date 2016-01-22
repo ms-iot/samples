@@ -8,14 +8,14 @@
 
   <Identity
     Name="c63c50ec-8f60-4046-9ce2-b39ba60db3e0"
-    Publisher="CN=magli"
+    Publisher="CN=MSFT"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="c63c50ec-8f60-4046-9ce2-b39ba60db3e0" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>TempSensor</DisplayName>
-    <PublisherDisplayName>magli</PublisherDisplayName>
+    <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

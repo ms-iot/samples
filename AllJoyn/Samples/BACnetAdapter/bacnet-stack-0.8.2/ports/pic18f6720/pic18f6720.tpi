@@ -1,0 +1,408 @@
+PICS 0
+BACnet Protocol Implementation Conformance Statement
+
+--
+--
+-- BACnet Stack Demo
+-- bacnet.sourceforge.net
+-- Author: Steve Karg
+--
+--
+Vendor Name: "ASHRAE"
+Product Name: "PIC18F6720 Device"
+Product Model Number: "GNU Demo"
+Product Description: "BACnet Demo"
+
+BIBBs Supported:
+{
+-- The BIBBs may be any of:
+-- DS-RP-A
+ DS-RP-B
+-- DS-RPM-A DS-RPM-B
+-- DS-RPC-A DS-RPC-B
+-- DS-WP-A
+ DS-WP-B
+-- DS-WPM-A DS-WPM-B
+-- DS-COV-A DS-COV-B
+-- DS-COVP-A DS-COVP-B
+-- DS-COVU-A DS-COVU-B
+-- AE-N-A AE-N-I-B AE-N-E-B
+-- AE-ACK-A AE-ACK-B
+-- AE-ASUM-A AE-ASUM-B
+-- AE-ESUM-A AE-ESUM-B
+-- AE-INFO-A AE-INFO-B
+-- AE-LS-A AE-LS-B
+-- SCHED-A SCHED-I-B SCHED-E-B
+-- T-VMT-A T-VMT-I-B T-VMT-E-B
+-- T-ATR-A T-ATR-B
+-- DM-DDB-A 
+ DM-DDB-B
+-- DM-DOB-A 
+-- DM-DOB-B
+-- DM-DCC-A 
+ DM-DCC-B
+-- DM-PT-A DM-PT-B
+-- DM-TM-A DM-TM-B
+-- DM-TS-A 
+-- DM-TS-B
+-- DM-UTC-A 
+-- DM-UTC-B
+-- DM-RD-A 
+ DM-RD-B
+-- DM-BR-A DM-BR-B
+-- DM-R-A DM-R-B
+-- DM-LM-A DM-LM-B
+-- DM-OCD-A DM-OCD-B
+-- DM-VT-A DM-VT-B
+-- NM-CE-A NM-CE-B
+-- NM-RC-A NM-RC-B
+}
+
+BACnet Standard Application Services Supported:
+{
+-- AcknowledgeAlarm               Initiate Execute
+-- ConfirmedCOVNotification       Initiate Execute
+-- UnconfirmedCOVNotification     Initiate
+-- ConfirmedEventNotification     Initiate Execute
+-- UnconfirmedEventNotification   Initiate Execute
+-- GetAlarmSummary                Initiate Execute
+-- GetEnrollmentSummary           Initiate Execute
+-- AtomicReadFile                 Initiate Execute
+-- AtomicWriteFile                Initiate Execute
+-- AddListElement                 Initiate Execute
+-- RemoveListElement              Initiate Execute
+-- CreateObject                   Initiate Execute
+-- DeleteObject                   Initiate Execute
+ ReadProperty                   Execute
+-- ReadpropertyConditional        Initiate Execute
+-- ReadPropertyMultiple           Initiate Execute
+-- SubscribeCOV                   Initiate Execute
+ WriteProperty                  Execute
+-- WritePropertyMultiple          Initiate Execute
+ DeviceCommunicationControl     Execute
+-- ConfirmedPrivateTransfer       Initiate Execute
+-- UnconfirmedPrivateTransfer     Initiate Execute
+-- TimeSynchronization            Initiate Execute
+-- Who-Has                        Execute
+-- I-Have                         Initiate
+ Who-Is                         Execute
+ I-Am                           Initiate
+-- VT-Open                        Initiate Execute
+-- VT-Close                       Initiate Execute
+-- VT-Data                        Initiate Execute
+-- ConfirmedTextMessage           Initiate Execute
+-- UnconfirmedTextMessage         Initiate Execute
+ ReinitializeDevice             Execute
+-- RequestKey                     Initiate Execute
+-- Authenticate                   Initiate Execute
+-- UTCTimeSynchronization         Initiate Execute
+-- ReadRange                      Initiate Execute
+-- GetEventInformation            Initiate Execute
+-- LifeSafetyOperation            Initiate Execute
+-- SubscribeCOVProperty           Initiate Execute
+-- RequestKey                     Initiate Execute
+-- Authenticate                   Initiate Execute
+}
+
+Standard Object-Types Supported:
+{
+ Analog Input
+-- Analog Output
+ Analog Value
+-- Averaging                      Createable Deleteable
+ Binary Input
+-- Binary Output
+ Binary Value
+-- Calendar                       Createable Deleteable
+-- Command                        Createable Deleteable
+ Device
+-- Event Enrollment               Createable Deleteable
+-- File
+-- Group                          Createable Deleteable
+-- Loop                           Createable Deleteable
+-- Multi-state Input              Createable Deleteable
+-- Multi-state Output
+-- Multi-state Value              Createable Deleteable
+-- Notification Class             Createable Deleteable
+-- Program                        Createable Deleteable
+-- Schedule                       Createable Deleteable
+-- Life Safety Point
+-- Life Safety Zone               Createable Deleteable
+-- Trend Log                      Createable Deleteable
+-- Load Control
+}
+
+Data Link Layer Option:
+{
+-- ISO 8802-3, 10BASE5
+-- ISO 8802-3, 10BASE2
+-- ISO 8802-3, 10BASET
+-- ISO 8802-3, Fiber
+-- ARCNET, coax star
+-- ARCNET, coax bus     
+-- ARCNET, twisted pair star
+-- ARCNET, twisted pair bus
+-- ARCNET, fiber star
+MS/TP master. Baud rate(s): 9600, 19200, 38400, 76800
+-- MS/TP slave. Baud rate(s): 9600
+-- Point-To-Point. Modem, Baud rate(s): 14.4k
+-- Point-To-Point. Modem, Autobaud range: 9600 to 28.8k
+-- BACnet/IP, 'DIX' Ethernet
+-- BACnet/IP, PPP
+-- Other
+}
+
+Character Sets Supported:
+{
+ ANSI X3.4
+-- Other Character Sets not supported
+-- IBM/Microsoft DBCS
+-- JIS C 6226
+-- ISO 10646 (ICS-4)
+-- ISO 10646 (UCS2)
+}
+
+Special Functionality:
+{
+ Maximum APDU size in octets: 50
+-- Maximum APDU size in octets: 480
+-- Segmented Requests Supported, window size: 1
+-- Segmented Responses Supported, window size: 1
+-- Router
+}
+
+List of Objects in test device:
+{
+  {
+    object-identifier: (device,12345)
+    object-name: "PIC18F6720 Device"
+    object-type: device
+    system-status: operational
+    vendor-name: "ASHRAE"
+    vendor-identifier: 0
+    model-name: "GNU Demo"
+    firmware-revision: "1.00"
+    application-software-version: "1.00"
+    location: "USA"
+    description: "BACnet Demo"
+    protocol-version: 1
+    protocol-conformance-class: 1
+    protocol-services-supported: (T,F,F,F,F,F,F,F,F,F,F,F,T,F,F,T,F,T,F,F,T,F,F,
+F,F,F,F,F,F,F,F,F,F,F,T,F,F,F,F,F)
+    protocol-object-types-supported: (T,F,T,T,F,T,F,F,T,F,F,F,F,F,F,F,F,F,F,F,F,
+F,F,F,F,F,F,F,F,F,F,F)
+    max-apdu-length-accepted: 50
+    segmentation-supported: no-segmentation
+    local-time: ?
+    local-date: ?
+    utc-offset: ?
+    daylight-savings-status: ?
+    database-revision: ?
+    apdu-timeout: 60000
+    number-of-apdu-retries: 0
+    max-master: 127
+    max-info-frames: 1
+    device-address-binding: ?
+    object-list: {
+      (device,12345),(binary-value,0),(binary-value,1),
+      (binary-value,2),(binary-value,3),(binary-value,4),
+      (binary-value,5),(binary-value,6),(binary-value,7),
+      (analog-value,0),(analog-value,1),(analog-value,2),
+      (analog-value,3),(analog-input,0),(analog-input,1),
+      (binary-input,0),(binary-input,1),(binary-input,2),
+      (binary-input,3)
+    }
+  },
+  {
+    object-identifier: (binary-value,0)
+    object-name: "BV-0"
+    object-type: binary-value
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    description: "BV-0"
+  },
+  {
+    object-identifier: (binary-value,1)
+    object-name: "BV-1"
+    object-type: binary-value
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    description: "BV-1"
+  },
+  {
+    object-identifier: (binary-value,2)
+    object-name: "BV-2"
+    object-type: binary-value
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    description: "BV-2"
+  },
+  {
+    object-identifier: (binary-value,3)
+    object-name: "BV-3"
+    object-type: binary-value
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    description: "BV-3"
+  },
+  {
+    object-identifier: (binary-value,4)
+    object-name: "BV-4"
+    object-type: binary-value
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    description: "BV-4"
+  },
+  {
+    object-identifier: (binary-value,5)
+    object-name: "BV-5"
+    object-type: binary-value
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    description: "BV-5"
+  },
+  {
+    object-identifier: (binary-value,6)
+    object-name: "BV-6"
+    object-type: binary-value
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    description: "BV-6"
+  },
+  {
+    object-identifier: (binary-value,7)
+    object-name: "BV-7"
+    object-type: binary-value
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    description: "BV-7"
+  },
+  {
+    object-identifier: (analog-value,0)
+    object-name: "AV-0"
+    object-type: analog-value
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    units: percent
+    description: "AV-0"
+  },
+  {
+    object-identifier: (analog-value,1)
+    object-name: "AV-1"
+    object-type: analog-value
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    units: percent
+    description: "AV-1"
+  },
+  {
+    object-identifier: (analog-value,2)
+    object-name: "AV-2"
+    object-type: analog-value
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    units: percent
+    description: "AV-2"
+  },
+  {
+    object-identifier: (analog-value,3)
+    object-name: "AV-3"
+    object-type: analog-value
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    units: percent
+    description: "AV-3"
+  },
+  {
+    object-identifier: (analog-input,0)
+    object-name: "AI-0"
+    object-type: analog-input
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    units: percent
+    description: "AI-0"
+  },
+  {
+    object-identifier: (analog-input,1)
+    object-name: "AI-1"
+    object-type: analog-input
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    units: percent
+    description: "AI-1"
+  },
+  {
+    object-identifier: (binary-input,0)
+    object-name: "BI-0"
+    object-type: binary-input
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    polarity: normal
+    description: "BI-0"
+  },
+  {
+    object-identifier: (binary-input,1)
+    object-name: "BI-1"
+    object-type: binary-input
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    polarity: normal
+    description: "BI-1"
+  },
+  {
+    object-identifier: (binary-input,2)
+    object-name: "BI-2"
+    object-type: binary-input
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    polarity: normal
+    description: "BI-2"
+  },
+  {
+    object-identifier: (binary-input,3)
+    object-name: "BI-3"
+    object-type: binary-input
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    polarity: normal
+    description: "BI-3"
+  }
+}
+
+End of BACnet Protocol Implementation Conformance Statement

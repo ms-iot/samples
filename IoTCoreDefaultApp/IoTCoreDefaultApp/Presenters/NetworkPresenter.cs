@@ -4,8 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
+using Windows.Devices.Enumeration;
 using Windows.Devices.WiFi;
 using Windows.Networking;
 using Windows.Networking.Connectivity;
@@ -17,6 +19,46 @@ namespace IoTCoreDefaultApp
     {
         private readonly static uint EthernetIanaType = 6;
         private readonly static uint WirelessInterfaceIanaType = 71;
+        private Dictionary<String, WiFiAdapter> WiFiAdapters = new Dictionary<string, WiFiAdapter>();
+        private DeviceWatcher WiFiAdaptersWatcher;
+        ManualResetEvent EnumAdaptersCompleted = new ManualResetEvent(false);
+        
+        public NetworkPresenter()
+        {
+            WiFiAdaptersWatcher = DeviceInformation.CreateWatcher(WiFiAdapter.GetDeviceSelector());
+            WiFiAdaptersWatcher.EnumerationCompleted += AdaptersEnumCompleted;
+            WiFiAdaptersWatcher.Added += AdaptersAdded;
+            WiFiAdaptersWatcher.Removed += AdaptersRemoved;
+            WiFiAdaptersWatcher.Start();
+        }
+
+        private void AdaptersRemoved(DeviceWatcher sender, DeviceInformationUpdate args)
+        {
+            WiFiAdapters.Remove(args.Id);
+        }
+
+        private void AdaptersAdded(DeviceWatcher sender, DeviceInformation args)
+        {
+            WiFiAdapters.Add(args.Id, null);
+        }
+
+        private async void AdaptersEnumCompleted(DeviceWatcher sender, object args)
+        {
+            List<String> WiFiAdaptersID = new List<string>(WiFiAdapters.Keys);
+            for(int i = 0; i < WiFiAdaptersID.Count; i++)
+            {
+                string id = WiFiAdaptersID[i];
+                try
+                {
+                    WiFiAdapters[id] = await WiFiAdapter.FromIdAsync(id);
+                }
+                catch (Exception)
+                {
+                    WiFiAdapters.Remove(id);
+                }
+            }
+            EnumAdaptersCompleted.Set();
+        }
 
         public static string GetDirectConnectionName()
         {
@@ -76,7 +118,37 @@ namespace IoTCoreDefaultApp
 
         private static WiFiAccessStatus? accessStatus;
 
-        public static async Task<bool> WifiIsAvailable()
+        // Call this method before accessing WiFiAdapters Dictionary
+        private async Task UpdateAdapters()
+        {
+            bool fInit = false;
+            foreach (var adapter in WiFiAdapters)
+            {
+                if (adapter.Value == null)
+                {
+                    // New Adapter plugged-in which requires Initialization
+                    fInit = true;
+                }
+            }
+
+            if (fInit)
+            {
+                List<String> WiFiAdaptersID = new List<string>(WiFiAdapters.Keys);
+                for (int i = 0; i < WiFiAdaptersID.Count; i++)
+                {
+                    string id = WiFiAdaptersID[i];
+                    try
+                    {
+                        WiFiAdapters[id] = await WiFiAdapter.FromIdAsync(id);
+                    }
+                    catch (Exception)
+                    {
+                        WiFiAdapters.Remove(id);
+                    }
+                }
+            }
+        }
+        public async Task<bool> WifiIsAvailable()
         {
             if ((await TestAccess()) == false)
             {
@@ -85,8 +157,9 @@ namespace IoTCoreDefaultApp
 
             try
             {
-                var adapters = await WiFiAdapter.FindAllAdaptersAsync();
-                return adapters.Count > 0;
+                EnumAdaptersCompleted.WaitOne();
+                await UpdateAdapters();
+                return (WiFiAdapters.Count > 0);
             }
             catch (Exception)
             {
@@ -102,11 +175,14 @@ namespace IoTCoreDefaultApp
             }
 
             networkNameToInfo = new Dictionary<WiFiAvailableNetwork, WiFiAdapter>();
-
-            var adapters = WiFiAdapter.FindAllAdaptersAsync();
-
-            foreach (var adapter in await adapters)
+            List<WiFiAdapter> WiFiAdaptersList = new List<WiFiAdapter>(WiFiAdapters.Values);
+            foreach (var adapter in WiFiAdaptersList)
             {
+                if (adapter == null)
+                {
+                    return false;
+                }
+
                 await adapter.ScanAsync();
 
                 if (adapter.NetworkReport == null)

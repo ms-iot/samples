@@ -29,41 +29,50 @@
     DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="0,0,0,-70">
-        <Grid x:Name="RootGrid" Margin="12,0,12,12">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="343*"/>
+            <ColumnDefinition Width="17*"/>
+        </Grid.ColumnDefinitions>
+        <Grid x:Name="RootGrid" Margin="12,0,12,12" Grid.ColumnSpan="2">
             <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top">
-                <TextBlock Text="Recognition Language: " Margin="0,20,150,0"/>
-                <ComboBox x:Name="cbLanguageSelection" SelectionChanged="cbLanguageSelection_SelectionChanged" Margin="0,0,150,10" Width="186"/>
-                    <StackPanel Orientation="Horizontal">
-                        <Button x:Name="btnStartTalk" Click="btnStartTalk_Click" IsEnabled="{Binding IsReadyToRecognize}" Margin="10,10,0,0" >
-                            <StackPanel Orientation="Horizontal">
-                                <SymbolIcon Symbol="Microphone"/>
-                                <TextBlock x:Name="StartTalkButtonText" Text="Start Talk" />
-                            </StackPanel>
-                        </Button>
-                        <Button x:Name="btnClearText" Click="btnClearText_Click"  IsEnabled="False" Margin="10,10,0,0" Content="Clear Text" />
-                    </StackPanel>
-                    <TextBlock Margin="0,14.5,0,0" Text="Message Recognized" TextWrapping="Wrap" Style="{StaticResource SubheaderTextBlockStyle}" />
-                    <TextBox x:Name="dictationTextBox" Margin="0,14.5,0,0" IsReadOnly="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" Height="120" TextChanged="dictationTextBox_TextChanged"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Recognition Language: " Margin="0,5,10,0"/>
+                    <ComboBox x:Name="cbLanguageSelection" SelectionChanged="cbLanguageSelection_SelectionChanged" Margin="0,5,150,10" Width="186"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="btnStartTalk" Click="btnStartTalk_Click" IsEnabled="{Binding IsReadyToRecognize}" Margin="0,0,0,0" >
+                        <StackPanel Orientation="Horizontal">
+                            <SymbolIcon Symbol="Microphone"/>
+                            <TextBlock x:Name="StartTalkButtonText" Text="Start Talk" />
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="btnClearText" Click="btnClearText_Click"  IsEnabled="False" Margin="10,0,0,0" Content="Clear Text" />
+                </StackPanel>
+                <TextBlock Margin="0,2,0,0" Text="Message Recognized" TextWrapping="Wrap" Style="{StaticResource SubheaderTextBlockStyle}" />
+                <TextBox x:Name="dictationTextBox" Margin="0,2,0,0" IsReadOnly="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" Height="100" TextChanged="dictationTextBox_TextChanged"/>
+                <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
                     <TextBlock x:Name="checkError" Text="Speech Recog Status:" Margin="0,10,10,5" Visibility="Collapsed"></TextBlock>
-                <TextBox x:Name="errorCheck" FontSize="16" Height="Auto" Margin="0,0,0,0" Visibility="Collapsed"/>
+                    <TextBox x:Name="errorCheck" FontSize="16" Height="Auto" Margin="0,0,0,0" Visibility="Collapsed" Width="440"/>
+                </StackPanel>
                 <TextBlock x:Name="hlOpenPrivacySettings" Visibility="Collapsed" TextWrapping="WrapWholeWords" Margin="0,10,0,0">The speech recognition privacy settings have not been accepted. <Hyperlink Click="openPrivacySettings_Click">Open Privacy Settings</Hyperlink> to review the privacy policy and enable personalization.</TextBlock>
             </StackPanel>
-            
-            <StackPanel Orientation="Vertical" Margin="0,500,0,10">
-                <StackPanel>
-                    <StackPanel Orientation="Vertical" Margin="0,0,0,0">
-                        <TextBlock Text="Original msg Received:" FontSize="16" Height="20"  Margin="0,10,150,0" />
-                        <TextBox x:Name="originalmsg" Margin="0,0,0,0" IsReadOnly="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" Height="55" TextChanged="ReceivedMsgTextBox_TextChanged"/>
-                        <TextBlock Text="Translated msg:" FontSize="16" Height="20"  Margin="0,10,150,0" />
-                        <TextBox x:Name="ReceivedText" Margin="0,0,0,10" IsReadOnly="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" Height="51" TextChanged="ReceivedMsgTextBox_TextChanged"/>
-                    </StackPanel>
-                    <TextBlock Text="Status Check:" FontSize="16" Height="20" Margin="0,20,150,0" />
-                    <TextBox x:Name="StatusText" Text="Idle" FontSize="16" Height="Auto" Margin="0,0,150,-10" />
 
+            <StackPanel Orientation="Vertical" Margin="0,300,0,10">
+
+                    <StackPanel Orientation="Vertical" Margin="0,20,0,0">
+                        <TextBlock Text="Original msg Received:" FontSize="16" Height="20"  Margin="0,10,150,0" />
+                        <TextBox x:Name="originalmsg" Margin="0,0,0,0" IsReadOnly="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" TextChanged="ReceivedMsgTextBox_TextChanged"/>
+                        <TextBlock Text="Translated msg:" FontSize="16" Height="20"  Margin="0,10,150,0" />
+                        <TextBox x:Name="ReceivedText" Margin="0,0,0,10" IsReadOnly="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" TextChanged="ReceivedMsgTextBox_TextChanged"/>
+                    </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Status Check:" FontSize="16" Height="20" Margin="0,5,10,0" />
+                    <TextBox x:Name="StatusText" Text="Idle" FontSize="16" Height="Auto" Margin="0,5,10,0" Width="474" />
                 </StackPanel>
+
             </StackPanel>
         </Grid>
-        <MediaElement x:Name="media" AutoPlay="True"/>
+        <MediaElement x:Name="media" AutoPlay="True" Margin="180,355,161.667,354"/>
 
     </Grid>
 </Page>

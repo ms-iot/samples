@@ -1,0 +1,9 @@
+#--indent-cases
+--indent-classes
+--indent-switches
+--indent=spaces=4
+#--max-instatement-indent=4
+#--min-conditional-indent=0
+--brackets=linux
+--convert-tabs
+--mode=c

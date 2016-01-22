@@ -1,0 +1,354 @@
+PICS 0
+BACnet Protocol Implementation Conformance Statement
+
+--
+--
+-- BACnet Development Kit
+-- bacnetdevelopmentkit.com
+-- Author: Steve Karg
+--
+--
+
+Vendor Name: "BACnet Stack at SourceForge"
+Product Name: "bdk-atxx4-mstp"
+Product Model Number: "bdk-atxx4-mstp"
+Product Description: "BACnet Development Kit"
+
+BIBBs Supported:
+{
+-- The BIBBs may be any of:
+-- DS-RP-A
+ DS-RP-B
+ DS-RPM-B
+-- DS-RPM-A
+-- DS-RPC-A DS-RPC-B
+-- DS-WP-A
+ DS-WP-B
+-- DS-WPM-A DS-WPM-B
+-- DS-COV-A DS-COV-B
+-- DS-COVP-A DS-COVP-B
+-- DS-COVU-A DS-COVU-B
+-- AE-N-A AE-N-I-B AE-N-E-B
+-- AE-ACK-A AE-ACK-B
+-- AE-ASUM-A AE-ASUM-B
+-- AE-ESUM-A AE-ESUM-B
+-- AE-INFO-A AE-INFO-B
+-- AE-LS-A AE-LS-B
+-- SCHED-A SCHED-I-B SCHED-E-B
+-- T-VMT-A T-VMT-I-B T-VMT-E-B
+-- T-ATR-A T-ATR-B
+-- DM-DDB-A
+ DM-DDB-B
+-- DM-DOB-A
+ DM-DOB-B
+-- DM-DCC-A
+ DM-DCC-B
+-- DM-PT-A DM-PT-B
+-- DM-TM-A DM-TM-B
+-- DM-TS-A
+-- DM-TS-B
+-- DM-UTC-A
+-- DM-UTC-B
+-- DM-RD-A
+ DM-RD-B
+-- DM-BR-A DM-BR-B
+-- DM-R-A DM-R-B
+-- DM-LM-A DM-LM-B
+-- DM-OCD-A DM-OCD-B
+-- DM-VT-A DM-VT-B
+-- NM-CE-A NM-CE-B
+-- NM-RC-A NM-RC-B
+}
+
+BACnet Standard Application Services Supported:
+{
+-- AcknowledgeAlarm               Initiate Execute
+-- ConfirmedCOVNotification       Initiate Execute
+-- UnconfirmedCOVNotification     Initiate Execute
+-- ConfirmedEventNotification     Initiate Execute
+-- UnconfirmedEventNotification   Initiate Execute
+-- GetAlarmSummary                Initiate Execute
+-- GetEnrollmentSummary           Initiate Execute
+-- AtomicReadFile                 Initiate Execute
+-- AtomicWriteFile                Initiate Execute
+-- AddListElement                 Initiate Execute
+-- RemoveListElement              Initiate Execute
+-- CreateObject                   Initiate Execute
+-- DeleteObject                   Initiate Execute
+ ReadProperty                   Execute
+-- ReadpropertyConditional        Initiate Execute
+ReadPropertyMultiple           Execute
+-- SubscribeCOV                   Initiate Execute
+ WriteProperty                  Execute
+-- WritePropertyMultiple          Initiate Execute
+ DeviceCommunicationControl     Execute
+-- ConfirmedPrivateTransfer       Initiate Execute
+-- UnconfirmedPrivateTransfer     Initiate Execute
+-- TimeSynchronization            Initiate Execute
+ Who-Has                        Execute
+ I-Have                         Initiate
+ Who-Is                         Execute
+ I-Am                           Initiate
+-- VT-Open                        Initiate Execute
+-- VT-Close                       Initiate Execute
+-- VT-Data                        Initiate Execute
+-- ConfirmedTextMessage           Initiate Execute
+-- UnconfirmedTextMessage         Initiate Execute
+ ReinitializeDevice             Execute
+-- RequestKey                     Initiate Execute
+-- Authenticate                   Initiate Execute
+-- UTCTimeSynchronization         Initiate Execute
+-- ReadRange                      Initiate Execute
+-- GetEventInformation            Initiate Execute
+-- LifeSafetyOperation            Initiate Execute
+-- SubscribeCOVProperty           Initiate Execute
+-- RequestKey                     Initiate Execute
+-- Authenticate                   Initiate Execute
+}
+
+Standard Object-Types Supported:
+{
+ Analog Input
+-- Analog Output                  Createable Deleteable
+ Analog Value
+-- Averaging                      Createable Deleteable
+ Binary Input
+ Binary Output
+-- Binary Value                   Createable Deleteable
+-- Calendar                       Createable Deleteable
+-- Command                        Createable Deleteable
+ Device
+-- Event Enrollment               Createable Deleteable
+-- File                           Createable Deleteable
+-- Group                          Createable Deleteable
+-- Loop                           Createable Deleteable
+-- Multi-state Input              Createable Deleteable
+-- Multi-state Output             Createable Deleteable
+-- Multi-state Value              Createable Deleteable
+-- Notification Class             Createable Deleteable
+-- Program                        Createable Deleteable
+-- Schedule                       Createable Deleteable
+-- Life Safety Point              Createable Deleteable
+-- Life Safety Zone               Createable Deleteable
+-- Trend Log                      Createable Deleteable
+-- Load Control                   Createable Deleteable
+}
+
+Data Link Layer Option:
+{
+-- ISO 8802-3, 10BASE5
+-- ISO 8802-3, 10BASE2
+-- ISO 8802-3, 10BASET
+-- ISO 8802-3, Fiber
+-- ARCNET, coax star
+-- ARCNET, coax bus
+-- ARCNET, twisted pair star
+-- ARCNET, twisted pair bus
+-- ARCNET, fiber star
+ MS/TP master. Baud rate(s): 9600, 19200, 38400, 57600, 76800, 115200
+-- MS/TP slave. Baud rate(s): 9600
+-- Point-To-Point. Modem, Baud rate(s): 14.4k
+-- Point-To-Point. Modem, Autobaud range: 9600 to 28.8k
+-- BACnet/IP, 'DIX' Ethernet
+-- BACnet/IP, PPP
+-- Other
+}
+
+Character Sets Supported:
+{
+ ANSI X3.4
+-- Other Character Sets not supported
+-- IBM/Microsoft DBCS
+-- JIS C 6226
+-- ISO 10646 (ICS-4)
+-- ISO 10646 (UCS2)
+}
+
+Special Functionality:
+{
+ Maximum APDU size in octets: 128 -- MS/TP Maximum 501 less NL Header
+-- Maximum APDU size in octets: 480
+-- Segmented Requests Supported, window size: 1
+-- Segmented Responses Supported, window size: 1
+-- Router
+}
+
+List of Objects in Test Device:
+{
+  {
+    object-identifier: (Device, 90) Writable
+    object-name: "DEVICE-90" Writable
+    object-type: Device
+    system-status: operational
+    vendor-name: "BACnet Stack at SourceForge"
+    vendor-identifier: 260
+    model-name: "bdk-atxx4-mstp"
+    firmware-revision: "1.0"
+    application-software-version: "1.0"
+    protocol-version: 1
+    protocol-revision: 10
+    protocol-services-supported: (
+        F,F,F,F,   -- ,,,,
+        F,F,F,F,   -- ,,,,
+        F,F,F,F,   -- ,,,,
+        T,F,T,T,   --  Read-Property,, Read-Property-Multiple, Write-Property,
+        F,T,F,F,   -- , Device-Communication-Control,,,
+        T,F,F,F,   --  Reinitialize-Device,,,,
+        F,F,F,F,   -- ,,,,
+        F,F,F,F,   -- ,,,,
+        F,T,T,F,   -- , Who-Has, Who-Is,,
+        F,F,F,F    -- ,,,,
+        )
+    protocol-object-types-supported: (
+        T,F,T,T,   --  Analog Input,, Analog Value, Binary Input,
+        T,F,F,F,   --  Binary Output,,,,
+        T,F,F,F,   --  Device,,,,
+        F,F,F,F,   -- ,,,,
+        F,F,F,F,   -- ,,,,
+        F,F,F,F,   -- ,,,,
+        F,F,F,F,   -- ,,,,
+        F,F,F,F,   -- ,,,,
+        F,F,F,F,   -- ,,,,
+        F,F,F,F,   -- ,,,,
+        F,F,F,F,   -- ,,,,
+        F,F,F,F,   -- ,,,,
+        F,F,F    -- ,,,
+        )
+    object-list: {
+        (Device, 90), (Analog Input, 0), (Analog Input, 1), (Analog Value, 0),
+        (Analog Value, 1), (Binary Input, 0), (Binary Input, 1),
+        (Binary Input, 2),
+        (Binary Input, 3), (Binary Input, 4), (Binary Output, 0),
+        (Binary Output, 1) }
+    max-apdu-length-accepted: 128
+    segmentation-supported: no-segmentation
+    apdu-timeout: 3000
+    number-of-APDU-retries: 3
+    device-address-binding: ?
+    database-revision: ?
+    max-master: 127 Writable
+    max-info-frames: 1 Writable
+    description: "BACnet Development Kit" Writable
+    location: "default location" Writable
+  -- Found 12 Objects
+  },
+  {
+    object-identifier: (Analog Input, 0)
+    object-name: "AI-0"
+    object-type: Analog Input
+    present-value: ?
+    status-flags: {false,false,false,false}
+    event-state: normal
+    out-of-service: FALSE
+    units: percent
+  },
+  {
+    object-identifier: (Analog Input, 1)
+    object-name: "AI-1"
+    object-type: Analog Input
+    present-value: ?
+    status-flags: {false,false,false,false}
+    event-state: normal
+    out-of-service: FALSE
+    units: percent
+  },
+  {
+    object-identifier: (Analog Value, 0)
+    object-name: "AV-0"
+    object-type: Analog Value
+    present-value: ?
+    status-flags: {false,false,false,false}
+    event-state: normal
+    out-of-service: FALSE
+    units: percent
+  },
+  {
+    object-identifier: (Analog Value, 1)
+    object-name: "AV-1"
+    object-type: Analog Value
+    present-value: ?
+    status-flags: {false,false,false,false}
+    event-state: normal
+    out-of-service: FALSE
+    units: percent
+  },
+  {
+    object-identifier: (Binary Input, 0)
+    object-name: "BI-0"
+    object-type: Binary Input
+    present-value: ?
+    status-flags: {false,false,false,false}
+    event-state: normal
+    out-of-service: FALSE
+    polarity: normal
+  },
+  {
+    object-identifier: (Binary Input, 1)
+    object-name: "BI-1"
+    object-type: Binary Input
+    present-value: ?
+    status-flags: {false,false,false,false}
+    event-state: normal
+    out-of-service: FALSE
+    polarity: normal
+  },
+  {
+    object-identifier: (Binary Input, 2)
+    object-name: "BI-2"
+    object-type: Binary Input
+    present-value: ?
+    status-flags: {false,false,false,false}
+    event-state: normal
+    out-of-service: FALSE
+    polarity: normal
+  },
+  {
+    object-identifier: (Binary Input, 3)
+    object-name: "BI-3"
+    object-type: Binary Input
+    present-value: ?
+    status-flags: {false,false,false,false}
+    event-state: normal
+    out-of-service: FALSE
+    polarity: normal
+  },
+  {
+    object-identifier: (Binary Input, 4)
+    object-name: "BI-4"
+    object-type: Binary Input
+    present-value: ?
+    status-flags: {false,false,false,false}
+    event-state: normal
+    out-of-service: FALSE
+    polarity: normal
+  },
+  {
+    object-identifier: (Binary Output, 0)
+    object-name: "BO-0"
+    object-type: Binary Output
+    present-value: ?
+    status-flags: {false,false,false,false}
+    event-state: normal
+    out-of-service: FALSE
+    polarity: normal
+    priority-array: ?
+    relinquish-default: inactive
+    active-text: "on"
+    inactive-text: "off"
+  },
+  {
+    object-identifier: (Binary Output, 1)
+    object-name: "BO-1"
+    object-type: Binary Output
+    present-value: ?
+    status-flags: {false,false,false,false}
+    event-state: normal
+    out-of-service: FALSE
+    polarity: normal
+    priority-array: ?
+    relinquish-default: inactive
+    active-text: "on"
+    inactive-text: "off"
+  }
+}
+End of BACnet Protocol Implementation Conformance Statement

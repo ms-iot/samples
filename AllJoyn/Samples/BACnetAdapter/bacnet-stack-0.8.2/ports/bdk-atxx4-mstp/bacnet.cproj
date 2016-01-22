@@ -1,0 +1,355 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>6.1</ProjectVersion>
+    <ToolchainName>com.Atmel.AVRGCC8.C</ToolchainName>
+    <ProjectGuid>{1cefd571-4b50-48fd-b75e-0e968ebbd698}</ProjectGuid>
+    <avrdevice>ATmega644P</avrdevice>
+    <avrdeviceseries>none</avrdeviceseries>
+    <OutputType>Executable</OutputType>
+    <Language>C</Language>
+    <OutputFileName>$(MSBuildProjectName)</OutputFileName>
+    <OutputFileExtension>.elf</OutputFileExtension>
+    <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
+    <AssemblyName>BACnet Development Kit</AssemblyName>
+    <Name>BACnet Development Kit</Name>
+    <RootNamespace>BACnet Development Kit</RootNamespace>
+    <ToolchainFlavour>Native</ToolchainFlavour>
+    <KeepTimersRunning>true</KeepTimersRunning>
+    <OverrideVtor>false</OverrideVtor>
+    <OverrideVtorValue />
+    <eraseonlaunchrule>0</eraseonlaunchrule>
+    <ProgFlashFromRam>true</ProgFlashFromRam>
+    <RamSnippetAddress>0x20000000</RamSnippetAddress>
+    <CacheFlash>true</CacheFlash>
+    <UncachedRange />
+    <BootSegment>2</BootSegment>
+    <AsfFrameworkConfig>
+      <framework-data xmlns="">
+        <options />
+        <configurations />
+        <files />
+        <documentation help="" />
+        <offline-documentation help="" />
+        <dependencies>
+          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.8.1" />
+        </dependencies>
+      </framework-data>
+    </AsfFrameworkConfig>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <ToolchainSettings>
+      <AvrGcc>
+  <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
+  <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
+  <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
+  <avrgcc.common.outputfiles.srec>True</avrgcc.common.outputfiles.srec>
+  <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
+  <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
+  <avrgcc.compiler.symbols.DefSymbols><ListValues>
+  <Value>BACDL_MSTP</Value>
+  <Value>MAX_APDU=128</Value>
+  <Value>BIG_ENDIAN=0</Value>
+  <Value>MAX_TSM_TRANSACTIONS=0</Value>
+  <Value>MSTP_PDU_PACKET_COUNT=2</Value>
+  <Value>MAX_CHARACTER_STRING_BYTES=64</Value>
+  <Value>MAX_OCTET_STRING_BYTES=64</Value>
+  <Value>NDEBUG</Value>
+</ListValues></avrgcc.compiler.symbols.DefSymbols>
+  <avrgcc.compiler.directories.IncludePaths><ListValues>
+  <Value>..</Value>
+  <Value>../../../demo/object</Value>
+  <Value>../../../include</Value>
+  <Value>../../../ports/bdk-atxx4-mstp</Value>
+</ListValues></avrgcc.compiler.directories.IncludePaths>
+  <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
+  <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
+  <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
+  <avrgcc.linker.libraries.Libraries><ListValues><Value>libm</Value></ListValues></avrgcc.linker.libraries.Libraries>
+  <avrgcc.compiler.optimization.level>Optimize for size (-Os)</avrgcc.compiler.optimization.level>
+</AvrGcc>
+    </ToolchainSettings>
+    <UsesExternalMakeFile>False</UsesExternalMakeFile>
+    <BuildTarget>all</BuildTarget>
+    <CleanTarget>clean</CleanTarget>
+    <ExternalMakeFilePath>D:\code\bacnet-stack\ports\bdk-atxx4-mstp\Makefile</ExternalMakeFilePath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <ToolchainSettings>
+      <AvrGcc>
+  <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
+  <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
+  <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
+  <avrgcc.common.outputfiles.srec>True</avrgcc.common.outputfiles.srec>
+  <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
+  <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
+  <avrgcc.compiler.symbols.DefSymbols><ListValues>
+  <Value>BACDL_MSTP</Value>
+  <Value>MAX_APDU=128</Value>
+  <Value>BIG_ENDIAN=0</Value>
+  <Value>MAX_TSM_TRANSACTIONS=0</Value>
+  <Value>MSTP_PDU_PACKET_COUNT=2</Value>
+  <Value>MAX_CHARACTER_STRING_BYTES=64</Value>
+  <Value>MAX_OCTET_STRING_BYTES=64</Value>
+  <Value>DEBUG</Value>
+</ListValues></avrgcc.compiler.symbols.DefSymbols>
+  <avrgcc.compiler.directories.IncludePaths><ListValues><Value>..</Value><Value>../../../demo/object</Value><Value>../../../include</Value></ListValues></avrgcc.compiler.directories.IncludePaths>
+  <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
+  <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
+  <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
+  <avrgcc.linker.libraries.Libraries><ListValues><Value>libm</Value></ListValues></avrgcc.linker.libraries.Libraries>
+  <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
+  <avrgcc.compiler.optimization.DebugLevel>Default (-g2)</avrgcc.compiler.optimization.DebugLevel>
+  <avrgcc.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcc.assembler.debugging.DebugLevel>
+</AvrGcc>
+    </ToolchainSettings>
+    <UsesExternalMakeFile>False</UsesExternalMakeFile>
+    <BuildTarget>all</BuildTarget>
+    <CleanTarget>clean</CleanTarget>
+    <ExternalMakeFilePath>D:\code\bacnet-stack\ports\bdk-atxx4-mstp\Makefile</ExternalMakeFilePath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\demo\handler\h_dcc.c">
+      <SubType>compile</SubType>
+      <Link>BACnet Handlers\h_dcc.c</Link>
+    </Compile>
+    <Compile Include="..\..\demo\handler\h_npdu.c">
+      <SubType>compile</SubType>
+      <Link>BACnet Handlers\h_npdu.c</Link>
+    </Compile>
+    <Compile Include="..\..\demo\handler\h_rd.c">
+      <SubType>compile</SubType>
+      <Link>BACnet Handlers\h_rd.c</Link>
+    </Compile>
+    <Compile Include="..\..\demo\handler\h_rp.c">
+      <SubType>compile</SubType>
+      <Link>BACnet Handlers\h_rp.c</Link>
+    </Compile>
+    <Compile Include="..\..\demo\handler\h_rpm.c">
+      <SubType>compile</SubType>
+      <Link>BACnet Handlers\h_rpm.c</Link>
+    </Compile>
+    <Compile Include="..\..\demo\handler\h_whohas.c">
+      <SubType>compile</SubType>
+      <Link>BACnet Handlers\h_whohas.c</Link>
+    </Compile>
+    <Compile Include="..\..\demo\handler\h_whois.c">
+      <SubType>compile</SubType>
+      <Link>BACnet Handlers\h_whois.c</Link>
+    </Compile>
+    <Compile Include="..\..\demo\handler\h_wp.c">
+      <SubType>compile</SubType>
+      <Link>BACnet Handlers\h_wp.c</Link>
+    </Compile>
+    <Compile Include="..\..\demo\handler\noserv.c">
+      <SubType>compile</SubType>
+      <Link>BACnet Handlers\noserv.c</Link>
+    </Compile>
+    <Compile Include="..\..\demo\handler\s_iam.c">
+      <SubType>compile</SubType>
+      <Link>BACnet Handlers\s_iam.c</Link>
+    </Compile>
+    <Compile Include="..\..\demo\handler\s_ihave.c">
+      <SubType>compile</SubType>
+      <Link>BACnet Handlers\s_ihave.c</Link>
+    </Compile>
+    <Compile Include="..\..\demo\handler\txbuf.c">
+      <SubType>compile</SubType>
+      <Link>BACnet Handlers\txbuf.c</Link>
+    </Compile>
+    <Compile Include="..\..\ports\bdk-atxx4-mstp\adc.c">
+      <SubType>compile</SubType>
+      <Link>adc.c</Link>
+    </Compile>
+    <Compile Include="..\..\ports\bdk-atxx4-mstp\ai.c">
+      <SubType>compile</SubType>
+      <Link>ai.c</Link>
+    </Compile>
+    <Compile Include="..\..\ports\bdk-atxx4-mstp\av.c">
+      <SubType>compile</SubType>
+      <Link>av.c</Link>
+    </Compile>
+    <Compile Include="..\..\ports\bdk-atxx4-mstp\bacnet.c">
+      <SubType>compile</SubType>
+      <Link>bacnet.c</Link>
+    </Compile>
+    <Compile Include="..\..\ports\bdk-atxx4-mstp\bi.c">
+      <SubType>compile</SubType>
+      <Link>bi.c</Link>
+    </Compile>
+    <Compile Include="..\..\ports\bdk-atxx4-mstp\bname.c">
+      <SubType>compile</SubType>
+      <Link>bname.c</Link>
+    </Compile>
+    <Compile Include="..\..\ports\bdk-atxx4-mstp\bo.c">
+      <SubType>compile</SubType>
+      <Link>bo.c</Link>
+    </Compile>
+    <Compile Include="..\..\ports\bdk-atxx4-mstp\device.c">
+      <SubType>compile</SubType>
+      <Link>device.c</Link>
+    </Compile>
+    <Compile Include="..\..\ports\bdk-atxx4-mstp\dlmstp.c">
+      <SubType>compile</SubType>
+      <Link>dlmstp.c</Link>
+    </Compile>
+    <Compile Include="..\..\ports\bdk-atxx4-mstp\eeprom.c">
+      <SubType>compile</SubType>
+      <Link>eeprom.c</Link>
+    </Compile>
+    <Compile Include="..\..\ports\bdk-atxx4-mstp\fuses.c">
+      <SubType>compile</SubType>
+      <Link>fuses.c</Link>
+    </Compile>
+    <Compile Include="..\..\ports\bdk-atxx4-mstp\init.c">
+      <SubType>compile</SubType>
+      <Link>init.c</Link>
+    </Compile>
+    <Compile Include="..\..\ports\bdk-atxx4-mstp\input.c">
+      <SubType>compile</SubType>
+      <Link>input.c</Link>
+    </Compile>
+    <Compile Include="..\..\ports\bdk-atxx4-mstp\led.c">
+      <SubType>compile</SubType>
+      <Link>led.c</Link>
+    </Compile>
+    <Compile Include="..\..\ports\bdk-atxx4-mstp\main.c">
+      <SubType>compile</SubType>
+      <Link>main.c</Link>
+    </Compile>
+    <Compile Include="..\..\ports\bdk-atxx4-mstp\rs485.c">
+      <SubType>compile</SubType>
+      <Link>rs485.c</Link>
+    </Compile>
+    <Compile Include="..\..\ports\bdk-atxx4-mstp\seeprom.c">
+      <SubType>compile</SubType>
+      <Link>seeprom.c</Link>
+    </Compile>
+    <Compile Include="..\..\ports\bdk-atxx4-mstp\serial.c">
+      <SubType>compile</SubType>
+      <Link>serial.c</Link>
+    </Compile>
+    <Compile Include="..\..\ports\bdk-atxx4-mstp\stack.c">
+      <SubType>compile</SubType>
+      <Link>stack.c</Link>
+    </Compile>
+    <Compile Include="..\..\ports\bdk-atxx4-mstp\test.c">
+      <SubType>compile</SubType>
+      <Link>test.c</Link>
+    </Compile>
+    <Compile Include="..\..\ports\bdk-atxx4-mstp\timer.c">
+      <SubType>compile</SubType>
+      <Link>timer.c</Link>
+    </Compile>
+    <Compile Include="..\..\ports\bdk-atxx4-mstp\timer2.c">
+      <SubType>compile</SubType>
+      <Link>timer2.c</Link>
+    </Compile>
+    <Compile Include="..\..\ports\bdk-atxx4-mstp\watchdog.c">
+      <SubType>compile</SubType>
+      <Link>watchdog.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\abort.c">
+      <SubType>compile</SubType>
+      <Link>BACnet Core\abort.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\apdu.c">
+      <SubType>compile</SubType>
+      <Link>BACnet Core\apdu.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\bacaddr.c">
+      <SubType>compile</SubType>
+      <Link>BACnet Core\bacaddr.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\bacapp.c">
+      <SubType>compile</SubType>
+      <Link>BACnet Core\bacapp.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\bacdcode.c">
+      <SubType>compile</SubType>
+      <Link>BACnet Core\bacdcode.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\bacerror.c">
+      <SubType>compile</SubType>
+      <Link>BACnet Core\bacerror.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\bacint.c">
+      <SubType>compile</SubType>
+      <Link>BACnet Core\bacint.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\bacreal.c">
+      <SubType>compile</SubType>
+      <Link>BACnet Core\bacreal.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\bacstr.c">
+      <SubType>compile</SubType>
+      <Link>BACnet Core\bacstr.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\crc.c">
+      <SubType>compile</SubType>
+      <Link>BACnet Core\crc.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\dcc.c">
+      <SubType>compile</SubType>
+      <Link>BACnet Core\dcc.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\fifo.c">
+      <SubType>compile</SubType>
+      <Link>BACnet Core\fifo.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\iam.c">
+      <SubType>compile</SubType>
+      <Link>BACnet Core\iam.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\ihave.c">
+      <SubType>compile</SubType>
+      <Link>BACnet Core\ihave.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\memcopy.c">
+      <SubType>compile</SubType>
+      <Link>BACnet Core\memcopy.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\npdu.c">
+      <SubType>compile</SubType>
+      <Link>BACnet Core\npdu.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\rd.c">
+      <SubType>compile</SubType>
+      <Link>BACnet Core\rd.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\reject.c">
+      <SubType>compile</SubType>
+      <Link>BACnet Core\reject.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\ringbuf.c">
+      <SubType>compile</SubType>
+      <Link>BACnet Core\ringbuf.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\rp.c">
+      <SubType>compile</SubType>
+      <Link>BACnet Core\rp.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\rpm.c">
+      <SubType>compile</SubType>
+      <Link>BACnet Core\rpm.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\whohas.c">
+      <SubType>compile</SubType>
+      <Link>BACnet Core\whohas.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\whois.c">
+      <SubType>compile</SubType>
+      <Link>BACnet Core\whois.c</Link>
+    </Compile>
+    <Compile Include="..\..\src\wp.c">
+      <SubType>compile</SubType>
+      <Link>BACnet Core\wp.c</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="BACnet Handlers" />
+    <Folder Include="BACnet Core" />
+  </ItemGroup>
+  <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
+</Project>

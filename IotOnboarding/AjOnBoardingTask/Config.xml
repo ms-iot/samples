@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<OnboardingConfig>
+    <DefaultDescriptionTemplate value="IoTCore Onboarding service instance Id {0}"/>
+    <DefaultManufacturer value="Microsoft"/>
+    <ModelNumber value="IoTCore Onboarding"/>
+    <SoftApPassword value="password"/>
+    <SoftApSsidTemplate value="AJ_{0}"/>
+</OnboardingConfig>

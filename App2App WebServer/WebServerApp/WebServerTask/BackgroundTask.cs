@@ -50,7 +50,7 @@ namespace WebServerTask
                         var messageDeferral = args.GetDeferral();
                         //Set a result to return to the caller
                         var returnMessage = new ValueSet();
-                        HttpServer server = new HttpServer(8000, appServiceConnection);
+                        server = new HttpServer(8000, appServiceConnection);
                         IAsyncAction asyncAction = Windows.System.Threading.ThreadPool.RunAsync(
                             (workItem) =>
                             {
@@ -76,6 +76,7 @@ namespace WebServerTask
             //Clean up and get ready to exit
         }
 
+        HttpServer server;
         BackgroundTaskDeferral serviceDeferral;
         AppServiceConnection appServiceConnection;
     }

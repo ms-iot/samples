@@ -1,0 +1,759 @@
+PICS 0
+BACnet Protocol Implementation Conformance Statement
+
+--
+--
+-- BACnet Stack Demo
+-- bacnet.sourceforge.net
+-- Author: Steve Karg
+--
+--
+
+Vendor Name: "ASHRAE"
+Product Name: "SimpleServer"
+Product Model Number: "GNU"
+Product Description: "server"
+
+BIBBs Supported:
+{
+-- The BIBBs may be any of:
+-- DS-RP-A
+ DS-RP-B
+-- DS-RPM-A DS-RPM-B
+-- DS-RPC-A DS-RPC-B
+-- DS-WP-A
+ DS-WP-B
+-- DS-WPM-A DS-WPM-B
+-- DS-COV-A DS-COV-B
+-- DS-COVP-A DS-COVP-B
+-- DS-COVU-A DS-COVU-B
+-- AE-N-A AE-N-I-B AE-N-E-B
+-- AE-ACK-A AE-ACK-B
+-- AE-ASUM-A AE-ASUM-B
+-- AE-ESUM-A AE-ESUM-B
+-- AE-INFO-A AE-INFO-B
+-- AE-LS-A AE-LS-B
+-- SCHED-A SCHED-I-B SCHED-E-B
+-- T-VMT-A T-VMT-I-B T-VMT-E-B
+-- T-ATR-A T-ATR-B
+-- DM-DDB-A 
+ DM-DDB-B
+-- DM-DOB-A 
+ DM-DOB-B
+-- DM-DCC-A 
+ DM-DCC-B
+-- DM-PT-A DM-PT-B
+-- DM-TM-A DM-TM-B
+-- DM-TS-A 
+ DM-TS-B
+-- DM-UTC-A 
+ DM-UTC-B
+-- DM-RD-A 
+ DM-RD-B
+-- DM-BR-A DM-BR-B
+-- DM-R-A DM-R-B
+-- DM-LM-A DM-LM-B
+-- DM-OCD-A DM-OCD-B
+-- DM-VT-A DM-VT-B
+-- NM-CE-A NM-CE-B
+-- NM-RC-A NM-RC-B
+}
+
+BACnet Standard Application Services Supported:
+{
+-- AcknowledgeAlarm               Initiate Execute
+-- ConfirmedCOVNotification       Initiate Execute
+ UnconfirmedCOVNotification     Initiate
+-- ConfirmedEventNotification     Initiate Execute
+-- UnconfirmedEventNotification   Initiate Execute
+-- GetAlarmSummary                Initiate Execute
+-- GetEnrollmentSummary           Initiate Execute
+ AtomicReadFile                 Initiate Execute
+-- AtomicWriteFile                Initiate Execute
+-- AddListElement                 Initiate Execute
+-- RemoveListElement              Initiate Execute
+-- CreateObject                   Initiate Execute
+-- DeleteObject                   Initiate Execute
+ ReadProperty                   Initiate Execute
+-- ReadpropertyConditional        Initiate Execute
+-- ReadPropertyMultiple           Initiate Execute
+-- SubscribeCOV                   Initiate Execute
+ WriteProperty                  Initiate Execute
+-- WritePropertyMultiple          Initiate Execute
+ DeviceCommunicationControl     Initiate Execute
+-- ConfirmedPrivateTransfer       Initiate Execute
+-- UnconfirmedPrivateTransfer     Initiate Execute
+ TimeSynchronization            Initiate Execute
+ Who-Has                        Initiate Execute
+ I-Have                         Initiate
+ Who-Is                         Initiate Execute
+ I-Am                           Initiate
+-- VT-Open                        Initiate Execute
+-- VT-Close                       Initiate Execute
+-- VT-Data                        Initiate Execute
+-- ConfirmedTextMessage           Initiate Execute
+-- UnconfirmedTextMessage         Initiate Execute
+ ReinitializeDevice             Initiate Execute
+-- RequestKey                     Initiate Execute
+-- Authenticate                   Initiate Execute
+ UTCTimeSynchronization         Initiate Execute
+-- ReadRange                      Initiate Execute
+-- GetEventInformation            Initiate Execute
+-- LifeSafetyOperation            Initiate Execute
+-- SubscribeCOVProperty           Initiate Execute
+-- RequestKey                     Initiate Execute
+-- Authenticate                   Initiate Execute
+}
+
+Standard Object-Types Supported:
+{
+ Analog Input
+ Analog Output
+ Analog Value
+-- Averaging                      Createable Deleteable
+ Binary Input
+ Binary Output
+ Binary Value
+-- Calendar                       Createable Deleteable
+-- Command                        Createable Deleteable
+ Device
+-- Event Enrollment               Createable Deleteable
+ File
+-- Group                          Createable Deleteable
+-- Loop                           Createable Deleteable
+-- Multi-state Input              Createable Deleteable
+Multi-state Output
+-- Multi-state Value              Createable Deleteable
+-- Notification Class             Createable Deleteable
+-- Program                        Createable Deleteable
+-- Schedule                       Createable Deleteable
+ Life Safety Point
+-- Life Safety Zone               Createable Deleteable
+-- Trend Log                      Createable Deleteable
+ Load Control
+}
+
+Data Link Layer Option:
+{
+-- ISO 8802-3, 10BASE5
+-- ISO 8802-3, 10BASE2
+-- ISO 8802-3, 10BASET
+-- ISO 8802-3, Fiber
+-- ARCNET, coax star
+-- ARCNET, coax bus     
+-- ARCNET, twisted pair star
+-- ARCNET, twisted pair bus
+-- ARCNET, fiber star
+-- MS/TP master. Baud rate(s): 9600
+-- MS/TP slave. Baud rate(s): 9600
+-- Point-To-Point. Modem, Baud rate(s): 14.4k
+-- Point-To-Point. Modem, Autobaud range: 9600 to 28.8k
+ BACnet/IP, 'DIX' Ethernet
+-- BACnet/IP, PPP
+-- Other
+}
+
+Character Sets Supported:
+{
+ ANSI X3.4
+-- Other Character Sets not supported
+-- IBM/Microsoft DBCS
+-- JIS C 6226
+-- ISO 10646 (ICS-4)
+-- ISO 10646 (UCS2)
+}
+
+Special Functionality:
+{
+ Maximum APDU size in octets: 480 -- Arcnet Maximum 501 less NL Header
+-- Maximum APDU size in octets: 480
+-- Segmented Requests Supported, window size: 1
+-- Segmented Responses Supported, window size: 1
+-- Router
+}
+
+List of Objects in test device:
+{
+  {
+    object-identifier: (device,123)
+    object-name: "SimpleServer"
+    object-type: device
+    system-status: operational
+    vendor-name: "ASHRAE"
+    vendor-identifier: 0
+    model-name: "GNU"
+    firmware-revision: "1.0"
+    application-software-version: "1.0"
+    protocol-version: 1
+    protocol-revision: 5
+    protocol-conformance-class: 1
+    protocol-services-supported: (F,F,F,F,F,F,T,F,F,F,F,F,T,F,F,T,F,T,F,F,T,F,F,F,F,F,F,F,F,F,F,F,T,T,T,F,T,F,F,F)
+    protocol-object-types-supported: (T,T,T,T,T,T,F,F,T,F,T,F,F,F,T,F,F,F,F,F,F,T,F,F,F)
+    max-apdu-length-accepted: 480
+    segmentation-supported: no-segmentation
+    apdu-timeout: 3000
+    number-of-apdu-retries: 3
+    device-address-binding: ?
+    local-time: ?
+    local-date: ?
+    utc-offset: ?
+    daylight-savings-status: ?
+    database-revision: ?
+    object-list: {
+      (device,123),(analog-input,0),(analog-input,1),
+      (analog-input,2),(analog-input,3),(analog-input,4),
+      (analog-input,5),(analog-input,6),(analog-output,0),
+      (analog-output,1),(analog-output,2),(analog-output,3),
+      (analog-value,0),(analog-value,1),(analog-value,2),
+      (analog-value,3),(binary-input,0),(binary-input,1),
+      (binary-input,2),(binary-input,3),(binary-input,4),
+      (binary-output,0),(binary-output,1),(binary-output,2),
+      (binary-output,3),(binary-output,4),(binary-output,5),
+      (binary-value,0),(binary-value,1),(life-safety-point,0),
+      (life-safety-point,1),(life-safety-point,2),(life-safety-point,3),
+      (life-safety-point,4),(life-safety-point,5),(life-safety-point,6),
+      (multi-state-output,0),(multi-state-output,1),(multi-state-output,2),
+      (multi-state-output,3),(file,0),(file,1),
+      (file,2)
+    }
+  },
+  {
+    object-identifier: (analog-input,0)
+    object-name: "ANALOG INPUT 0"
+    object-type: analog-input
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    units: percent
+    description: "ANALOG INPUT 0"
+  },
+  {
+    object-identifier: (analog-input,1)
+    object-name: "ANALOG INPUT 1"
+    object-type: analog-input
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    units: percent
+    description: "ANALOG INPUT 1"
+  },
+  {
+    object-identifier: (analog-input,2)
+    object-name: "ANALOG INPUT 2"
+    object-type: analog-input
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    units: percent
+    description: "ANALOG INPUT 2"
+  },
+  {
+    object-identifier: (analog-input,3)
+    object-name: "ANALOG INPUT 3"
+    object-type: analog-input
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    units: percent
+    description: "ANALOG INPUT 3"
+  },
+  {
+    object-identifier: (analog-input,4)
+    object-name: "ANALOG INPUT 4"
+    object-type: analog-input
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    units: percent
+    description: "ANALOG INPUT 4"
+  },
+  {
+    object-identifier: (analog-input,5)
+    object-name: "ANALOG INPUT 5"
+    object-type: analog-input
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    units: percent
+    description: "ANALOG INPUT 5"
+  },
+  {
+    object-identifier: (analog-input,6)
+    object-name: "ANALOG INPUT 6"
+    object-type: analog-input
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    units: percent
+    description: "ANALOG INPUT 6"
+  },
+  {
+    object-identifier: (analog-output,0)
+    object-name: "ANALOG OUTPUT 0"
+    object-type: analog-output
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    units: percent
+    priority-array: {?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?}
+    relinquish-default: 0.000000
+    description: "ANALOG OUTPUT 0"
+  },
+  {
+    object-identifier: (analog-output,1)
+    object-name: "ANALOG OUTPUT 1"
+    object-type: analog-output
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    units: percent
+    priority-array: {?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?}
+    relinquish-default: 0.000000
+    description: "ANALOG OUTPUT 1"
+  },
+  {
+    object-identifier: (analog-output,2)
+    object-name: "ANALOG OUTPUT 2"
+    object-type: analog-output
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    units: percent
+    priority-array: {?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?}
+    relinquish-default: 0.000000
+    description: "ANALOG OUTPUT 2"
+  },
+  {
+    object-identifier: (analog-output,3)
+    object-name: "ANALOG OUTPUT 3"
+    object-type: analog-output
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    units: percent
+    priority-array: {?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?}
+    relinquish-default: 0.000000
+    description: "ANALOG OUTPUT 3"
+  },
+  {
+    object-identifier: (analog-value,0)
+    object-name: "ANALOG VALUE 0"
+    object-type: analog-value
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    units: percent
+    relinquish-default: 0.000000
+    description: "ANALOG VALUE 0"
+    priority-array: {?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?}
+    relinquish-default: 0.000000
+  },
+  {
+    object-identifier: (analog-value,1)
+    object-name: "ANALOG VALUE 1"
+    object-type: analog-value
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    units: percent
+    relinquish-default: 0.000000
+    description: "ANALOG VALUE 1"
+    priority-array: {?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?}
+    relinquish-default: 0.000000
+  },
+  {
+    object-identifier: (analog-value,2)
+    object-name: "ANALOG VALUE 2"
+    object-type: analog-value
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    units: percent
+    relinquish-default: 0.000000
+    description: "ANALOG VALUE 2"
+    priority-array: {?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?}
+    relinquish-default: 0.000000
+  },
+  {
+    object-identifier: (analog-value,3)
+    object-name: "ANALOG VALUE 3"
+    object-type: analog-value
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    units: percent
+    relinquish-default: 0.000000
+    description: "ANALOG VALUE 3"
+    priority-array: {?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?}
+    relinquish-default: 0.000000
+  },
+  {
+    object-identifier: (binary-input,0)
+    object-name: "BINARY INPUT 0"
+    object-type: binary-input
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    polarity: normal
+    description: "BINARY INPUT 0"
+  },
+  {
+    object-identifier: (binary-input,1)
+    object-name: "BINARY INPUT 1"
+    object-type: binary-input
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    polarity: normal
+    description: "BINARY INPUT 1"
+  },
+  {
+    object-identifier: (binary-input,2)
+    object-name: "BINARY INPUT 2"
+    object-type: binary-input
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    polarity: normal
+    description: "BINARY INPUT 2"
+  },
+  {
+    object-identifier: (binary-input,3)
+    object-name: "BINARY INPUT 3"
+    object-type: binary-input
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    polarity: normal
+    description: "BINARY INPUT 3"
+  },
+  {
+    object-identifier: (binary-input,4)
+    object-name: "BINARY INPUT 4"
+    object-type: binary-input
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    polarity: normal
+    description: "BINARY INPUT 4"
+  },
+  {
+    object-identifier: (binary-output,0)
+    object-name: "BINARY OUTPUT 0"
+    object-type: binary-output
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    polarity: normal
+    priority-array: {?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?}
+    relinquish-default: inactive
+    description: "BINARY OUTPUT 0"
+  },
+  {
+    object-identifier: (binary-output,1)
+    object-name: "BINARY OUTPUT 1"
+    object-type: binary-output
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    polarity: normal
+    priority-array: {?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?}
+    relinquish-default: inactive
+    description: "BINARY OUTPUT 1"
+  },
+  {
+    object-identifier: (binary-output,2)
+    object-name: "BINARY OUTPUT 2"
+    object-type: binary-output
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    polarity: normal
+    priority-array: {?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?}
+    relinquish-default: inactive
+    description: "BINARY OUTPUT 2"
+  },
+  {
+    object-identifier: (binary-output,3)
+    object-name: "BINARY OUTPUT 3"
+    object-type: binary-output
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    polarity: normal
+    priority-array: {?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?}
+    relinquish-default: inactive
+    description: "BINARY OUTPUT 3"
+  },
+  {
+    object-identifier: (binary-output,4)
+    object-name: "BINARY OUTPUT 4"
+    object-type: binary-output
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    polarity: normal
+    priority-array: {?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?}
+    relinquish-default: inactive
+    description: "BINARY OUTPUT 4"
+  },
+  {
+    object-identifier: (binary-output,5)
+    object-name: "BINARY OUTPUT 5"
+    object-type: binary-output
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    polarity: normal
+    priority-array: {?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?}
+    relinquish-default: inactive
+    description: "BINARY OUTPUT 5"
+  },
+  {
+    object-identifier: (binary-value,0)
+    object-name: "BINARY VALUE 0"
+    object-type: binary-value
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    description: "BINARY VALUE 0"
+    priority-array: {?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?}
+    relinquish-default: inactive
+  },
+  {
+    object-identifier: (binary-value,1)
+    object-name: "BINARY VALUE 1"
+    object-type: binary-value
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    description: "BINARY VALUE 1"
+    priority-array: {?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?}
+    relinquish-default: inactive
+  },
+  {
+    object-identifier: (life-safety-point,0)
+    object-name: "LS POINT 0"
+    object-type: life-safety-point
+    description: "LS POINT 0"
+    present-value: ?
+    device-type: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    reliability: ?
+    out-of-service: F
+    mode: ? W
+    silenced: ?
+    operation-expected: ?
+  },
+  {
+    object-identifier: (life-safety-point,1)
+    object-name: "LS POINT 1"
+    object-type: life-safety-point
+    description: "LS POINT 1"
+    present-value: ?
+    device-type: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    reliability: ?
+    out-of-service: F
+    mode: ? W
+    silenced: ?
+    operation-expected: ?
+  },
+  {
+    object-identifier: (life-safety-point,2)
+    object-name: "LS POINT 2"
+    object-type: life-safety-point
+    description: "LS POINT 2"
+    present-value: ?
+    device-type: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    reliability: ?
+    out-of-service: F
+    mode: ? W
+    silenced: ?
+    operation-expected: ?
+  },
+  {
+    object-identifier: (life-safety-point,3)
+    object-name: "LS POINT 3"
+    object-type: life-safety-point
+    description: "LS POINT 3"
+    present-value: ?
+    device-type: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    reliability: ?
+    out-of-service: F
+    mode: ? W
+    silenced: ?
+    operation-expected: ?
+  },
+  {
+    object-identifier: (life-safety-point,4)
+    object-name: "LS POINT 4"
+    object-type: life-safety-point
+    description: "LS POINT 4"
+    present-value: ?
+    device-type: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    reliability: ?
+    out-of-service: F
+    mode: ? W
+    silenced: ?
+    operation-expected: ?
+  },
+  {
+    object-identifier: (life-safety-point,5)
+    object-name: "LS POINT 5"
+    object-type: life-safety-point
+    description: "LS POINT 5"
+    present-value: ?
+    device-type: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    reliability: ?
+    out-of-service: F
+    mode: ? W
+    silenced: ?
+    operation-expected: ?
+  },
+  {
+    object-identifier: (life-safety-point,6)
+    object-name: "LS POINT 6"
+    object-type: life-safety-point
+    description: "LS POINT 6"
+    present-value: ?
+    device-type: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    reliability: ?
+    out-of-service: F
+    mode: ? W
+    silenced: ?
+    operation-expected: ?
+  },
+  {
+    object-identifier: (multi-state-output,0)
+    object-name: "MULTISTATE OUTPUT 0"
+    object-type: multi-state-output
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    priority-array: {?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?}
+    relinquish-default: inactive
+    number-of-states: 254
+    description: "MULTISTATE OUTPUT 0"
+  },
+  {
+    object-identifier: (multi-state-output,1)
+    object-name: "MULTISTATE OUTPUT 1"
+    object-type: multi-state-output
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    priority-array: {?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?}
+    relinquish-default: inactive
+    number-of-states: 254
+    description: "MULTISTATE OUTPUT 1"
+  },
+  {
+    object-identifier: (multi-state-output,2)
+    object-name: "MULTISTATE OUTPUT 2"
+    object-type: multi-state-output
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    priority-array: {?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?}
+    relinquish-default: inactive
+    number-of-states: 254
+    description: "MULTISTATE OUTPUT 2"
+  },
+  {
+    object-identifier: (multi-state-output,3)
+    object-name: "MULTISTATE OUTPUT 3"
+    object-type: multi-state-output
+    present-value: ?
+    status-flags: (F,F,F,F)
+    event-state: normal
+    out-of-service: F
+    priority-array: {?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?}
+    relinquish-default: inactive
+    number-of-states: 254
+    description: "MULTISTATE OUTPUT 3"
+  },
+  {
+    object-identifier: (file,0)
+    object-name: "FILE 0"
+    object-type: file
+    file-type: "TEXT"
+    file-size: 0
+    modification-date: ?
+    archive: ? W
+    read-only: T
+    file-access-method: stream-access
+    description: "test.log"
+  },
+  {
+    object-identifier: (file,1)
+    object-name: "FILE 1"
+    object-type: file
+    file-type: "TEXT"
+    file-size: 0
+    modification-date: ?
+    archive: ? W
+    read-only: T
+    file-access-method: stream-access
+    description: "script.txt"
+  },
+  {
+    object-identifier: (file,2)
+    object-name: "FILE 2"
+    object-type: file
+    file-type: "TEXT"
+    file-size: 39582
+    modification-date: ?
+    archive: ? W
+    read-only: T
+    file-access-method: stream-access
+    description: "bacenum.h"
+  }
+}
+
+End of BACnet Protocol Implementation Conformance Statement
+
+

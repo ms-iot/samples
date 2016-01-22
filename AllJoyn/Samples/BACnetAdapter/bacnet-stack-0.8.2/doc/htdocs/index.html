@@ -1,0 +1,884 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE>BACnet stack - open source BACnet protocol stack</TITLE>
+</HEAD>
+<BODY LANG="en-US">
+  <img src="images/BACnet.png" align=right>
+  <h1>BACnet Stack</h1>
+  <h2>An open source BACnet protocol stack for embedded systems</h2>
+  <hr>
+  <h2>About this Project</h2>
+  <P><a href="http://sourceforge.net/projects/bacnet/">This BACnet protocol stack library</a>
+  provides a BACnet application layer, network layer and media access (MAC)
+  layer communications services.  It is an open source, royalty-free library
+  for an embedded system, Windows, Linux, or other operating system.  <a href="https://sourceforge.net/projects/bacnet/files/bacnet-tools/">Example
+  BACnet client and server applications</a> are included.</p>
+
+  <P>BACnet - A Data Communication Protocol for Building
+  Automation and Control Networks - see <a
+    href="http://www.bacnet.org/">bacnet.org</a>.  BACnet is a standard data
+  communication protocol for Building Automation and Control Networks.  BACnet
+  is an open protocol, which means anyone can contribute to the standard, and
+  anyone may use it. The only caveat is that the BACnet standard document
+  itself is copyrighted by ASHRAE, and they sell the document to help defray
+  costs of developing and maintaining the standard (just like IEEE or ANSI or
+  ISO).</P>
+
+  <P>For software developers, the BACnet protocol is a standard way to send and
+  receive messages on the wire containing data that is understood by other
+  BACnet compliant devices.  The BACnet standard defines a standard way to
+  communicate over a number of wires, known as Data Link/Physical Layers:
+  Ethernet, EIA-485, EIA-232, ARCNET, and LonTalk.  The BACnet standard also
+  defines a standard way to communicate using UDP, IP and HTTP (Web
+  Services).</P>
+
+  There are other open source projects for BACnet:</p>
+  <ul>
+    <li><a href="http://vts.sourceforge.net/">VTS</a> - visual test shell for
+    Win32, used for Visually testing a BACnet implementation.  It also includes
+    a detailed network sniffer for BACnet messages, and the ability  to send
+    any BACnet services.  The source code is in the public domain. </li>
+    <li><a href="http://www.wireshark.org/">Wireshark</a> - an open source,
+    cross platform protocol analyzer with BACnet support.  The detailed BACnet
+    support began in version 0.10.11 released on May 4, 2005 when Wireshark
+    was known as Ethereal.</li>
+    <li><a href="http://bacnet4linux.sourceforge.net/">BACnet4Linux</a> - an
+    LGPL BACnet application that requires Linux as the OS.</li>
+    <li><a href="http://bfr.sourceforge.net/">BACnet Firewall Router</a> -an
+    application that combines BACnet routing capability with traffic management
+    functions to carefully control access to building automation and control
+    networks.</li>
+    <li><a href="http://bacpypes.sourceforge.net/">BACpypes</a> - a
+    BACnet stack written in Python.</li>
+    <li><a href="http://bacsharp.sourceforge.net/">BACsharp</a> - a
+    BACnet/IP stack written in C#.</li>
+    <li><a href="http://bacnet4j.sourceforge.net/">BACnet4J</a> - a
+    BACnet/IP stack written in Java that serves as the BACnet layer for
+    <a href="http://mango.serotoninsoftware.com/">Mango</a>.
+    Mango is open source Machine-to-Machine software
+    (aka Industrial Control, SCADA, HMI, or domotics).</li>
+  </ul>
+
+  <p>There are also commercial BACnet protocol source code libraries for BACnet
+  that are designed for embedded use:</p>
+  <ul>
+    <li><a href="http://www.cimetrics.com">Cimetrics</a><font
+      size="-2"><sup>TM</sup></font> - has a source library
+    called BACstac/32 as part of their BACNet Protocol Stack SDK.</li>
+    <li><a href="http://www.polarsoft.biz">Polarsoft</a> - has a
+    protocol stack source library for embedded use called FreeRange<font
+      size="-2"><sup>TM</sup></font> and PolarSoft&#174; FreeRange VSB (Very
+    Small BACnet stack).</li>
+    <li><a href="http://www.scadaengine.com/">SCADA Engine</a> - The BACnet
+    Linux Server is a complete BACnet Device running on the linux platform.
+    The entire source code is available for custom applications and has been
+    written in ANSI C which has been succesfully ported to Unix,
+    VxWorks etc. </li>
+    <li><a href="http://bacnetstack.com/">BACnet Stack</a> - Chipkin
+    automation systems BACnet stack is an application layer BACnet
+    library for an embedded system and application development.</li>
+  </ul>
+
+  <h2>Licensing</h2>
+  <p>Our BACnet protocol stack implementation is specifically designed for the
+  embedded BACnet appliance, using a GPL with exception license (like <a
+    href="http://ecos.sourceware.org/">eCos</a>),
+  which means that any changes to the core code that are distributed are
+  made available, but the BACnet library can be linked to
+  proprietary code without it becoming licensed under the GPL.
+  See the <a href="http://ecos.sourceware.org/license-overview.html">eCos license overview</a> for
+  easy to read details about this exception to the GPL.
+  The license does <i>not</i> require users to release the source code of any
+  <i>applications</i> that are developed with this BACnet stack - only portions of
+  the BACnet stack that have been modified.  Note that those files in this
+  BACnet stack that are expected to be modified are licensed using the
+  <a href="http://en.wikipedia.org/wiki/MIT_License">MIT License</a>.<p>
+
+  <p>The text of the GPL exception included in each source file is as
+  follows:</p>
+
+  <blockquote>
+    <p>"As a special exception, if other files instantiate templates or
+  use macros or inline functions from this file, or you compile
+  this file and link it with other works to produce a work based
+  on this file, this file does not by itself cause the resulting
+  work to be covered by the GNU General Public License. However
+  the source code for this file must still be made available in
+  accordance with section (3) of the GNU General Public License."<p>
+  </blockquote>
+
+  <h2>The source code</h2>
+  <p>The source code is written in C for portability, and includes
+  unit tests (PC based unit tests) and example application code.
+  Since the code is designed to be
+  portable, it compiles with GCC as well as other compilers,
+  such as Borland C++, Visual C++, MinGW, Code Warrior, IAR, or MicroChip C18.
+  The source code is also designed to be high quality, readable,
+  understandable, and easy to use.</p>
+
+  <p>The BACnet protocol is an ASHRAE/ANSI/ISO standard, so this library
+  adheres to that standard.  BACnet has no royalties or licensing restrictions,
+  and <a href="http://www.bacnet.org/VendorID/">registration for a BACnet
+    vendor ID</a> is free.</p>
+
+  <h2>What the code does</h2>
+
+  <p>The BACnet stack comes with example applications
+  that can be run under Linux, Win32, RTOS-32, and just about any embedded
+  microcontroller.</p>
+
+  <p>The BACnet stack includes unit tests can be run in a command shell on Linux using the
+  unittest.sh script, or using individual .mak files. They were tested under
+  <a href="http://www.debian.org/">Debian GNU/Linux</a> and <a href="http://www.ubuntu.com/">Ubuntu Linux</a>.</p>
+
+  <p>The BACnet stack was functionally tested
+  using <a href="http://vts.sourceforge.net/">VTS (Visual Test Shell)</a>,
+  another project hosted on SourceForge, as well as various BACnet controllers,
+  BACnet workstations, and through BACnet routers.  Some versions of the
+  BACnet stack were BTL tested.<p>
+
+<h2>Demo BACnet Applications</h2>
+  <p>Using a master Makefile in the project root directory, a dozen
+  demo applications can be created that run under Linux or Win32.
+  Linux supports BACnet Ethernet, BACnet/IP, or ARCNET data link layer
+  for communication, and BACnet/IP is supported under Win32.  BACnet Ethernet
+  can also be used under Win32 with the <a href="http://www.winpcap.org/">WinPcap library</a>.
+  Root priveleges are required to run the Ethernet or ARCNET interfaces
+  on Linux, but are not needed to run BACnet/IP.
+  MS/TP support under Windows or Linux using a USB to RS-485 device is a
+  work in progress. </p>
+
+  <p>To build all the demo applications under linux using the
+  BACnet/IP datalink layer, use the familiar make command:</p>
+  <code>
+  $ make clean all<br>
+  </code>
+  <p>You can also modify the Makefile variabiles from the command line to build
+  with the BACnet MS/TP datalink layer, for example:</p>
+  <code>
+  $ make BACDL_DEFINE=-DBACDL_MSTP=1 clean all<br>
+  </code>
+
+  <p>To build all the demo applications under Windows with the
+  BACnet/IP datalink layer and utilizing the
+  <a href="http://www.mingw.org/">MinGW tools</a>,
+  use the <code>build.bat</code> file provided in the root directory.
+  Note that you may have to
+  copy the <code>mingw-make.exe</code> to <code>make.exe</code>
+  to enable the compile.</p>
+  <code>
+  $ build.bat<br>
+  </code>
+
+  <p>To build all the demo applications under Windows with the
+  BACnet/IP datalink layer and utilizing the
+  <a href=http://www.borland.com/>Borland tools</a>, use the
+  <code>borland.bat</code> file provided in the root directory.</p>
+  <code>
+  $ borland.bat<br>
+  </code>
+
+  <p>To build all the demo applications under Windows using the
+  BACnet/IP datalink layer utilizing the
+  <a href="http://codeblocks.org/">Code::Blocks</a> tools, use the
+  <code>BACnetDemo.workspace</code> file provided in the
+  <a href="http://bacnet.svn.sourceforge.net/viewvc/bacnet/trunk/bacnet-stack/demo">demo</a>
+  directory.</p>
+
+
+  <p>The demo application accept command line arguments.
+  To specify an array index of ALL, use "-1".
+  To make a priority optional, use "0".
+  The applications also use environment variables to set
+  datalink layer preferences.
+  Use <code>--help</code> on the command line to see more options.</p>
+
+  <code>
+  $ demo/server/bacsrv 123<br>
+  BACnet Server Demo - Device #123<br>
+  <br>
+  $ demo/readprop/bacrp<br>
+  bacrp device-instance object-type object-instance property [index]<br>
+  <br>
+  $ demo/writeprop/bacwp<br>
+  bacwp device-instance object-type object-instance property priority index tag value [tag value...]<br>
+  <br>
+  $ demo/readfile/bacarf<br>
+  bacarf device-instance file-instance local-name<br>
+  <br>
+  $ demo/writefile/bacawf<br>
+  bacawf device-instance file-instance local-name<br>
+  <br>
+  $ demo/reinit/bacrd<br>
+  Usage: bacrd device-instance state [password]<br>
+  Send BACnet ReinitializeDevice service to device.<br>
+  <br>
+  $ demo/whohas/bacwh<br>
+  Usage: bacwh object-type object-instance | object-name<br>
+  Send BACnet WhoHas request to devices, and wait for responses.<br>
+  <br>
+  $ demo/dcc/bacdcc<br>
+  Usage: bacdcc device-instance state timeout [password]<br>
+  Send BACnet DeviceCommunicationControl service to device.<br>
+  <br>
+  $ demo/timesync/bacts<br>
+  Received TimeSyncronization Request<br>
+  2006/8/30 07:10:45.00<br>
+  <br>
+  $ demo/ucov/bacucov<br>
+  Usage: bacucov pid device-id object-type object-instance time property tag value [priority] [index]<br>
+  <br>
+  $ demo/whois/bacwi<br>
+  Usage: bacwi device-instance | device-instance-min device-instance-max<br>
+  Send BACnet WhoIs request to devices, and wait for responses.<br>
+  <br>
+  The device-instance can be 0 to 4194303, or -1 for ALL.<br>
+  The device-instance can also be specified as a range.<br>
+  <br>
+  </code>
+
+  <p>The demos can be compiled under Win32 using <a href="http://www.mingw.org/">MinGW - Minimalist GNU for Windows</a>,
+  <a href="http://www.borland.com/bcppbuilder/freecompiler/">Borland C++</a>, or
+  <a href="http://msdn.microsoft.com/visualc/vctoolkit2003/">Microsoft Visual C++</a>, which
+  are free command line compilers. Be sure to pick up the free
+  <a href="http://info.borland.com/devsupport/bcppbuilder/patches/#freecompiler55">patches (service packs) for the Borland C++ compiler</a>
+  (<a href="http://info.borland.com/devsupport/bcppbuilder/patches/bcc55/bcc55sp1.zip">SP1</a>,
+  <a href="http://info.borland.com/devsupport/bcppbuilder/patches/bcc55/bcc55sp2.exe">SP2</a>),
+  as well as the free turbo debugger.
+  It is also possible to create Win32 projects using the
+  free <a href="http://msdn.microsoft.com/vstudio/express/">Visual Studio Express Edition</a> after
+  downloading the platform development kit for your operating system.
+  You can also use <a href="http://www.mingw.org/">MinGW - Minimalist GNU for Windows</a> which comes with Code::Blocks.
+  I frequently use <a href="http://codeblocks.org/">Code::Blocks</a> for
+  compiling the unit tests using the MinGW compiler and
+  created some Code::Block projects for some of the demos.
+  I have also used <a href="http://codeblocks.org/">Code::Blocks</a> with
+  the Borland C++ compiler and it successfully compiles and runs the code.</p>
+
+  <p><a href="https://sourceforge.net/projects/bacnet/files/bacnet-tools/">BACnet-Tools</a> -
+  the example applications are compiled for Windows and can be downloaded from
+  SourceForge.</p>
+
+  <p>To build the demo applications under Linux, such as
+  <a href="http://ubuntu.com/">Ubuntu</a>, you may need to install
+  some build tools.</p>
+  <code>
+  $ sudo apt-get install build-essential subversion-tools
+  </code>
+
+<h2>Example BACnet Server Ported to Various Architectures</h2>
+  <p>There is a Makefile in the
+  <a href="http://bacnet.svn.sourceforge.net/viewvc/bacnet/trunk/bacnet-stack/ports/rtos32">ports/rtos32</a>
+  directory, and a sample application that runs
+  under <a href="http://www.on-time.com/">RTOS-32</a>.
+  It currently uses the BACnet/IP data link layer for communication, and also
+  has an MS/TP datalink layer sample application.
+  It compiles using <a href="http://borland.com/">Borland C++</a>.</p>
+
+  <p>There is a project in the
+  <a href="http://bacnet.svn.sourceforge.net/viewvc/bacnet/trunk/bacnet-stack/ports/pic18f6720">ports/pic18f6720</a>
+  directory, and a sample
+  application that can be built using <a href="http://microchip.com">MP-Lab</a>
+  and the Microchip compiler MCC18.  The datalink layer uses BACnet MS/TP
+  and the example uses several different objects and services.</p>
+
+  <p>There is a project in the
+  <a href="http://bacnet.svn.sourceforge.net/viewvc/bacnet/trunk/bacnet-stack/ports/at91sam7s">ports/at91sam7s</a>
+  directory for the AT91SAM7S-EK
+  demo board.   There is a server application that can be built using
+  the GNU ARM tools, such as
+  <a href="http://www.codesourcery.com/gnu_toolchains/arm">GNU Toolchain for ARM</a>,
+  <a href="http://www.gnuarm.com/">GNU ARM</a>,
+  <a href="http://www.siwawi.arubi.uni-kl.de/avr_projects/arm_projects/">WinARM</a>,
+  <a href="http://www.yagarto.de/">YAGARTO</a>,
+  or <a href="http://www.rowley.co.uk/arm/">Rowley Crossworks for ARM</a> toolchains on the Windows platform.
+  The datalink layer uses BACnet MS/TP
+  and the example uses several different objects and services.</p>
+
+  <p>There is a project in the
+  <a href="http://bacnet.svn.sourceforge.net/viewvc/bacnet/trunk/bacnet-stack/ports/atmega168">ports/atmega168</a>
+  directory, and a sample
+  server application that can be built using
+  <a href="http://www.avrfreaks.net/wiki/index.php/Documentation:AVR_GCC/AVR_GCC_Tool_Collection">GCC-AVR</a> or
+  <a href="http://winavr.sourceforge.net/">WinAVR</a> for Atmel AVR series of microcontrollers.
+  There is also a project in the
+  <a href="http://bacnet.svn.sourceforge.net/viewvc/bacnet/trunk/bacnet-stack/ports/bdk-atxx4-mstp">ports/bdk-atxx4-mstp</a>
+  directory which works on the <a href="http://bacnetdevelopmentkit.com/">ATmega644 based BACnet Development Kit</a>.</p>
+
+  <p>Both projects use the BACnet MS/TP datalink layer
+  and the example uses several different objects and services.
+  In additional to the free tools listed above, the AVR projects
+  can be developed using the commercial
+  <a href="http://www.rowley.co.uk/avr/">Rowley Crossworks for AVR</a>
+  on the Windows, MAC OS X, Linux, or Solaris platform. CrossWorks is a complete
+  development environment.
+  The AVR projects can also be developed using the commercial
+  <a href="http://www.iar.com/en/Products/IAR-Embedded-Workbench/AVR/">IAR Embedded Workbench for Atmel AVR</a>
+  environment on Windows.</p>
+
+  <p>There is a project in the
+  <a href="http://bacnet.svn.sourceforge.net/viewvc/bacnet/trunk/bacnet-stack/ports/stm32f10x">ports/stm32f10x</a>
+  directory, and a sample server application that can be built using
+  <a href="http://www.iar.com/">IAR Embedded Workbench for ARM</a>.
+  It was written for the 2011
+  <a href="http://www.stm32challenge.com/">STM32 Design Challenge,</a>
+  and was one of the finalists.
+  The Target is an ARM Cortex-M3 microcontroller, and the design utilizes
+  the <a href="http://www.arm.com/products/processors/cortex-m/cortex-microcontroller-software-interface-standard.php">CMSIS</a> and
+  STM32 Peripheral Driver Library.
+  The port uses the BACnet MS/TP datalink layer
+  and the example uses several different objects and services.</p>
+
+  <TABLE border="1" width="100%" cellpadding="1" cellspacing="0"
+    summary="BACnet services supported matrix">
+  <TBODY>
+  <TR><H2>BACnet services supported matrix</H2>
+  <p>The BACnet stack currently implements the following services listed in the
+  the table.  We plan to add the rest of the services as we go.
+  With the services that are implemented, you could build a BACnet device
+  that meets the standardized profile for a BACnet Smart Sensor,
+  BACnet Smart Actuator, or a BACnet Application Specific Controller.</p></TR>
+  <TR>
+    <TD bgcolor="#CCF6F6" width="50%" valign="top"><b>BACnet Service</b></td>
+    <TD bgcolor="#CCF6F6" width="25%" align="center" valign="top"><b>Initiate</b></td>
+    <TD bgcolor="#CCF6F6" width="25%" align="center" valign="top"><b>Execute</b></td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="50%" valign="top">Who Is</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="50%" valign="top">I Am</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="50%" valign="top">Who Has</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="50%" valign="top">I Have</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="50%" valign="top">Read Property</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="50%" valign="top">Write Property</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="50%" valign="top">Device Communication Control</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="50%" valign="top">ReinitializeDevice</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="50%" valign="top">Atomic Read File</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="50%" valign="top">Atomic Write File</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="50%" valign="top">Time Synchronization</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="50%" valign="top">UTC Time Synchronization</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="50%" valign="top">Subscribe COV</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="50%" valign="top">Confirmed COV Notification</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="50%" valign="top">Unconfirmed COV Notification</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="50%" valign="top">Read Property Multiple</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="50%" valign="top">Read Property Conditional</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="50%" valign="top">Read Range</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="50%" valign="top">Write Property Multiple</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="50%" valign="top">Get Alarm Summary</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="50%" valign="top">Get Event Information</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="50%" valign="top">Get Enrollment Summary</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="50%" valign="top">Acknowledge Alarm</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="50%" valign="top">Confirmed Event Notification</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="50%" valign="top">Unconfirmed Event Notification</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="50%" valign="top">Unconfirmed Text Message</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="50%" valign="top">Confirmed Text Message</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="50%" valign="top">Add List Element</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="50%" valign="top">Remove List Element</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="50%" valign="top">Create Object</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="50%" valign="top">Delete Object</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="50%" valign="top">Unconfirmed Private Transfer</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="50%" valign="top">Confirmed Private Transfer</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="50%" valign="top">VT Open</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="50%" valign="top">VT Data</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="50%" valign="top">VT Close</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  </TBODY>
+  </TABLE>
+
+  <TABLE border="1" width="100%" cellpadding="1" cellspacing="0"
+    summary="BACnet Objects">
+  <TBODY>
+  <TR><H2>BACnet Objects</H2>
+  <p>The BACnet stack currently implements an example Device Object, and
+  handles all of the ReadProperty and ReadPropertyMultiple inquiries for
+  the required Device Object properties. The stack handles Who-Is inquiries
+  with an I-Am, WhoHas with I-Have, and handles reject messages for
+  services not currently supported or implemented by your device.
+  There is built-in handling for DeviceCommunicationControl.</p>
+
+  <p>The example handlers interact with example objects by way of the Device
+  object.  There are example objects for the developer to use as a template
+  when customizing the objects for their device.</p>
+
+  <p>File Objects are conditionally included in the demonstation
+  applications. The files can be accessed using WriteProperty,
+  ReadProperty, Who-Has, AtomicWriteFile, or AtomicReadFile services.</p></TR>
+  <TR>
+    <TD bgcolor="#CCF6F6" width="75%" valign="top"><b>BACnet Object</b></td>
+    <TD bgcolor="#CCF6F6" width="25%" align="center" valign="top"><b>Code Example</b></td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Accumulator</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Analog Input</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Analog Output</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Analog Value</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Averaging</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Binary Input</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Binary Output</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Binary Value</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Calendar</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Command</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Device</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Event Enrollment</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">File</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Group</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Life Safety Point</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Life Safety Zone</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Loop</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Multi-state Input</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Multi-state Output</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Multi-state Value</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Notification Class</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Program</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Pulse Converter</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Schedule</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Trend Log</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Access Door</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Event Log</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Load Control</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">Yes</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Structured View</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Trend Log Multiple</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Access Point</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Access Zone</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Access User</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Access Rights</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Access Credential</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Credential Data Input</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">CharacterString Value</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">DateTime Value</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Large Analog Value</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">BitString Value</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">OctetString Value</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Time Value</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Integer Value</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Positive Integer Value</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Date Value</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">DateTime Pattern Value</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Time Pattern Value</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Date Pattern Value</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Network Security</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  <TR>
+    <TD bgcolor="#FFFFDD" width="75%" valign="top">Global Group</td>
+    <TD bgcolor="#FFFFDD" width="25%" align="center" valign="top">-</td>
+  </TR>
+  </TBODY>
+  </TABLE>
+
+  <h2>Getting Involved</h2>
+
+  <p>If you want to help out on this project, join the <a href="http://lists.sourceforge.net/mailman/listinfo/bacnet-developers">developers mailing list</a>, introduce yourself, and tell us what you would like to do.
+  If you are trying to implement a BACnet device or service using this project,
+  you are welcome to join the same <a href="http://lists.sourceforge.net/mailman/listinfo/bacnet-developers">developers mailing list</a> as well.</p>
+
+  <p>More details about the project can be found on
+  the <a href="http://sourceforge.net/projects/bacnet/">BACnet Source Forge Project Page</a></p>
+
+  <p>There is documentation that <a href="http://bacnet.svn.sourceforge.net/viewvc/bacnet/trunk/bacnet-stack/doc/README.developer">describes the mechanisms in the BACnet Stack</a>.
+  I wrote up some <a href="http://bacnet.svn.sourceforge.net/viewvc/bacnet/trunk/bacnet-stack/doc/README.faq">answers to some frequently asked questions</a>.
+Of course, there are a handful of text files in the doc directory of
+the project with more useful information.</p>
+
+  <p><a
+    href="http://sourceforge.net/project/showfiles.php?group_id=117598&package_id=140172">BACnet
+    Stack released files download</a></p>
+
+  <p>You can get the latest BACnet protocol stack source code using
+  the <a href="http://subversion.tigris.org/">Subversion</a> version control system.
+  The main development branch is
+  at: <a href="https://bacnet.svn.sourceforge.net/svnroot/bacnet/trunk/bacnet-stack/">https://bacnet.svn.sourceforge.net/svnroot/bacnet/trunk/bacnet-stack/</a>.  This
+  has the absolute latest code and features. Anyone doing development on the BACnet protocol stack
+  should be using this branch. The stable releases are
+  at: <a href="https://bacnet.svn.sourceforge.net/svnroot/bacnet/tags/">https://bacnet.svn.sourceforge.net/svnroot/bacnet/tags/</a>.  This
+  matches the released version downloadable through SourceForge. Anyone doing project development using
+  the BACnet protocol stack should be using the tags branch and an appropriate version tag.
+  The custom and vendor branches are
+  at: <a href="https://bacnet.svn.sourceforge.net/svnroot/bacnet/branches/">https://bacnet.svn.sourceforge.net/svnroot/bacnet/branches/</a>.
+  The <a href="https://bacnet.svn.sourceforge.net/svnroot/bacnet/branches/jbennet/">JBennet branch</a> includes a
+  derivative project that is designed for a BACnet Client.</p>
+
+  <p>To check out the trunk, use "svn co", e.g.</p>
+    <blockquote>
+    <code>svn co https://bacnet.svn.sourceforge.net/svnroot/bacnet/trunk/bacnet-stack/</code><br />
+    or for the stable releases:<br />
+    <code>svn co https://bacnet.svn.sourceforge.net/svnroot/bacnet/tags/bacnet-stack-0-5-0/</code><br />
+    or for the JBennet branch:<br />
+    <code>svn co https://bacnet.svn.sourceforge.net/svnroot/bacnet/branches/jbennet/</code>
+    </blockquote>
+
+<h2>BACnet Developer Resources</h2>
+
+There are a number of resources that can help you develop a BACnet product or project.
+
+<ul>
+    <li><a href="http://vts.sourceforge.net/">VTS</a> - visual test shell for
+    Win32, used for Visually testing a BACnet implementation.  It also includes
+    a detailed network sniffer for BACnet messages, and the ability  to send
+    any BACnet services.  The source code is in the public domain. </li>
+    <li><a href="http://www.wireshark.org/">Wireshark</a> - an open source,
+    cross platform protocol analyzer with BACnet support.  The detailed BACnet
+    support in began in version 0.10.11 released on May 4, 2005 when Wireshark
+    was known as Ethereal.  Also, BACnet MS/TP capture support was added
+    in Wireshark version 1.1.0.
+    The <a href=http://steve.kargs.net/bacnet/wireshark-and-bacnet-mstp/>demo application mstpcap</a>
+    can be used to capture BACnet MS/TP using an RS-485 converter,
+    and save the data to a capture file that can be viewed with Wireshark.</li>
+    <li><a href="http://www.ubuntu.com/">Ubuntu Linux</a> or
+    <a href="http://www.debian.org/">Debian Linux</a> - my
+    development platforms of choice.
+    Linux makes a great development platform
+    because all the necessary development tools are included.</li>
+    <li><a href="http://www.codeblocks.org/">Code::Blocks</a> - a free cross-platform
+    open source C/C++ IDE. Includes the MinGW compiler for Win32.</li>
+    <li>Win32 development can use <a href="http://www.borland.com/bcppbuilder/freecompiler/">Borland C++</a> or
+  <a href="http://msdn.microsoft.com/visualc/vctoolkit2003/">Microsoft Visual C++</a>,
+  both of which are free (as in beer) command line compilers. Be sure to pick up the free
+  <a href="http://info.borland.com/devsupport/bcppbuilder/patches/#freecompiler55">patches (service packs) for the Borland C++ compiler</a>
+  (<a href="http://info.borland.com/devsupport/bcppbuilder/patches/bcc55/bcc55sp1.zip">SP1</a>,
+  <a href="http://info.borland.com/devsupport/bcppbuilder/patches/bcc55/bcc55sp2.exe">SP2</a>),
+  as well as the free turbo debugger.</li>
+</ul>
+
+<p><a href="http://www.bacnet.org/Developer/index.html">BACnet
+Developer Help</a></p>
+
+<p><a href="http://www.bacnetinternational.org/associations/8066/btl/?page=47">BACnet
+International Developer Resources</a></p>
+
+<h2>Products and Projects that use this BACnet Stack</h2>
+
+<p>Did you develop a product using this BACnet stack?  <a href="http://kargs.net/contacts.html">Let us know</a>, and you
+can get a little recognition for your hard work!</p>
+
+<p><a href="http://bacnetdevelopmentkit.com/">BACnet Development Kit</a> - An
+Atmel ATmega644 based development kit designed to kickstart BACnet MS/TP
+development.</p>
+
+<p><a href="http://wattstopper.com/DLM/">Digital Lighting Management</a> -
+offers connectivity without complexity for remote system management and
+control of lights and plug loads. Just one device in each room network has to
+be connected to a BACnet MS/TP segment for centralized control.</p>
+
+<p><a href="http://www.controlsystemworks.com/">CSWorks</a> - a development
+ framework for building web-based HMI (Human Machine Interface),
+ SCADA (Supervisory Control And Data Acquisition),
+ EMI (Enterprise Manufacturing Intelligence) and
+ M2M (Machine to Machine) software applications.</p>
+
+<p><a href="http://sensors.scinterface.com/">SCInterface&trade; = Sensor Control Interface</a> - middleware
+ platform for managing legacy and modern-day sensors through a centralized
+ interface.</p>
+
+<p><a href="http://sourceforge.net/projects/bacnet-sim/">BACnetSim</a> - a
+portable implementation of the BACnet data communication protocol.
+BACnetSim is meant for embedded devices and use MS/TP as the media
+access layer. BACnetSim is a fork of bacnet-stack-0.0.1</p>
+
+<p><a href="http://simulationresearch.lbl.gov/bcvtb">Building Controls Virtual Test Bed</a> - a
+software environment that allows coupling different simulation programs
+including Dymola, EnergyPlus, MATLAB/Simulink and Radiance for co-simulation,
+and to couple these programs to control systems.</p>
+
+<p><a href="http://linde.caltech.edu/articles/the-prodigal-sun-returns-the-coelostat-in-the-linde-robinson-laboratory">The coelostat in the Linde + Robinson Laboratory</a> at Caltech.</p>
+
+<hr>
+
+  <A href="http://sourceforge.net"> <IMG
+    src="http://sourceforge.net/sflogo.php?group_id=117598&amp;type=5"
+    width="210" height="62" border="0" alt="SourceForge.net Logo" /></A>
+
+  <p><font size="-2"><b>ASHRAE<sup>&reg;</sup></b> and
+    <b>BACnet<sup>&reg;</sup></b> are registered trademarks of the American
+    Society of Heating, Refrigerating and Air-Conditioning Engineers, Inc.,
+    1791 Tullie Circle NE, Atlanta, GA 30329.</font> </p>
+  <p>Website updated 19-December-2011 by <a href="http://steve.kargs.net/">Steve Karg</a>.</p>
+</BODY>
+</HTML>
