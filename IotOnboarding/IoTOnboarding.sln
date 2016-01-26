@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AjOnBoardingTask", "AjOnBoardingTask\AjOnBoardingTask.csproj", "{E95ABB20-8F13-43D7-BCE0-B7D4475D407C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoTOnboardingTask", "IoTOnboardingTask\IoTOnboardingTask.csproj", "{E95ABB20-8F13-43D7-BCE0-B7D4475D407C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoTOnboardingService", "IoTOnboardingService\IoTOnboardingService.csproj", "{E3B0785F-7A90-45E5-9D0B-A96D0A615BB1}"
 EndProject

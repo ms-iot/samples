@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:iot="http://schemas.microsoft.com/appx/manifest/iot/windows10" IgnorableNamespaces="uap mp iot">
-  <Identity Name="AjOnBoardingTask-uwp" Publisher="CN=MSFT" Version="1.0.0.0" />
+  <Identity Name="IoTOnboardingTask-uwp" Publisher="CN=MSFT" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="cc131251-a2f0-42bf-abe8-1a901885dcbb" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>AjOnBoardingTask</DisplayName>
+    <DisplayName>IoTOnboardingTask</DisplayName>
     <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -15,13 +15,13 @@
   </Resources>
   <Applications>
     <Application Id="App">
-      <uap:VisualElements DisplayName="AjOnBoardingTask" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="AjOnBoardingTask" BackgroundColor="transparent" AppListEntry="none">
+      <uap:VisualElements DisplayName="IoTOnboardingTask" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="IoTOnboardingTask" BackgroundColor="transparent" AppListEntry="none">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png">
         </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
-        <Extension Category="windows.backgroundTasks" EntryPoint="AjOnBoardingTask.StartupTask">
+        <Extension Category="windows.backgroundTasks" EntryPoint="IoTOnboardingTask.StartupTask">
           <BackgroundTasks>
             <iot:Task Type="startup" />
           </BackgroundTasks>

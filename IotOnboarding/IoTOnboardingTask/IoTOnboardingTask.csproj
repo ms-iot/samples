@@ -7,8 +7,8 @@
     <ProjectGuid>{E95ABB20-8F13-43D7-BCE0-B7D4475D407C}</ProjectGuid>
     <OutputType>winmdobj</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AjOnBoardingTask</RootNamespace>
-    <AssemblyName>AjOnBoardingTask</AssemblyName>
+    <RootNamespace>IoTOnboardingTask</RootNamespace>
+    <AssemblyName>IoTOnboardingTask</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
@@ -18,7 +18,7 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <AllowCrossPlatformRetargeting>false</AllowCrossPlatformRetargeting>
-    <PackageCertificateKeyFile>AjOnBoardingTask_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>IoTOnboardingTask_TemporaryKey.pfx</PackageCertificateKeyFile>
     <AppxPackage>true</AppxPackage>
     <ContainsStartupTask>true</ContainsStartupTask>
   </PropertyGroup>
@@ -103,7 +103,7 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="AjOnBoardingTask_TemporaryKey.pfx" />
+    <None Include="IoTOnboardingTask_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config.xml" />

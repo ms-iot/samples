@@ -21,15 +21,36 @@ namespace IoTOnboardingService
 {
     public sealed class OnboardingService : IOnboardingService, IIconService
     {
+        private struct SoftAPConfig
+        {
+            public bool enabled;
+            public string ssid;
+            public string password;
+        };
+        private SoftAPConfig _softAPConfig;
+        private struct AJOnboardingConfig
+        {
+            public bool enabled;
+            public string defaultDescription;
+            public string defaultManufacturer;
+            public string modelNumber;
+        }
+        private AJOnboardingConfig _ajOnboardingConfig;
+
         private const string CONFIG_FILE_NAME = "Config.xml";
 
-        private const string NODE_SOFTAPSSIDTEMPLATE = "OnboardingConfig/SoftApSsidTemplate";
-        private const string NODE_SOFTAPPASSWORD = "OnboardingConfig/SoftApPassword";
-        private const string NODE_DEFAULTDESCRIPTIONTEMPLATE = "OnboardingConfig/DefaultDescriptionTemplate";
-        private const string NODE_DEFAULTMANUFACTURER = "OnboardingConfig/DefaultManufacturer";
-        private const string NODE_MODELNUMBER = "OnboardingConfig/ModelNumber";
+        private const string NODE_SOFTAPENABLE = "IoTOnboarding/SoftAP/Enabled";
+        private const string NODE_SOFTAPSSIDTEMPLATE = "IoTOnboarding/SoftAP/Ssid";
+        private const string NODE_SOFTAPPASSWORD = "IoTOnboarding/SoftAP/Password";
+
+        private const string NODE_ALLJOYNONBOARDINGENABLE = "IoTOnboarding/AllJoynOnboarding/Enabled";
+        private const string NODE_DEFAULTDESCRIPTIONTEMPLATE = "IoTOnboarding/AllJoynOnboarding/DefaultDescription";
+        private const string NODE_DEFAULTMANUFACTURER = "IoTOnboarding/AllJoynOnboarding/DefaultManufacturer";
+        private const string NODE_MODELNUMBER = "IoTOnboarding/AllJoynOnboarding/ModelNumber";
         private const string ATTRIBUTE_VALUE = "value";
 
+        private const string SOFTAP_SSID_AJONBOARDING_PREFIX = "AJ_";
+         
         private static ushort _onboardingInterfaceVersion = 1412;
         private static ushort _iconInterfaceVersion = 1412;
         private static string _onboardingInstanceIdSettingName = "OnboardingInstanceId";
@@ -55,6 +76,88 @@ namespace IoTOnboardingService
 
         private StorageFile _iconFile;
 
+        private async Task ResetConfig()
+        {
+            var installedLocation = Package.Current.InstalledLocation;
+            var localFolder = ApplicationData.Current.LocalFolder;
+            StorageFile configFile;
+
+            // delete config if it exists
+            var currentConfig = await localFolder.TryGetItemAsync(CONFIG_FILE_NAME);
+            if (currentConfig != null)
+            {
+                await currentConfig.DeleteAsync();
+            }
+
+            // copy config from package
+            var pkgFile = await installedLocation.GetFileAsync(CONFIG_FILE_NAME);
+            configFile = await pkgFile.CopyAsync(localFolder);
+        }
+
+        private async Task<bool> ReadConfig()
+        {
+            bool retVal = true;
+
+            try
+            {
+                // get config file from app folder
+                var localFolder = ApplicationData.Current.LocalFolder;
+                StorageFile configFile;
+                if (await localFolder.TryGetItemAsync(CONFIG_FILE_NAME) == null)
+                {
+                    // config file doesn't exist => copy it from the app package
+                    var installedLocation = Package.Current.InstalledLocation;
+                    var pkgFile = await installedLocation.GetFileAsync(CONFIG_FILE_NAME);
+                    configFile = await pkgFile.CopyAsync(localFolder);
+                }
+                else
+                {
+                    configFile = await localFolder.GetFileAsync(CONFIG_FILE_NAME);
+                }
+
+                var xmlConfig = await XmlDocument.LoadFromFileAsync(configFile);
+
+                // SoftAP config
+                var xmlNode = xmlConfig.SelectSingleNode(NODE_SOFTAPENABLE);
+                var tempString = GetXmlNodeValue(xmlNode);
+                if (tempString == "true")
+                {
+                    _softAPConfig.enabled = true;
+                }
+                else
+                {
+                    _softAPConfig.enabled = false;
+                }
+                xmlNode = xmlConfig.SelectSingleNode(NODE_SOFTAPSSIDTEMPLATE);
+                _softAPConfig.ssid = GetXmlNodeValue(xmlNode);
+                xmlNode = xmlConfig.SelectSingleNode(NODE_SOFTAPPASSWORD);
+                _softAPConfig.password = GetXmlNodeValue(xmlNode);
+
+                // AllJoyn Onboarding config
+                xmlNode = xmlConfig.SelectSingleNode(NODE_ALLJOYNONBOARDINGENABLE);
+                if (tempString == "true")
+                {
+                    _ajOnboardingConfig.enabled = true;
+                }
+                else
+                {
+                    _ajOnboardingConfig.enabled = false;
+                }
+                xmlNode = xmlConfig.SelectSingleNode(NODE_DEFAULTDESCRIPTIONTEMPLATE);
+                _ajOnboardingConfig.defaultDescription = GetXmlNodeValue(xmlNode);
+                xmlNode = xmlConfig.SelectSingleNode(NODE_DEFAULTMANUFACTURER);
+                _ajOnboardingConfig.defaultManufacturer = GetXmlNodeValue(xmlNode);
+                xmlNode = xmlConfig.SelectSingleNode(NODE_MODELNUMBER);
+                _ajOnboardingConfig.modelNumber = GetXmlNodeValue(xmlNode);
+            }
+            catch (Exception ex)
+            {
+                retVal = false;
+            }
+
+
+            return retVal; 
+        }
         public OnboardingService()
         {
             _state = OnboardingState.NotConfigured;
@@ -92,48 +195,47 @@ namespace IoTOnboardingService
                     }
                 }
 
-                // get config file from app folder
-                var localFolder = ApplicationData.Current.LocalFolder;
-                StorageFile configFile;
-                if (await localFolder.TryGetItemAsync(CONFIG_FILE_NAME) == null)
+                // read configuration
+                bool configOk = await ReadConfig();
+                if (!configOk)
                 {
-                    // config file doesn't exist => copy it from the app package
-                    var installedLocation = Package.Current.InstalledLocation;
-                    var pkgFile = await installedLocation.GetFileAsync(CONFIG_FILE_NAME);
-                    configFile = await pkgFile.CopyAsync(localFolder);
+                    // for some reason config file doesn't seem to be OK
+                    // => reset config and try another time 
+                    await ResetConfig();
+                    configOk = await ReadConfig();
+                    if(!configOk)
+                    {
+                        throw new System.IO.InvalidDataException("Invalid configuration");
+                    }
                 }
-                else
+
+                // create softAP 
+                if (_softAccessPoint == null &&
+                    (_softAPConfig.enabled ||
+                     _ajOnboardingConfig.enabled))
                 {
-                    configFile = await localFolder.GetFileAsync(CONFIG_FILE_NAME);
-                }
+                    string prefix = "";
+                    string suffix = "";
+                    string ssid = "";
+                    if(_ajOnboardingConfig.enabled)
+                    {
+                        prefix = SOFTAP_SSID_AJONBOARDING_PREFIX;
+                        suffix = "_" + _onboardingInstanceId;
+                    }
 
-                var xmlConfig = await XmlDocument.LoadFromFileAsync(configFile);
-
-                // create softAP (if necessary)
-                if (_softAccessPoint == null)
-                {
-                    var xmlNode = xmlConfig.SelectSingleNode(NODE_SOFTAPSSIDTEMPLATE);
-                    var ssid = GetXmlNodeValue(xmlNode);
-                    xmlNode = xmlConfig.SelectSingleNode(NODE_SOFTAPPASSWORD);
-                    var password = GetXmlNodeValue(xmlNode);
-
-                    _softAccessPoint = new OnboardingAccessPoint(string.Format(ssid, _onboardingInstanceId), password);
+                    ssid = prefix + _softAPConfig.ssid + suffix;
+                    _softAccessPoint = new OnboardingAccessPoint(ssid, _softAPConfig.password);                    
                 }
 
                 // create AllJoyn related things
-                if (_busAttachment == null)
+                if (_busAttachment == null &&
+                    _ajOnboardingConfig.enabled)
                 {
                     _busAttachment = new AllJoynBusAttachment();
 
-                    var xmlNode = xmlConfig.SelectSingleNode(NODE_DEFAULTDESCRIPTIONTEMPLATE);
-                    var tempString = GetXmlNodeValue(xmlNode);
-                    _busAttachment.AboutData.DefaultDescription = string.Format(tempString, _onboardingInstanceId);
-
-                    xmlNode = xmlConfig.SelectSingleNode(NODE_DEFAULTMANUFACTURER);
-                    _busAttachment.AboutData.DefaultManufacturer = GetXmlNodeValue(xmlNode);
-
-                    xmlNode = xmlConfig.SelectSingleNode(NODE_MODELNUMBER);
-                    _busAttachment.AboutData.ModelNumber = GetXmlNodeValue(xmlNode);
+                    _busAttachment.AboutData.DefaultDescription = _ajOnboardingConfig.defaultDescription  + " instance Id " + _onboardingInstanceId;
+                    _busAttachment.AboutData.DefaultManufacturer = _ajOnboardingConfig.defaultManufacturer;
+                    _busAttachment.AboutData.ModelNumber = _ajOnboardingConfig.modelNumber;
 
                     _onboardingProducer = new OnboardingProducer(_busAttachment);
                     _onboardingProducer.Service = this;
