@@ -12,7 +12,7 @@ using System.Diagnostics;
 
 // The Background Application template is documented at http://go.microsoft.com/fwlink/?LinkID=533884&clcid=0x409
 
-namespace AjOnBoardingTask
+namespace IoTOnboardingTask
 {
     public sealed class StartupTask : IBackgroundTask
     {
@@ -24,7 +24,7 @@ namespace AjOnBoardingTask
 
             try
             {
-                // start AllJoyn OnBoarding
+                // start IoT OnBoarding
                 _onboardingService.Start();
             }
             catch (Exception ex)
