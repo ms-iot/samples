@@ -62,15 +62,9 @@ namespace HttpServer
 
                 // Send a initialize request 
                 var res = await appServiceConnection.OpenAsync();
-                if (res == AppServiceConnectionStatus.Success)
+                if (res != AppServiceConnectionStatus.Success)
                 {
-                    var message = new ValueSet();
-                    message.Add("Command", "Initialize");
-                    var response = await appServiceConnection.SendMessageAsync(message);
-                    if (response.Status != AppServiceResponseStatus.Success)
-                    {
-                        throw new Exception("Failed to send message");
-                    }
+                    throw new Exception("Failed to connect to the AppService");
                 }
             });
         }

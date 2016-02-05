@@ -1,4 +1,7 @@
-﻿using Windows.ApplicationModel.AppService;
+﻿// Copyright (c) Microsoft. All rights reserved.
+
+
+using Windows.ApplicationModel.AppService;
 using Windows.ApplicationModel.Background;
 
 namespace App2AppCommunication
@@ -21,8 +24,11 @@ namespace App2AppCommunication
 
         private void OnRequestReceived(AppServiceConnection sender, AppServiceRequestReceivedEventArgs args)
         {
+            var messageDefferal = args.GetDeferral();
             var message = args.Request.Message;
             string command = message["Command"] as string;
+
+            messageDefferal.Complete();
 
             switch (command)
             {

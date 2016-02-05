@@ -29,10 +29,16 @@ namespace BlinkyWebService
                 switch (newState)
                 {
                     case "On":
-                        await TurnOnLED();
+                        if (LEDStatus == 0)
+                        {
+                            await Dispatcher.RunAsync(CoreDispatcherPriority.High, () => { FlipLED(); });
+                        }
                         break;
                     case "Off":
-                        await TurnOffLED();
+                        if (LEDStatus == 1)
+                        {
+                            await Dispatcher.RunAsync(CoreDispatcherPriority.High, () => { FlipLED(); });
+                        }
                         break;
                     case "Unspecified":
                     default:
@@ -83,21 +89,6 @@ namespace BlinkyWebService
                 }
                 LED.Fill = grayBrush;
                 StateText.Text = "Off"; 
-            }
-        }
-
-        private async Task TurnOffLED()
-        {
-            if (LEDStatus == 1)
-            {
-                await Dispatcher.RunAsync(CoreDispatcherPriority.High, () => { FlipLED(); }); 
-            }
-        }
-        private async Task TurnOnLED()
-        {
-            if (LEDStatus == 0)
-            {
-                await Dispatcher.RunAsync(CoreDispatcherPriority.High, () => { FlipLED(); });
             }
         }
 
