@@ -1,4 +1,6 @@
-﻿
+﻿// Copyright (c) Microsoft. All rights reserved.
+
+
 using System;
 using System.Text;
 using Windows.Foundation.Collections;
