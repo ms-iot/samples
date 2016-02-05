@@ -22,22 +22,27 @@ namespace BlinkyWebService
 
         private async Task HandleDataChangedEvent(ApplicationData data, object args)
         {
-            var localSettings = ApplicationData.Current.LocalSettings;
-            if (localSettings.Values.ContainsKey("BlinkyState"))
+            try
             {
+                var localSettings = ApplicationData.Current.LocalSettings;
+                if (!localSettings.Values.ContainsKey("BlinkyState"))
+                {
+                    return;
+                }
+
                 string newState = localSettings.Values["BlinkyState"] as string;
                 switch (newState)
                 {
                     case "On":
                         if (LEDStatus == 0)
                         {
-                            await Dispatcher.RunAsync(CoreDispatcherPriority.High, () => { FlipLED(); });
+                            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { FlipLED(); });
                         }
                         break;
                     case "Off":
                         if (LEDStatus == 1)
                         {
-                            await Dispatcher.RunAsync(CoreDispatcherPriority.High, () => { FlipLED(); });
+                            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { FlipLED(); });
                         }
                         break;
                     case "Unspecified":
@@ -45,6 +50,10 @@ namespace BlinkyWebService
                         // Do nothing 
                         break;
                 }
+            }
+            catch (Exception)
+            {
+                // Do nothing
             }
         }
 

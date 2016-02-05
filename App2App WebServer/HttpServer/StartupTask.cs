@@ -103,7 +103,7 @@ namespace HttpServer
                 if (requestParts.Length > 1)
                 {
                     if (requestParts[0] == "GET")
-                        WriteResponseAsync(requestParts[1], socket);
+                        WriteResponse(requestParts[1], socket);
                     else
                         throw new InvalidDataException("HTTP method not supported: "
                             + requestParts[0]);
@@ -111,7 +111,7 @@ namespace HttpServer
             }
         }
 
-        private void WriteResponseAsync(string request, StreamSocket socket)
+        private void WriteResponse(string request, StreamSocket socket)
         {
             // See if the request is for blinky.html, if yes get the new state
             string state = "Unspecified";
@@ -131,7 +131,9 @@ namespace HttpServer
             {
                 var updateMessage = new ValueSet();
                 updateMessage.Add("Command", state);
-                Task.Run(async () => { await appServiceConnection.SendMessageAsync(updateMessage); });
+#pragma warning disable CS4014
+                appServiceConnection.SendMessageAsync(updateMessage);
+#pragma warning restore CS4014
             }
 
             string html = state == "On" ? onHtmlString : offHtmlString;
