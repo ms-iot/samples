@@ -4,17 +4,18 @@
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
   xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
-  IgnorableNamespaces="uap mp">
+  xmlns:iot="http://schemas.microsoft.com/appx/manifest/iot/windows10"
+  IgnorableNamespaces="uap mp iot">
 
   <Identity
-    Name="BlinkyWebService"
+    Name="HttpServer-uwp"
     Publisher="CN=MSFT"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="9e06b37f-dd91-4ec6-bc3a-19e70989b5e1" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="f14066bc-1ad5-4657-bddf-66f1c73391cf" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>BlinkyWebService</DisplayName>
+    <DisplayName>HttpServer</DisplayName>
     <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -28,22 +29,34 @@
   </Resources>
 
   <Applications>
-    <Application Id="App"
-      Executable="$targetnametoken$.exe"
-      EntryPoint="BlinkyWebService.App">
+    <Application Id="App">
       <uap:VisualElements
-        DisplayName="BlinkyWebService"
+        DisplayName="HttpServer"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="BlinkyWebService"
-        BackgroundColor="transparent">
+        Description="HttpServer"
+        BackgroundColor="transparent"
+        AppListEntry="none">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
+      <Extensions>
+<!--
+        <uap:Extension Category="windows.appService" EntryPoint="HttpServer.AppService">
+          <uap:AppService Name="App2AppComService" />
+        </uap:Extension>
+-->
+        <Extension Category="windows.backgroundTasks" EntryPoint="HttpServer.StartupTask">
+          <BackgroundTasks>
+            <iot:Task Type="startup" />
+          </BackgroundTasks>
+        </Extension>
+      </Extensions>
     </Application>
   </Applications>
 
   <Capabilities>
-    <Capability Name="internetClient" />
+      <Capability Name="internetClient" />
+      <Capability Name="internetClientServer" />
   </Capabilities>
 </Package>

@@ -7,14 +7,14 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="WebServer"
+    Name="BlinkyWebService"
     Publisher="CN=MSFT"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="8fdb9bc1-d06d-4286-8e2c-a4dff10ad183" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="9e06b37f-dd91-4ec6-bc3a-19e70989b5e1" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>WebServer</DisplayName>
+    <DisplayName>BlinkyWebService</DisplayName>
     <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -30,26 +30,25 @@
   <Applications>
     <Application Id="App"
       Executable="$targetnametoken$.exe"
-      EntryPoint="TimerProvider.App">
+      EntryPoint="BlinkyWebService.App">
       <uap:VisualElements
-        DisplayName="TimerProvider"
+        DisplayName="BlinkyWebService"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="TimerProvider"
+        Description="BlinkyWebService"
         BackgroundColor="transparent">
-        <uap:SplashScreen
-          Image="Assets\SplashScreen.png" />
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
-        <uap:Extension Category="windows.appService" EntryPoint="WebServerTask.WebServerBGTask">
-          <uap:AppService Name="App2AppComService" />
-        </uap:Extension>
+          <uap:Extension Category="windows.appService" EntryPoint="App2AppCommunication.AppService">
+              <uap:AppService Name="App2AppComService"/>
+          </uap:Extension>
       </Extensions>
     </Application>
   </Applications>
 
   <Capabilities>
     <Capability Name="internetClient" />
-    <Capability Name="internetClientServer" />
   </Capabilities>
 </Package>
