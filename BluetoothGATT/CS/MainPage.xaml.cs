@@ -1,5 +1,10 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 
+//
+// Note that this sample only supports the CC2541 Sensor Tag: http://processors.wiki.ti.com/index.php/CC2541_SensorTag
+//
+
+ 
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,6 +29,12 @@ using System.Diagnostics;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 
+// Disable warning "...execution of the current method continues before the call is completed..."
+#pragma warning disable 4014
+
+// Disable warning to "consider using the 'await' operator to await non-blocking API calls"
+#pragma warning disable 1998
+
 namespace BluetoothGATT
 {
     /// <summary>
@@ -45,6 +56,22 @@ namespace BluetoothGATT
         const int BAROMETRIC_PRESSURE = 4;
         const int GYROSCOPE = 5;
         const int KEYS = 6;
+
+        
+        const string SENSOR_GUID_PREFIX = "F000AA";
+        const string SENSOR_GUID_SUFFFIX = "0-0451-4000-B000-000000000000";
+        const string SENSOR_NOTIFICATION_GUID_SUFFFIX = "1-0451-4000-B000-000000000000";
+        const string SENSOR_ENABLE_GUID_SUFFFIX = "2-0451-4000-B000-000000000000";
+        const string SENSOR_PERIOD_GUID_SUFFFIX = "3-0451-4000-B000-000000000000";
+
+        const string BUTTONS_GUID_STR = "0000FFE0-0000-1000-8000-00805F9B34FB";
+        readonly Guid BUTTONS_GUID = new Guid(BUTTONS_GUID_STR);
+        readonly Guid BUTTONS_NOTIFICATION_GUID = new Guid("0000FFE1-0000-1000-8000-00805F9B34FB");
+
+        readonly Guid BAROMETER_CONFIGURATION_GUID = new Guid("F000AA42-0451-4000-B000-000000000000");
+        readonly Guid BAROMETER_CALIBRATION_GUID = new Guid("F000AA43-0451-4000-B000-000000000000");
+
+
 
         private DeviceWatcher deviceWatcher = null;
 
@@ -112,24 +139,24 @@ namespace BluetoothGATT
 
             // Hook up handlers for the watcher events before starting the watcher
 
-            handlerAdded = new TypedEventHandler<DeviceWatcher, DeviceInformation>(async (watcher, deviceInfo) =>
+            handlerAdded = async (watcher, deviceInfo) =>
             {
                 // Since we have the collection databound to a UI element, we need to update the collection on the UI thread.
-                await this.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                this.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
                 {
-                    Debug.WriteLine("Watcher Add: "+deviceInfo.Id);
+                    Debug.WriteLine("Watcher Add: " + deviceInfo.Id);
                     ResultCollection.Add(new DeviceInformationDisplay(deviceInfo));
                     UpdatePairingButtons();
                 });
-            });
+            };
             deviceWatcher.Added += handlerAdded;
 
-            handlerUpdated = new TypedEventHandler<DeviceWatcher, DeviceInformationUpdate>(async (watcher, deviceInfoUpdate) =>
+            handlerUpdated = async (watcher, deviceInfoUpdate) =>
             {
                 // Since we have the collection databound to a UI element, we need to update the collection on the UI thread.
-                await Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
                 {
-                    Debug.WriteLine("Watcher Update:" + deviceInfoUpdate.Id);
+                    Debug.WriteLine("Watcher Update: " + deviceInfoUpdate.Id);
                     // Find the corresponding updated DeviceInformation in the collection and pass the update object
                     // to the Update method of the existing DeviceInformation. This automatically updates the object
                     // for us.
@@ -142,17 +169,17 @@ namespace BluetoothGATT
                         }
                     }
                 });
-            });
+            };
             deviceWatcher.Updated += handlerUpdated;
 
 
 
-            handlerRemoved = new TypedEventHandler<DeviceWatcher, DeviceInformationUpdate>(async (watcher, deviceInfoUpdate) =>
+            handlerRemoved = async (watcher, deviceInfoUpdate) =>
             {
                 // Since we have the collection databound to a UI element, we need to update the collection on the UI thread.
-                await Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
                 {
-                    Debug.WriteLine("Watcher Remove:" + deviceInfoUpdate.Id);
+                    Debug.WriteLine("Watcher Remove: " + deviceInfoUpdate.Id);
                     // Find the corresponding DeviceInformation in the collection and remove it
                     foreach (DeviceInformationDisplay deviceInfoDisp in ResultCollection)
                     {
@@ -160,7 +187,7 @@ namespace BluetoothGATT
                         {
                             ResultCollection.Remove(deviceInfoDisp);
                             UpdatePairingButtons();
-                            if (ResultCollection.Count==0)
+                            if (ResultCollection.Count == 0)
                             {
                                 UserOut.Text = "Searching for Bluetooth LE Devices...";
                             }
@@ -168,15 +195,14 @@ namespace BluetoothGATT
                         }
                     }
                 });
-            });
+            };
             deviceWatcher.Removed += handlerRemoved;
 
-            handlerEnumCompleted = new TypedEventHandler<DeviceWatcher, Object>(async (watcher, obj) =>
+            handlerEnumCompleted = async (watcher, obj) =>
             {
-                await Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
                 {
-                    string dbg = "Found " + ResultCollection.Count.ToString() + " Bluetooth LE Devices";
-                    Debug.WriteLine(dbg);
+                    Debug.WriteLine($"Found {ResultCollection.Count} Bluetooth LE Devices");
 
                     if (ResultCollection.Count > 0)
                     {
@@ -188,7 +214,7 @@ namespace BluetoothGATT
                     }
                     UpdatePairingButtons();
                 });
-            });
+            };
 
             deviceWatcher.EnumerationCompleted += handlerEnumCompleted;
 
@@ -221,20 +247,20 @@ namespace BluetoothGATT
         {
             int discoveredServices = 0;
             // Hook up handlers for the watcher events before starting the watcher
-            OnBLEAdded = new TypedEventHandler<DeviceWatcher, DeviceInformation>(async (watcher, deviceInfo) =>
+            OnBLEAdded = async (watcher, deviceInfo) =>
             {
-                await Dispatcher.RunAsync(CoreDispatcherPriority.Low, async () =>
+                Dispatcher.RunAsync(CoreDispatcherPriority.Low, async () =>
                 {
                     Debug.WriteLine("OnBLEAdded: " + deviceInfo.Id);
                     GattDeviceService service = await GattDeviceService.FromIdAsync(deviceInfo.Id);
                     if (service != null)
                     {
                         int sensorIdx = -1;
-                        String svcGuid = service.Uuid.ToString().ToUpper();
+                        string svcGuid = service.Uuid.ToString().ToUpper();
                         Debug.WriteLine("Found Service: " + svcGuid);
 
                         // Add this service to the list if it conforms to the TI-GUID pattern for most sensors
-                        if (svcGuid.StartsWith("F000AA"))
+                        if (svcGuid.StartsWith(SENSOR_GUID_PREFIX))
                         {
                             // The character at this position indicates the index into the serviceList 
                             // container that we want to save this service to.  The rest of this program
@@ -242,7 +268,7 @@ namespace BluetoothGATT
                             sensorIdx = svcGuid[6] - '0';
                         }
                         // otherwise, if this is the GUID for the KEYS, then handle it special
-                        else if (svcGuid.StartsWith("0000FFE0"))
+                        else if (svcGuid == BUTTONS_GUID_STR)
                         {
                             sensorIdx = KEYS;
                         }
@@ -252,7 +278,7 @@ namespace BluetoothGATT
                         {
                             serviceList[sensorIdx] = service;
                             await enableSensor(sensorIdx);
-                            System.Threading.Interlocked.Increment(ref discoveredServices);                            
+                            System.Threading.Interlocked.Increment(ref discoveredServices);
                         }
 
                         // When all sensors have been discovered, notify the user
@@ -266,36 +292,35 @@ namespace BluetoothGATT
                         }
                     }
                 });
-            });
+            };
 
 
-            OnBLEUpdated = new TypedEventHandler<DeviceWatcher, DeviceInformationUpdate>(async (watcher, deviceInfoUpdate) =>
+            OnBLEUpdated = async (watcher, deviceInfoUpdate) =>
                     {
-                        await Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                        Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
                         {
-                            Debug.WriteLine("OnBLEUpdated: ");
-                            Debug.WriteLine(deviceInfoUpdate.Id);
+                            Debug.WriteLine($"OnBLEUpdated: {deviceInfoUpdate.Id}");
                         });
-                    });
+                    };
 
 
-            OnBLERemoved = new TypedEventHandler<DeviceWatcher, DeviceInformationUpdate>(async (watcher, deviceInfoUpdate) =>
+            OnBLERemoved = async (watcher, deviceInfoUpdate) =>
             {
-                await Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
                 {
                     Debug.WriteLine("OnBLERemoved");
 
                 });
-            });
+            };
 
-            String aqs = "";
+            string aqs = "";
             for (int i = 0; i < NUM_SENSORS; i++)
             {
                 Guid BLE_GUID;
                 if (i < 6)
-                    BLE_GUID = new Guid("F000AA" + i + "0-0451-4000-B000-000000000000");
+                    BLE_GUID = new Guid(SENSOR_GUID_PREFIX + i + SENSOR_GUID_SUFFFIX);
                 else
-                    BLE_GUID = new Guid("0000FFE0-0000-1000-8000-00805F9B34FB");
+                    BLE_GUID = BUTTONS_GUID;
 
                 aqs += "(" + GattDeviceService.GetDeviceSelectorFromUuid(BLE_GUID) + ")";
 
@@ -339,7 +364,7 @@ namespace BluetoothGATT
             if (gattService != null)
             {
                 // Set Barometer configuration to 2, so that calibration data is saved
-                var characteristicList = gattService.GetCharacteristics(new Guid("F000AA42-0451-4000-B000-000000000000"));
+                var characteristicList = gattService.GetCharacteristics(BAROMETER_CONFIGURATION_GUID);
                 if (characteristicList != null)
                 {
                     GattCharacteristic characteristic = characteristicList[0];
@@ -353,7 +378,7 @@ namespace BluetoothGATT
                 }
 
                 // Save Barometer calibration data
-                characteristicList = gattService.GetCharacteristics(new Guid("F000AA43-0451-4000-B000-000000000000"));
+                characteristicList = gattService.GetCharacteristics(BAROMETER_CALIBRATION_GUID);
                 if (characteristicList != null)
                 {
                     GattReadResult result = await characteristicList[0].ReadValueAsync(BluetoothCacheMode.Uncached);
@@ -369,7 +394,7 @@ namespace BluetoothGATT
             GattDeviceService gattService = serviceList[sensor];
             if (sensor != KEYS && gattService != null)
             {
-                var characteristicList = gattService.GetCharacteristics(new Guid("F000AA" + sensor + "3-0451-4000-B000-000000000000"));
+                var characteristicList = gattService.GetCharacteristics(new Guid(SENSOR_GUID_PREFIX + sensor + SENSOR_PERIOD_GUID_SUFFFIX));
                 if (characteristicList != null)
                 {
                     GattCharacteristic characteristic = characteristicList[0];
@@ -395,9 +420,9 @@ namespace BluetoothGATT
                 // Turn on notifications
                 IReadOnlyList<GattCharacteristic> characteristicList;
                 if (sensor >= 0 && sensor <= 5)
-                    characteristicList = gattService.GetCharacteristics(new Guid("F000AA" + sensor + "1-0451-4000-B000-000000000000"));
+                    characteristicList = gattService.GetCharacteristics(new Guid(SENSOR_GUID_PREFIX + sensor + SENSOR_NOTIFICATION_GUID_SUFFFIX));
                 else
-                    characteristicList = gattService.GetCharacteristics(new Guid("0000FFE1-0000-1000-8000-00805F9B34FB"));
+                    characteristicList = gattService.GetCharacteristics(BUTTONS_NOTIFICATION_GUID);
 
                 if (characteristicList != null)
                 {
@@ -451,7 +476,7 @@ namespace BluetoothGATT
                 // Turn on sensor
                 if (sensor >= 0 && sensor <= 5)
                 {
-                    characteristicList = gattService.GetCharacteristics(new Guid("F000AA" + sensor + "2-0451-4000-B000-000000000000"));
+                    characteristicList = gattService.GetCharacteristics(new Guid(SENSOR_GUID_PREFIX + sensor + SENSOR_ENABLE_GUID_SUFFFIX));
                     if (characteristicList != null)
                     {
                         GattCharacteristic characteristic = characteristicList[0];
@@ -483,9 +508,9 @@ namespace BluetoothGATT
                 // Disable notifications
                 IReadOnlyList<GattCharacteristic> characteristicList;
                 if (sensor >= 0 && sensor <= 5)
-                    characteristicList = gattService.GetCharacteristics(new Guid("F000AA" + sensor + "1-0451-4000-B000-000000000000"));
+                    characteristicList = gattService.GetCharacteristics(new Guid(SENSOR_GUID_PREFIX + sensor + SENSOR_NOTIFICATION_GUID_SUFFFIX));
                 else
-                    characteristicList = gattService.GetCharacteristics(new Guid("0000FFE1-0000-1000-8000-00805F9B34FB"));
+                    characteristicList = gattService.GetCharacteristics(BUTTONS_NOTIFICATION_GUID);
 
                 if (characteristicList != null)
                 {
@@ -774,12 +799,13 @@ namespace BluetoothGATT
             try
             {
                 DeviceUnpairingResult dupr = await deviceInfoDisp.DeviceInformation.Pairing.UnpairAsync();
-                Debug.WriteLine("Unpairing result= " + dupr.Status.ToString());
-                UserOut.Text = "Unpairing result = " + dupr.Status.ToString();
+                string unpairResult = $"Unpairing result = {dupr.Status}";
+                Debug.WriteLine(unpairResult);
+                UserOut.Text = unpairResult;
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Unpair exception= " + ex.Message);
+                Debug.WriteLine("Unpair exception = " + ex.Message);
             }           
 
             for (int i = 0; i < NUM_SENSORS; i++)
@@ -792,7 +818,7 @@ namespace BluetoothGATT
 
         private void UpdatePairingButtons()
         {
-            DeviceInformationDisplay deviceInfoDisp = (DeviceInformationDisplay)resultsListView.SelectedItem;
+            var deviceInfoDisp = (DeviceInformationDisplay)resultsListView.SelectedItem;
             bool bSelectableDevices = (resultsListView.Items.Count > 0);
 
             // If something on the list of bluetooth devices is selected
