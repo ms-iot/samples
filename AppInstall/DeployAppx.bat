@@ -10,14 +10,14 @@ SETLOCAL
 :: Variable setup
 ::
 :: Example:
-:: set defaultappx=defappxname (name only. no need for .appx extension)
-:: set defaultappxid=defaultappxid
+:: set defaultappx=defappxname (Name only. no need for .appx extension)
+:: set defaultappxid=defaultappxid  (You can find your app's id by checking your app's Package.appxmanifest)
 :: set dependencylist=depappx1name depappx2name (Name only. No need for .appx extension. You can delimit mutliple dependency appxs with a space.)
 :: ---------------------------------------------------------------------
-set defaultappx=MainAppx_1.0.0.0_Win32_Debug
-set defaultappxid=bfa3eb48-79d5-4245-9bfe-6d2ffeef846d_q8jky9dv1tcdg!App
-set dependencylist=Microsoft.VCLibs.x86.Debug.14.00
-::set defaultappx=MainAppx_1.0.2.0_Win32_Debug
+set defaultappx=MainAppx_1.0.0.0_x86
+set defaultappxid=7a11c6a0-d9a8-40cd-80cf-91d6a409edae_pft3qchy8afw0
+set dependencylist=Microsoft.VCLibs.x86.14.00 Microsoft.NET.Native.Runtime.1.1 Microsoft.NET.Native.Framework.1.2
+::set defaultappx=MainAppx_1.0.2.0_x86
 
 ::
 :: Add all dependency appx

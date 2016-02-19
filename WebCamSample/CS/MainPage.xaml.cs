@@ -126,6 +126,31 @@ namespace WebCamSample
 
             isRecording = false;
             isPreviewing = false;
+        }        
+
+        private async void Cleanup()
+        {
+            if (mediaCapture != null)
+            {
+                // Cleanup MediaCapture object
+                if (isPreviewing)
+                {
+                    await mediaCapture.StopPreviewAsync();
+                    captureImage.Source = null;
+                    playbackElement.Source = null;
+                    isPreviewing = false;
+                }
+                if (isRecording)
+                {
+                    await mediaCapture.StopRecordAsync();
+                    isRecording = false;
+                    recordVideo.Content = "Start Video Record";
+                    recordAudio.Content = "Start Audio Record";
+                }                
+                mediaCapture.Dispose();
+                mediaCapture = null;
+            }
+            SetInitButtonVisibility(Action.ENABLE);
         }
 
         /// <summary>
@@ -156,6 +181,8 @@ namespace WebCamSample
                     if (isPreviewing)
                     {
                         await mediaCapture.StopPreviewAsync();
+                        captureImage.Source = null;
+                        playbackElement.Source = null;
                         isPreviewing = false;
                     }
                     if (isRecording)
@@ -172,7 +199,7 @@ namespace WebCamSample
                 status.Text = "Initializing camera to capture audio and video...";
                 // Use default initialization
                 mediaCapture = new MediaCapture();
-                await mediaCapture.InitializeAsync();
+                await mediaCapture.InitializeAsync();                
 
                 // Set callbacks for failure and recording limit exceeded
                 status.Text = "Device successfully initialized for video recording!";
@@ -193,10 +220,19 @@ namespace WebCamSample
             }
             catch (Exception ex)
             {
-                status.Text = "Unable to initialize camera for audio/video mode: " + ex.Message;
-                }
+                status.Text = "Unable to initialize camera for audio/video mode: " + ex.Message;             
+            }
         }
 
+        private void cleanup_Click(object sender, RoutedEventArgs e)
+        {
+            SetInitButtonVisibility(Action.DISABLE);
+            SetVideoButtonVisibility(Action.DISABLE);
+            SetAudioButtonVisibility(Action.DISABLE);
+            Cleanup();            
+        }
+
+        
         /// <summary>
         /// 'Initialize Audio Only' button action function
         /// Dispose existing MediaCapture object and set it up for audio only
@@ -260,8 +296,7 @@ namespace WebCamSample
             }
             catch (Exception ex)
             {
-                status.Text = "Unable to initialize camera for audio mode: " + ex.Message;
-                SetInitButtonVisibility(Action.ENABLE);
+                status.Text = "Unable to initialize camera for audio mode: " + ex.Message;                      
             }
         }
 
@@ -294,6 +329,7 @@ namespace WebCamSample
             catch (Exception ex)
             {
                 status.Text = ex.Message;
+                Cleanup();
             }
             finally
             {
@@ -319,6 +355,7 @@ namespace WebCamSample
 
                 if (recordVideo.Content.ToString() == "Start Video Record")
                 {
+                    takePhoto.IsEnabled = false;
                     status.Text = "Initialize video recording";
                     String fileName;
                     fileName = VIDEO_FILE_NAME;
@@ -338,25 +375,34 @@ namespace WebCamSample
                 }
                 else
                 {
+                    takePhoto.IsEnabled = true;
                     status.Text = "Stopping video recording...";
                     await mediaCapture.StopRecordAsync();
                     isRecording = false;
 
-                    status.Text = "Playing recorded video" + recordStorageFile.Path;
                     var stream = await recordStorageFile.OpenReadAsync();
                     playbackElement.AutoPlay = true;
                     playbackElement.SetSource(stream, recordStorageFile.FileType);
                     playbackElement.Play();
+                    status.Text = "Playing recorded video" + recordStorageFile.Path;
                     recordVideo.Content = "Start Video Record";
                 }
             }
             catch (Exception ex)
             {
-                status.Text = ex.Message;
+                if (ex is System.UnauthorizedAccessException)
+                {
+                    status.Text = "Unable to play recorded video; video recorded successfully to: " + recordStorageFile.Path;
+                    recordVideo.Content = "Start Video Record";
+                }
+                else
+                {
+                    status.Text = ex.Message;
+                    Cleanup();
+                }                
             }
             finally
-            {
-                takePhoto.IsEnabled = true;
+            {                
                 recordVideo.IsEnabled = true;                
             }
         }
@@ -411,6 +457,7 @@ namespace WebCamSample
             catch (Exception ex)
             {
                 status.Text = ex.Message;
+                Cleanup();                
             }
             finally
             {

@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 
-using IoTOnboardingService;
 using System;
 using System.Globalization;
 using System.Threading.Tasks;
@@ -21,7 +20,6 @@ namespace IoTCoreDefaultApp
         private CoreDispatcher MainPageDispatcher;
         private DispatcherTimer timer;
         private ConnectedDevicePresenter connectedDevicePresenter;
-        private OnboardingService OnboardingService;
 
         public CoreDispatcher UIThreadDispatcher
         {
@@ -47,8 +45,6 @@ namespace IoTCoreDefaultApp
             MainPageDispatcher = Window.Current.Dispatcher;
 
             NetworkInformation.NetworkStatusChanged += NetworkInformation_NetworkStatusChanged;
-
-            OnboardingService = new OnboardingService();
 
             this.NavigationCacheMode = NavigationCacheMode.Enabled;
 
@@ -79,8 +75,6 @@ namespace IoTCoreDefaultApp
             {
                 ApplicationData.Current.LocalSettings.Values[Constants.HasDoneOOBEKey] = Constants.HasDoneOOBEValue;
             }
-
-            Task.Run(() => OnboardingService.Start());
 
             base.OnNavigatedTo(e);
         }
@@ -122,7 +116,7 @@ namespace IoTCoreDefaultApp
         private void UpdateDateTime()
         {
             var t = DateTime.Now;
-            this.CurrentTime.Text = t.ToString("t", CultureInfo.CurrentCulture);
+            this.CurrentTime.Text = t.ToString("t", CultureInfo.CurrentCulture) + Environment.NewLine + t.ToString("d", CultureInfo.CurrentCulture);
         }
 
         private async void UpdateNetworkInfo()
