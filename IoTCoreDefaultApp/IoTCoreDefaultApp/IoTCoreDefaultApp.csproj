@@ -120,6 +120,7 @@
     <Compile Include="Presenters\NetworkPresenter.cs" />
     <Compile Include="Utils\DeviceTypeInformation.cs" />
     <Compile Include="Utils\Constants.cs" />
+    <Compile Include="Utils\NativeTimeMethods.cs" />
     <Compile Include="Utils\NavigationUtils.cs" />
     <Compile Include="Utils\WifiGlyphConverter.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
