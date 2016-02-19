@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 
+using IoTCoreDefaultApp.Utils;
 using System;
 using System.Globalization;
-using System.Threading.Tasks;
 using Windows.Networking.Connectivity;
 using Windows.Storage;
 using Windows.System;
@@ -59,7 +59,7 @@ namespace IoTCoreDefaultApp
 
                 timer = new DispatcherTimer();
                 timer.Tick += timer_Tick;
-                timer.Interval = TimeSpan.FromSeconds(30);
+                timer.Interval = TimeSpan.FromSeconds(10);
                 timer.Start();
             };
             this.Unloaded += (sender, e) =>
@@ -115,8 +115,12 @@ namespace IoTCoreDefaultApp
 
         private void UpdateDateTime()
         {
-            var t = DateTime.Now;
-            this.CurrentTime.Text = t.ToString("t", CultureInfo.CurrentCulture) + Environment.NewLine + t.ToString("d", CultureInfo.CurrentCulture);
+            // Using DateTime.Now is simpler, but the time zone is cached. So, we use a native method insead.
+            SYSTEMTIME localTime;
+            NativeTimeMethods.GetLocalTime(out localTime);
+
+            DateTime t = localTime.ToDateTime();
+            CurrentTime.Text = t.ToString("t", CultureInfo.CurrentCulture) + Environment.NewLine + t.ToString("d", CultureInfo.CurrentCulture);
         }
 
         private async void UpdateNetworkInfo()
