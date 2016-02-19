@@ -30,6 +30,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+  <ScrollViewer HorizontalScrollMode="Disabled" >
     <Grid Background="{StaticResource AccentBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="60"/>
@@ -87,4 +88,5 @@
         </Grid>
 
     </Grid>
+  </ScrollViewer>
 </Page>
