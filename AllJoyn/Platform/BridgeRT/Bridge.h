@@ -85,14 +85,14 @@ namespace BridgeRT
         std::map<int, BridgeDevice ^>	m_deviceList;
 
         // Synchronization object
-        DsbCommon::CSLock m_bridgeLock;
+        std::recursive_mutex m_bridgeLock;
 
     internal:
         // The following is needed to synchronize access to the configuration file.
         // It is unlikely, but possible that a device is added to the config file
         // at the same time the CSP attempts to read it.
         friend CspBridge;
-        DsbCommon::CSLock& GetLock();
+        std::recursive_mutex& GetLock();
 
         //called from background MonitorThread(void* pContext);
         int32 Reset();

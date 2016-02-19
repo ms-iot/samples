@@ -24,9 +24,9 @@
 
 #include "AllJoynFileTransfer.h"
 #include "Bridge.h"
+#include "BridgeUtils.h"
 
 using namespace BridgeRT;
-using namespace DsbCommon;
 
 static const char CSP_INTERFACE_NAME[] = "com.microsoft.alljoynmanagement.Config";
 static const ULONG CHUNK_SIZE = (4 * 1024);     // size in bytes
@@ -864,7 +864,7 @@ void AllJoynFileTransfer::DeleteTempFile()
     // delete previous temp file
     if (0 != m_tempFileName.length())
     {
-        AutoLock bridgeLocker(&DsbBridge::SingleInstance()->GetLock(), true);
+        AutoLock bridgeLocker(DsbBridge::SingleInstance()->GetLock());
         DeleteFileW(m_tempFileName.c_str());
         m_tempFileName.clear();
     }

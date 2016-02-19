@@ -20,10 +20,10 @@
 #include "BridgeDevice.h"
 #include "PropertyInterface.h"
 #include "AllJoynProperty.h"
+#include "BridgeUtils.h"
 
 using namespace BridgeRT;
 using namespace std;
-using namespace DsbCommon;
 
 static std::string EMIT_CHANGE_SIGNAL_ANNOTATION = "org.freedesktop.DBus.Property.EmitsChangedSignal";
 static std::string TRUE_VALUE = "true";

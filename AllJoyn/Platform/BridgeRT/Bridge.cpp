@@ -24,13 +24,13 @@
 #include "BridgeDevice.h"
 #include "AllJoynHelper.h"
 #include "BridgeLog.h"
+#include "BridgeUtils.h"
 
 using namespace Platform;
 using namespace Platform::Collections;
 using namespace Windows::Foundation::Collections;
 using namespace Windows::Foundation;
 using namespace BridgeRT;
-using namespace DsbCommon;
 using namespace std;
 
 // Device Arrival Signal
@@ -126,7 +126,7 @@ DsbBridge::Initialize()
     BridgeLog::Instance()->LogEnter(__FUNCTIONW__);
     int32 hr = S_OK;
 
-    AutoLock bridgeLocker(&this->m_bridgeLock, true);
+    AutoLock bridgeLocker(this->m_bridgeLock);
 
     // initialize AllJoyn
     if (!m_alljoynInitialized)
@@ -233,7 +233,7 @@ DsbBridge::Shutdown()
 {
     BridgeLog::Instance()->LogInfo(L"DsbBridge::Shutdown");
     int32 hr = S_OK;
-    AutoLock bridgeLocker(&this->m_bridgeLock, true);
+    AutoLock bridgeLocker(this->m_bridgeLock);
 
     if (m_hThread != NULL)
     {
@@ -316,7 +316,7 @@ QStatus DsbBridge::InitializeDevices(_In_ bool isUpdate)
 
     {
         // loop through the Devices list and create corresponding AllJoyn bus objects
-        AutoLock bridgeLocker(&this->m_bridgeLock, true);
+        AutoLock bridgeLocker(this->m_bridgeLock);
         for (auto device : devicesList)
         {
             DsbObjectConfig objConfigItem;
@@ -357,7 +357,7 @@ QStatus DsbBridge::CreateDevice(IAdapterDevice ^device)
 {
     QStatus status = ER_OK;
     BridgeDevice ^newDevice = nullptr;
-    AutoLock bridgeLocker(&this->m_bridgeLock, true);
+    AutoLock bridgeLocker(this->m_bridgeLock);
 
     // create and initialize the device
     newDevice = ref new BridgeDevice();
@@ -455,7 +455,7 @@ DsbBridge::AdapterSignalHandler(
             bool bUpdateXml = m_configManager.GetObjectConfigItem(adapterDevice, objConfigItem);
             if (bUpdateXml)
             {
-                AutoLock bridgeLocker(&this->m_bridgeLock, true);
+                AutoLock bridgeLocker(this->m_bridgeLock);
                 m_configManager.ToFile();
             }
         }
@@ -479,7 +479,7 @@ DsbBridge::AdapterSignalHandler(
         // remove device
         // note that config doesn't need to be updated, if the device come again
         // it will be shown again and config clean up is done by CSP)
-        AutoLock bridgeLocker(&this->m_bridgeLock, true);
+        AutoLock bridgeLocker(this->m_bridgeLock);
         UpdateDevice(adapterDevice, false);
     }
 
@@ -490,7 +490,7 @@ Leave:
 int32
 DsbBridge::registerAdapterSignalHandlers(bool IsRegister)
 {
-    AutoLock sync(&this->m_bridgeLock, true);
+    AutoLock sync(this->m_bridgeLock);
 
     for (auto signal : this->m_adapter->Signals)
     {
@@ -531,7 +531,7 @@ Leave:
     return hr;
 }
 
-CSLock& DsbBridge::GetLock()
+std::recursive_mutex& DsbBridge::GetLock()
 {
     return m_bridgeLock;
 }
@@ -539,7 +539,7 @@ CSLock& DsbBridge::GetLock()
 int32 DsbBridge::Reset()
 {
     int32 hr = S_OK;
-    AutoLock bridgeLocker(&this->m_bridgeLock, true);
+    AutoLock bridgeLocker(this->m_bridgeLock);
 
     hr = this->ShutdownInternal();
     if (SUCCEEDED(hr))

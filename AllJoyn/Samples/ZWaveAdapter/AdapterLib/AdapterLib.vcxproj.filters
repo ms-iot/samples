@@ -18,6 +18,9 @@
     <ClCompile Include="UniversalControlPanelHandler.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="LSFHandler.cpp" />
+    <ClCompile Include="AdapterUtils.cpp" />
+    <ClCompile Include="HeadedBackgroundTask.cpp" />
+    <ClCompile Include="HeadlessStartupTask.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdapterConfig.h" />
@@ -32,5 +35,8 @@
     <ClInclude Include="SwitchControlPanelHandler.h" />
     <ClInclude Include="UniversalControlPanelHandler.h" />
     <ClInclude Include="LSFHandler.h" />
+    <ClInclude Include="AdapterUtils.h" />
+    <ClInclude Include="HeadedBackgroundTask.h" />
+    <ClInclude Include="HeadlessStartupTask.h" />
   </ItemGroup>
 </Project>

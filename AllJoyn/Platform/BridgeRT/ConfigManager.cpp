@@ -27,9 +27,9 @@
 #include "AllJoynHelper.h"
 
 #include "ConfigManager.h"
+#include "BridgeUtils.h"
 
 using namespace BridgeRT;
-using namespace DsbCommon;
 
 static const uint32_t SESSION_LINK_TIMEOUT = 30;        // seconds
 const StringReference BRIDGE_CONFIG_FILE(L"BridgeConfig.xml");
@@ -486,7 +486,7 @@ HRESULT ConfigManager::SetDeviceConfig(_In_ std::wstring &tempFileName, _Out_ HA
     {
         if (nullptr != m_parent)
         {
-            AutoLock bridgeLocker(&DsbBridge::SingleInstance()->GetLock(), true);
+            AutoLock bridgeLocker(DsbBridge::SingleInstance()->GetLock());
             updateStatus = m_parent->InitializeDevices(true);
             if (updateStatus != ER_OK)
             {

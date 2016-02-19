@@ -16,10 +16,11 @@
 #include "pch.h"
 
 #include "AdapterConfig.h"
-#include "Misc.h"
+#include "AdapterUtils.h"
 
 #include <string>
 #include <ppltasks.h>
+
 
 using namespace Platform;
 using namespace Windows::Storage;
@@ -29,7 +30,6 @@ using namespace Windows::ApplicationModel;
 
 using namespace std;
 
-using namespace DsbCommon;
 
 namespace AdapterLib
 {
@@ -60,7 +60,7 @@ namespace AdapterLib
         {
             //First check if the config file is present in LocalState folder
             wstring wPath = GetUserPath() + ConfigFilePath;
-            if (!FileExist(StringReference(wPath.c_str())))
+            if (!AdapterLib::FileExist(StringReference(wPath.c_str())))
             {
                 //if not get it from AppX folder
                 wPath = GetConfigPath() + ConfigFilePath;

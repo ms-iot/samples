@@ -27,6 +27,7 @@
 #include "AllJoynHelper.h"
 #include "ControlPanel.h"
 #include "LSF.h"
+#include "BridgeUtils.h"
 
 using namespace Platform;
 using namespace Platform::Collections;
@@ -34,7 +35,7 @@ using namespace Windows::Foundation::Collections;
 using namespace Windows::Foundation;
 
 using namespace BridgeRT;
-using namespace DsbCommon;
+
 using namespace std;
 
 static const DWORD FIRST_UNIQUE_ID = 1;
@@ -190,6 +191,12 @@ void BridgeDevice::Shutdown()
     {
         delete m_pControlPanel;
         m_pControlPanel = nullptr;
+    }
+
+    if (nullptr != m_pLightingService)
+    {
+        delete m_pLightingService;
+        m_pLightingService = nullptr;        
     }
 
     // shutdown device properties
@@ -691,7 +698,7 @@ void AJ_CALL BridgeDevice::SessionJoined(void * context, alljoyn_sessionport ses
     }
 
     {
-        AutoLock bridgeLocker(&DsbBridge::SingleInstance()->GetLock(), true);
+        AutoLock bridgeLocker(DsbBridge::SingleInstance()->GetLock());
         bridgeDevice->m_activeSessions.push_back(id);
     }
 
@@ -716,7 +723,7 @@ void AJ_CALL BridgeDevice::MemberRemoved(void * context, alljoyn_sessionid sessi
     bridgeDevice->m_authHandler.ResetAccess(uniqueName);
 
     {
-        AutoLock bridgeLocker(&DsbBridge::SingleInstance()->GetLock(), true);
+        AutoLock bridgeLocker(DsbBridge::SingleInstance()->GetLock());
         auto iter = std::find(bridgeDevice->m_activeSessions.begin(), bridgeDevice->m_activeSessions.end(), sessionid);
 
         if (iter != bridgeDevice->m_activeSessions.end())
@@ -731,7 +738,7 @@ leave:
 
 HRESULT BridgeDevice::registerSignalHandlers(bool IsRegister)
 {
-    AutoLock bridgeLocker(&DsbBridge::SingleInstance()->GetLock(), true);
+    AutoLock bridgeLocker(DsbBridge::SingleInstance()->GetLock());
 
     for (auto signal : m_device->Signals)
     {
@@ -752,7 +759,7 @@ HRESULT BridgeDevice::registerSignalHandlers(bool IsRegister)
 
 void BridgeDevice::VerifyCOVSupport()
 {
-    AutoLock bridgeLocker(&DsbBridge::SingleInstance()->GetLock(), true);
+    AutoLock bridgeLocker(DsbBridge::SingleInstance()->GetLock());
 
     // default to no change of value signal (aka COV)
     m_supportCOVSignal = false;

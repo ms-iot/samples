@@ -16,7 +16,9 @@
 
 #include "pch.h"
 #include "BridgeLog.h"
+#include "BridgeUtils.h"
 
+using namespace BridgeRT;
 using namespace Platform;
 using namespace Windows::Foundation::Diagnostics;
 using namespace Windows::Storage;
@@ -175,7 +177,7 @@ void BridgeLog::LogEnter(_In_z_ wchar_t* funcName)
         try
         {
             String^ enterString;
-            DsbCommon::FormatString(enterString, L"Enter %s", funcName);
+            FormatString(enterString, L"Enter %s", funcName);
             LogInfo(enterString);
         }
         catch (...)
@@ -201,7 +203,7 @@ void BridgeLog::LogLeave(_In_z_ wchar_t* funcName, int hr)
         try
         {
             String^ leaveString;
-            DsbCommon::FormatString(leaveString, L"Leave %s.  Result=0x%X", funcName, hr);
+            FormatString(leaveString, L"Leave %s.  Result=0x%X", funcName, hr);
             if (hr == S_OK)
             {
                 LogInfo(leaveString);

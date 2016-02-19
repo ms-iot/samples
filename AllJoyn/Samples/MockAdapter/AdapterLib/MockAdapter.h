@@ -17,7 +17,6 @@
 #pragma once
 
 #include "AdapterDefinitions.h"
-#include "Misc.h"
 #include "AdapterConfig.h"
 
 namespace AdapterLib
@@ -27,7 +26,6 @@ namespace AdapterLib
     static const std::wstring cVendor = L"Microsoft";
     static const std::wstring cAdapterName = L"DSB Mock Bridge";
     static const std::wstring cDomainPrefix = L"com";
-    static const std::wstring cAdapterPrefix = cDomainPrefix + L"." + DsbCommon::ToLower(cVendor.c_str())->Data();
 
     //
     // MockAdapter class.
@@ -167,8 +165,11 @@ namespace AdapterLib
         std::vector<BridgeRT::IAdapterSignal^> signals;
 
         // Sync object
-        DsbCommon::CSLock lock;
+        std::recursive_mutex lock;
 
+        uint32 StringToArray(
+            _In_ Platform::String^ SourceString,
+            _Out_ Platform::Array<BYTE>^* TargetDataArrayPtr);
         //
         // Signal listener entry
         //

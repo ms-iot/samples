@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:iot="http://schemas.microsoft.com/appx/manifest/iot/windows10" IgnorableNamespaces="uap mp iot">
-  <Identity Name="ZigBeeHeadedAdapterApp" Publisher="CN=MSFT" Version="1.0.0.0" />
+  <Identity Name="ZigBeeHeadedAdapterApp" Publisher="CN=MSFT" Version="1.0.1.0" />
   <mp:PhoneIdentity PhoneProductId="e3adf3a4-09fb-41f4-86f7-a99e44ab7dce" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>ZigBeeHeadedAdapterApp</DisplayName>
+    <DisplayName>ms-resource:ApplicationDisplayName</DisplayName>
     <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -14,24 +14,32 @@
     <Resource Language="x-generate" />
   </Resources>
   <Applications>
-    <Application Id="ZigBeeHeadedAdapterApp" Executable="$targetnametoken$.exe" EntryPoint="HeadedAdapterApp.App">
+    <Application Id="HeadedAdapterApp" Executable="$targetnametoken$.exe" EntryPoint="HeadedAdapterApp.App">
       <uap:VisualElements 
-		DisplayName="ZigBeeHeadedAdapterApp" 
-		Square150x150Logo="Assets\Square150x150Logo.png" 
-		Square44x44Logo="Assets\Square44x44Logo.png" 
-		Description="ZigBeeHeadedAdapterApp" 
-		BackgroundColor="#464646">
-		<uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
+          DisplayName="ms-resource:ApplicationDisplayName" 
+          Square150x150Logo="Assets\Square150x150Logo.png" 
+          Square44x44Logo="Assets\Square44x44Logo.png" 
+          Description="ms-resource:ApplicationDescription" 
+          BackgroundColor="#464646">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png">
+        </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
+      <Extensions>
+        <Extension Category="windows.backgroundTasks" EntryPoint="AdapterLib.HeadedBackgroundTask">
+          <BackgroundTasks>
+            <Task Type="general" />
+          </BackgroundTasks>
+        </Extension>
+      </Extensions>
     </Application>
   </Applications>
   <Capabilities>
     <Capability Name="allJoyn" />
     <Capability Name="internetClient" />
-    <DeviceCapability Name="serialcommunication" >
+    <DeviceCapability Name="serialcommunication">
       <Device Id="any">
-        <Function Type="name:serialPort"/>
+        <Function Type="name:serialPort" />
       </Device>
     </DeviceCapability>
   </Capabilities>

@@ -16,15 +16,15 @@
 
 #include "pch.h"
 #include "BridgeAuthHandler.h"
-#include "misc.h"
-
+#include "BridgeUtils.h"
 #include <alljoyn_c/DBusStdDefines.h>
 #include <alljoyn_c/BusAttachment.h>
 #include <alljoyn_c/version.h>
 #include <alljoyn_c/Status.h>
 
+
 using namespace BridgeRT;
-using namespace DsbCommon;
+
 
 static const char KEYX_AUTHENTICATION[] = "ALLJOYN_SRP_KEYX";
 static const char CREDENTIAL_AUTHENTICATION[] = "ALLJOYN_SRP_LOGON";
@@ -73,7 +73,7 @@ BridgeAuthHandler::InitializeWithAllAuthenticationMethods(_In_ alljoyn_busattach
     if (nullptr != keyx &&
         !keyx->IsEmpty())
     {
-        m_keyx = To_Ascii_String(keyx);
+        m_keyx = ConvertTo<std::string>(keyx);
     }
     else
     {
@@ -83,7 +83,7 @@ BridgeAuthHandler::InitializeWithAllAuthenticationMethods(_In_ alljoyn_busattach
     if (nullptr != username &&
         !username->IsEmpty())
     {
-        m_username = To_Ascii_String(username);
+        m_username = ConvertTo<std::string>(username);
     }
     else
     {
@@ -93,7 +93,7 @@ BridgeAuthHandler::InitializeWithAllAuthenticationMethods(_In_ alljoyn_busattach
     if (nullptr != password &&
         !password->IsEmpty())
     {
-        m_password = To_Ascii_String(password);
+        m_password = ConvertTo<std::string>(password);
     }
     else
     {
@@ -103,7 +103,7 @@ BridgeAuthHandler::InitializeWithAllAuthenticationMethods(_In_ alljoyn_busattach
     if (nullptr != ecdheEcdsaPrivateKey &&
         !ecdheEcdsaPrivateKey->IsEmpty())
     {
-        m_ecdheEcdsaPrivateKey = To_Ascii_String(ecdheEcdsaPrivateKey);
+        m_ecdheEcdsaPrivateKey = ConvertTo<std::string>(ecdheEcdsaPrivateKey);
     }
     else
     {
@@ -113,7 +113,7 @@ BridgeAuthHandler::InitializeWithAllAuthenticationMethods(_In_ alljoyn_busattach
     if (nullptr != ecdheEcdsaCertChain &&
         !ecdheEcdsaCertChain->IsEmpty())
     {
-        m_ecdheEcdsaCertChain = To_Ascii_String(ecdheEcdsaCertChain);
+        m_ecdheEcdsaCertChain = ConvertTo<std::string>(ecdheEcdsaCertChain);
     }
     else
     {

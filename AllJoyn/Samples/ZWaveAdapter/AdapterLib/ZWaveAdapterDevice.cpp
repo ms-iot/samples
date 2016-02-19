@@ -21,28 +21,30 @@
 #include "ZWaveAdapterMethod.h"
 
 #include "Manager.h"
-#include "Misc.h"
+#include "BridgeUtils.h"
+#include "AdapterUtils.h"
 
 #include <string>
 #include <sstream>
 
+
+using namespace BridgeRT;
 using namespace Platform;
 using namespace Windows::Foundation;
 using namespace std;
 using namespace OpenZWave;
-using namespace DsbCommon;
 using namespace BridgeRT;
 
 namespace AdapterLib
 {
     
 
-    ZWaveAdapterDevice::ZWaveAdapterDevice(uint32 homeId, uint8 nodeId)
+    ZWaveAdapterDevice::ZWaveAdapterDevice(ZWaveAdapter^ adapter, uint32 homeId, uint8 nodeId)
         : m_homeId(homeId)
         , m_nodeId(nodeId)
         , m_controlPanel(nullptr)
         , m_lightingServiceHandler(nullptr)
-        , m_parent(nullptr)
+        , m_parent(adapter)
     {
 
     }
@@ -216,7 +218,7 @@ namespace AdapterLib
         //initialize properties
         for (auto prop : m_properties)
         {
-            dynamic_cast<ZWaveAdapterProperty^>(prop)->Initialize();
+            dynamic_cast<ZWaveAdapterProperty^>(prop)->Initialize(m_parent);
         }
 
         //initialize methods

@@ -16,10 +16,11 @@
 #pragma once
 
 #include <map>
+#include <mutex>
 
 #include "AdapterDefinitions.h"
-#include "Misc.h"
-
+#include "BridgeUtils.h"
+#include "AdapterUtils.h"
 
 //
 // adapter IO request.
@@ -163,7 +164,7 @@ protected private:
 private:
 
     // Sync object
-    DsbCommon::CSLock lock;
+    std::recursive_mutex lock;
 
     // Parent object
     Platform::Object^ parent;
@@ -213,7 +214,7 @@ private:
 private:
 
     // Sync object
-    DsbCommon::CSLock   lock;
+    std::recursive_mutex  lock;
 
     // The free requests list
     std::vector<BACnetAdapterIoRequest^> freeRequestList;
@@ -224,7 +225,7 @@ template <typename T>
 T^
 BACnetAdapterIoRequestPool::Alloc(Platform::Object^ Parent)
 {
-    DsbCommon::AutoLock sync(&this->lock, true);
+    AutoLock sync(this->lock);
 
     T^ request = dynamic_cast<T^>(this->pop());
 

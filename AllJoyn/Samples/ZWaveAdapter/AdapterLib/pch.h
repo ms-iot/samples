@@ -21,5 +21,6 @@
 #define WIN32_LEAN_AND_MEAN
 #endif
 
+#include <string>
 #include <windows.h>
-#include "Misc.h"
+#include <ppltasks.h>

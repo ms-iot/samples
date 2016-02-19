@@ -18,6 +18,7 @@
 #include "AllJoynAboutIcon.h"
 #include <IAdapter.h>
 #include "BridgeLog.h"
+#include "BridgeUtils.h"
 
 
 const size_t MAX_ALLJOYN_ARRAY_SIZE = 128 * 1024;
@@ -99,7 +100,7 @@ QStatus AllJoynAboutIcon::Initialize(_In_ alljoyn_busattachment bus, _In_ IAdapt
     try
     {
         // Get the MIME type from the ICON
-        std::string mimeType = DsbCommon::To_Ascii_String(icon->MimeType);
+        std::string mimeType = ConvertTo<std::string>(icon->MimeType);
 
         // copy the source icon to the about data
         if (image != nullptr)
@@ -126,7 +127,7 @@ QStatus AllJoynAboutIcon::Initialize(_In_ alljoyn_busattachment bus, _In_ IAdapt
         // copy the url to the about data
         if (icon->Url != nullptr)
         {
-            std::string url = DsbCommon::To_Ascii_String(icon->Url);
+            std::string url = ConvertTo<std::string>(icon->Url);
             CHK_AJSTATUS(alljoyn_abouticon_seturl(m_icon, mimeType.c_str(), url.c_str()));
         }
 

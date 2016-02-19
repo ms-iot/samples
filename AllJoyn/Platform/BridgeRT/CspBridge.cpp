@@ -20,9 +20,10 @@
 #include "DsbServiceNames.h"
 #include "CspBridge.h"
 #include "ConfigManager.h"
+#include "BridgeUtils.h"
 
 using namespace BridgeRT;
-using namespace DsbCommon;
+
 
 CspBridge::CspBridge()
     : AllJoynFileTransfer(),
@@ -129,7 +130,7 @@ HRESULT CspBridge::PreFileReadAction(_Out_ std::wstring &appRelativeFileName)
         m_tempConfigFilePath += tempString;
         appRelativeFileName = tempString;
 
-        AutoLock bridgeLocker(&DsbBridge::SingleInstance()->GetLock(), true);
+        AutoLock bridgeLocker(DsbBridge::SingleInstance()->GetLock());
         hr = CopyFile2(m_srcConfigFilePath.c_str(), m_tempConfigFilePath.c_str(), nullptr);
         if (FAILED(hr))
         {

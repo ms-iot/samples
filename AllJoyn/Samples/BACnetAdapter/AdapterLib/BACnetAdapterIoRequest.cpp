@@ -14,12 +14,12 @@
 //
 
 #include "pch.h"
+#include "AdapterUtils.h"
 #include "BACnetAdapterIoRequest.h"
 
 using namespace Platform;
 
 using namespace BridgeRT;
-using namespace DsbCommon;
 
 //
 // IO request.
@@ -77,7 +77,7 @@ BACnetAdapterIoRequest::reInitialize(Platform::Object^ Parent)
 void
 BACnetAdapterIoRequest::setState(BACnetAdapterIoRequest::STATE NewState)
 {
-    AutoLock sync(&this->lock, true);
+    AutoLock sync(this->lock);
 
     if (NewState == StatePending)
     {
@@ -91,7 +91,7 @@ BACnetAdapterIoRequest::setState(BACnetAdapterIoRequest::STATE NewState)
 BACnetAdapterIoRequest::STATE
 BACnetAdapterIoRequest::getState()
 {
-    AutoLock sync(&this->lock, true);
+    AutoLock sync(this->lock);
 
     return this->state;
 }
@@ -139,7 +139,7 @@ _Use_decl_annotations_
 void
 BACnetAdapterIoRequest::GetIoParameters(BACnetAdapterIoRequest::IO_PARAMETERS* RequestParamatersPtr)
 {
-    AutoLock sync(&this->lock, true);
+    AutoLock sync(this->lock);
 
     *RequestParamatersPtr = this->parameters;
 }
@@ -148,7 +148,7 @@ BACnetAdapterIoRequest::GetIoParameters(BACnetAdapterIoRequest::IO_PARAMETERS* R
 ULONG
 BACnetAdapterIoRequest::GetType()
 {
-    AutoLock sync(&this->lock, true);
+    AutoLock sync(this->lock);
 
     return this->parameters.Type;
 }
@@ -157,7 +157,7 @@ BACnetAdapterIoRequest::GetType()
 void
 BACnetAdapterIoRequest::SetCancelRoutine(CANCEL_REQUEST_HANDLER CancelRoutinePtr)
 {
-    AutoLock sync(&this->lock, true);
+    AutoLock sync(this->lock);
 
     this->cancelRoutinePtr = CancelRoutinePtr;
 }
@@ -166,7 +166,7 @@ BACnetAdapterIoRequest::SetCancelRoutine(CANCEL_REQUEST_HANDLER CancelRoutinePtr
 void
 BACnetAdapterIoRequest::SetCompletionRoutine(COMPLETE_REQUEST_HANDLER CompletionRoutinePtr, PVOID ContextPtr)
 {
-    AutoLock sync(&this->lock, true);
+    AutoLock sync(this->lock);
 
     this->completionRoutinePtr = CompletionRoutinePtr;
     this->completionRoutineContextPtr = ContextPtr;
@@ -176,7 +176,7 @@ BACnetAdapterIoRequest::SetCompletionRoutine(COMPLETE_REQUEST_HANDLER Completion
 void
 BACnetAdapterIoRequest::Complete(DWORD Status, DWORD ActualBytes)
 {
-    AutoLock sync(&this->lock, true);
+    AutoLock sync(this->lock);
 
     this->SetCancelRoutine(nullptr);
 
@@ -221,14 +221,15 @@ _Use_decl_annotations_
 uint32
 BACnetAdapterIoRequest::Wait(DWORD TimeoutMsec, HANDLE AbortEvent)
 {
-    AutoLock sync(&this->lock, true);
-
-    if (this->getState() != StatePending)
     {
-        return this->reqStatus;
-    }
+        AutoLock sync(this->lock);
 
-    sync.Unlock();
+        if (this->getState() != StatePending)
+        {
+            return this->reqStatus;
+        }
+
+    }
 
     if (this->completionEvent == NULL)
     {
@@ -270,7 +271,7 @@ BACnetAdapterIoRequest::Wait(DWORD TimeoutMsec, HANDLE AbortEvent)
 uint32
 BACnetAdapterIoRequest::Cancel()
 {
-    AutoLock sync(&this->lock, true);
+    AutoLock sync(this->lock);
 
     if ((this->state != StatePending) &&
         (this->state != StateActive))
@@ -297,7 +298,7 @@ _Use_decl_annotations_
 DWORD
 BACnetAdapterIoRequest::GetStatus(PDWORD ActualBytesPtr)
 {
-    AutoLock sync(&this->lock, true);
+    AutoLock sync(this->lock);
 
     if (ActualBytesPtr != nullptr)
     {
@@ -311,7 +312,7 @@ BACnetAdapterIoRequest::GetStatus(PDWORD ActualBytesPtr)
 HANDLE
 BACnetAdapterIoRequest::GetCompletionEvent()
 {
-    AutoLock sync(&this->lock, true);
+    AutoLock sync(this->lock);
 
     return this->completionEvent;
 }
@@ -335,7 +336,7 @@ BACnetAdapterIoRequestPool::~BACnetAdapterIoRequestPool()
 void
 BACnetAdapterIoRequestPool::Free(BACnetAdapterIoRequest^ IoRequest)
 {
-    AutoLock sync(&this->lock, true);
+    AutoLock sync(this->lock);
 
     if (IoRequest != nullptr)
     {
@@ -353,7 +354,7 @@ BACnetAdapterIoRequestPool::Free(BACnetAdapterIoRequest^ IoRequest)
 BACnetAdapterIoRequest^
 BACnetAdapterIoRequestPool::pop()
 {
-    AutoLock sync(&this->lock, true);
+    AutoLock sync(this->lock);
 
     if (this->freeRequestList.size() == 0)
     {
@@ -371,7 +372,7 @@ BACnetAdapterIoRequestPool::pop()
 void
 BACnetAdapterIoRequestPool::push(BACnetAdapterIoRequest^ IoRequest)
 {
-    AutoLock sync(&this->lock, true);
+    AutoLock sync(this->lock);
 
     if (IoRequest != nullptr)
     {

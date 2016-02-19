@@ -9,6 +9,8 @@
     <ClCompile Include="ControlPanelHandlers.cpp" />
     <ClCompile Include="MockLampDevice.cpp" />
     <ClCompile Include="LSFHandler.cpp" />
+    <ClCompile Include="HeadlessStartupTask.cpp" />
+    <ClCompile Include="HeadedBackgroundTask.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -22,6 +24,8 @@
     <ClInclude Include="MockLampConsts.h" />
     <ClInclude Include="LSFHandler.h" />
     <ClInclude Include="MockLampDevice.h" />
+    <ClInclude Include="HeadlessStartupTask.h" />
+    <ClInclude Include="HeadedBackgroundTask.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="DimmableLight.jpg" />

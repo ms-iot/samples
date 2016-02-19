@@ -20,7 +20,7 @@ using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 
 using namespace BridgeRT;
-using namespace DsbCommon;
+
 
 namespace AdapterLib
 {

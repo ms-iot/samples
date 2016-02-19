@@ -20,7 +20,10 @@
 #include "BACnetAdapterDevice.h"
 #include "BfiDefinitions.h"
 #include "BACnetDef.h"
-#include "Misc.h"
+#include "BridgeUtils.h"
+#include "AdapterUtils.h"
+#include <cctype>
+#include <functional>
 
 
 using namespace Platform;
@@ -28,7 +31,6 @@ using namespace Platform::Collections;
 using namespace Windows::Foundation::Collections;
 
 using namespace BridgeRT;
-using namespace DsbCommon;
 
 // minutes to mSec
 static DWORD MIN_TO_MSEC = (60 * 1000);
@@ -55,7 +57,9 @@ namespace AdapterLib
         this->adapterName = ref new String(cAdapterName.c_str());
         // the adapter prefix must be something like "com.mycompany" (only alpha num and dots)
         // it is used by the Device System Bridge as root string for all services and interfaces it exposes
-        this->exposedAdapterPrefix = ref new String(cAdapterPrefix.c_str());
+        std::wstring adapterPrefix = cDomainPrefix + L"." + cVendor;
+        std::transform(adapterPrefix.begin(), adapterPrefix.end(), adapterPrefix.begin(), std::tolower);
+        this->exposedAdapterPrefix = ref new String(adapterPrefix.c_str());
 
         this->exposedApplicationGuid = Platform::Guid(DSB_BACNET_APPLICATION_GUID);
 
@@ -85,7 +89,7 @@ namespace AdapterLib
         uint32 status = ERROR_SUCCESS;
 
         // Sync access to configuration parameters
-        AutoLock sync(&this->lock, true);
+        AutoLock sync(this->lock);
 
         try
         {
@@ -110,7 +114,7 @@ namespace AdapterLib
         uint32 status = ERROR_SUCCESS;
 
         // Sync access to configuration parameters
-        AutoLock sync(&this->lock, true);
+        AutoLock sync(this->lock);
 
         String^ configurationXml;
         status = WIN32_FROM_HRESULT(adapterConfig.GetConfig(&configurationXml));
@@ -421,7 +425,7 @@ namespace AdapterLib
             int mmapkey = Signal->GetHashCode();
 
             // Sync access to listeners list
-            AutoLock sync(&this->lock, true);
+            AutoLock sync(this->lock);
 
             // check if the listener is already registered for the signal
             auto handlers = this->signalListeners.equal_range(mmapkey);
@@ -493,7 +497,7 @@ namespace AdapterLib
         int mmapkey = Signal->GetHashCode();
 
         // Sync access to listeners list
-        AutoLock sync(&this->lock, true);
+        AutoLock sync(this->lock);
 
         // get all the listeners for the SignalHandle
         auto handlers = this->signalListeners.equal_range(mmapkey);
@@ -538,7 +542,7 @@ namespace AdapterLib
         int mmapkey = Signal->GetHashCode();
 
         // Sync access to listeners list
-        AutoLock sync(&this->lock, true);
+        AutoLock sync(this->lock);
 
         // Iterate through listeners
         auto handlers = signalListeners.equal_range(mmapkey);
@@ -566,7 +570,9 @@ namespace AdapterLib
             return true;
         }
 
-        String^ modelName = ToLower(DeviceModelName->Data());
+        std::wstring deviceModelName(DeviceModelName->Data());
+        std::transform(deviceModelName.begin(), deviceModelName.end(), deviceModelName.begin(), tolower);
+        String^ modelName = ref new String(deviceModelName.c_str());
 
         for (String^ devToken : this->adapterConfig.AllowedDeviceList)
         {
@@ -616,7 +622,7 @@ namespace AdapterLib
     IAdapterSignal^
     BACnetAdapter::getSignalByName(String^ SignalName)
     {
-        AutoLock sync(&this->lock, true);
+        AutoLock sync(this->lock);
 
         for (UINT signalInx = 0; signalInx < this->signals.size(); ++signalInx)
         {
@@ -709,7 +715,7 @@ namespace AdapterLib
 
         try
         {
-            AutoLock sync(&this->lock, true);
+            AutoLock sync(this->lock);
 
             auto insertRes = this->deviceLookup.insert(std::pair<ULONG, BACnetAdapterDevice^>(EventParameters->AsNewDevice.DeviceId, newDevice));
             if (insertRes.second)

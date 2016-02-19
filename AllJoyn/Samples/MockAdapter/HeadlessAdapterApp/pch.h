@@ -16,7 +16,11 @@
 
 #pragma once
 
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+
 #include <collection.h>
 #include <ppltasks.h>
 #include <agile.h>
-#include "Misc.h"
+

@@ -11,8 +11,8 @@
     <AssemblyName>AdapterLib</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>$targetplatformversion$</TargetPlatformVersion>
+    <TargetPlatformMinVersion>$targetplatformminversion$</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -111,6 +111,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Adapter.cs" />
+    <Compile Include="HeadedBackgroundTask.cs" />
+    <Compile Include="HeadlessStartupTask.cs" />
     <Compile Include="AdapterDevice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -120,6 +122,18 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BackgroundHost.Headed\BackgroundHost.Headed.vcxproj">
+      <Project>{0184c325-c1df-4305-b202-324cb0413377}</Project>
+      <Name>BackgroundHost.Headed</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BackgroundHost.Headless\BackgroundHost.Headless.vcxproj">
+      <Project>{14882a0f-8926-4837-8e25-06d3f58b1df8}</Project>
+      <Name>BackgroundHost.Headless</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BackgroundHost\BackgroundHost.vcxproj">
+      <Project>{98b5350d-3b67-4109-9cd5-1a675295c461}</Project>
+      <Name>BackgroundHost</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BridgeRT\BridgeRT.vcxproj">
       <Project>{2783a617-8e1d-40d1-9684-dfaeb8dd5406}</Project>
       <Name>BridgeRT</Name>
