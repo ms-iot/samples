@@ -398,7 +398,9 @@ namespace IoTCoreDefaultApp
 
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
+            RefreshButton.IsEnabled = false;
             SetupWifi();
+            RefreshButton.IsEnabled = true;
         }
 
         /// <summary>
