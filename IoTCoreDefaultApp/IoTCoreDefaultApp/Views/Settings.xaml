@@ -79,7 +79,7 @@
                     </Border>
                     <TextBlock Text="{Binding Ssid}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
                 </StackPanel>
-                <CheckBox Grid.Row="1" x:Name="ConnectAutomaticallyCheckBox" IsChecked="True" HorizontalAlignment="Left" Margin="45,0,0,0" Height="32" Checked="ConnectAutomaticallyCheckBox_Checked" Style="{StaticResource IoTCoreDefaultAppCheckBoxStyle}">
+                <CheckBox Grid.Row="1" x:Name="ConnectAutomaticallyCheckBox" IsChecked="True" HorizontalAlignment="Left" Margin="45,0,0,0" Height="32" Checked="ConnectAutomaticallyCheckBox_Changed" Unchecked="ConnectAutomaticallyCheckBox_Changed" Style="{StaticResource IoTCoreDefaultAppCheckBoxStyle}">
                     <TextBlock Text="{Binding ElementName='rootPage', Path=DataContext[ConnectAutomaticallyText]}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}"/>
                 </CheckBox>
                 <Button Grid.Row="3" Content="{Binding ElementName='rootPage', Path=DataContext[ConnectButtonContent]}" x:Name="ConnectButton" Width="120" Height="32" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="ConnectButton_Clicked" Margin="102,0,0,0"/>

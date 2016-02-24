@@ -338,7 +338,7 @@ namespace IoTCoreDefaultApp
             return item;
         }
 
-        private void ConnectAutomaticallyCheckBox_Checked(object sender, RoutedEventArgs e)
+        private void ConnectAutomaticallyCheckBox_Changed(object sender, RoutedEventArgs e)
         {
             var checkbox = sender as CheckBox;
 
