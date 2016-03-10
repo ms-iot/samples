@@ -121,6 +121,8 @@ namespace IoTCoreDefaultApp
             }
             // Ensure the current window is active
             Window.Current.Activate();
+
+            Screensaver.InitializeScreensaver();
         }
 
         protected override void OnActivated(IActivatedEventArgs args)

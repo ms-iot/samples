@@ -697,4 +697,12 @@
 {1}</value>
     <comment>Format for message displayed when an inbounbd pairing request is received</comment>
   </data>
+  <data name="EnableScreensaverText" xml:space="preserve">
+    <value>Screensaver</value>
+    <comment>Toggle switch for enabling the screensaver</comment>
+  </data>
+  <data name="NoDeviceName" xml:space="preserve">
+    <value>&lt;no device name&gt;</value>
+    <comment>This is shown when we fail to retrieve a valid device name (very strange case)</comment>
+  </data>
 </root>

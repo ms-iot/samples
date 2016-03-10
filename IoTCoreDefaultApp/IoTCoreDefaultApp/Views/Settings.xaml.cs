@@ -66,6 +66,7 @@ namespace IoTCoreDefaultApp
             this.Loaded += (sender, e) =>
             {
                 SetupLanguages();
+                screensaverToggleSwitch.IsOn = Screensaver.IsScreensaverEnabled;
             };
         }
 
@@ -337,7 +338,7 @@ namespace IoTCoreDefaultApp
             return item;
         }
 
-        private void ConnectAutomaticallyCheckBox_Checked(object sender, RoutedEventArgs e)
+        private void ConnectAutomaticallyCheckBox_Changed(object sender, RoutedEventArgs e)
         {
             var checkbox = sender as CheckBox;
 
@@ -952,6 +953,12 @@ namespace IoTCoreDefaultApp
             {
                 StopWatchingAndDisplayConfirmationMessage();
             }
+        }
+
+        private void Screensaver_Toggled(object sender, RoutedEventArgs e)
+        {
+            var screensaverToggleSwitch = sender as ToggleSwitch;
+            Screensaver.IsScreensaverEnabled = screensaverToggleSwitch.IsOn;
         }
     }
 }
