@@ -221,5 +221,14 @@ namespace IoTCoreDefaultApp
             SetupWifi();
             RefreshButton.IsEnabled = true;
         }
+
+        private void WifiPasswordBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            var passwordBox = sender as PasswordBox;
+            if (passwordBox != null)
+            {
+                passwordBox.Focus(FocusState.Programmatic);
+            }
+        }
     }
 }
