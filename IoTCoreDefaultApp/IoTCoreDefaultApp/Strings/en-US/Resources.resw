@@ -192,6 +192,10 @@
     <value>Raspberry Pi 2</value>
     <comment>Board name</comment>
   </data>
+  <data name="Rpi3Name" xml:space="preserve">
+    <value>Raspberry Pi 3</value>
+    <comment>Board name</comment>
+  </data>
   <data name="DB410Name" xml:space="preserve">
     <value>DragonBoard 410c</value>
     <comment>Board name</comment>
@@ -324,6 +328,12 @@
   </data>
   <data name="TutorialBlinkyBody5Text" xml:space="preserve">
     <value>Disclaimer: Microsoft takes no responsibility for whatever damage may be caused by hosting such a huge rave of a party using the small blinking LED on your board.</value>
+  </data>
+  <data name="TutorialBlinkyBody6Text_Rpi3" xml:space="preserve">
+    <value>For Raspberry Pi 3, connect an LED to GPIO pin 5.</value>
+  </data>
+  <data name="TutorialBlinkyBody6Text_Dragonboard" xml:space="preserve">
+    <value>For DragonBoard 410c, connect an LED to GPIO pin 115.</value>
   </data>
   <data name="TutorialBlinkyTitle1Text" xml:space="preserve">
     <value>Hello Blinky</value>

@@ -5,7 +5,7 @@ using System;
 
 namespace IoTCoreDefaultApp.Utils
 {
-    public enum DeviceTypes { RPI2, MBM, DB410, GenericBoard, Unknown };
+    public enum DeviceTypes { RPI2, RPI3, MBM, DB410, GenericBoard, Unknown };
     public static class DeviceTypeInformation
     {
         static DeviceTypes _type = DeviceTypes.Unknown;
@@ -23,7 +23,14 @@ namespace IoTCoreDefaultApp.Utils
                 }
                 else if (deviceInfo.SystemProductName.IndexOf("Raspberry", StringComparison.OrdinalIgnoreCase) >= 0)
                 {
-                    _type = DeviceTypes.RPI2;
+                    if (deviceInfo.SystemProductName.IndexOf("Pi 3", StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        _type = DeviceTypes.RPI3;
+                    }
+                    else
+                    {
+                        _type = DeviceTypes.RPI2;
+                    }
                 }
                 else if (deviceInfo.SystemProductName == "SBC")
                 {
@@ -33,6 +40,14 @@ namespace IoTCoreDefaultApp.Utils
                 {
                     _type = DeviceTypes.GenericBoard;
                 }
+            }
+        }
+
+        public static bool IsRaspberryPi
+        {
+            get
+            {
+                return Type == DeviceTypes.RPI2 || Type == DeviceTypes.RPI3;
             }
         }
 
