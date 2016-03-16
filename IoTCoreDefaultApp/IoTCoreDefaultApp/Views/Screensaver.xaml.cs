@@ -98,12 +98,18 @@ namespace IoTCoreDefaultApp
 
         private static void App_KeyDown(object sender, KeyRoutedEventArgs args)
         {
-            ResetScreensaverTimeout();
+            if (IsScreensaverEnabled)
+            {
+                ResetScreensaverTimeout();
+            }
         }
 
         private static void App_PointerEvent(object sender, PointerRoutedEventArgs e)
         {
-            ResetScreensaverTimeout();
+            if (IsScreensaverEnabled)
+            {
+                ResetScreensaverTimeout();
+            }
         }
 
         // Resets the timer and starts over.
@@ -130,7 +136,10 @@ namespace IoTCoreDefaultApp
         protected override void OnPointerMoved(PointerRoutedEventArgs e)
         {
             base.OnPointerMoved(e);
-            ResetScreensaverTimeout();
+            if (IsScreensaverEnabled)
+            {
+                ResetScreensaverTimeout();
+            }
         }
 
         private void MoveTimer_Tick(object sender, object e)
