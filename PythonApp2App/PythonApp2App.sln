@@ -1,0 +1,65 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppServer", "AppServer\AppServer.csproj", "{08799B96-F6AC-4CCB-8125-1063282CFD92}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "AppClient", "AppClient\AppClient.pyproj", "{113979F9-5C92-4752-8A51-7211B2BEA1DB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B33CD338-91A5-4BC1-8CDE-77D52B2E7412}"
+	ProjectSection(SolutionItems) = preProject
+		PythonApp2App.md = PythonApp2App.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM = Debug|ARM
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|ARM = Release|ARM
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{08799B96-F6AC-4CCB-8125-1063282CFD92}.Debug|ARM.ActiveCfg = Debug|ARM
+		{08799B96-F6AC-4CCB-8125-1063282CFD92}.Debug|ARM.Build.0 = Debug|ARM
+		{08799B96-F6AC-4CCB-8125-1063282CFD92}.Debug|ARM.Deploy.0 = Debug|ARM
+		{08799B96-F6AC-4CCB-8125-1063282CFD92}.Debug|x64.ActiveCfg = Debug|x64
+		{08799B96-F6AC-4CCB-8125-1063282CFD92}.Debug|x64.Build.0 = Debug|x64
+		{08799B96-F6AC-4CCB-8125-1063282CFD92}.Debug|x64.Deploy.0 = Debug|x64
+		{08799B96-F6AC-4CCB-8125-1063282CFD92}.Debug|x86.ActiveCfg = Debug|x86
+		{08799B96-F6AC-4CCB-8125-1063282CFD92}.Debug|x86.Build.0 = Debug|x86
+		{08799B96-F6AC-4CCB-8125-1063282CFD92}.Debug|x86.Deploy.0 = Debug|x86
+		{08799B96-F6AC-4CCB-8125-1063282CFD92}.Release|ARM.ActiveCfg = Release|ARM
+		{08799B96-F6AC-4CCB-8125-1063282CFD92}.Release|ARM.Build.0 = Release|ARM
+		{08799B96-F6AC-4CCB-8125-1063282CFD92}.Release|ARM.Deploy.0 = Release|ARM
+		{08799B96-F6AC-4CCB-8125-1063282CFD92}.Release|x64.ActiveCfg = Release|x64
+		{08799B96-F6AC-4CCB-8125-1063282CFD92}.Release|x64.Build.0 = Release|x64
+		{08799B96-F6AC-4CCB-8125-1063282CFD92}.Release|x64.Deploy.0 = Release|x64
+		{08799B96-F6AC-4CCB-8125-1063282CFD92}.Release|x86.ActiveCfg = Release|x86
+		{08799B96-F6AC-4CCB-8125-1063282CFD92}.Release|x86.Build.0 = Release|x86
+		{08799B96-F6AC-4CCB-8125-1063282CFD92}.Release|x86.Deploy.0 = Release|x86
+		{113979F9-5C92-4752-8A51-7211B2BEA1DB}.Debug|ARM.ActiveCfg = Debug|ARM
+		{113979F9-5C92-4752-8A51-7211B2BEA1DB}.Debug|ARM.Build.0 = Debug|ARM
+		{113979F9-5C92-4752-8A51-7211B2BEA1DB}.Debug|ARM.Deploy.0 = Debug|ARM
+		{113979F9-5C92-4752-8A51-7211B2BEA1DB}.Debug|x64.ActiveCfg = Debug|x64
+		{113979F9-5C92-4752-8A51-7211B2BEA1DB}.Debug|x64.Build.0 = Debug|x64
+		{113979F9-5C92-4752-8A51-7211B2BEA1DB}.Debug|x64.Deploy.0 = Debug|x64
+		{113979F9-5C92-4752-8A51-7211B2BEA1DB}.Debug|x86.ActiveCfg = Debug|x86
+		{113979F9-5C92-4752-8A51-7211B2BEA1DB}.Debug|x86.Build.0 = Debug|x86
+		{113979F9-5C92-4752-8A51-7211B2BEA1DB}.Debug|x86.Deploy.0 = Debug|x86
+		{113979F9-5C92-4752-8A51-7211B2BEA1DB}.Release|ARM.ActiveCfg = Release|ARM
+		{113979F9-5C92-4752-8A51-7211B2BEA1DB}.Release|ARM.Build.0 = Release|ARM
+		{113979F9-5C92-4752-8A51-7211B2BEA1DB}.Release|ARM.Deploy.0 = Release|ARM
+		{113979F9-5C92-4752-8A51-7211B2BEA1DB}.Release|x64.ActiveCfg = Release|x64
+		{113979F9-5C92-4752-8A51-7211B2BEA1DB}.Release|x64.Build.0 = Release|x64
+		{113979F9-5C92-4752-8A51-7211B2BEA1DB}.Release|x64.Deploy.0 = Release|x64
+		{113979F9-5C92-4752-8A51-7211B2BEA1DB}.Release|x86.ActiveCfg = Release|x86
+		{113979F9-5C92-4752-8A51-7211B2BEA1DB}.Release|x86.Build.0 = Release|x86
+		{113979F9-5C92-4752-8A51-7211B2BEA1DB}.Release|x86.Deploy.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
