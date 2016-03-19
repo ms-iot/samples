@@ -10,12 +10,10 @@ lang: en-US
 {% include VerifiedVersion.md %}
 
 When writing a Python app for Windows 10 IoT Core you may find yourself trying to use a class available in the UWP namespace only to
-realize that there is no UPW namespace in Python today. But you do have an option. We can take advantage of App Services to call UWP functions
-from another app on our device that does have the UWP namespace.
-
-Windows 10 introduced new ways for applications to communicate with each other. One of those ways is to implement "App Services." 
-App Services is a request/response model where one app can call a service located within another app. 
-App Services enables communication between apps, but also with the system.
+realize that the UWP namespace is not accessible. Although you cannot call UWP functions directly from Python, you still can take advantage 
+of UWP functions. Windows 10 introduced new ways for applications to communicate with each other. One of those ways is to implement 
+"App Services." App Services is a request/response model where one app can call a service located within another app. 
+App Services enables communication between apps, but also with the system. 
 
 ### Set up your PC
 * Follow the instructions [here]({{site.baseurl}}/{{page.lang}}/GetStarted.htm) to setup your device and PC.
@@ -83,14 +81,16 @@ main()
 
 Here we'll create the connection, assign the event handlers, and open the connection to our server
 You will need to know the 'AppServiceName' of your AppService server and the 'PackageFamilyName' of your AppService server
+_This can be found in the Package.appxmainfest file_
+![Package.appxmanifest Packaging Screenshot](Assets/package-packaging-screenshot.png)
 {% highlight Python %}
 def main():
 	with AppService.AppServiceConnection() as conn:
 		conn.ServiceClosed.Add(OnServiceClosed)
 		conn.RequestReceived.Add(OnRequestReceived)
 
-		conn.AppServiceName = "HelloService"
-		conn.PackageFamilyName = "Service-uwp_gpek5j0d8wyr0"
+		conn.AppServiceName = "AppServer-uwp_y3yrc27jh5z9e"
+		conn.PackageFamilyName = "AppServer-uwp_y3yrc27jh5z9e"
 
 		print("Opening...")
 		status = conn.Open()
