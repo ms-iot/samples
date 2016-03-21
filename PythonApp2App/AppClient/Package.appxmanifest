@@ -9,7 +9,7 @@
 
   <Identity
 	  Name="AppClient"
-	  Publisher="CN=trmck"
+	  Publisher="CN=MSFT"
 	  Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="2abd5def-cf52-45a2-b8ad-1b9a7b37cdb5" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
@@ -50,9 +50,6 @@
   </Applications>
 
   <Capabilities>
-    <Capability Name="internetClient" />
-    <Capability Name="internetClientServer" />
-    <Capability Name="privateNetworkClientServer" />
   </Capabilities>
 
   <Extensions>
