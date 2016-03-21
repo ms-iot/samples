@@ -25,7 +25,7 @@ namespace AppServer
 
             if (appService != null)
             {
-                if (appService.Name.Equals("HelloService"))
+                if (appService.Name.Equals("App2AppService"))
                 {
                     appService.AppServiceConnection.RequestReceived += AppServiceConnection_RequestReceived;
 
@@ -38,18 +38,6 @@ namespace AppServer
                     deferral.Complete();
                 }
             }
-        }
-
-        void Foo<Type>(ValueSet v)
-        {
-            var arr = new Type[0];
-            v.Add(arr.GetType().Name + "null array", arr);
-        }
-
-        void Foobar<Type>(ValueSet v)
-        {
-            var arr = new Type[5];
-            v.Add(arr.GetType().Name + " array", arr);
         }
 
         private async void AppServiceConnection_RequestReceived(AppServiceConnection sender, AppServiceRequestReceivedEventArgs args)

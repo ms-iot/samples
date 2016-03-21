@@ -29,7 +29,7 @@ def main():
         conn.ServiceClosed.Add(OnServiceClosed)
         conn.RequestReceived.Add(OnRequestReceived)
 
-        conn.AppServiceName = "AppServer-uwp"
+        conn.AppServiceName = "App2AppService"
         conn.PackageFamilyName = "AppServer-uwp_y3yrc27jh5z9e"
 
         print("Opening...")
