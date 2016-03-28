@@ -8,7 +8,7 @@
     </AllJoynOnboarding>
     <SoftAP>
         <Enabled value="true"/>
-        <Password value="password"/>
+        <Password value="p@ssw0rd"/>
         <Ssid value="SoftAPSsid"/>
     </SoftAP>
 </IoTOnboarding>
