@@ -76,6 +76,9 @@ namespace IoTCoreDefaultApp
 
             LanguageListBox.ItemsSource = languageManager.LanguageDisplayNames;
             LanguageListBox.SelectedItem = LanguageManager.GetCurrentLanguageDisplayName();
+
+            InputLanguageListBox.ItemsSource = languageManager.InputLanguageDisplayNames;
+            InputLanguageListBox.SelectedItem = LanguageManager.GetCurrentInputLanguageDisplayName();
         }
 
         private void SetupNetwork()
@@ -201,6 +204,16 @@ namespace IoTCoreDefaultApp
             languageManager.UpdateLanguage(listBox.SelectedItem as string);
         }
 
+        private void InputLanguageListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var listBox = sender as ListBox;
+            if (listBox.SelectedItem == null)
+            {
+                return;
+            }
+
+            languageManager.UpdateInputLanguage(listBox.SelectedItem as string);
+        }
 
         private void SetupEthernet()
         {
