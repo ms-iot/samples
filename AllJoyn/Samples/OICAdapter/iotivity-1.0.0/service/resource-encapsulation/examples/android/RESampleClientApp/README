@@ -1,0 +1,23 @@
+To build the app 
+
+1. build Iotivity with TARGET_OS=android
+
+2. Copy aar files into app/libs folder
+   - {Iotivity_root}/android/android_api/base/build/outputs/aar/iotivity-{TARGET_ARCH}-base-{MODE}.aar
+   - {Iotivity_root}/service/resource-encapsulation/android/service/build/outputs/aar/iotivity-{TARGET_ARCH}-service-{MODE}.aar
+
+3. Configure dependencies for libs in app/build.gradle
+   - default TARGET_ARCH is armeabi
+   - default MODE is release
+
+   for example, if you build Iotivity as follows,
+   
+   $scons TARGET_OS=android TARGET_ARCH=x86 RELEASE=0
+
+   then, dependencies should be modified like below
+
+   dependencies {
+      compile(name:'iotivity-x86-service-debug', ext:'aar')
+      compile(name:'iotivity-x86-base-debug', ext:'aar')
+   }
+   

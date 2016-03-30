@@ -1,0 +1,80 @@
+#******************************************************************
+#
+# Copyright 2014 Intel Mobile Communications GmbH All Rights Reserved.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+Import('env')
+target_os = env.get('TARGET_OS')
+samples_env = env.Clone()
+with_ra = env.get ('WITH_RA')
+######################################################################
+# Build flags
+######################################################################
+samples_env.PrependUnique(CPPPATH = [
+		'../../../../logger/include',
+		'../../../../stack/include',
+		'../../../../../../extlibs/cjson',
+		'../../../../../oc_logger/include',
+		'../../../../../connectivity/lib/libcoap-4.1.1'
+		])
+
+samples_env.AppendUnique(CXXFLAGS = ['-std=c++0x', '-Wall', '-pthread'])
+samples_env.AppendUnique(RPATH = [env.get('BUILD_DIR')])
+samples_env.AppendUnique(LIBS = ['-lpthread' ])
+samples_env.AppendUnique(LIBPATH = [env.get('BUILD_DIR')])
+
+if target_os in ['darwin', 'ios']:
+	samples_env.PrependUnique(LIBS = ['m','octbstack', 'ocsrm', 'connectivity_abstraction','coap' ])
+elif target_os not in ['arduino']:
+	samples_env.PrependUnique(LIBS = ['m', 'octbstack', 'ocsrm', 'connectivity_abstraction', 'coap'])
+	samples_env.AppendUnique(LIBS = ['rt'])
+
+if env.get('SECURED') == '1':
+    samples_env.AppendUnique(LIBS = ['tinydtls'])
+
+samples_env.AppendUnique(CPPDEFINES = ['TB_LOG'])
+
+######################################################################
+# Source files and Targets
+######################################################################
+ocserver         = samples_env.Program('ocserver', ['ocserver.cpp', 'common.cpp'])
+if samples_env.get('ROUTING') == 'GW':
+	ocrouting        = samples_env.Program('ocrouting', ['ocrouting.cpp', 'common.cpp'])
+occlient         = samples_env.Program('occlient', ['occlient.cpp', 'common.cpp'])
+ocserverslow     = samples_env.Program('ocserverslow', ['ocserverslow.cpp', 'common.cpp'])
+occlientslow     = samples_env.Program('occlientslow', ['occlientslow.cpp', 'common.cpp'])
+ocservercoll     = samples_env.Program('ocservercoll', ['ocservercoll.cpp', 'common.cpp'])
+occlientcoll     = samples_env.Program('occlientcoll', ['occlientcoll.cpp', 'common.cpp'])
+ocserverbasicops = samples_env.Program('ocserverbasicops', ['ocserverbasicops.cpp', 'common.cpp'])
+occlientbasicops = samples_env.Program('occlientbasicops', ['occlientbasicops.cpp', 'common.cpp'])
+if with_ra:
+	ocremoteaccessclient = samples_env.Program('ocremoteaccessclient',
+						['ocremoteaccessclient.cpp','common.cpp'])
+
+list_of_samples = [ocserver, occlient,
+				ocservercoll, occlientcoll,
+				ocserverbasicops, occlientbasicops,
+				ocserverslow, occlientslow
+                ]
+if with_ra:
+	list_of_samples.append (ocremoteaccessclient)
+Alias("samples", list_of_samples)
+
+env.AppendTarget('samples')
+
+

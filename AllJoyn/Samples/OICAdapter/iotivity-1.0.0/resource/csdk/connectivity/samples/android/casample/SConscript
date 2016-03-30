@@ -1,0 +1,28 @@
+import os
+import platform
+Import('env')
+
+ANDROID_TARGET_ARCH = env.get('TARGET_ARCH')
+if env.get('RELEASE'):
+	ANDROID_RELEASE="release"
+else:
+	ANDROID_RELEASE="debug"
+
+print '''
+***************************************** Info ********************************
+* NOTE: If you have a problem in downloading the gradle-core-1.1.0.jar file   *
+*       please do one time setup as below                                     *
+*                                                                             *
+* Edit resource/csdk/connectivity/samples/android/casample/gradle.properties  *
+* Add the proxy information as below :                                        *
+*    systemProp.http.proxyPort=<YOUR_PORT_NUMBER>                             *
+*    systemProp.http.proxyHost=<YOUR_HTTP_PROXY_ADDRESS>                      *
+*    systemProp.https.proxyPort=<YOUR_PORT_NUMBER>                            *
+*    systemProp.https.proxyHost=<YOUR_HTTP_PROXY_ADDRESS>                     *
+*                                                                             *
+*******************************************************************************
+'''
+jdk_env = Environment(ENV=os.environ)
+jdk_env['BUILDERS']['Gradle'] = Builder(action = env.get('ANDROID_GRADLE') + ' build -b' + Dir('.').srcnode().abspath + '/build.gradle -PTARGET_ARCH=%s -PRELEASE=%s' %(ANDROID_TARGET_ARCH, ANDROID_RELEASE))
+jdk_env.Gradle(target="base/objs", source="sampleService/src/main/java/org/iotivity/ca/service/MainActivity.java")
+

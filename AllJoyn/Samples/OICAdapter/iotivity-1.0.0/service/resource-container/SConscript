@@ -1,0 +1,247 @@
+#******************************************************************
+#
+# Copyright 2015 Samsung Electronics All Rights Reserved.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+##
+# resource container build script
+##
+import os
+Import('env')
+import os.path
+
+containerJavaSupport = ARGUMENTS.get('containerJavaSupport',0)
+
+def filtered_glob(env, pattern, omit=[],
+  ondisk=True, source=False, strings=False):
+    return filter(
+      lambda f: os.path.basename(f.path) not in omit,
+      env.Glob(pattern))
+
+env.AddMethod(filtered_glob, "FilteredGlob");
+
+# Add third party libraries
+lib_env = env.Clone()
+SConscript(env.get('SRC_DIR') + '/service/third_party_libs.scons', exports = 'lib_env')
+
+resource_container_env = lib_env.Clone()
+target_os = env.get('TARGET_OS')
+######################################################################
+# Build flags
+######################################################################
+
+if int(containerJavaSupport):
+    try:
+        print 'Java Home: ', os.environ['JAVA_HOME']
+        print 'Java Lib: ', os.environ['JAVA_LIB']
+        resource_container_env.Append(CPPDEFINES={'JAVA_SUPPORT':1})
+    except KeyError:
+        print '''
+    *********************************** Error *************************************
+    * Building resource container without Java support. JAVA_HOME or JAVA_LIB are not set properly
+    * Please configure JAVA_HOME to point to your Java 7 JDK and
+    * JAVA_LIB to your folder containing libjvm
+    * Example: export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-i386
+    *          export JAVA_LIB=/usr/lib/jvm/java-7-openjdk-i386/jre/lib/i386/server
+    *******************************************************************************
+        '''
+        resource_container_env.Append(CPPDEFINES={'JAVA_SUPPORT':0})
+
+
+resource_container_env.AppendUnique(
+    CPPPATH = [
+        env.get('SRC_DIR')+'/extlibs',
+        '../resource-encapsulation/include',
+        'include',
+        'bundle-api/include',
+        'src'
+    ])
+
+if int(containerJavaSupport):
+    try:
+        resource_container_env.AppendUnique(
+        CPPPATH = [
+            os.environ['JAVA_HOME']+'/include',
+            os.environ['JAVA_HOME']+'/include/linux'
+        ])
+    except KeyError:
+        print ''
+
+
+if target_os not in ['windows', 'winrt']:
+    resource_container_env.AppendUnique(CXXFLAGS = ['-std=c++0x', '-Wall'])
+    if target_os != 'android':
+        resource_container_env.AppendUnique(CXXFLAGS = ['-pthread'])
+
+if target_os not in ['darwin', 'ios', 'windows', 'winrt']:
+    resource_container_env.AppendUnique(LINKFLAGS = ['-Wl,--no-undefined'])
+
+if target_os == 'android':
+    resource_container_env.AppendUnique(CXXFLAGS = ['-frtti', '-fexceptions'])
+    resource_container_env.PrependUnique(LIBS = ['gnustl_shared', 'log'])
+
+try:
+    resource_container_env.AppendUnique(LIBPATH = [os.environ['JAVA_LIB']])
+except KeyError:
+    print ''
+
+
+resource_container_env.PrependUnique(LIBS = ['rcs_client', 'rcs_server', 'rcs_common', 'oc','octbstack', 'oc_logger', 'connectivity_abstraction'])
+resource_container_env.AppendUnique(LIBS = ['dl', 'boost_system', 'boost_date_time', 'boost_thread'])
+
+if int(containerJavaSupport):
+    try:
+        print 'Java Lib: ', os.environ['JAVA_LIB']
+        resource_container_env.AppendUnique(LIBS = ['jvm'])
+    except KeyError:
+        print ''
+
+######################################################################
+# Source files and Targets
+######################################################################
+res_container_src = ['src/BaseActivator.cpp','src/BundleActivator.cpp','src/RCSBundleInfo.cpp',
+    'src/BundleInfoInternal.cpp', 'src/BundleResource.cpp', 'src/Configuration.cpp', 'src/JavaBundleResource.cpp', 'src/ProtocolBridgeResource.cpp',
+    'src/ProtocolBridgeConnector.cpp', 'src/RCSResourceContainer.cpp', 'src/ResourceContainerBundleAPI.cpp', 'src/ResourceContainerImpl.cpp',
+    'src/SoftSensorResource.cpp', 'src/DiscoverResourceUnit.cpp', 'src/RemoteResourceUnit.cpp',
+    ]
+
+res_container_static = resource_container_env.StaticLibrary('rcs_container', res_container_src)
+res_container_shared = resource_container_env.SharedLibrary('rcs_container', res_container_src)
+
+resource_container_env.InstallTarget([res_container_static,res_container_shared], 'libResContainer')
+
+resource_container_env.UserInstallTargetHeader('include/RCSBundleInfo.h', 'service/resource-container', 'RCSBundleInfo.h')
+resource_container_env.UserInstallTargetHeader('include/RCSResourceContainer.h', 'service/resource-container', 'RCSResourceContainer.h')
+
+######################################################################
+# build discomfort index sensor sample bundle
+######################################################################
+if target_os in ['linux', 'tizen', 'android']:
+    DI_sensor_bundle_env = resource_container_env.Clone()
+    DI_sensor_bundle_env.AppendUnique(CCFLAGS = ['-fPIC'])
+
+    DI_SENSOR_BUNDLE_DIR = 'examples/DiscomfortIndexSensorBundle/'
+    DI_sensor_bundle_env.AppendUnique(CPPPATH = [ DI_SENSOR_BUNDLE_DIR + 'include' ])
+
+    DI_sensor_bundle_env.PrependUnique(LIBS = ['rcs_container'])
+
+    DI_sensor_bundle_src = [ Glob(DI_SENSOR_BUNDLE_DIR + 'src/*.cpp')]
+
+    DISensorBundle = DI_sensor_bundle_env.SharedLibrary('DISensorBundle', DI_sensor_bundle_src)
+    DI_sensor_bundle_env.InstallTarget(DISensorBundle, 'libDISensorBundle')
+
+    if target_os == 'linux' :
+        SConscript(DI_SENSOR_BUNDLE_DIR + 'src/inputSensors/SConscript')
+        Command("THSensorApp", DI_SENSOR_BUNDLE_DIR + "src/inputSensors/THSensorApp/THSensorApp", Copy("$TARGET", "$SOURCE"))
+        Command("THSensorApp1", DI_SENSOR_BUNDLE_DIR + "src/inputSensors/THSensorApp1/THSensorApp1", Copy("$TARGET", "$SOURCE"))
+
+######################################################################
+# build BMI sensor sample bundle
+######################################################################
+if target_os in ['linux', 'tizen', 'android']:
+    BMI_sensor_bundle_env = resource_container_env.Clone()
+    BMI_sensor_bundle_env.AppendUnique(CCFLAGS = ['-fPIC'])
+
+    BMI_SENSOR_BUNDLE_DIR = 'examples/BMISensorBundle/'
+    BMI_sensor_bundle_env.AppendUnique(CPPPATH = [ BMI_SENSOR_BUNDLE_DIR + 'include' ])
+
+    BMI_sensor_bundle_env.PrependUnique(LIBS = ['rcs_container'])
+
+    BMI_sensor_bundle_src = [ Glob(BMI_SENSOR_BUNDLE_DIR + 'src/*.cpp')]
+
+    BMISensorBundle = BMI_sensor_bundle_env.SharedLibrary('BMISensorBundle', BMI_sensor_bundle_src)
+    BMI_sensor_bundle_env.InstallTarget(BMISensorBundle, 'libBMISensorBundle')
+
+    if target_os == 'linux' :
+        SConscript(BMI_SENSOR_BUNDLE_DIR + 'src/inputSensors/SConscript')
+        Command("HeightSensorApp", BMI_SENSOR_BUNDLE_DIR + "src/inputSensors/HeightSensorApp/HeightSensorApp", Copy("$TARGET", "$SOURCE"))
+        Command("WeightSensorApp", BMI_SENSOR_BUNDLE_DIR + "src/inputSensors/WeightSensorApp/WeightSensorApp", Copy("$TARGET", "$SOURCE"))
+
+######################################################################
+# build hue sample bundle
+######################################################################
+
+conf2 = Configure(lib_env)
+if not conf2.CheckLib('curl'):
+    print '''X
+*********************************** Error *************************************
+* Cannot build hue sample. Please install libcurl.
+* Example (Ubuntu):
+*   sudo apt-get install libcurl4-openssl-dev
+*   sudo ldconfig
+* Hint: check with pkg-config --libs libcurl and clear scons cache.
+* Skipping hue sample build.
+*******************************************************************************
+    '''
+else:
+    hue_resource_bundle_env = resource_container_env.Clone()
+    hue_resource_bundle_env.AppendUnique(CCFLAGS = ['-fPIC'])
+
+    HUE_RESOURCE_BUNDLE_DIR = 'examples/HueSampleBundle/'
+    hue_resource_bundle_env.AppendUnique(CPPPATH = [
+            HUE_RESOURCE_BUNDLE_DIR + 'include',
+            'include/'
+            ])
+
+    hue_resource_bundle_env.PrependUnique(LIBS = ['curl', 'rcs_container'])
+
+    hue_resource_bundle_src = [ Glob(HUE_RESOURCE_BUNDLE_DIR + 'src/*.cpp')]
+
+    HueBundle = hue_resource_bundle_env.SharedLibrary('HueBundle', hue_resource_bundle_src)
+    hue_resource_bundle_env.InstallTarget(HueBundle, 'libHueBundle')
+lib_env = conf2.Finish()
+
+######################################################################
+# build resource container unit tests
+######################################################################
+if target_os == 'linux':
+    SConscript('unittests/SConscript')
+
+######################################################################
+# Build Container Sample
+######################################################################
+containersample_env = resource_container_env.Clone();
+containersample_env.AppendUnique(LINKFLAGS=["-rdynamic"])
+
+# Copy test configuration
+Command("examples/ResourceContainerConfig.xml","examples/ResourceContainerConfig.xml", Copy("$TARGET", "$SOURCE"))
+Ignore("examples/ResourceContainerConfig.xml", "examples/ResourceContainerConfig.xml")
+
+containersample_env.AppendUnique(LIBS = ['rcs_container'])
+
+containersampleapp_src =  ['examples/ContainerSample.cpp']
+containersampleapp = containersample_env.Program('ContainerSample',containersampleapp_src)
+Alias("containersample", containersampleapp)
+env.AppendTarget('containersample')
+
+######################################################################
+# Build Container Sample Client
+######################################################################
+containersampleclient_env = resource_container_env.Clone();
+
+containersample_env.AppendUnique(LIBS = ['rcs_container'])
+containersampleclient_src =  ['examples/ContainerSampleClient.cpp']
+containersampleclientapp = containersample_env.Program('ContainerSampleClient',containersampleclient_src)
+Alias("containersampleclient", containersampleclientapp)
+env.AppendTarget('containersampleclient')
+
+######################################################################
+# Build Container Java SDK
+######################################################################
+if target_os == 'android':
+    SConscript('android/SConscript')

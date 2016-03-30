@@ -1,0 +1,98 @@
+Release notes
+Release date: Aug 5th, 2014.
+OS: Ubuntu 12.0.4 and above
+Requires boost version 1.55 to build.
+NOTE: Boost is not distributed but should be installed in the Ubuntu machine.
+
+What’s new?
+Class OCPlatform (Header file: OCPlatform.h)
+registerResource API (signature update)
+•This API provides the ability to register the resource with its name, type and list of properties
+•Signature of this API has changed. The API takes reference to resource handle which will be filled upon successful registration. Other parameters include resource URI, resource Type, resource interface, entity handler address and resource property (whether discoverable, observable etc.).
+•NOTE: This applies to server side functionality.
+•NOTE: This API might get modified to accommodate for resource collection in future.
+
+notifyObservers API
+•This new API provides the ability to notify core that resource’s attributes have changed. When entity handler is ready to indicate core that a resource has changed, notifyObservers API needs to be invoked.
+•This API takes resource handle as the only parameter.
+•NOTE: This applies to server side functionality.
+•NOTE: This API might get modified to accommodate for resource collection in future.
+
+Class OCResource (Header file: OCResource.h)
+
+get API
+•This new API provides the ability to get the attributes of a resource. This API takes a callback as parameter. Callback will be invoked with Attribute map which will provide representation of the resource. Callback will also include error code for GET operation.
+•NOTE: This applies to client side functionality.
+•NOTE: This API might get modified to accommodate for resource collection in future.
+
+put API
+•This new API provides the ability to set the attributes of a resource via PUT.
+•This API takes Attribute map, query parameter map and a callback as parameters. Callback will be invoked with Attribute map which will provide current representation of the resource. Callback will also include error code for PUT operation.
+•NOTE: This applies to client side functionality.
+•NOTE: This API might get modified to accommodate for resource collection in future.
+
+Observe API
+•This new API provides the ability for the client to set observation on a resource
+•This API provides callback as a parameter. Callback will be invoked with attribute map and with an error code for this operation.
+•NOTE: This applies to client side functionality.
+
+cancelObserve API
+•This new API provides the ability for the client to cancel observation on a resource
+•This API provides callback as a parameter. Callback will be invoked with error code for this operation.
+•NOTE: This applies to client side functionality.
+Class OCResourceRequest (Header file: OCResourceRequest.h)
+NOTE: This applies to server side functionality.
+
+getRequestType API
+•This new API provides the ability to retrieve the type of request. This could be GET, PUT (and in future POST and DELETE).
+
+getQueryParams API
+•This new API provides the ability to retrieve the query parameters from the URL request.
+
+getRequestHandlerFlag API
+•This new API provides the ability to retrieve the request handler flag on the URL request. This could be either INIT, REQUEST or OBSERVE flag.
+
+getResourceRepresentation API
+•This new API provides the ability to retrieve attribute representation of the resource.
+
+Class OCResourceResponse (Header file: OCResourceResponse.h)
+NOTE: This applies to server side functionality.
+
+setErrorCode API
+•This new API provides the ability to set the error code
+
+setResourceRepresentation API
+•This new API provides the ability to set the attribute representation of a resource.
+
+Other Notes:
+1.	Security model is still open.
+2.	APIs have OCStackResult as return type. This is will indicate success or failure for the API operation.
+3.	Resource collection/hierarchy APIs are not checked into the code base. They will be given as separate header files.
+4.	Query parameters are not used in this deliverable.
+5.	Only single client observer has been tested.
+6.	Maximum length of URI supported is 64 bytes
+7.	Maximum length of response (for GET, PUT) from server is 128 bytes.
+
+
+How to build:
+1.	Root folder oic-resource consists of ‘OIC’ folder.  Inside OIC folder there is a Makefile.
+2.	Before building, make sure to have contents from oic-utilities repo at the folder level where oic-resource is.
+3.	Use ‘make’ to build the entire OIC code. This would build the C++ SDK, stack and samples.
+
+Samples:
+1.	We have a sample for hosting a resource on a server and a sample for client which will be able to discover resources.
+2.	Server sample location: OIC/examples/simpleserver.cpp
+3.	Client sample location: OIC/examples/simpleclient.cpp
+4.	In simpleserver.cpp, inside main,
+
+PlatformConfig cfg;
+cfg.ipAddress = "134.134.161.33";
+
+Modify the above IP address to the IP address of the machine where this server is running.
+
+Similarly, in simpleclient.cpp, inside main, modify the IP address to the IP address of the machine where the client is running.
+
+The server and client can run in same machine or in different machines.
+
+5. To run simpleServer do ‘./simpleServer’ and to run simpleClient do ‘./simpleClient’.
+

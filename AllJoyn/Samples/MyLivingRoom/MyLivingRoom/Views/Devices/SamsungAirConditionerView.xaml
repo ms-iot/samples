@@ -1,0 +1,97 @@
+﻿<vw:BasePageView
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+    xmlns:vm="using:MyLivingRoom.ViewModels"
+    xmlns:vw="using:MyLivingRoom.Views"
+
+    x:Class="MyLivingRoom.Views.SamsungAirConditionerView"
+    d:DesignWidth="388" d:DesignHeight="584"
+    >
+    <StackPanel>
+        <vw:DeviceHeaderView DataContext="{x:Bind ViewModel.TopicDefinition}" />
+
+        <TextBlock
+            Style="{StaticResource TitleTextBlockStyle}"
+            Text="Controls"
+            />
+
+        <ToggleSwitch
+            Margin="0,20,0,0"
+            Header="Power" OffContent="Off" OnContent="On"
+            IsOn="{x:Bind ViewModel.IsOn,Mode=TwoWay}"
+            />
+
+        <!-- Temperature -->
+        <TextBlock
+            HorizontalAlignment="Left"
+            Text="Current temperature"
+            />
+        <Grid Margin="0,4,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock
+                Grid.Column="0"
+                VerticalAlignment="Top"
+                Text="{Binding Temperature,Converter={StaticResource StringFormatConverter},ConverterParameter='{}{0}Â°',FallbackValue=68Â°}"
+                />
+        </Grid>
+
+        <Grid Margin="0,4,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Mode -->
+            <TextBlock
+                Grid.Column="0"
+                Margin="0,24,0,0"
+                Text="Mode"
+                />
+
+            <ComboBox
+                Grid.Column="2"
+                PlaceholderText="Mode"
+                Margin="0,24,0,0"
+                Width="120"
+                ItemsSource="{Binding SupportedModesList}"
+                SelectedValue="{Binding Modes,Mode=TwoWay}"/>
+
+            <!-- Airflow -->
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="0,24,0,0"
+                Text="Airflow"
+                />
+
+            <ComboBox
+                Grid.Row="1"
+                Grid.Column="2"
+                PlaceholderText="Direction"
+                Margin="0,24,0,0"
+                Width="120"
+                ItemsSource="{Binding AirflowDirectionOptions,Mode=OneTime}"
+                SelectedValue="{Binding AirflowDirection,Mode=TwoWay}"/>
+        </Grid>
+
+        <Slider
+            StepFrequency="2" TickFrequency="2" SmallChange="2" LargeChange="2"
+            Minimum="10" Maximum="20"
+            Value="{Binding AirflowSpeed,Mode=TwoWay,FallbackValue=2}" VerticalAlignment="Top" Margin="0,5,0,0"
+            />
+
+
+    </StackPanel>
+</vw:BasePageView>

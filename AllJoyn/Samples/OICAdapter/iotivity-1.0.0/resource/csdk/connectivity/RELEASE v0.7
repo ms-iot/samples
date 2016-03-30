@@ -1,0 +1,97 @@
+Project Name: IoTivity
+Release Version No: CA_v0.7
+API Version: CA_v0.8
+
+Release Description:
+Connectivity Abstraction provides a unified approach to send different OIC messages across multiple transports.
+
+Supported Platform OS: 
+1) Ubuntu 12.0.4 and above:
+	Connectivity : WIFI, ETHERNET
+	Security : DTLS for WIFI
+2) Tizen 2.3
+	Connectivity : WIFI, EDR, BLE(1:1).
+3) Arduino Mega
+	Connectivity : WIFI, ETH,BLE
+4) Android 5.0s
+	Connectivity : WIFI, BLE
+
+Preconditions:
+1)gcc 4.6.3 and above.
+2)glib library (sudo apt-get install libglib2.0-dev) for linux, tizen and android devices
+3)libcoap.a library ( do make @lib/libcoap-4.1.1)
+4)tinyDTLS library for DTLS enabled applications( enable DTLS = 1 in makefile @connectivity\build/linux)
+5)Ethernet, BLE, TimedActions, Timer libraries for arduino support.
+6)scons for scons script compilation.
+
+Scope of Release:
+1. Supported APIs ( please check below APIs)
+2. Samples to test for Supported APIs.
+3. OIC Coding guidelines followed based on the current CSDK source.
+4. Multi-Threaded, Single threaded Connectivity abstraction.
+5. Executed Open Source Verification and Prevent analysis.
+Type of Release: Source
+The following Connectivity Abstraction API features are supported in this release:
+
+Supported APIs
+CAInitialize()
+CATerminate()
+CAStartListeningServer()
+CAStartDiscoveryServer()
+CARegisterHandler()
+CAhandleRequestResponse()
+FindResource()
+SendRequest()
+SendResponse()
+SelectNetwork()
+UnselectNetwork()
+SendNotification()
+AdvertizeResource()
+CAGenerateToken()
+CADestryToken()
+CAGetNetworkInfo()
+
+
+Known and Open Issues:
+1) OIC Log, OIC Malloc will be removed once name changes applied to OIC Bases code.
+2) Tizen platform BLE stack is not stable. So we may see random crashes.
+
+How to Build for Linux:
+Follow below steps to execute CA Client / server in different systems
+Step 1: Build Libcoap library
+Make File Location @connectivity\lib\libcoap-4.1.1
+Step 2: Build CA library
+Make File Location @connectivity\build\linux
+Step 3: Samples
+Make File Location @connectivity\samples\linux
+
+Execution:
+linux$ export LD_LIBRARY_PATH=../../build/out/
+linux$ ./out/sample_main
+
+
+Follow below sequence to test
+
+Client Option:   c
+Server Option:  s
+
+Client Option:  f (provide a/light)
+Server Option: h (will pick from queue and send response)
+Client Option:  h (to pick server response)
+
+Client Option:  r (provide “ServerIP:5383/a/request”)
+Server Option: h (will pick from queue and send response)
+Client Option:  h (to pick server response)
+
+Server Option: a
+Client Option: h (to pick server response)
+
+Server Option: b (provide ServerIP:5383/a/notify)
+Client Option: h (to pick server response)
+
+Client: Server side: n for network selection (WIFI enabled by default)
+
+
+How to Build for Linux/DTLS:
+./sample.sh WITH_DTLS @@connectivity\samples\linux
+

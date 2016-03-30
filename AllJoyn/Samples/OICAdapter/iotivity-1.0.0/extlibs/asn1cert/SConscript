@@ -1,0 +1,57 @@
+##
+# Script to generate ASN.1 source code.
+# If asn1 compiler is not installed get it and install it.
+#
+##
+
+import os
+
+Import('env')
+
+asn1_env = env.Clone()
+
+target_os = asn1_env.get('TARGET_OS')
+src_dir = asn1_env.get('SRC_DIR')
+
+targets_need_asn1 = ['linux']
+asn1c_dir      = src_dir + '/extlibs/asn1cert/asn1c-0.9.27'
+asn1c_gz_file = src_dir + '/extlibs/asn1cert/asn1c-0.9.27.tar.gz'
+asn1c_url      = 'http://lionet.info/soft/asn1c-0.9.27.tar.gz'
+asn1c_file = src_dir + '/extlibs/asn1cert/asn1c-0.9.27/asn1c/asn1c'
+
+if target_os in targets_need_asn1:
+	print '*** Checking for installation of asn1c-0.9.27 ***'
+
+	if not os.path.exists(asn1c_dir):
+		# If the asn1 gz file is not already present, download it
+		if not os.path.exists(asn1c_gz_file):
+			asn1c_gz = asn1_env.Download(asn1c_gz_file, asn1c_url)
+		else:
+			asn1c_gz = asn1c_gz_file
+
+		# Ungz asn1c
+		print 'Unzipping asn1 compiler'
+		asn1_env.UnpackAll(asn1c_dir, asn1c_gz)
+	if os.path.exists(asn1c_dir):
+		if not os.path.exists(asn1c_file):
+			# Run configure on asn1
+			print 'Configuring asn1 compiler'
+			if asn1_env.get('CROSS_COMPILE'):
+				asn1_env.Configure(asn1c_dir, './configure --host=' + asn1_env['CROSS_COMPILE'])
+			else:
+				asn1_env.Configure(asn1c_dir, './configure')
+
+			# Run make on asn1
+			print 'Making asn1 compiler'
+			asn1_env.Configure(asn1c_dir, 'make')
+	print 'Generating Source Code:'
+	asn1_env.Configure(src_dir + '/extlibs/asn1cert', './asn1c-0.9.27/asn1c/asn1c certificate.asn')
+	asn1_env.Configure(src_dir + '/extlibs/asn1cert', './asn1c-0.9.27/asn1c/asn1c crl.asn')
+	asn1_env.Configure(src_dir + '/extlibs/asn1cert', './asn1c-0.9.27/asn1c/asn1c csr.asn')
+	asn1_env.Configure(src_dir + '/extlibs/asn1cert', 'rm converter-sample.c')
+
+	#Build asn1 as static library
+	asn1_src = Glob('*.c')
+	asn1_lib = asn1_env.StaticLibrary('asn1', asn1_src)
+	asn1_env.InstallTarget(asn1_lib, 'libasn1')
+

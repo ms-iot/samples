@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.perspectives">
+        <perspective
+             class="oic.simulator.clientcontroller.perspective.PerspectiveFactory"
+             icon="icons/oic_logo_16x16.png"
+             id="oic.simulator.clientcontroller.perspective"
+             name="Client Controller">
+        </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+        <category
+            id="oic.simulator.clientcontroller.category"
+            name="Client Controller">
+        </category>
+        <view category="oic.simulator.clientcontroller.category"
+            class="oic.simulator.clientcontroller.view.ResourceManagerView"
+            icon="icons/oic_logo_16x16.png"
+            id="oic.simulator.clientcontroller.view.resourcemanager"
+            name="Resource Manager"
+            restorable="true">
+        </view>
+        <view category="oic.simulator.clientcontroller.category"
+            class="oic.simulator.clientcontroller.view.MetaPropertiesView"
+            icon="icons/oic_logo_16x16.png"
+            id="oic.simulator.clientcontroller.view.metaproperties"
+            name="Properties"
+            restorable="true">
+        </view>
+        <view category="oic.simulator.clientcontroller.category"
+            class="oic.simulator.clientcontroller.view.AttributeView"
+            icon="icons/oic_logo_16x16.png"
+            id="oic.simulator.clientcontroller.view.attribute"
+            name="Attribute Manager"
+            restorable="true">
+        </view>
+        <view category="oic.simulator.clientcontroller.category"
+            class="oic.simulator.clientcontroller.view.MultiResourceOrchestrationView"
+            icon="icons/oic_logo_16x16.png"
+            id="oic.simulator.clientcontroller.view.orchestration"
+            name="Multi-Resource Automation"
+            restorable="true">
+        </view>
+        <view category="oic.simulator.clientcontroller.category"
+            class="oic.simulator.clientcontroller.view.LogView"
+            icon="icons/oic_logo_16x16.png"
+            id="oic.simulator.clientcontroller.view.log"
+            name="Simulator Log"
+            restorable="true">
+        </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+        <perspectiveExtension targetID="*">
+            <perspectiveShortcut 
+                 id="oic.simulator.clientcontroller.perspective">
+             </perspectiveShortcut>
+        </perspectiveExtension>
+        <perspectiveExtension targetID="oic.simulator.clientcontroller.perspective">
+            <viewShortcut
+                id="oic.simulator.clientcontroller.view.resourcemanager">
+            </viewShortcut>
+            <viewShortcut
+                id="oic.simulator.clientcontroller.view.metaproperties">
+            </viewShortcut>
+            <viewShortcut
+                id="oic.simulator.clientcontroller.view.attribute">
+            </viewShortcut>
+            <viewShortcut
+                id="oic.simulator.clientcontroller.view.orchestration">
+            </viewShortcut>
+            <viewShortcut
+                id="oic.simulator.clientcontroller.view.log">
+            </viewShortcut>
+        </perspectiveExtension>
+   </extension>
+</plugin>

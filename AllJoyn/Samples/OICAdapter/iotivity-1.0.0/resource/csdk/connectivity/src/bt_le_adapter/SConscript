@@ -1,0 +1,39 @@
+################################
+#       Build BLE adapter
+################################
+
+Import('env')
+import os.path
+
+target_os = env.get('TARGET_OS')
+
+print "Reading BLE adapter script for", target_os
+
+src_dir = os.path.join(os.curdir, 'bt_le_adapter')
+
+# Source files common to all platforms.
+common_files = [ os.path.join(src_dir, 'caleadapter.c') ]
+
+# Get list of target-specific source file base names, i.e. no parent
+# directories prepended to the path.
+#
+# Target-specific SConscript files are expected to return that list.
+target_files = []
+target_sconscript = os.path.join(target_os, 'SConscript')
+
+# Check for the existence of the platform-specific SConscript file
+# relative to the top-level source directory, not the build (variant)
+# directory, before calling that SConscript file to prevent a missing
+# file warning platforms that don't provide one.
+target_sconscript_abspath = str(File(target_sconscript).srcnode().abspath)
+if os.path.exists(target_sconscript_abspath):
+        target_files = env.SConscript(target_sconscript, exports='src_dir')
+
+# Now prepend the appropriate parent directories
+# (e.g. ./bt_le_adapter/linux) to each of the target source files in
+# the list.
+target_files = [ os.path.join(src_dir, target_os, f) for f in target_files ]
+
+# The list of BLE adapter source files is a combination of both the
+# common and target-specific source file lists.
+env.AppendUnique(CA_SRC = common_files + target_files)

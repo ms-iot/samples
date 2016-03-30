@@ -1,0 +1,15 @@
+<manifest>
+	<define>
+		<domain name="iotivity-test" />
+		<permit>
+			<smack permit="system::use_internet" type="w" />
+		</permit>
+		<request>
+			<smack request="system::use_internet" type="w" />
+			<smack request="connman::get" type="w" />
+		</request>
+	</define>
+	<request>
+		<domain name="iotivity-test" />
+	</request>
+</manifest>

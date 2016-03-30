@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resources">
+      <UniqueIdentifier>5acdad49-ad84-47bd-b765-78d99c79a1f0</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="airflowConsumer.cpp" />
+    <ClCompile Include="airflowProducer.cpp" />
+    <ClCompile Include="airflowServiceEventAdapter.cpp" />
+    <ClCompile Include="airflowServiceEventArgs.cpp" />
+    <ClCompile Include="airflowSignals.cpp" />
+    <ClCompile Include="airflowWatcher.cpp" />
+    <ClCompile Include="AllJoynBusObjectManager.cpp" />
+    <ClCompile Include="AllJoynHelpers.cpp" />
+    <ClCompile Include="TypeConversionHelpers.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="airflowConsumer.h" />
+    <ClInclude Include="airflowEventArgs.h" />
+    <ClInclude Include="airflowMethodResults.h" />
+    <ClInclude Include="airflowProducer.h" />
+    <ClInclude Include="airflowServiceEventAdapter.h" />
+    <ClInclude Include="airflowServiceEventArgs.h" />
+    <ClInclude Include="airflowSignals.h" />
+    <ClInclude Include="airflowStructures.h" />
+    <ClInclude Include="airflowWatcher.h" />
+    <ClInclude Include="AllJoynBusObjectManager.h" />
+    <ClInclude Include="AllJoynHelpers.h" />
+    <ClInclude Include="IairflowService.h" />
+    <ClInclude Include="TypeConversionHelpers.h" />
+  </ItemGroup>
+</Project>

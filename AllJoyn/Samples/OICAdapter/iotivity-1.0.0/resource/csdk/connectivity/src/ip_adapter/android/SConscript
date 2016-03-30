@@ -1,0 +1,12 @@
+#######################################################
+#       Build IP adapter for Android
+#######################################################
+
+Import('env', 'src_dir')
+import os.path
+
+env.AppendUnique(CPPPATH = [ os.path.join(src_dir, 'android') ])
+
+src_files = [ 'caipnwmonitor.c' ]
+
+Return('src_files')

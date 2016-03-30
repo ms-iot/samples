@@ -1,0 +1,23 @@
+##
+# The main build script
+#
+##
+
+# Load common build config
+# Load common build config
+SConscript('SConscript')
+
+Import('env')
+
+target_os = env.get('TARGET_OS')
+transport = env.get('TARGET_TRANSPORT')
+
+print "Given Transport is %s" % transport
+print "Given OS is %s" % target_os
+print "Secured %s" % env.get('SECURED')
+
+if target_os == 'tizen':
+        SConscript('scons/SConscript')
+else:
+	print "Given platform is not supported"
+
