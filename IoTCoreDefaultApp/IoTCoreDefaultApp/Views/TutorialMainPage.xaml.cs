@@ -35,7 +35,7 @@ namespace IoTCoreDefaultApp
             this.InitializeComponent();
 
 #if !ALWAYS_SHOW_BLINKY
-            if (DeviceTypeInformation.Type != DeviceTypes.RPI2 && DeviceTypeInformation.Type != DeviceTypes.DB410)
+            if (!DeviceTypeInformation.IsRaspberryPi && DeviceTypeInformation.Type != DeviceTypes.DB410)
             {
                 TutorialList.Items.Remove(HelloBlinkyGridViewItem);
             }

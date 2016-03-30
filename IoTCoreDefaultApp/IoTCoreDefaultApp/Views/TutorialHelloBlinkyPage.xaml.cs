@@ -39,9 +39,17 @@ namespace IoTCoreDefaultApp
         {
             this.InitializeComponent();
 
-            if (DeviceTypeInformation.Type == DeviceTypes.DB410)
+            switch (DeviceTypeInformation.Type)
             {
-                LED_PIN = 115; // on-board LED on the DB410c
+                case DeviceTypes.RPI2:
+                    LED_PIN = 47; // onboard LED
+                    break;
+                case DeviceTypes.RPI3:
+                    LED_PIN = 5;
+                    break;
+                case DeviceTypes.DB410:
+                    LED_PIN = 115;
+                    break;
             }
 
             var rootFrame = Window.Current.Content as Frame;
@@ -67,6 +75,19 @@ namespace IoTCoreDefaultApp
 
                 loader = new Windows.ApplicationModel.Resources.ResourceLoader();
                 BlinkyStartStop.Content = loader.GetString("BlinkyStart");
+
+                switch (DeviceTypeInformation.Type)
+                {
+                    case DeviceTypes.RPI2:
+                        GpioPinInstructions.Text = "";
+                        break;
+                    case DeviceTypes.RPI3:
+                        GpioPinInstructions.Text = loader.GetString("TutorialBlinkyBody6Text_Rpi3");
+                        break;
+                    case DeviceTypes.DB410:
+                        GpioPinInstructions.Text = loader.GetString("TutorialBlinkyBody6Text_Dragonboard");
+                        break;
+                }
             };
         }
 

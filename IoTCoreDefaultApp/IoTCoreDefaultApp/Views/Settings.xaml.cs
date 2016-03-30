@@ -348,6 +348,8 @@ namespace IoTCoreDefaultApp
                 item.ContentTemplate = template;
             }
 
+
+
             return item;
         }
 
@@ -972,6 +974,15 @@ namespace IoTCoreDefaultApp
         {
             var screensaverToggleSwitch = sender as ToggleSwitch;
             Screensaver.IsScreensaverEnabled = screensaverToggleSwitch.IsOn;
+        }
+
+        private void WifiPasswordBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            var passwordBox = sender as PasswordBox;
+            if (passwordBox != null)
+            {
+                passwordBox.Focus(FocusState.Programmatic);
+            }
         }
     }
 }
