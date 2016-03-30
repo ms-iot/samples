@@ -224,7 +224,7 @@
     <comment>Field label</comment>
   </data>
   <data name="LanguageTitleText" xml:space="preserve">
-    <value>Language</value>
+    <value>Taal</value>
     <comment>Field label</comment>
   </data>
   <data name="NetworkConnectedText" xml:space="preserve">
@@ -315,19 +315,19 @@
     <value>Resources en tools om je verder op weg te helpen met je projecten en ontwikkelingen.</value>
   </data>
   <data name="TutorialBlinkyBody1Text" xml:space="preserve">
-    <value>Het eerste en meest eenvoudige I/O voorbeeld is een LED laten knipperen....</value>
+    <value>Het eerste en meest eenvoudige I/O voorbeeld is een LED laten knipperen.</value>
   </data>
   <data name="TutorialBlinkyBody2Text" xml:space="preserve">
-    <value>Zoals eerder genoemd in het "Ga beginnen" deel, alle broncode van dit opensource project is beschikbaar op  www. windowsondevices.com (zoek naar de IoTCoreDefaultApp).</value>
+    <value>Zoals eerder genoemd in het "Ga beginnen" deel, alle broncode van dit open source project is beschikbaar op  www. windowsondevices.com (zoek naar de IoTCoreDefaultApp).</value>
   </data>
   <data name="TutorialBlinkyBody3Text" xml:space="preserve">
-    <value>Led verbonden via P5 ?. Druk op start.</value>
+    <value>Er is geen configuratie nodig. Druk op start.</value>
   </data>
   <data name="TutorialBlinkyBody4Text" xml:space="preserve">
-    <value>Je kan de knipper-frequentie aanpassen. </value>
+    <value>Je kan de knipper-frequentie aanpassen. Nodig gerust je vrienden uit voor een dansje rond de knipperende LED. </value>
   </data>
   <data name="TutorialBlinkyBody5Text" xml:space="preserve">
-    <value>Disclaimer: Microsoft takes no responsibility for whatever damage may be caused by hosting such a huge rave of a party using the small blinking LED on your board.</value>
+    <value>Disclaimer: Microsoft is niet verantwoordelijk voor wat voor schade dan ook welke veroorzaakt kan worden tijdens het dansje rond de knipperende LED.</value>
   </data>
   <data name="TutorialBlinkyBody6Text_Rpi3" xml:space="preserve">
     <value>Voor de Raspberry Pi 3, verbind een LED aan GPIO pin 5.</value>
@@ -336,7 +336,7 @@
     <value>Voor de DragonBoard 410c, verbind een LED aan GPIO pin 115.</value>
   </data>
   <data name="TutorialBlinkyTitle1Text" xml:space="preserve">
-    <value>Hallo Blinky  (P5 Led versie)</value>
+    <value>Hallo Blinky</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialBlinkyTitle2Text" xml:space="preserve">
@@ -655,7 +655,7 @@
     <comment>Message display when "Start Watcher" button is pressed</comment>
   </data>
   <data name="BluetoothStoppedWatching" xml:space="preserve">
-    <value>Zoeken naar andere bluetooth aparaten is gestopt</value>
+    <value>Zoeken naar andere bluetooth apparaten is gestopt</value>
     <comment>Message display when "Stop Watcher" button is pressed</comment>
   </data>
   <data name="BluetoothUnpairingFailureFormat" xml:space="preserve">
@@ -692,7 +692,7 @@
     <comment>Label text for Bluetooth watcher toggle switch</comment>
   </data>
   <data name="BluetoothNoDeviceAvailableFormat" xml:space="preserve">
-    <value>Er is geen bruikbarre bluetooth-adapter gevonden op deze computer:
+    <value>Er is geen bruikbare bluetooth-adapter gevonden op deze computer:
 {0}</value>
     <comment>Message displayed on systems which do not have a Bluetooth adapter. The new line before {0} is deliberate and should be kept</comment>
   </data>
