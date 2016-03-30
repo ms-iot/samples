@@ -1,0 +1,17 @@
+##
+# This script includes windows specific config (MSVS/MSVC)
+##
+Import('env')
+
+# Set common flags
+env.AppendUnique(CXXFLAGS=['/wd4244', '/wd4267','/wd4345', '/wd4355', '/wd4800', '/wd4996'])
+env.AppendUnique(CCFLAGS=['/EHsc'])
+
+# Set release/debug flags
+if env.get('RELEASE'):
+	env.AppendUnique(CCFLAGS = ['/MD', '/O2', '/GF'])
+	env.AppendUnique(CPPDEFINES = ['NDEBUG'])
+else:
+	env.AppendUnique(CCFLAGS = ['/MDd', '/Od', '/ZI', '/GZ', '/Gm'])
+	env.AppendUnique(CPPDEFINES = ['_DEBUG'])
+	env.AppendUnique(LINKFLAGS = ['/debug'])

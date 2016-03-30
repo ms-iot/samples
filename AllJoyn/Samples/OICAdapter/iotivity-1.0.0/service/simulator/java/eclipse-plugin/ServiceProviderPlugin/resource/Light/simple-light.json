@@ -1,0 +1,34 @@
+{
+  "id": "simple.light#",
+  "$schema": "http://json-schema.org/schema#",
+  "title": "Simple Light",
+  "$ref": "#/definitions/light",
+  "definitions": {
+    "light": {
+      "type": "object",
+      "properties": {
+		"resourceType": {
+          "type": "string",
+          "description": "Description about resource type",
+          "default": "sample.light"
+        },
+		"power": {
+		  "type": "string",
+		  "description": "Light status",
+		  "default": "on",
+		  "enum": ["on","off"],
+		  "update_frequency": 1000
+		  },
+		"intensity": {
+		  "type": "integer",
+		  "description": "brightness of the light",
+		  "default": 1,
+		  "minimum": 1,
+          "maximum": 20,		  
+		  "update_frequency": 1001
+		  }
+		 }
+		}
+	},	
+  "required": [ "resourceType", "power" ]
+}

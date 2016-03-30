@@ -1,0 +1,57 @@
+//---------------------------------------------------------------------
+//  NOTICE - Transition to SCONS
+//---------------------------------------------------------------------
+
+The IoTivity build system is transitioning to SCONS. Although the
+makefiles are still available (until v1.0) and some developers are
+still using them, they are currently no longer supported. To learn more
+about building using SCONS see Readme.scons.txt in the repository root
+directory. The build steps used in continuous integration can be found
+in auto_build.sh which is also in the the repository root directory.
+
+To dynamically link with the Google Unit test library,
+add <src_dir>/extlibs/gtest/gtest-1.7.0/lib/.libs/ to LD_LIBRARY_PATH
+
+//---------------------------------------------------------------------
+
+stacktests.cpp is a unit test of the APIs in ocstack.c.
+It uses Google Test for the unit tests.  Note that
+the unit tests are only to test the functionality of
+ocstack.c.  It is not a system or end-to-end test.
+
+Unit Test Requirements:
+
+1. Install Google Test on a Linux build machine
+2. Create a file called "local.properties" in the
+   root/csdk/stack/test.  local.properties is used
+   by the makefile and specifies the path to the
+   Google Test directory on the build machine.
+   Since local.properties is specific to each build
+   system, do not add local.properties to the code repo.
+
+   local.properties should contain GTEST_DIR.
+   For example:
+
+
+   GTEST_DIR := /home/johndoe/utils/gtest-1.7.0
+
+3. The unit test assumes that a network interface is available
+   (e.g. "eth0", "wlan0", etc.)
+   If no interface is available, the unit tests will FAIL.
+4. To run the unit test, first build the C OCStack.
+   At the time of this writing this was done by running
+
+   root/csdk/make deepclean
+   root/csdk/make BUILD=release    *default
+   root/csdk/make BUILD=debug
+
+5. Next, build the ocstack
+   root/csdk/stack/test/make clean
+   root/csdk/stack/test/make BUILD=release    *default
+   root/csdk/stack/test/make BUILD=debug
+
+6. Run the unit test by
+   root/csdk/stack/test/release/stacktests
+   root/csdk/stack/test/debug/stacktests
+
+

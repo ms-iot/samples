@@ -1,0 +1,85 @@
+#******************************************************************
+#
+# Copyright 2014 Intel Mobile Communications GmbH All Rights Reserved.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+Import('env')
+
+samples_env = env.Clone()
+######################################################################
+# Build flags
+######################################################################
+samples_env.PrependUnique(CPPPATH = [
+		'../../../../logger/include',
+		'../../../../stack/include',
+		'../../../../security/include',
+		'../../../../../../extlibs/cjson',
+		'../../../../../oc_logger/include'
+		])
+
+target_os = env.get('TARGET_OS')
+if target_os not in ['windows', 'winrt']:
+	samples_env.AppendUnique(CXXFLAGS = ['-std=c++0x', '-Wall', '-pthread'])
+
+	# Note: 'pthread' is in libc for android.
+	if target_os != 'android':
+		samples_env.AppendUnique(LIBS = ['-lpthread'])
+
+samples_env.AppendUnique(LIBPATH = [env.get('BUILD_DIR')])
+samples_env.PrependUnique(LIBS = ['octbstack', 'm', 'connectivity_abstraction', 'coap'])
+if env.get('SECURED') == '1':
+    samples_env.AppendUnique(LIBS = ['tinydtls'])
+
+samples_env.Append(LINKFLAGS = ['-Wl,--no-as-needed'])
+
+if target_os == 'android':
+	samples_env.AppendUnique(CXXFLAGS = ['-frtti', '-fexceptions'])
+	samples_env.AppendUnique(LIBS = ['gnustl_shared'])
+	samples_env.AppendUnique(CPPDEFINES = ['_GLIBCXX_USE_C99=1', '_GLIBCXX_HAVE_WCSTOF=1'])
+
+	if not env.get('RELEASE'):
+		samples_env.AppendUnique(LIBS = ['log'])
+
+if target_os in ['darwin', 'ios']:
+	samples_env.AppendUnique(CPPDEFINES = ['_DARWIN_C_SOURCE'])
+
+samples_env.AppendUnique(CPPDEFINES = ['TB_LOG'])
+
+######################################################################
+# Source files and Targets
+######################################################################
+
+ocserverbasicops = samples_env.Program('ocserverbasicops', ['common.cpp', 'ocserverbasicops.cpp'])
+occlientbasicops = samples_env.Program('occlientbasicops', ['common.cpp', 'occlientbasicops.cpp'])
+ocamsservice = samples_env.Program('ocamsservice', ['common.cpp', 'ocamsservice.cpp'])
+
+Alias("samples", [ocserverbasicops, occlientbasicops, ocamsservice])
+
+env.AppendTarget('samples')
+
+src_dir = samples_env.get('SRC_DIR')
+sec_samples_src_dir = src_dir + '/resource/csdk/stack/samples/linux/secure/'
+sec_samples_build_dir = env.get('BUILD_DIR') +'/resource/csdk/stack/samples/linux/secure'
+
+samples_env.Alias("install", samples_env.Install( sec_samples_build_dir,
+    sec_samples_src_dir + 'oic_svr_db_server.json'))
+samples_env.Alias("install", samples_env.Install( sec_samples_build_dir,
+    sec_samples_src_dir + 'oic_svr_db_client.json'))
+samples_env.Alias("install", samples_env.Install( sec_samples_build_dir,
+    sec_samples_src_dir + 'oic_amss_db.json'))
+

@@ -1,0 +1,34 @@
+<!DOCTYPE node PUBLIC "-//allseen//DTD ALLJOYN Object Introspection 1.0//EN"
+"http://www.allseen.org/alljoyn/introspect-1.0.dtd">
+<node>
+  <node name="1"/>
+  <interface name="com.enocean.Bridge.RockerButton.interface_1">
+    <property name="ButtonA0" type="s" access="readwrite">
+      <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="true"/>
+    </property>
+    <property name="ButtonAI" type="s" access="readwrite">
+      <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="true"/>
+    </property>
+    <property name="ButtonB0" type="s" access="readwrite">
+      <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="true"/>
+    </property>
+    <property name="ButtonBI" type="s" access="readwrite">
+      <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="true"/>
+    </property>
+  </interface>
+  <interface name="org.freedesktop.DBus.Introspectable">
+    <method name="Introspect">
+      <arg name="data" type="s" direction="out"/>
+    </method>
+  </interface>
+  <interface name="org.allseen.Introspectable">
+    <method name="GetDescriptionLanguages">
+      <arg name="languageTags" type="as" direction="out"/>
+    </method>
+    <method name="IntrospectWithDescription">
+      <arg name="languageTag" type="s" direction="in"/>
+      <arg name="data" type="s" direction="out"/>
+    </method>
+    <annotation name="org.alljoyn.Bus.Secure" value="off"/>
+  </interface>
+</node>

@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resources">
+      <UniqueIdentifier>19570da8-c0a9-4fea-b515-fb4b5faf47cd</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="AllJoynBusObjectManager.cpp" />
+    <ClCompile Include="AllJoynHelpers.cpp" />
+    <ClCompile Include="TypeConversionHelpers.cpp" />
+    <ClCompile Include="VolumeConsumer.cpp" />
+    <ClCompile Include="VolumeProducer.cpp" />
+    <ClCompile Include="VolumeServiceEventAdapter.cpp" />
+    <ClCompile Include="VolumeServiceEventArgs.cpp" />
+    <ClCompile Include="VolumeSignals.cpp" />
+    <ClCompile Include="VolumeWatcher.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="AllJoynBusObjectManager.h" />
+    <ClInclude Include="AllJoynHelpers.h" />
+    <ClInclude Include="IVolumeService.h" />
+    <ClInclude Include="TypeConversionHelpers.h" />
+    <ClInclude Include="VolumeConsumer.h" />
+    <ClInclude Include="VolumeEventArgs.h" />
+    <ClInclude Include="VolumeMethodResults.h" />
+    <ClInclude Include="VolumeProducer.h" />
+    <ClInclude Include="VolumeServiceEventAdapter.h" />
+    <ClInclude Include="VolumeServiceEventArgs.h" />
+    <ClInclude Include="VolumeSignals.h" />
+    <ClInclude Include="VolumeStructures.h" />
+    <ClInclude Include="VolumeWatcher.h" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Easy Setup</string>
+    <string name="action_settings">Settings</string>
+    <string name="textview2">Device Information</string>
+    <string name="textview1"> -- empty -- </string>
+    <string name="scan_qr_code">Scan QR Code</string> 
+	<string name="start_easy_setup">Start Easy Setup</string> 
+	<string name="start_soft_ap">Start Wi-Fi Soft AP</string>
+	<string name="stop_soft_ap">Stop Soft AP</string>  
+    <string name="provision_device">Provision Connected Device</string>
+
+    <string name="startSetup">Start Setup</string>
+    <string name="stopSetup">Stop Setup</string>
+    <string name="SSID">SSID</string>
+    <string name="Password">Password</string>
+    <string name="success">Successful</string>
+    <string name="failed">Failed</string>
+    <string name="not_started">Not started</string>
+    <string name="test_status">Device configuration</string>
+    <string name="running">Running</string>
+    <string name="stopped">Stopped</string>
+    <string name="not_available">Not available</string>
+
+
+</resources>

@@ -1,0 +1,54 @@
+#******************************************************************
+#
+# Copyright 2015 Samsung Electronics All Rights Reserved.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+##
+# ResourceDirectory Sample Apps build script
+##
+
+Import('env')
+
+lib_env = env.Clone()
+SConscript(env.get('SRC_DIR') + '/service/third_party_libs.scons', 'lib_env')
+
+rd_sample_app_env = lib_env.Clone()
+
+######################################################################
+# Build flags
+######################################################################
+rd_sample_app_env.AppendUnique(CPPPATH = ['../include'])
+
+rd_sample_app_env.AppendUnique(CXXFLAGS = ['-O2', '-g', '-Wall', '-Wextra', '-std=c++0x'])
+rd_sample_app_env.AppendUnique(LIBPATH = [env.get('BUILD_DIR')])
+rd_sample_app_env.AppendUnique(RPATH = [env.get('BUILD_DIR')])
+rd_sample_app_env.PrependUnique(LIBS = ['resource_directory', 'oc', 'octbstack'])
+
+if env.get('SECURED') == '1':
+    rd_sample_app_env.AppendUnique(LIBS = ['tinydtls'])
+
+####################################################################
+# Source files and Targets
+######################################################################
+rd_server = rd_sample_app_env.Program('rd_server', 'rd_main.c')
+rd_publishingClient = rd_sample_app_env.Program('rd_publishingClient', 'rd_publishingClient.cpp')
+rd_queryClient = rd_sample_app_env.Program('rd_queryClient', 'rd_queryClient.cpp')
+
+Alias("resource_directory", [rd_server, rd_publishingClient])
+
+env.AppendTarget('resource_directory')

@@ -1,0 +1,89 @@
+#******************************************************************
+#
+# Copyright 2015 Samsung Electronics All Rights Reserved.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+##
+# ResourceHosting Unit Test build script
+##
+
+Import('env')
+
+if env.get('RELEASE'):
+	env.AppendUnique(CCFLAGS = ['-Os'])
+	env.AppendUnique(CPPDEFINES = ['NDEBUG'])
+else:
+	env.AppendUnique(CCFLAGS = ['-g'])
+
+if env.get('LOGGING'):
+	env.AppendUnique(CPPDEFINES = ['TB_LOG'])
+
+lib_env = env.Clone()
+SConscript(env.get('SRC_DIR') + '/service/third_party_libs.scons', 'lib_env')
+
+######################################################################
+#unit test setting
+######################################################################
+src_dir = lib_env.get('SRC_DIR')
+gtest_dir = src_dir + '/extlibs/gtest/gtest-1.7.0'
+
+hosting_test_env = lib_env.Clone()
+target_os = env.get('TARGET_OS')
+
+######################################################################
+# Build flags
+######################################################################
+GTest = File(gtest_dir + '/lib/.libs/libgtest.a')
+GTest_Main = File(gtest_dir + '/lib/.libs/libgtest_main.a')
+
+#hosting_test_env.AppendUnique(LIBPATH = [gtest_dir + '/lib/.libs'])
+hosting_test_env.AppendUnique(LIBPATH = [lib_env.get('BUILD_DIR')])
+hosting_test_env.AppendUnique(LIBS = [
+	'resource_hosting', 'rcs_server', 'rcs_client','rcs_common',
+	'oc', 'octbstack', 'oc_logger', 'connectivity_abstraction', 'coap',
+	GTest_Main, GTest])
+
+if target_os not in ['windows', 'winrt']:
+    hosting_test_env.AppendUnique(CXXFLAGS = ['-O2', '-g', '-Wall', '-fmessage-length=0', '-std=c++0x'])
+
+if target_os == 'linux':
+	hosting_test_env.AppendUnique(CXXFLAGS = ['-pthread'])
+	hosting_test_env.AppendUnique(LIBS = ['pthread'])
+
+hosting_test_env.PrependUnique(CPPPATH = [ src_dir + '/extlibs/hippomocks-master',
+                             gtest_dir + '/include'])
+hosting_test_env.AppendUnique(CPPPATH = ['../'])
+hosting_test_env.AppendUnique(CPPPATH = ['../../../resource-encapsulation/include'])
+hosting_test_env.AppendUnique(CPPPATH = ['../../../resource-encapsulation/src/common/primitiveResource/include'])
+hosting_test_env.AppendUnique(CPPPATH = ['../../../resource-encapsulation/src/common/utils/include'])
+######################################################################
+# Build Test
+######################################################################
+
+hosting_test_src = env.Glob('./*.cpp')
+hosting_test = hosting_test_env.Program('hosting_test', hosting_test_src)
+Alias("hosting_test", hosting_test)
+env.AppendTarget('hosting_test')
+hosting_test_env.InstallTarget(hosting_test, 'hosting_test')
+
+#target_os = env.get('TARGET_OS')
+#if target_os == 'linux':
+#        from tools.scons.RunTest import *
+#        run_test(hosting_test_env,
+#                 '',
+#                 'service/notification-manager/NotificationManager/src/unittest/hosting_test')

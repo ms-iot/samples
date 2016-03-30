@@ -1,0 +1,182 @@
+******************************************************************
+
+ Copyright 2014 Intel Mobile Communications GmbH All Rights Reserved.
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+===============================================================================
+====         UB Stack & TB Stack - Artifact Output Locations               ====
+===============================================================================
+
+This file contains the file location for every artifact from every possible
+build process in the OIC-RESOURCE repository.
+
+Please refer to the readme file at <oic-resource>/README for more information.
+
+===============================================================================
+====                   Linux - Release & Debug                             ====
+===============================================================================
+
+TB Stack:
+	release:
+		<oic-resource>/csdk/linux/release/liboctbstack.a
+	debug:
+		<oic-resource>/csdk/linux/debug/liboctbstack.a
+
+TB Unit Tests:
+	release:
+		<oic-resource>/csdk/stack/test/linux/release/ocserver
+		<oic-resource>/csdk/stack/test/linux/release/occlient
+	debug:
+		<oic-resource>/csdk/stack/test/linux/debug/ocserver
+		<oic-resource>/csdk/stack/test/linux/debug/occlient
+
+TB Examples:
+	release:
+		<oic-resource>/csdk/stack/samples/linux/SimpleClientServer/release/ocserver
+		<oic-resource>/csdk/stack/samples/linux/SimpleClientServer/release/occlient
+		<oic-resource>/csdk/stack/samples/linux/SimpleClientServer/release/ocservercoll
+		<oic-resource>/csdk/stack/samples/linux/SimpleClientServer/release/occlientcoll
+	debug:
+		<oic-resource>/csdk/stack/samples/linux/SimpleClientServer/debug/ocserver
+		<oic-resource>/csdk/stack/samples/linux/SimpleClientServer/debug/occlient
+		<oic-resource>/csdk/stack/samples/linux/SimpleClientServer/debug/ocservercoll
+		<oic-resource>/csdk/stack/samples/linux/SimpleClientServer/debug/occlientcoll
+
+UB Stack:
+	release:
+		<oic-resource>/release/obj/liboc.a
+	debug:
+		<oic-resource>/debug/obj/liboc.a
+
+UB Examples:
+	release:
+		<oic-resource>/examples/release/fridgeclient
+		<oic-resource>/examples/release/fridgeserver
+		<oic-resource>/examples/release/garageclient
+		<oic-resource>/examples/release/garageserver
+		<oic-resource>/examples/release/presenceclient
+		<oic-resource>/examples/release/presenceserver
+		<oic-resource>/examples/release/roomclient
+		<oic-resource>/examples/release/roomserver
+		<oic-resource>/examples/release/simpleclient
+		<oic-resource>/examples/release/simpleclientserver
+		<oic-resource>/examples/release/simpleserver
+	debug:
+		<oic-resource>/examples/debug/fridgeclient
+		<oic-resource>/examples/debug/fridgeserver
+		<oic-resource>/examples/debug/garageclient
+		<oic-resource>/examples/debug/garageserver
+		<oic-resource>/examples/debug/presenceclient
+		<oic-resource>/examples/debug/presenceserver
+		<oic-resource>/examples/debug/roomclient
+		<oic-resource>/examples/debug/roomserver
+		<oic-resource>/examples/debug/simpleclient
+		<oic-resource>/examples/debug/simpleclientserver
+		<oic-resource>/examples/debug/simpleserver
+
+UB OCICUC:
+	<oic-resource>/examples/ocicuc/client
+	<oic-resource>/examples/ocicuc/monoprocess
+	<oic-resource>/examples/ocicuc/server
+
+
+===============================================================================
+====           Arduino ATMega 2560 - Release & Debug - Ethernet Shield     ====
+===============================================================================
+
+TB Stack:
+	Ethernet Shield:
+		release:
+			<oic-resource>/csdk/arduinomega/ethernet_shield/release/liboctbstack.a
+		debug:
+			<oic-resource>/csdk/arduinomega/ethernet_shield/debug/liboctbstack.a
+
+TB Examples:
+	Ethernet Shield:
+		release:
+			<oic-resource>/csdk/stack/samples/arduino/SimpleClientServer/ocserver/arduinomega/ethernet_shield/release/ocserver.hex
+		debug:
+			<oic-resource>/csdk/stack/samples/arduino/SimpleClientServer/ocserver/arduinomega/ethernet_shield/debug/ocserver.hex
+
+===============================================================================
+====           Arduino ATMega 2560 - Release & Debug - WiFi Shield         ====
+===============================================================================
+
+TB Stack:
+	WiFi Shield:
+		release:
+			<oic-resource>/csdk/arduinomega/wifi_shield/release/liboctbstack.a
+		debug:
+			<oic-resource>/csdk/arduinomega/wifi_shield/debug/liboctbstack.a
+
+TB Examples:
+	WiFi Shield:
+		release:
+			<oic-resource>/csdk/stack/samples/arduino/SimpleClientServer/ocserver/arduinomega/wifi_shield/release/ocserver.hex
+		debug:
+			<oic-resource>/csdk/stack/samples/arduino/SimpleClientServer/ocserver/arduinomega/wifi_shield/debug/ocserver.hex
+
+===============================================================================
+====           Arduino Due - Release & Debug - Ethernet Shield             ====
+===============================================================================
+
+TB Stack:
+	Ethernet Shield:
+		release:
+			<oic-resource>/csdk/arduinodue/ethernet_shield/release/liboctbstack.a
+		debug:
+			<oic-resource>/csdk/arduinodue/ethernet_shield/debug/liboctbstack.a
+
+TB Examples:
+	Ethernet Shield:
+		release:
+			<oic-resource>/csdk/stack/samples/arduino/SimpleClientServer/ocserver/arduinodue/ethernet_shield/release/ocserver.hex
+		debug:
+			<oic-resource>/csdk/stack/samples/arduino/SimpleClientServer/ocserver/arduinodue/ethernet_shield/debug/ocserver.hex
+
+===============================================================================
+====           Arduino Due - Release & Debug - WiFi Shield         ====
+===============================================================================
+
+TB Stack:
+	WiFi Shield:
+		release:
+			<oic-resource>/csdk/arduinodue/wifi_shield/release/liboctbstack.a
+		debug:
+			<oic-resource>/csdk/arduinodue/wifi_shield/debug/liboctbstack.a
+
+TB Examples:
+	WiFi Shield:
+		release:
+			<oic-resource>/csdk/stack/samples/arduino/SimpleClientServer/ocserver/arduinodue/wifi_shield/release/ocserver.hex
+		debug:
+			<oic-resource>/csdk/stack/samples/arduino/SimpleClientServer/ocserver/arduinodue/wifi_shield/debug/ocserver.hex
+
+
+
+
+
+
+
+
+
+
+
+
+
+

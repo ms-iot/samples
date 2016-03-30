@@ -1,0 +1,63 @@
+import os, string, sys, subprocess
+
+Import('env')
+
+boost_env = env.Clone()
+
+modules = ['thread','program_options', 'system', 'date_time']
+
+target_os = env.get('TARGET_OS')
+target_arch = env.get('TARGET_ARCH')
+
+if 'linux' == target_os :
+    # Check for Boost libraries in /usr/boost
+    print 'TODO: Perform platform check for linux'
+    raise SCons.Errors.EnvironmentError('Unsupported platform')
+
+if 'android' == target_os :
+    env.Tool('URLDownload',    toolpath=['../../tools/scons'])
+    env.Tool('UnpackAll',      toolpath=['../../tools/scons'])
+    env.Tool('BoostBootstrap', toolpath=['../../tools/scons'])
+    env.Tool('BoostBuild',     toolpath=['../../tools/scons'])
+
+    boost_version   = '1.58.0'
+    boost_base_name  = 'boost_'+string.replace(boost_version,'.','_')
+    boost_arch_name  = boost_base_name+'.zip'
+    boost_b2_name    = boost_base_name+os.sep+'b2'
+    boost_url       = 'http://downloads.sourceforge.net/project/boost/boost/'+boost_version+'/'+boost_arch_name+'?r=&ts=1421801329&use_mirror=iweb'
+
+    host_os = sys.platform
+
+    if host_os == 'linux2' :
+        boost_bootstrap = boost_base_name+os.sep+'bootstrap.sh'
+    else :
+        msg="Host platform (%s) is currently not supported for boost builds" % host_os
+        raise SCons.Errors.EnvironmentError(msg)
+
+    if not os.path.exists(boost_arch_name) and not os.path.exists(boost_base_name):
+        boost_arch_name = env.URLDownload(boost_arch_name, boost_url)
+
+    if not os.path.exists(boost_base_name):
+	boost_arch_name = env.UnpackAll(boost_bootstrap, boost_arch_name)
+
+    boost_b2  = env.BoostBootstrap(boost_b2_name, boost_arch_name)
+
+    dep_sys_root = env['DEP_SYS_ROOT']
+    dep_src_dir =  dep_sys_root + os.sep + 'include'
+    dep_lib_dir =  dep_sys_root + os.sep + 'lib'
+
+    boost_targets = [
+        os.path.join(dep_src_dir, 'boost', 'config.hpp'),
+        os.path.join(dep_src_dir, 'boost', 'variant.hpp'),
+        os.path.join(dep_src_dir, 'boost', 'program_options.hpp'),
+        os.path.join(dep_src_dir, 'boost', 'thread.hpp'),
+        os.path.join(dep_src_dir, 'boost', 'date_time.hpp'),
+        os.path.join(dep_src_dir, 'libboost_thread.a'),        
+        os.path.join(dep_src_dir, 'libboost_date_time.a'),
+        os.path.join(dep_src_dir, 'libboost_atomic.a'),
+        os.path.join(dep_src_dir, 'libboost_system.a'),
+        os.path.join(dep_src_dir, 'libboost_program_options.a')
+        ]
+
+    boost_build = env.BoostBuild(boost_targets, boost_b2, PREFIX=dep_sys_root, MODULES=modules)
+

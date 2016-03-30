@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resources">
+      <UniqueIdentifier>d2767e05-c5a0-471b-9439-7caddf327535</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="AllJoynHelpers.cpp" />
+    <ClCompile Include="ControlPanelConsumer.cpp" />
+    <ClCompile Include="ControlPanelProducer.cpp" />
+    <ClCompile Include="ControlPanelSignals.cpp" />
+    <ClCompile Include="ControlPanelWatcher.cpp" />
+    <ClCompile Include="TypeConversionHelpers.cpp" />
+    <ClCompile Include="ContainerConsumer.cpp" />
+    <ClCompile Include="ContainerProducer.cpp" />
+    <ClCompile Include="ContainerSignals.cpp" />
+    <ClCompile Include="ContainerWatcher.cpp" />
+    <ClCompile Include="PropertyConsumer.cpp" />
+    <ClCompile Include="PropertyProducer.cpp" />
+    <ClCompile Include="PropertySignals.cpp" />
+    <ClCompile Include="PropertyWatcher.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="AllJoynHelpers.h" />
+    <ClInclude Include="ControlPanelConsumer.h" />
+    <ClInclude Include="ControlPanelEventArgs.h" />
+    <ClInclude Include="ControlPanelMethodResults.h" />
+    <ClInclude Include="ControlPanelProducer.h" />
+    <ClInclude Include="ControlPanelSignals.h" />
+    <ClInclude Include="ControlPanelStructures.h" />
+    <ClInclude Include="ControlPanelWatcher.h" />
+    <ClInclude Include="IControlPanelService.h" />
+    <ClInclude Include="TypeConversionHelpers.h" />
+    <ClInclude Include="ContainerConsumer.h" />
+    <ClInclude Include="ContainerEventArgs.h" />
+    <ClInclude Include="ContainerMethodResults.h" />
+    <ClInclude Include="ContainerProducer.h" />
+    <ClInclude Include="ContainerSignals.h" />
+    <ClInclude Include="ContainerStructures.h" />
+    <ClInclude Include="ContainerWatcher.h" />
+    <ClInclude Include="IContainerService.h" />
+    <ClInclude Include="PropertyConsumer.h" />
+    <ClInclude Include="PropertyEventArgs.h" />
+    <ClInclude Include="PropertyMethodResults.h" />
+    <ClInclude Include="PropertyProducer.h" />
+    <ClInclude Include="PropertySignals.h" />
+    <ClInclude Include="PropertyStructures.h" />
+    <ClInclude Include="PropertyWatcher.h" />
+    <ClInclude Include="IPropertyService.h" />
+  </ItemGroup>
+</Project>

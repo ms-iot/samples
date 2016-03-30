@@ -1,0 +1,51 @@
+-------------------------------------------------------------------------------
+  NOTICE - Transition to SCONS
+-------------------------------------------------------------------------------
+
+The IoTivity build system is transitioning to SCONS. Although the
+makefiles are still available (until v1.0) and some developers are
+still using them, they are currently no longer supported. To learn more
+about building using SCONS see Readme.scons.txt in the repository root
+directory. The build steps used in continuous integration can be found
+in auto_build.sh which is also in the the repository root directory.
+
+-------------------------------------------------------------------------------
+**Arduino** -- Must be built with the same BUILD mode declared as octbstack.a.
+-------------------------------------------------------------------------------
+When an Arduino SimpleClientServer application is running, it outputs logs to
+serial port. This requires the current user to be a part of the "dialout" user
+group permissions on Ubuntu. If your Arduino device is NOT installed at
+location "ttyACM0", you must define ARDUINO_PORT to the location it is
+installed at. This location will be referred to as <DEV_PORT>.
+
+This makefile relies on "local.properties" at the directory level of the
+makefile that generates octbstack.a. Please refer to the README at that level
+to determine what definitions are needed for your environment.
+
+To make ocserver in release mode:
+
+	make (arduinomega)
+    make -f makefiledue (arduinodue)
+
+To make & install ocserver in release mode, with <DEV_PORT> NOT specified:
+
+	make install (arduinomega)
+    make -f makefiledue install (arduinodue)
+
+To make & install ocserver in release mode, with <DEV_PORT> specified:
+
+	make install ARDUINO_PORT=<DEV_PORT>
+
+To make & install ocserver in debug mode, with <DEV_PORT> specified:
+
+	make install ARDUINO_PORT=<DEV_PORT> BUILD=debug
+
+To make ocserver_wifi with Arduino WiFi Shield support:
+
+	make ARDUINOWIFI=1 (arduinomega)
+-------------------------------------------------------------------------------
+**Clean-Up**
+-------------------------------------------------------------------------------
+To clean ocserver sample app and objects:
+
+	make clean

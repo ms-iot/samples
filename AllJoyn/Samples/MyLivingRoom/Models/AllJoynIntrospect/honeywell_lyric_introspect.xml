@@ -1,0 +1,33 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
+"http://standards.freedesktop.org/dbus/introspect-1.0.dtd">
+<node>
+  <interface name="com.honeywell.Thermostat.LyricAsa3demo.MainInterface">
+    <method name="SetTemperature">
+      <arg name="TargetTemperatureTemperatureScale" type="d" direction="in"/>
+      <arg type="n" direction="in"/>
+    </method>
+    <method name="SetTemperature68">
+    </method>
+    <method name="SetTemperature70">
+    </method>
+    <method name="SetTemperature72">
+    </method>
+    <method name="SetTemperature74">
+    </method>
+  </interface>
+  <interface name="org.freedesktop.DBus.Introspectable">
+    <method name="Introspect">
+      <arg name="data" type="s" direction="out"/>
+    </method>
+  </interface>
+  <interface name="org.allseen.Introspectable">
+    <method name="GetDescriptionLanguages">
+      <arg name="languageTags" type="as" direction="out"/>
+    </method>
+    <method name="IntrospectWithDescription">
+      <arg name="languageTag" type="s" direction="in"/>
+      <arg name="data" type="s" direction="out"/>
+    </method>
+    <annotation name="org.alljoyn.Bus.Secure" value="off"/>
+  </interface>
+</node>

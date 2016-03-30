@@ -1,0 +1,42 @@
+##
+# Script to install (if they do not exist) the SQLite library
+##
+
+import os
+import shutil
+
+Import('env')
+sqlite_env = env.Clone()
+
+target_os = sqlite_env.get('TARGET_OS')
+src_dir = sqlite_env.get('SRC_DIR')
+
+targets_need_sqlite = ['linux', 'android', 'tizen']
+sqlite_dir      = src_dir + '/extlibs/sqlite3/'
+sqlite_build_dir      = src_dir + '/extlibs/sqlite3/sqlite-amalgamation-3081101/'
+sqlite_zip_file = src_dir + '/extlibs/sqlite3/sqlite-amalgamation-3081101.zip'
+sqlite_url      = 'http://www.sqlite.org/2015/sqlite-amalgamation-3081101.zip'
+
+# Download
+if target_os in targets_need_sqlite:
+	print '*** Checking for installation of SQLite 3.8.11.1 ***'
+	if not os.path.exists(sqlite_dir + 'sqlite3.c') or not os.path.exists(sqlite_dir + 'sqlite3.h'):
+
+	    # If the zip file is not already present, download it
+		if not os.path.exists(sqlite_zip_file):
+			sqlite_zip = sqlite_env.Download(sqlite_zip_file, sqlite_url)
+		else:
+			sqlite_zip = sqlite_zip_file
+
+		# Unzip the lib
+		print 'Unzipping SQLite amalgamation src...'
+		sqlite_env.UnpackAll(sqlite_build_dir, sqlite_zip)
+		print 'Unzipping SQLite amalgamation src complete'
+
+		# Move requried src and header
+		os.rename(sqlite_build_dir + 'sqlite3.c', sqlite_dir + 'sqlite3.c')
+		os.rename(sqlite_build_dir + 'sqlite3.h', sqlite_dir + 'sqlite3.h')
+		os.remove(sqlite_zip_file)
+		shutil.rmtree(sqlite_build_dir)
+
+# Build will be done with provisioning manager module.

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<manifest xmlns="http://tizen.org/ns/packages" api-version="2.3" package="org.tizen.resampleclient" version="1.0.0">
+    <profile name="mobile"/>
+    <ui-application appid="org.tizen.resampleclient" exec="resampleclient" multiple="false" nodisplay="false" taskmanage="true" type="capp">
+        <label>resampleclient</label>
+        <icon>resampleapp.png</icon>
+    </ui-application>
+    <privileges>
+        <privilege>http://tizen.org/privilege/network.get</privilege>
+        <privilege>http://tizen.org/privilege/internet</privilege>
+    </privileges>
+    <feature name="http://tizen.org/feature/network.wifi">true</feature>
+</manifest>

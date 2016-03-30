@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SampleConsumer</string>
+    <string name="observe">Obv</string>
+    <string name="get">Get</string>
+    <string name="put">Put</string>
+    <string name="post">Post</string>
+    <string name="delete">Del</string>
+    <string name="select_method_type">Select Method Type</string>
+    <string name="received">Received</string>
+    <string name="current_log">Current Log</string>
+    <string name="none">None</string>
+    <string name="quit">Quit</string>
+    <string name="clean">Clear Log</string>
+    <string name="found_resource">Found Resource</string>
+</resources>

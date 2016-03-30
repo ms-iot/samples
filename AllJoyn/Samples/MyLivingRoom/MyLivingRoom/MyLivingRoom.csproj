@@ -1,0 +1,436 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{B139FB3F-0C58-4A62-BB34-5BEA35D79EC2}</ProjectGuid>
+    <OutputType>AppContainerExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MyLivingRoom</RootNamespace>
+    <AssemblyName>MyLivingRoom</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
+    <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <PackageCertificateKeyFile>MyLivingRoom_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxBundlePlatforms>x86</AppxBundlePlatforms>
+    <AppxBundle>Always</AppxBundle>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <OutputPath>bin\ARM\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>false</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <None Include="MyLivingRoom_TemporaryKey.pfx" />
+    <None Include="project.json" />
+    <PRIResource Include="Resources\en-US\Strings.resw">
+      <Generator>InternalReswFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.cs</LastGenOutput>
+      <CustomToolNamespace>MyLivingRoom.Resources</CustomToolNamespace>
+    </PRIResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\BooleanConverterBase.cs" />
+    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\FanSpeedConverter.cs" />
+    <Compile Include="Converters\MappingConverter.cs" />
+    <Compile Include="Converters\StringFormatConverter.cs" />
+    <Compile Include="Core\ValidateArgument.cs" />
+    <Compile Include="Events\InvalidProtocolEvent.cs" />
+    <Compile Include="Extensions\ColorExtensions.cs" />
+    <Compile Include="Extensions\FrameworkElementExtensions.cs" />
+    <Compile Include="Extensions\NavigationServiceExtensions.cs" />
+    <Compile Include="Extensions\ViewModelExtensions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\en-US\Strings.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings.resw</DependentUpon>
+    </Compile>
+    <Compile Include="Services\CoreDispatcherService.cs" />
+    <Compile Include="Core\DisposeActionScope.cs" />
+    <Compile Include="Services\IDispatcherObject.cs" />
+    <Compile Include="Services\IDispatcherService.cs" />
+    <Compile Include="Services\IRaisePropertyChanged.cs" />
+    <Compile Include="ViewModels\Base\BaseTopicViewModel.cs" />
+    <Compile Include="ViewModels\Base\BaseBindable.cs" />
+    <Compile Include="ViewModels\Base\BaseViewModel.cs" />
+    <Compile Include="Controls\SymbolIconDefinition.cs" />
+    <Compile Include="Controls\FontIconDefinition.cs" />
+    <Compile Include="Controls\PathIconDefinition.cs" />
+    <Compile Include="Controls\BitmapIconDefinition.cs" />
+    <Compile Include="Controls\IconDefinition.cs" />
+    <Compile Include="ViewModels\Definitions\PageNavigationTopicDefinition.cs" />
+    <Compile Include="ViewModels\Definitions\ActionInvocationTopicDefinition.cs" />
+    <Compile Include="ViewModels\Definitions\TopicDefinition.cs" />
+    <Compile Include="ViewModels\Devices\AirConditionerViewModel.cs" />
+    <Compile Include="ViewModels\Devices\EnOceanRockerButtonViewModel.cs" />
+    <Compile Include="ViewModels\Devices\HueLightViewModel.cs" />
+    <Compile Include="ViewModels\Devices\MediaPlayerViewModel.cs" />
+    <Compile Include="ViewModels\Devices\PumaRulesViewModel.cs" />
+    <Compile Include="ViewModels\Devices\ZWaveSwitchViewModel.cs" />
+    <Compile Include="ViewModels\Devices\SimpleLockViewModel.cs" />
+    <Compile Include="ViewModels\Devices\PumaLockViewModel.cs" />
+    <Compile Include="ViewModels\Base\IProtocolProcessor.cs" />
+    <Compile Include="ViewModels\Base\ITopicViewModel.cs" />
+    <Compile Include="ViewModels\Definitions\TopicGroupDefinitionCollection.cs" />
+    <Compile Include="ViewModels\Definitions\TopicGroupDefinition.cs" />
+    <Compile Include="ViewModels\Base\BaseDeviceViewModel.cs" />
+    <Compile Include="ViewModels\Devices\PumaLyricViewModel.cs" />
+    <Compile Include="ViewModels\Devices\PlaceholderViewModel.cs" />
+    <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="ViewModels\MasterListViewModel.cs" />
+    <Compile Include="ViewModels\Devices\LightPanelViewModel.cs" />
+    <Compile Include="ViewModels\Definitions\ObjectCollection.cs" />
+    <Compile Include="ViewModels\Base\ProtocolParts.cs" />
+    <Compile Include="ViewModels\Devices\TelevisionViewModel.cs" />
+    <Compile Include="Views\Base\BasePageView.cs" />
+    <Compile Include="Views\Controls\Busy.xaml.cs">
+      <DependentUpon>Busy.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\DeviceHeaderView.xaml.cs">
+      <DependentUpon>DeviceHeaderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\UpDownLayoutView.xaml.cs">
+      <DependentUpon>UpDownLayoutView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Devices\LGAirConditionerView.xaml.cs">
+      <DependentUpon>LGAirConditionerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Devices\HueLightView.xaml.cs">
+      <DependentUpon>HueLightView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Devices\MediaPlayerView.xaml.cs">
+      <DependentUpon>MediaPlayerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Devices\PumaRulesView.xaml.cs">
+      <DependentUpon>PumaRulesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Devices\EnOceanRockerButtonView.xaml.cs">
+      <DependentUpon>EnOceanRockerButtonView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Devices\ZWaveSwitchView.xaml.cs">
+      <DependentUpon>ZWaveSwitchView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Devices\SimpleLockView.xaml.cs">
+      <DependentUpon>SimpleLockView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Devices\PumaLyricView.xaml.cs">
+      <DependentUpon>PumaLyricView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Devices\PlaceholderView.xaml.cs">
+      <DependentUpon>PlaceholderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\IconView.cs" />
+    <Compile Include="Views\Devices\TelevisionPanelView.xaml.cs">
+      <DependentUpon>TelevisionPanelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HomePageView.xaml.cs">
+      <DependentUpon>HomePageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Devices\LightPanelView.xaml.cs">
+      <DependentUpon>LightPanelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\ListViewBaseExtensions.cs" />
+    <Compile Include="Views\ShellView.xaml.cs">
+      <DependentUpon>ShellView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MasterListView.xaml.cs">
+      <DependentUpon>MasterListView.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\ac-icon.png" />
+    <Content Include="Assets\build-away-01.png" />
+    <Content Include="Assets\build-home-01.png" />
+    <Content Include="Assets\build-icon-honeywell.png" />
+    <Content Include="Assets\ConnectedHome.png" />
+    <Content Include="Assets\CFLlightbulb.png" />
+    <Content Include="Assets\Control_Television_Icon.png" />
+    <Content Include="Assets\power.png" />
+    <Content Include="Assets\RockerSwitch.png" />
+    <Content Include="Assets\simpleLock.png" />
+    <Content Include="Help.htm" />
+    <Content Include="Properties\Default.rd.xml" />
+    <Content Include="Assets\LockScreenLogo.scale-200.png" />
+    <Content Include="Assets\SplashScreen.scale-200.png" />
+    <Content Include="Assets\Square150x150Logo.scale-200.png" />
+    <Content Include="Assets\Square44x44Logo.scale-200.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
+    <Content Include="Assets\StoreLogo.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+    <Content Include="Resources\en-US\VoiceCommandService.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Styles\Custom.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Views\Controls\Busy.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\DeviceHeaderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\UpDownLayoutView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Devices\LGAirConditionerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Devices\HueLightView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Devices\MediaPlayerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Devices\PumaRulesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Devices\EnOceanRockerButtonView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Devices\ZWaveSwitchView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Devices\SimpleLockView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Devices\PumaLyricView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Devices\PlaceholderView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Devices\TelevisionPanelView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\HomePageView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Devices\LightPanelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ShellView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MasterListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="org.alljoyn.ControlPanel.Property, Version=255.255.255.255, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\$(Platform)\$(Configuration)\org.alljoyn.ControlPanel.Property\org.alljoyn.ControlPanel.Property.winmd</HintPath>
+    </Reference>
+    <Reference Include="com.microsoft.OICBridge.oic.r.light.brightness, Version=255.255.255.255, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\$(Platform)\$(Configuration)\com.microsoft.OICBridge.oic.r.light.brightness\com.microsoft.OICBridge.oic.r.light.brightness.winmd</HintPath>
+    </Reference>
+    <Reference Include="com.enocean.Bridge.RockerButton.interface_1, Version=255.255.255.255, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\$(Platform)\$(Configuration)\com.enocean.Bridge.RockerButton.interface_1\com.enocean.Bridge.RockerButton.interface_1.winmd</HintPath>
+    </Reference>
+    <Reference Include="org.alljoyn.ControlPanel.Container, Version=255.255.255.255, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\$(Platform)\$(Configuration)\org.alljoyn.ControlPanel.Container\org.alljoyn.ControlPanel.Container.winmd</HintPath>
+    </Reference>
+    <Reference Include="com.microsoft.OICBridge.oic.r.openlevel, Version=255.255.255.255, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\$(Platform)\$(Configuration)\com.microsoft.OICBridge.oic.r.openlevel\com.microsoft.OICBridge.oic.r.openlevel.winmd</HintPath>
+    </Reference>
+    <Reference Include="org.alljoyn.ControlPanel.ControlPanel, Version=255.255.255.255, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\$(Platform)\$(Configuration)\org.alljoyn.ControlPanel.ControlPanel\org.alljoyn.ControlPanel.ControlPanel.winmd</HintPath>
+    </Reference>
+    <Reference Include="com.microsoft.ZWaveBridge.SwitchBinary.Switch, Version=255.255.255.255, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\$(Platform)\$(Configuration)\com.microsoft.ZWaveBridge.SwitchBinary.Switch\com.microsoft.ZWaveBridge.SwitchBinary.Switch.winmd</HintPath>
+    </Reference>
+    <Reference Include="com.microsoft.OICBridge.oic.r.channel, Version=255.255.255.255, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\$(Platform)\$(Configuration)\com.microsoft.OICBridge.oic.r.channel\com.microsoft.OICBridge.oic.r.channel.winmd</HintPath>
+    </Reference>
+    <Reference Include="org.alljoyn.Control.Volume, Version=255.255.255.255, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\$(Platform)\$(Configuration)\org.alljoyn.Control.Volume\org.alljoyn.Control.Volume.winmd</HintPath>
+    </Reference>
+    <Reference Include="net.allplay.MCU, Version=255.255.255.255, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\$(Platform)\$(Configuration)\net.allplay.MCU\net.allplay.MCU.winmd</HintPath>
+    </Reference>
+    <Reference Include="net.allplay.MediaPlayer, Version=255.255.255.255, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\$(Platform)\$(Configuration)\net.allplay.MediaPlayer\net.allplay.MediaPlayer.winmd</HintPath>
+    </Reference>
+    <Reference Include="com.enocean.Bridge.TempHumidityBrightness.interface_1, Version=255.255.255.255, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\$(Platform)\$(Configuration)\com.enocean.Bridge.TempHumidityBrightness.interface_1\com.enocean.Bridge.TempHumidityBrightness.interface_1.winmd</HintPath>
+    </Reference>
+    <Reference Include="org.allseen.LSF, Version=255.255.255.255, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\$(Platform)\$(Configuration)\org.allseen.LSF\org.allseen.LSF.winmd</HintPath>
+    </Reference>
+    <Reference Include="org.alljoyn.ControlPanel, Version=255.255.255.255, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\$(Platform)\$(Configuration)\org.alljoyn.ControlPanel\org.alljoyn.ControlPanel.winmd</HintPath>
+    </Reference>
+    <Reference Include="org.alljoyn.Control, Version=255.255.255.255, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\$(Platform)\$(Configuration)\org.alljoyn.Control\org.alljoyn.Control.winmd</HintPath>
+    </Reference>
+    <Reference Include="com.microsoft.OICBridge.core.rule.engine, Version=255.255.255.255, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\$(Platform)\$(Configuration)\com.microsoft.OICBridge.core.rule.engine\com.microsoft.OICBridge.core.rule.engine.winmd</HintPath>
+    </Reference>
+    <Reference Include="com.microsoft.OICBridge.oic.r.airflow, Version=255.255.255.255, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\$(Platform)\$(Configuration)\com.microsoft.OICBridge.oic.r.airflow\com.microsoft.OICBridge.oic.r.airflow.winmd</HintPath>
+    </Reference>
+    <Reference Include="com.microsoft.OICBridge.oic.r.temperature, Version=255.255.255.255, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\$(Platform)\$(Configuration)\com.microsoft.OICBridge.oic.r.temperature\com.microsoft.OICBridge.oic.r.temperature.winmd</HintPath>
+    </Reference>
+    <Reference Include="com.microsoft.OICBridge.oic.r.audio, Version=255.255.255.255, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\$(Platform)\$(Configuration)\com.microsoft.OICBridge.oic.r.audio\com.microsoft.OICBridge.oic.r.audio.winmd</HintPath>
+    </Reference>
+    <Reference Include="com.microsoft.OICBridge.oic.r.mode, Version=255.255.255.255, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\$(Platform)\$(Configuration)\com.microsoft.OICBridge.oic.r.mode\com.microsoft.OICBridge.oic.r.mode.winmd</HintPath>
+    </Reference>
+    <Reference Include="com.microsoft.OICBridge.oic.r.switch.binary, Version=255.255.255.255, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\$(Platform)\$(Configuration)\com.microsoft.OICBridge.oic.r.switch.binary\com.microsoft.OICBridge.oic.r.switch.binary.winmd</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\MyLivingRoom.Cortana\VoiceCommandService\MyLivingRoom.Cortana.csproj">
+      <Project>{92e2b585-f2c7-42d5-9ed6-2664d35f272e}</Project>
+      <Name>MyLivingRoom.Cortana</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
+    <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

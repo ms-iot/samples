@@ -1,0 +1,71 @@
+#******************************************************************
+#
+# Copyright 2014 Intel Mobile Communications GmbH All Rights Reserved.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+##
+# 'unit_test' script for building unit tests and libs
+#
+##
+
+Import('env')
+
+target_os = env.get('TARGET_OS')
+src_dir = env.get('SRC_DIR')
+build_dir = env.get('BUILD_DIR')
+
+if target_os == 'linux':
+	# Verify that 'google unit test' library is installed.  If not,
+	# get it and install it
+	SConscript(src_dir + '/extlibs/gtest/SConscript')
+
+	# Verify that 'hippomocks' mocking code is installed.  If not,
+	# get it and install it
+	SConscript(src_dir + '/extlibs/hippomocks.scons')
+
+    # Build Common unit tests
+	SConscript('c_common/oic_string/test/SConscript')
+	SConscript('c_common/oic_malloc/test/SConscript')
+
+	# Build C unit tests
+	SConscript('csdk/stack/test/SConscript')
+	SConscript('csdk/ocrandom/test/SConscript')
+
+	SConscript('csdk/connectivity/test/SConscript')
+
+	# Build Security Resource Manager unit tests
+	SConscript('csdk/security/unittest/SConscript')
+
+	# Build C++ unit tests
+	SConscript('unittests/SConscript')
+
+	# Build Provisioning API unit test
+	if env.get('SECURED') == '1':
+		SConscript('csdk/security/provisioning/unittest/SConscript')
+		SConscript('provisioning/unittests/SConscript')
+
+elif target_os == 'darwin':
+	# Verify that 'google unit test' library is installed.  If not,
+	# get it and install it
+	SConscript(src_dir + '/extlibs/gtest/SConscript')
+
+	# Build C stack's unit tests.
+	SConscript('csdk/stack/test/SConscript')
+	SConscript('csdk/connectivity/test/SConscript')
+
+
