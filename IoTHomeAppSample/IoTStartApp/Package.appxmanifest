@@ -16,7 +16,7 @@
 
   <Properties>
     <DisplayName>IotStartApp</DisplayName>
-    <PublisherDisplayName>modhankw</PublisherDisplayName>
+    <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
