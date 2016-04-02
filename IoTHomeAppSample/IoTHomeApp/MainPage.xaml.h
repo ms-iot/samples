@@ -30,6 +30,5 @@ namespace ShellHomeApp
     private:
         void OemApp1_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
         void OemApp2_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
-        void OemApp3_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
     };
 }

@@ -46,6 +46,7 @@
 
   <Capabilities>
     <Capability Name="internetClient" />
+    <!-- Restricted Capability to use PackageManager APIs in UWP app -->
     <rescap:Capability Name="packageQuery" />
   </Capabilities>
 </Package>

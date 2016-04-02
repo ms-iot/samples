@@ -20,26 +20,21 @@ using namespace ShellHomeApp;
 
 using namespace Platform;
 using namespace Windows::Foundation;
-using namespace Windows::Foundation::Collections;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Controls::Primitives;
-using namespace Windows::UI::Xaml::Data;
-using namespace Windows::UI::Xaml::Input;
-using namespace Windows::UI::Xaml::Media;
-using namespace Windows::UI::Xaml::Navigation;
 using namespace Windows::System;
-
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 MainPage::MainPage()
 {
     InitializeComponent();
 }
 
-
-void ShellHomeApp::MainPage::OemApp1_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+void MainPage::OemApp1_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
+    //Launches the app that has registered as a protocol handler for 'oemapp1' protocol
+    //Use Launcher option to specify the Target Application Package Family Name to resolve
+    //the ambiguity, in case, more than one app has registered for the same protocol
+    //More information about the api can be found at:
+    //https://msdn.microsoft.com/en-us/library/windows/apps/hh701484.aspx
+
     auto options = ref new LauncherOptions();
     options->TargetApplicationPackageFamilyName = ref new String(L"OemApp1_1w720vyc4ccym");
 
@@ -47,7 +42,11 @@ void ShellHomeApp::MainPage::OemApp1_Click(Platform::Object^ sender, Windows::UI
 }
 
 
-void ShellHomeApp::MainPage::OemApp2_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+void MainPage::OemApp2_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
+    //Launches the app that has registered as a protocol handler for 'oemapp2' protocol
+    //More information about the api can be found at:
+    //https://msdn.microsoft.com/en-us/library/windows/apps/hh701484.aspx
+
     Launcher::LaunchUriAsync(ref new Uri("oemapp2:"));
 }

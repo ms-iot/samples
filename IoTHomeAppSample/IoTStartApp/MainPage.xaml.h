@@ -24,36 +24,13 @@ namespace IotStartApp
     public ref class AppListItem sealed
     {
     public:
-        property Windows::UI::Xaml::Media::Imaging::BitmapImage^ ImgSrc
-        {
-            Windows::UI::Xaml::Media::Imaging::BitmapImage^ get() { return m_ImgSrc; }
-            void set(Windows::UI::Xaml::Media::Imaging::BitmapImage^ img) { m_ImgSrc = img; }
-        }
+        property Windows::UI::Xaml::Media::Imaging::BitmapImage^ ImgSrc;
 
-        property Platform::String^ Name
-        {
-            Platform::String^ get() { return m_Name; }
-            void set(Platform::String^ name) { m_Name = name; }
-        }
+        property Platform::String^ Name;
 
-        property Platform::String^ PackageFullName
-        {
-            Platform::String^ get() { return m_PackageFullName; }
-            void set(Platform::String^ name) { m_PackageFullName = name; }
-        }
+        property Platform::String^ PackageFullName;
 
-        property Windows::ApplicationModel::Core::AppListEntry^ AppEntry
-        {
-            Windows::ApplicationModel::Core::AppListEntry^ get() { return m_AppEntry; }
-            void set(Windows::ApplicationModel::Core::AppListEntry^ entry) { m_AppEntry = entry; }
-        }
-
-    private:
-        Windows::UI::Xaml::Media::Imaging::BitmapImage^ m_ImgSrc;
-        Platform::String^ m_Name;
-        Platform::String^ m_PackageFullName;
-        Windows::ApplicationModel::Core::AppListEntry^ m_AppEntry;
-
+        property Windows::ApplicationModel::Core::AppListEntry^ AppEntry;
     };
 
     /// <summary>

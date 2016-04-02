@@ -16,7 +16,6 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            
             <Button x:Name="OemApp1" Content="Oem App1" Background="DarkRed" Foreground="White"  Margin="6" Width="200" Height="200" Click="OemApp1_Click"/>
             <Button x:Name="OemApp2" Content="Oem App2" Background="DarkGreen" Foreground="White" Margin="6" Width="200" Height="200" Grid.Column="1" Click="OemApp2_Click"/>
         </Grid>

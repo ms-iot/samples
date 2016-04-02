@@ -24,23 +24,12 @@ using namespace Platform;
 using namespace Platform::Collections;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Controls::Primitives;
-using namespace Windows::UI::Xaml::Data;
 using namespace Windows::UI::Xaml::Input;
-using namespace Windows::UI::Xaml::Media;
-using namespace Windows::UI::Xaml::Navigation;
 using namespace Windows::UI::Xaml::Media::Imaging;
 using namespace Windows::Storage::Streams;
 using namespace Concurrency;
-
-using namespace Windows::ApplicationModel;
 using namespace Windows::ApplicationModel::Core;
-
 using namespace Windows::Management::Deployment;
-
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 MainPage::MainPage()
 {
@@ -97,7 +86,7 @@ void MainPage::EnumApplications()
 
 }
 
-void IotStartApp::MainPage::StackPanel_Tapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e)
+void IotStartApp::MainPage::StackPanel_Tapped(Object^ sender, TappedRoutedEventArgs^ e)
 {
     auto appItem = dynamic_cast<AppListItem^>(appList->SelectedItem);
 
