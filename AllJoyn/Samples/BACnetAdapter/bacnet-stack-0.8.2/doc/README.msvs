@@ -1,0 +1,7 @@
+BACnet Stack - SourceForge.net
+Build for Visual Studio 2005 Express Edition
+
+Q1: Cannot open include file: 'winsock2.h'
+
+A1: Install the Microsoft Platform SDK:
+http://msdn.microsoft.com/vstudio/express/visualc/usingpsdk/default.aspx

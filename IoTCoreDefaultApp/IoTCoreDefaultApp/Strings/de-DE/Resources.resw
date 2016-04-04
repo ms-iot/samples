@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="IoTCoreHeader.Text" xml:space="preserve">
+  <data name="IoTCoreHeaderText" xml:space="preserve">
     <value>Windows 10 IoT Core</value>
     <comment>The Operating System Name</comment>
   </data>
@@ -125,11 +125,11 @@
     <value>IoTCore Board</value>
     <comment>A generic board name</comment>
   </data>
-  <data name="MainPageDeviceName.Text" xml:space="preserve">
+  <data name="MainPageDeviceNameText" xml:space="preserve">
     <value>Gerätename</value>
     <comment>Field label</comment>
   </data>
-  <data name="MainPageNetwork.Text" xml:space="preserve">
+  <data name="MainPageNetworkText" xml:space="preserve">
     <value>Netzwerk</value>
     <comment>Field label</comment>
   </data>
@@ -137,192 +137,196 @@
     <value>MinnowBoard Max</value>
     <comment>Board name</comment>
   </data>
-  <data name="RestartText.Text" xml:space="preserve">
+  <data name="RestartText" xml:space="preserve">
     <value>Neu starten</value>
     <comment>Restart entry in the shutdown menu</comment>
   </data>
-  <data name="ShutdownText.Text" xml:space="preserve">
+  <data name="ShutdownText" xml:space="preserve">
     <value>Herunterfahren</value>
     <comment>Shutdown entry in the shutdown menu</comment>
   </data>
-  <data name="BackButton.Content" xml:space="preserve">
+  <data name="BackButtonContent" xml:space="preserve">
     <value>Zurück</value>
   </data>
-  <data name="CancelButton.Content" xml:space="preserve">
+  <data name="CancelButtonContent" xml:space="preserve">
     <value>Abbrechen</value>
   </data>
-  <data name="ConnectAutomatically.Text" xml:space="preserve">
+  <data name="ConnectAutomaticallyText" xml:space="preserve">
     <value>Automatisch verbinden</value>
   </data>
-  <data name="ConnectButton.Content" xml:space="preserve">
+  <data name="ConnectButtonContent" xml:space="preserve">
     <value>Verbinden</value>
   </data>
-  <data name="DirectConnections.Text" xml:space="preserve">
+  <data name="DirectConnectionsText" xml:space="preserve">
     <value>Direktverbindungen</value>
   </data>
-  <data name="Ethernet.Text" xml:space="preserve">
+  <data name="EthernetText" xml:space="preserve">
     <value>Ethernet</value>
     <comment>Field label</comment>
   </data>
-  <data name="NetworkConnectingMessage.Text" xml:space="preserve">
+  <data name="NetworkConnectingMessageText" xml:space="preserve">
     <value>Netzwerkanforderungen werden überprüft</value>
   </data>
-  <data name="NetworkPasswordPrompt.Text" xml:space="preserve">
+  <data name="NetworkPasswordPromptText" xml:space="preserve">
     <value>Netzwerksicherheitsschlüssel eingeben</value>
   </data>
-  <data name="NextButton.Content" xml:space="preserve">
+  <data name="NextButtonContent" xml:space="preserve">
     <value>Weiter</value>
   </data>
-  <data name="NoNetworks.Text" xml:space="preserve">
+  <data name="NoNetworksText" xml:space="preserve">
     <value>Keine gefunden</value>
   </data>
-  <data name="OOBEIntro.Text" xml:space="preserve">
+  <data name="OOBEIntroText" xml:space="preserve">
     <value>Lassen Sie uns zunächst einige grundlegende Dinge klären.</value>
   </data>
-  <data name="OOBELanguageSelect.Text" xml:space="preserve">
+  <data name="OOBELanguageSelectText" xml:space="preserve">
     <value>Sprache wählen</value>
   </data>
-  <data name="OOBENetworkTitle.Text" xml:space="preserve">
+  <data name="OOBENetworkTitleText" xml:space="preserve">
     <value>Verbindung herstellen</value>
   </data>
-  <data name="OOBEWelcomeTitle.Text" xml:space="preserve">
+  <data name="OOBEWelcomeTitleText" xml:space="preserve">
     <value>Hallo und willkommen bei Windows 10 IoT Core</value>
   </data>
   <data name="Rpi2Name" xml:space="preserve">
     <value>Raspberry Pi 2</value>
     <comment>Board name</comment>
   </data>
-  <data name="SkipStep.Text" xml:space="preserve">
+  <data name="DB410Name" xml:space="preserve">
+    <value>DragonBoard 410c</value>
+    <comment>Board name</comment>
+  </data>
+  <data name="SkipStepText" xml:space="preserve">
     <value>Schritt überspringen</value>
   </data>
-  <data name="Wifi.Text" xml:space="preserve">
+  <data name="WifiText" xml:space="preserve">
     <value>WLAN</value>
     <comment>Label for Wi-Fi list in options page</comment>
   </data>
-  <data name="StartDeveloping.Text" xml:space="preserve">
+  <data name="StartDevelopingText" xml:space="preserve">
     <value> um mit der Entwicklung zu beginnen.</value>
     <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
   </data>
-  <data name="Visit.Text" xml:space="preserve">
+  <data name="VisitText" xml:space="preserve">
     <value>Besuchen Sie</value>
     <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
   </data>
-  <data name="KeyboardTitle.Text" xml:space="preserve">
+  <data name="KeyboardTitleText" xml:space="preserve">
     <value>Tastaturlayout</value>
     <comment>Field label</comment>
   </data>
-  <data name="LanguageTitle.Text" xml:space="preserve">
+  <data name="LanguageTitleText" xml:space="preserve">
     <value>Sprachen</value>
     <comment>Field label</comment>
   </data>
-  <data name="NetworkConnected.Text" xml:space="preserve">
+  <data name="NetworkConnectedText" xml:space="preserve">
     <value>Verbunden</value>
   </data>
-  <data name="NetworkPreferences.Text" xml:space="preserve">
+  <data name="NetworkPreferencesText" xml:space="preserve">
     <value>Netzwerk &amp; WLAN</value>
   </data>
-  <data name="SettingsPreferences.Text" xml:space="preserve">
+  <data name="SettingsPreferencesText" xml:space="preserve">
     <value>Grundeinstellungen</value>
   </data>
-  <data name="SettingsTitle.Text" xml:space="preserve">
+  <data name="SettingsTitleText" xml:space="preserve">
     <value>Geräteeinstellungen</value>
   </data>
-  <data name="TimeZoneTitle.Text" xml:space="preserve">
+  <data name="TimeZoneTitleText" xml:space="preserve">
     <value>Zeitzone</value>
   </data>
-  <data name="DeviceInfo.Text" xml:space="preserve">
+  <data name="DeviceInfoText" xml:space="preserve">
     <value>Geräteinfo</value>
   </data>
-  <data name="Tutorials.Text" xml:space="preserve">
+  <data name="TutorialsText" xml:space="preserve">
     <value>Lern-
 programme</value>
     <comment>Text under the Tutorials button on the top bar</comment>
   </data>
-  <data name="ConnectedDevices.Text" xml:space="preserve">
+  <data name="ConnectedDevicesText" xml:space="preserve">
     <value>Verbundene Geräte</value>
   </data>
-  <data name="Ipv4.Text" xml:space="preserve">
+  <data name="Ipv4Text" xml:space="preserve">
     <value>IPv4</value>
     <comment>Field label</comment>
   </data>
-  <data name="Ipv6.Text" xml:space="preserve">
+  <data name="Ipv6Text" xml:space="preserve">
     <value>IPv6</value>
     <comment>Field label</comment>
   </data>
-  <data name="MainPageIPAddress.Text" xml:space="preserve">
+  <data name="MainPageIPAddressText" xml:space="preserve">
     <value>IP-Adresse</value>
     <comment>Field label</comment>
   </data>
-  <data name="NetworkInformation.Text" xml:space="preserve">
+  <data name="NetworkInformationText" xml:space="preserve">
     <value>NETZWERKINFORMATIONEN</value>
   </data>
-  <data name="Status.Text" xml:space="preserve">
+  <data name="StatusText" xml:space="preserve">
     <value>Status</value>
     <comment>Status of the network connection (e.g. not connected, limited, etc.)</comment>
   </data>
-  <data name="TutorialGetCodingDescription.Text" xml:space="preserve">
+  <data name="TutorialGetCodingDescriptionText" xml:space="preserve">
     <value>Remoteprogrammierung vom PC</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialGetCodingTitle.Text" xml:space="preserve">
+  <data name="TutorialGetCodingTitleText" xml:space="preserve">
     <value>Einstieg in die Programmierung</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialGetConnectedDescription.Text" xml:space="preserve">
+  <data name="TutorialGetConnectedDescriptionText" xml:space="preserve">
     <value>Gerät mit dem Internet und dem PC verbinden</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialGetConnectedTitle.Text" xml:space="preserve">
+  <data name="TutorialGetConnectedTitleText" xml:space="preserve">
     <value>Verbindung herstellen</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialGetStartedDescription.Text" xml:space="preserve">
+  <data name="TutorialGetStartedDescriptionText" xml:space="preserve">
     <value>Windows 10 IoT Core kennenlernen</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialGetStartedTitle.Text" xml:space="preserve">
+  <data name="TutorialGetStartedTitleText" xml:space="preserve">
     <value>Los geht’s</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialHeader.Text" xml:space="preserve">
+  <data name="TutorialHeaderText" xml:space="preserve">
     <value>Das Beste aus Windows 10 IoT Core herausholen</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialHelloBlinkyDescription.Text" xml:space="preserve">
+  <data name="TutorialHelloBlinkyDescriptionText" xml:space="preserve">
     <value>LED am Gerät ein-/ausschalten</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialHelloBlinkyTitle.Text" xml:space="preserve">
+  <data name="TutorialHelloBlinkyTitleText" xml:space="preserve">
     <value>Hello Blinky</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialTitle.Text" xml:space="preserve">
+  <data name="TutorialTitleText" xml:space="preserve">
     <value>Ressourcen und Tools, die Ihnen die Verbindung und die Entwicklung erleichtern.</value>
   </data>
-  <data name="TutorialBlinkyBody1.Text" xml:space="preserve">
+  <data name="TutorialBlinkyBody1Text" xml:space="preserve">
     <value>Die wichtigste Aufgabe eines Boards besteht darin, die LED zum Blinken zu bringen.</value>
   </data>
-  <data name="TutorialBlinkyBody2.Text" xml:space="preserve">
+  <data name="TutorialBlinkyBody2Text" xml:space="preserve">
     <value>Wie im Abschnitt „Los geht’s“ erwähnt, ist der gesamte Quellcode auf „Open Source“ ausgerichtet und steht unter „www.windowsondevices.com“ zur Verfügung (suchen Sie nach „IoTCoreDefaultApp“).</value>
   </data>
-  <data name="TutorialBlinkyBody3.Text" xml:space="preserve">
+  <data name="TutorialBlinkyBody3Text" xml:space="preserve">
     <value>Es ist keine Einrichtung erforderlich. Drücken Sie einfach „Start“.</value>
   </data>
-  <data name="TutorialBlinkyBody4.Text" xml:space="preserve">
-    <value>Sie können die Blinkfrequenz auch ändern. Trommeln Sie alle Freunde zusammen, und veranstalten Sie eine Tanzparty rund um Ihren Raspberry Pi 2.</value>
+  <data name="TutorialBlinkyBody4Text" xml:space="preserve">
+    <value>Sie können die Blinkfrequenz auch ändern. Trommeln Sie alle Freunde zusammen, und veranstalten Sie eine Tanzparty rund um Ihr Gerät.</value>
   </data>
-  <data name="TutorialBlinkyBody5.Text" xml:space="preserve">
+  <data name="TutorialBlinkyBody5Text" xml:space="preserve">
     <value>Haftungsausschluss: Microsoft haftet nicht für Schäden, die dadurch entstehen, dass Sie große Technopartys mit der kleinen blinkenden LED auf dem Board veranstalten.</value>
   </data>
-  <data name="TutorialBlinkyTitle1.Text" xml:space="preserve">
+  <data name="TutorialBlinkyTitle1Text" xml:space="preserve">
     <value>Hello Blinky</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialBlinkyTitle2.Text" xml:space="preserve">
+  <data name="TutorialBlinkyTitle2Text" xml:space="preserve">
     <value>Board zum Blinken bringen</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="MainPageOSVersion.Text" xml:space="preserve">
+  <data name="MainPageOSVersionText" xml:space="preserve">
     <value>Betriebssystemversion</value>
     <comment>Label for OS Version field in main page</comment>
   </data>
@@ -330,9 +334,13 @@ programme</value>
     <value>Nicht verfügbar</value>
     <comment>Text shown when we cannot retrieve the OS Version</comment>
   </data>
-  <data name="Refresh.Content" xml:space="preserve">
+  <data name="RefreshContent" xml:space="preserve">
     <value>Aktualisieren</value>
     <comment>Refresh button</comment>
+  </data>
+  <data name="Tutorial.GetStarted.001.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetStarted-{0}.jpg</value>
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetStarted.002.title" xml:space="preserve">
     <value>Erste Schritte</value>
@@ -373,10 +381,6 @@ programme</value>
   <data name="Tutorial.GetStarted.014.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
-  <data name="Tutorial.GetStarted.014a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetStarted.015.p" xml:space="preserve">
     <value>Klicken Sie auf das Lernprogramm „Einstieg in die Codierung“, um weitere Informationen zu erhalten.</value>
   </data>
@@ -395,8 +399,8 @@ programme</value>
   <data name="Tutorial.GetStarted.020.p" xml:space="preserve">
     <value>Verwenden Sie dieses Beispiel als Ausgangsbasis für die Entwicklung einer eigenen Anwendung.</value>
   </data>
-  <data name="Tutorial.GetStarted.021.br" xml:space="preserve">
-    <value />
+  <data name="Tutorial.GetConnected.001.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetConnected-{0}.jpg</value>
     <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.002.title" xml:space="preserve">
@@ -438,10 +442,6 @@ programme</value>
   <data name="Tutorial.GetConnected.015.ul" xml:space="preserve">
     <value>Ein Ethernetkabel zum Verbinden Ihres Entwicklungscomputers mit Ihrem IoT Core-Gerät</value>
   </data>
-  <data name="Tutorial.GetConnected.015a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetConnected.016.p" xml:space="preserve">
     <value>Folgen Sie den unten angegebenen Anweisungen, um die gemeinsame Nutzung der Internetverbindung (Internet Connection Sharing, ICS) auf Ihrem PC zu aktivieren.</value>
   </data>
@@ -460,10 +460,6 @@ programme</value>
   <data name="Tutorial.GetConnected.021.ul" xml:space="preserve">
     <value>Klicken Sie auf die Registerkarte „Freigabe“, und aktivieren Sie das Kontrollkästchen „Anderen Benutzern im Netzwerk gestatten, diese Verbindung des Computers als Internetverbindung zu verwenden“.</value>
   </data>
-  <data name="Tutorial.GetConnected.021a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetConnected.022.p" xml:space="preserve">
     <value>Nachdem Sie ICS auf Ihrem PC aktiviert haben, können Sie Ihr Windows 10 IoT Core-Gerät jetzt direkt an Ihren PC anschließen. Schließen Sie dazu ein Ende des Ethernet-Ersatzkabels an den zusätzlichen Ethernet-Anschluss am PC und das andere Ende an den Ethernet-Anschluss Ihres IoT Core-Geräts an.</value>
   </data>
@@ -473,19 +469,11 @@ programme</value>
   <data name="Tutorial.GetConnected.024.ul" xml:space="preserve">
     <value>Die Registerkarte „Freigabe“ ist nicht verfügbar, wenn Sie nur über eine Netzwerkverbindung verfügen.</value>
   </data>
-  <data name="Tutorial.GetConnected.024a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetConnected.025.h1" xml:space="preserve">
     <value>Probleme?</value>
   </data>
   <data name="Tutorial.GetConnected.026.p" xml:space="preserve">
     <value>Wir haben einige erweiterte Netzwerkdiagnose-Funktionen auf der Hauptseite hinzugefügt, um Ihnen das Debuggen von Problemen zu erleichtern. Weitere Unterstützung erhalten Sie unter „www.windowsondevices.com“.</value>
-  </data>
-  <data name="Tutorial.GetConnected.028.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetCoding.002.title" xml:space="preserve">
     <value>Einstieg in die Programmierung</value>
@@ -511,15 +499,8 @@ programme</value>
   <data name="Tutorial.GetCoding.009.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
-  <data name="Tutorial.GetCoding.009a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetCoding.010.h1" xml:space="preserve">
     <value>Einrichten von Visual Studio 2015 auf Ihrem PC</value>
-  </data>
-  <data name="Tutorial.GetCoding.011.p" xml:space="preserve">
-    <value>Wir haben eine Versionsdatei erstellt, in der die unterstützten Versionen der benötigten Tools beschrieben sind. Benutzen Sie diese Datei als Referenz zur Installation der erforderlichen Tools auf Ihrem PC:</value>
   </data>
   <data name="Tutorial.GetCoding.012.ul" xml:space="preserve">
     <value>Windows 10 installieren</value>
@@ -529,23 +510,6 @@ programme</value>
   </data>
   <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
     <value>Wenn Sie in die Treiberentwicklung einsteigen möchten, installieren Sie das WDK.</value>
-  </data>
-  <data name="Tutorial.GetCoding.015.ul" xml:space="preserve">
-    <value>Installieren Sie die MSI für IoT-Tools.</value>
-  </data>
-  <data name="Tutorial.GetCoding.016.ul" xml:space="preserve">
-    <value>Sie sind jetzt bereit für die App-Entwicklung. Sobald Sie sich anmelden, wird die Windows IoT Core Watcher-Anwendung automatisch gestartet. Mit ihr können Sie verfügbare Windows 10 IoT Core-Geräte suchen, auf denen die Apps bereitgestellt werden.</value>
-  </data>
-  <data name="Tutorial.GetCoding.016a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
-  <data name="Tutorial.GetCoding.018.p" xml:space="preserve">
-    <value>Nachdem Sie Ihr Gerät im Netzwerk gefunden haben, besuchen Sie „www.windowsondevices.com“, um Beispielcode zum Testen und Ausführen herunterzuladen!</value>
-  </data>
-  <data name="Tutorial.GetCoding.019.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="NetworkConnectivityLevel_ConstrainedInternetAccess" xml:space="preserve">
     <value>Eingeschränkter Internetzugriff</value>
@@ -563,7 +527,7 @@ programme</value>
     <value>&lt;keine Internetverbindung&gt;</value>
     <comment>Used in the main page under "IP address"</comment>
   </data>
-  <data name="DefaultLanguageTimeout.Text" xml:space="preserve">
+  <data name="DefaultLanguageTimeoutText" xml:space="preserve">
     <value>Die Standardsprache wird automatisch ausgewählt…</value>
   </data>
   <data name="BlinkyStart" xml:space="preserve">

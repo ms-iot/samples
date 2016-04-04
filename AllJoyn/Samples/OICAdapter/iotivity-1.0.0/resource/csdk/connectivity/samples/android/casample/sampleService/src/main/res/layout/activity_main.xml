@@ -1,0 +1,265 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="org.iotivity.ca.service.MainActivity" >
+
+    <RelativeLayout
+        android:id="@+id/sample_service_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="#cccccc" >
+
+        <LinearLayout
+            android:id="@+id/layout_mode"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_mode"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_network"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_mode"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_network"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_Response_Noti_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_mode" >
+
+            <TextView
+                android:id="@+id/tv_Response_Noti"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="[Send Response / Send Notification]"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_notify"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_Response_Noti_title" >
+
+            <EditText
+                android:id="@+id/et_notification"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="@string/notification" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_request_setting_for_server"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_notify" >
+
+            <Button
+                android:id="@+id/btn_Request_setting_for_server"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="@string/request_setting" />
+
+            <Button
+                android:id="@+id/btn_notify"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/btn_Request_setting_for_server"
+                android:text="@string/notify" />
+
+            <Button
+                android:id="@+id/btn_sendresponse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/btn_notify"
+                android:text="@string/sendresponse" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_request_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_mode" >
+
+            <TextView
+                android:id="@+id/tv_request"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="[Send Request]" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_request"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_request_title" >
+
+            <EditText
+                android:id="@+id/et_req_data"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/req_data" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_request_setting_for_client"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_request" >
+
+            <Button
+                android:id="@+id/btn_Request_setting_for_client"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="@string/request_setting" />
+
+            <Button
+                android:id="@+id/btn_Request"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/btn_Request_setting_for_client"
+                android:text="@string/request" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_request_to_all_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_request_setting_for_client" >
+
+            <TextView
+                android:id="@+id/tv_request_to_all"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" 
+                android:text="[Send Request to All]"
+                />
+
+         </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_request_to_all"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_request_to_all_title" >
+
+            <EditText
+                android:id="@+id/et_req_to_all_data"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/uri" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_request_to_all_setting_for_client"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_request_to_all" >
+
+            <Button
+                android:id="@+id/btn_request_to_all_setting_for_client"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="@string/request_setting" />
+
+            <Button
+                android:id="@+id/btn_request_to_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/btn_request_to_all_setting_for_client"
+                android:text="@string/request_to_all" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_handle_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_request_to_all_setting_for_client" >
+
+            <TextView
+                android:id="@+id/tv_handle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="[Handle Reqeust,Response data / Get NetworkInfo]"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_receive"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_handle_title" >
+
+            <Button
+                android:id="@+id/btn_receive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="@string/receive" />
+
+            <Button
+                android:id="@+id/btn_get_network_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/btn_receive"
+                android:text="@string/get_network_info" />
+
+            <Button
+                android:id="@+id/btn_big_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/btn_get_network_info"
+                android:text="big data" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/sv_result_scoll"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/sample_service_layout"
+        android:layout_marginTop="10pt" >
+
+        <TextView
+            android:id="@+id/tv_result"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
+
+</RelativeLayout>

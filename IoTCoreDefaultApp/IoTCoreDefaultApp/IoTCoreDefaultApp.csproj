@@ -11,8 +11,8 @@
     <AssemblyName>IoTCoreDefaultApp</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10545.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
     <FileAlignment>512</FileAlignment>
@@ -20,15 +20,21 @@
     <DebugEngines>{2E36F1D4-B23C-435D-AB41-18E608940038}</DebugEngines>
     <PackageCertificateKeyFile>IoTCoreDefaultApp_TemporaryKey.pfx</PackageCertificateKeyFile>
     <NuGetPackageImportStamp>b66cac28</NuGetPackageImportStamp>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <AppxBundlePlatforms>x86</AppxBundlePlatforms>
+    <AppxBundle>Never</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\ARM\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP;RPI</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
     <NoWarn>;2008</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>ARM</PlatformTarget>
@@ -38,7 +44,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
     <OutputPath>bin\ARM\Release\</OutputPath>
-    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP;RPI</DefineConstants>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
     <Optimize>true</Optimize>
     <NoWarn>;2008</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -74,7 +80,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NETFX_CORE;WINDOWS_UWP;MBM;CODE_ANALYSIS;FORCE_OOBE_WELCOME_SCREEN;ALWAYS_SHOW_BLINKY;CODE_ANALYSIS</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NETFX_CORE;WINDOWS_UWP;CODE_ANALYSIS;FORCE_OOBE_WELCOME_SCREEN;ALWAYS_SHOW_BLINKY;CODE_ANALYSIS</DefineConstants>
     <NoWarn>;2008</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
@@ -84,7 +90,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
-    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP;MBM</DefineConstants>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
     <Optimize>true</Optimize>
     <NoWarn>;2008</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -99,7 +105,7 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="WindowsIoT, Version=10.0.10240.0">
+    <SDKReference Include="WindowsIoT, Version=10.0.10586.0">
       <Name>Windows IoT Extension SDK</Name>
     </SDKReference>
   </ItemGroup>
@@ -107,11 +113,14 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Presenters\BluetoothDisplayHelpers.cs" />
     <Compile Include="Presenters\ConnectedDevicePresenter.cs" />
     <Compile Include="Presenters\DeviceInfoPresenter.cs" />
     <Compile Include="Presenters\LanguageManager.cs" />
     <Compile Include="Presenters\NetworkPresenter.cs" />
+    <Compile Include="Utils\DeviceTypeInformation.cs" />
     <Compile Include="Utils\Constants.cs" />
+    <Compile Include="Utils\NativeTimeMethods.cs" />
     <Compile Include="Utils\NavigationUtils.cs" />
     <Compile Include="Utils\WifiGlyphConverter.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
@@ -123,6 +132,9 @@
     </Compile>
     <Compile Include="Views\OOBEWelcome.xaml.cs">
       <DependentUpon>OOBEWelcome.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Screensaver.xaml.cs">
+      <DependentUpon>Screensaver.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
@@ -147,6 +159,7 @@
     <PRIResource Include="Strings\zh-CN\Resources.resw" />
     <PRIResource Include="Strings\ru-RU\Resources.resw" />
     <PRIResource Include="Strings\pt-BR\Resources.resw" />
+    <PRIResource Include="Strings\nl-NL\Resources.resw" />
     <PRIResource Include="Strings\ko-KR\Resources.resw" />
     <PRIResource Include="Strings\ja-JP\Resources.resw" />
     <PRIResource Include="Strings\it-IT\Resources.resw" />
@@ -164,14 +177,19 @@
     <Content Include="Assets\Tutorials\GetCodingTile.jpg" />
     <Content Include="Assets\Tutorials\GetConnected-004.jpg" />
     <Content Include="Assets\Tutorials\GetConnected-006.jpg" />
-    <Content Include="Assets\Tutorials\GetConnected.jpg" />
+    <Content Include="Assets\Tutorials\GetConnected-RPI2.jpg" />
+    <Content Include="Assets\Tutorials\GetConnected-DB410.jpg" />
     <Content Include="Assets\MBMBoard.png" />
     <Content Include="Assets\RaspberryPiBoard.png" />
+    <Content Include="Assets\DB410Board.png" />
     <Content Include="Assets\rpi2-tutorials.png" />
-    <Content Include="Assets\Tutorials\GetStarted.jpg" />
+    <Content Include="Assets\DB410-tutorials.png" />
+    <Content Include="Assets\Tutorials\GetStarted-RPI2.jpg" />
+    <Content Include="Assets\Tutorials\GetStarted-DB410.jpg" />
     <Content Include="Assets\Tutorials\HelloBlinky.jpg" />
     <Content Include="Assets\Tutorials\HelloBlinky-004.jpg" />
-    <Content Include="Assets\Tutorials\HelloBlinkyTile.jpg" />
+    <Content Include="Assets\Tutorials\HelloBlinkyTile-RPI2.jpg" />
+    <Content Include="Assets\Tutorials\HelloBlinkyTile-DB410.jpg" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
@@ -204,6 +222,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ScreenSaver.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -220,16 +242,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AllJoynOnBoarding\AllJoynOnBoarding.vcxproj">
-      <Project>{e3a2f25b-1d8f-4564-ad8b-024518a4c6de}</Project>
-      <Name>org.alljoyn</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\OnBoardee\OnBoardee.vcxproj">
-      <Project>{8ff91bae-5593-4fd6-9bdf-9f11b2978fc9}</Project>
-      <Name>OnBoardee</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

@@ -1,0 +1,79 @@
+##
+# This script set darwin specific flags (GNU GCC)
+#
+##
+import os
+import platform
+import commands
+from distutils.version import StrictVersion
+
+Import('env')
+
+target_arch = env.get('TARGET_ARCH')
+target_os = env.get('TARGET_OS')
+
+tc_path=commands.getoutput('xcode-select -p')
+
+tc_sdks=commands.getoutput('xcodebuild -showsdks')
+
+#Find the SDK's that are installed
+sdks=[]
+for line in tc_sdks.split('\n'):
+    if (line == ''):
+        bIn=False
+    if (line[:10] == 'OS X SDKs:'):
+        bIn=(target_os == 'darwin')
+    elif (line[:9] == 'iOS SDKs:'):
+        bIn=(target_os == 'ios')
+    elif bIn:
+        sdks.append(line[:14].strip())
+
+#find the latest
+maxsdk='0.0'
+if len(sdks) > 0:
+    for sdk in sdks:
+        p = sdk.rsplit(' ',1)[1]
+        if (StrictVersion(p)) > StrictVersion(maxsdk):
+            maxsdk=p
+
+# SYS_VERSION build option
+help_vars = Variables()
+help_vars.Add('SYS_VERSION', 'MAC OS X SDK version / IOS SDK version', os.environ.get('SYS_VERSION'))
+help_vars.Update(env)
+Help(help_vars.GenerateHelpText(env))
+
+sys_version = env.get('SYS_VERSION')
+
+#if they didn't explictly set it use the auto-detected one
+if sys_version is None:
+    sys_version=maxsdk
+
+env['SYS_VERSION']=sys_version
+
+# Set release/debug flags
+if env.get('RELEASE'):
+	env.AppendUnique(CCFLAGS = ['-Os'])
+	env.AppendUnique(CPPDEFINES = ['NDEBUG'])
+else:
+	env.AppendUnique(CCFLAGS = ['-g'])
+	env.AppendUnique(LINKFLAGS = ['-g'])
+
+if env.get('LOGGING'):
+    env.AppendUnique(CPPDEFINES = ['-DTB_LOG'])
+
+if target_os == 'darwin':
+	sys_root = tc_path + '/Platforms/MacOSX.platform/Developer/SDKs/MacOSX' + sys_version + '.sdk/'
+else:
+	if target_arch in ['i386', 'x86_64']:
+		sys_root = tc_path + '/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator' + sys_version + '.sdk/'
+	else:
+		sys_root = tc_path + '/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS' + sys_version + '.sdk/'
+
+# Set arch flags
+env.AppendUnique(CCFLAGS = ['-arch', target_arch, '-isysroot', sys_root])
+env.AppendUnique(LINKFLAGS = ['-arch', target_arch, '-isysroot', sys_root])
+
+if target_os == 'darwin':
+	flag = '-mmacosx-version-min=' + sys_version
+	env.AppendUnique(CCFLAGS = [flag])
+	env.AppendUnique(LINKFLAGS = [flag])

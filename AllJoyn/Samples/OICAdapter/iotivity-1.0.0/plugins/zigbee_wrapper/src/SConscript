@@ -1,0 +1,82 @@
+#******************************************************************
+#
+# Copyright 2015 Intel Mobile Communications GmbH All Rights Reserved.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+##
+# Plugin Interface build script
+##
+
+import os
+import os.path
+
+Import('env')
+
+target_os = env.get('TARGET_OS')
+src_dir = env.get('SRC_DIR')
+zw_path = os.path.join(src_dir, 'plugins')
+
+print"Reading Zigbee Wrapper (ZW) script"
+
+######################################################################
+# Build flags
+######################################################################
+
+env.PrependUnique(CPPPATH = [ os.path.join(src_dir, 'resource', 'c_common', 'oic_malloc', 'include'),
+                              os.path.join(src_dir, 'resource', 'c_common', 'oic_string', 'include'),
+                              os.path.join(src_dir, 'resource', 'oc_logger', 'include'),
+                              os.path.join(src_dir, 'resource', 'csdk', 'logger', 'include'),
+                              os.path.join(src_dir, 'resource', 'csdk', 'stack', 'include'),
+                              ])
+env.AppendUnique(CPPPATH = [ os.path.join(zw_path, 'include'),
+                             os.path.join(zw_path, 'include', 'internal'),
+                             os.path.join(zw_path, 'zigbee_wrapper', 'include')
+                             ])
+
+if target_os not in ['arduino', 'windows', 'winrt']:
+	env.AppendUnique(CPPDEFINES = ['WITH_POSIX'])
+
+if target_os in ['darwin','ios']:
+	env.AppendUnique(CPPDEFINES = ['_DARWIN_C_SOURCE'])
+
+env.AppendUnique(CXXFLAGS = ['-std=c++0x', '-Wall', '-Wextra', '-Werror'])
+env.AppendUnique(RPATH = [env.get('BUILD_DIR')])
+env.AppendUnique(LIBPATH = [env.get('BUILD_DIR')])
+
+env.PrependUnique(LIBS = ['telegesis_wrapper'])
+
+if env.get('LOGGING'):
+	env.AppendUnique(CPPDEFINES = ['TB_LOG'])
+
+#####################################################################
+# Source files and Target(s)
+######################################################################
+
+zw_src = [
+         os.path.join(src_dir, 'resource', 'c_common', 'oic_malloc', 'src', 'oic_malloc.c'),
+         os.path.join(src_dir, 'resource', 'csdk', 'logger', 'src', 'logger.c'),
+	     'zigbee_wrapper.c',
+         ]
+
+env.AppendUnique(ZW_SRC = zw_src)
+
+if target_os in ['android', 'tizen']:
+	calib = env.SharedLibrary('zigbee_wrapper', env.get('ZW_SRC'))
+else:
+	calib = env.StaticLibrary('zigbee_wrapper', env.get('ZW_SRC'))
+env.InstallTarget(calib, 'libzigbee_wrapper')
+env.UserInstallTargetLib(calib, 'libzigbee_wrapper')

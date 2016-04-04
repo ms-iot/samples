@@ -1,0 +1,75 @@
+pre{
+   font-family: "Courier New", Courier, monospace, sans-serif;
+   text-align: left;
+   line-height: 1.6em;
+   font-size: 11px;
+   padding: 0.1em 0.5em 0.3em 0.7em;
+   border: 2px solid #888;
+   margin: 1.7em 0 1.7em 0.3em;
+   overflow: auto;
+   width: 93%;
+   background: #EEEEEE;
+}
+h1 {
+   font-size: 20pt;
+   counter-increment: counter-h1;
+   counter-reset: counter-h2;
+}
+h2 {
+   font-size: 17pt;
+   counter-increment: counter-h2;
+   counter-reset: counter-h3;
+}
+h3 {
+   font-size: 14pt;
+   counter-increment: counter-h3;
+   counter-reset: counter-h4;
+}
+h1:before {
+   content: counter(counter-h1) ". ";
+}
+h2:before {
+   content: counter(counter-h1) "." counter(counter-h2) ". ";
+}
+h3:before {
+   content: counter(counter-h1) "." counter(counter-h2) "." counter(counter-h3) ". ";
+}
+ul {
+   list-style-type: circle;
+}
+.quotedString
+{
+	color: #0000FF;
+}
+.comment
+{
+	color: #999999;
+}
+.operator
+{
+	color: #00CCCC;
+}
+.builtinVariable
+{
+	color: #CCCC00;
+}
+.variableSpecifier
+{
+	color: #FF0000;
+}
+.keyword
+{
+	color: #AA0033;
+}
+.builtinFunction
+{
+	color: #AA00AA;
+}
+.identifier
+{
+	color: #009900;
+}
+.number
+{
+	color: #9999FF;
+}

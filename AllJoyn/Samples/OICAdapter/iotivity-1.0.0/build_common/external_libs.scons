@@ -1,0 +1,139 @@
+##
+# This script manages external libraries
+#
+# Some methods are added to manage external packages:
+#    'PrepareLib': Checks the existence of an external library, if it
+# doesn't exist, calls the script user provided to download(if required)
+# and build the source code of the external library or notify user to
+# install the library.
+#   'Download': Download package from specify URL
+#   'UnpackAll': Unpack the package
+#   'Configure': Execute specify script(configure, bootstrap etc)
+#   'InstallHeadFile': Install head files
+#   'InstallLib': Install library binaries(.so, .a etc)
+#
+# By default, assume the script for an exteranl library is:
+#    <src_dir>/extlibs/<libname>/SConscript
+#
+# Note: After the external library is built:
+#   Head files should be installed to <src_dir>/deps/<target_os>/include
+#   lib(e.g .so, .a) should be installed to <src_dir>/deps/<target_os>/lib/<arch>
+#
+##
+import os, subprocess
+import urllib2, urlparse
+import SCons.Errors
+
+Import('env')
+
+target_os = env.get('TARGET_OS')
+target_arch = env.get('TARGET_ARCH')
+
+# for android, doesn't distinguish 'armeabi-v7a-hard' and 'armeabi-v7a' library
+if target_os == 'android':
+	if target_arch == 'armeabi-v7a-hard':
+		target_arch = 'armeabi-v7a'
+
+if target_os == 'darwin':
+	env.AppendUnique(CPPPATH = ['/usr/local/include'])
+	env.AppendUnique(LIBPATH = ['/usr/local/lib'])
+
+# External library include files are in <src_dir>/deps/<target_os>/include
+# the library binaries are in <src_dir>/deps/<target_os>/lib/<arch>
+env.AppendUnique(CPPPATH = [os.path.join(env.get('SRC_DIR'), 'deps', target_os, 'include')])
+env.AppendUnique(LIBPATH = [os.path.join(env.get('SRC_DIR'), 'deps', target_os, 'lib', target_arch)])
+
+# Check whether a library exists, if not, notify user to install it or try to
+# download the source code and build it
+# @param libname - the name of the library try to prepare
+# @param lib - the lib(.so, .a etc) to check (a library may include more then
+#      one lib, e.g. boost, includes boost_thread, boost_system ...
+# @param path - the directory of the library building script, if it's not set,
+#			by default, it's <src_dir>/extlibs/<libname>/
+# @param script - the building script, by default, it's 'SConscript'
+#
+def __prepare_lib(ienv, libname, lib = None, path = None, script = None):
+	p_env = ienv.Clone()
+	if p_env.GetOption('clean') or p_env.GetOption('help'):
+		return
+
+	conf = Configure(p_env)
+
+	if not lib:
+		lib = libname
+	if not conf.CheckLib(lib):
+		if path:
+			dir = path
+		else:
+			dir = os.path.join(env.get('SRC_DIR'), 'extlibs', libname)
+
+		# Execute the script to download(if required) and build source code
+		if script:
+			st = os.path.join(dir, script)
+		else:
+			st = os.path.join(dir, 'SConscript')
+
+		if os.path.exists(st):
+			SConscript(st)
+		else:
+			if target_os in ['linux', 'darwin', 'tizen']:
+				print 'Don\'t find library(%s), please intall it, exit ...' % libname
+			else:
+				print 'Don\'t find library(%s) and don\'t find the process script (%s), exit ...' % (libname, st)
+			Exit(1)
+
+	conf.Finish()
+
+# Run configure command (usually it's done before build a library)
+def __configure(env, cwd, cmd) :
+	print "Configuring using [%s/%s] ..." % (cwd, cmd)
+	# build it now (we need the shell, because some programs need it)
+	devnull = open(os.devnull, "wb")
+	handle  = subprocess.Popen(cmd, shell=True, cwd=cwd, stdout=devnull)
+
+	if handle.wait() <> 0 :
+		raise SCons.Errors.BuildError( "Run configuring script [%s]" % (cmd) )
+
+# Download from URL 'url', will save as 'target'
+def __download(ienv, target, url) :
+	if os.path.exists(target) :
+		return target
+
+	try :
+		print "Download %s from %s" % (target, url)
+		print "Downloading ..."
+		stream = urllib2.urlopen(url)
+		file = open(target, 'wb')
+		file.write(stream.read())
+		file.close()
+		print "Download %s from %s complete" % (target, url)
+		return target
+	except Exception, e :
+		raise SCons.Errors.StopError( '%s [%s]' % (e, url) )
+
+# Install header file(s) to <src_dir>/deps/<target_os>/include
+def __install_head_file(ienv, file):
+		return ienv.Install(os.path.join(env.get('SRC_DIR'), 'dep', target_os, target_arch, 'usr', 'include'), file)
+
+# Install library binaries to <src_dir>/deps/<target_os>/lib/<arch>
+def __install_lib(ienv, lib):
+		return ienv.Install(os.path.join(env.get('SRC_DIR'), 'dep', target_os, target_arch, 'usr', 'lib'), lib)
+
+SConscript('tools/UnpackAll.py')
+
+# tinycbor build/fetch
+SConscript(os.path.join(env.get('SRC_DIR'), 'extlibs', 'tinycbor', 'SConscript'))
+
+with_ra = env.get('WITH_RA')
+if with_ra:
+	SConscript(os.path.join(env.get('SRC_DIR'), 'extlibs', 'raxmpp', 'SConscript'))
+
+
+env.AddMethod(__prepare_lib, "PrepareLib")
+env.AddMethod(__configure, "Configure")
+env.AddMethod(__download, "Download")
+env.AddMethod(__install_head_file, "InstallHeadFile")
+env.AddMethod(__install_lib, "InstallLib")
+
+if env.get('SECURED') == '1':
+	SConscript(os.path.join(env.get('SRC_DIR'), 'extlibs', 'sqlite3', 'SConscript'))

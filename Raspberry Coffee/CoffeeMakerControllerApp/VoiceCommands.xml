@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.2">
+  <CommandSet xml:lang="en-us" Name="MakeCoffeeCommand">
+    <CommandPrefix>Coffee Machine</CommandPrefix>
+    <Example> Coffe machine coffee please </Example>
+    <Command Name="make">
+      <Example> Start my coffee [please] </Example>
+      <ListenFor> Make coffee [please] </ListenFor>
+      <ListenFor> Coffee please </ListenFor>
+      <ListenFor> Start my coffee [please] </ListenFor>
+      <ListenFor> I want coffee </ListenFor>
+      <Feedback> Okay I have started your coffee </Feedback>
+      <Navigate />
+    </Command>
+  </CommandSet>
+</VoiceCommands>

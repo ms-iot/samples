@@ -1,0 +1,17 @@
+##
+# This script is for fixing android platform compatibility problem
+##
+import os
+
+Import('env')
+
+env.AppendUnique(CPPDEFINES = ['ANDROID_C11_COMPAT'])
+
+cc_env = env.Clone()
+cc_env.AppendUnique(CPPPATH = ['.'])
+cc_lib = cc_env.StaticLibrary(env.get('BUILD_DIR') + '/android_cpp11_compat',
+	env.SrcToObj(os.path.abspath('./android_cpp11_compat.cpp'), env.get('SRC_DIR')))
+
+env.AppendUnique(CPPPATH = [os.path.abspath('.')])
+env.AppendUnique(LIBPATH = [env.get('BUILD_DIR')])
+env.AppendUnique(LIBS = ['android_cpp11_compat'])

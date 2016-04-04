@@ -1,0 +1,17 @@
+Add the ability to compile, edit, and maintain code
+
+Here are the compilers and their documents
+$ sudo apt-get install build-essential subversion-tools gcc-4.2-doc glibc-doc manpages-dev
+$ sudo apt-get install mingw32 mingw32-binutils mingw32-runtime
+I need access to subversion and XSLT ChangeLog tools
+$ sudo apt-get install subversion-tools
+$ sudo apt-get install xsltproc
+I install a couple of editors, useful for various things. Kate is already installed.
+$ sudo apt-get install scite
+$ sudo apt-get install vim-full
+Useful tools for cleaning up code, converting comments and line endings, and code statistics:
+$ sudo apt-get install splint
+$ sudo apt-get install sloccount
+$ sudo apt-get install indent
+$ sudo apt-get install liwc
+$ sudo apt-get install tofrodos

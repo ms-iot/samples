@@ -1,0 +1,70 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "20.0.0"
+
+    defaultConfig {
+        applicationId "org.iotivity.ca.sample_service"
+        minSdkVersion 21
+        targetSdkVersion 21
+
+        ndk {
+            moduleName "RMInterface"
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+
+    lintOptions {
+       abortOnError false
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'src/main/AndroidManifest.xml'
+            jniLibs.srcDir 'libs'
+            jni.srcDirs = [] //disable automatic ndk-build call
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':cAInterface')
+}
+
+task copyNativeLibs(type: Copy, dependsOn: 'buildNative') {
+    dependsOn 'buildNative'
+    from(new File('src/main/libs')) { include '**/*.so' }
+    into new File(buildDir, 'native-libs')
+}
+
+tasks.withType(JavaCompile) { compileTask -> compileTask.dependsOn copyNativeLibs }
+
+clean.dependsOn 'cleanCopyNativeLibs'
+
+tasks.withType(com.android.build.gradle.tasks.PackageApplication) { pkgTask ->
+    pkgTask.jniFolders = new HashSet<File>()
+    pkgTask.jniFolders.add(new File(buildDir, 'native-libs'))
+}
+
+task buildNative(type: Exec) {
+    if (System.env.ANDROID_NDK_HOME != null) {
+        //for windows use 'ndk-build.cmd'
+        //def ndkBuild = new File(System.env.ANDROID_NDK_HOME, 'ndk-build.cmd')
+        def ndkBuild = new File(System.env.ANDROID_NDK_HOME, 'ndk-build')
+        commandLine ndkBuild, "-C", file("src/main"), "-B", "-j", Runtime.runtime.availableProcessors(),
+                              "APP_ABI=$TARGET_ARCH", "APP_OPTIM=$RELEASE"
+    } else {
+        println '##################'
+        println 'Skipping NDK build'
+        println 'Reason: ANDROID_NDK_HOME not set.'
+        println '##################'
+    }
+}

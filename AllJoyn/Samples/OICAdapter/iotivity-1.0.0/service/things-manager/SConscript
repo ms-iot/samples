@@ -1,0 +1,76 @@
+#******************************************************************
+#
+# Copyright 2014 Samsung Electronics All Rights Reserved.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+##
+# things_manager project build script
+##
+import os
+Import('env')
+
+# Add third party libraries
+lib_env = env.Clone()
+SConscript(env.get('SRC_DIR') + '/service/third_party_libs.scons', exports = 'lib_env')
+
+things_manager_env = lib_env.Clone()
+target_os = env.get('TARGET_OS')
+######################################################################
+# Build flags
+######################################################################
+things_manager_env.AppendUnique(CPPPATH = ['../../extlibs/timer', 'sdk/inc', 'sdk/src'])
+
+things_manager_env.PrependUnique(LIBS = ['oc', 'octbstack'])
+
+if target_os not in ['windows', 'winrt']:
+    things_manager_env.AppendUnique(CXXFLAGS = ['-std=c++0x', '-Wall'])
+    if target_os != 'android':
+        things_manager_env.AppendUnique(CXXFLAGS = ['-pthread'])
+        things_manager_env.AppendUnique(LIBS = ['pthread'])
+
+if target_os not in ['darwin', 'ios', 'windows', 'winrt']:
+    things_manager_env.AppendUnique(LINKFLAGS = ['-Wl,--no-undefined'])
+
+if target_os == 'android':
+    things_manager_env.AppendUnique(CXXFLAGS = ['-frtti', '-fexceptions'])
+    things_manager_env.PrependUnique(LIBS = ['gnustl_shared'])
+
+######################################################################
+# Source files and Targets
+######################################################################
+
+tgm_src = env.Glob('sdk/src/*.cpp', '../../extlibs/timer/timer.c')
+tgmsdk_static = things_manager_env.StaticLibrary('TGMSDKLibrary', tgm_src)
+tgmsdk_shared = things_manager_env.SharedLibrary('TGMSDKLibrary', tgm_src)
+
+things_manager_env.InstallTarget([tgmsdk_static,tgmsdk_shared], 'libTGMSDK')
+things_manager_env.UserInstallTargetLib([tgmsdk_static,tgmsdk_shared], 'libTGMSDK')
+
+# Build JNI layer
+#if target_os == 'android':
+#    SConscript(os.path.join('sdk', 'java', 'jni', 'SConscript'))
+
+#Go to build sample apps
+SConscript('sampleapp/SConscript')
+
+######################################################################
+# Build UnitTests Things Manager
+################################################ ######################
+if target_os == 'linux':
+    SConscript('unittests/SConscript')
+

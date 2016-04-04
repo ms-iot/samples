@@ -8,14 +8,14 @@
 
   <Identity
     Name="29c6e42c-6793-47d4-a2c1-01f8d711b7da"
-    Publisher="CN=msaleh"
+    Publisher="CN=MSFT"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="29c6e42c-6793-47d4-a2c1-01f8d711b7da" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>WiFiConnect</DisplayName>
-    <PublisherDisplayName>msaleh</PublisherDisplayName>
+    <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

@@ -1,0 +1,175 @@
+<!DOCTYPE node PUBLIC "-//allseen//DTD ALLJOYN Object Introspection 1.0//EN"
+"http://www.allseen.org/alljoyn/introspect-1.0.dtd">
+<node>
+  <interface name="net.allplay.MediaPlayer">
+    <signal name="EnabledControlsChanged">
+      <arg name="enabledControls" type="a{sb}" direction="out"/>
+    </signal>
+    <signal name="EndOfPlayback">
+    </signal>
+    <method name="ForcedPrevious">
+    </method>
+    <method name="GetPlayerInfo">
+      <arg name="displayName" type="s" direction="out"/>
+      <arg name="capabilities" type="as" direction="out"/>
+      <arg name="maximumVolume" type="i" direction="out"/>
+      <arg name="zoneInfo" type="(siv)" direction="out"/>
+    </method>
+    <!--<method name="GetPlaylist">
+      <arg name="items" type="a(ssssxsssa{ss}a{sv}v)" direction="out"/>
+      <arg name="controllerType" type="s" direction="out"/>
+      <arg name="playlistUserData" type="s" direction="out"/>
+    </method>-->
+    <method name="GetPlaylistInfo">
+      <arg name="controllerType" type="s" direction="out"/>
+      <arg name="playlistUserData" type="s" direction="out"/>
+    </method>
+    <signal name="InterruptibleChanged">
+      <arg name="interruptible" type="b" direction="out"/>
+    </signal>
+    <signal name="LoopModeChanged">
+      <arg name="loopMode" type="s" direction="out"/>
+    </signal>
+    <method name="Next">
+    </method>
+    <signal name="OnPlaybackError">
+      <arg name="index" type="i" direction="out"/>
+      <arg name="error" type="s" direction="out"/>
+      <arg name="description" type="s" direction="out"/>
+    </signal>
+    <method name="Pause">
+    </method>
+    <method name="Play">
+      <arg name="itemIndex" type="i" direction="in"/>
+      <arg name="startPositionMsecs" type="x" direction="in"/>
+      <arg name="pauseStateOnly" type="b" direction="in"/>
+    </method>
+    <!--<signal name="PlayStateChanged">
+      <arg name="state" type="(sxuuuiia(ssssxsssa{ss}a{sv}v))" direction="out"/>
+    </signal>-->
+    <signal name="PlaylistChanged">
+    </signal>
+    <method name="Previous">
+    </method>
+    <method name="Resume">
+    </method>
+    <method name="SetPosition">
+      <arg name="positionMsecs" type="x" direction="in"/>
+    </method>
+    <signal name="ShuffleModeChanged">
+      <arg name="shuffleMode" type="s" direction="out"/>
+    </signal>
+    <method name="Stop">
+    </method>
+    <!--<method name="UpdatePlaylist">
+      <arg name="playlistItems" type="a(ssssxsssa{ss}a{sv}v)" direction="in"/>
+      <arg name="index" type="i" direction="in"/>
+      <arg name="controllerType" type="s" direction="in"/>
+      <arg name="playlistUserData" type="s" direction="in"/>
+    </method>-->
+    <property name="EnabledControls" type="a{sb}" access="read"/>
+    <property name="Interruptible" type="b" access="read"/>
+    <property name="LoopMode" type="s" access="readwrite"/>
+    <!--<property name="PlayState" type="(sxuuuiia(ssssxsssa{ss}a{sv}v))" access="read"/>-->
+    <property name="ShuffleMode" type="s" access="readwrite"/>
+    <property name="Version" type="q" access="read"/>
+  </interface>
+  <interface name="net.allplay.ZoneManager">
+    <method name="CreateZone">
+      <arg name="slaves" type="as" direction="in"/>
+      <arg name="zoneId" type="s" direction="out"/>
+      <arg name="timestamp" type="i" direction="out"/>
+      <arg name="slaves" type="a{si}" direction="out"/>
+    </method>
+    <signal name="EnabledChanged">
+      <arg name="enabled" type="b" direction="out"/>
+    </signal>
+    <signal name="OnZoneChanged">
+      <arg name="zoneId" type="s" direction="out"/>
+      <arg name="timestamp" type="i" direction="out"/>
+      <arg name="slaves" type="a{si}" direction="out"/>
+    </signal>
+    <signal name="PlayerReady">
+      <arg name="resumeLatency" type="t" direction="out"/>
+    </signal>
+    <method name="SetZoneLead">
+      <arg name="zoneId" type="s" direction="in"/>
+      <arg name="timeServerIp" type="s" direction="in"/>
+      <arg name="timeServerPort" type="q" direction="in"/>
+      <arg name="timestamp" type="i" direction="out"/>
+    </method>
+    <signal name="SlaveOutOfData">
+    </signal>
+    <signal name="SlaveState">
+      <arg name="timestamp" type="i" direction="out"/>
+      <arg name="state" type="s" direction="out"/>
+      <arg name="url" type="s" direction="out"/>
+      <arg name="startTime" type="t" direction="out"/>
+      <arg name="currentPosition" type="t" direction="out"/>
+      <arg name="nextStream" type="s" direction="out"/>
+    </signal>
+    <property name="Enabled" type="b" access="read"/>
+    <property name="Version" type="q" access="read"/>
+  </interface>
+  <interface name="net.allplay.MCU">
+    <method name="AdvanceLoopMode">
+    </method>
+    <method name="GetCurrentItemUrl">
+      <arg name="url" type="s" direction="out"/>
+    </method>
+    <method name="PlayItem">
+      <arg name="url" type="s" direction="in"/>
+      <arg name="title" type="s" direction="in"/>
+      <arg name="artist" type="s" direction="in"/>
+      <arg name="thumbnailUrl" type="s" direction="in"/>
+      <arg name="duration" type="x" direction="in"/>
+      <arg name="album" type="s" direction="in"/>
+      <arg name="genre" type="s" direction="in"/>
+    </method>
+    <method name="SetExternalSource">
+      <arg name="name" type="s" direction="in"/>
+      <arg name="interruptible" type="b" direction="in"/>
+      <arg name="volumeCtrlEnabled" type="b" direction="in"/>
+    </method>
+    <method name="ToggleShuffleMode">
+    </method>
+    <property name="Version" type="q" access="read"/>
+  </interface>
+  <interface name="org.alljoyn.Control.Volume">
+    <method name="AdjustVolume">
+      <arg name="delta" type="n" direction="in"/>
+    </method>
+    <method name="AdjustVolumePercent">
+      <arg name="change" type="d" direction="in"/>
+    </method>
+    <signal name="EnabledChanged">
+      <arg name="enabled" type="b" direction="out"/>
+    </signal>
+    <signal name="MuteChanged">
+      <arg name="newMute" type="b" direction="out"/>
+    </signal>
+    <signal name="VolumeChanged">
+      <arg name="newVolume" type="n" direction="out"/>
+    </signal>
+    <property name="Enabled" type="b" access="read"/>
+    <property name="Mute" type="b" access="readwrite"/>
+    <property name="Version" type="q" access="read"/>
+    <property name="Volume" type="n" access="readwrite"/>
+    <property name="VolumeRange" type="(nnn)" access="read"/>
+  </interface>
+  <interface name="org.freedesktop.DBus.Introspectable">
+    <method name="Introspect">
+      <arg name="data" type="s" direction="out"/>
+    </method>
+  </interface>
+  <interface name="org.allseen.Introspectable">
+    <method name="GetDescriptionLanguages">
+      <arg name="languageTags" type="as" direction="out"/>
+    </method>
+    <method name="IntrospectWithDescription">
+      <arg name="languageTag" type="s" direction="in"/>
+      <arg name="data" type="s" direction="out"/>
+    </method>
+    <annotation name="org.alljoyn.Bus.Secure" value="off"/>
+  </interface>
+</node>

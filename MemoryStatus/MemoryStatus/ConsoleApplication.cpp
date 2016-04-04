@@ -48,15 +48,38 @@ void printMessageLine(LPCSTR msg, DWORDLONG value)
     cout << right << value << endl;
 }
 
+void checkInput(HANDLE exitEvent)
+{
+    for (;;)
+    {
+        char character;
+        cin.get(character);
+        if (character == 'q')
+        {
+            ::SetEvent(exitEvent);
+            break;
+        }
+    }
+}
+
 int main(int argc, char **argv)
 {
-    printMessageLine("Starting to monitor memory consumption!");
+    printMessageLine("Starting to monitor memory consumption! Press enter to start monitoring");
+    printMessageLine("You can press q and enter at anytime to exit");
+    cin.get();
+    HANDLE exitEvent = ::CreateEvent(NULL, FALSE, FALSE, NULL);
+    if (NULL == exitEvent)
+    {
+        printMessageLine("Failed to create exitEvent.");
+        return -1;
+    }
+    std::thread inputThread(checkInput, exitEvent);
     for (;;)
     {
         MEMORYSTATUSEX statex;
         statex.dwLength = sizeof(statex);
 
-        BOOL success = GlobalMemoryStatusEx(&statex);
+        BOOL success = ::GlobalMemoryStatusEx(&statex);
         if (!success)
         {
             DWORD error = GetLastError();
@@ -90,7 +113,13 @@ int main(int argc, char **argv)
 
         }
 
-        this_thread::sleep_for(chrono::milliseconds(100));
+        if (WAIT_OBJECT_0 == ::WaitForSingleObject(exitEvent, 100))
+        {
+            break;
+        }
     }
+
+    inputThread.join();
+    ::CloseHandle(exitEvent);
     printMessageLine("No longer monitoring memory consumption!");
 }

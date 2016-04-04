@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resources">
+      <UniqueIdentifier>eea43ab0-4664-40d7-99c0-e458e462e877</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="AllJoynHelpers.cpp" />
+    <ClCompile Include="LampDetailsConsumer.cpp" />
+    <ClCompile Include="LampDetailsProducer.cpp" />
+    <ClCompile Include="LampDetailsSignals.cpp" />
+    <ClCompile Include="LampDetailsWatcher.cpp" />
+    <ClCompile Include="LampParametersConsumer.cpp" />
+    <ClCompile Include="LampParametersProducer.cpp" />
+    <ClCompile Include="LampParametersSignals.cpp" />
+    <ClCompile Include="LampParametersWatcher.cpp" />
+    <ClCompile Include="LampServiceConsumer.cpp" />
+    <ClCompile Include="LampServiceProducer.cpp" />
+    <ClCompile Include="LampServiceSignals.cpp" />
+    <ClCompile Include="LampServiceWatcher.cpp" />
+    <ClCompile Include="LampStateConsumer.cpp" />
+    <ClCompile Include="LampStateProducer.cpp" />
+    <ClCompile Include="LampStateSignals.cpp" />
+    <ClCompile Include="LampStateWatcher.cpp" />
+    <ClCompile Include="TypeConversionHelpers.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="AllJoynHelpers.h" />
+    <ClInclude Include="ILampDetailsService.h" />
+    <ClInclude Include="ILampParametersService.h" />
+    <ClInclude Include="ILampServiceService.h" />
+    <ClInclude Include="ILampStateService.h" />
+    <ClInclude Include="LampDetailsConsumer.h" />
+    <ClInclude Include="LampDetailsEventArgs.h" />
+    <ClInclude Include="LampDetailsMethodResults.h" />
+    <ClInclude Include="LampDetailsProducer.h" />
+    <ClInclude Include="LampDetailsSignals.h" />
+    <ClInclude Include="LampDetailsStructures.h" />
+    <ClInclude Include="LampDetailsWatcher.h" />
+    <ClInclude Include="LampParametersConsumer.h" />
+    <ClInclude Include="LampParametersEventArgs.h" />
+    <ClInclude Include="LampParametersMethodResults.h" />
+    <ClInclude Include="LampParametersProducer.h" />
+    <ClInclude Include="LampParametersSignals.h" />
+    <ClInclude Include="LampParametersStructures.h" />
+    <ClInclude Include="LampParametersWatcher.h" />
+    <ClInclude Include="LampServiceConsumer.h" />
+    <ClInclude Include="LampServiceEventArgs.h" />
+    <ClInclude Include="LampServiceMethodResults.h" />
+    <ClInclude Include="LampServiceProducer.h" />
+    <ClInclude Include="LampServiceSignals.h" />
+    <ClInclude Include="LampServiceStructures.h" />
+    <ClInclude Include="LampServiceWatcher.h" />
+    <ClInclude Include="LampStateConsumer.h" />
+    <ClInclude Include="LampStateEventArgs.h" />
+    <ClInclude Include="LampStateMethodResults.h" />
+    <ClInclude Include="LampStateProducer.h" />
+    <ClInclude Include="LampStateSignals.h" />
+    <ClInclude Include="LampStateStructures.h" />
+    <ClInclude Include="LampStateWatcher.h" />
+    <ClInclude Include="TypeConversionHelpers.h" />
+  </ItemGroup>
+</Project>

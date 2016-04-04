@@ -1,0 +1,3 @@
+usr/lib/*/libopenzwave.so
+usr/include/openzwave/*
+usr/share/doc/openzwave*/* 

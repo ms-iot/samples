@@ -1,0 +1,19 @@
+﻿<Page
+    x:Class="Lpd8806Sample.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Lpd8806Sample"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+        <Button Grid.Row="0" x:Name="StaticColorsButton" Content="Static Colors" HorizontalAlignment="Left" Margin="94,80,0,0" VerticalAlignment="Top" Width="200" Height="200" Grid.RowSpan="2" Click="button_Click"/>
+        <ToggleButton Grid.Row="0" x:Name="FancyColorsButton" Content="Fancy Colors" HorizontalAlignment="Left" Margin="372,80,0,0" VerticalAlignment="Top" Width="200" Height="200" Grid.RowSpan="2" Checked="FancyColorsButton_Checked" Unchecked="FancyColorsButton_Unchecked" />
+
+    </Grid>
+</Page>

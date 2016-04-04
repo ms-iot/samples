@@ -1,0 +1,57 @@
+                 OIC GATT Transport Service for Linux
+                 ====================================
+
+This is an IoTivity BLE adapter implementation of the OIC GATT
+Transport specification for Linux.  It relies on the GATT and LE
+advertisement functionality found in BlueZ 5.31 or better.  As of
+BlueZ 5.31, the LE advertisement APIs are still considered
+experimental, meaning specific steps must be taken to enable them for
+that version of BlueZ, as described below.
+
+LE advertisement support requires Linux kernel 4.1 better.  If a LE
+peripheral won't be started, Linux kernel 3.19 is sufficient for LE
+central-only use cases.
+
+Enable LE Advertisement Support in BlueZ 5.31
+---------------------------------------------
+1. Backport the advertising patch that was created after BlueZ 5.31
+was released.  If you've cloned the BlueZ git repository this can be
+achieved by cherry picking the patch as follows:
+
+        git clone git://git.kernel.org/pub/scm/bluetooth/bluez.git
+        cd bluez
+        git checkout 5.31
+        git cherry-pick c73c1002331b2c0de0eaf555b5f1d05149f9a3b0
+
+Otherwise apply to BlueZ 5.31 the patch file found in the IoTivity
+`extlibs/bluez' directory:
+
+        0001-core-advertising-Fix-using-wrong-instance-id.patch
+
+2. Enable experimental APIs when building BlueZ 5.31, e.g.:
+
+        ./configure --enable-experimental ...
+
+3. Enable experimental APIs at run-time by starting bluetoothd with
+   the "--experimental" command line flag.  If you've installed BlueZ
+   on a platform with Systemd support, this can be done by appending
+   "--experimental" to the [Service] ExecStart option in the
+   bluetooth.service unit file (e.g.
+   /lib/systemd/system/bluetooth.service).  If you're going to build
+   and install BlueZ from source often, you may want to patch the
+   `bluetooth.service.in' in your bluez source directory instead so
+   that you won't have to modify the unit file after installation:
+
+diff --git a/src/bluetooth.service.in b/src/bluetooth.service.in
+index 35e9457..368df4c 100644
+--- a/src/bluetooth.service.in
++++ b/src/bluetooth.service.in
+@@ -5,7 +5,7 @@ Documentation=man:bluetoothd(8)
+ [Service]
+ Type=dbus
+ BusName=org.bluez
+-ExecStart=@libexecdir@/bluetoothd
++ExecStart=@libexecdir@/bluetoothd --experimental
+ NotifyAccess=main
+ #WatchdogSec=10
+ #Restart=on-failure

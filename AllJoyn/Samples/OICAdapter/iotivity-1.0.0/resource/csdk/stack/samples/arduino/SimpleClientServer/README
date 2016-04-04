@@ -1,0 +1,46 @@
+-------------------------------------------------------------------------------
+  NOTICE - Transition to SCONS
+-------------------------------------------------------------------------------
+
+The IoTivity build system is transitioning to SCONS. Although the
+makefiles are still available (until v1.0) and some developers are
+still using them, they are currently no longer supported. To learn more
+about building using SCONS see Readme.scons.txt in the repository root
+directory. The build steps used in continuous integration can be found
+in auto_build.sh which is also in the the repository root directory.
+
+-------------------------------------------------------------------------------
+**Arduino** -- Must be built with the same BUILD mode declared as octbstack.a.
+-------------------------------------------------------------------------------
+When an Arduino SimpleClientServer application is running, it outputs logs to
+serial port. This requires the current user to be a part of the "dialout" user
+group permissions on Ubuntu. If your Arduino device is NOT installed at
+location "ttyACM0", you must define ARDUINO_PORT to the location it is
+installed at. This location will be referred to as <DEV_PORT>.
+
+You can only install one application at a time. Your choices are "oclient" or
+"ocserver." Your selection will be referred to as <DEV_APP>.
+
+This makefile relies on "local.properties" at the directory level of the
+makefile that generates octbstack.a. Please refer to the README at that level
+to determine what definitions are needed for your environment.
+
+To make occlient or ocserver in release mode:
+
+	make
+
+To make & install occlient or ocserver in release mode, with <DEV_PORT> specified:
+
+	make install APP_INSTALL=<DEV_APP> ARDUINO_PORT=<DEV_PORT>
+
+To make & install occlient or ocserver in debug mode:
+
+	make install APP_INSTALL=<DEV_APP> ARDUINO_PORT=<DEV_PORT> BUILD=debug
+
+-------------------------------------------------------------------------------
+**Clean-Up**
+-------------------------------------------------------------------------------
+To clean occlient & ocserver sample apps and objects:
+
+	sudo make clean
+

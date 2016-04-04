@@ -1,0 +1,131 @@
+#******************************************************************
+#
+# Copyright 2015 Samsung Electronics All Rights Reserved.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+##
+# rcs_common (primitiveResource and expiryTimer) build script
+##
+import os
+Import('env')
+
+# Add third party libraries
+lib_env = env.Clone()
+SConscript(env.get('SRC_DIR') + '/service/third_party_libs.scons', exports = 'lib_env')
+
+src_dir = lib_env.get('SRC_DIR')
+
+gtest_dir = src_dir + '/extlibs/gtest/gtest-1.7.0'
+
+rcs_common_env = lib_env.Clone()
+target_os = env.get('TARGET_OS')
+
+release = env.get('RELEASE')
+
+######################################################################
+# Build flags
+######################################################################
+rcs_common_env.AppendUnique(CPPPATH = [
+    env.get('SRC_DIR')+'/extlibs',
+    '../../include',
+    'primitiveResource/include'])
+
+rcs_common_env.AppendUnique(CPPPATH = [
+    'expiryTimer/include',
+    'expiryTimer/src'])
+
+rcs_common_env.AppendUnique(LIBPATH = [env.get('BUILD_DIR')])
+
+if target_os not in ['windows', 'winrt']:
+    rcs_common_env.AppendUnique(CXXFLAGS = ['-std=c++0x', '-Wall'])
+    if target_os != 'android':
+        rcs_common_env.AppendUnique(CXXFLAGS = ['-pthread'])
+        rcs_common_env.AppendUnique(LIBS = ['pthread'])
+
+if target_os not in ['darwin', 'ios', 'windows', 'winrt']:
+    rcs_common_env.AppendUnique(LINKFLAGS = ['-Wl,--no-undefined'])
+
+if target_os == 'android':
+    rcs_common_env.AppendUnique(CXXFLAGS = ['-frtti', '-fexceptions'])
+    rcs_common_env.PrependUnique(LIBS = ['gnustl_shared', 'log'])
+
+rcs_common_env.AppendUnique(LIBS = ['dl', 'oc'])
+
+if not release:
+    rcs_common_env.AppendUnique(CXXFLAGS = ['--coverage'])
+    rcs_common_env.PrependUnique(LIBS = ['gcov'])
+
+######################################################################
+# Source files and Targets
+######################################################################
+TIMER_SRC_DIR = 'expiryTimer/src/'
+RESOURCE_SRC = 'primitiveResource/src/'
+rcs_common_src = [
+        TIMER_SRC_DIR + 'ExpiryTimerImpl.cpp',
+		TIMER_SRC_DIR + 'ExpiryTimer.cpp',
+		RESOURCE_SRC + 'PresenceSubscriber.cpp',
+		RESOURCE_SRC + 'PrimitiveResource.cpp',
+		RESOURCE_SRC + 'RCSException.cpp',
+		RESOURCE_SRC + 'RCSAddress.cpp',
+		RESOURCE_SRC + 'RCSResourceAttributes.cpp',
+		RESOURCE_SRC + 'ResponseStatement.cpp'
+        ]
+
+rcs_common_static = rcs_common_env.StaticLibrary('rcs_common', rcs_common_src)
+rcs_common_shared = rcs_common_env.SharedLibrary('rcs_common', rcs_common_src)
+rcs_common_env.InstallTarget([rcs_common_static,rcs_common_shared], 'rcs_common')
+
+######################################################################
+# Build Test Expiry Timer and primitive Resource
+######################################################################
+if target_os == 'linux':
+	rcs_common_test_env = rcs_common_env.Clone();
+
+	rcs_common_test_env.PrependUnique(CPPPATH = [
+		env.get('SRC_DIR')+'/extlibs/hippomocks-master',
+		gtest_dir + '/include',
+		'utils/include'
+		])
+
+	gtest = File(gtest_dir + '/lib/.libs/libgtest.a')
+	gtest_main = File(gtest_dir + '/lib/.libs/libgtest_main.a')
+
+	rcs_common_test_env.PrependUnique(LIBS = [
+		'octbstack',
+		'oc_logger',
+		'connectivity_abstraction',
+		'coap',
+		'rcs_common',
+		gtest,
+		gtest_main,
+		'pthread'
+		])
+
+	rcs_common_test_src = [
+		env.Glob('primitiveResource/unittests/*.cpp'),
+		'expiryTimer/unittests/ExpiryTimerTest.cpp'
+		]
+
+	rcs_common_test = rcs_common_test_env.Program('rcs_common_test', rcs_common_test_src)
+	Alias("rcs_common_test", rcs_common_test)
+	env.AppendTarget('rcs_common_test')
+
+	if env.get('TEST') == '1':
+		from tools.scons.RunTest import *
+		run_test(rcs_common_test_env, '',
+			'service/resource-encapsulation/src/common/rcs_common_test')

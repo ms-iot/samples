@@ -1,0 +1,17 @@
+The build steps used in continuous integration can be found
+in auto_build.sh which is also in the the repository root directory.
+
+Go to the top directory of 'iotivity' project(Note: should always run 'scons'
+command in this directory)
+
+#1. build "connectivity" project (for release mode)
+	- execute 'scons resource/csdk/connectivity/' command
+
+#2. build "example" for linux
+	- execute 'scons resource/csdk/connectivity/samples/linux/' command
+
+#3. execute sample program
+	- you should link the "connectivity_abstraction" library.
+	ex. cd out/linux/x86/release/resource/csdk/connectivity/samples/linux
+	    ./casample
+

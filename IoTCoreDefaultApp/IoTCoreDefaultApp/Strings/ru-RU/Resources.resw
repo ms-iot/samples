@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="IoTCoreHeader.Text" xml:space="preserve">
+  <data name="IoTCoreHeaderText" xml:space="preserve">
     <value>Windows 10 IoT Базовая</value>
     <comment>The Operating System Name</comment>
   </data>
@@ -125,11 +125,11 @@
     <value>Плата IoTCore</value>
     <comment>A generic board name</comment>
   </data>
-  <data name="MainPageDeviceName.Text" xml:space="preserve">
+  <data name="MainPageDeviceNameText" xml:space="preserve">
     <value>Название устройства</value>
     <comment>Field label</comment>
   </data>
-  <data name="MainPageNetwork.Text" xml:space="preserve">
+  <data name="MainPageNetworkText" xml:space="preserve">
     <value>Сеть</value>
     <comment>Field label</comment>
   </data>
@@ -137,191 +137,195 @@
     <value>MinnowBoard Max</value>
     <comment>Board name</comment>
   </data>
-  <data name="RestartText.Text" xml:space="preserve">
+  <data name="RestartText" xml:space="preserve">
     <value>Начать сначала</value>
     <comment>Restart entry in the shutdown menu</comment>
   </data>
-  <data name="ShutdownText.Text" xml:space="preserve">
+  <data name="ShutdownText" xml:space="preserve">
     <value>Завершение работы</value>
     <comment>Shutdown entry in the shutdown menu</comment>
   </data>
-  <data name="BackButton.Content" xml:space="preserve">
+  <data name="BackButtonContent" xml:space="preserve">
     <value>Назад</value>
   </data>
-  <data name="CancelButton.Content" xml:space="preserve">
+  <data name="CancelButtonContent" xml:space="preserve">
     <value>Отмена</value>
   </data>
-  <data name="ConnectAutomatically.Text" xml:space="preserve">
+  <data name="ConnectAutomaticallyText" xml:space="preserve">
     <value>Подключаться автоматически</value>
   </data>
-  <data name="ConnectButton.Content" xml:space="preserve">
+  <data name="ConnectButtonContent" xml:space="preserve">
     <value>Подключиться</value>
   </data>
-  <data name="DirectConnections.Text" xml:space="preserve">
+  <data name="DirectConnectionsText" xml:space="preserve">
     <value>Прямые подключения</value>
   </data>
-  <data name="Ethernet.Text" xml:space="preserve">
+  <data name="EthernetText" xml:space="preserve">
     <value>Ethernet</value>
     <comment>Field label</comment>
   </data>
-  <data name="NetworkConnectingMessage.Text" xml:space="preserve">
+  <data name="NetworkConnectingMessageText" xml:space="preserve">
     <value>Проверка требований сети</value>
   </data>
-  <data name="NetworkPasswordPrompt.Text" xml:space="preserve">
+  <data name="NetworkPasswordPromptText" xml:space="preserve">
     <value>Ввести ключ безопасности сети</value>
   </data>
-  <data name="NextButton.Content" xml:space="preserve">
+  <data name="NextButtonContent" xml:space="preserve">
     <value>Далее</value>
   </data>
-  <data name="NoNetworks.Text" xml:space="preserve">
-    <value>Ничего не найдено</value>
+  <data name="NoNetworksText" xml:space="preserve">
+    <value>Не найдены</value>
   </data>
-  <data name="OOBEIntro.Text" xml:space="preserve">
+  <data name="OOBEIntroText" xml:space="preserve">
     <value>Давайте разделаемся с некоторыми основными материалами.</value>
   </data>
-  <data name="OOBELanguageSelect.Text" xml:space="preserve">
+  <data name="OOBELanguageSelectText" xml:space="preserve">
     <value>Выберите язык</value>
   </data>
-  <data name="OOBENetworkTitle.Text" xml:space="preserve">
+  <data name="OOBENetworkTitleText" xml:space="preserve">
     <value>Установка подключения</value>
   </data>
-  <data name="OOBEWelcomeTitle.Text" xml:space="preserve">
+  <data name="OOBEWelcomeTitleText" xml:space="preserve">
     <value>Приветствуем! Добро пожаловать в Windows 10 IoT Базовую!</value>
   </data>
   <data name="Rpi2Name" xml:space="preserve">
     <value>Raspberry Pi 2</value>
     <comment>Board name</comment>
   </data>
-  <data name="SkipStep.Text" xml:space="preserve">
+  <data name="DB410Name" xml:space="preserve">
+    <value>DragonBoard 410c</value>
+    <comment>Board name</comment>
+  </data>
+  <data name="SkipStepText" xml:space="preserve">
     <value>Пропустить этот шаг</value>
   </data>
-  <data name="Wifi.Text" xml:space="preserve">
+  <data name="WifiText" xml:space="preserve">
     <value>Wi-Fi</value>
     <comment>Label for Wi-Fi list in options page</comment>
   </data>
-  <data name="StartDeveloping.Text" xml:space="preserve">
+  <data name="StartDevelopingText" xml:space="preserve">
     <value>для начала разработки</value>
     <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
   </data>
-  <data name="Visit.Text" xml:space="preserve">
+  <data name="VisitText" xml:space="preserve">
     <value>Перейдите по адресу</value>
     <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
   </data>
-  <data name="KeyboardTitle.Text" xml:space="preserve">
+  <data name="KeyboardTitleText" xml:space="preserve">
     <value>Раскладка клавиатуры</value>
     <comment>Field label</comment>
   </data>
-  <data name="LanguageTitle.Text" xml:space="preserve">
+  <data name="LanguageTitleText" xml:space="preserve">
     <value>Язык</value>
     <comment>Field label</comment>
   </data>
-  <data name="NetworkConnected.Text" xml:space="preserve">
+  <data name="NetworkConnectedText" xml:space="preserve">
     <value>Подключено</value>
   </data>
-  <data name="NetworkPreferences.Text" xml:space="preserve">
+  <data name="NetworkPreferencesText" xml:space="preserve">
     <value>Сеть и Wi-Fi</value>
   </data>
-  <data name="SettingsPreferences.Text" xml:space="preserve">
+  <data name="SettingsPreferencesText" xml:space="preserve">
     <value>Основные параметры</value>
   </data>
-  <data name="SettingsTitle.Text" xml:space="preserve">
+  <data name="SettingsTitleText" xml:space="preserve">
     <value>Параметры устройства</value>
   </data>
-  <data name="TimeZoneTitle.Text" xml:space="preserve">
+  <data name="TimeZoneTitleText" xml:space="preserve">
     <value>Часовой пояс</value>
   </data>
-  <data name="DeviceInfo.Text" xml:space="preserve">
+  <data name="DeviceInfoText" xml:space="preserve">
     <value>Сведения об устройстве</value>
   </data>
-  <data name="Tutorials.Text" xml:space="preserve">
+  <data name="TutorialsText" xml:space="preserve">
     <value>Руководство</value>
     <comment>Text under the Tutorials button on the top bar</comment>
   </data>
-  <data name="ConnectedDevices.Text" xml:space="preserve">
+  <data name="ConnectedDevicesText" xml:space="preserve">
     <value>Подключенные устройства</value>
   </data>
-  <data name="Ipv4.Text" xml:space="preserve">
+  <data name="Ipv4Text" xml:space="preserve">
     <value>IPv4</value>
     <comment>Field label</comment>
   </data>
-  <data name="Ipv6.Text" xml:space="preserve">
+  <data name="Ipv6Text" xml:space="preserve">
     <value>IPv6</value>
     <comment>Field label</comment>
   </data>
-  <data name="MainPageIPAddress.Text" xml:space="preserve">
+  <data name="MainPageIPAddressText" xml:space="preserve">
     <value>IP-адрес</value>
     <comment>Field label</comment>
   </data>
-  <data name="NetworkInformation.Text" xml:space="preserve">
+  <data name="NetworkInformationText" xml:space="preserve">
     <value>ИНФОРМАЦИЯ СЕТИ</value>
   </data>
-  <data name="Status.Text" xml:space="preserve">
+  <data name="StatusText" xml:space="preserve">
     <value>Состояние</value>
     <comment>Status of the network connection (e.g. not connected, limited, etc.)</comment>
   </data>
-  <data name="TutorialGetCodingDescription.Text" xml:space="preserve">
+  <data name="TutorialGetCodingDescriptionText" xml:space="preserve">
     <value>Удаленное написание кода с ПК</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialGetCodingTitle.Text" xml:space="preserve">
+  <data name="TutorialGetCodingTitleText" xml:space="preserve">
     <value>Кодирование</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialGetConnectedDescription.Text" xml:space="preserve">
+  <data name="TutorialGetConnectedDescriptionText" xml:space="preserve">
     <value>Подключение устройства к Интернету и ПК</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialGetConnectedTitle.Text" xml:space="preserve">
+  <data name="TutorialGetConnectedTitleText" xml:space="preserve">
     <value>Подключение</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialGetStartedDescription.Text" xml:space="preserve">
+  <data name="TutorialGetStartedDescriptionText" xml:space="preserve">
     <value>Введение в Windows 10 IoT Базовую</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialGetStartedTitle.Text" xml:space="preserve">
+  <data name="TutorialGetStartedTitleText" xml:space="preserve">
     <value>Начало работы</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialHeader.Text" xml:space="preserve">
+  <data name="TutorialHeaderText" xml:space="preserve">
     <value>Узнайте, как использовать Windows 10 IoT Базовую максимально продуктивно</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialHelloBlinkyDescription.Text" xml:space="preserve">
+  <data name="TutorialHelloBlinkyDescriptionText" xml:space="preserve">
     <value>Переключение светодиода на устройстве</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialHelloBlinkyTitle.Text" xml:space="preserve">
+  <data name="TutorialHelloBlinkyTitleText" xml:space="preserve">
     <value>Привет, Блинки!</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialTitle.Text" xml:space="preserve">
+  <data name="TutorialTitleText" xml:space="preserve">
     <value>Вспомогательные ресурсы и средства для подключения и разработки</value>
   </data>
-  <data name="TutorialBlinkyBody1.Text" xml:space="preserve">
+  <data name="TutorialBlinkyBody1Text" xml:space="preserve">
     <value>Первая и основная вещь, которая должна осуществляться платой, – это мигание.</value>
   </data>
-  <data name="TutorialBlinkyBody2.Text" xml:space="preserve">
+  <data name="TutorialBlinkyBody2Text" xml:space="preserve">
     <value>Как уже упоминалось в разделе "Начало работы", весь исходный код для этого открытого источника доступен по адресу www. windowsondevices.com (выполните поиск IoTCoreDefaultApp).</value>
   </data>
-  <data name="TutorialBlinkyBody3.Text" xml:space="preserve">
+  <data name="TutorialBlinkyBody3Text" xml:space="preserve">
     <value>Установка не требуется. Просто нажмите клавишу начала.</value>
   </data>
-  <data name="TutorialBlinkyBody4.Text" xml:space="preserve">
-    <value>Вы также можете изменить частоту мигания. Смело собирайте всех друзей и организуйте танцевальную вечеринку вокруг вашего Raspberry Pi 2.</value>
+  <data name="TutorialBlinkyBody4Text" xml:space="preserve">
+    <value>Вы также можете изменить частоту мигания. Смело собирайте всех друзей и организуйте танцевальную вечеринку вокруг своего устройства.</value>
   </data>
-  <data name="TutorialBlinkyBody5.Text" xml:space="preserve">
+  <data name="TutorialBlinkyBody5Text" xml:space="preserve">
     <value>Заявление об отказе. Майкрософт не несет ответственности за любой ущерб, который может быть вызван размещением вечеринки такого размаха с использованием маленького мигающего светодиода на плате.</value>
   </data>
-  <data name="TutorialBlinkyTitle1.Text" xml:space="preserve">
+  <data name="TutorialBlinkyTitle1Text" xml:space="preserve">
     <value>Привет, Блинки!</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialBlinkyTitle2.Text" xml:space="preserve">
+  <data name="TutorialBlinkyTitle2Text" xml:space="preserve">
     <value>Обеспечение мигания платы</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="MainPageOSVersion.Text" xml:space="preserve">
+  <data name="MainPageOSVersionText" xml:space="preserve">
     <value>Версия ОС</value>
     <comment>Label for OS Version field in main page</comment>
   </data>
@@ -329,9 +333,13 @@
     <value>Недоступно</value>
     <comment>Text shown when we cannot retrieve the OS Version</comment>
   </data>
-  <data name="Refresh.Content" xml:space="preserve">
+  <data name="RefreshContent" xml:space="preserve">
     <value>Обновить</value>
     <comment>Refresh button</comment>
+  </data>
+  <data name="Tutorial.GetStarted.001.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetStarted-{0}.jpg</value>
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetStarted.002.title" xml:space="preserve">
     <value>Начало работы</value>
@@ -372,10 +380,6 @@
   <data name="Tutorial.GetStarted.014.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
-  <data name="Tutorial.GetStarted.014a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetStarted.015.p" xml:space="preserve">
     <value>Чтобы получить дополнительные сведения, выберите руководство "Кодирование"</value>
   </data>
@@ -394,8 +398,8 @@
   <data name="Tutorial.GetStarted.020.p" xml:space="preserve">
     <value>Смело используйте все это как шаблон, чтобы приступить к созданию собственного приложения</value>
   </data>
-  <data name="Tutorial.GetStarted.021.br" xml:space="preserve">
-    <value />
+  <data name="Tutorial.GetConnected.001.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetConnected-{0}.jpg</value>
     <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.002.title" xml:space="preserve">
@@ -437,10 +441,6 @@
   <data name="Tutorial.GetConnected.015.ul" xml:space="preserve">
     <value>Кабель Ethernet для подключения компьютера, на котором ведется разработка, к устройству с IoT Базовой.</value>
   </data>
-  <data name="Tutorial.GetConnected.015a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetConnected.016.p" xml:space="preserve">
     <value>Чтобы включить на компьютере общий доступ к подключению Интернета, следуйте приведенным ниже инструкциям</value>
   </data>
@@ -459,29 +459,17 @@
   <data name="Tutorial.GetConnected.021.ul" xml:space="preserve">
     <value>Откройте вкладку "Общий доступ" и установите флажок "Разрешить другим пользователям сети использовать подключение к Интернету данного компьютера".</value>
   </data>
-  <data name="Tutorial.GetConnected.021a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetConnected.022.p" xml:space="preserve">
     <value>После включения общего доступа к подключению Интернета на компьютере к нему можно напрямую подключить устройство с Windows 10 IoT Базовой: вставьте один конец свободного кабеля Ethernet в дополнительный порт Ethernet на компьютере, а другой — в порт Ethernet на устройстве с IoT Базовой.</value>
   </data>
   <data name="Tutorial.GetConnected.024.ul" xml:space="preserve">
     <value>Вкладка "Общий доступ" будет недоступна, если у вас только одно сетевое подключение.</value>
   </data>
-  <data name="Tutorial.GetConnected.024a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetConnected.025.h1" xml:space="preserve">
     <value>Возникли проблемы?</value>
   </data>
   <data name="Tutorial.GetConnected.026.p" xml:space="preserve">
     <value>Мы добавили на главную страницу расширенные средства сетевой диагностики, чтобы вы могли отладить ошибки. Дополнительную поддержку можно получить на сайте www.windowsondevices.com</value>
-  </data>
-  <data name="Tutorial.GetConnected.028.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetCoding.002.title" xml:space="preserve">
     <value>Кодирование</value>
@@ -507,15 +495,8 @@
   <data name="Tutorial.GetCoding.009.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
-  <data name="Tutorial.GetCoding.009a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetCoding.010.h1" xml:space="preserve">
     <value>Настройка Visual Studio 2015 на компьютере</value>
-  </data>
-  <data name="Tutorial.GetCoding.011.p" xml:space="preserve">
-    <value>Мы создали файл версий, в котором описаны поддерживаемые версии необходимых средств. Используйте его в качестве рекомендаций по установке требуемых средств на компьютере:</value>
   </data>
   <data name="Tutorial.GetCoding.012.ul" xml:space="preserve">
     <value>Установите Windows 10.</value>
@@ -525,23 +506,6 @@
   </data>
   <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
     <value>Если вы планируете разрабатывать драйверы, установите WDK.</value>
-  </data>
-  <data name="Tutorial.GetCoding.015.ul" xml:space="preserve">
-    <value>Установите MSI средств IoT.</value>
-  </data>
-  <data name="Tutorial.GetCoding.016.ul" xml:space="preserve">
-    <value>После установки всех необходимых средств вы будете готовы к разработке приложений. Обратите внимание, что приложение Windows IoT Core Watcher запускается автоматически при входе в систему. С помощью него можно находить доступные устройства с Windows 10 IoT Базовой, на которых можно развертывать приложения.</value>
-  </data>
-  <data name="Tutorial.GetCoding.016a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
-  <data name="Tutorial.GetCoding.018.p" xml:space="preserve">
-    <value>Когда устройство подключиться к сети, скачайте с сайта www.windowsondevices.com пример кода, чтобы ознакомиться с ним и запустить его!</value>
-  </data>
-  <data name="Tutorial.GetCoding.019.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="NetworkConnectivityLevel_ConstrainedInternetAccess" xml:space="preserve">
     <value>Ограниченный доступ к Интернету</value>
@@ -559,7 +523,7 @@
     <value>&lt;отсутствует подключение к Интернету&gt;</value>
     <comment>Used in the main page under "IP address"</comment>
   </data>
-  <data name="DefaultLanguageTimeout.Text" xml:space="preserve">
+  <data name="DefaultLanguageTimeoutText" xml:space="preserve">
     <value>Язык по умолчанию выбирается автоматически...</value>
   </data>
   <data name="BlinkyStart" xml:space="preserve">

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+      <EditText
+          android:id="@+id/region"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentTop="true"
+          android:layout_centerHorizontal="true"
+          android:layout_marginTop="28dp"
+          android:ems="10"
+          android:hint="Enter the Region Value" />
+
+      <Button
+          android:id="@+id/ok"
+          android:layout_width="150dp"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          android:layout_below="@+id/region"
+          android:layout_marginTop="101dp"
+          android:text="OK" />
+
+       <Button
+           android:id="@+id/cancel"
+           android:layout_width="150dp"
+           android:layout_height="wrap_content"
+           android:layout_alignBaseline="@+id/ok"
+           android:layout_alignBottom="@+id/ok"
+           android:layout_alignParentRight="true"
+           android:text="Cancel" />
+
+</RelativeLayout>

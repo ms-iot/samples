@@ -1,0 +1,81 @@
+##
+# 'googletest' script to check if Google Unit Test library is installed.  If not,
+# get it and install it
+#
+##
+
+import os
+
+Import('env')
+
+target_os = env.get('TARGET_OS')
+src_dir = env.get('SRC_DIR')
+
+targets_need_gtest = ['darwin','linux']
+gtest_dir      = src_dir + '/extlibs/gtest/gtest-1.7.0'
+gtest_zip_file = src_dir + '/extlibs/gtest/gtest-1.7.0.zip'
+gtest_url      = 'https://googletest.googlecode.com/files/gtest-1.7.0.zip'
+
+if target_os in targets_need_gtest:
+	print '*** Checking for installation of google unit test 1.7.0 ***'
+
+	if not os.path.exists(gtest_dir):
+		# If the gtest zip file is not already present, download it
+		if not os.path.exists(gtest_zip_file):
+			gtest_zip = env.Download(gtest_zip_file, gtest_url)
+		else:
+			gtest_zip = gtest_zip_file
+
+		# Unzip gtest
+		print 'Unzipping google unit test'
+		env.UnpackAll(gtest_dir, gtest_zip)
+
+
+if target_os == 'darwin':
+	if os.path.exists(gtest_dir):
+		# Build gtest and store it at a temporary directory
+		gtest_lib_dir = gtest_dir + '/lib'
+		gtest_dotlib_dir = gtest_lib_dir + '/.libs'
+
+        if not os.path.exists(gtest_lib_dir):
+#			print 'Create a directory'
+#			os.mkdir(gtest_lib_dir)
+
+
+			print 'Invoke cmake command to generate appropriate make files'
+			env.Configure(gtest_dir, './configure')
+
+			# Run make on gtest
+			print 'Making google unit test'
+			env.Configure(gtest_dir, 'make')
+
+#			print 'Create a directory'
+#			os.mkdir(gtest_dotlib_dir)
+
+			print 'Change to a directory'
+			os.chdir(gtest_dotlib_dir)
+
+##			print 'Change to a directory'
+#			os.chdir(gtest_lib_dir)
+
+			print 'Create hard links pointing to gtest libraries'
+			os.link('libgtest.a', gtest_lib_dir + 'libgtest.a')
+			os.link('libgtest_main.a', gtest_lib_dir +  'libgtest_main.a')
+			print 'Create hard links pointing to gtest libraries - DONE'
+
+
+elif target_os == 'linux':
+	if os.path.exists(gtest_dir):
+		if not os.path.exists(gtest_dir + "/lib"):
+			# Run configure on gtest
+			print 'Configuring google unit test'
+			if env.get('CROSS_COMPILE'):
+				env.Configure(gtest_dir, './configure --host=' + env['CROSS_COMPILE'])
+			else:
+				env.Configure(gtest_dir, './configure')
+
+			# Run make on gtest
+			print 'Making google unit test'
+			env.Configure(gtest_dir, 'make')
+
+

@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="IoTCoreHeader.Text" xml:space="preserve">
+  <data name="IoTCoreHeaderText" xml:space="preserve">
     <value>Windows 10 IoT 核心版</value>
     <comment>The Operating System Name</comment>
   </data>
@@ -125,11 +125,11 @@
     <value>IoTCore 電路板</value>
     <comment>A generic board name</comment>
   </data>
-  <data name="MainPageDeviceName.Text" xml:space="preserve">
+  <data name="MainPageDeviceNameText" xml:space="preserve">
     <value>裝置名稱</value>
     <comment>Field label</comment>
   </data>
-  <data name="MainPageNetwork.Text" xml:space="preserve">
+  <data name="MainPageNetworkText" xml:space="preserve">
     <value>網路</value>
     <comment>Field label</comment>
   </data>
@@ -137,191 +137,195 @@
     <value>MinnowBoard Max</value>
     <comment>Board name</comment>
   </data>
-  <data name="RestartText.Text" xml:space="preserve">
+  <data name="RestartText" xml:space="preserve">
     <value>重新啟動</value>
     <comment>Restart entry in the shutdown menu</comment>
   </data>
-  <data name="ShutdownText.Text" xml:space="preserve">
+  <data name="ShutdownText" xml:space="preserve">
     <value>關機</value>
     <comment>Shutdown entry in the shutdown menu</comment>
   </data>
-  <data name="BackButton.Content" xml:space="preserve">
+  <data name="BackButtonContent" xml:space="preserve">
     <value>上一頁</value>
   </data>
-  <data name="CancelButton.Content" xml:space="preserve">
+  <data name="CancelButtonContent" xml:space="preserve">
     <value>取消</value>
   </data>
-  <data name="ConnectAutomatically.Text" xml:space="preserve">
+  <data name="ConnectAutomaticallyText" xml:space="preserve">
     <value>自動連線</value>
   </data>
-  <data name="ConnectButton.Content" xml:space="preserve">
+  <data name="ConnectButtonContent" xml:space="preserve">
     <value>連線</value>
   </data>
-  <data name="DirectConnections.Text" xml:space="preserve">
+  <data name="DirectConnectionsText" xml:space="preserve">
     <value>直接連線</value>
   </data>
-  <data name="Ethernet.Text" xml:space="preserve">
+  <data name="EthernetText" xml:space="preserve">
     <value>乙太網路</value>
     <comment>Field label</comment>
   </data>
-  <data name="NetworkConnectingMessage.Text" xml:space="preserve">
+  <data name="NetworkConnectingMessageText" xml:space="preserve">
     <value>檢查網路需求</value>
   </data>
-  <data name="NetworkPasswordPrompt.Text" xml:space="preserve">
+  <data name="NetworkPasswordPromptText" xml:space="preserve">
     <value>輸入網路安全性金鑰</value>
   </data>
-  <data name="NextButton.Content" xml:space="preserve">
+  <data name="NextButtonContent" xml:space="preserve">
     <value>下一步</value>
   </data>
-  <data name="NoNetworks.Text" xml:space="preserve">
+  <data name="NoNetworksText" xml:space="preserve">
     <value>找不到任何連線</value>
   </data>
-  <data name="OOBEIntro.Text" xml:space="preserve">
+  <data name="OOBEIntroText" xml:space="preserve">
     <value>讓我們先了解一些基礎知識。</value>
   </data>
-  <data name="OOBELanguageSelect.Text" xml:space="preserve">
+  <data name="OOBELanguageSelectText" xml:space="preserve">
     <value>選擇語言</value>
   </data>
-  <data name="OOBENetworkTitle.Text" xml:space="preserve">
+  <data name="OOBENetworkTitleText" xml:space="preserve">
     <value>開始連線</value>
   </data>
-  <data name="OOBEWelcomeTitle.Text" xml:space="preserve">
+  <data name="OOBEWelcomeTitleText" xml:space="preserve">
     <value>您好，歡迎使用 Windows IoT 核心版</value>
   </data>
   <data name="Rpi2Name" xml:space="preserve">
     <value>Raspberry Pi 2</value>
     <comment>Board name</comment>
   </data>
-  <data name="SkipStep.Text" xml:space="preserve">
+  <data name="DB410Name" xml:space="preserve">
+    <value>DragonBoard 410c</value>
+    <comment>Board name</comment>
+  </data>
+  <data name="SkipStepText" xml:space="preserve">
     <value>跳過此步驟</value>
   </data>
-  <data name="Wifi.Text" xml:space="preserve">
+  <data name="WifiText" xml:space="preserve">
     <value>Wi-Fi</value>
     <comment>Label for Wi-Fi list in options page</comment>
   </data>
-  <data name="StartDeveloping.Text" xml:space="preserve">
+  <data name="StartDevelopingText" xml:space="preserve">
     <value>開始開發</value>
     <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
   </data>
-  <data name="Visit.Text" xml:space="preserve">
+  <data name="VisitText" xml:space="preserve">
     <value>造訪</value>
     <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
   </data>
-  <data name="KeyboardTitle.Text" xml:space="preserve">
+  <data name="KeyboardTitleText" xml:space="preserve">
     <value>鍵盤配置</value>
     <comment>Field label</comment>
   </data>
-  <data name="LanguageTitle.Text" xml:space="preserve">
+  <data name="LanguageTitleText" xml:space="preserve">
     <value>語言</value>
     <comment>Field label</comment>
   </data>
-  <data name="NetworkConnected.Text" xml:space="preserve">
+  <data name="NetworkConnectedText" xml:space="preserve">
     <value>已連線</value>
   </data>
-  <data name="NetworkPreferences.Text" xml:space="preserve">
+  <data name="NetworkPreferencesText" xml:space="preserve">
     <value>網路 &amp; Wi-Fi</value>
   </data>
-  <data name="SettingsPreferences.Text" xml:space="preserve">
+  <data name="SettingsPreferencesText" xml:space="preserve">
     <value>基本喜好設定</value>
   </data>
-  <data name="SettingsTitle.Text" xml:space="preserve">
+  <data name="SettingsTitleText" xml:space="preserve">
     <value>裝置設定</value>
   </data>
-  <data name="TimeZoneTitle.Text" xml:space="preserve">
+  <data name="TimeZoneTitleText" xml:space="preserve">
     <value>時區</value>
   </data>
-  <data name="DeviceInfo.Text" xml:space="preserve">
+  <data name="DeviceInfoText" xml:space="preserve">
     <value>裝置資訊</value>
   </data>
-  <data name="Tutorials.Text" xml:space="preserve">
+  <data name="TutorialsText" xml:space="preserve">
     <value>教學課程</value>
     <comment>Text under the Tutorials button on the top bar</comment>
   </data>
-  <data name="ConnectedDevices.Text" xml:space="preserve">
+  <data name="ConnectedDevicesText" xml:space="preserve">
     <value>連線的服務</value>
   </data>
-  <data name="Ipv4.Text" xml:space="preserve">
+  <data name="Ipv4Text" xml:space="preserve">
     <value>IPv4</value>
     <comment>Field label</comment>
   </data>
-  <data name="Ipv6.Text" xml:space="preserve">
+  <data name="Ipv6Text" xml:space="preserve">
     <value>IPv6</value>
     <comment>Field label</comment>
   </data>
-  <data name="MainPageIPAddress.Text" xml:space="preserve">
+  <data name="MainPageIPAddressText" xml:space="preserve">
     <value>IP 位址</value>
     <comment>Field label</comment>
   </data>
-  <data name="NetworkInformation.Text" xml:space="preserve">
+  <data name="NetworkInformationText" xml:space="preserve">
     <value>網路資訊</value>
   </data>
-  <data name="Status.Text" xml:space="preserve">
+  <data name="StatusText" xml:space="preserve">
     <value>狀態</value>
     <comment>Status of the network connection (e.g. not connected, limited, etc.)</comment>
   </data>
-  <data name="TutorialGetCodingDescription.Text" xml:space="preserve">
+  <data name="TutorialGetCodingDescriptionText" xml:space="preserve">
     <value>瞭解如何透過您的電腦遠端撰寫程式碼</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialGetCodingTitle.Text" xml:space="preserve">
+  <data name="TutorialGetCodingTitleText" xml:space="preserve">
     <value>開始撰寫程式碼</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialGetConnectedDescription.Text" xml:space="preserve">
+  <data name="TutorialGetConnectedDescriptionText" xml:space="preserve">
     <value>將您的裝置連線到網際網路及電腦</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialGetConnectedTitle.Text" xml:space="preserve">
+  <data name="TutorialGetConnectedTitleText" xml:space="preserve">
     <value>開始連線</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialGetStartedDescription.Text" xml:space="preserve">
+  <data name="TutorialGetStartedDescriptionText" xml:space="preserve">
     <value>認識 Windows IoT 核心版</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialGetStartedTitle.Text" xml:space="preserve">
+  <data name="TutorialGetStartedTitleText" xml:space="preserve">
     <value>入門</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialHeader.Text" xml:space="preserve">
+  <data name="TutorialHeaderText" xml:space="preserve">
     <value>瞭解如何徹底善用 Windows IoT 核心版</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialHelloBlinkyDescription.Text" xml:space="preserve">
+  <data name="TutorialHelloBlinkyDescriptionText" xml:space="preserve">
     <value>切換您裝置上的 LED</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialHelloBlinkyTitle.Text" xml:space="preserve">
+  <data name="TutorialHelloBlinkyTitleText" xml:space="preserve">
     <value>哈囉閃閃</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialTitle.Text" xml:space="preserve">
+  <data name="TutorialTitleText" xml:space="preserve">
     <value>協助您連線及開發的資源和工具</value>
   </data>
-  <data name="TutorialBlinkyBody1.Text" xml:space="preserve">
+  <data name="TutorialBlinkyBody1Text" xml:space="preserve">
     <value>電路板最重要且最基本的一個行為就是閃爍。</value>
   </data>
-  <data name="TutorialBlinkyBody2.Text" xml:space="preserve">
+  <data name="TutorialBlinkyBody2Text" xml:space="preserve">
     <value>如「入門」區段所述，www. windowsondevices.com 提供此開放來源的所有來源程式碼  (請尋找 IoTCoreDefaultApp)。</value>
   </data>
-  <data name="TutorialBlinkyBody3.Text" xml:space="preserve">
+  <data name="TutorialBlinkyBody3Text" xml:space="preserve">
     <value>無需設定。按下開始即可。</value>
   </data>
-  <data name="TutorialBlinkyBody4.Text" xml:space="preserve">
-    <value>您也可變更閃爍的頻率。聚集您的朋友，在您的 Raspberry Pi 2 旁盡情熱舞。</value>
+  <data name="TutorialBlinkyBody4Text" xml:space="preserve">
+    <value>您也可以變更閃爍的頻率。聚集您的朋友，在您的裝置旁盡情熱舞。</value>
   </data>
-  <data name="TutorialBlinkyBody5.Text" xml:space="preserve">
+  <data name="TutorialBlinkyBody5Text" xml:space="preserve">
     <value>免責聲明: 對於使用電路板的小型閃爍 LED 舉辦熱舞派對可能導致的任何傷害，Microsoft 概不負責。</value>
   </data>
-  <data name="TutorialBlinkyTitle1.Text" xml:space="preserve">
+  <data name="TutorialBlinkyTitle1Text" xml:space="preserve">
     <value>哈囉閃閃</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialBlinkyTitle2.Text" xml:space="preserve">
+  <data name="TutorialBlinkyTitle2Text" xml:space="preserve">
     <value>使您的電路板閃爍</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="MainPageOSVersion.Text" xml:space="preserve">
+  <data name="MainPageOSVersionText" xml:space="preserve">
     <value>OS 版本</value>
     <comment>Label for OS Version field in main page</comment>
   </data>
@@ -329,9 +333,13 @@
     <value>無法使用</value>
     <comment>Text shown when we cannot retrieve the OS Version</comment>
   </data>
-  <data name="Refresh.Content" xml:space="preserve">
+  <data name="RefreshContent" xml:space="preserve">
     <value>重新整理</value>
     <comment>Refresh button</comment>
+  </data>
+  <data name="Tutorial.GetStarted.001.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetStarted-{0}.jpg</value>
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetStarted.002.title" xml:space="preserve">
     <value>開始使用</value>
@@ -372,10 +380,6 @@
   <data name="Tutorial.GetStarted.014.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
-  <data name="Tutorial.GetStarted.014a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetStarted.015.p" xml:space="preserve">
     <value>按一下「開始撰寫程式碼」教學課程以取得詳細資訊</value>
   </data>
@@ -394,8 +398,8 @@
   <data name="Tutorial.GetStarted.020.p" xml:space="preserve">
     <value>在設計您專屬的應用程式時，可以將它作為初始範本使用</value>
   </data>
-  <data name="Tutorial.GetStarted.021.br" xml:space="preserve">
-    <value />
+  <data name="Tutorial.GetConnected.001.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetConnected-{0}.jpg</value>
     <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.002.title" xml:space="preserve">
@@ -437,10 +441,6 @@
   <data name="Tutorial.GetConnected.015.ul" xml:space="preserve">
     <value>可連接開發電腦與 IoT 核心版裝置的乙太網路連接線。</value>
   </data>
-  <data name="Tutorial.GetConnected.015a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetConnected.016.p" xml:space="preserve">
     <value>遵循下方說明在您的電腦上啟用網際網路連線共用 (ICS)</value>
   </data>
@@ -459,10 +459,6 @@
   <data name="Tutorial.GetConnected.021.ul" xml:space="preserve">
     <value>按一下 [共用] 索引標籤，並選取 [允許其他網路使用者透過此電腦的網際網路連線] 方塊。</value>
   </data>
-  <data name="Tutorial.GetConnected.021a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetConnected.022.p" xml:space="preserve">
     <value>當您在電腦上啟用 ICS 後，您即可將 Windows 10 IoT 核心版裝置直接連線至電腦。您可以將乙太網路連接線一端插入電腦上額外的乙太網路連接埠，將另一端插入 IoT 核心版裝置上的乙太網路連接埠。</value>
   </data>
@@ -472,19 +468,11 @@
   <data name="Tutorial.GetConnected.024.ul" xml:space="preserve">
     <value>若您僅有一個網路連線，則無法使用 [共用] 索引標籤。</value>
   </data>
-  <data name="Tutorial.GetConnected.024a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetConnected.025.h1" xml:space="preserve">
     <value>遇到問題?</value>
   </data>
   <data name="Tutorial.GetConnected.026.p" xml:space="preserve">
     <value>我們已在主頁面中新增一些進階網路診斷資訊以協助您偵錯問題。如需其他支援，請前往 www.windowsondevices.com</value>
-  </data>
-  <data name="Tutorial.GetConnected.028.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetCoding.002.title" xml:space="preserve">
     <value>開始撰寫程式碼</value>
@@ -510,10 +498,6 @@
   <data name="Tutorial.GetCoding.009.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
-  <data name="Tutorial.GetCoding.009a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetCoding.010.h1" xml:space="preserve">
     <value>在您的電腦上設定 Visual Studio 2015</value>
   </data>
@@ -525,23 +509,6 @@
   </data>
   <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
     <value>若您計劃開發驅動程式，請安裝 WDK。</value>
-  </data>
-  <data name="Tutorial.GetCoding.015.ul" xml:space="preserve">
-    <value>安裝 IoT 工具 MSI。</value>
-  </data>
-  <data name="Tutorial.GetCoding.016.ul" xml:space="preserve">
-    <value>目前您已可開發 app。請注意，Windows IoT Core Watcher 應用程式會在您登入時自動啟動。您可使用它來尋找要部署 app 的可用 Windows 10 IoT 核心版裝置。</value>
-  </data>
-  <data name="Tutorial.GetCoding.016a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
-  <data name="Tutorial.GetCoding.018.p" xml:space="preserve">
-    <value>當您在網路上找到裝置後，請造訪 www.windowsondevices.com 下載簡單的程式碼並試用！</value>
-  </data>
-  <data name="Tutorial.GetCoding.019.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="NetworkConnectivityLevel_ConstrainedInternetAccess" xml:space="preserve">
     <value>受限的網際網路存取</value>
@@ -559,7 +526,7 @@
     <value>&lt;沒有網際網路連線&gt;</value>
     <comment>Used in the main page under "IP address"</comment>
   </data>
-  <data name="DefaultLanguageTimeout.Text" xml:space="preserve">
+  <data name="DefaultLanguageTimeoutText" xml:space="preserve">
     <value>我們將會自動選擇預設語言...</value>
   </data>
   <data name="BlinkyStart" xml:space="preserve">

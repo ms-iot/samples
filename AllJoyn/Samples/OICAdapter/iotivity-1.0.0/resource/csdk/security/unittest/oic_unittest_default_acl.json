@@ -1,0 +1,21 @@
+{
+    "acl": [
+        {
+            "sub": "Kg==",
+            "rsrc": [
+                "/oic/res",
+                "/oic/d",
+                "/oic/p",
+                "/oic/res/types/d",
+                "/oic/ad",
+                "/oic/sec/acl",
+                "/oic/sec/doxm",
+                "/oic/sec/pstat"
+			],
+			"perms": 2,
+			"ownrs" : [
+				"MjIyMjIyMjIyMjIyMjIyMg=="
+			]
+		}
+	]
+}

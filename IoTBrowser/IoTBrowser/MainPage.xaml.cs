@@ -1,20 +1,9 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -30,7 +19,7 @@ namespace IoTBrowser
             this.InitializeComponent();
         }
 
-        private async void Go_Web_Click(object sender, RoutedEventArgs e)
+        private void Go_Web_Click(object sender, RoutedEventArgs e)
         {
             DoWebNavigate();
         }
@@ -44,8 +33,10 @@ namespace IoTBrowser
             }
         }
 
-        private async void DoWebNavigate()
+        private void DoWebNavigate()
         {
+            DismissMessage();
+
             try
             {
                 if (Web_Address.Text.Length > 0)
@@ -54,21 +45,18 @@ namespace IoTBrowser
                 }
                 else
                 {
-                    MessageDialog dlg = new MessageDialog("you need to enter a web address.");
-                    await dlg.ShowAsync();
+                    DisplayMessage("You need to enter a web address.");
                 }
             }
             catch (Exception e)
             {
-                MessageDialog dlg = new MessageDialog("Error: " + e.Message);
-                await dlg.ShowAsync();
-
+                DisplayMessage("Error: " + e.Message);
             }
         }
 
-        private void Go_IoTPortal_Click(object sender, RoutedEventArgs e)
+        private void Go_WOD_Click(object sender, RoutedEventArgs e)
         {
-            Web_Address.Text = "https://devx.windows-int.com/en-us/iot";
+            Web_Address.Text = "https://www.windowsondevices.com";
             DoWebNavigate();
         }
 
@@ -82,6 +70,25 @@ namespace IoTBrowser
         {
             Web_Address.Text = "https://github.com/ms-iot";
             DoWebNavigate();
+        }
+
+        private void DisplayMessage(String message)
+        {
+            Message.Text = message;
+            MessageStackPanel.Visibility = Visibility.Visible;
+            webView.Visibility = Visibility.Collapsed;
+
+        }
+
+        private void OnMessageDismiss_Click(object sender, RoutedEventArgs e)
+        {
+            DismissMessage();
+        }
+
+        private void DismissMessage()
+        {
+            webView.Visibility = Visibility.Visible;
+            MessageStackPanel.Visibility = Visibility.Collapsed;
         }
     }
 }

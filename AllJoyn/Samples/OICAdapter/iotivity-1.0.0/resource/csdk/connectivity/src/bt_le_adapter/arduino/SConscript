@@ -1,0 +1,14 @@
+#######################################################
+#       Build BLE adapter for Arduino
+#######################################################
+
+Import('env', 'src_dir')
+import os.path
+
+env.PrependUnique(CPPPATH = [ os.path.join(src_dir, 'arduino') ])
+
+src_files = [ 'cableserver.cpp',
+              'cablenwmonitor.cpp',
+              'cableclient.cpp']
+
+Return('src_files')

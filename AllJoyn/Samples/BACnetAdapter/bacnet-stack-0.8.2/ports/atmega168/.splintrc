@@ -1,0 +1,13 @@
+-sysdirs C:\WinAVR~1\avr\include;C:\WinAVR~1\lib\gcc\avr\4.2.2\include;C:\WinAVR~1\avr\include\avr;C:\WinAVR~1\avr\include\compat;C:\WinAVR~1\avr\include\util
+-IC:\WinAVR~1\avr\include
+-IC:\WinAVR~1\avr\include\avr
+-IC:\WinAVR~1\avr\include\compat
+-IC:\WinAVR~1\avr\include\util
+-IC:\WinAVR~1\lib\gcc\avr\4.2.2\include
+-I../../include
+-I.
+-castfcnptr
+-fullinitblock
+-weak
+-D__AVR_ATmega168__
+-D__GNUC__

@@ -1,0 +1,88 @@
+diff -Naur /home/joseph/Desktop/old_arduino/arduino-1.5.7/libraries/Ethernet/src/Ethernet.cpp /home/joseph/Desktop/arduino-1.5.7/./libraries/Ethernet/src/Ethernet.cpp
+--- /home/joseph/Desktop/old_arduino/arduino-1.5.7/libraries/Ethernet/src/Ethernet.cpp	2014-07-07 04:11:39.000000000 -0400
++++ /home/joseph/Desktop/arduino-1.5.7/./libraries/Ethernet/src/Ethernet.cpp	2014-10-20 17:14:19.666407959 -0400
+@@ -7,10 +7,10 @@
+   0, 0, 0, 0 };
+ uint16_t EthernetClass::_server_port[MAX_SOCK_NUM] = { 
+   0, 0, 0, 0 };
++static DhcpClass s_dhcp;
+ 
+ int EthernetClass::begin(uint8_t *mac_address)
+ {
+-  static DhcpClass s_dhcp;
+   _dhcp = &s_dhcp;
+ 
+ 
+diff -Naur /home/joseph/Desktop/old_arduino/arduino-1.5.7/libraries/Ethernet/src/utility/socket.cpp /home/joseph/Desktop/arduino-1.5.7/./libraries/Ethernet/src/utility/socket.cpp
+--- /home/joseph/Desktop/old_arduino/arduino-1.5.7/libraries/Ethernet/src/utility/socket.cpp	2014-07-07 04:11:39.000000000 -0400
++++ /home/joseph/Desktop/arduino-1.5.7/./libraries/Ethernet/src/utility/socket.cpp	2014-10-20 17:16:31.834413773 -0400
+@@ -248,6 +248,7 @@
+ {
+   uint8_t head[8];
+   uint16_t data_len=0;
++  uint16_t data_copied=0;
+   uint16_t ptr=0;
+ 
+   if ( len > 0 )
+@@ -285,10 +286,6 @@
+       data_len = head[4];
+       data_len = (data_len << 8) + head[5];
+ 
+-      W5100.read_data(s, ptr, buf, data_len); // data copy.
+-      ptr += data_len;
+-
+-      W5100.writeSnRX_RD(s, ptr);
+       break;
+ 
+     case SnMR::MACRAW:
+@@ -297,17 +294,22 @@
+       data_len = head[0];
+       data_len = (data_len<<8) + head[1] - 2;
+ 
+-      W5100.read_data(s, ptr, buf, data_len);
+-      ptr += data_len;
+-      W5100.writeSnRX_RD(s, ptr);
+       break;
+ 
+     default :
+       break;
+     }
++
++    if (data_len > 0)
++    {
++        data_copied = (data_len <= len) ? data_len : len;// only copy the len bytes, rest of is discarded.
++        W5100.read_data(s, ptr, buf, data_copied); // data copy.
++        ptr += data_len;
++        W5100.writeSnRX_RD(s, ptr);
++    }
+     W5100.execCmdSn(s, Sock_RECV);
+   }
+-  return data_len;
++  return data_copied;
+ }
+ 
+ /**
+diff -Naur /home/joseph/Desktop/old_arduino/arduino-1.5.7/libraries/WiFi/src/utility/wifi_spi.h /home/joseph/Desktop/arduino-1.5.7/./libraries/WiFi/src/utility/wifi_spi.h
+--- /home/joseph/Desktop/old_arduino/arduino-1.5.7/libraries/WiFi/src/utility/wifi_spi.h	2014-07-07 04:11:40.000000000 -0400
++++ /home/joseph/Desktop/arduino-1.5.7/./libraries/WiFi/src/utility/wifi_spi.h	2014-10-20 17:17:59.490417629 -0400
+@@ -82,7 +82,7 @@
+ 
+ 	SEND_DATA_TCP_CMD		= 0x44,
+     GET_DATABUF_TCP_CMD		= 0x45,
+-    INSERT_DATABUF_CMD		= 0x46,
++    INSERT_DATABUF_CMD		= 0x46
+ };
+ 
+ 
+diff -Naur /home/joseph/Desktop/old_arduino/arduino-1.5.7/libraries/WiFi/src/utility/wl_types.h /home/joseph/Desktop/arduino-1.5.7/./libraries/WiFi/src/utility/wl_types.h
+--- /home/joseph/Desktop/old_arduino/arduino-1.5.7/libraries/WiFi/src/utility/wl_types.h	2014-07-07 04:11:40.000000000 -0400
++++ /home/joseph/Desktop/arduino-1.5.7/./libraries/WiFi/src/utility/wl_types.h	2014-10-20 17:17:25.754416145 -0400
+@@ -31,7 +31,7 @@
+ 
+ typedef enum {
+         WL_FAILURE = -1,
+-        WL_SUCCESS = 1,
++        WL_SUCCESS = 1
+ } wl_error_code_t;
+ 
+ /* Authentication modes */

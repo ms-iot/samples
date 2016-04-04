@@ -1,0 +1,17 @@
+BACnet Stack @ SourceForge.net
+Build using Code Blocks
+
+Q1: GNU GCC Compiler, undefined reference to closesocket
+
+A1: Under Project->Build Options->Linker settings, 
+add "ws2_32" to Link Libraries.
+
+Q2: GNU GCC Compiler, creating a DLL
+
+A2: Under Project->Build Options->Linker settings, 
+add "user32" to Link Libraries.
+
+Q3: GNU GCC Compiler, undefined reference to _GetAdaptersInfo
+
+A3: Under Project->Build Options->Linker settings, 
+add "iphlpapi" to Link Libraries.

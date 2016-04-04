@@ -117,19 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="IoTCoreHeader.Text" xml:space="preserve">
-    <value>Windows 10 IoT Core K</value>
+  <data name="IoTCoreHeaderText" xml:space="preserve">
+    <value>Windows 10 IoT Core</value>
     <comment>The Operating System Name</comment>
   </data>
   <data name="GenericBoardName" xml:space="preserve">
     <value>IoTCore Board</value>
     <comment>A generic board name</comment>
   </data>
-  <data name="MainPageDeviceName.Text" xml:space="preserve">
+  <data name="MainPageDeviceNameText" xml:space="preserve">
     <value>장치 이름</value>
     <comment>Field label</comment>
   </data>
-  <data name="MainPageNetwork.Text" xml:space="preserve">
+  <data name="MainPageNetworkText" xml:space="preserve">
     <value>네트워크</value>
     <comment>Field label</comment>
   </data>
@@ -137,191 +137,195 @@
     <value>MinnowBoard Max</value>
     <comment>Board name</comment>
   </data>
-  <data name="RestartText.Text" xml:space="preserve">
+  <data name="RestartText" xml:space="preserve">
     <value>다시 시작</value>
     <comment>Restart entry in the shutdown menu</comment>
   </data>
-  <data name="ShutdownText.Text" xml:space="preserve">
+  <data name="ShutdownText" xml:space="preserve">
     <value>종료</value>
     <comment>Shutdown entry in the shutdown menu</comment>
   </data>
-  <data name="BackButton.Content" xml:space="preserve">
+  <data name="BackButtonContent" xml:space="preserve">
     <value>뒤로</value>
   </data>
-  <data name="CancelButton.Content" xml:space="preserve">
+  <data name="CancelButtonContent" xml:space="preserve">
     <value>취소</value>
   </data>
-  <data name="ConnectAutomatically.Text" xml:space="preserve">
+  <data name="ConnectAutomaticallyText" xml:space="preserve">
     <value>자동으로 연결</value>
   </data>
-  <data name="ConnectButton.Content" xml:space="preserve">
+  <data name="ConnectButtonContent" xml:space="preserve">
     <value>연결</value>
   </data>
-  <data name="DirectConnections.Text" xml:space="preserve">
+  <data name="DirectConnectionsText" xml:space="preserve">
     <value>직접 연결</value>
   </data>
-  <data name="Ethernet.Text" xml:space="preserve">
+  <data name="EthernetText" xml:space="preserve">
     <value>이더넷</value>
     <comment>Field label</comment>
   </data>
-  <data name="NetworkConnectingMessage.Text" xml:space="preserve">
+  <data name="NetworkConnectingMessageText" xml:space="preserve">
     <value>네트워크 요구 사항 확인 중</value>
   </data>
-  <data name="NetworkPasswordPrompt.Text" xml:space="preserve">
+  <data name="NetworkPasswordPromptText" xml:space="preserve">
     <value>네트워크 보안 키 입력</value>
   </data>
-  <data name="NextButton.Content" xml:space="preserve">
+  <data name="NextButtonContent" xml:space="preserve">
     <value>다음</value>
   </data>
-  <data name="NoNetworks.Text" xml:space="preserve">
+  <data name="NoNetworksText" xml:space="preserve">
     <value>없음</value>
   </data>
-  <data name="OOBEIntro.Text" xml:space="preserve">
+  <data name="OOBEIntroText" xml:space="preserve">
     <value>시작하기</value>
   </data>
-  <data name="OOBELanguageSelect.Text" xml:space="preserve">
+  <data name="OOBELanguageSelectText" xml:space="preserve">
     <value>언어 선택</value>
   </data>
-  <data name="OOBENetworkTitle.Text" xml:space="preserve">
+  <data name="OOBENetworkTitleText" xml:space="preserve">
     <value>연결하기</value>
   </data>
-  <data name="OOBEWelcomeTitle.Text" xml:space="preserve">
-    <value>Windows 10 IoT Core K 시작</value>
+  <data name="OOBEWelcomeTitleText" xml:space="preserve">
+    <value>Windows 10 IoT Core 시작</value>
   </data>
   <data name="Rpi2Name" xml:space="preserve">
     <value>Raspberry Pi 2</value>
     <comment>Board name</comment>
   </data>
-  <data name="SkipStep.Text" xml:space="preserve">
+  <data name="DB410Name" xml:space="preserve">
+    <value>DragonBoard 410c</value>
+    <comment>Board name</comment>
+  </data>
+  <data name="SkipStepText" xml:space="preserve">
     <value>이 단계 건너뛰기</value>
   </data>
-  <data name="Wifi.Text" xml:space="preserve">
+  <data name="WifiText" xml:space="preserve">
     <value>Wi-Fi</value>
     <comment>Label for Wi-Fi list in options page</comment>
   </data>
-  <data name="StartDeveloping.Text" xml:space="preserve">
+  <data name="StartDevelopingText" xml:space="preserve">
     <value> 방문하세요.</value>
     <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
   </data>
-  <data name="Visit.Text" xml:space="preserve">
+  <data name="VisitText" xml:space="preserve">
     <value>개발을 시작하려면</value>
     <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
   </data>
-  <data name="KeyboardTitle.Text" xml:space="preserve">
+  <data name="KeyboardTitleText" xml:space="preserve">
     <value>키보드 레이아웃</value>
     <comment>Field label</comment>
   </data>
-  <data name="LanguageTitle.Text" xml:space="preserve">
+  <data name="LanguageTitleText" xml:space="preserve">
     <value>언어</value>
     <comment>Field label</comment>
   </data>
-  <data name="NetworkConnected.Text" xml:space="preserve">
+  <data name="NetworkConnectedText" xml:space="preserve">
     <value>연결됨</value>
   </data>
-  <data name="NetworkPreferences.Text" xml:space="preserve">
+  <data name="NetworkPreferencesText" xml:space="preserve">
     <value>네트워크 및 Wi-Fi</value>
   </data>
-  <data name="SettingsPreferences.Text" xml:space="preserve">
+  <data name="SettingsPreferencesText" xml:space="preserve">
     <value>기본 설정</value>
   </data>
-  <data name="SettingsTitle.Text" xml:space="preserve">
+  <data name="SettingsTitleText" xml:space="preserve">
     <value>장치 설정</value>
   </data>
-  <data name="TimeZoneTitle.Text" xml:space="preserve">
+  <data name="TimeZoneTitleText" xml:space="preserve">
     <value>표준 시간대</value>
   </data>
-  <data name="DeviceInfo.Text" xml:space="preserve">
+  <data name="DeviceInfoText" xml:space="preserve">
     <value>장치 정보</value>
   </data>
-  <data name="Tutorials.Text" xml:space="preserve">
+  <data name="TutorialsText" xml:space="preserve">
     <value>자습서</value>
     <comment>Text under the Tutorials button on the top bar</comment>
   </data>
-  <data name="ConnectedDevices.Text" xml:space="preserve">
+  <data name="ConnectedDevicesText" xml:space="preserve">
     <value>연결된 장치</value>
   </data>
-  <data name="Ipv4.Text" xml:space="preserve">
+  <data name="Ipv4Text" xml:space="preserve">
     <value>IPv4</value>
     <comment>Field label</comment>
   </data>
-  <data name="Ipv6.Text" xml:space="preserve">
+  <data name="Ipv6Text" xml:space="preserve">
     <value>IPv6</value>
     <comment>Field label</comment>
   </data>
-  <data name="MainPageIPAddress.Text" xml:space="preserve">
+  <data name="MainPageIPAddressText" xml:space="preserve">
     <value>IP 주소</value>
     <comment>Field label</comment>
   </data>
-  <data name="NetworkInformation.Text" xml:space="preserve">
+  <data name="NetworkInformationText" xml:space="preserve">
     <value>네트워크 정보</value>
   </data>
-  <data name="Status.Text" xml:space="preserve">
+  <data name="StatusText" xml:space="preserve">
     <value>상태</value>
     <comment>Status of the network connection (e.g. not connected, limited, etc.)</comment>
   </data>
-  <data name="TutorialGetCodingDescription.Text" xml:space="preserve">
+  <data name="TutorialGetCodingDescriptionText" xml:space="preserve">
     <value>PC에서 원격으로 코드를 작성하는 방법</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialGetCodingTitle.Text" xml:space="preserve">
+  <data name="TutorialGetCodingTitleText" xml:space="preserve">
     <value>코딩</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialGetConnectedDescription.Text" xml:space="preserve">
+  <data name="TutorialGetConnectedDescriptionText" xml:space="preserve">
     <value>인터넷 및 PC에 장치 연결</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialGetConnectedTitle.Text" xml:space="preserve">
+  <data name="TutorialGetConnectedTitleText" xml:space="preserve">
     <value>연결하기</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialGetStartedDescription.Text" xml:space="preserve">
-    <value> Windows 10 IoT Core K 소개</value>
+  <data name="TutorialGetStartedDescriptionText" xml:space="preserve">
+    <value> Windows 10 IoT Core 소개</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialGetStartedTitle.Text" xml:space="preserve">
+  <data name="TutorialGetStartedTitleText" xml:space="preserve">
     <value>시작하기</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialHeader.Text" xml:space="preserve">
-    <value>Windows 10 IoT Core K 활용 방법</value>
+  <data name="TutorialHeaderText" xml:space="preserve">
+    <value>Windows 10 IoT Core 활용 방법</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialHelloBlinkyDescription.Text" xml:space="preserve">
+  <data name="TutorialHelloBlinkyDescriptionText" xml:space="preserve">
     <value>장치에서 LED 켜기/끄기</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialHelloBlinkyTitle.Text" xml:space="preserve">
+  <data name="TutorialHelloBlinkyTitleText" xml:space="preserve">
     <value>Hello Blinky</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialTitle.Text" xml:space="preserve">
+  <data name="TutorialTitleText" xml:space="preserve">
     <value>연결과 개발에 도움이 되는 리소스 및 도구</value>
   </data>
-  <data name="TutorialBlinkyBody1.Text" xml:space="preserve">
+  <data name="TutorialBlinkyBody1Text" xml:space="preserve">
     <value>보드에서 가장 기본적인 첫 번째 항목은 깜박임입니다.</value>
   </data>
-  <data name="TutorialBlinkyBody2.Text" xml:space="preserve">
+  <data name="TutorialBlinkyBody2Text" xml:space="preserve">
     <value>"시작" 섹션에서 설명한 대로 이 오픈 소스의 모든 소스 코드는 www. windowsondevices.com(IoTCoreDefaultApp 검색)에서 사용할 수 있습니다.</value>
   </data>
-  <data name="TutorialBlinkyBody3.Text" xml:space="preserve">
+  <data name="TutorialBlinkyBody3Text" xml:space="preserve">
     <value>설정은 필요하지 않습니다. [시작]을 누르기만 하세요.</value>
   </data>
-  <data name="TutorialBlinkyBody4.Text" xml:space="preserve">
-    <value>깜박임의 빈도를 변경할 수도 있습니다. 언제든지 친구들을 초대하여 Raspberry Pi 2 주변에서 댄스 파티를 열 수도 있습니다.</value>
+  <data name="TutorialBlinkyBody4Text" xml:space="preserve">
+    <value>깜박임의 빈도를 변경할 수도 있습니다. 언제든지 친구들을 초대하여 장치 주변에서 댄스 파티를 열 수도 있습니다.</value>
   </data>
-  <data name="TutorialBlinkyBody5.Text" xml:space="preserve">
+  <data name="TutorialBlinkyBody5Text" xml:space="preserve">
     <value>통지 사항: 보드의 깜박이는 작은 LED를 이용해 대규모 파티를 주최하여 발생할 수 있는 모든 손상에 대해 Microsoft는 책임을 지지 않습니다.</value>
   </data>
-  <data name="TutorialBlinkyTitle1.Text" xml:space="preserve">
+  <data name="TutorialBlinkyTitle1Text" xml:space="preserve">
     <value>Hello Blinky</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialBlinkyTitle2.Text" xml:space="preserve">
+  <data name="TutorialBlinkyTitle2Text" xml:space="preserve">
     <value>보드의 깜박임 설정</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="MainPageOSVersion.Text" xml:space="preserve">
+  <data name="MainPageOSVersionText" xml:space="preserve">
     <value>OS 버전</value>
     <comment>Label for OS Version field in main page</comment>
   </data>
@@ -329,21 +333,25 @@
     <value>사용할 수 없음</value>
     <comment>Text shown when we cannot retrieve the OS Version</comment>
   </data>
-  <data name="Refresh.Content" xml:space="preserve">
+  <data name="RefreshContent" xml:space="preserve">
     <value>새로 고침</value>
     <comment>Refresh button</comment>
+  </data>
+  <data name="Tutorial.GetStarted.001.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetStarted-{0}.jpg</value>
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetStarted.002.title" xml:space="preserve">
     <value>시작</value>
   </data>
   <data name="Tutorial.GetStarted.003.subtitle" xml:space="preserve">
-    <value>Windows 10 IoT Core K 시작</value>
+    <value>Windows 10 IoT Core 시작</value>
   </data>
   <data name="Tutorial.GetStarted.004.h1" xml:space="preserve">
     <value>소개</value>
   </data>
   <data name="Tutorial.GetStarted.005.p" xml:space="preserve">
-    <value>축하합니다! 보드 설정이 완료되었습니다. 이제 장치 개발을 돕도록 설계된 가벼운 운영 체제인 Windows 10 IoT Core K를 살펴보세요. IoT Core K를 사용하면 즉시 장치를 연결하여 실행하는 데 필요한 모든 도구가 Windows에서 제공됩니다. 여러분의 아이디어를 가능한 한 빨리 실현하도록 도와드리겠습니다.</value>
+    <value>축하합니다! 보드 설정이 완료되었습니다. 이제 장치 개발을 돕도록 설계된 가벼운 운영 체제인 Windows 10 IoT Core를 살펴보세요. IoT Core를 사용하면 즉시 장치를 연결하여 실행하는 데 필요한 모든 도구가 Windows에서 제공됩니다. 여러분의 아이디어를 가능한 한 빨리 실현하도록 도와드리겠습니다.</value>
   </data>
   <data name="Tutorial.GetStarted.006.p" xml:space="preserve">
     <value>자세한 내용을 알아보고 자습서, 설명서 및 도움말을 살펴보려면 www.windowsondevices.com을 방문하세요.</value>
@@ -352,7 +360,7 @@
     <value>코딩하는 방법</value>
   </data>
   <data name="Tutorial.GetStarted.008.p" xml:space="preserve">
-    <value>Windows 10 IoT Core K는 PC 기능을 활용하여 프로젝트를 빌드합니다.</value>
+    <value>Windows 10 IoT Core는 PC 기능을 활용하여 프로젝트를 빌드합니다.</value>
   </data>
   <data name="Tutorial.GetStarted.009.p" xml:space="preserve">
     <value>모든 코딩은 Visual Studio를 통해 원격으로 수행됩니다. 테스트하려거나 출시 준비가 된 경우 장치에 코드를 쉽게 푸시할 수 있습니다.</value>
@@ -372,10 +380,6 @@
   <data name="Tutorial.GetStarted.014.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
-  <data name="Tutorial.GetStarted.014a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetStarted.015.p" xml:space="preserve">
     <value>자세한 내용을 보려면 [코딩] 자습서를 클릭하세요.</value>
   </data>
@@ -383,7 +387,7 @@
     <value>시작 단추의 위치</value>
   </data>
   <data name="Tutorial.GetStarted.017.p" xml:space="preserve">
-    <value>Windows 10 IoT Core K는 매우 가볍게 설계되었으며, 응용프로그램을 빌드한 후에 표시되지 않습니다. 따라서 셸과 시작 단추가 없습니다. 개발자가 모든 단추, 탐색 및 UI를 만들어야 합니다.</value>
+    <value>Windows 10 IoT Core는 매우 가볍게 설계되었으며, 응용프로그램을 빌드한 후에 표시되지 않습니다. 따라서 셸과 시작 단추가 없습니다. 개발자가 모든 단추, 탐색 및 UI를 만들어야 합니다.</value>
   </data>
   <data name="Tutorial.GetStarted.018.p" xml:space="preserve">
     <value>하지만 걱정하지 마세요. 언제든지 도와드리겠습니다.</value>
@@ -394,8 +398,8 @@
   <data name="Tutorial.GetStarted.020.p" xml:space="preserve">
     <value>응용프로그램을 직접 빌드할 때 언제든지 이 응용프로그램을 템플릿으로 사용하여 시작하세요.</value>
   </data>
-  <data name="Tutorial.GetStarted.021.br" xml:space="preserve">
-    <value />
+  <data name="Tutorial.GetConnected.001.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetConnected-{0}.jpg</value>
     <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.002.title" xml:space="preserve">
@@ -434,10 +438,6 @@
   <data name="Tutorial.GetConnected.015.ul" xml:space="preserve">
     <value>개발 컴퓨터를 IoT Core 장치에 연결하는 이더넷 케이블</value>
   </data>
-  <data name="Tutorial.GetConnected.015a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetConnected.016.p" xml:space="preserve">
     <value>아래의 지침에 따라 PC에서 ICS(인터넷 연결 공유)를 사용하도록 설정합니다.</value>
   </data>
@@ -456,12 +456,8 @@
   <data name="Tutorial.GetConnected.021.ul" xml:space="preserve">
     <value>[공유] 탭을 클릭하고 [다른 네트워크 사용자가 이 컴퓨터의 인터넷 연결을 통해 연결할 수 있도록 허용] 확인란을 선택합니다.</value>
   </data>
-  <data name="Tutorial.GetConnected.021a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetConnected.022.p" xml:space="preserve">
-    <value>PC에서 ICS를 사용하도록 설정했으면 이제 Windows 10 IoT Core K 장치를 PC에 직접 연결할 수 있습니다. 이렇게 하려면 예비 이더넷 케이블의 한쪽 끝을 PC의 추가 이더넷 포트에 연결하고 케이블의 다른 쪽 끝을 IoT Core 장치의 이더넷 포트에 연결하면 됩니다.</value>
+    <value>PC에서 ICS를 사용하도록 설정했으면 이제 Windows 10 IoT Core 장치를 PC에 직접 연결할 수 있습니다. 이렇게 하려면 예비 이더넷 케이블의 한쪽 끝을 PC의 추가 이더넷 포트에 연결하고 케이블의 다른 쪽 끝을 IoT Core 장치의 이더넷 포트에 연결하면 됩니다.</value>
   </data>
   <data name="Tutorial.GetConnected.023.p" xml:space="preserve">
     <value>참고:</value>
@@ -469,25 +465,17 @@
   <data name="Tutorial.GetConnected.024.ul" xml:space="preserve">
     <value>네트워크 연결이 하나만 있는 경우에는 [공유] 탭을 사용할 수 없습니다.</value>
   </data>
-  <data name="Tutorial.GetConnected.024a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetConnected.025.h1" xml:space="preserve">
     <value>문제가 발생하는 경우</value>
   </data>
   <data name="Tutorial.GetConnected.026.p" xml:space="preserve">
     <value>문제를 디버그하는 데 도움을 주기 위해 몇 가지 고급 네트워크 진단 기능을 주 페이지에 추가했습니다. 지원이 더 필요하면 www.windowsondevices.com으로 이동하세요.</value>
   </data>
-  <data name="Tutorial.GetConnected.028.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetCoding.002.title" xml:space="preserve">
     <value>코딩</value>
   </data>
   <data name="Tutorial.GetCoding.003.subtitle" xml:space="preserve">
-    <value>Windows 10 IoT Core K는 PC 기능을 활용하여 프로젝트를 빌드합니다.</value>
+    <value>Windows 10 IoT Core는 PC 기능을 활용하여 프로젝트를 빌드합니다.</value>
   </data>
   <data name="Tutorial.GetCoding.004.p" xml:space="preserve">
     <value>모든 코딩은 Visual Studio를 통해 원격으로 수행됩니다. 테스트하려거나 출시 준비가 된 경우 장치에 코드를 쉽게 푸시할 수 있습니다.</value>
@@ -507,10 +495,6 @@
   <data name="Tutorial.GetCoding.009.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
-  <data name="Tutorial.GetCoding.009a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetCoding.010.h1" xml:space="preserve">
     <value>PC에서 Visual Studio 2015 설정</value>
   </data>
@@ -522,23 +506,6 @@
   </data>
   <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
     <value>드라이버를 개발할 계획인 경우 WDK를 설치합니다.</value>
-  </data>
-  <data name="Tutorial.GetCoding.015.ul" xml:space="preserve">
-    <value>IoT 도구 MSI를 설치합니다.</value>
-  </data>
-  <data name="Tutorial.GetCoding.016.ul" xml:space="preserve">
-    <value>이제 앱을 개발할 준비가 되었습니다. 로그온하면 Windows IoT Core Watcher 응용프로그램이 자동으로 시작됩니다. 이 응용프로그램을 사용하여 앱을 배포할 사용 가능한 Windows 10 IoT Core K 장치를 찾을 수 있습니다.</value>
-  </data>
-  <data name="Tutorial.GetCoding.016a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
-  <data name="Tutorial.GetCoding.018.p" xml:space="preserve">
-    <value>네트워크에서 장치를 찾으면 www.windowsondevices.com을 방문하여 샘플 코드를 다운로드한 후 실행하고 시험해 보세요.</value>
-  </data>
-  <data name="Tutorial.GetCoding.019.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="NetworkConnectivityLevel_ConstrainedInternetAccess" xml:space="preserve">
     <value>제한된 인터넷 액세스</value>
@@ -556,7 +523,7 @@
     <value>&lt;인터넷 연결 없음&gt;</value>
     <comment>Used in the main page under "IP address"</comment>
   </data>
-  <data name="DefaultLanguageTimeout.Text" xml:space="preserve">
+  <data name="DefaultLanguageTimeoutText" xml:space="preserve">
     <value>기본 언어를 자동으로 선택하는 중...</value>
   </data>
   <data name="BlinkyStart" xml:space="preserve">

@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resources">
+      <UniqueIdentifier>9547aca9-8daf-407d-8e49-d508a95cb8be</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="AllJoynBusObjectManager.cpp" />
+    <ClCompile Include="AllJoynHelpers.cpp" />
+    <ClCompile Include="binaryConsumer.cpp" />
+    <ClCompile Include="binaryProducer.cpp" />
+    <ClCompile Include="binaryServiceEventAdapter.cpp" />
+    <ClCompile Include="binaryServiceEventArgs.cpp" />
+    <ClCompile Include="binarySignals.cpp" />
+    <ClCompile Include="binaryWatcher.cpp" />
+    <ClCompile Include="TypeConversionHelpers.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="AllJoynBusObjectManager.h" />
+    <ClInclude Include="AllJoynHelpers.h" />
+    <ClInclude Include="binaryConsumer.h" />
+    <ClInclude Include="binaryEventArgs.h" />
+    <ClInclude Include="binaryMethodResults.h" />
+    <ClInclude Include="binaryProducer.h" />
+    <ClInclude Include="binaryServiceEventAdapter.h" />
+    <ClInclude Include="binaryServiceEventArgs.h" />
+    <ClInclude Include="binarySignals.h" />
+    <ClInclude Include="binaryStructures.h" />
+    <ClInclude Include="binaryWatcher.h" />
+    <ClInclude Include="IbinaryService.h" />
+    <ClInclude Include="TypeConversionHelpers.h" />
+  </ItemGroup>
+</Project>

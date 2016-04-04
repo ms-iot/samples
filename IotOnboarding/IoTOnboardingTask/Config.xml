@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<IoTOnboarding>
+    <AllJoynOnboarding>
+        <Enabled value="true"/>
+        <DefaultDescription value="IoTCore Onboarding service"/>
+        <DefaultManufacturer value="Microsoft"/>
+        <ModelNumber value="IoTCore Onboarding"/>
+    </AllJoynOnboarding>
+    <SoftAP>
+        <Enabled value="true"/>
+        <Password value="p@ssw0rd"/>
+        <Ssid value="SoftAPSsid"/>
+    </SoftAP>
+</IoTOnboarding>

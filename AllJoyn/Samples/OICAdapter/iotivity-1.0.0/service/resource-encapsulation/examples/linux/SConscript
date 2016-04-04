@@ -1,0 +1,103 @@
+#******************************************************************
+#
+# Copyright 2015 Samsung Electronics All Rights Reserved.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+##
+# linux sample app  build script (Sample Client & Sample Server)
+##
+Import('env')
+
+# Add third party libraries
+lib_env = env.Clone()
+SConscript(env.get('SRC_DIR') + '/service/third_party_libs.scons', 'lib_env')
+
+ResourceClient_env = lib_env.Clone()
+ResourceServer_env = lib_env.Clone()
+NestedAttributeServer_env = lib_env.Clone()
+NestedAttributeClient_env = lib_env.Clone()
+
+######################################################################
+# ##### Resource Client #####
+######################################################################
+
+ResourceClient_env.AppendUnique(CXXFLAGS = ['-O2', '-g', '-Wall', '-fmessage-length=0', '-std=c++0x'])
+ResourceClient_env.AppendUnique(LIBS = ['rcs_client', 'rcs_common','oc', 'octbstack', 'oc_logger', 'connectivity_abstraction', 'coap', 'pthread'])
+ResourceClient_env.AppendUnique(CPPPATH = ['../../include'])
+ResourceClient_env.AppendUnique(CPPPATH = ['../../src/resourceBroker/include'])
+ResourceClient_env.AppendUnique(CPPPATH = ['../../src/resourceCache/include'])
+ResourceClient_env.AppendUnique(CPPPATH = ['../../src/common/primitiveResource/include'])
+
+######################################################################
+# ##### Nested Attribute Client #####
+######################################################################
+
+NestedAttributeClient_env.AppendUnique(CXXFLAGS = ['-O2', '-g', '-Wall', '-fmessage-length=0', '-std=c++0x'])
+NestedAttributeClient_env.AppendUnique(LIBS = ['rcs_client', 'rcs_common','oc', 'octbstack', 'oc_logger', 'connectivity_abstraction', 'coap', 'pthread'])
+NestedAttributeClient_env.AppendUnique(CPPPATH = ['../../include'])
+NestedAttributeClient_env.AppendUnique(CPPPATH = ['../../src/resourceBroker/include'])
+NestedAttributeClient_env.AppendUnique(CPPPATH = ['../../src/resourceCache/include'])
+NestedAttributeClient_env.AppendUnique(CPPPATH = ['../../src/common/primitiveResource/include'])
+
+######################################################################
+# ##### Resource Server #####
+######################################################################
+
+ResourceServer_env.AppendUnique(CXXFLAGS = ['-O2', '-g', '-Wall', '-fmessage-length=0', '-std=c++0x'])
+ResourceServer_env.AppendUnique(LIBS = ['rcs_server', 'rcs_common','oc', 'octbstack', 'oc_logger', 'connectivity_abstraction', 'coap', 'pthread'])
+ResourceServer_env.AppendUnique(CPPPATH = ['../../include'])
+ResourceServer_env.AppendUnique(CPPPATH = ['../../src/common/primitiveResource/include'])
+ResourceServer_env.AppendUnique(CPPPATH = ['../../src/serverBuilder/include'])
+
+######################################################################
+# ##### Nested Attribute Server #####
+######################################################################
+
+NestedAttributeServer_env.AppendUnique(CXXFLAGS = ['-O2', '-g', '-Wall', '-fmessage-length=0', '-std=c++0x'])
+NestedAttributeServer_env.AppendUnique(LIBS = ['rcs_server', 'rcs_common','oc', 'octbstack', 'oc_logger', 'connectivity_abstraction', 'coap', 'pthread'])
+NestedAttributeServer_env.AppendUnique(CPPPATH = ['../../include'])
+NestedAttributeServer_env.AppendUnique(CPPPATH = ['../../src/common/primitiveResource/include'])
+NestedAttributeServer_env.AppendUnique(CPPPATH = ['../../src/serverBuilder/include'])
+
+if env.get('SECURED') == '1':
+    ResourceClient_env.AppendUnique(LIBS = ['tinydtls'])
+    NestedAttributeClient_env.AppendUnique(LIBS = ['tinydtls'])
+    ResourceServer_env.AppendUnique(LIBS = ['tinydtls'])
+    NestedAttributeServer_env.AppendUnique(LIBS = ['tinydtls'])
+
+if 'rt' in ResourceClient_env.get('LIBS'):
+    ResourceClient_env.Append(LIBS = ['rt'])
+if 'rt' in NestedAttributeClient_env.get('LIBS'):
+    NestedAttributeClient_env.Append(LIBS = ['rt'])
+if 'rt' in ResourceServer_env.get('LIBS'):
+    ResourceServer_env.Append(LIBS = ['rt'])
+if 'rt' in NestedAttributeServer_env.get('LIBS'):
+    NestedAttributeServer_env.Append(LIBS = ['rt'])
+
+####################################################################
+# Source files and Targets
+####################################################################
+sampleResourceClient = ResourceClient_env.Program('sampleResourceClient', 'SampleResourceClient.cpp')
+nestedAttributeClient = NestedAttributeClient_env.Program('nestedAttributeClient', 'NestedAttributeClient.cpp')
+sampleResourceServer = ResourceServer_env.Program('sampleResourceServer', 'SampleResourceServer.cpp')
+nestedAttributeServer = NestedAttributeServer_env.Program('nestedAttributeServer', 'NestedAttributeServer.cpp')
+
+ResourceClient_env.InstallTarget(sampleResourceClient, 'sampleResourceClient')
+NestedAttributeClient_env.InstallTarget(nestedAttributeClient, 'nestedAttributeClient')
+ResourceServer_env.InstallTarget(sampleResourceServer, 'sampleResourceServer')
+NestedAttributeServer_env.InstallTarget(nestedAttributeServer, 'nestedAttributeServer')

@@ -1,0 +1,78 @@
+##
+# libcoap (share library) build script
+##
+
+Import('env')
+
+libcoap_env = env.Clone()
+
+target_os = env.get('TARGET_OS')
+ca_transport = env.get('TARGET_TRANSPORT')
+with_tcp = env.get('WITH_TCP')
+# As in the source code(C) includes arduino Time library head file(C++)
+# It requires compile the .c with g++
+if target_os == 'arduino':
+	libcoap_env.Replace(CFLAGS = env.get('CXXFLAGS'))
+
+######################################################################
+# Build flags
+######################################################################
+	libcoap_env.PrependUnique(CPPPATH = [
+		'./',
+		env.get('ARDUINO_HOME')+'/',
+		env.get('ARDUINO_HOME')+'/hardware/arduino/avr/cores/arduino',
+		env.get('ARDUINO_HOME')+'/hardware/tools/avr/avr/include/',
+		env.get('ARDUINO_HOME')+'/hardware/arduino/avr/variants/mega',
+		env.get('ARDUINO_HOME')+'/libraries/Time/Time',
+		env.get('ARDUINO_HOME')+'/libraries/TimedAction',
+		env.get('ARDUINO_HOME')+'/hardware/arduino/avr/libraries/SPI',
+		env.get('ARDUINO_HOME')+'/libraries/Ethernet/src/utility',
+		])
+
+if target_os not in ['arduino', 'windows', 'winrt']:
+	libcoap_env.AppendUnique(CPPDEFINES = ['WITH_POSIX', '_DEFAULT_SOURCE'])
+	libcoap_env.AppendUnique(CFLAGS = ['-std=gnu99','-fPIC'])
+
+if target_os not in ['windows', 'winrt']:
+	libcoap_env.AppendUnique(CFLAGS = ['-Wall', '-ffunction-sections',
+			'-fdata-sections', '-fno-exceptions'])
+
+if target_os == 'linux':
+	if with_tcp == True:
+		libcoap_env.AppendUnique(CPPDEFINES = ['WITH_TCP'])
+
+if target_os == 'android':
+	libcoap_env.AppendUnique(LIBS = ['log'])
+
+if target_os == 'arduino':
+	libcoap_env.AppendUnique(CPPDEFINES = ['NDEBUG', 'WITH_ARDUINO'])
+
+if target_os in ['darwin', 'ios']:
+	libcoap_env.AppendUnique(CPPDEFINES = ['_DARWIN_C_SOURCE'])
+
+if env.get('LOGGING'):
+	libcoap_env.AppendUnique(CPPDEFINES = ['TB_LOG'])
+
+######################################################################
+# Source files and Target(s)
+######################################################################
+libcoap_src = [
+	'pdu.c',
+	'net.c',
+	'debug.c',
+	'encode.c',
+	'uri.c',
+	'coap_list.c',
+	'resource.c',
+	'hashkey.c',
+	'str.c',
+	'option.c',
+	'async.c',
+	'subscribe.c',
+	'block.c'
+	]
+
+libcoap = libcoap_env.StaticLibrary('libcoap', libcoap_src, OBJPREFIX='libcoap_')
+
+libcoap_env.InstallTarget([libcoap], 'libcoap')
+libcoap_env.UserInstallTargetLib([libcoap], 'libcoap')

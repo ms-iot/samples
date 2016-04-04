@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E9A65567-B028-4278-881D-674604B2E126}</ProjectGuid>
+    <RootNamespace>BACnetStackLibrary</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.21006.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;PRINT_ENABLED=1;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+      <AdditionalIncludeDirectories>$(SolutionPath)\..\..\..\..\Demo\Object;$(SolutionPath)\..\..\..\..\Include;$(SolutionPath)\..\..</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Lib>
+      <AdditionalDependencies>ws2_32.lib;iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;PRINT_ENABLED=1;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <AdditionalIncludeDirectories>$(SolutionPath)\..\..\..\..\Include;$(SolutionPath)\..\..\..\..\demo\object;$(SolutionPath)\..\..</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Lib>
+      <AdditionalDependencies>ws2_32.lib;iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\src\abort.c" />
+    <ClCompile Include="..\..\..\..\src\address.c" />
+    <ClCompile Include="..\..\..\..\src\apdu.c" />
+    <ClCompile Include="..\..\..\..\src\arf.c" />
+    <ClCompile Include="..\..\..\..\src\awf.c" />
+    <ClCompile Include="..\..\..\..\src\bacaddr.c" />
+    <ClCompile Include="..\..\..\..\src\bacapp.c" />
+    <ClCompile Include="..\..\..\..\src\bacdcode.c" />
+    <ClCompile Include="..\..\..\..\src\bacdevobjpropref.c" />
+    <ClCompile Include="..\..\..\..\src\bacerror.c" />
+    <ClCompile Include="..\..\..\..\src\bacint.c" />
+    <ClCompile Include="..\..\..\..\src\bacprop.c" />
+    <ClCompile Include="..\..\..\..\src\bacpropstates.c" />
+    <ClCompile Include="..\..\..\..\src\bacreal.c" />
+    <ClCompile Include="..\..\..\..\src\bacstr.c" />
+    <ClCompile Include="..\..\..\..\src\bactext.c" />
+    <ClCompile Include="..\..\..\..\src\bigend.c" />
+    <ClCompile Include="..\..\..\..\src\bip.c" />
+    <ClCompile Include="..\..\..\..\src\bvlc.c" />
+    <ClCompile Include="..\..\..\..\src\cov.c" />
+    <ClCompile Include="..\..\..\..\src\crc.c" />
+    <ClCompile Include="..\..\..\..\src\datalink.c" />
+    <ClCompile Include="..\..\..\..\src\datetime.c" />
+    <ClCompile Include="..\..\..\..\src\dcc.c" />
+    <ClCompile Include="..\..\..\..\src\debug.c" />
+    <ClCompile Include="..\..\..\..\src\event.c" />
+    <ClCompile Include="..\..\..\..\src\fifo.c" />
+    <ClCompile Include="..\..\..\..\src\filename.c" />
+    <ClCompile Include="..\..\..\..\src\iam.c" />
+    <ClCompile Include="..\..\..\..\src\ihave.c" />
+    <ClCompile Include="..\..\..\..\src\indtext.c" />
+    <ClCompile Include="..\..\..\..\src\key.c" />
+    <ClCompile Include="..\..\..\..\src\keylist.c" />
+    <ClCompile Include="..\..\..\..\src\lso.c" />
+    <ClCompile Include="..\..\..\..\src\memcopy.c" />
+    <ClCompile Include="..\..\..\..\src\mstp.c" />
+    <ClCompile Include="..\..\..\..\src\mstptext.c" />
+    <ClCompile Include="..\..\..\..\src\npdu.c" />
+    <ClCompile Include="..\..\..\..\src\proplist.c" />
+    <ClCompile Include="..\..\..\..\src\ptransfer.c" />
+    <ClCompile Include="..\..\..\..\src\rd.c" />
+    <ClCompile Include="..\..\..\..\src\readrange.c" />
+    <ClCompile Include="..\..\..\..\src\reject.c" />
+    <ClCompile Include="..\..\..\..\src\ringbuf.c" />
+    <ClCompile Include="..\..\..\..\src\rp.c" />
+    <ClCompile Include="..\..\..\..\src\rpm.c" />
+    <ClCompile Include="..\..\..\..\src\sbuf.c" />
+    <ClCompile Include="..\..\..\..\src\timestamp.c" />
+    <ClCompile Include="..\..\..\..\src\timesync.c" />
+    <ClCompile Include="..\..\..\..\src\tsm.c" />
+    <ClCompile Include="..\..\..\..\src\version.c" />
+    <ClCompile Include="..\..\..\..\src\whohas.c" />
+    <ClCompile Include="..\..\..\..\src\whois.c" />
+    <ClCompile Include="..\..\..\..\src\wp.c" />
+    <ClCompile Include="..\..\..\..\src\wpm.c" />
+    <ClCompile Include="..\..\bip-init.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\include\abort.h" />
+    <ClInclude Include="..\..\..\..\include\address.h" />
+    <ClInclude Include="..\..\..\..\include\alarm_ack.h" />
+    <ClInclude Include="..\..\..\..\include\apdu.h" />
+    <ClInclude Include="..\..\..\..\include\arcnet.h" />
+    <ClInclude Include="..\..\..\..\include\arf.h" />
+    <ClInclude Include="..\..\..\..\include\awf.h" />
+    <ClInclude Include="..\..\..\..\include\bacaddr.h" />
+    <ClInclude Include="..\..\..\..\include\bacapp.h" />
+    <ClInclude Include="..\..\..\..\include\bacdcode.h" />
+    <ClInclude Include="..\..\..\..\include\bacdef.h" />
+    <ClInclude Include="..\..\..\..\include\bacdevobjpropref.h" />
+    <ClInclude Include="..\..\..\..\include\bacenum.h" />
+    <ClInclude Include="..\..\..\..\include\bacerror.h" />
+    <ClInclude Include="..\..\..\..\include\bacint.h" />
+    <ClInclude Include="..\..\..\..\include\bacnet.h" />
+    <ClInclude Include="..\..\..\..\include\bacprop.h" />
+    <ClInclude Include="..\..\..\..\include\bacpropstates.h" />
+    <ClInclude Include="..\..\..\..\include\bacreal.h" />
+    <ClInclude Include="..\..\..\..\include\bacstr.h" />
+    <ClInclude Include="..\..\..\..\include\bactext.h" />
+    <ClInclude Include="..\..\..\..\include\bigend.h" />
+    <ClInclude Include="..\..\..\..\include\bip.h" />
+    <ClInclude Include="..\..\..\..\include\bits.h" />
+    <ClInclude Include="..\..\..\..\include\bvlc.h" />
+    <ClInclude Include="..\..\..\..\include\bytes.h" />
+    <ClInclude Include="..\..\..\..\include\config.h" />
+    <ClInclude Include="..\..\..\..\include\cov.h" />
+    <ClInclude Include="..\..\..\..\include\crc.h" />
+    <ClInclude Include="..\..\..\..\include\datalink.h" />
+    <ClInclude Include="..\..\..\..\include\datetime.h" />
+    <ClInclude Include="..\..\..\..\include\dcc.h" />
+    <ClInclude Include="..\..\..\..\include\debug.h" />
+    <ClInclude Include="..\..\..\..\include\dlmstp.h" />
+    <ClInclude Include="..\..\..\..\include\ethernet.h" />
+    <ClInclude Include="..\..\..\..\include\event.h" />
+    <ClInclude Include="..\..\..\..\include\fifo.h" />
+    <ClInclude Include="..\..\..\..\include\filename.h" />
+    <ClInclude Include="..\..\..\..\include\getevent.h" />
+    <ClInclude Include="..\..\..\..\include\get_alarm_sum.h" />
+    <ClInclude Include="..\..\..\..\include\handlers.h" />
+    <ClInclude Include="..\..\..\..\include\iam.h" />
+    <ClInclude Include="..\..\..\..\include\ihave.h" />
+    <ClInclude Include="..\..\..\..\include\indtext.h" />
+    <ClInclude Include="..\..\..\..\include\key.h" />
+    <ClInclude Include="..\..\..\..\include\keylist.h" />
+    <ClInclude Include="..\..\..\..\include\lso.h" />
+    <ClInclude Include="..\..\..\..\include\memcopy.h" />
+    <ClInclude Include="..\..\..\..\include\mstp.h" />
+    <ClInclude Include="..\..\..\..\include\mstpdef.h" />
+    <ClInclude Include="..\..\..\..\include\mstptext.h" />
+    <ClInclude Include="..\..\..\..\include\mydata.h" />
+    <ClInclude Include="..\..\..\..\include\npdu.h" />
+    <ClInclude Include="..\..\..\..\include\objects.h" />
+    <ClInclude Include="..\..\..\..\include\proplist.h" />
+    <ClInclude Include="..\..\..\..\include\ptransfer.h" />
+    <ClInclude Include="..\..\..\..\include\rd.h" />
+    <ClInclude Include="..\..\..\..\include\readrange.h" />
+    <ClInclude Include="..\..\..\..\include\reject.h" />
+    <ClInclude Include="..\..\..\..\include\ringbuf.h" />
+    <ClInclude Include="..\..\..\..\include\rp.h" />
+    <ClInclude Include="..\..\..\..\include\rpm.h" />
+    <ClInclude Include="..\..\..\..\include\sbuf.h" />
+    <ClInclude Include="..\..\..\..\include\timestamp.h" />
+    <ClInclude Include="..\..\..\..\include\timesync.h" />
+    <ClInclude Include="..\..\..\..\include\tsm.h" />
+    <ClInclude Include="..\..\..\..\include\version.h" />
+    <ClInclude Include="..\..\..\..\include\whohas.h" />
+    <ClInclude Include="..\..\..\..\include\whois.h" />
+    <ClInclude Include="..\..\..\..\include\wp.h" />
+    <ClInclude Include="..\..\..\..\include\wpm.h" />
+    <ClInclude Include="..\..\..\net.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
