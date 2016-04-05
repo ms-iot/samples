@@ -192,6 +192,10 @@
     <value>Raspberry Pi 2</value>
     <comment>Board name</comment>
   </data>
+  <data name="Rpi3Name" xml:space="preserve">
+    <value>Raspberry Pi 3</value>
+    <comment>Board name</comment>
+  </data>
   <data name="DB410Name" xml:space="preserve">
     <value>DragonBoard 410c</value>
     <comment>Board name</comment>
@@ -211,6 +215,10 @@
     <value>Visita</value>
     <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
   </data>
+  <data name="WindowsOnDevicesUrlText" xml:space="preserve">
+    <value> www.windowsondevices.com</value>
+    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
+  </data>
   <data name="KeyboardTitleText" xml:space="preserve">
     <value>Layout di tastiera</value>
     <comment>Field label</comment>
@@ -224,6 +232,10 @@
   </data>
   <data name="NetworkPreferencesText" xml:space="preserve">
     <value>Rete e Wi-Fi</value>
+  </data>
+  <data name="BluetoothPreferencesText" xml:space="preserve">
+    <value>Bluetooth</value>
+    <comment>Label for Setting item tp control Bluetooth pairing</comment>
   </data>
   <data name="SettingsPreferencesText" xml:space="preserve">
     <value>Preferenze di base</value>
@@ -317,6 +329,12 @@
   <data name="TutorialBlinkyBody5Text" xml:space="preserve">
     <value>Dichiarazione di non responsabilità: Microsoft non si assume alcuna responsabilità per gli eventuali danni causati dall'organizzazione di un rave party usando il LED lampeggiante della scheda.</value>
   </data>
+  <data name="TutorialBlinkyBody6Text_Rpi3" xml:space="preserve">
+    <value>Per Raspberry Pi 3, connetti un LED al pin GPIO 5.</value>
+  </data>
+  <data name="TutorialBlinkyBody6Text_Dragonboard" xml:space="preserve">
+    <value>Per DragonBoard 410c, connetti un LED al pin GPIO 115.</value>
+  </data>
   <data name="TutorialBlinkyTitle1Text" xml:space="preserve">
     <value>Hello Blinky</value>
     <comment>Tutorial titles and subtitles</comment>
@@ -380,6 +398,10 @@
   <data name="Tutorial.GetStarted.014.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
+  <data name="Tutorial.GetStarted.014a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetStarted.015.p" xml:space="preserve">
     <value>Per altre informazioni, fai clic sull'esercitazione “Inizia a scrivere codice”</value>
   </data>
@@ -397,6 +419,10 @@
   </data>
   <data name="Tutorial.GetStarted.020.p" xml:space="preserve">
     <value>Usa questa applicazione come modello per iniziare a sviluppare la tua</value>
+  </data>
+  <data name="Tutorial.GetStarted.021.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.001.620x400.image" xml:space="preserve">
     <value>Assets/Tutorials/GetConnected-{0}.jpg</value>
@@ -426,6 +452,10 @@
   <data name="Tutorial.GetConnected.009.p" xml:space="preserve">
     <value>Ne hai una? Ottimo, collegala!</value>
   </data>
+  <data name="Tutorial.GetConnected.010.620x350.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetConnected-004.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.011.p" xml:space="preserve">
     <value>Nell'angolo superiore destro dello schermo è presente l'icona di un ingranaggio per l'accesso alle impostazioni. Fai clic sull'icona e passa a Rete e Wi-Fi. Da qui puoi connetterti alla tua rete locale.</value>
   </data>
@@ -440,6 +470,10 @@
   </data>
   <data name="Tutorial.GetConnected.015.ul" xml:space="preserve">
     <value>Un cavo Ethernet per collegare il computer di sviluppo al dispositivo IoT Core.</value>
+  </data>
+  <data name="Tutorial.GetConnected.015a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.016.p" xml:space="preserve">
     <value>Segui le istruzioni seguenti per abilitare Condivisione connessione Internet (ICS) nel PC</value>
@@ -459,6 +493,10 @@
   <data name="Tutorial.GetConnected.021.ul" xml:space="preserve">
     <value>Fai clic sulla scheda 'Condivisione' e seleziona la casella 'Consenti ad altri utenti in rete di collegarsi tramite la connessione Internet di questo computer'.</value>
   </data>
+  <data name="Tutorial.GetConnected.021a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.022.p" xml:space="preserve">
     <value>Dopo avere abilitato Condivisione connessione Internet nel PC, puoi collegare direttamente al PC il tuo dispositivo Windows 10 IoT Core. Per farlo, collega un'estremità del cavo Ethernet alla porta Ethernet aggiuntiva del PC e l'altra estremità alla porta Ethernet del dispositivo IoT Core.</value>
   </data>
@@ -468,11 +506,27 @@
   <data name="Tutorial.GetConnected.024.ul" xml:space="preserve">
     <value>La scheda 'Condivisione' non sarà disponibile se è presente una sola connessione di rete.</value>
   </data>
+  <data name="Tutorial.GetConnected.024a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.025.h1" xml:space="preserve">
     <value>Problemi?</value>
   </data>
   <data name="Tutorial.GetConnected.026.p" xml:space="preserve">
     <value>Per semplificare il debug in caso di problemi, sono state aggiunte funzionalità avanzate di diagnostica di rete nella pagina principale. Per assistenza, visita www.windowsondevices.com</value>
+  </data>
+  <data name="Tutorial.GetConnected.027.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetConnected-006.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetConnected.028.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetCoding.001.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetCoding.jpg</value>
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetCoding.002.title" xml:space="preserve">
     <value>Inizia a scrivere codice</value>
@@ -498,6 +552,10 @@
   <data name="Tutorial.GetCoding.009.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
+  <data name="Tutorial.GetCoding.009a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetCoding.010.h1" xml:space="preserve">
     <value>Configurazione di Visual Studio 2015 nel PC</value>
   </data>
@@ -509,6 +567,14 @@
   </data>
   <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
     <value>Se prevedi di sviluppare driver, installa il WDK.</value>
+  </data>
+  <data name="Tutorial.GetCoding.016a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetCoding.019.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="NetworkConnectivityLevel_ConstrainedInternetAccess" xml:space="preserve">
     <value>Accesso a Internet limitato</value>
@@ -547,5 +613,106 @@
   </data>
   <data name="ProblemsInitializingGPIOPin" xml:space="preserve">
     <value>Si sono verificati problemi durante l'inizializzazione del pin GPIO.</value>
+  </data>
+  <data name="BluetoothAttemptingToPairFormat" xml:space="preserve">
+    <value>Tentativo di associazione con {0} ({1})</value>
+    <comment>Format string for message displayed when pairing attempt starts</comment>
+  </data>
+  <data name="BluetoothConfirmOnlyFormat" xml:space="preserve">
+    <value>Associazione con {0} ({1})</value>
+    <comment>Format string for message displayed when ConfirmOnly ceremony is invoked</comment>
+  </data>
+  <data name="BluetoothConfirmPinMatchFormat" xml:space="preserve">
+    <value>Il PIN visualizzato sul dispositivo corrisponde a {0}?</value>
+    <comment>Format string for message displayed when ConfirmPinMatch ceremony is invoked</comment>
+  </data>
+  <data name="BluetoothDisplayPinFormat" xml:space="preserve">
+    <value>Immetti questo PIN nel dispositivo con cui stai eseguendo l'associazione: {0}</value>
+    <comment>Format string for message displayed when DisplayPin ceremony is invoked</comment>
+  </data>
+  <data name="BluetoothInboundRegistrationAlreadyDoneFormat" xml:space="preserve">
+    <value>Registrazione per l'associazione in entrata già eseguita. Procedure supportate: {0}</value>
+    <comment>Format string for message displayed when Inbound pairing handler registration already done</comment>
+  </data>
+  <data name="BluetoothInboundRegistrationFailed" xml:space="preserve">
+    <value>Registrazione per l'associazione in entrata non riuscita</value>
+    <comment>Message displayed when Inbound pairing handler registration fails</comment>
+  </data>
+  <data name="BluetoothInboundRegistrationSucceededFormat" xml:space="preserve">
+    <value>Registrazione per l'associazione in entrata completata. Procedure supportate: {0}</value>
+    <comment>Format string for message displayed when Inbound pairing handler registration succeeds</comment>
+  </data>
+  <data name="BluetoothPairingFailureFormat" xml:space="preserve">
+    <value>Risultato dell'associazione: {0}. Associazione con {1} non riuscita ({2})</value>
+    <comment>Format string for message displayed when pairing attempt fails</comment>
+  </data>
+  <data name="BluetoothPairingSuccessFormat" xml:space="preserve">
+    <value>Associazione con {0} completata ({1})</value>
+    <comment>Format string for message displayed when pairing attempt succeeds</comment>
+  </data>
+  <data name="BluetoothStartedWatching" xml:space="preserve">
+    <value>Il dispositivo esegue la ricerca di altri dispositivi Bluetooth e può essere individuato da questi ultimi</value>
+    <comment>Message display when "Start Watcher" button is pressed</comment>
+  </data>
+  <data name="BluetoothStoppedWatching" xml:space="preserve">
+    <value>Controllo dei dispositivi Bluetooth interrotto</value>
+    <comment>Message display when "Stop Watcher" button is pressed</comment>
+  </data>
+  <data name="BluetoothUnpairingFailureFormat" xml:space="preserve">
+    <value>Risultato dell'annullamento dell'associazione: {0}. Annullamento dell'associazione con {1} non riuscito ({2})</value>
+    <comment>Format string for message displayed when unpairing attempt fails</comment>
+  </data>
+  <data name="BluetoothUnpairingSuccessFormat" xml:space="preserve">
+    <value>Annullamento dell'associazione da {0} completato ({1})</value>
+    <comment>Format string for message displayed when unpairing attempt succeeds</comment>
+  </data>
+  <data name="PinLabelTextBox.Text" xml:space="preserve">
+    <value>Immetti il PIN:</value>
+    <comment>Message on flyout control for PIN entry for ProvidePin ceremony</comment>
+  </data>
+  <data name="BluetoothPairButtonContent" xml:space="preserve">
+    <value>Associa</value>
+    <comment>Text displayed on the button to pair Bluetooth list item</comment>
+  </data>
+  <data name="BluetoothUnpairButtonContent" xml:space="preserve">
+    <value>Annulla associazione</value>
+    <comment>Text displayed on the button to unpair Bluetooth list item</comment>
+  </data>
+  <data name="BluetoothDeviceStatePairedText" xml:space="preserve">
+    <value>Associato</value>
+  </data>
+  <data name="BluetoothDeviceStateReadyToPairText" xml:space="preserve">
+    <value>Pronto per l'associazione</value>
+  </data>
+  <data name="BluetoothManageDevicesText" xml:space="preserve">
+    <value>Gestisci dispositivi Bluetooth</value>
+  </data>
+  <data name="BluetoothWatcherToggleLabel" xml:space="preserve">
+    <value>Bluetooth</value>
+    <comment>Label text for Bluetooth watcher toggle switch</comment>
+  </data>
+  <data name="BluetoothNoDeviceAvailableFormat" xml:space="preserve">
+    <value>Non è possibile trovare alcuna scheda Bluetooth utilizzabile nel computer:
+{0}</value>
+    <comment>Message displayed on systems which do not have a Bluetooth adapter. The new line before {0} is deliberate and should be kept</comment>
+  </data>
+  <data name="BluetoothEnterPINText" xml:space="preserve">
+    <value>Immetti il PIN:</value>
+  </data>
+  <data name="BluetoothDeviceStateUnknownText" xml:space="preserve">
+    <value>Stato sconosciuto</value>
+  </data>
+  <data name="BluetoothInboundPairingRequestFormat" xml:space="preserve">
+    <value>Richiesta in entrata: {0}
+{1}</value>
+    <comment>Format for message displayed when an inbounbd pairing request is received</comment>
+  </data>
+  <data name="EnableScreensaverText" xml:space="preserve">
+    <value>Screen saver</value>
+    <comment>Toggle switch for enabling the screensaver</comment>
+  </data>
+  <data name="NoDeviceName" xml:space="preserve">
+    <value>&lt;nessun nome di dispositivo&gt;</value>
+    <comment>This is shown when we fail to retrieve a valid device name (very strange case)</comment>
   </data>
 </root>

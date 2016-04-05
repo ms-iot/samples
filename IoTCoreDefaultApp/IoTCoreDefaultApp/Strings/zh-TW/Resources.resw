@@ -146,7 +146,7 @@
     <comment>Shutdown entry in the shutdown menu</comment>
   </data>
   <data name="BackButtonContent" xml:space="preserve">
-    <value>上一頁</value>
+    <value>上一步</value>
   </data>
   <data name="CancelButtonContent" xml:space="preserve">
     <value>取消</value>
@@ -165,7 +165,7 @@
     <comment>Field label</comment>
   </data>
   <data name="NetworkConnectingMessageText" xml:space="preserve">
-    <value>檢查網路需求</value>
+    <value>正在檢查網路需求</value>
   </data>
   <data name="NetworkPasswordPromptText" xml:space="preserve">
     <value>輸入網路安全性金鑰</value>
@@ -174,7 +174,7 @@
     <value>下一步</value>
   </data>
   <data name="NoNetworksText" xml:space="preserve">
-    <value>找不到任何連線</value>
+    <value>找不到任何網路</value>
   </data>
   <data name="OOBEIntroText" xml:space="preserve">
     <value>讓我們先了解一些基礎知識。</value>
@@ -183,13 +183,17 @@
     <value>選擇語言</value>
   </data>
   <data name="OOBENetworkTitleText" xml:space="preserve">
-    <value>開始連線</value>
+    <value>讓我們開始連線</value>
   </data>
   <data name="OOBEWelcomeTitleText" xml:space="preserve">
-    <value>您好，歡迎使用 Windows IoT 核心版</value>
+    <value>您好，歡迎使用 Windows 10 IoT 核心版</value>
   </data>
   <data name="Rpi2Name" xml:space="preserve">
     <value>Raspberry Pi 2</value>
+    <comment>Board name</comment>
+  </data>
+  <data name="Rpi3Name" xml:space="preserve">
+    <value>Raspberry Pi 3</value>
     <comment>Board name</comment>
   </data>
   <data name="DB410Name" xml:space="preserve">
@@ -204,11 +208,15 @@
     <comment>Label for Wi-Fi list in options page</comment>
   </data>
   <data name="StartDevelopingText" xml:space="preserve">
-    <value>開始開發</value>
+    <value> 開始開發</value>
     <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
   </data>
   <data name="VisitText" xml:space="preserve">
-    <value>造訪</value>
+    <value>瀏覽</value>
+    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
+  </data>
+  <data name="WindowsOnDevicesUrlText" xml:space="preserve">
+    <value> www.windowsondevices.com</value>
     <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
   </data>
   <data name="KeyboardTitleText" xml:space="preserve">
@@ -223,7 +231,11 @@
     <value>已連線</value>
   </data>
   <data name="NetworkPreferencesText" xml:space="preserve">
-    <value>網路 &amp; Wi-Fi</value>
+    <value>網路與 Wi-Fi</value>
+  </data>
+  <data name="BluetoothPreferencesText" xml:space="preserve">
+    <value>藍牙</value>
+    <comment>Label for Setting item tp control Bluetooth pairing</comment>
   </data>
   <data name="SettingsPreferencesText" xml:space="preserve">
     <value>基本喜好設定</value>
@@ -242,7 +254,7 @@
     <comment>Text under the Tutorials button on the top bar</comment>
   </data>
   <data name="ConnectedDevicesText" xml:space="preserve">
-    <value>連線的服務</value>
+    <value>已連線的裝置</value>
   </data>
   <data name="Ipv4Text" xml:space="preserve">
     <value>IPv4</value>
@@ -264,7 +276,7 @@
     <comment>Status of the network connection (e.g. not connected, limited, etc.)</comment>
   </data>
   <data name="TutorialGetCodingDescriptionText" xml:space="preserve">
-    <value>瞭解如何透過您的電腦遠端撰寫程式碼</value>
+    <value>了解如何透過您的電腦遠端撰寫程式碼</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialGetCodingTitleText" xml:space="preserve">
@@ -272,7 +284,7 @@
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialGetConnectedDescriptionText" xml:space="preserve">
-    <value>將您的裝置連線到網際網路及電腦</value>
+    <value>將您的裝置連線到網際網路與您的電腦</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialGetConnectedTitleText" xml:space="preserve">
@@ -280,7 +292,7 @@
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialGetStartedDescriptionText" xml:space="preserve">
-    <value>認識 Windows IoT 核心版</value>
+    <value>認識 Windows 10 IoT 核心版</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialGetStartedTitleText" xml:space="preserve">
@@ -288,7 +300,7 @@
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialHeaderText" xml:space="preserve">
-    <value>瞭解如何徹底善用 Windows IoT 核心版</value>
+    <value>了解如何徹底善用 Windows 10 IoT 核心版</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialHelloBlinkyDescriptionText" xml:space="preserve">
@@ -300,13 +312,13 @@
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialTitleText" xml:space="preserve">
-    <value>協助您連線及開發的資源和工具</value>
+    <value>協助您連線及開發的資源與工具</value>
   </data>
   <data name="TutorialBlinkyBody1Text" xml:space="preserve">
     <value>電路板最重要且最基本的一個行為就是閃爍。</value>
   </data>
   <data name="TutorialBlinkyBody2Text" xml:space="preserve">
-    <value>如「入門」區段所述，www. windowsondevices.com 提供此開放來源的所有來源程式碼  (請尋找 IoTCoreDefaultApp)。</value>
+    <value>如「入門」區段所述，www. windowsondevices.com 提供此開放原始碼的所有原始程式碼 (請尋找 IoTCoreDefaultApp)。</value>
   </data>
   <data name="TutorialBlinkyBody3Text" xml:space="preserve">
     <value>無需設定。按下開始即可。</value>
@@ -316,6 +328,12 @@
   </data>
   <data name="TutorialBlinkyBody5Text" xml:space="preserve">
     <value>免責聲明: 對於使用電路板的小型閃爍 LED 舉辦熱舞派對可能導致的任何傷害，Microsoft 概不負責。</value>
+  </data>
+  <data name="TutorialBlinkyBody6Text_Rpi3" xml:space="preserve">
+    <value>對於 Raspberry Pi 3，請將 LED 連接到 GPIO 針腳 5。</value>
+  </data>
+  <data name="TutorialBlinkyBody6Text_Dragonboard" xml:space="preserve">
+    <value>對於 DragonBoard 410c，請將 LED 連接到 GPIO 針腳 115。</value>
   </data>
   <data name="TutorialBlinkyTitle1Text" xml:space="preserve">
     <value>哈囉閃閃</value>
@@ -380,6 +398,10 @@
   <data name="Tutorial.GetStarted.014.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
+  <data name="Tutorial.GetStarted.014a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetStarted.015.p" xml:space="preserve">
     <value>按一下「開始撰寫程式碼」教學課程以取得詳細資訊</value>
   </data>
@@ -397,6 +419,10 @@
   </data>
   <data name="Tutorial.GetStarted.020.p" xml:space="preserve">
     <value>在設計您專屬的應用程式時，可以將它作為初始範本使用</value>
+  </data>
+  <data name="Tutorial.GetStarted.021.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.001.620x400.image" xml:space="preserve">
     <value>Assets/Tutorials/GetConnected-{0}.jpg</value>
@@ -426,6 +452,10 @@
   <data name="Tutorial.GetConnected.009.p" xml:space="preserve">
     <value>有了? 非常好，插入電路板!</value>
   </data>
+  <data name="Tutorial.GetConnected.010.620x350.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetConnected-004.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.011.p" xml:space="preserve">
     <value>您的畫面右上角有一個「設定齒輪」。請按一下齒輪並瀏覽至 [網路及 Wi-Fi]。您可從該處連線至本機網路。</value>
   </data>
@@ -440,6 +470,10 @@
   </data>
   <data name="Tutorial.GetConnected.015.ul" xml:space="preserve">
     <value>可連接開發電腦與 IoT 核心版裝置的乙太網路連接線。</value>
+  </data>
+  <data name="Tutorial.GetConnected.015a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.016.p" xml:space="preserve">
     <value>遵循下方說明在您的電腦上啟用網際網路連線共用 (ICS)</value>
@@ -459,6 +493,10 @@
   <data name="Tutorial.GetConnected.021.ul" xml:space="preserve">
     <value>按一下 [共用] 索引標籤，並選取 [允許其他網路使用者透過此電腦的網際網路連線] 方塊。</value>
   </data>
+  <data name="Tutorial.GetConnected.021a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.022.p" xml:space="preserve">
     <value>當您在電腦上啟用 ICS 後，您即可將 Windows 10 IoT 核心版裝置直接連線至電腦。您可以將乙太網路連接線一端插入電腦上額外的乙太網路連接埠，將另一端插入 IoT 核心版裝置上的乙太網路連接埠。</value>
   </data>
@@ -468,11 +506,27 @@
   <data name="Tutorial.GetConnected.024.ul" xml:space="preserve">
     <value>若您僅有一個網路連線，則無法使用 [共用] 索引標籤。</value>
   </data>
+  <data name="Tutorial.GetConnected.024a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.025.h1" xml:space="preserve">
     <value>遇到問題?</value>
   </data>
   <data name="Tutorial.GetConnected.026.p" xml:space="preserve">
     <value>我們已在主頁面中新增一些進階網路診斷資訊以協助您偵錯問題。如需其他支援，請前往 www.windowsondevices.com</value>
+  </data>
+  <data name="Tutorial.GetConnected.027.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetConnected-006.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetConnected.028.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetCoding.001.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetCoding.jpg</value>
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetCoding.002.title" xml:space="preserve">
     <value>開始撰寫程式碼</value>
@@ -498,6 +552,10 @@
   <data name="Tutorial.GetCoding.009.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
+  <data name="Tutorial.GetCoding.009a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetCoding.010.h1" xml:space="preserve">
     <value>在您的電腦上設定 Visual Studio 2015</value>
   </data>
@@ -509,6 +567,14 @@
   </data>
   <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
     <value>若您計劃開發驅動程式，請安裝 WDK。</value>
+  </data>
+  <data name="Tutorial.GetCoding.016a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetCoding.019.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="NetworkConnectivityLevel_ConstrainedInternetAccess" xml:space="preserve">
     <value>受限的網際網路存取</value>
@@ -547,5 +613,106 @@
   </data>
   <data name="ProblemsInitializingGPIOPin" xml:space="preserve">
     <value>初始化 GPIO 釘選時，發生錯誤。</value>
+  </data>
+  <data name="BluetoothAttemptingToPairFormat" xml:space="preserve">
+    <value>正在嘗試與 {0} ({1}) 配對</value>
+    <comment>Format string for message displayed when pairing attempt starts</comment>
+  </data>
+  <data name="BluetoothConfirmOnlyFormat" xml:space="preserve">
+    <value>正在與 {0} ({1}) 配對</value>
+    <comment>Format string for message displayed when ConfirmOnly ceremony is invoked</comment>
+  </data>
+  <data name="BluetoothConfirmPinMatchFormat" xml:space="preserve">
+    <value>裝置上顯示的 PIN 是否符合 {0}?</value>
+    <comment>Format string for message displayed when ConfirmPinMatch ceremony is invoked</comment>
+  </data>
+  <data name="BluetoothDisplayPinFormat" xml:space="preserve">
+    <value>請在您要與其配對的裝置上輸入此 PIN: {0}</value>
+    <comment>Format string for message displayed when DisplayPin ceremony is invoked</comment>
+  </data>
+  <data name="BluetoothInboundRegistrationAlreadyDoneFormat" xml:space="preserve">
+    <value>已針對連入配對註冊，支援的模式: {0}</value>
+    <comment>Format string for message displayed when Inbound pairing handler registration already done</comment>
+  </data>
+  <data name="BluetoothInboundRegistrationFailed" xml:space="preserve">
+    <value>無法針對連入配對註冊</value>
+    <comment>Message displayed when Inbound pairing handler registration fails</comment>
+  </data>
+  <data name="BluetoothInboundRegistrationSucceededFormat" xml:space="preserve">
+    <value>已順利針對連入配對註冊，支援的模式: {0}</value>
+    <comment>Format string for message displayed when Inbound pairing handler registration succeeds</comment>
+  </data>
+  <data name="BluetoothPairingFailureFormat" xml:space="preserve">
+    <value>配對結果是 {0}: 無法與 {1} ({2}) 配對</value>
+    <comment>Format string for message displayed when pairing attempt fails</comment>
+  </data>
+  <data name="BluetoothPairingSuccessFormat" xml:space="preserve">
+    <value>已順利與 {0} ({1}) 配對</value>
+    <comment>Format string for message displayed when pairing attempt succeeds</comment>
+  </data>
+  <data name="BluetoothStartedWatching" xml:space="preserve">
+    <value>您的裝置正在搜尋藍牙裝置，而且可被其他藍牙裝置探索到</value>
+    <comment>Message display when "Start Watcher" button is pressed</comment>
+  </data>
+  <data name="BluetoothStoppedWatching" xml:space="preserve">
+    <value>停止搜尋藍牙裝置</value>
+    <comment>Message display when "Stop Watcher" button is pressed</comment>
+  </data>
+  <data name="BluetoothUnpairingFailureFormat" xml:space="preserve">
+    <value>解除配對結果是 {0}: 無法從 {1} ({2}) 解除配對</value>
+    <comment>Format string for message displayed when unpairing attempt fails</comment>
+  </data>
+  <data name="BluetoothUnpairingSuccessFormat" xml:space="preserve">
+    <value>已順利從 {0} ({1}) 解除配對</value>
+    <comment>Format string for message displayed when unpairing attempt succeeds</comment>
+  </data>
+  <data name="PinLabelTextBox.Text" xml:space="preserve">
+    <value>輸入 PIN:</value>
+    <comment>Message on flyout control for PIN entry for ProvidePin ceremony</comment>
+  </data>
+  <data name="BluetoothPairButtonContent" xml:space="preserve">
+    <value>配對</value>
+    <comment>Text displayed on the button to pair Bluetooth list item</comment>
+  </data>
+  <data name="BluetoothUnpairButtonContent" xml:space="preserve">
+    <value>解除配對</value>
+    <comment>Text displayed on the button to unpair Bluetooth list item</comment>
+  </data>
+  <data name="BluetoothDeviceStatePairedText" xml:space="preserve">
+    <value>已配對</value>
+  </data>
+  <data name="BluetoothDeviceStateReadyToPairText" xml:space="preserve">
+    <value>準備好進行配對</value>
+  </data>
+  <data name="BluetoothManageDevicesText" xml:space="preserve">
+    <value>管理藍牙裝置</value>
+  </data>
+  <data name="BluetoothWatcherToggleLabel" xml:space="preserve">
+    <value>藍牙</value>
+    <comment>Label text for Bluetooth watcher toggle switch</comment>
+  </data>
+  <data name="BluetoothNoDeviceAvailableFormat" xml:space="preserve">
+    <value>在此電腦上找不到可用的藍牙介面卡:
+{0}</value>
+    <comment>Message displayed on systems which do not have a Bluetooth adapter. The new line before {0} is deliberate and should be kept</comment>
+  </data>
+  <data name="BluetoothEnterPINText" xml:space="preserve">
+    <value>輸入 PIN:</value>
+  </data>
+  <data name="BluetoothDeviceStateUnknownText" xml:space="preserve">
+    <value>未知的狀態</value>
+  </data>
+  <data name="BluetoothInboundPairingRequestFormat" xml:space="preserve">
+    <value>連入要求: {0}
+{1}</value>
+    <comment>Format for message displayed when an inbounbd pairing request is received</comment>
+  </data>
+  <data name="EnableScreensaverText" xml:space="preserve">
+    <value>螢幕保護裝置</value>
+    <comment>Toggle switch for enabling the screensaver</comment>
+  </data>
+  <data name="NoDeviceName" xml:space="preserve">
+    <value>&lt;無裝置名稱&gt;</value>
+    <comment>This is shown when we fail to retrieve a valid device name (very strange case)</comment>
   </data>
 </root>
