@@ -8,6 +8,16 @@
     mc:Ignorable="d">
 
     <Grid Background="DarkGreen">
-        <TextBlock Text="OEM Application 2" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical">
+            <TextBlock Text="OEM Application 2" Foreground="White" FontSize="30" HorizontalAlignment="Center"/>
+            <Button HorizontalAlignment="Center" Margin="0,30,0,0" Background="Transparent" Click="Home_Click">
+                <Button.Content>
+                    <StackPanel>
+                        <Image Source="/Assets/home.png" Width="30" Height="30"/>
+                        <TextBlock Text="Home" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+        </StackPanel>
     </Grid>
 </Page>

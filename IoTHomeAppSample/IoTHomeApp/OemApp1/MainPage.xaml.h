@@ -26,5 +26,7 @@ namespace OemApp1
     {
     public:
         MainPage();
+    private:
+        void Home_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
     };
 }
