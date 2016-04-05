@@ -48,19 +48,7 @@ namespace IoTCoreDefaultApp
 
             this.NavigationCacheMode = NavigationCacheMode.Enabled;
 
-            var languageManager = LanguageManager.GetInstance();
-            languageManager.PropertyChanged += (sender, e) =>
-            {
-                // If the language manager updates the 
-                // language, the current content needs to
-                // be reloaded.
-                if (e.PropertyName == "Item[]")
-                {
-                    Dispatcher.RunAsync(CoreDispatcherPriority.Low, () => { UpdateDateTime(); });
-                }
-            };
-
-            this.DataContext = languageManager;
+            this.DataContext = LanguageManager.GetInstance();
 
             this.Loaded += (sender, e) => 
             {

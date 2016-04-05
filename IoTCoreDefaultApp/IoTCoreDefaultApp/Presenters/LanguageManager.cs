@@ -88,15 +88,22 @@ namespace IoTCoreDefaultApp
             var newLang = GetLanguageTagFromDisplayName(displayName);
             if (currentLang != newLang)
             {
-                ApplicationLanguages.PrimaryLanguageOverride = newLang;
+                // Do this twice because in Release mode, once isn't enough
+                // to change the current CultureInfo (changing the WaitOne delay
+                // doesn't help).
+                for (int i = 0; i < 2; i++)
+                {
+                    ApplicationLanguages.PrimaryLanguageOverride = newLang;
 
-                // Refresh the resources in new language
-                ResourceContext.GetForCurrentView().Reset();
+                    // Refresh the resources in new language
+                    ResourceContext.GetForCurrentView().Reset();
+                    ResourceContext.GetForViewIndependentUse().Reset();
 
-                // Where seems to be some delay between when this is reset and when
-                // we can start re-evaluating the resources.  Without a pause, sometimes
-                // the first resource remains the previous language.
-                new System.Threading.ManualResetEvent(false).WaitOne(100);
+                    // Where seems to be some delay between when this is reset and when
+                    // we can start re-evaluating the resources.  Without a pause, sometimes
+                    // the first resource remains the previous language.
+                    new System.Threading.ManualResetEvent(false).WaitOne(100);
+                }
 
                 OnPropertyChanged("Item[]");
                 return true;
