@@ -43,59 +43,7 @@ App::App()
 /// <param name="e">Details about the launch request and process.</param>
 void App::OnLaunched(LaunchActivatedEventArgs^ e)
 {
-
-#if _DEBUG
-    // Show graphics profiling information while debugging.
-    if (IsDebuggerPresent())
-    {
-        // Display the current frame rate counters
-        DebugSettings->EnableFrameRateCounter = true;
-    }
-#endif
-
-    auto rootFrame = dynamic_cast<Frame^>(Window::Current->Content);
-
-    // Do not repeat app initialization when the Window already has content,
-    // just ensure that the window is active
-    if (rootFrame == nullptr)
-    {
-        // Create a Frame to act as the navigation context and associate it with
-        // a SuspensionManager key
-        rootFrame = ref new Frame();
-
-        rootFrame->NavigationFailed += ref new NavigationFailedEventHandler(this, &App::OnNavigationFailed);
-
-        if (e->PreviousExecutionState == ApplicationExecutionState::Terminated)
-        {
-            // TODO: Restore the saved session state only when appropriate, scheduling the
-            // final launch steps after the restore is complete
-
-        }
-
-        if (rootFrame->Content == nullptr)
-        {
-            // When the navigation stack isn't restored navigate to the first page,
-            // configuring the new page by passing required information as a navigation
-            // parameter
-            rootFrame->Navigate(TypeName(MainPage::typeid), e->Arguments);
-        }
-        // Place the frame in the current Window
-        Window::Current->Content = rootFrame;
-        // Ensure the current window is active
-        Window::Current->Activate();
-    }
-    else
-    {
-        if (rootFrame->Content == nullptr)
-        {
-            // When the navigation stack isn't restored navigate to the first page,
-            // configuring the new page by passing required information as a navigation
-            // parameter
-            rootFrame->Navigate(TypeName(MainPage::typeid), e->Arguments);
-        }
-        // Ensure the current window is active
-        Window::Current->Activate();
-    }
+    return OnActivated(e);
 }
 
 /// <summary>
@@ -129,6 +77,15 @@ void App::OnNavigationFailed(Object ^sender, NavigationFailedEventArgs ^e)
 /// <param name="args">Event data for the event.</param>
 void App::OnActivated(IActivatedEventArgs^ args)
 {
+#if _DEBUG
+    // Show graphics profiling information while debugging.
+    if (IsDebuggerPresent())
+    {
+        // Display the current frame rate counters
+        DebugSettings->EnableFrameRateCounter = true;
+    }
+#endif
+
     auto rootFrame = dynamic_cast<Frame^>(Window::Current->Content);
 
     // Do not repeat app initialization when the Window already has content,

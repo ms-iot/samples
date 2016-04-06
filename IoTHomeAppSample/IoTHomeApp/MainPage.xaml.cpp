@@ -46,7 +46,7 @@ void MainPage::OemApp2_Click(Platform::Object^ sender, Windows::UI::Xaml::Routed
 {
     //Launches the app that has registered as a protocol handler for 'oemapp2' protocol
     //More information about the api can be found at:
-    //https://msdn.microsoft.com/en-us/library/windows/apps/hh701484.aspx
+    //https://msdn.microsoft.com/en-us/library/windows/apps/hh701480.aspx
 
     Launcher::LaunchUriAsync(ref new Uri("oemapp2:"));
 }

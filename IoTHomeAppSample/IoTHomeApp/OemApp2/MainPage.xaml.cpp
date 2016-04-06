@@ -17,8 +17,19 @@
 #include "MainPage.xaml.h"
 
 using namespace OemApp2;
+using namespace Windows::Foundation;
+using namespace Windows::System;
 
 MainPage::MainPage()
 {
     InitializeComponent();
+}
+
+void MainPage::Home_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+    //Launches the app that has registered as a protocol handler for 'oemhomeapp' protocol
+    //More information about the api can be found at:
+    //https://msdn.microsoft.com/en-us/library/windows/apps/hh701480.aspx
+
+    Launcher::LaunchUriAsync(ref new Uri("oemhomeapp:"));
 }
