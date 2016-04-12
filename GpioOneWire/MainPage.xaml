@@ -10,7 +10,7 @@
     Loaded="Page_Loaded">
 
     <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBlock x:Name="titleText" FontSize="48" TextWrapping="Wrap" TextAlignment="Center">Gpio OneWire Demo (DHT11 Sensor)</TextBlock>
+        <TextBlock x:Name="titleText" FontSize="48" TextWrapping="Wrap" TextAlignment="Center">DHT22/11 Demo</TextBlock>
         <TextBlock x:Name="pullResistorText" FontSize="22" Foreground="#777777" TextWrapping="Wrap" TextAlignment="Center" />
         <TextBlock x:Name="humidityText" FontSize="26" Foreground="#0066bb" TextWrapping="Wrap" TextAlignment="Center">Humidity: Not Initialized</TextBlock>
         <TextBlock x:Name="temperatureText"  FontSize="26" Foreground="#0066bb" TextWrapping="Wrap" TextAlignment="Center">Temperature: Not Initialized</TextBlock>
