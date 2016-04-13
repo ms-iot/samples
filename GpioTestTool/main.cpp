@@ -99,6 +99,28 @@ ComPtr<IGpioPin> MakePin (int PinNumber)
     ComPtr<IGpioPin> pin;
     HRESULT hr = controller->OpenPin(PinNumber, pin.GetAddressOf());
     if (FAILED(hr)) {
+        switch (hr) {
+        case E_INVALIDARG:
+            throw wexception(
+                L"The pin could not be opened because the pin number is invalid "
+                L"or an invalid parameter was specified to OpenPin(). "
+                L"Run 'GpioTestTool -list' to see the list of available pins.");
+        case __HRESULT_FROM_WIN32(ERROR_SHARING_VIOLATION):
+            throw wexception(
+                L"The pin could not be opened due to a sharing violation. "
+                L"Ensure the pin is not already in use.");
+        case __HRESULT_FROM_WIN32(ERROR_NOT_FOUND):
+            throw wexception(
+                L"The pin could not be opened because it is not accessible to "
+                L"usermode applications. Run 'GpioTestTool -list' to see the list "
+                L"of available pins.");
+        case __HRESULT_FROM_WIN32(ERROR_GPIO_INCOMPATIBLE_CONNECT_MODE):
+            throw wexception(
+                L"The pin could not be opened because it is currently muxed "
+                L"to a different function (e.g. I2C/SPI/UART). Ensure this pin "
+                L"is not in use by another function.");
+        }
+
         throw wexception(L"Failed to open pin. (hr = 0x%x)", hr);
     }
 
@@ -128,6 +150,11 @@ void ListPins ()
             break;
         case __HRESULT_FROM_WIN32(ERROR_NOT_FOUND):
             // pin is not available to applications; don't print anything
+            break;
+        case __HRESULT_FROM_WIN32(ERROR_GPIO_INCOMPATIBLE_CONNECT_MODE):
+            wprintf(
+                L"  Pin %d is currently muxed to a different function\n",
+                pinNumber);
             break;
         default:
             wprintf(
