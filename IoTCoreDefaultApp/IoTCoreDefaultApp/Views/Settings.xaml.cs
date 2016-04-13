@@ -74,11 +74,11 @@ namespace IoTCoreDefaultApp
         {
             languageManager = LanguageManager.GetInstance();
 
-            LanguageListBox.ItemsSource = languageManager.LanguageDisplayNames;
-            LanguageListBox.SelectedItem = LanguageManager.GetCurrentLanguageDisplayName();
+            LanguageComboBox.ItemsSource = languageManager.LanguageDisplayNames;
+            LanguageComboBox.SelectedItem = LanguageManager.GetCurrentLanguageDisplayName();
 
-            InputLanguageListBox.ItemsSource = languageManager.InputLanguageDisplayNames;
-            InputLanguageListBox.SelectedItem = LanguageManager.GetCurrentInputLanguageDisplayName();
+            InputLanguageComboBox.ItemsSource = languageManager.InputLanguageDisplayNames;
+            InputLanguageComboBox.SelectedItem = LanguageManager.GetCurrentInputLanguageDisplayName();
         }
 
         private void SetupNetwork()
@@ -193,26 +193,26 @@ namespace IoTCoreDefaultApp
             NavigationUtils.GoBack();
         }
 
-        private void LanguageListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void LanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var listBox = sender as ListBox;
-            if (listBox.SelectedItem == null)
+            var comboBox = sender as ComboBox;
+            if (comboBox.SelectedItem == null)
             {
                 return;
             }
 
-            languageManager.UpdateLanguage(listBox.SelectedItem as string);
+            languageManager.UpdateLanguage(comboBox.SelectedItem as string);
         }
 
-        private void InputLanguageListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void InputLanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var listBox = sender as ListBox;
-            if (listBox.SelectedItem == null)
+            var comboBox = sender as ComboBox;
+            if (comboBox.SelectedItem == null)
             {
                 return;
             }
 
-            languageManager.UpdateInputLanguage(listBox.SelectedItem as string);
+            languageManager.UpdateInputLanguage(comboBox.SelectedItem as string);
         }
 
         private void SetupEthernet()
