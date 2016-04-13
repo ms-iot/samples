@@ -280,12 +280,12 @@
                             </Border>
                             <TextBlock x:Uid="BluetoothDevices" Text="{Binding [BluetoothManageDevicesText]}"  Style="{StaticResource SubtitleTextBlockStyle}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" Height="64" VerticalAlignment="Top" Margin="12,0,0,0">
+                        <StackPanel Orientation="Horizontal" Height="64" VerticalAlignment="Bottom" Margin="24,0,0,0">
                             <ToggleSwitch x:Name="BluetoothWatcherToggle" Header="{Binding [BluetoothWatcherToggleLabel]}" Style="{StaticResource IoTCoreDefaultAppToggleStyle}"  Toggled="BluetoothWatcherToggle_Toggled" IsEnabled="False" />
                         </StackPanel>
-                        <StackPanel x:Name="confirmationPanel"  Orientation="Horizontal"  Height="88" HorizontalAlignment="Stretch">
+                        <StackPanel x:Name="confirmationPanel"  Orientation="Horizontal"  Height="88" HorizontalAlignment="Stretch"  Margin="24,0,0,0">
                             <RelativePanel>
-                                <TextBlock x:Name="confirmationText" Width="380" TextAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,2" Text="" TextWrapping="WrapWholeWords" RelativePanel.AlignLeftWithPanel="True" />
+                                <TextBlock x:Name="confirmationText" Width="380" TextAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,2" Text="" TextWrapping="WrapWholeWords" RelativePanel.AlignLeftWithPanel="True" />
                                 <Button x:Name="yesButton" Margin="0,0,5,10" Click="YesButton_Click" Width="44" RelativePanel.RightOf="confirmationText" >Yes</Button>
                                 <Button x:Name="noButton" Margin="0,0,5,10" Click="NoButton_Click" Width="44" RelativePanel.RightOf="confirmationText" RelativePanel.Below="yesButton" >No</Button>
                             </RelativePanel>
