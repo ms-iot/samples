@@ -1,0 +1,340 @@
+diff -rupN ./libraries/Ethernet/src/Ethernet.cpp ./arduino-1.5.8/libraries/Ethernet/src/Ethernet.cpp
+--- ./libraries/Ethernet/src/Ethernet.cpp	2014-10-01 20:45:35.000000000 +0530
++++ ./arduino-1.5.8/libraries/Ethernet/src/Ethernet.cpp	2015-02-05 15:51:09.000000000 +0530
+@@ -7,10 +7,10 @@ uint8_t EthernetClass::_state[MAX_SOCK_N
+   0, 0, 0, 0 };
+ uint16_t EthernetClass::_server_port[MAX_SOCK_NUM] = { 
+   0, 0, 0, 0 };
++static DhcpClass s_dhcp;
+ 
+ int EthernetClass::begin(uint8_t *mac_address)
+ {
+-  static DhcpClass s_dhcp;
+   _dhcp = &s_dhcp;
+ 
+ 
+diff -rupN ./libraries/Ethernet/src/utility/socket.cpp ./arduino-1.5.8/libraries/Ethernet/src/utility/socket.cpp
+--- ./libraries/Ethernet/src/utility/socket.cpp	2014-10-01 20:45:35.000000000 +0530
++++ ./arduino-1.5.8/libraries/Ethernet/src/utility/socket.cpp	2015-02-05 15:55:18.000000000 +0530
+@@ -295,6 +295,7 @@ uint16_t recvfrom(SOCKET s, uint8_t *buf
+ {
+   uint8_t head[8];
+   uint16_t data_len=0;
++  uint16_t data_copied=0;
+   uint16_t ptr=0;
+ 
+   if ( len > 0 )
+@@ -316,10 +317,6 @@ uint16_t recvfrom(SOCKET s, uint8_t *buf
+       data_len = head[6];
+       data_len = (data_len << 8) + head[7];
+ 
+-      W5100.read_data(s, ptr, buf, data_len); // data copy.
+-      ptr += data_len;
+-
+-      W5100.writeSnRX_RD(s, ptr);
+       break;
+ 
+     case SnMR::IPRAW :
+@@ -332,11 +329,6 @@ uint16_t recvfrom(SOCKET s, uint8_t *buf
+       addr[3] = head[3];
+       data_len = head[4];
+       data_len = (data_len << 8) + head[5];
+-
+-      W5100.read_data(s, ptr, buf, data_len); // data copy.
+-      ptr += data_len;
+-
+-      W5100.writeSnRX_RD(s, ptr);
+       break;
+ 
+     case SnMR::MACRAW:
+@@ -344,19 +336,22 @@ uint16_t recvfrom(SOCKET s, uint8_t *buf
+       ptr+=2;
+       data_len = head[0];
+       data_len = (data_len<<8) + head[1] - 2;
+-
+-      W5100.read_data(s, ptr, buf, data_len);
+-      ptr += data_len;
+-      W5100.writeSnRX_RD(s, ptr);
+       break;
+ 
+     default :
+       break;
+     }
++	
++	if (data_len > 0)
++	{
++	    data_copied = (data_len <= len) ? data_len : len;// only copy the len bytes, rest of is discarded.
++		W5100.read_data(s, ptr, buf, data_copied); // data copy.
++		ptr += data_len;
++		W5100.writeSnRX_RD(s, ptr);
++	}
+     W5100.execCmdSn(s, Sock_RECV);
+-    SPI.endTransaction();
+   }
+-  return data_len;
++  return data_copied;
+ }
+ 
+ /**
+diff -rupN ./libraries/Time/Time/DateStrings.cpp ./arduino-1.5.8/libraries/Time/Time/DateStrings.cpp
+--- ./libraries/Time/Time/DateStrings.cpp	2010-03-06 11:09:22.000000000 +0530
++++ ./arduino-1.5.8/libraries/Time/Time/DateStrings.cpp	2015-02-05 16:35:01.000000000 +0530
+@@ -6,8 +6,18 @@
+  * the long strings can be any length up to the constant dt_MAX_STRING_LEN defined in Time.h
+  * 
+  */
+- 
+-#include <avr/pgmspace.h> 
++
++#if defined(__AVR__)
++#include <avr/pgmspace.h>
++#else
++// for compatiblity with Arduino Due and Teensy 3.0 and maybe others?
++#define PROGMEM
++#define PGM_P  const char *
++#define pgm_read_byte(addr) (*(const unsigned char *)(addr))
++#define pgm_read_word(addr) (*(const unsigned char **)(addr))
++#define strcpy_P(dest, src) strcpy((dest), (src))
++#endif
++#include <string.h> // for strcpy_P or strcpy
+ #include "Time.h"
+  
+ // the short strings for each day or month must be exactly dt_SHORT_STR_LEN
+@@ -15,38 +25,38 @@
+ 
+ static char buffer[dt_MAX_STRING_LEN+1];  // must be big enough for longest string and the terminating null
+ 
+-char monthStr1[] PROGMEM = "January";
+-char monthStr2[] PROGMEM = "February";
+-char monthStr3[] PROGMEM = "March";
+-char monthStr4[] PROGMEM = "April";
+-char monthStr5[] PROGMEM = "May";
+-char monthStr6[] PROGMEM = "June";
+-char monthStr7[] PROGMEM = "July";
+-char monthStr8[] PROGMEM = "August";
+-char monthStr9[] PROGMEM = "September";
+-char monthStr10[] PROGMEM = "October";
+-char monthStr11[] PROGMEM = "November";
+-char monthStr12[] PROGMEM = "December";
++const char monthStr1[] PROGMEM = "January";
++const char monthStr2[] PROGMEM = "February";
++const char monthStr3[] PROGMEM = "March";
++const char monthStr4[] PROGMEM = "April";
++const char monthStr5[] PROGMEM = "May";
++const char monthStr6[] PROGMEM = "June";
++const char monthStr7[] PROGMEM = "July";
++const char monthStr8[] PROGMEM = "August";
++const char monthStr9[] PROGMEM = "September";
++const char monthStr10[] PROGMEM = "October";
++const char monthStr11[] PROGMEM = "November";
++const char monthStr12[] PROGMEM = "December";
+ 
+-PGM_P monthNames_P[] PROGMEM = 
++PGM_P const monthNames_P[] PROGMEM = 
+ {
+     "",monthStr1,monthStr2,monthStr3,monthStr4,monthStr5,monthStr6,
+ 	monthStr7,monthStr8,monthStr9,monthStr10,monthStr11,monthStr12
+ };
+ 
+-char monthShortNames_P[] PROGMEM = "ErrJanFebMarAprMayJunJulAugSepOctNovDec";
++const char monthShortNames_P[] PROGMEM = "ErrJanFebMarAprMayJunJulAugSepOctNovDec";
+ 
+-char dayStr0[] PROGMEM = "Err";
+-char dayStr1[] PROGMEM = "Sunday";
+-char dayStr2[] PROGMEM = "Monday";
+-char dayStr3[] PROGMEM = "Tuesday";
+-char dayStr4[] PROGMEM = "Wednesday";
+-char dayStr5[] PROGMEM = "Thursday";
+-char dayStr6[] PROGMEM = "Friday";
+-char dayStr7[] PROGMEM = "Saturday";
++const char dayStr0[] PROGMEM = "Err";
++const char dayStr1[] PROGMEM = "Sunday";
++const char dayStr2[] PROGMEM = "Monday";
++const char dayStr3[] PROGMEM = "Tuesday";
++const char dayStr4[] PROGMEM = "Wednesday";
++const char dayStr5[] PROGMEM = "Thursday";
++const char dayStr6[] PROGMEM = "Friday";
++const char dayStr7[] PROGMEM = "Saturday";
+ 
+-PGM_P dayNames_P[] PROGMEM = { dayStr0,dayStr1,dayStr2,dayStr3,dayStr4,dayStr5,dayStr6,dayStr7};
+-char dayShortNames_P[] PROGMEM = "ErrSunMonTueWedThrFriSat";
++PGM_P const dayNames_P[] PROGMEM = { dayStr0,dayStr1,dayStr2,dayStr3,dayStr4,dayStr5,dayStr6,dayStr7};
++const char dayShortNames_P[] PROGMEM = "ErrSunMonTueWedThrFriSat";
+ 
+ /* functions to return date strings */
+ 
+diff -rupN ./libraries/Time/Time/keywords.txt ./arduino-1.5.8/libraries/Time/Time/keywords.txt
+--- ./libraries/Time/Time/keywords.txt	2010-01-05 12:02:50.000000000 +0530
++++ ./arduino-1.5.8/libraries/Time/Time/keywords.txt	2015-02-05 16:35:47.000000000 +0530
+@@ -22,7 +22,7 @@ weekday KEYWORD2
+ setTime KEYWORD2
+ adjustTime KEYWORD2
+ setSyncProvider KEYWORD2
+-setSyncInteval KEYWORD2
++setSyncInterval KEYWORD2
+ timeStatus KEYWORD2
+ #######################################
+ # Instances (KEYWORD2)
+diff -rupN ./libraries/Time/Time/Time.cpp ./arduino-1.5.8/libraries/Time/Time/Time.cpp
+--- ./libraries/Time/Time/Time.cpp	2010-11-01 18:02:50.000000000 +0530
++++ ./arduino-1.5.8/libraries/Time/Time/Time.cpp	2015-02-05 16:32:08.000000000 +0530
+@@ -31,7 +31,7 @@
+ 
+ static tmElements_t tm;          // a cache of time elements
+ static time_t       cacheTime;   // the time the cache was updated
+-static time_t       syncInterval = 300;  // time sync will be attempted after this many seconds
++static uint32_t     syncInterval = 300;  // time sync will be attempted after this many seconds
+ 
+ void refreshCache( time_t t){
+   if( t != cacheTime)
+@@ -143,15 +143,17 @@ int year(time_t t) { // the year for the
+ 
+ static  const uint8_t monthDays[]={31,28,31,30,31,30,31,31,30,31,30,31}; // API starts months from 1, this array starts from 0
+  
+-void breakTime(time_t time, tmElements_t &tm){
++void breakTime(time_t timeInput, tmElements_t &tm){
+ // break the given time_t into time components
+ // this is a more compact version of the C library localtime function
+ // note that year is offset from 1970 !!!
+ 
+   uint8_t year;
+   uint8_t month, monthLength;
++  uint32_t time;
+   unsigned long days;
+-  
++
++  time = (uint32_t)timeInput;
+   tm.Second = time % 60;
+   time /= 60; // now it is minutes
+   tm.Minute = time % 60;
+@@ -200,7 +202,7 @@ time_t makeTime(tmElements_t &tm){
+ // previous version used full four digit year (or digits since 2000),i.e. 2009 was 2009 or 9
+   
+   int i;
+-  time_t seconds;
++  uint32_t seconds;
+ 
+   // seconds from 1970 till 1 jan 00:00:00 of the given year
+   seconds= tm.Year*(SECS_PER_DAY * 365);
+@@ -222,14 +224,14 @@ time_t makeTime(tmElements_t &tm){
+   seconds+= tm.Hour * SECS_PER_HOUR;
+   seconds+= tm.Minute * SECS_PER_MIN;
+   seconds+= tm.Second;
+-  return seconds; 
++  return (time_t)seconds; 
+ }
+ /*=====================================================*/	
+ /* Low level system time functions  */
+ 
+-static time_t sysTime = 0;
+-static time_t prevMillis = 0;
+-static time_t nextSyncTime = 0;
++static uint32_t sysTime = 0;
++static uint32_t prevMillis = 0;
++static uint32_t nextSyncTime = 0;
+ static timeStatus_t Status = timeNotSet;
+ 
+ getExternalTime getTimePtr;  // pointer to external sync function
+@@ -251,13 +253,15 @@ time_t now(){
+   if(nextSyncTime <= sysTime){
+ 	if(getTimePtr != 0){
+ 	  time_t t = getTimePtr();
+-      if( t != 0)
++      if( t != 0) {
+         setTime(t);
+-      else
++      } else {
++        nextSyncTime = sysTime + syncInterval;
+         Status = (Status == timeNotSet) ?  timeNotSet : timeNeedsSync;        
++      }
+     }
+   }  
+-  return sysTime;
++  return (time_t)sysTime;
+ }
+ 
+ void setTime(time_t t){ 
+@@ -266,9 +270,9 @@ void setTime(time_t t){
+    sysUnsyncedTime = t;   // store the time of the first call to set a valid Time   
+ #endif
+ 
+-  sysTime = t;  
+-  nextSyncTime = t + syncInterval;
+-  Status = timeSet; 
++  sysTime = (uint32_t)t;  
++  nextSyncTime = (uint32_t)t + syncInterval;
++  Status = timeSet;
+   prevMillis = millis();  // restart counting from now (thanks to Korman for this fix)
+ } 
+ 
+@@ -293,6 +297,7 @@ void adjustTime(long adjustment){
+ }
+ 
+ timeStatus_t timeStatus(){ // indicates if time has been set and recently synchronized
++  now(); // required to actually update the status
+   return Status;
+ }
+ 
+@@ -303,5 +308,6 @@ void setSyncProvider( getExternalTime ge
+ }
+ 
+ void setSyncInterval(time_t interval){ // set the number of seconds between re-sync
+-  syncInterval = interval;
++  syncInterval = (uint32_t)interval;
++  nextSyncTime = sysTime + syncInterval;
+ }
+\ No newline at end of file
+diff -rupN ./libraries/Time/Time/Time.h ./arduino-1.5.8/libraries/Time/Time/Time.h
+--- ./libraries/Time/Time/Time.h	2011-07-22 17:30:06.000000000 +0530
++++ ./arduino-1.5.8/libraries/Time/Time/Time.h	2015-02-05 16:22:27.000000000 +0530
+@@ -8,12 +8,29 @@
+ */     
+ 
+ #ifndef _Time_h
++#ifdef __cplusplus
+ #define _Time_h
+ 
+ #include <inttypes.h>
++#ifndef __AVR__
++#include <sys/types.h> // for __time_t_defined, but avr libc lacks sys/types.h
++#endif
+ 
++
++#if !defined(__time_t_defined) // avoid conflict with newlib or other posix libc
+ typedef unsigned long time_t;
++#endif
++
+ 
++// This ugly hack allows us to define C++ overloaded functions, when included
++// from within an extern "C", as newlib's sys/stat.h does.  Actually it is
++// intended to include "time.h" from the C library (on ARM, but AVR does not
++// have that file at all).  On Mac and Windows, the compiler will find this
++// "Time.h" instead of the C library "time.h", so we may cause other weird
++// and unpredictable effects by conflicting with the C library header "time.h",
++// but at least this hack lets us define C++ functions as intended.  Hopefully
++// nothing too terrible will result from overriding the C library header?!
++extern "C++" {
+ typedef enum {timeNotSet, timeNeedsSync, timeSet
+ }  timeStatus_t ;
+ 
+@@ -100,7 +117,11 @@ int     month(time_t t);   // the month
+ int     year();            // the full four digit year: (2009, 2010 etc) 
+ int     year(time_t t);    // the year for the given time
+ 
++extern "C"
++{
+ time_t now();              // return the current time as seconds since Jan 1 1970 
++}
++
+ void    setTime(time_t t);
+ void    setTime(int hr,int min,int sec,int day, int month, int yr);
+ void    adjustTime(long adjustment);
+@@ -121,6 +142,7 @@ void    setSyncInterval(time_t interval)
+ void breakTime(time_t time, tmElements_t &tm);  // break time_t into elements
+ time_t makeTime(tmElements_t &tm);  // convert time elements into time_t
+ 
+-
++} // extern "C++"
++#endif // __cplusplus
+ #endif /* _Time_h */
+ 

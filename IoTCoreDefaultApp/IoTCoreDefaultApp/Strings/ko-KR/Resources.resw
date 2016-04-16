@@ -126,7 +126,7 @@
     <comment>A generic board name</comment>
   </data>
   <data name="MainPageDeviceNameText" xml:space="preserve">
-    <value>장치 이름</value>
+    <value>디바이스 이름</value>
     <comment>Field label</comment>
   </data>
   <data name="MainPageNetworkText" xml:space="preserve">
@@ -192,6 +192,10 @@
     <value>Raspberry Pi 2</value>
     <comment>Board name</comment>
   </data>
+  <data name="Rpi3Name" xml:space="preserve">
+    <value>Raspberry Pi 3</value>
+    <comment>Board name</comment>
+  </data>
   <data name="DB410Name" xml:space="preserve">
     <value>DragonBoard 410c</value>
     <comment>Board name</comment>
@@ -211,6 +215,10 @@
     <value>개발을 시작하려면</value>
     <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
   </data>
+  <data name="WindowsOnDevicesUrlText" xml:space="preserve">
+    <value> www.windowsondevices.com을</value>
+    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
+  </data>
   <data name="KeyboardTitleText" xml:space="preserve">
     <value>키보드 레이아웃</value>
     <comment>Field label</comment>
@@ -225,24 +233,28 @@
   <data name="NetworkPreferencesText" xml:space="preserve">
     <value>네트워크 및 Wi-Fi</value>
   </data>
+  <data name="BluetoothPreferencesText" xml:space="preserve">
+    <value>Bluetooth</value>
+    <comment>Label for Setting item tp control Bluetooth pairing</comment>
+  </data>
   <data name="SettingsPreferencesText" xml:space="preserve">
     <value>기본 설정</value>
   </data>
   <data name="SettingsTitleText" xml:space="preserve">
-    <value>장치 설정</value>
+    <value>디바이스 설정</value>
   </data>
   <data name="TimeZoneTitleText" xml:space="preserve">
     <value>표준 시간대</value>
   </data>
   <data name="DeviceInfoText" xml:space="preserve">
-    <value>장치 정보</value>
+    <value>디바이스 정보</value>
   </data>
   <data name="TutorialsText" xml:space="preserve">
     <value>자습서</value>
     <comment>Text under the Tutorials button on the top bar</comment>
   </data>
   <data name="ConnectedDevicesText" xml:space="preserve">
-    <value>연결된 장치</value>
+    <value>연결된 디바이스</value>
   </data>
   <data name="Ipv4Text" xml:space="preserve">
     <value>IPv4</value>
@@ -272,7 +284,7 @@
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialGetConnectedDescriptionText" xml:space="preserve">
-    <value>인터넷 및 PC에 장치 연결</value>
+    <value>인터넷 및 PC에 디바이스 연결</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialGetConnectedTitleText" xml:space="preserve">
@@ -280,7 +292,7 @@
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialGetStartedDescriptionText" xml:space="preserve">
-    <value> Windows 10 IoT Core 소개</value>
+    <value>Windows 10 IoT Core 소개</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialGetStartedTitleText" xml:space="preserve">
@@ -292,7 +304,7 @@
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialHelloBlinkyDescriptionText" xml:space="preserve">
-    <value>장치에서 LED 켜기/끄기</value>
+    <value>디바이스에서 LED 켜기/끄기</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialHelloBlinkyTitleText" xml:space="preserve">
@@ -306,16 +318,22 @@
     <value>보드에서 가장 기본적인 첫 번째 항목은 깜박임입니다.</value>
   </data>
   <data name="TutorialBlinkyBody2Text" xml:space="preserve">
-    <value>"시작" 섹션에서 설명한 대로 이 오픈 소스의 모든 소스 코드는 www. windowsondevices.com(IoTCoreDefaultApp 검색)에서 사용할 수 있습니다.</value>
+    <value>"시작하기" 섹션에서 설명한 대로 이 오픈 소스의 모든 소스 코드는 www. windowsondevices.com(IoTCoreDefaultApp 검색)에서 사용할 수 있습니다.</value>
   </data>
   <data name="TutorialBlinkyBody3Text" xml:space="preserve">
     <value>설정은 필요하지 않습니다. [시작]을 누르기만 하세요.</value>
   </data>
   <data name="TutorialBlinkyBody4Text" xml:space="preserve">
-    <value>깜박임의 빈도를 변경할 수도 있습니다. 언제든지 친구들을 초대하여 장치 주변에서 댄스 파티를 열 수도 있습니다.</value>
+    <value>깜박임의 빈도를 변경할 수도 있습니다. 언제든지 친구들을 초대하여 디바이스 주변에서 댄스 파티를 열 수도 있습니다.</value>
   </data>
   <data name="TutorialBlinkyBody5Text" xml:space="preserve">
     <value>통지 사항: 보드의 깜박이는 작은 LED를 이용해 대규모 파티를 주최하여 발생할 수 있는 모든 손상에 대해 Microsoft는 책임을 지지 않습니다.</value>
+  </data>
+  <data name="TutorialBlinkyBody6Text_Rpi3" xml:space="preserve">
+    <value>Raspberry Pi 3의 경우 LED를 GPIO 핀 5에 연결하세요.</value>
+  </data>
+  <data name="TutorialBlinkyBody6Text_Dragonboard" xml:space="preserve">
+    <value>DragonBoard 410c의 경우 LED를 GPIO 핀 115에 연결하세요.</value>
   </data>
   <data name="TutorialBlinkyTitle1Text" xml:space="preserve">
     <value>Hello Blinky</value>
@@ -380,6 +398,10 @@
   <data name="Tutorial.GetStarted.014.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
+  <data name="Tutorial.GetStarted.014a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetStarted.015.p" xml:space="preserve">
     <value>자세한 내용을 보려면 [코딩] 자습서를 클릭하세요.</value>
   </data>
@@ -397,6 +419,10 @@
   </data>
   <data name="Tutorial.GetStarted.020.p" xml:space="preserve">
     <value>응용프로그램을 직접 빌드할 때 언제든지 이 응용프로그램을 템플릿으로 사용하여 시작하세요.</value>
+  </data>
+  <data name="Tutorial.GetStarted.021.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.001.620x400.image" xml:space="preserve">
     <value>Assets/Tutorials/GetConnected-{0}.jpg</value>
@@ -426,6 +452,10 @@
   <data name="Tutorial.GetConnected.009.p" xml:space="preserve">
     <value>USB Wi-Fi 어댑터가 있으면 연결하세요.</value>
   </data>
+  <data name="Tutorial.GetConnected.010.620x350.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetConnected-004.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.011.p" xml:space="preserve">
     <value>화면의 오른쪽 위에 "설정 기어"가 있습니다. 기어를 클릭하고 [네트워크 및 Wi-Fi]로 이동하세요. 여기에서 로컬 네트워크에 연결할 수 있습니다.</value>
   </data>
@@ -437,6 +467,10 @@
   </data>
   <data name="Tutorial.GetConnected.015.ul" xml:space="preserve">
     <value>개발 컴퓨터를 IoT Core 장치에 연결하는 이더넷 케이블</value>
+  </data>
+  <data name="Tutorial.GetConnected.015a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.016.p" xml:space="preserve">
     <value>아래의 지침에 따라 PC에서 ICS(인터넷 연결 공유)를 사용하도록 설정합니다.</value>
@@ -456,6 +490,10 @@
   <data name="Tutorial.GetConnected.021.ul" xml:space="preserve">
     <value>[공유] 탭을 클릭하고 [다른 네트워크 사용자가 이 컴퓨터의 인터넷 연결을 통해 연결할 수 있도록 허용] 확인란을 선택합니다.</value>
   </data>
+  <data name="Tutorial.GetConnected.021a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.022.p" xml:space="preserve">
     <value>PC에서 ICS를 사용하도록 설정했으면 이제 Windows 10 IoT Core 장치를 PC에 직접 연결할 수 있습니다. 이렇게 하려면 예비 이더넷 케이블의 한쪽 끝을 PC의 추가 이더넷 포트에 연결하고 케이블의 다른 쪽 끝을 IoT Core 장치의 이더넷 포트에 연결하면 됩니다.</value>
   </data>
@@ -465,11 +503,27 @@
   <data name="Tutorial.GetConnected.024.ul" xml:space="preserve">
     <value>네트워크 연결이 하나만 있는 경우에는 [공유] 탭을 사용할 수 없습니다.</value>
   </data>
+  <data name="Tutorial.GetConnected.024a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.025.h1" xml:space="preserve">
     <value>문제가 발생하는 경우</value>
   </data>
   <data name="Tutorial.GetConnected.026.p" xml:space="preserve">
     <value>문제를 디버그하는 데 도움을 주기 위해 몇 가지 고급 네트워크 진단 기능을 주 페이지에 추가했습니다. 지원이 더 필요하면 www.windowsondevices.com으로 이동하세요.</value>
+  </data>
+  <data name="Tutorial.GetConnected.027.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetConnected-006.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetConnected.028.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetCoding.001.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetCoding.jpg</value>
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetCoding.002.title" xml:space="preserve">
     <value>코딩</value>
@@ -495,6 +549,10 @@
   <data name="Tutorial.GetCoding.009.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
+  <data name="Tutorial.GetCoding.009a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetCoding.010.h1" xml:space="preserve">
     <value>PC에서 Visual Studio 2015 설정</value>
   </data>
@@ -506,6 +564,14 @@
   </data>
   <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
     <value>드라이버를 개발할 계획인 경우 WDK를 설치합니다.</value>
+  </data>
+  <data name="Tutorial.GetCoding.016a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetCoding.019.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="NetworkConnectivityLevel_ConstrainedInternetAccess" xml:space="preserve">
     <value>제한된 인터넷 액세스</value>
@@ -544,5 +610,106 @@
   </data>
   <data name="ProblemsInitializingGPIOPin" xml:space="preserve">
     <value>GPIO 핀을 초기화하는 데 문제가 있습니다.</value>
+  </data>
+  <data name="BluetoothAttemptingToPairFormat" xml:space="preserve">
+    <value>{0}({1})과(와) 연결하려는 중</value>
+    <comment>Format string for message displayed when pairing attempt starts</comment>
+  </data>
+  <data name="BluetoothConfirmOnlyFormat" xml:space="preserve">
+    <value>{0}({1})과(와) 연결하는 중</value>
+    <comment>Format string for message displayed when ConfirmOnly ceremony is invoked</comment>
+  </data>
+  <data name="BluetoothConfirmPinMatchFormat" xml:space="preserve">
+    <value>디바이스에 표시된 PIN이 {0}과(와) 일치하나요?</value>
+    <comment>Format string for message displayed when ConfirmPinMatch ceremony is invoked</comment>
+  </data>
+  <data name="BluetoothDisplayPinFormat" xml:space="preserve">
+    <value>연결할 디바이스에서 이 PIN을 입력하세요. {0}</value>
+    <comment>Format string for message displayed when DisplayPin ceremony is invoked</comment>
+  </data>
+  <data name="BluetoothInboundRegistrationAlreadyDoneFormat" xml:space="preserve">
+    <value>인바운드 페어링에 대해 이미 등록되었습니다. 지원되는 양식: {0}</value>
+    <comment>Format string for message displayed when Inbound pairing handler registration already done</comment>
+  </data>
+  <data name="BluetoothInboundRegistrationFailed" xml:space="preserve">
+    <value>인바운드 페어링에 대해 등록하지 못했습니다.</value>
+    <comment>Message displayed when Inbound pairing handler registration fails</comment>
+  </data>
+  <data name="BluetoothInboundRegistrationSucceededFormat" xml:space="preserve">
+    <value>인바운드 페어링에 대해 등록했습니다. 지원되는 양식: {0}</value>
+    <comment>Format string for message displayed when Inbound pairing handler registration succeeds</comment>
+  </data>
+  <data name="BluetoothPairingFailureFormat" xml:space="preserve">
+    <value>페어링 결과는 {0}입니다. {1}({2})과(와) 연결하지 못했습니다.</value>
+    <comment>Format string for message displayed when pairing attempt fails</comment>
+  </data>
+  <data name="BluetoothPairingSuccessFormat" xml:space="preserve">
+    <value>{0}({1})과(와) 연결했습니다.</value>
+    <comment>Format string for message displayed when pairing attempt succeeds</comment>
+  </data>
+  <data name="BluetoothStartedWatching" xml:space="preserve">
+    <value>디바이스에서 다른 Bluetooth 디바이스를 검색하고 있으며 다른 Bluetooth 디바이스에서 이 디바이스를 검색할 수 있습니다.</value>
+    <comment>Message display when "Start Watcher" button is pressed</comment>
+  </data>
+  <data name="BluetoothStoppedWatching" xml:space="preserve">
+    <value>Bluetooth 디바이스의 감시를 중지했습니다.</value>
+    <comment>Message display when "Stop Watcher" button is pressed</comment>
+  </data>
+  <data name="BluetoothUnpairingFailureFormat" xml:space="preserve">
+    <value>언페어링 결과는 {0}입니다. {1}({2})에서 연결을 해제하지 못했습니다.</value>
+    <comment>Format string for message displayed when unpairing attempt fails</comment>
+  </data>
+  <data name="BluetoothUnpairingSuccessFormat" xml:space="preserve">
+    <value>{0}({1})에서 연결을 해제했습니다.</value>
+    <comment>Format string for message displayed when unpairing attempt succeeds</comment>
+  </data>
+  <data name="PinLabelTextBox.Text" xml:space="preserve">
+    <value>PIN 입력:</value>
+    <comment>Message on flyout control for PIN entry for ProvidePin ceremony</comment>
+  </data>
+  <data name="BluetoothPairButtonContent" xml:space="preserve">
+    <value>연결</value>
+    <comment>Text displayed on the button to pair Bluetooth list item</comment>
+  </data>
+  <data name="BluetoothUnpairButtonContent" xml:space="preserve">
+    <value>연결 해제</value>
+    <comment>Text displayed on the button to unpair Bluetooth list item</comment>
+  </data>
+  <data name="BluetoothDeviceStatePairedText" xml:space="preserve">
+    <value>연결됨</value>
+  </data>
+  <data name="BluetoothDeviceStateReadyToPairText" xml:space="preserve">
+    <value>연결 준비 완료</value>
+  </data>
+  <data name="BluetoothManageDevicesText" xml:space="preserve">
+    <value>Bluetooth 디바이스 관리</value>
+  </data>
+  <data name="BluetoothWatcherToggleLabel" xml:space="preserve">
+    <value>Bluetooth</value>
+    <comment>Label text for Bluetooth watcher toggle switch</comment>
+  </data>
+  <data name="BluetoothNoDeviceAvailableFormat" xml:space="preserve">
+    <value>이 컴퓨터에서 사용 가능한 Bluetooth 어댑터를 찾을 수 없습니다.
+{0}</value>
+    <comment>Message displayed on systems which do not have a Bluetooth adapter. The new line before {0} is deliberate and should be kept</comment>
+  </data>
+  <data name="BluetoothEnterPINText" xml:space="preserve">
+    <value>PIN 입력:</value>
+  </data>
+  <data name="BluetoothDeviceStateUnknownText" xml:space="preserve">
+    <value>알 수 없는 상태</value>
+  </data>
+  <data name="BluetoothInboundPairingRequestFormat" xml:space="preserve">
+    <value>인바운드 요청: {0}
+{1}</value>
+    <comment>Format for message displayed when an inbounbd pairing request is received</comment>
+  </data>
+  <data name="EnableScreensaverText" xml:space="preserve">
+    <value>화면 보호기</value>
+    <comment>Toggle switch for enabling the screensaver</comment>
+  </data>
+  <data name="NoDeviceName" xml:space="preserve">
+    <value>&lt;디바이스 이름 없음&gt;</value>
+    <comment>This is shown when we fail to retrieve a valid device name (very strange case)</comment>
   </data>
 </root>

@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\iotivity-1.0.0\extlibs\cjson\cJSON.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\extlibs\timer\timer.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\logger\src\logger.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\ocrandom\src\ocrandom.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\stack\src\occlientcb.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\stack\src\occollection.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\stack\src\ocobserve.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\stack\src\ocpayload.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\stack\src\ocpayloadconvert.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\stack\src\ocpayloadparse.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\stack\src\ocresource.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\stack\src\ocserverrequest.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\stack\src\ocstack.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\stack\src\oicgroup.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\stack\src\rdpayload.c" />
+  </ItemGroup>
+</Project>

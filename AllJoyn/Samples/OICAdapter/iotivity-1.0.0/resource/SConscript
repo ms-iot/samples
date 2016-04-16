@@ -1,0 +1,85 @@
+#******************************************************************
+#
+# Copyright 2014 Intel Mobile Communications GmbH All Rights Reserved.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+##
+# 'resource' sub-project main build script
+#
+##
+
+import os
+
+Import('env')
+
+target_os = env.get('TARGET_OS')
+src_dir = env.get('SRC_DIR')
+
+if target_os not in ['arduino', 'darwin', 'ios', 'android']:
+	env.AppendUnique(LIBS=['rt'])
+
+# Build libcoap
+SConscript('csdk/connectivity/lib/libcoap-4.1.1/SConscript')
+
+# Build C Common dependencies
+SConscript('c_common/SConscript')
+
+# Build connectivity
+SConscript('csdk/connectivity/SConscript')
+
+if env.get('ROUTING') in ['GW', 'EP']:
+	# Build Routing
+	SConscript('csdk/routing/SConscript')
+
+# Build libocsrm
+SConscript('csdk/security/SConscript')
+
+# Build liboctbstack
+SConscript('csdk/SConscript')
+
+if target_os not in ['arduino','darwin','ios']:
+	# Build liboc_logger
+	SConscript('oc_logger/SConscript')
+
+	# Build liboc
+	SConscript('src/SConscript')
+
+if target_os not in ['arduino','darwin','ios','android']:
+	# Build examples
+	SConscript('examples/SConscript')
+
+if target_os == 'linux':
+	# Build C Samples
+	SConscript('csdk/stack/samples/linux/SimpleClientServer/SConscript')
+
+	# Build secure samples
+	SConscript('csdk/stack/samples/linux/secure/SConscript')
+
+	# Build C/C++ unit tests
+	SConscript('unit_tests.scons')
+
+elif target_os == 'darwin':
+	env.Command('../../out/darwin/iotivity-csdk.framework',None,src_dir + '/tools/darwin/mkfwk_osx.sh')
+	# Build linux samples for now
+	SConscript('csdk/stack/samples/linux/SimpleClientServer/SConscript')
+
+	# Build C stack's unit tests.
+	SConscript('unit_tests.scons')
+
+elif target_os == 'arduino':
+	SConscript('csdk/stack/samples/arduino/SimpleClientServer/ocserver/SConscript')

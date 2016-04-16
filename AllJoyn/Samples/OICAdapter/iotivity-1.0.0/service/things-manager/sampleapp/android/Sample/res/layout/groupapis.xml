@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+       <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="Find Group" />
+       
+       
+        <ListView
+            android:id="@+id/groupaApiList"
+            android:layout_width="match_parent"
+            android:layout_height="300dp" 
+             android:layout_below="@id/button1">
+         </ListView>
+         
+         <EditText
+        android:id="@+id/EditText"
+        android:layout_width="fill_parent"
+        android:layout_height="250dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/groupaApiList"
+        android:layout_marginTop="15dp"
+        android:ems="10" 
+        android:editable="false" >
+
+        <requestFocus />
+    </EditText>
+      
+        
+</RelativeLayout>

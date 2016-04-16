@@ -1,0 +1,20 @@
+#######################################################
+#       Build IP adapter for Ardunino
+#######################################################
+
+Import('env', 'src_dir')
+import os.path
+
+env.AppendUnique(CPPPATH = [ os.path.join(src_dir, 'arduino') ])
+
+if env.get('SHIELD') == 'WIFI':
+    src_files = [ 'caipclient_wifi.cpp',
+                   'caipserver_wifi.cpp',
+                   'caipnwmonitor_wifi.cpp' ]
+else:
+    src_files = [ 'caipadapterutils_eth.cpp',
+                   'caipclient_eth.cpp',
+                   'caipserver_eth.cpp',
+                   'caipnwmonitor_eth.cpp' ]
+
+Return('src_files')

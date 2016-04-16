@@ -1,0 +1,100 @@
+#******************************************************************
+#
+# Copyright 2014 Samsung Electronics All Rights Reserved.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+######################################################################
+# This script manages third party libraries
+#
+#Note: The paths must keep consistent with oic-resource
+######################################################################
+import os
+import platform
+
+Import('env', 'lib_env')
+
+target_os = env.get('TARGET_OS')
+target_arch = env.get('TARGET_ARCH')
+src_dir = env.get('SRC_DIR')
+
+resource_path = src_dir + '/resource'
+
+######################################################################
+# Check dependent packages (Linux only)
+######################################################################
+if target_os in ['linux', 'tizen']:
+	if not env.GetOption('help'):
+		if not target_arch == platform.machine():
+			print '''
+*********************************** Warning ***********************************
+* You are trying cross build, please make sure (%s) version libraries are
+* installed!       	                                                      *
+*******************************************************************************
+''' % target_arch
+
+		conf = Configure(lib_env)
+
+		if target_os not in ['tizen'] and not conf.CheckLib('boost_thread', language='C++'):
+			print 'Did not find boost_thread, exiting!'
+			Exit(1)
+
+		if target_os not in ['tizen'] and not conf.CheckLib('boost_system', language='C++'):
+			print 'Did not find boost_system, exiting!'
+			Exit(1)
+
+		lib_env = conf.Finish()
+
+######################################################################
+# The 'include' path of external libraries
+######################################################################
+lib_env.AppendUnique(CPPPATH = [
+		resource_path ,
+		resource_path + '/include' ,
+		resource_path + '/oc_logger/include',
+		resource_path + '/csdk/stack/include',
+		resource_path + '/csdk/ocrandom/include',
+		resource_path + '/csdk/logger/include'
+		])
+
+######################################################################
+# The path of third party libraries binary
+######################################################################
+if target_os == 'android':
+	if target_arch == 'armeabi-v7a-hard':
+		target_arch = 'armeabi-v7a'
+
+	if target_arch not in ['x86', 'armeabi', 'armeabi-v7a']:
+		if not env.GetOption('help') and not env.GetOption('clean'):
+			print '''
+*********************************** Warning ***********************************
+* current only x86, armeabi, armeabi-v7a libraries are provided!              *
+*******************************************************************************
+'''
+	else:
+		# Too much boost warning, suppress the warning
+		lib_env.AppendUnique(CCFLAGS = ['-w'])
+
+elif target_os == 'ios':
+	lib_env.AppendUnique(FRAMEWORKS = ['boost', 'expat', 'openssl'])
+elif target_os == 'darwin':
+	lib_env.AppendUnique(CPPPATH = ['/usr/local/include'])
+	lib_env.AppendUnique(LIBPATH = ['/usr/local/lib'])
+
+Import('env')
+lib_env.AppendUnique(LIBPATH = env.get('BUILD_DIR'))
+

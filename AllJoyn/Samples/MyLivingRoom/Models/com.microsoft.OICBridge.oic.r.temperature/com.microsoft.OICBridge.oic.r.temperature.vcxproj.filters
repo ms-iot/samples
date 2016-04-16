@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resources">
+      <UniqueIdentifier>a8db365b-b1af-48c8-9095-abfd31a1eb04</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="AllJoynBusObjectManager.cpp" />
+    <ClCompile Include="AllJoynHelpers.cpp" />
+    <ClCompile Include="temperatureConsumer.cpp" />
+    <ClCompile Include="temperatureProducer.cpp" />
+    <ClCompile Include="temperatureServiceEventAdapter.cpp" />
+    <ClCompile Include="temperatureServiceEventArgs.cpp" />
+    <ClCompile Include="temperatureSignals.cpp" />
+    <ClCompile Include="temperatureWatcher.cpp" />
+    <ClCompile Include="TypeConversionHelpers.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="AllJoynBusObjectManager.h" />
+    <ClInclude Include="AllJoynHelpers.h" />
+    <ClInclude Include="ItemperatureService.h" />
+    <ClInclude Include="temperatureConsumer.h" />
+    <ClInclude Include="temperatureEventArgs.h" />
+    <ClInclude Include="temperatureMethodResults.h" />
+    <ClInclude Include="temperatureProducer.h" />
+    <ClInclude Include="temperatureServiceEventAdapter.h" />
+    <ClInclude Include="temperatureServiceEventArgs.h" />
+    <ClInclude Include="temperatureSignals.h" />
+    <ClInclude Include="temperatureStructures.h" />
+    <ClInclude Include="temperatureWatcher.h" />
+    <ClInclude Include="TypeConversionHelpers.h" />
+  </ItemGroup>
+</Project>

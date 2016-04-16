@@ -13,13 +13,22 @@ namespace IoTCoreDefaultApp
     {
         public static string GetDeviceName()
         {
-            var hostname = NetworkInformation.GetHostNames()
-                .FirstOrDefault(x => x.Type == HostNameType.DomainName);
-            if (hostname != null)
+            try
             {
-                return hostname.CanonicalName;
+                var hostname = NetworkInformation.GetHostNames()
+                    .FirstOrDefault(x => x.Type == HostNameType.DomainName);
+                if (hostname != null)
+                {
+                    return hostname.CanonicalName;
+                }
             }
-            return "<no device name>";
+            catch (Exception)
+            {
+                // do nothing
+                // in some (strange) cases NetworkInformation.GetHostNames() fails... maybe a bug in the API...
+            }
+            var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
+            return loader.GetString("NoDeviceName");
         }
 
         public static string GetBoardName()
@@ -29,11 +38,12 @@ namespace IoTCoreDefaultApp
 
             switch (DeviceTypeInformation.Type)
             {
+                case DeviceTypes.RPI3:
                 case DeviceTypes.RPI2:
                     boardName = DeviceTypeInformation.ProductName;
                     if (string.IsNullOrEmpty(boardName))
                     {
-                        boardName = loader.GetString("Rpi2Name");
+                        boardName = loader.GetString( (DeviceTypeInformation.Type == DeviceTypes.RPI2) ? "Rpi2Name" : "Rpi3Name");
                     }
                     break;
 
@@ -56,6 +66,7 @@ namespace IoTCoreDefaultApp
         {
             switch (DeviceTypeInformation.Type)
             {
+                case DeviceTypes.RPI3:
                 case DeviceTypes.RPI2:
                     return new Uri("ms-appx:///Assets/RaspberryPiBoard.png");
 

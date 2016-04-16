@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">CA Android Sample</string>
+    <string name="sendresponse">Response</string>
+    <string name="notify">Notification</string>
+    <string name="request_setting">Setting</string>
+    <string name="request">Request</string>
+    <string name="request_to_all">Request to All</string>
+    <string name="response">Response</string>
+    <string name="uri">/a/light</string>
+    <string name="coap_prefix">coap://</string>
+    <string name="notification"></string>
+    <string name="req_data"></string>
+    <string name="resp_data">resourceUri/response</string>
+    <string name="get_network_info">Network Info</string>
+    <string name="receive">Receive</string>
+    <string name="received">Received Message</string>
+    <string name="remote_address">"Remote Address: "</string>
+    <string name="remote_port">"Remote Port: "</string>
+    <string name="action_settings">Settings</string>
+</resources>

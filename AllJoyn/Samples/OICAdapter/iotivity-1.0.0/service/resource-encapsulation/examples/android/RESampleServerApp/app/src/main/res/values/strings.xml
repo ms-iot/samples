@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">RESampleServerApp</string>
+
+    <string name="start_server">Start</string>
+    <string name="stop_server">Stop Server</string>
+
+    <string name="set_temp">Set Temperature</string>
+
+    <string name="simple_sever">Simple Server</string>
+    <string name="custom_sever">Custom Server</string>
+
+    <string name="register_get_request_handler">Register GetRequestHandler</string>
+    <string name="unregister_get_request_handler">Unregister GetRequestHandler</string>
+
+    <string name="register_set_request_handler">Register SetRequestHandler</string>
+    <string name="unregister_set_request_handler">Unregister SetRequestHandler</string>
+
+    <string name="register_attribute_updated_listener">Register AttributeUpdatedListener</string>
+    <string name="unregister_attribute_updated_listener">Unregister AttributeUpdatedListener</string>
+</resources>

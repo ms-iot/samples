@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">RESampleClientApp</string>
+
+    <string name="resource_client">Resource Client</string>
+    <string name="container_resource">Discover Container Resource</string>
+
+    <string name="discover_resource">Discover Resource</string>
+    <string name="cancel_discovery">Cancel Discovery</string>
+
+</resources>

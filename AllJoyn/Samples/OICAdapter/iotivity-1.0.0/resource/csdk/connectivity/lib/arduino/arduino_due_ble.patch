@@ -1,0 +1,69 @@
+diff -rupN BLE_Old/aci_setup.cpp BLE_New/aci_setup.cpp
+--- BLE_Old/aci_setup.cpp	2015-02-26 08:59:03.289267311 +0530
++++ BLE_New/aci_setup.cpp	2015-02-26 08:59:02.985267313 +0530
+@@ -63,6 +63,9 @@ static bool aci_setup_fill(aci_state_t *
+ 		//Add 2 bytes to the length byte for status byte, length for the total number of bytes
+ 		memcpy(&msg_to_send, &(aci_stat->aci_setup_info.setup_msgs[*num_cmd_offset]), 
+ 				  (aci_stat->aci_setup_info.setup_msgs[*num_cmd_offset].buffer[0]+2)); 
++	#elif defined(__SAM3X8E__)
++		memcpy(&msg_to_send, &(aci_stat->aci_setup_info.setup_msgs[*num_cmd_offset]),
++				  (aci_stat->aci_setup_info.setup_msgs[*num_cmd_offset].buffer[0]+2));
+ 	#endif
+ 
+     //Put the Setup ACI message in the command queue
+diff -rupN BLE_Old/hal_aci_tl.cpp BLE_New/hal_aci_tl.cpp
+--- BLE_Old/hal_aci_tl.cpp	2015-02-26 08:59:03.521267309 +0530
++++ BLE_New/hal_aci_tl.cpp	2015-02-26 08:59:03.285267311 +0530
+@@ -346,6 +346,12 @@ void hal_aci_tl_init(aci_pins_t *a_pins,
+ 
+   The SPI library assumes that the hardware pins are used
+   */
++#if defined(__SAM3X8E__)
++	SPI.begin          (DUE_SPI_CSN);
++  SPI.setBitOrder    (DUE_SPI_CSN, LSBFIRST);
++  SPI.setClockDivider(DUE_SPI_CSN, a_pins->spi_clock_divider); /* This will run the SPI at 3MHz assuming a 84MHz clock to the mcu*/
++  SPI.setDataMode    (DUE_SPI_CSN, SPI_MODE0);
++#else
+   SPI.begin();
+   //Board dependent defines
+   #if defined (__AVR__)
+@@ -357,6 +363,7 @@ void hal_aci_tl_init(aci_pins_t *a_pins,
+   #endif
+   SPI.setClockDivider(a_pins->spi_clock_divider);
+   SPI.setDataMode(SPI_MODE0);
++#endif
+ 
+   /* Initialize the ACI Command queue. This must be called after the delay above. */
+   aci_queue_init(&aci_tx_q);
+@@ -429,6 +436,8 @@ static uint8_t spi_readwrite(const uint8
+     uint8_t tmp_bits;
+     tmp_bits = SPI.transfer(REVERSE_BITS(aci_byte));
+ 	return REVERSE_BITS(tmp_bits);
++#elif defined(__SAM3X8E__)
++	return SPI.transfer(DUE_SPI_CSN, aci_byte, SPI_CONTINUE);
+ #endif
+ }
+ 
+diff -rupN BLE_Old/hal_platform.h BLE_New/hal_platform.h
+--- BLE_Old/hal_platform.h	2015-02-26 08:59:03.293267311 +0530
++++ BLE_New/hal_platform.h	2015-02-26 08:59:02.989267313 +0530
+@@ -71,6 +71,19 @@
+ 	
+ 	//Redefine the function for reading from flash in ChipKit
+ 	#define memcpy_P        memcpy
++#elif defined(__SAM3X8E__)
++		/* definition for DUE */
++		#include "Arduino.h"
++
++		#define F(X) (X)
++		#undef PSTR
++		#define PSTR(x) (x)
++		#define PROGMEM
++
++		#define pgm_read_byte_near(x) (x)
++		#define memcpy_P memcpy
++
++		#define DUE_SPI_CSN            52
+ #endif
+ 
+ #endif /* PLATFORM_H__ */

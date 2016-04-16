@@ -3,7 +3,6 @@
 using IoTCoreDefaultApp.Utils;
 using System;
 using System.Globalization;
-using System.Threading.Tasks;
 using Windows.Networking.Connectivity;
 using Windows.Storage;
 using Windows.System;
@@ -118,7 +117,7 @@ namespace IoTCoreDefaultApp
         {
             // Using DateTime.Now is simpler, but the time zone is cached. So, we use a native method insead.
             SYSTEMTIME localTime;
-            NativeTime.GetLocalTime(out localTime);
+            NativeTimeMethods.GetLocalTime(out localTime);
 
             DateTime t = localTime.ToDateTime();
             CurrentTime.Text = t.ToString("t", CultureInfo.CurrentCulture) + Environment.NewLine + t.ToString("d", CultureInfo.CurrentCulture);

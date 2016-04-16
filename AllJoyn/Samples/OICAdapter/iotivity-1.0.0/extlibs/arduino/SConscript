@@ -1,0 +1,181 @@
+##
+# Script to install (if they do not exist) the Arduino library, Time library,
+# Red Bear Library, and Nordic library.
+##
+
+import os, subprocess, struct
+import urllib2, urlparse
+import SCons.Errors
+import shutil
+
+Import('env')
+
+target_os = env.get('TARGET_OS')
+src_dir = env.get('SRC_DIR')
+
+SConscript(src_dir + '/build_common/tools/UnpackAll.py')
+SConscript(src_dir + '/build_common/external_libs.scons')
+
+# Download
+if target_os == 'arduino':
+	arduino_home = env.get('ARDUINO_HOME')
+	if not arduino_home:
+		print 'Creating ARDUINO_HOME for Arduino lib'
+		print '''
+        *******************************************************************************
+        *   Arduino root directory isn't set, you can set enviornment variable        *
+        *   ARDUINO_HOME or add it in command line as follows (Only set if your       *
+        *   version has fixes applied as depicted below. Press ctrl+c now if you      *
+        *   wish to manually set ARDUINO_HOME.):                                      *
+        *      # scons ARDUINO_HOME=<path to arduino root directory> ...              *
+        *******************************************************************************
+        '''
+		arduinolib_dir      = src_dir + '/extlibs/arduino/arduino-1.5.8'
+
+		if not os.path.exists(arduinolib_dir):
+			from sys import platform as _platform
+			if _platform == "linux" or _platform == "linux2":
+				archType = 8 * struct.calcsize("P")
+				print 'On %s-bit machine.' % (archType)
+				if archType == 32:
+					arduinolib_zip_file = src_dir + '/extlibs/arduino/arduino-1.5.8-linux32.tgz'
+					arduinolib_url      = 'http://arduino.cc/download.php?f=/arduino-1.5.8-linux32.tgz'
+				else:
+					arduinolib_zip_file = src_dir + '/extlibs/arduino/arduino-1.5.8-linux64.tgz'
+					arduinolib_url      = 'http://arduino.cc/download.php?f=/arduino-1.5.8-linux64.tgz'
+			elif _platform == "darwin":
+				arduinolib_zip_file = src_dir + '/extlibs/arduino/arduino-1.5.8-macosx.zip'
+				arduinolib_url      = 'http://arduino.cc/download.php?f=/arduino-1.5.8-macosx.zip'
+			elif _platform == "win32":
+				arduinolib_zip_file = src_dir + '/extlibs/arduino/arduino-1.5.8-windows.zip'
+				arduinolib_url      = src_dir + 'http://arduino.cc/download.php?f=/arduino-1.5.8-windows.zip'
+
+			# If the zip file is not already present, download it
+			if not os.path.exists(arduinolib_zip_file):
+				arduinolib_zip = env.Download(arduinolib_zip_file, arduinolib_url)
+			else:
+				arduinolib_zip = arduinolib_zip_file
+
+			# Unzip the lib
+			print 'Unzipping arduino lib...'
+			env.UnpackAll(arduinolib_dir, arduinolib_zip)
+			print 'Unzipping arduino lib complete'
+
+			# Remove downloaded file
+			os.remove(arduinolib_zip_file)
+	else:
+		arduinolib_dir = env.get('ARDUINO_HOME')
+
+	timelib_dir         = arduinolib_dir + '/libraries/Time'
+
+	if not os.path.exists(timelib_dir):
+		if WhereIs('dos2unix') is not None:
+			timelib_zip_file    = src_dir + '/extlibs/arduino/Time.zip'
+			timelib_url         = 'http://playground.arduino.cc/uploads/Code/Time.zip'
+			# Install Arduino Time library
+			# If the zip file is not already present, download it
+			os.mkdir(timelib_dir)
+			os.chdir(timelib_dir)
+			if not os.path.exists(timelib_zip_file):
+				timelib_zip = env.Download(timelib_zip_file, timelib_url)
+			else:
+				timelib_zip = timelib_zip_file
+
+			# Unzip the lib
+			print 'Unzipping Arduino Time lib...'
+			env.UnpackAll(timelib_dir + '/Time', timelib_zip)
+
+			# Apply patches to ARDUINO_HOME directory.
+			os.chdir(arduinolib_dir)
+			print 'Patching Arduino libraries...'
+
+			os.system("find ./libraries/Time/Time/DateStrings.cpp -type f -exec dos2unix {} \;")
+			os.system("patch -p1 < " + src_dir + "/resource/csdk/connectivity/lib/arduino/arduino_libraries.patch --directory=" + arduinolib_dir)
+
+			# Remove downloaded file
+			os.remove(timelib_zip_file)
+		else:
+			print 'Please manually install package dos2unix. The build process will end now. Your Action Required: Install package manually, then restart build process.'
+			print 'You may likely retrieve this package as follows:'
+			print '      sudo apt-get install dos2unix'
+			print '               or'
+			print '      sudo yum install dos2unix'
+			exit(1)
+
+	redbearlib_dir         = arduinolib_dir + '/libraries/RBL_nRF8001'
+
+	if not os.path.exists(redbearlib_dir):
+		if WhereIs('dos2unix') is not None:
+			redbearlib_zip_file    = src_dir + '/extlibs/arduino/25643e7b1b7da3740406325a471e3faa4b948747.zip'
+			redbearlib_url         = 'https://github.com/RedBearLab/nRF8001/archive/25643e7b1b7da3740406325a471e3faa4b948747.zip'
+			if not os.path.exists(redbearlib_zip_file):
+				redbearlib_zip = env.Download(redbearlib_zip_file, redbearlib_url)
+			else:
+				redbearlib_zip = redbearlib_zip_file
+
+			# Unzip the lib
+			print 'Unzipping Red Bear lib...'
+			os.chdir(arduinolib_dir + '/libraries')
+			env.UnpackAll(redbearlib_dir, redbearlib_zip)
+
+			# Because the way Red Bear lib is distributed... All Red Bear source files must be moved up a few directories.
+			shutil.move('nRF8001-25643e7b1b7da3740406325a471e3faa4b948747/Arduino/libraries/RBL_nRF8001/', '.')
+			shutil.rmtree('nRF8001-25643e7b1b7da3740406325a471e3faa4b948747')
+
+			# Apply Red Bear patches
+			print 'Patching Red Bear library...'
+			os.chdir(arduinolib_dir + '/libraries/RBL_nRF8001/')
+
+			os.system("find . -type f -exec dos2unix {} \;")
+			os.system("patch -p1 < " + src_dir + "/resource/csdk/connectivity/lib/arduino/RBL_nRF8001.patch")
+
+			# Remove downloaded file
+			os.remove(redbearlib_zip_file)
+		else:
+			print 'Please manually install package dos2unix. The build process will end now. Your Action Required: Install package manually, then restart build process.'
+			print 'You may likely retrieve this package as follows:'
+			print '      sudo apt-get install dos2unix'
+			print '               or'
+			print '      sudo yum install dos2unix'
+			exit(1)
+
+	nordiclib_dir           = arduinolib_dir + '/libraries/BLE'
+
+	if not os.path.exists(nordiclib_dir):
+		if WhereIs('dos2unix') is not None:
+			nordiclib_zip_file    = src_dir + '/extlibs/arduino/ble-sdk-arduino-0.9.5.beta.zip'
+		        nordiclib_url         = 'https://github.com/NordicSemiconductor/ble-sdk-arduino/archive/0.9.5.beta.zip'
+			if not os.path.exists(nordiclib_zip_file):
+				nordiclib_zip = env.Download(nordiclib_zip_file, nordiclib_url)
+			else:
+				nordiclib_zip = nordiclib_zip_file
+
+			# Unzip the lib
+			print 'Unzipping Nordic lib...'
+			os.chdir(arduinolib_dir + '/libraries')
+			env.UnpackAll(nordiclib_dir, nordiclib_zip)
+
+			# Because the way Nordic lib is distributed... All Nordic source files must be moved up a few directories.
+			shutil.move('ble-sdk-arduino-0.9.5.beta/libraries/BLE/', '.')
+			shutil.rmtree('ble-sdk-arduino-0.9.5.beta')
+
+			# Apply Nordic lib patches
+			print 'Patching Nordic library...'
+			os.chdir(arduinolib_dir + '/libraries/BLE/')
+
+			os.system("find . -type f -exec dos2unix {} \;")
+			os.system("patch -p1 < " + src_dir + "/resource/csdk/connectivity/lib/arduino/arduino_due_ble.patch")
+
+			# Remove downloaded file
+			os.remove(nordiclib_zip_file)
+		else:
+			print 'Please manually install package dos2unix. The build process will end now. Your Action Required: Install package manually, then restart build process.'
+			print 'You may likely retrieve this package as follows:'
+			print '      sudo apt-get install dos2unix'
+			print '               or'
+			print '      sudo yum install dos2unix'
+			exit(1)
+
+# Set the ARDUINO_HOME
+env.Replace(ARDUINO_HOME = arduinolib_dir)
+print 'ARDUINO_HOME = ' + env.get('ARDUINO_HOME')

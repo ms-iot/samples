@@ -1,0 +1,76 @@
+#******************************************************************
+#
+# Copyright 2014 Intel Mobile Communications GmbH All Rights Reserved.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+##
+# Examples build script
+##
+Import('env')
+# Add third party libraries
+lib_env = env.Clone()
+SConscript(env.get('SRC_DIR') + '/resource/third_party_libs.scons', 'lib_env')
+
+examples_env = lib_env.Clone()
+
+######################################################################
+# Build flags
+######################################################################
+examples_env.AppendUnique(CPPPATH = [
+		'../../resource/include/',
+		'../../resource/csdk/stack/include',
+		'../../resource/csdk/ocrandom/include',
+		'../../resource/csdk/logger/include',
+		'../../resource/oc_logger/include'
+		])
+
+target_os = env.get('TARGET_OS')
+if target_os not in ['windows', 'winrt']:
+	examples_env.AppendUnique(CXXFLAGS = ['-std=c++0x', '-Wall', '-pthread'])
+
+	# Note: 'pthread' is in libc for android. On other platform, if use
+	# new gcc(>4.9?) it isn't required, otherwise, it's required
+	if target_os != 'android':
+		examples_env.AppendUnique(LIBS = ['-lpthread'])
+
+examples_env.AppendUnique(LIBPATH = [env.get('BUILD_DIR')])
+examples_env.PrependUnique(LIBS = ['oc', 'octbstack', 'oc_logger', 'connectivity_abstraction',
+        'coap', 'rt'])
+if env.get('SECURED') == '1':
+    examples_env.AppendUnique(LIBS = ['tinydtls'])
+
+if target_os == 'android':
+	examples_env.AppendUnique(CXXFLAGS = ['-frtti', '-fexceptions'])
+	examples_env.AppendUnique(LIBS = ['gnustl_static'])
+
+	if not env.get('RELEASE'):
+		examples_env.AppendUnique(LIBS = ['log'])
+
+if target_os in ['darwin', 'ios']:
+	examples_env.AppendUnique(CPPDEFINES = ['_DARWIN_C_SOURCE'])
+
+######################################################################
+# Source files and Targets
+######################################################################
+OICMiddle = examples_env.Program('OICMiddle', ['OICMiddle.cpp', 'Client.cpp', 'LineInput.cpp', 'RestInput.cpp', 'Server.cpp', 'WrapResource.cpp'])
+
+Alias("examples", [OICMiddle])
+env.AppendTarget('examples')
+
+
+

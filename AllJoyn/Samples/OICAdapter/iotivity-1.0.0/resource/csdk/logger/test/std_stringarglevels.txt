@@ -1,0 +1,5 @@
+DEBUG: StringArgLevels: this is a DEBUG message
+INFO: StringArgLevels: this is a INFO message
+WARNING: StringArgLevels: this is a WARNING message
+ERROR: StringArgLevels: this is a ERROR message
+FATAL: StringArgLevels: this is a FATAL message

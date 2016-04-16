@@ -79,7 +79,7 @@
                     </Border>
                     <TextBlock Text="{Binding Ssid}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
                 </StackPanel>
-                <CheckBox Grid.Row="1" x:Name="ConnectAutomaticallyCheckBox" IsChecked="True" HorizontalAlignment="Left" Margin="45,0,0,0" Height="32" Checked="ConnectAutomaticallyCheckBox_Checked" Style="{StaticResource IoTCoreDefaultAppCheckBoxStyle}">
+                <CheckBox Grid.Row="1" x:Name="ConnectAutomaticallyCheckBox" IsChecked="True" HorizontalAlignment="Left" Margin="45,0,0,0" Height="32" Checked="ConnectAutomaticallyCheckBox_Changed" Unchecked="ConnectAutomaticallyCheckBox_Changed" Style="{StaticResource IoTCoreDefaultAppCheckBoxStyle}">
                     <TextBlock Text="{Binding ElementName='rootPage', Path=DataContext[ConnectAutomaticallyText]}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}"/>
                 </CheckBox>
                 <Button Grid.Row="3" Content="{Binding ElementName='rootPage', Path=DataContext[ConnectButtonContent]}" x:Name="ConnectButton" Width="120" Height="32" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="ConnectButton_Clicked" Margin="102,0,0,0"/>
@@ -105,7 +105,7 @@
                 <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Ssid}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
                 <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch">
                     <TextBlock Text="{Binding ElementName='rootPage', Path=DataContext[NetworkPasswordPromptText]}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}"/>
-                    <PasswordBox x:Name="WifiPasswordBox" PasswordChanged="WifiPasswordBox_PasswordChanged" HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="334" Margin="0,8,0,0"/>
+                    <PasswordBox x:Name="WifiPasswordBox" PasswordChanged="WifiPasswordBox_PasswordChanged" HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="334" Margin="0,8,0,0" Loaded="WifiPasswordBox_Loaded"/>
                 </StackPanel>
                 <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="130,0,0,0">
                     <Button Content="{Binding ElementName='rootPage', Path=DataContext[NextButtonContent]}" x:Name="NextButton" Width="120" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="NextButton_Clicked" Height="32"/>
@@ -220,23 +220,34 @@
                     <ColumnDefinition Width="40"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="30"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="117*"/>
-                    <RowDefinition Height="172*"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="408"/>
+                    <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding [LanguageTitleText]}" Style="{StaticResource SubtitleTextBlockStyle}" FontWeight="Normal" />
-				<ListBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" x:Name="LanguageListBox" FontSize="16" Margin="0,10,0,0" Width="446" SelectionChanged="LanguageListBox_SelectionChanged" />
+                <ToggleSwitch Grid.Column="1" Grid.Row="1" Style="{StaticResource IoTCoreDefaultAppToggleStyle}" Toggled="Screensaver_Toggled" x:Name="screensaverToggleSwitch" >
+                    <ToggleSwitch.Header>
+                        <TextBlock Text="{Binding [EnableScreensaverText]}" Style="{StaticResource SubtitleTextBlockStyle}" FontWeight="Normal" />
+                    </ToggleSwitch.Header>
+                </ToggleSwitch>
+                <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding [LanguageTitleText]}" Style="{StaticResource SubtitleTextBlockStyle}" FontWeight="Normal" />
+                <ComboBox Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" x:Name="LanguageComboBox" FontSize="16" Margin="0,10,0,0" Width="446" SelectionChanged="LanguageComboBox_SelectionChanged" />
+                <TextBlock Grid.Column="1" Grid.Row="6" Text="{Binding [KeyboardTitleText]}" Style="{StaticResource SubtitleTextBlockStyle}" FontWeight="Normal" />
+                <ComboBox Grid.Column="1" Grid.Row="7" HorizontalAlignment="Left" x:Name="InputLanguageComboBox" FontSize="16" Margin="0,10,0,0" Width="446" SelectionChanged="InputLanguageComboBox_SelectionChanged"/>
             </Grid>
         </ScrollViewer>
 
         <ScrollViewer  x:Name="NetworkGrid" Grid.Column="2" Grid.Row="1" Visibility="Collapsed">
-            <StackPanel Margin="24,85,0,0" Orientation="Vertical">
-                <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,25,0,0">
+            <StackPanel Margin="24,25,0,0" Orientation="Vertical">
+                <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Left">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">
-                        <TextBlock Text="{Binding [DirectConnectionsText]}" Style="{StaticResource BaseTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,12"/>
-                        <TextBlock Text="{Binding [NoNetworksText]}" x:Name="NoneFoundText" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed"/>
+                        <TextBlock Text="{Binding [DirectConnectionsText]}" Style="{StaticResource SubtitleTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,12"/>
+                        <TextBlock Text="{Binding [NoNetworksText]}" x:Name="NoneFoundText" Style="{StaticResource SubtitleTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed"/>
                         <StackPanel x:Name="DirectConnectionStackPanel" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                             <Border Width="44" Height="44">
                                 <TextBlock Text="{StaticResource ResourceKey=IconEthernet}" FontSize="24" FontFamily="{StaticResource IconFontFamily}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
@@ -249,32 +260,32 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="{Binding [WifiText]}" Style="{StaticResource BaseTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,12,0,12"/>
+                            <TextBlock Text="{Binding [WifiText]}" Style="{StaticResource SubtitleTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,12,0,12"/>
                             <Button Grid.Column="2" x:Name="RefreshButton" Content="{Binding [RefreshContent]}" Click="RefreshButton_Click" />
                         </Grid>
                         <ListView x:Name="WifiListView" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionMode="Single" Width="446" ItemTemplate="{StaticResource WifiInitialState}" SelectionChanged="WifiListView_SelectionChanged" ItemContainerStyle="{StaticResource WifiListViewItemStyle}"/>
-                        <TextBlock Text="{Binding [NoNetworksText]}" x:Name="NoWifiFoundText" Width="446" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed"/>
+                        <TextBlock Text="{Binding [NoNetworksText]}" x:Name="NoWifiFoundText" Width="446" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed"  Margin="10,0,0,0"/>
                     </StackPanel>
                 </ScrollViewer>
             </StackPanel>
         </ScrollViewer>
 
         <ScrollViewer  x:Name="BluetoothGrid" Grid.Column="2" Grid.Row="1" Visibility="Collapsed">
-            <StackPanel Margin="24,85,0,0" Orientation="Vertical">
-                <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="0,25,0,0">
-                    <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+            <StackPanel Margin="24,25,0,0" Orientation="Vertical">
+                <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Left">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
-                            <Border Width="44" Height="32">
-                                <TextBlock Text="{StaticResource ResourceKey=IconBluetooth}" FontSize="24" FontFamily="{StaticResource IconFontFamily}" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                            <Border Width="30" Height="44">
+                                <TextBlock Text="{StaticResource ResourceKey=IconBluetooth}" FontSize="24" FontFamily="{StaticResource IconFontFamily}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                             </Border>
-                            <TextBlock x:Uid="BluetoothDevices" Text="{Binding [BluetoothManageDevicesText]}"  Style="{StaticResource SubtitleTextBlockStyle}" VerticalAlignment="Top"/>
+                            <TextBlock x:Uid="BluetoothDevices" Text="{Binding [BluetoothManageDevicesText]}"  Style="{StaticResource SubtitleTextBlockStyle}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" Height="64" VerticalAlignment="Top">
+                        <StackPanel Orientation="Horizontal" Height="64" VerticalAlignment="Bottom" Margin="24,0,0,0">
                             <ToggleSwitch x:Name="BluetoothWatcherToggle" Header="{Binding [BluetoothWatcherToggleLabel]}" Style="{StaticResource IoTCoreDefaultAppToggleStyle}"  Toggled="BluetoothWatcherToggle_Toggled" IsEnabled="False" />
                         </StackPanel>
-                        <StackPanel x:Name="confirmationPanel"  Orientation="Horizontal"  Height="88" HorizontalAlignment="Stretch">
+                        <StackPanel x:Name="confirmationPanel"  Orientation="Horizontal"  Height="88" HorizontalAlignment="Stretch"  Margin="24,0,0,0">
                             <RelativePanel>
-                                <TextBlock x:Name="confirmationText" Width="380" TextAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,2" Text="" TextWrapping="WrapWholeWords" RelativePanel.AlignLeftWithPanel="True" />
+                                <TextBlock x:Name="confirmationText" Width="380" TextAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,2" Text="" TextWrapping="WrapWholeWords" RelativePanel.AlignLeftWithPanel="True" />
                                 <Button x:Name="yesButton" Margin="0,0,5,10" Click="YesButton_Click" Width="44" RelativePanel.RightOf="confirmationText" >Yes</Button>
                                 <Button x:Name="noButton" Margin="0,0,5,10" Click="NoButton_Click" Width="44" RelativePanel.RightOf="confirmationText" RelativePanel.Below="yesButton" >No</Button>
                             </RelativePanel>

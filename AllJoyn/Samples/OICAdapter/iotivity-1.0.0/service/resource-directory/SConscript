@@ -1,0 +1,82 @@
+#******************************************************************
+#
+# Copyright 2015 Samsung Electronics All Rights Reserved.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+##
+# Resource Directory build script
+##
+
+Import('env')
+
+if env.get('RELEASE'):
+    env.AppendUnique(CCFLAGS = ['-Os'])
+    env.AppendUnique(CPPDEFINES = ['NDEBUG'])
+else:
+    env.AppendUnique(CCFLAGS = ['-g'])
+
+if env.get('LOGGING'):
+    env.AppendUnique(CPPDEFINES = ['-DTB_LOG'])
+
+lib_env = env.Clone()
+SConscript(env.get('SRC_DIR') + '/service/third_party_libs.scons', 'lib_env')
+rd_env = lib_env.Clone()
+
+target_os = env.get('TARGET_OS')
+######################################################################
+# Build flags
+######################################################################
+rd_env.AppendUnique(CPPPATH = ['include'])
+rd_env.AppendUnique(CPPPATH = ['src/internal'])
+rd_env.AppendUnique(CPPPATH = ['../../resource/csdk/logger/include'])
+rd_env.PrependUnique(LIBS = ['oc', 'octbstack', 'oc_logger', 'connectivity_abstraction', 'libcoap'])
+
+if target_os not in ['windows', 'winrt']:
+    rd_env.AppendUnique(CXXFLAGS = ['-O2', '-g', '-Wall', '-Wextra'])
+
+if target_os == 'linux':
+    rd_env.AppendUnique(LIBS = ['pthread'])
+
+if target_os == 'android':
+    rd_env.AppendUnique(CXXFLAGS = ['-frtti', '-fexceptions'])
+    rd_env.AppendUnique(LIBS = ['gnustl_static'])
+
+    if not env.get('RELEASE'):
+        rd_env.AppendUnique(LIBS = ['log'])
+
+######################################################################
+# Source files and Targets
+######################################################################
+RD_SRC_DIR = 'src/'
+rd_src = [
+        RD_SRC_DIR + '/internal/rd_storage.c',
+        RD_SRC_DIR + 'rd_server.c',
+        RD_SRC_DIR + 'rd_client.c',
+         ]
+
+if target_os in ['tizen'] :
+    rdsdk = rd_env.SharedLibrary('resource_directory', rd_src)
+else :
+    rdsdk = rd_env.StaticLibrary('resource_directory', rd_src)
+
+rd_env.InstallTarget(rdsdk, 'libresource_directory')
+
+######################################################################
+# Samples for the resource directory
+######################################################################
+SConscript('samples/SConscript')

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">IoTivity Client Demo</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_discard">Clear Items</string>
+    <string name="action_test">Developer Test Action</string>
+    <string name="edit_input">default-string-from-xml</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="attribute_name_not_set">Attribute Name not set</string>
+    <string name="attribute_value_not_set">Attribute Value not set</string>
+    <string name="resource_name_not_set">Resource Name not set</string>
+    <string name="resource_description_not_set">Resource Description not set</string>
+    <string name="unnamed_switch">Unnamed Switch</string>
+    <string name="unnamed_slider">Unnamed Slider</string>
+    <string name="oc_light_switch_toggle_text">Turn Light On/Off:</string>
+    <string name="discover_resources">Discover Resources</string>
+    <string name="no_resource_selected">No Resource Selected</string>
+    <string name="oc_led_switch_toggle_text">Turn LED on/off</string>
+    <string name="ui_resource_label_light">SimpleServer Light</string>
+    <string name="ui_resource_label_ambient_light_sensor">Edison Ambient Light Sensor</string>
+    <string name="ui_resource_label_platform_led">Edison Platform LED</string>
+    <string name="ui_resource_label_room_temperature_sensor">Edison Room Temp Sensor</string>
+    <string name="ui_attribute_label_ambient_light_sensor_reading">Ambient Light Level:</string>
+    <string name="ui_attribute_label_light_dimmer">Light Dimmer:</string>
+    <string name="ui_attribute_label_light_switch">Light Switch:</string>
+    <string name="ui_attribute_label_led_switch">LED switch:</string>
+    <string name="ui_attribute_label_room_temperature_sensor_reading">Temperature Reading:</string>
+</resources>

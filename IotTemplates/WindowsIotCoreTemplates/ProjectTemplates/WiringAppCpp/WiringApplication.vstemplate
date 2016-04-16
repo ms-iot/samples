@@ -57,7 +57,7 @@
   <WizardData>
     <packages>
       <package id="Microsoft.IoT.SDKFromArduino" version="1.1.1" />
-      <package id="Microsoft.IoT.Lightning" version="1.0.2-alpha" />
+      <package id="Microsoft.IoT.Lightning" version="1.0.3-alpha" />
     </packages>
   </WizardData>
 </VSTemplate>

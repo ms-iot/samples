@@ -120,7 +120,7 @@
     <Compile Include="Presenters\NetworkPresenter.cs" />
     <Compile Include="Utils\DeviceTypeInformation.cs" />
     <Compile Include="Utils\Constants.cs" />
-    <Compile Include="Utils\NativeTime.cs" />
+    <Compile Include="Utils\NativeTimeMethods.cs" />
     <Compile Include="Utils\NavigationUtils.cs" />
     <Compile Include="Utils\WifiGlyphConverter.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
@@ -132,6 +132,9 @@
     </Compile>
     <Compile Include="Views\OOBEWelcome.xaml.cs">
       <DependentUpon>OOBEWelcome.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Screensaver.xaml.cs">
+      <DependentUpon>Screensaver.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
@@ -156,6 +159,7 @@
     <PRIResource Include="Strings\zh-CN\Resources.resw" />
     <PRIResource Include="Strings\ru-RU\Resources.resw" />
     <PRIResource Include="Strings\pt-BR\Resources.resw" />
+    <PRIResource Include="Strings\nl-NL\Resources.resw" />
     <PRIResource Include="Strings\ko-KR\Resources.resw" />
     <PRIResource Include="Strings\ja-JP\Resources.resw" />
     <PRIResource Include="Strings\it-IT\Resources.resw" />
@@ -217,6 +221,10 @@
     <Page Include="Views\OOBEWelcome.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ScreenSaver.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Settings.xaml">
       <SubType>Designer</SubType>

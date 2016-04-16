@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resources">
+      <UniqueIdentifier>55c2f1fb-275d-47b3-bf04-996adadc124e</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="AllJoynBusObjectManager.cpp" />
+    <ClCompile Include="AllJoynHelpers.cpp" />
+    <ClCompile Include="interface_1Consumer.cpp" />
+    <ClCompile Include="interface_1Producer.cpp" />
+    <ClCompile Include="interface_1ServiceEventAdapter.cpp" />
+    <ClCompile Include="interface_1ServiceEventArgs.cpp" />
+    <ClCompile Include="interface_1Signals.cpp" />
+    <ClCompile Include="interface_1Watcher.cpp" />
+    <ClCompile Include="TypeConversionHelpers.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="AllJoynBusObjectManager.h" />
+    <ClInclude Include="AllJoynHelpers.h" />
+    <ClInclude Include="Iinterface_1Service.h" />
+    <ClInclude Include="interface_1Consumer.h" />
+    <ClInclude Include="interface_1EventArgs.h" />
+    <ClInclude Include="interface_1MethodResults.h" />
+    <ClInclude Include="interface_1Producer.h" />
+    <ClInclude Include="interface_1ServiceEventAdapter.h" />
+    <ClInclude Include="interface_1ServiceEventArgs.h" />
+    <ClInclude Include="interface_1Signals.h" />
+    <ClInclude Include="interface_1Structures.h" />
+    <ClInclude Include="interface_1Watcher.h" />
+    <ClInclude Include="TypeConversionHelpers.h" />
+  </ItemGroup>
+</Project>

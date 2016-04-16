@@ -1,0 +1,58 @@
+##
+# Things manager service JNI build script
+##
+
+import os
+Import('env')
+
+# Add third party libraries
+lib_env = env.Clone()
+SConscript(env.get('SRC_DIR') + '/service/third_party_libs.scons', exports = 'lib_env')
+
+tm_jni_env = lib_env.Clone()
+target_os = tm_jni_env.get('TARGET_OS')
+tm_sdk = tm_jni_env.get('SRC_DIR') + '/service/things-manager/sdk'
+base_jni = tm_jni_env.get('SRC_DIR') + '/android/android_api/base/jni'
+extlibs = tm_jni_env.get('SRC_DIR') + '/extlibs'
+
+######################################################################
+# Build flags
+######################################################################
+tm_jni_env.AppendUnique(CXXFLAGS = ['-Wall', '-DLINUX', '-DNDEBUG'])
+tm_jni_env.AppendUnique(CXXFLAGS = ['-frtti', '-fexceptions', '-std=c++0x'])
+tm_jni_env.AppendUnique(LIBPATH = [base_jni+'/../libs/'+tm_jni_env.get('TARGET_ARCH')])
+tm_jni_env.PrependUnique(LIBS = ['ocstack-jni', 'TGMSDKLibrary', 'oc', 'oc_logger', 'gnustl_shared', 'log'])
+
+tm_jni_env.AppendUnique(CPPPATH = [tm_sdk+'/inc'])
+tm_jni_env.AppendUnique(CPPPATH = [base_jni])
+tm_jni_env.AppendUnique(CPPPATH = ['tm/inc', 'jniutil/inc', extlibs+'/timer/'])
+
+if target_os not in ['darwin', 'ios', 'windows', 'winrt']:
+    tm_jni_env.AppendUnique(LINKFLAGS = ['-Wl,--no-undefined'])
+
+######################################################################
+# Source files and Targets
+######################################################################
+tm_jni_src = [tm_jni_env.Glob('tm/src/*.cpp'), tm_jni_env.Glob('jniutil/src/*.cpp')]
+tm_jni = tm_jni_env.SharedLibrary('things-manager-jni', tm_jni_src)
+
+tm_jni_env.InstallTarget(tm_jni, 'libthings-manager-jni')
+tm_jni_env.UserInstallTargetLib(tm_jni, 'libthings-manager-jni')
+
+# Install the libraries to /libs/<TARGET_ARCH> directory
+tm_jni_env.Install(tm_sdk+'/java/libs/'+tm_jni_env.get('TARGET_ARCH'),tm_jni_env.get('BUILD_DIR')+'/liboc_logger.so')
+tm_jni_env.Install(tm_sdk+'/java/libs/'+tm_jni_env.get('TARGET_ARCH'),tm_jni_env.get('BUILD_DIR')+'/liboctbstack.so')
+tm_jni_env.Install(tm_sdk+'/java/libs/'+tm_jni_env.get('TARGET_ARCH'),tm_jni_env.get('BUILD_DIR')+'/liboc.so')
+tm_jni_env.Install(tm_sdk+'/java/libs/'+tm_jni_env.get('TARGET_ARCH'),tm_jni_env.get('BUILD_DIR')+'/libconnectivity_abstraction.so')
+tm_jni_env.Install(tm_sdk+'/java/libs/'+tm_jni_env.get('TARGET_ARCH'),base_jni+'/../libs/'+tm_jni_env.get('TARGET_ARCH')+'/libocstack-jni.so')
+tm_jni_env.Install(tm_sdk+'/java/libs/'+tm_jni_env.get('TARGET_ARCH'),base_jni+'/../libs/'+tm_jni_env.get('TARGET_ARCH')+'/libca-interface.so')
+tm_jni_env.Install(tm_sdk+'/java/libs/'+tm_jni_env.get('TARGET_ARCH'),tm_jni_env.get('BUILD_DIR')+'/libTGMSDKLibrary.so')
+tm_jni_env.Install(tm_sdk+'/java/libs/'+tm_jni_env.get('TARGET_ARCH'),tm_jni)
+
+gnu_lib_paths = env.get('LIBPATH')
+for gnu_lib_path in gnu_lib_paths:
+    gnu_lib_path = gnu_lib_path + '/libgnustl_shared.so'
+    if os.path.exists(gnu_lib_path):
+        tm_jni_env.Install(tm_sdk+'/java/libs/'+tm_jni_env.get('TARGET_ARCH'), gnu_lib_path)
+        break
+

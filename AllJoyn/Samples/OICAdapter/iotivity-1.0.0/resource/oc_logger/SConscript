@@ -1,0 +1,60 @@
+#******************************************************************
+#
+# Copyright 2014 Intel Mobile Communications GmbH All Rights Reserved.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+##
+# liboc_logger (share library) build script
+##
+
+Import('env')
+
+lib_env = env.Clone()
+SConscript(env.get('SRC_DIR') + '/resource/third_party_libs.scons', 'lib_env')
+
+liboc_logger_env = lib_env.Clone()
+######################################################################
+# Build flags
+######################################################################
+liboc_logger_env.PrependUnique(CPPPATH = ['include'])
+
+target_os = env.get('TARGET_OS')
+if target_os == 'android':
+	liboc_logger_env.AppendUnique(CXXFLAGS = ['-frtti', '-fexceptions'])
+	liboc_logger_env.AppendUnique(LIBS = ['gnustl_shared', 'log'])
+
+if target_os not in ['arduino', 'windows', 'winrt']:
+	liboc_logger_env.AppendUnique(CFLAGS = ['-Wall', '-std=c99', '-fPIC'])
+	liboc_logger_env.AppendUnique(CXXFLAGS = ['-Wall', '-std=c++0x', '-fPIC'])
+
+if target_os not in ['darwin', 'ios', 'windows', 'winrt']:
+	liboc_logger_env.AppendUnique(LINKFLAGS = ['-Wl,--no-undefined'])
+
+######################################################################
+# Source files and Targets
+######################################################################
+liboc_logger_core = liboc_logger_env.SharedLibrary('oc_logger_core', 'c/oc_logger.c',  OBJPREFIX='core_')
+liboc_logger = liboc_logger_env.SharedLibrary('oc_logger',
+		['c/oc_logger.c', 'c/oc_console_logger.c', 'cpp/oc_ostream_logger.cpp'])
+
+liboc_logger_env.InstallTarget([liboc_logger_core, liboc_logger], 'liboc_logger')
+liboc_logger_env.UserInstallTargetLib([liboc_logger_core, liboc_logger], 'liboc_logger')
+
+if target_os not in ['ios', 'android']:
+	SConscript('examples/SConscript')
+

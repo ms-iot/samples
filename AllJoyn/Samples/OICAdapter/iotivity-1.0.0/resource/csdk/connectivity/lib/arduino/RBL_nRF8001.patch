@@ -1,0 +1,274 @@
+diff -rupN RBL_nRF8001_old/RBL_nRF8001.cpp RBL_nRF8001/RBL_nRF8001.cpp
+--- RBL_nRF8001_old/RBL_nRF8001.cpp	2015-01-13 12:25:32.000000000 +0530
++++ RBL_nRF8001/RBL_nRF8001.cpp	2015-01-13 12:40:41.740244741 +0530
+@@ -22,7 +22,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOU
+ #endif
+ 
+ /* Store the setup for the nRF8001 in the flash of the AVR to save on RAM */
+-static hal_aci_data_t setup_msgs[NB_SETUP_MESSAGES] PROGMEM = SETUP_MESSAGES_CONTENT;
++static const hal_aci_data_t setup_msgs[NB_SETUP_MESSAGES] PROGMEM = SETUP_MESSAGES_CONTENT;
+ 
+ #if defined(BLEND_MICRO)
+ static char device_name[11] = "BlendMicro";
+@@ -31,7 +31,10 @@ static char device_name[11] = "Blend
+ #else
+ static char device_name[11] = "BLE Shield";
+ #endif
+-		
++
++#define BLE_ADDRESS_SIZE 18
++static unsigned char *gLeAddress = NULL;
++
+ static uint16_t Adv_Timeout = 0;	// Advertising all the time
+ static uint16_t Adv_Interval = 0x0050; /* advertising interval 50ms
+ 
+@@ -117,7 +120,7 @@ void ble_begin()
+         aci_state.aci_setup_info.services_pipe_type_mapping = NULL;
+     }
+     aci_state.aci_setup_info.number_of_pipes    = NUMBER_OF_PIPES;
+-    aci_state.aci_setup_info.setup_msgs         = setup_msgs;
++    aci_state.aci_setup_info.setup_msgs         = (hal_aci_data_t*)setup_msgs;
+     aci_state.aci_setup_info.num_setup_msgs     = NB_SETUP_MESSAGES;
+ 
+     /*
+@@ -159,7 +162,7 @@ void ble_begin()
+ static volatile byte ack = 0;
+ 
+ void ble_write(unsigned char data)
+-{	    
++{
+     if(tx_buffer_len == MAX_TX_BUFF)
+     {
+             return;
+@@ -199,13 +202,13 @@ unsigned char ble_connected()
+ }
+ 
+ void ble_set_name(char *name)
+-{       
++{
+     unsigned char len=0;
+-    
++
+     len = strlen(name);
+     if(len > 10)
+     {
+-        Serial.print("the new name is too long");        
++        Serial.print("the new name is too long");
+     }
+     else
+     {
+@@ -236,6 +239,10 @@ void ble_reset(uint8_t reset_pin)
+ void ble_disconnect(void)
+ {
+ 	lib_aci_disconnect(&aci_state, ACI_REASON_TERMINATE);
++    if (NULL != gLeAddress)
++    {
++        free(gLeAddress);
++    }
+ }
+ 
+ static void process_events()
+@@ -271,6 +278,7 @@ static void process_events()
+                             lib_aci_set_local_data(&aci_state, PIPE_GAP_DEVICE_NAME_SET , (uint8_t *)&device_name , strlen(device_name));
+                             lib_aci_connect(Adv_Timeout/* in seconds */, Adv_Interval /* advertising interval 50ms*/);
+                             Serial.println(F("Advertising started"));
++                            lib_aci_get_address();
+                         }
+                         break;
+                 }
+@@ -294,6 +302,32 @@ static void process_events()
+                     lib_aci_set_local_data(&aci_state, PIPE_DEVICE_INFORMATION_HARDWARE_REVISION_STRING_SET,
+                     (uint8_t *)&(aci_evt->params.cmd_rsp.params.get_device_version), sizeof(aci_evt_cmd_rsp_params_get_device_version_t));
+                 }
++
++                if (ACI_CMD_GET_DEVICE_ADDRESS == aci_evt->params.cmd_rsp.cmd_opcode)
++                {
++                    if (NULL != gLeAddress)
++                    {
++                        free(gLeAddress);
++                    }
++                    gLeAddress = (unsigned char *) malloc (BLE_ADDRESS_SIZE);
++                    if (NULL == gLeAddress)
++                    {
++                        Serial.println("error");
++                        break;
++                    }
++                    char *tempAddr = (char *) gLeAddress;
++                    int8_t iter = 0;
++                    for (iter = BTLE_DEVICE_ADDRESS_SIZE - 1; iter >= 0; iter--)
++                    {
++                        sprintf(tempAddr, "%02x%c",
++                                 (uint8_t)aci_evt->params.cmd_rsp.params.get_device_address.bd_addr_own[iter], 58);
++                        tempAddr += 3;
++                    }
++                    gLeAddress[BLE_ADDRESS_SIZE - 1] = '\0';
++                    Serial.println("LEAddress :");
++                    Serial.println((char *)gLeAddress);
++                    return;
++                }
+                 break;
+ 
+             case ACI_EVT_CONNECTED:
+@@ -471,3 +505,12 @@ void ble_do_events()
+ #endif
+ }
+ 
++unsigned char* ble_getAddress()
++{
++    return gLeAddress;
++}
++
++void ble_radio_reset()
++{
++    lib_aci_radio_reset();
++}
+diff -rupN RBL_nRF8001_old/RBL_nRF8001.h RBL_nRF8001/RBL_nRF8001.h
+--- RBL_nRF8001_old/RBL_nRF8001.h	2015-01-13 12:25:32.000000000 +0530
++++ RBL_nRF8001/RBL_nRF8001.h	2015-01-13 12:40:41.740244741 +0530
+@@ -48,6 +48,8 @@ void ble_set_pins(uint8_t reqn, uint8_t
+ unsigned char ble_busy();
+ void ble_reset(uint8_t reset_pin);
+ void ble_disconnect(void);
++unsigned char* ble_getAddress();
++void ble_radio_reset();
+ 
+ #endif
+ 
+diff -rupN RBL_nRF8001_old/RBL_nRF8001.xml RBL_nRF8001/RBL_nRF8001.xml
+--- RBL_nRF8001_old/RBL_nRF8001.xml	2015-01-14 01:52:26.000000000 +0530
++++ RBL_nRF8001/RBL_nRF8001.xml	2015-07-21 14:27:18.000000000 +0530
+@@ -5,10 +5,10 @@
+     <Device>nRF8001_Dx</Device>
+     <Service Type="local" PrimaryService="true">
+         <Name>UART over BTLE</Name>
+-        <Uuid BaseUUID="713D0000503E4C75BA943148F18D941E" BaseUUIDName="Custom UART">0000</Uuid>
++        <Uuid BaseUUID="ADE30000C7844F63A987EB69F70EE816" BaseUUIDName="Custom UART">D529</Uuid>
+         <Characteristic>
+             <Name>UART RX</Name>
+-            <Uuid BaseUUID="713D0000503E4C75BA943148F18D941E" BaseUUIDName="Custom UART">0003</Uuid>
++            <Uuid BaseUUID="AD7B000046374B8690B69D787F03D218" BaseUUIDName="Custom UART2">334f</Uuid>
+             <DefaultValue></DefaultValue>
+             <UsePresentationFormat>0</UsePresentationFormat>
+             <MaxDataLength>20</MaxDataLength>
+@@ -30,7 +30,7 @@
+         </Characteristic>
+         <Characteristic>
+             <Name>UART TX</Name>
+-            <Uuid BaseUUID="713D0000503E4C75BA943148F18D941E" BaseUUIDName="Custom UART">0002</Uuid>
++            <Uuid BaseUUID="E9240000458042C4883195048216B256" BaseUUIDName="Custom UART3">1982</Uuid>
+             <DefaultValue></DefaultValue>
+             <UsePresentationFormat>0</UsePresentationFormat>
+             <MaxDataLength>20</MaxDataLength>
+@@ -111,7 +111,7 @@
+         <AddServiceUpdateCharacteristicPipe>true</AddServiceUpdateCharacteristicPipe>
+         <TimingChangeDelay>5</TimingChangeDelay>
+         <ServiceToAdvertise>
+-            <Uuid BaseUUID="713D0000503E4C75BA943148F18D941E" BaseUUIDName="Custom UART">0000</Uuid>
++            <Uuid BaseUUID="ADE30000C7844F63A987EB69F70EE816" BaseUUIDName="Custom UART">D529</Uuid>
+         </ServiceToAdvertise>
+         <CustomAdTypes>
+             <AdType index="1">
+diff -rupN RBL_nRF8001_old/RBL_services.h RBL_nRF8001/RBL_services.h
+--- RBL_nRF8001_old/RBL_services.h	2015-01-14 01:52:26.000000000 +0530
++++ RBL_nRF8001/RBL_services.h	2015-07-17 15:22:22.000000000 +0530
+@@ -49,7 +49,7 @@
+ #define GAP_PPCP_SLAVE_LATENCY 0
+ #define GAP_PPCP_CONN_TIMEOUT 0xa /** Connection Supervision timeout multiplier as a multiple of 10msec, 0xFFFF means no specific value requested */
+ 
+-#define NB_SETUP_MESSAGES 23
++#define NB_SETUP_MESSAGES 24
+ #define SETUP_MESSAGES_CONTENT {\
+     {0x00,\
+         {\
+@@ -59,13 +59,13 @@
+     {0x00,\
+         {\
+             0x1f,0x06,0x10,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x05,0x00,0x05,0x01,0x01,0x00,0x00,0x06,0x00,0x00,\
+-            0x90,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,\
++            0x90,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xd5,\
+         },\
+     },\
+     {0x00,\
+         {\
+-            0x1f,0x06,0x10,0x1c,0x00,0x02,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,\
+-            0x00,0x00,0x00,0x10,0x00,0x00,0x00,0x10,0x03,0x90,0x01,0xff,\
++            0x1f,0x06,0x10,0x1c,0x29,0x02,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,\
++            0x00,0x00,0x00,0x10,0x00,0x00,0x00,0x10,0x03,0x90,0x03,0xff,\
+         },\
+     },\
+     {0x00,\
+@@ -112,30 +112,30 @@
+     {0x00,\
+         {\
+             0x1f,0x06,0x20,0x8c,0x03,0x02,0x00,0x0b,0x29,0x02,0x01,0x00,0x00,0x04,0x04,0x10,0x10,0x00,0x0c,0x28,\
+-            0x00,0x01,0x1e,0x94,0x8d,0xf1,0x48,0x31,0x94,0xba,0x75,0x4c,\
++            0x00,0x01,0x16,0xe8,0x0e,0xf7,0x69,0xeb,0x87,0xa9,0x63,0x4f,\
+         },\
+     },\
+     {0x00,\
+         {\
+-            0x1f,0x06,0x20,0xa8,0x3e,0x50,0x00,0x00,0x3d,0x71,0x04,0x04,0x13,0x13,0x00,0x0d,0x28,0x03,0x01,0x04,\
+-            0x0e,0x00,0x1e,0x94,0x8d,0xf1,0x48,0x31,0x94,0xba,0x75,0x4c,\
++            0x1f,0x06,0x20,0xa8,0x84,0xc7,0x29,0xd5,0xe3,0xad,0x04,0x04,0x13,0x13,0x00,0x0d,0x28,0x03,0x01,0x04,\
++            0x0e,0x00,0x18,0xd2,0x03,0x7f,0x78,0x9d,0xb6,0x90,0x86,0x4b,\
+         },\
+     },\
+     {0x00,\
+         {\
+-            0x1f,0x06,0x20,0xc4,0x3e,0x50,0x03,0x00,0x3d,0x71,0x44,0x10,0x14,0x00,0x00,0x0e,0x00,0x03,0x02,0x00,\
++            0x1f,0x06,0x20,0xc4,0x37,0x46,0x4f,0x33,0x7b,0xad,0x44,0x10,0x14,0x00,0x00,0x0e,0x33,0x4f,0x03,0x00,\
+             0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,\
+         },\
+     },\
+     {0x00,\
+         {\
+             0x1f,0x06,0x20,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x04,0x04,0x13,0x13,0x00,0x0f,0x28,0x03,0x01,\
+-            0x10,0x10,0x00,0x1e,0x94,0x8d,0xf1,0x48,0x31,0x94,0xba,0x75,\
++            0x10,0x10,0x00,0x56,0xb2,0x16,0x82,0x04,0x95,0x31,0x88,0xc4,\
+         },\
+     },\
+     {0x00,\
+         {\
+-            0x1f,0x06,0x20,0xfc,0x4c,0x3e,0x50,0x02,0x00,0x3d,0x71,0x14,0x00,0x14,0x00,0x00,0x10,0x00,0x02,0x02,\
++            0x1f,0x06,0x20,0xfc,0x42,0x80,0x45,0x82,0x19,0x24,0xe9,0x14,0x00,0x14,0x00,0x00,0x10,0x19,0x82,0x04,\
+             0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,\
+         },\
+     },\
+@@ -159,18 +159,25 @@
+     {0x00,\
+         {\
+             0x1f,0x06,0x40,0x00,0x2a,0x00,0x01,0x00,0x80,0x04,0x00,0x03,0x00,0x00,0x2a,0x05,0x01,0x00,0x04,0x04,\
+-            0x00,0x0a,0x00,0x0b,0x00,0x03,0x02,0x00,0x08,0x04,0x00,0x0e,\
++            0x00,0x0a,0x00,0x0b,0x33,0x4f,0x03,0x00,0x08,0x04,0x00,0x0e,\
+         },\
+     },\
+     {0x00,\
+         {\
+-            0x19,0x06,0x40,0x1c,0x00,0x00,0x00,0x02,0x02,0x00,0x02,0x04,0x00,0x10,0x00,0x11,0x2a,0x27,0x01,0x00,\
++            0x19,0x06,0x40,0x1c,0x00,0x00,0x19,0x82,0x04,0x00,0x02,0x04,0x00,0x10,0x00,0x11,0x2a,0x27,0x01,0x00,\
+             0x80,0x04,0x00,0x14,0x00,0x00,\
+         },\
+     },\
+     {0x00,\
+         {\
+-            0x13,0x06,0x50,0x00,0x1e,0x94,0x8d,0xf1,0x48,0x31,0x94,0xba,0x75,0x4c,0x3e,0x50,0x00,0x00,0x3d,0x71,\
++            0x1f,0x06,0x50,0x00,0x16,0xe8,0x0e,0xf7,0x69,0xeb,0x87,0xa9,0x63,0x4f,0x84,0xc7,0x00,0x00,0xe3,0xad,\
++            0x18,0xd2,0x03,0x7f,0x78,0x9d,0xb6,0x90,0x86,0x4b,0x37,0x46,\
++        },\
++    },\
++    {0x00,\
++        {\
++            0x17,0x06,0x50,0x1c,0x00,0x00,0x7b,0xad,0x56,0xb2,0x16,0x82,0x04,0x95,0x31,0x88,0xc4,0x42,0x80,0x45,\
++            0x00,0x00,0x24,0xe9,\
+         },\
+     },\
+     {0x00,\
+@@ -180,7 +187,7 @@
+     },\
+     {0x00,\
+         {\
+-            0x06,0x06,0xf0,0x00,0x03,0x3d,0x6c,\
++            0x06,0x06,0xf0,0x00,0x03,0x2b,0x7e,\
+         },\
+     },\
+ }

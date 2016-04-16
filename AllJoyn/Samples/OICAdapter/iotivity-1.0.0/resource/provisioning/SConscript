@@ -1,0 +1,63 @@
+#******************************************************************
+#
+# Copyright 2015 Samsung Electronics All Rights Reserved.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+Import('env')
+
+ocprovision_env = env.Clone()
+
+######################################################################
+# Build flags
+######################################################################
+ocprovision_env.AppendUnique(CPPPATH = [
+		'../include/',
+        '../csdk/stack/include',
+        '../csdk/logger/include',
+        '../oc_logger/include',
+		'../csdk/security/include',
+		'../csdk/security/provisioning/include',
+		'../csdk/security/provisioning/include/oxm',
+		'../csdk/security/provisioning/include/internal'
+		])
+
+target_os = env.get('TARGET_OS')
+if target_os not in ['windows', 'winrt']:
+	ocprovision_env.AppendUnique(CXXFLAGS = ['-std=c++0x', '-Wall', '-fPIC'])
+
+if target_os == 'android':
+	ocprovision_env.AppendUnique(CXXFLAGS = ['-frtti', '-fexceptions'])
+	ocprovision_env.AppendUnique(LIBPATH = [env.get('BUILD_DIR')])
+	ocprovision_env.AppendUnique(LIBS = ['ocspapi', 'octbstack', 'oc_logger', 'boost_thread', 'gnustl_shared', 'log'])
+
+if target_os in ['darwin', 'ios']:
+	ocprovision_env.AppendUnique(LIBPATH = [env.get('BUILD_DIR')])
+	ocprovision_env.AppendUnique(LIBS = ['octbstack', 'oc_logger'])
+
+######################################################################
+# Source files and Targets
+######################################################################
+ocprovision_src = [
+		'src/OCProvisioningManager.cpp'
+	]
+
+ocprovision = ocprovision_env.StaticLibrary('ocprovision', ocprovision_src)
+ocprovision_env.InstallTarget(ocprovision, 'libocprovision')
+
+if target_os in ['linux']:
+    SConscript('examples/SConscript')

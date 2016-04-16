@@ -152,7 +152,7 @@
     <value>キャンセル</value>
   </data>
   <data name="ConnectAutomaticallyText" xml:space="preserve">
-    <value>自動的に接続する</value>
+    <value>自動的に接続</value>
   </data>
   <data name="ConnectButtonContent" xml:space="preserve">
     <value>接続</value>
@@ -165,25 +165,25 @@
     <comment>Field label</comment>
   </data>
   <data name="NetworkConnectingMessageText" xml:space="preserve">
-    <value>ネットワーク要件を確認しています</value>
+    <value>ネットワークの要件をチェックしています</value>
   </data>
   <data name="NetworkPasswordPromptText" xml:space="preserve">
-    <value>ネットワーク セキュリティ キーを入力</value>
+    <value>ネットワーク セキュリティ キーを入力してください</value>
   </data>
   <data name="NextButtonContent" xml:space="preserve">
     <value>次へ</value>
   </data>
   <data name="NoNetworksText" xml:space="preserve">
-    <value>見つかりませんでした</value>
+    <value>見つかりません</value>
   </data>
   <data name="OOBEIntroText" xml:space="preserve">
     <value>いくつか基本的なことを確認してみましょう。</value>
   </data>
   <data name="OOBELanguageSelectText" xml:space="preserve">
-    <value>言語を選択</value>
+    <value>言語を選択してください</value>
   </data>
   <data name="OOBENetworkTitleText" xml:space="preserve">
-    <value>さぁ、接続してみましょう</value>
+    <value>接続しましょう</value>
   </data>
   <data name="OOBEWelcomeTitleText" xml:space="preserve">
     <value>Windows 10 IoT Core へようこそ</value>
@@ -192,23 +192,31 @@
     <value>Raspberry Pi 2</value>
     <comment>Board name</comment>
   </data>
+  <data name="Rpi3Name" xml:space="preserve">
+    <value>Raspberry Pi 3</value>
+    <comment>Board name</comment>
+  </data>
   <data name="DB410Name" xml:space="preserve">
     <value>DragonBoard 410c</value>
     <comment>Board name</comment>
   </data>
   <data name="SkipStepText" xml:space="preserve">
-    <value>このステップをスキップ</value>
+    <value>この手順をスキップする</value>
   </data>
   <data name="WifiText" xml:space="preserve">
     <value>Wi-Fi</value>
     <comment>Label for Wi-Fi list in options page</comment>
   </data>
   <data name="StartDevelopingText" xml:space="preserve">
-    <value> にアクセスしてください</value>
+    <value> にアクセスしてください</value>
     <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
   </data>
   <data name="VisitText" xml:space="preserve">
-    <value>開発を始めるには </value>
+    <value>開発を始めるには、</value>
+    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
+  </data>
+  <data name="WindowsOnDevicesUrlText" xml:space="preserve">
+    <value> www.windowsondevices.com</value>
     <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
   </data>
   <data name="KeyboardTitleText" xml:space="preserve">
@@ -220,19 +228,23 @@
     <comment>Field label</comment>
   </data>
   <data name="NetworkConnectedText" xml:space="preserve">
-    <value>接続完了</value>
+    <value>接続済み</value>
   </data>
   <data name="NetworkPreferencesText" xml:space="preserve">
     <value>ネットワークと Wi-Fi</value>
+  </data>
+  <data name="BluetoothPreferencesText" xml:space="preserve">
+    <value>Bluetooth</value>
+    <comment>Label for Setting item tp control Bluetooth pairing</comment>
   </data>
   <data name="SettingsPreferencesText" xml:space="preserve">
     <value>基本設定</value>
   </data>
   <data name="SettingsTitleText" xml:space="preserve">
-    <value>デバイス設定</value>
+    <value>デバイスの設定</value>
   </data>
   <data name="TimeZoneTitleText" xml:space="preserve">
-    <value>タイムゾーン</value>
+    <value>タイム ゾーン</value>
   </data>
   <data name="DeviceInfoText" xml:space="preserve">
     <value>デバイス情報</value>
@@ -242,7 +254,7 @@
     <comment>Text under the Tutorials button on the top bar</comment>
   </data>
   <data name="ConnectedDevicesText" xml:space="preserve">
-    <value>接続済みデバイス</value>
+    <value>接続中のデバイス</value>
   </data>
   <data name="Ipv4Text" xml:space="preserve">
     <value>IPv4</value>
@@ -260,15 +272,15 @@
     <value>ネットワーク情報</value>
   </data>
   <data name="StatusText" xml:space="preserve">
-    <value>ステータス</value>
+    <value>状態</value>
     <comment>Status of the network connection (e.g. not connected, limited, etc.)</comment>
   </data>
   <data name="TutorialGetCodingDescriptionText" xml:space="preserve">
-    <value>PC からリモートでコードを書く方法</value>
+    <value>PC からリモートでコードを記述する方法</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialGetCodingTitleText" xml:space="preserve">
-    <value>コードを取得</value>
+    <value>コーディング</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialGetConnectedDescriptionText" xml:space="preserve">
@@ -276,7 +288,7 @@
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialGetConnectedTitleText" xml:space="preserve">
-    <value>接続</value>
+    <value>接続する</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialGetStartedDescriptionText" xml:space="preserve">
@@ -284,7 +296,7 @@
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialGetStartedTitleText" xml:space="preserve">
-    <value>はじめに</value>
+    <value>開始する</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialHeaderText" xml:space="preserve">
@@ -292,11 +304,11 @@
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialHelloBlinkyDescriptionText" xml:space="preserve">
-    <value>デバイスの LED を切り替え</value>
+    <value>デバイスでの LED の切り替え</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialHelloBlinkyTitleText" xml:space="preserve">
-    <value>LED を点滅</value>
+    <value>LED の点滅</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialTitleText" xml:space="preserve">
@@ -315,10 +327,16 @@
     <value>点滅の頻度を変更することもできます。友だちをたくさん集めてデバイスの周りでダンス パーティーをしてみるのもいいですね。</value>
   </data>
   <data name="TutorialBlinkyBody5Text" xml:space="preserve">
-    <value>免責事項: ボードで LED を点滅させてレイヴ パーティーなどを開催した結果発生したいかなる損害にも Microsoft は責任を負いません。</value>
+    <value>免責事項: ボードで LED を点滅させてレイヴ パーティーなどを開催した結果発生したいかなる損害にも Microsoft は責任を負いません。</value>
+  </data>
+  <data name="TutorialBlinkyBody6Text_Rpi3" xml:space="preserve">
+    <value>Raspberry Pi 3 の場合は、LED を GPIO ピン 5 に接続します。</value>
+  </data>
+  <data name="TutorialBlinkyBody6Text_Dragonboard" xml:space="preserve">
+    <value>DragonBoard 410c の場合は、LED を GPIO ピン 115 に接続します。</value>
   </data>
   <data name="TutorialBlinkyTitle1Text" xml:space="preserve">
-    <value>LED を点滅</value>
+    <value>LED の点滅</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialBlinkyTitle2Text" xml:space="preserve">
@@ -426,6 +444,10 @@
   <data name="Tutorial.GetConnected.009.p" xml:space="preserve">
     <value>購入したら、接続しましょう!</value>
   </data>
+  <data name="Tutorial.GetConnected.010.620x350.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetConnected-004.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.011.p" xml:space="preserve">
     <value>画面の右上にあるのは "設定ギア" です。ギアをクリックし、[ネットワークと Wi-Fi] に移動します。そこでは、ローカル ネットワークに接続できます。</value>
   </data>
@@ -470,6 +492,14 @@
   </data>
   <data name="Tutorial.GetConnected.026.p" xml:space="preserve">
     <value>問題をデバッグする際に役立つ高度なネットワーク診断機能をメイン ページにいくつか追加しました。サポートが必要な場合は、www.windowsondevices.com にアクセスしてください</value>
+  </data>
+  <data name="Tutorial.GetConnected.027.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetConnected-006.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetCoding.001.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetCoding.jpg</value>
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetCoding.002.title" xml:space="preserve">
     <value>コードを取得</value>
@@ -544,5 +574,106 @@
   </data>
   <data name="ProblemsInitializingGPIOPin" xml:space="preserve">
     <value>GPIO ピンの初期化で問題が発生しました。</value>
+  </data>
+  <data name="BluetoothAttemptingToPairFormat" xml:space="preserve">
+    <value>{0} ({1}) とのペアリングを試みています</value>
+    <comment>Format string for message displayed when pairing attempt starts</comment>
+  </data>
+  <data name="BluetoothConfirmOnlyFormat" xml:space="preserve">
+    <value>{0}({1}) とのペアリング</value>
+    <comment>Format string for message displayed when ConfirmOnly ceremony is invoked</comment>
+  </data>
+  <data name="BluetoothConfirmPinMatchFormat" xml:space="preserve">
+    <value>デバイスに表示されている PIN は、{0} と一致しますか?</value>
+    <comment>Format string for message displayed when ConfirmPinMatch ceremony is invoked</comment>
+  </data>
+  <data name="BluetoothDisplayPinFormat" xml:space="preserve">
+    <value>ペアリング先デバイスで、この PIN を入力してください: {0}</value>
+    <comment>Format string for message displayed when DisplayPin ceremony is invoked</comment>
+  </data>
+  <data name="BluetoothInboundRegistrationAlreadyDoneFormat" xml:space="preserve">
+    <value>受信ペアリング用に既に登録されている、サポートされているセレモニー: {0}</value>
+    <comment>Format string for message displayed when Inbound pairing handler registration already done</comment>
+  </data>
+  <data name="BluetoothInboundRegistrationFailed" xml:space="preserve">
+    <value>受信ペアリング用に登録できませんでした。</value>
+    <comment>Message displayed when Inbound pairing handler registration fails</comment>
+  </data>
+  <data name="BluetoothInboundRegistrationSucceededFormat" xml:space="preserve">
+    <value>受信ペアリング用に正しく登録されている、サポートされているセレモニー: {0}</value>
+    <comment>Format string for message displayed when Inbound pairing handler registration succeeds</comment>
+  </data>
+  <data name="BluetoothPairingFailureFormat" xml:space="preserve">
+    <value>ペアリングの結果は {0} でした: {1} ({2}) とペアリングできませんでした</value>
+    <comment>Format string for message displayed when pairing attempt fails</comment>
+  </data>
+  <data name="BluetoothPairingSuccessFormat" xml:space="preserve">
+    <value>{0} ({1}) とのペアリングに成功しました</value>
+    <comment>Format string for message displayed when pairing attempt succeeds</comment>
+  </data>
+  <data name="BluetoothStartedWatching" xml:space="preserve">
+    <value>このデバイスは、他の Bluetooth デバイスを検索しています。他の Bluetooth デバイスからこのデバイスを検出することもできます。</value>
+    <comment>Message display when "Start Watcher" button is pressed</comment>
+  </data>
+  <data name="BluetoothStoppedWatching" xml:space="preserve">
+    <value>Bluetooth デバイスの監視を停止しました</value>
+    <comment>Message display when "Stop Watcher" button is pressed</comment>
+  </data>
+  <data name="BluetoothUnpairingFailureFormat" xml:space="preserve">
+    <value>ペアリング解除の結果は {0} でした: {1} ({2}) からペアリングを解除できませんでした</value>
+    <comment>Format string for message displayed when unpairing attempt fails</comment>
+  </data>
+  <data name="BluetoothUnpairingSuccessFormat" xml:space="preserve">
+    <value>{0} ({1}) から正常にペアリングを解除しました</value>
+    <comment>Format string for message displayed when unpairing attempt succeeds</comment>
+  </data>
+  <data name="PinLabelTextBox.Text" xml:space="preserve">
+    <value>PIN を入力してください:</value>
+    <comment>Message on flyout control for PIN entry for ProvidePin ceremony</comment>
+  </data>
+  <data name="BluetoothPairButtonContent" xml:space="preserve">
+    <value>ペアリング</value>
+    <comment>Text displayed on the button to pair Bluetooth list item</comment>
+  </data>
+  <data name="BluetoothUnpairButtonContent" xml:space="preserve">
+    <value>ペアリングの解除</value>
+    <comment>Text displayed on the button to unpair Bluetooth list item</comment>
+  </data>
+  <data name="BluetoothDeviceStatePairedText" xml:space="preserve">
+    <value>ペアリング済み</value>
+  </data>
+  <data name="BluetoothDeviceStateReadyToPairText" xml:space="preserve">
+    <value>ペアリングの準備完了</value>
+  </data>
+  <data name="BluetoothManageDevicesText" xml:space="preserve">
+    <value>Bluetooth デバイスの管理</value>
+  </data>
+  <data name="BluetoothWatcherToggleLabel" xml:space="preserve">
+    <value>Bluetooth</value>
+    <comment>Label text for Bluetooth watcher toggle switch</comment>
+  </data>
+  <data name="BluetoothNoDeviceAvailableFormat" xml:space="preserve">
+    <value>このコンピューターで使用可能な Bluetooth アダプターが見つかりません:
+{0}</value>
+    <comment>Message displayed on systems which do not have a Bluetooth adapter. The new line before {0} is deliberate and should be kept</comment>
+  </data>
+  <data name="BluetoothEnterPINText" xml:space="preserve">
+    <value>PIN を入力してください:</value>
+  </data>
+  <data name="BluetoothDeviceStateUnknownText" xml:space="preserve">
+    <value>不明な状態</value>
+  </data>
+  <data name="BluetoothInboundPairingRequestFormat" xml:space="preserve">
+    <value>受信要求: {0}
+{1}</value>
+    <comment>Format for message displayed when an inbounbd pairing request is received</comment>
+  </data>
+  <data name="EnableScreensaverText" xml:space="preserve">
+    <value>スクリーンセーバー</value>
+    <comment>Toggle switch for enabling the screensaver</comment>
+  </data>
+  <data name="NoDeviceName" xml:space="preserve">
+    <value>&lt;デバイス名がありません&gt;</value>
+    <comment>This is shown when we fail to retrieve a valid device name (very strange case)</comment>
   </data>
 </root>

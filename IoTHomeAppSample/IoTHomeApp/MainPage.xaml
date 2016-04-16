@@ -1,0 +1,23 @@
+﻿<Page
+    x:Class="ShellHomeApp.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ShellHomeApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource SystemControlBackgroundChromeBlackHighBrush}">
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button x:Name="OemApp1" Content="Oem App1" Background="DarkRed" Foreground="White"  Margin="6" Width="200" Height="200" Click="OemApp1_Click"/>
+            <Button x:Name="OemApp2" Content="Oem App2" Background="DarkGreen" Foreground="White" Margin="6" Width="200" Height="200" Grid.Column="1" Click="OemApp2_Click"/>
+        </Grid>
+    </Grid>
+</Page>

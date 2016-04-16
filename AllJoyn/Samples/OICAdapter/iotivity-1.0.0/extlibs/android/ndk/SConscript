@@ -1,0 +1,37 @@
+import os, string, sys, subprocess, struct
+
+Import('env')
+
+env = env.Clone()
+ndk_env = env.Clone()
+
+target_os = env.get('TARGET_OS')
+target_arch = env.get('TARGET_ARCH')
+
+host_os = sys.platform
+
+######################################################################
+# Build flags
+######################################################################
+src_dir = env.get('SRC_DIR')
+path = os.path.join(src_dir, 'extlibs', 'android', 'ndk', 'android-ndk-r10d')
+
+# check 'ndk' library, if it doesn't exits, ask user to download it
+if not os.path.exists(path):
+	ndk_env = Environment(ENV = os.environ)
+	if host_os == 'linux2' :
+		archType = 8 * struct.calcsize("P")
+		if archType == 64:
+			env.Download('android-ndk-r10d.bin', 'http://dl.google.com/android/ndk/android-ndk-r10d-linux-x86_64.bin')
+		else:
+			env.Download('android-ndk-r10d.bin', 'http://dl.google.com/android/ndk/android-ndk-r10d-linux-x86.bin')
+
+		os.system("chmod a+x android-ndk-r10d.bin")
+		os.system("./android-ndk-r10d.bin")
+	else:
+		if target_arch in ['x86_64']:
+			env.Download('android-ndk-r10d', 'http://dl.google.com/android/ndk/android-ndk-r10d-windows-x86_64.exe')
+		if target_arch in ['x86']:
+			env.Download('android-ndk-r10d', 'http://dl.google.com/android/ndk/android-ndk-r10d-windows-x86.exe')
+
+

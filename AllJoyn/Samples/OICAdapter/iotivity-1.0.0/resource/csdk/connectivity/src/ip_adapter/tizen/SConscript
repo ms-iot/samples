@@ -1,0 +1,12 @@
+#######################################################
+#       Build IP adapter for Tizen
+#######################################################
+
+Import('env', 'src_dir')
+import os.path
+
+env.ParseConfig("pkg-config --cflags --libs capi-network-wifi")
+
+src_files = [ 'caipnwmonitor.c' ]
+
+Return('src_files')

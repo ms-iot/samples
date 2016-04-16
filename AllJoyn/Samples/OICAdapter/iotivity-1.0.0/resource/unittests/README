@@ -1,0 +1,35 @@
+//---------------------------------------------------------------------
+// NOTICE - Transition to SCONS
+//---------------------------------------------------------------------
+
+The IoTivity build system is transitioning to SCONS. Although the
+makefiles are still available (until v1.0) and some developers are
+still using them, they are currently no longer supported. To learn more
+about building using SCONS see Readme.scons.txt in the repository root
+directory. The build steps used in continuous integration can be found
+in auto_build.sh which is also in the the repository root directory.
+
+To dynamically link with the Google Unit test library,
+add <src_dir>/extlibs/gtest/gtest-1.7.0/lib/.libs/ to LD_LIBRARY_PATH
+
+//---------------------------------------------------------------------
+
+The unittests folder contains unit tests for C++ APIs.
+It uses Google Test for the unit tests. Please note that the unit tests are
+only to test the functionality of public APIs.
+It is not a system or end-to-end test.
+
+1. To run the unit test, first build the unit tests with the following command
+   from root 'iotivity' folder:
+   scons unittests
+   NOTE: Just running 'scons' from 'iotivity' folder will build the entire stack along
+   with unit tests.
+
+2. Export LD_LIBRARY_PATH before running the unit tests.
+   Example:
+   export LD_LIBRARY_PATH=/home/tester/Documents/iotivity/extlibs/gtest/gtest-1.7.0/lib/.libs/
+
+3. Run the unit test by issuing the following command from root 'iotivity' folder:
+   ./out/<TARGET_OS>/<TARGET_ARCH>/<release/debug>/resource/unittests/unittests
+   Example: ./out/linux/x86_64/release/resource/unittests/unittests
+

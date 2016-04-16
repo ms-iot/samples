@@ -1,0 +1,53 @@
+#******************************************************************
+#
+# Copyright 2015 Samsung Electronics All Rights Reserved.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+##
+# 'service' sub-project main build script
+#
+##
+Import('env')
+
+target_os = env.get('TARGET_OS')
+
+if target_os not in ['arduino','darwin']:
+    # Build things manager project
+    SConscript('things-manager/SConscript')
+
+    # Build notification manager project
+    SConscript('resource-hosting/SConscript')
+
+    # Build resource-encapsulation project
+    SConscript('resource-encapsulation/SConscript')
+
+    # Build resource-container project
+    SConscript('resource-container/SConscript')
+
+    # Build simulator module
+    if target_os in ['linux'] and env.get('SIMULATOR', False):
+        SConscript('simulator/SConscript')	
+    
+    # Build resource directory project
+    if env.get('WITH_RD') == '1':
+        SConscript('resource-directory/SConscript')
+
+# Build EasySetup module
+if target_os in ['arduino','android', 'linux']:
+    SConscript('easy-setup/SConscript')
+

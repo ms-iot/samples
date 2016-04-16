@@ -1,0 +1,51 @@
+# SConscript file for Local PKI project
+
+Import('env')
+
+x509_env = env.Clone()
+
+EXTLIBS_DIR = "/extlibs/"
+
+# Includes
+INCLUDE_DIRS = []
+
+src_dir = x509_env.get('SRC_DIR')
+
+SConscript(src_dir + '/extlibs/asn1cert/SConscript')
+
+#Internal sources
+INCLUDE_DIRS.append(src_dir +'/resource/csdk/security/provisioning/ck_manager/include/');
+INCLUDE_DIRS.append(src_dir + '/resource/csdk/connectivity/inc/pkix/');
+
+#External sources
+INCLUDE_DIRS.append(src_dir + '/extlibs/tinydtls/ecc/');
+INCLUDE_DIRS.append(src_dir + '/extlibs/tinydtls/sha2/');
+INCLUDE_DIRS.append(src_dir + '/extlibs/asn1cert/');
+INCLUDE_DIRS.append(src_dir + '/extlibs/cjson/');
+
+#OIC incude
+INCLUDE_DIRS.append(src_dir + '/resource/csdk/security/include/');
+INCLUDE_DIRS.append(src_dir + '/resource/csdk/security/include/internal/');
+INCLUDE_DIRS.append(src_dir + '/resource/csdk/stack/include/');
+
+DEFINES = ['WITH_SHA256', 'uECC_CURVE=uECC_secp256r1', 'X509_DEBUG']
+
+x509_env.AppendUnique(CPPPATH = INCLUDE_DIRS)
+x509_env.AppendUnique(CPPDEFINES = DEFINES)
+
+#Encoder/Decoder source code
+ckmanager_src = Glob('src/*.c')
+
+#Build static libraries
+ckmStaticLib = x509_env.StaticLibrary('CKManager', ckmanager_src)
+
+x509_env.InstallTarget(ckmStaticLib, 'libCKManager')
+
+#x509_env.AppendUnique(LIBS = ['ocsrm'])
+x509_env.AppendUnique(LIBS = ['asn1'])
+x509_env.AppendUnique(LIBS = ['Base64'])
+x509_env.AppendUnique(LIBS = ['Json'])
+
+SConscript('tools/SConscript')
+SConscript('sample/SConscript')
+SConscript('unittest/SConscript')

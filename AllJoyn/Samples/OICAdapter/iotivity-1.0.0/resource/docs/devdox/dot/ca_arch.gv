@@ -1,0 +1,283 @@
+//******************************************************************
+//
+// Copyright 2015 Samsung Electronics All Rights Reserved.
+//
+//-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+//-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+digraph G {
+    label = "Network Interface Creation";
+    fontsize = 10;
+
+    edge [
+        fontsize = 10
+    ]
+
+    node [
+        fontsize = 10,
+    ]
+
+ // ----
+
+    msg_handler [
+        shape = none
+        margin = 0
+        label = <<table border="1" cellspacing="0" cellborder="0">
+                    <tr><td port="a" tooltip="Message Handler" bgcolor="gray">Message Handler</td></tr>
+                    <hr/>
+                    <tr><td align="left" href="\ref g_threadPoolHandle" tooltip="-g_threadPoolHandle: ca_thread_pool_t">-g_threadPoolHandle: ca_thread_pool_t</td></tr>
+                    <tr><td align="left" href="\ref g_sendThread" tooltip="-g_sendThread: CAQueueingThread_t">-g_sendThread: CAQueueingThread_t</td></tr>
+                    <tr><td align="left" href="\ref g_receiveThread" tooltip="-g_receiveThread: CAQueueingThread_t">-g_receiveThread: CAQueueingThread_t</td></tr>
+                    <tr><td align="left" href="\ref g_retransmissionContext" tooltip="-g_retransmissionContext: CARetransmission_t">-g_retransmissionContext: CARetransmission_t</td></tr>
+                    <tr><td align="left" href="\ref g_requestHandler" tooltip="-g_requestHandler: CARequestCallback">-g_requestHandler: CARequestCallback</td></tr>
+                    <tr><td align="left" href="\ref g_responseHandler" tooltip="-g_responseHandler: CAResponseCallback">-g_responseHandler: CAResponseCallback</td></tr>
+                    <hr/>
+                    <tr><td align="left" href="\ref CAInitializeMessageHandler()" tooltip="+CAInitializeMessageHandler">+CAInitializeMessageHandler</td></tr>
+                    <tr><td align="left" href="\ref CATerminateMessageHandler()" tooltip="+CATerminateMessageHandler">+CATerminateMessageHandler</td></tr>
+                </table>>
+    ]
+
+    threadpool [
+        shape = none
+        margin = 0
+        label = <<table border="1" cellspacing="0" cellborder="0">
+                    <tr><td href="\ref ca_thread_pool_t" tooltip="ca_threadpool_t" bgcolor="gray">ca_threadpool_t</td></tr>
+                    <hr/>
+                    <tr><td> </td></tr>
+                    <hr/>
+                    <tr><td align="left" href="\ref ca_thread_pool_init()" tooltip="+ca_thread_pool_init">+ca_thread_pool_init</td></tr>
+                    <tr><td align="left" href="\ref ca_thread_pool_free()" tooltip="+ca_thread_pool_free">+ca_thread_pool_free</td></tr>
+                    <tr><td align="left" href="\ref ca_thread_pool_add_task()" tooltip="+ca_thread_pool_add_task">+ca_thread_pool_add_task</td></tr>
+                </table>>
+    ]
+
+
+    thread_out [
+        shape = none
+        margin = 0
+        label = <<table border="1" cellspacing="0" cellborder="0">
+                    <tr><td href="\ref CASendThreadProcess()" tooltip="Send Thread" bgcolor="gray">Send Thread</td></tr>
+                    <hr/>
+                    <tr><td> </td></tr>
+                    <hr/>
+                    <tr><td align="left" href="\ref CASendThreadProcess()" tooltip="+CASendThreadProcess">+CASendThreadProcess</td></tr>
+                </table>>
+    ]
+
+    thread_in [
+        shape = none
+        margin = 0
+        label = <<table border="1" cellspacing="0" cellborder="0">
+                    <tr><td href="\ref CAReceiveThreadProcess()" tooltip="Receive Thread" bgcolor="gray">Receive Thread</td></tr>
+                    <hr/>
+                    <tr><td> </td></tr>
+                    <hr/>
+                    <tr><td align="left" href="\ref CAReceiveThreadProcess()" tooltip="+CAReceiveThreadProcess">+CAReceiveThreadProcess</td></tr>
+                </table>>
+    ]
+
+    thread_retrans [
+        shape = none
+        margin = 0
+        label = <<table border="1" cellspacing="0" cellborder="0">
+                    <tr><td href="\ref CASendUnicastData()" tooltip="Retransmit Thread" bgcolor="gray">Retransmit Thread</td></tr>
+                    <hr/>
+                    <tr><td> </td></tr>
+                    <hr/>
+                    <tr><td align="left" href="\ref CASendUnicastData()" tooltip="+CASendUnicastData">+CASendUnicastData</td></tr>
+                </table>>
+    ]
+
+    control [
+        tooltip = "Interface Controller",
+        label = "{Interface Controller| +CAInitializeAdapters()\l\n \n }",
+        URL = "\ref CAInitializeAdapters()"
+
+
+        shape = none
+        margin = 0
+        label = <<table border="1" cellspacing="0" cellborder="0">
+                    <tr><td href="\ref CAInitializeAdapters()" tooltip="Interface Controller" bgcolor="gray">Interface Controller</td></tr>
+                    <hr/>
+                    <tr><td align="left" href="\ref g_adapterHandler" tooltip="-g_adapterHandler: CAConnectivityHandler_t[]">-g_adapterHandler: CAConnectivityHandler_t[]</td></tr>
+                    <tr><td align="left" href="\ref g_networkPacketReceivedCallback" tooltip="-g_networkPacketReceivedCallback: CANetworkPacketReceivedCallback">-g_networkPacketReceivedCallback: CANetworkPacketReceivedCallback</td></tr>
+
+                    <tr><td align="left" href="\ref g_networkChangeCallback" tooltip="-g_networkChangeCallback: CANetworkChangeCallback">-g_networkChangeCallback: CANetworkChangeCallback</td></tr>
+                    <hr/>
+                    <tr><td align="left" href="\ref CAInitializeAdapters()" tooltip="+CAInitializeAdapters">+CAInitializeAdapters</td></tr>
+                    <tr><td align="left" href="\ref CATerminateAdapters()" tooltip="+CATerminateAdapters">+CATerminateAdapters</td></tr>
+                    <tr><td align="left" href="\ref CAStartAdapter()" tooltip="+CAStartAdapter">+CAStartAdapter</td></tr>
+                    <tr><td align="left" href="\ref CAStopAdapter()" tooltip="+CAStopAdapter">+CAStopAdapter</td></tr>
+                    <tr><td align="left" href="\ref CAGetNetworkInfo()" tooltip="+CAGetNetworkInfo">+CAGetNetworkInfo</td></tr>
+                    <tr><td align="left" href="\ref CAStartListeningServerAdapters()" tooltip="+CAStartListeningServerAdapters">+CAStartListeningServerAdapters</td></tr>
+                    <tr><td align="left" href="\ref CAStartDiscoveryServerAdapters()" tooltip="+CAStartDiscoveryServerAdapters">+CAStartDiscoveryServerAdapters</td></tr>
+                </table>>
+    ]
+
+
+    conn_handler [
+        shape = none
+        margin = 0
+        label = <<table border="1" cellspacing="0" cellborder="0">
+                    <tr><td href="\ref CAConnectivityHandler_t" tooltip="CAConnectivityHandler_t" bgcolor="gray">CAConnectivityHandler_t</td></tr>
+                    <hr/>
+                    <tr><td> </td></tr>
+                    <hr/>
+                    <tr><td align="left" href="\ref CAConnectivityHandler_t::startAdapter" tooltip="+startAdapter: CAAdapterStart">+startAdapter: CAAdapterStart</td></tr>
+                    <tr><td align="left" href="\ref CAConnectivityHandler_t::startListenServer" tooltip="+startListenServer: CAAdapterStartListeningServer">+startListenServer: CAAdapterStartListeningServer</td></tr>
+                    <tr><td align="left" href="\ref CAConnectivityHandler_t::startDiscoveryServer" tooltip="+startDiscoveryServer: CAAdapterStartDiscoveryServer">+startDiscoveryServer: CAAdapterStartDiscoveryServer</td></tr>
+                    <tr><td align="left" href="\ref CAConnectivityHandler_t::sendData" tooltip="+sendData: CAAdapterSendUnicastData">+sendData: CAAdapterSendUnicastData</td></tr>
+                    <tr><td align="left" href="\ref CAConnectivityHandler_t::sendDataToAll" tooltip="+sendDataToAll: CAAdapterSendMulticastData">+sendDataToAll: CAAdapterSendMulticastData</td></tr>
+                    <tr><td align="left" href="\ref CAConnectivityHandler_t::GetnetInfo" tooltip="+GetnetInfo: CAAdapterGetNetworkInfo">+GetnetInfo: CAAdapterGetNetworkInfo</td></tr>
+                    <tr><td align="left" href="\ref CAConnectivityHandler_t::readData" tooltip="+readData: CAAdapterReadData">+readData: CAAdapterReadData</td></tr>
+                    <tr><td align="left" href="\ref CAConnectivityHandler_t::stopAdapter" tooltip="+stopAdapter: CAAdapterStop">+stopAdapter: CAAdapterStop</td></tr>
+                    <tr><td align="left" href="\ref CAConnectivityHandler_t::terminate" tooltip="+terminate: CAAdapterTerminate">+terminate: CAAdapterTerminate</td></tr>
+                </table>>
+
+
+    ]
+
+    adapt01 [
+        shape = none
+        margin = 0
+        label = <<table border="1" cellspacing="0" cellborder="0">
+                    <tr><td href="\ref CAInitializeEthernet" tooltip="Ethernet Adapter" bgcolor="gray">Ethernet Adapter</td></tr>
+                    <hr/>
+                    <tr><td> </td></tr>
+                    <hr/>
+                    <tr><td align="left" href="\ref CAInitializeEthernet" tooltip="+CAInitializeEthernet">+CAInitializeEthernet</td></tr>
+                    <tr><td align="left" href="\ref CATerminateEthernet()" tooltip="+CATerminateEthernet">+CATerminateEthernet</td></tr>
+                    <tr><td align="left" href="\ref CAStartEthernet()" tooltip="+CAStartEthernet">+CAStartEthernet</td></tr>
+                    <tr><td align="left" href="\ref CAStopEthernet()" tooltip="+CAStopEthernet">+CAStopEthernet</td></tr>
+                    <tr><td align="left" href="\ref CAStartEthernetListeningServer()" tooltip="+CAStartEthernetListeningServer">+CAStartEthernetListeningServer</td></tr>
+                    <tr><td align="left" href="\ref CAStartEthernetDiscoveryServer()" tooltip="+CAStartEthernetDiscoveryServer">+CAStartEthernetDiscoveryServer</td></tr>
+                    <tr><td align="left" href="\ref CAGetEthernetInterfaceInformation" tooltip="+CAGetEthernetInterfaceInformation">+CAGetEthernetInterfaceInformation</td></tr>
+                    <tr><td align="left" href="\ref CASendEthernetUnicastData()" tooltip="+CASendEthernetUnicastData">+CASendEthernetUnicastData</td></tr>
+                    <tr><td align="left" href="\ref CASendEthernetMulticastData()" tooltip="+CASendEthernetMulticastData">+CASendEthernetMulticastData</td></tr>
+                    <tr><td align="left" href="\ref CAReadEthernetData()" tooltip="+CAReadEthernetData">+CAReadEthernetData</td></tr>
+                </table>>
+    ]
+
+    adapt02 [
+        tooltip = "WiFi Adapter",
+        label = "{WiFi Adapter| +CAInitializeWifi()\l\n \n }",
+        URL = "\ref CAInitializeWifi()"
+
+        shape = none
+        margin = 0
+        label = <<table border="1" cellspacing="0" cellborder="0">
+                    <tr><td href="\ref CAInitializeWifi" tooltip="WiFi Adapter" bgcolor="gray">WiFi Adapter</td></tr>
+                    <hr/>
+                    <tr><td> </td></tr>
+                    <hr/>
+                    <tr><td align="left" href="\ref CAInitializeWifi()" tooltip="+CAInitializeWifi">+CAInitializeWifi</td></tr>
+                    <tr><td align="left" href="\ref CATerminateWIFI()" tooltip="+CATerminateWIFI">+CATerminateWIFI</td></tr>
+                    <tr><td align="left" href="\ref CAStartWIFI()" tooltip="+CAStartWIFI">+CAStartWIFI</td></tr>
+                    <tr><td align="left" href="\ref CAStopWIFI()" tooltip="+CAStopWIFI">+CAStopWIFI</td></tr>
+                    <tr><td align="left" href="\ref CAStartWIFIListeningServer()" tooltip="+CAStartWIFIListeningServer">+CAStartWIFIListeningServer</td></tr>
+                    <tr><td align="left" href="\ref CAStartWIFIDiscoveryServer()" tooltip="+CAStartWIFIDiscoveryServer">+CAStartWIFIDiscoveryServer</td></tr>
+                    <tr><td align="left" href="\ref CAGetWIFIInterfaceInformation()" tooltip="+CAGetWIFIInterfaceInformation">+CAGetWIFIInterfaceInformation</td></tr>
+                    <tr><td align="left" href="\ref CASendWIFIUnicastData()" tooltip="+CASendWIFIUnicastData">+CASendWIFIUnicastData</td></tr>
+                    <tr><td align="left" href="\ref CASendWIFIMulticastData()" tooltip="+CASendWIFIMulticastData">+CASendWIFIMulticastData</td></tr>
+                    <tr><td align="left" href="\ref CAReadWIFIData()" tooltip="+CAReadWIFIData">+CAReadWIFIData</td></tr>
+                </table>>
+    ]
+
+    adapt03 [
+        tooltip = "EDR Adapter",
+        label = "{EDR Adapter| +CAInitializeEDR()\l\n \n }",
+        URL = "\ref CAInitializeEDR()"
+
+        shape = none
+        margin = 0
+        label = <<table border="1" cellspacing="0" cellborder="0">
+                    <tr><td href="\ref CAInitializeEDR" tooltip="EDR Adapter" bgcolor="gray">EDR Adapter</td></tr>
+                    <hr/>
+                    <tr><td> </td></tr>
+                    <hr/>
+                    <tr><td align="left" href="\ref CAInitializeEDR" tooltip="+CAInitializeEDR">+CAInitializeEDR</td></tr>
+                    <tr><td align="left" href="\ref CATerminateEDR()" tooltip="+CATerminateEDR">+CATerminateEDR</td></tr>
+                    <tr><td align="left" href="\ref CAStartEDR()" tooltip="+CAStartEDR">+CAStartEDR</td></tr>
+                    <tr><td align="left" href="\ref CAStopEDR()" tooltip="+CAStopEDR">+CAStopEDR</td></tr>
+                    <tr><td align="left" href="\ref CAStartEDRListeningServer()" tooltip="+CAStartEDRListeningServer">+CAStartEDRListeningServer</td></tr>
+                    <tr><td align="left" href="\ref CAStartEDRDiscoveryServer()" tooltip="+CAStartEDRDiscoveryServer">+CAStartEDRDiscoveryServer</td></tr>
+                    <tr><td align="left" href="\ref CAGetEDRInterfaceInformation" tooltip="+CAGetEDRInterfaceInformation">+CAGetEDRInterfaceInformation</td></tr>
+                    <tr><td align="left" href="\ref CASendEDRUnicastData()" tooltip="+CASendEDRUnicastData">+CASendEDRUnicastData</td></tr>
+                    <tr><td align="left" href="\ref CASendEDRMulticastData()" tooltip="+CASendEDRMulticastData">+CASendEDRMulticastData</td></tr>
+                    <tr><td align="left" href="\ref CAReadEDRData()" tooltip="+CAReadEDRData">+CAReadEDRData</td></tr>
+                </table>>
+    ]
+
+    adapt04 [
+        tooltip = "LE Adapter",
+        label = "{LE Adapter| +CAInitializeLE()\l\n \n }",
+        URL = "\ref CAInitializeLE()"
+
+        shape = none
+        margin = 0
+        label = <<table border="1" cellspacing="0" cellborder="0">
+                    <tr><td href="\ref CAInitializeLE" tooltip="LE Adapter" bgcolor="gray">LE Adapter</td></tr>
+                    <hr/>
+                    <tr><td> </td></tr>
+                    <hr/>
+                    <tr><td align="left" href="\ref CAInitializeLE()" tooltip="+CAInitializeLE">+CAInitializeLE</td></tr>
+                    <tr><td align="left" href="\ref CATerminateLE()" tooltip="+CATerminateLE">+CATerminateLE</td></tr>
+                    <tr><td align="left" href="\ref CAStartLE()" tooltip="+CAStartLE">+CAStartLE</td></tr>
+                    <tr><td align="left" href="\ref CAStopLE" tooltip="+CAStopLE">+CAStopLE</td></tr>
+                    <tr><td align="left" href="\ref CAStartLEListeningServer()" tooltip="+CAStartLEListeningServer">+CAStartLEListeningServer</td></tr>
+                    <tr><td align="left" href="\ref CAStartLEDiscoveryServer()" tooltip="+CAStartLEDiscoveryServer">+CAStartLEDiscoveryServer</td></tr>
+                    <tr><td align="left" href="\ref CAGetLEInterfaceInformation()" tooltip="+CAGetLEInterfaceInformation">+CAGetLEInterfaceInformation</td></tr>
+                    <tr><td align="left" href="\ref CASendLEUnicastData()" tooltip="+CASendLEUnicastData">+CASendLEUnicastData</td></tr>
+                    <tr><td align="left" href="\ref CASendLEMulticastData()" tooltip="+CASendLEMulticastData">+CASendLEMulticastData</td></tr>
+                    <tr><td align="left" href="\ref CAReadLEData()" tooltip="+CAReadLEData">+CAReadLEData</td></tr>
+                </table>>
+    ]
+
+
+    // UML Inheritance relationships
+    edge [
+        arrowtail = open,
+        dir = back
+    ]
+
+    {
+        conn_handler -> adapt01
+        conn_handler -> adapt02
+        conn_handler -> adapt03
+        conn_handler -> adapt04
+    }
+
+    // UML Aggregation relationships
+    edge [
+        arrowtail = odiamond,
+        dir = back
+    ]
+
+    msg_handler -> control
+    msg_handler -> threadpool
+    msg_handler -> thread_out
+    msg_handler -> thread_in
+    msg_handler -> thread_retrans
+    control -> conn_handler
+
+
+    // Additional 'layout' tweaks
+    {rank = same control threadpool thread_out thread_in thread_retrans}
+    edge [
+        style = invis
+    ]
+    threadpool -> thread_out -> control -> thread_in -> thread_retrans
+}

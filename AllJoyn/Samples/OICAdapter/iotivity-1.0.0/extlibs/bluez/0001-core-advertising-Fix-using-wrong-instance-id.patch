@@ -1,0 +1,73 @@
+From 31fafe0dd2265cd181734ee909554f24fd3c3c20 Mon Sep 17 00:00:00 2001
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Date: Fri, 26 Jun 2015 14:52:22 +0300
+Subject: [PATCH] core/advertising: Fix using wrong instance id
+
+The instance id shall be limited to the number of instance the kernel
+support, and since this will probably be quite small the ids should be
+reused once the client unregistered.
+---
+ src/advertising.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
+
+diff --git a/src/advertising.c b/src/advertising.c
+index d6ab084..3763d85 100644
+--- a/src/advertising.c
++++ b/src/advertising.c
+@@ -48,7 +48,7 @@ struct btd_advertising {
+ 	uint16_t mgmt_index;
+ 	uint8_t max_adv_len;
+ 	uint8_t max_ads;
+-	unsigned int next_instance_id;
++	unsigned int instance_bitmap;
+ };
+ 
+ #define AD_TYPE_BROADCAST 0
+@@ -155,6 +155,8 @@ static void advertisement_remove(void *data)
+ 
+ 	queue_remove(ad->manager->ads, ad);
+ 
++	util_clear_uid(&ad->manager->instance_bitmap, ad->instance);
++
+ 	g_idle_add(advertisement_free_idle_cb, ad);
+ }
+ 
+@@ -633,6 +635,7 @@ static DBusMessage *register_advertisement(DBusConnection *conn,
+ 	DBusMessageIter args;
+ 	struct advertisement *ad;
+ 	struct dbus_obj_match match;
++	uint8_t instance;
+ 
+ 	DBG("RegisterAdvertisement");
+ 
+@@ -649,7 +652,8 @@ static DBusMessage *register_advertisement(DBusConnection *conn,
+ 	if (queue_find(manager->ads, match_advertisement, &match))
+ 		return btd_error_already_exists(msg);
+ 
+-	if (queue_length(manager->ads) >= manager->max_ads)
++	instance = util_get_uid(&manager->instance_bitmap, manager->max_ads);
++	if (!instance)
+ 		return btd_error_failed(msg, "Maximum advertisements reached");
+ 
+ 	dbus_message_iter_next(&args);
+@@ -664,7 +668,7 @@ static DBusMessage *register_advertisement(DBusConnection *conn,
+ 
+ 	DBG("Registered advertisement at path %s", match.path);
+ 
+-	ad->instance = manager->next_instance_id++;
++	ad->instance = instance;
+ 	ad->manager = manager;
+ 
+ 	queue_push_tail(manager->ads, ad);
+@@ -787,8 +791,6 @@ advertising_manager_create(struct btd_adapter *adapter)
+ 
+ 	manager->ads = queue_new();
+ 
+-	manager->next_instance_id = 1;
+-
+ 	return manager;
+ }
+ 
+-- 
+2.1.4
+

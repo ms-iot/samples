@@ -1,0 +1,42 @@
+CSR DEFINITIONS ::= BEGIN
+
+-- Certificate requests
+
+CertificationRequest ::= SEQUENCE {
+    certificationRequestInfo CertificationRequestInfo,
+    signatureAlgorithm AlgorithmIdentifier,
+    signature          BIT STRING
+}
+
+CertificationRequestInfo ::= SEQUENCE {
+    version       INTEGER { v1(0) },
+    subject       Name,
+    subjectPKInfo SubjectPublicKeyInfo
+}
+
+SubjectPublicKeyInfo ::= SEQUENCE {
+    algorithm        AlgorithmIdentifier,
+    subjectPublicKey BIT STRING
+}
+
+AlgorithmIdentifier ::= SEQUENCE {
+    algorithm       OBJECT IDENTIFIER,
+    id-ecPublicKey  OBJECT IDENTIFIER OPTIONAL,
+    nul             NULL OPTIONAL
+}
+
+Name ::= RDNSequence
+
+RDNSequence ::= SEQUENCE OF RelativeDistinguishedName
+
+RelativeDistinguishedName ::= SET OF AttributeTypeAndValue
+
+AttributeTypeAndValue ::= SEQUENCE {
+     type     AttributeType,
+     value    AttributeValue }
+
+AttributeType ::= OBJECT IDENTIFIER
+
+AttributeValue ::= UTF8String
+
+END

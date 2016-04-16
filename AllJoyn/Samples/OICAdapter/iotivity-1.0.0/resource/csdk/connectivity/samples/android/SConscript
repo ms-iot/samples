@@ -1,0 +1,56 @@
+##
+# Building sample application
+##
+
+Import('env')
+
+app_env = env.Clone()
+
+ca_os = app_env.get('TARGET_OS')
+ca_transport = app_env.get('TARGET_TRANSPORT')
+secured = app_env.get('SECURED')
+
+root_dir = './../../'
+main_dir  = Dir('.').srcnode().abspath
+jni_dir = main_dir + '/sample_serivce/android/jni'
+env.PrependUnique(CPPPATH = ['jni_dir'])
+app_env.PrependUnique(CPPDEFINES = ['__ANDROID__'])
+
+#####################################################################
+# Source files and Target(s)
+######################################################################
+
+print"Reading ca script %s"%ca_transport
+
+app_env.AppendUnique(CPPPATH = [root_dir + '/api/'])
+app_env.AppendUnique(CPPPATH = [root_dir + '/inc/'])
+app_env.AppendUnique(CPPPATH = [root_dir + '/common/inc/'])
+app_env.AppendUnique(CPPPATH = [root_dir + 'lib/libcoap-4.1.1'])
+
+print "Reading sample application build script"
+
+build_dir = app_env.get('BUILD_DIR')
+secured = app_env.get('SECURED')
+
+print "Sample secured flag is %s" % secured
+
+sample_dir = 'casample/sampleService/src/main/jni/'
+sample_src = [sample_dir + 'ResourceModel.c',]
+
+print " sample src %s" % sample_src
+
+app_env.AppendUnique(LIBPATH = [app_env.get('BUILD_DIR'), '.',])
+app_env.AppendUnique(CPPPATH = ['lib/android'])
+app_env.PrependUnique(LIBS = ['connectivity_abstraction'])
+app_env.AppendUnique(LINKFLAGS = ['-Wl,--no-undefined'])
+
+
+if secured == '1':
+	app_env.AppendUnique(CPPPATH = [root_dir + 'external/inc/'])
+	app_env.PrependUnique(CPPDEFINES = ['__WITH_DTLS__'])
+
+libRMInterface = app_env.SharedLibrary('RMInterface', sample_src, OBJPREFIX='libRMInterface_')
+app_env.InstallTarget(libRMInterface, 'RMInterface')
+app_env.UserInstallTargetLib(libRMInterface, 'RMInterface')
+
+
