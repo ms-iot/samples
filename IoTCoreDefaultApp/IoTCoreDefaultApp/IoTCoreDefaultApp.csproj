@@ -175,6 +175,7 @@
     <PRIResource Include="Strings\en-US\Resources.resw">
       <SubType>Designer</SubType>
     </PRIResource>
+    <PRIResource Include="Strings\ar-SA\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\GenericBoard.png" />
