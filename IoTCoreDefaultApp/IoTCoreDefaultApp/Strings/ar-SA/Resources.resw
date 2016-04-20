@@ -122,7 +122,7 @@
     <comment>The Operating System Name</comment>
   </data>
   <data name="GenericBoardName" xml:space="preserve">
-    <value>IoTCore Board</value>
+    <value>لوحة IoTCore</value>
     <comment>A generic board name</comment>
   </data>
   <data name="MainPageDeviceNameText" xml:space="preserve">
@@ -161,7 +161,7 @@
     <value>الإتصالات المباشرة</value>
   </data>
   <data name="EthernetText" xml:space="preserve">
-    <value>شبكة عبر كبل Ethernet</value>
+    <value>كبل Ethernet</value>
     <comment>Field label</comment>
   </data>
   <data name="NetworkConnectingMessageText" xml:space="preserve">
@@ -186,7 +186,7 @@
     <value>هيا لنتصل</value>
   </data>
   <data name="OOBEWelcomeTitleText" xml:space="preserve">
-    <value>مرحباً! أهلاً وسهلاً بكم في ويندوز 10 IoT Core</value>
+    <value>مرحباً! أهلاً وسهلاً بك في ويندوز 10 IoT Core</value>
   </data>
   <data name="Rpi2Name" xml:space="preserve">
     <value>Raspberry Pi 2</value>
@@ -201,14 +201,14 @@
     <comment>Board name</comment>
   </data>
   <data name="SkipStepText" xml:space="preserve">
-    <value>تخطى هذه المرحلة</value>
+    <value>تخطى هذه الخطوة</value>
   </data>
   <data name="WifiText" xml:space="preserve">
     <value>Wi-Fi</value>
     <comment>Label for Wi-Fi list in options page</comment>
   </data>
   <data name="StartDevelopingText" xml:space="preserve">
-    <value> للبدء بالبرمجة</value>
+    <value> للبدء بالتطوير</value>
     <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
   </data>
   <data name="VisitText" xml:space="preserve">
@@ -220,7 +220,7 @@
     <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
   </data>
   <data name="KeyboardTitleText" xml:space="preserve">
-    <value>تصميم لوحة المفاتيح</value>
+    <value>شكل لوحة المفاتيح</value>
     <comment>Field label</comment>
   </data>
   <data name="LanguageTitleText" xml:space="preserve">
@@ -276,7 +276,7 @@
     <comment>Status of the network connection (e.g. not connected, limited, etc.)</comment>
   </data>
   <data name="TutorialGetCodingDescriptionText" xml:space="preserve">
-    <value>تعلم كيف تكتب أسطر برمجة عن بعد بإستخدام كمبيوترك</value>
+    <value>تعلم كيف تطور عن بعد بإستخدام كمبيوترك</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialGetCodingTitleText" xml:space="preserve">
@@ -284,7 +284,7 @@
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialGetConnectedDescriptionText" xml:space="preserve">
-    <value>اتصل على كلا الأنترنت وكمبيوترك</value>
+    <value>اتصل على كلا الإنترنت وكمبيوترك</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialGetConnectedTitleText" xml:space="preserve">
@@ -304,7 +304,7 @@
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialHelloBlinkyDescriptionText" xml:space="preserve">
-    <value>تبديل LED على الجهاز</value>
+    <value>تبديل ضوء LED على الجهاز</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
   <data name="TutorialHelloBlinkyTitleText" xml:space="preserve">
@@ -315,7 +315,7 @@
     <value>معلومات وأدوات لتساعدك في التوصيل والتطوير على الجهاز</value>
   </data>
   <data name="TutorialBlinkyBody1Text" xml:space="preserve">
-    <value>أول وأبسط مهمة لأي جهاز هي أن يكون قادراً على الوميض.</value>
+    <value>أول وأبسط مهمة لأي جهاز هي أن يكون قادراً على تغيير وميض الضوء المركب.</value>
   </data>
   <data name="TutorialBlinkyBody2Text" xml:space="preserve">
     <value>كما ذكر في قسم "هكذا تعمل الأشياء" ، كل ملفات التطوير المتاحة موجودة على الموقعn www.windowsondevices.com (ابحث عن IoTCoreDefaultApp).</value>
@@ -363,40 +363,40 @@
     <value>البدء بالإستخدام</value>
   </data>
   <data name="Tutorial.GetStarted.003.subtitle" xml:space="preserve">
-    <value>أهلاً وسهلاً بكم في Windows 10 IoT Core</value>
+    <value>أهلاً وسهلاً بك في Windows 10 IoT Core</value>
   </data>
   <data name="Tutorial.GetStarted.004.h1" xml:space="preserve">
     <value>مقدمة</value>
   </data>
   <data name="Tutorial.GetStarted.005.p" xml:space="preserve">
-    <value>تهانينا! لقد قمت بتجهيز لوحك وأنت الآن جاهزاً لإستكشاف Windows 10 IoT Core ، النظام الخفيف المصمم لك لتقوم بصنع الأجهزة المختلفة. بمساعدة النظام IoT Core ، يتيح لك نظام الويندوز كل الأدوات اللازمة لك لتتمكن من ربط جهازك وتشغيله بدون استهلاك أي وقت. هدفنا الرئيسي هو أن تستخرج كل ما لديك من أفكار وتطبقها لتصبح واقعاً في أقرب وقت ممكن.</value>
+    <value>تهانينا! لقد قمت بتجهيز لوحك وأنت الآن جاهزاً لإستكشاف Windows 10 IoT Core ، النظام الخفيف المصمم لك لتقوم بصنع الأجهزة المختلفة. بمساعدة النظام IoT Core ، كل الأدوات اللازمة متاحة لك لتربط جهازك وتشغله بدون استهلاك أي وقت. هدفنا الرئيسي هو أن تستخرج كل ما لديك من أفكار وتطبقها لتصبح واقعاً في أقرب وقت ممكن.</value>
   </data>
   <data name="Tutorial.GetStarted.006.p" xml:space="preserve">
     <value>إذا أردت الإستكشاف بشكل أعمق والتعرف على البرامج التعليمية المتاحة ، بالإضافة إلى مستندات المراجع والمساعدة ، تفضل بزيارة الموقع www.windowsondevices.com.</value>
   </data>
   <data name="Tutorial.GetStarted.007.h1" xml:space="preserve">
-    <value>كيف أحصل على ملفات التطوير؟</value>
+    <value>كيف أبدأ بالتطوير؟</value>
   </data>
   <data name="Tutorial.GetStarted.008.p" xml:space="preserve">
-    <value>لدى Windows 10 IoT Core نفس طلقة جهاز الكمبيوتر ليبني المشاريع.</value>
+    <value>لدى Windows 10 IoT Core نفس طاقة جهاز الكمبيوتر في بناء المشاريع.</value>
   </data>
   <data name="Tutorial.GetStarted.009.p" xml:space="preserve">
-    <value>كل كتاباتك لأسطر البرمجة تتم عن بعد بإستخدام برنامج Visual Studio. قمنا بتسهيل العملية لك لنقل برامجك إلى جهازك لغرض التجربة ، ومن ثم تجهيزهم للإطلاق.</value>
+    <value>كل عمليات التطوير تعمل عن بعد بإستخدام برنامج Visual Studio ، حيث قمنا بتسهيل عملية رفع ملفات الكود إلى لوحتك للإختبار ومن ثم التجهيز للإطلاق.</value> 
   </data>
   <data name="Tutorial.GetStarted.010.h1" xml:space="preserve">
-    <value>ما تحتاج إليه</value>
+    <value>ما ستحتاج إليه هو:</value>
   </data>
   <data name="Tutorial.GetStarted.011.ul" xml:space="preserve">
-    <value>جهاز كمبيوتر Windows 10</value>
+    <value>جهاز كمبيوتر يعمل بنظام Windows 10</value>
   </data>
   <data name="Tutorial.GetStarted.012.ul" xml:space="preserve">
     <value>اتصال بالأنترنت</value>
   </data>
   <data name="Tutorial.GetStarted.013.ul" xml:space="preserve">
-    <value>هذا الجهاز</value>
+    <value>هذه اللوحة</value>
   </data>
   <data name="Tutorial.GetStarted.014.ul" xml:space="preserve">
-    <value>Visual Studio 2015</value>
+    <value>برنامج Visual Studio 2015</value>
   </data>
   <data name="Tutorial.GetStarted.014a.br" xml:space="preserve">
     <value />
@@ -409,7 +409,7 @@
     <value>أين يقع زر التشغيل؟!</value>
   </data>
   <data name="Tutorial.GetStarted.017.p" xml:space="preserve">
-    <value>صمم Windows 10 IoT Core خفيفاً بشكل كبير ، وغير مرئي للمستخدمين بعد الإنتهاء من تطوير برنامجك ، وهذا يعني أنه لن يكون هناك زر تشغيل أو واجهات تحكم. كل الأزرار والتوجيهات والواجهات ستأتي منك أنت ، مبرمج التطبيق.</value>
+    <value>صمم Windows 10 IoT Core خفيفاً بشكل كبير ، وغير مرئي للمستخدمين بعد الإنتهاء من تطوير برنامجك ، وهذا يعني أنه لن يكون هناك زر تشغيل أو واجهات تحكم. كل الأزرار والتوجيهات والنوافذ ستأتي منك أنت ، مبرمج التطبيق.</value>
   </data>
   <data name="Tutorial.GetStarted.018.p" xml:space="preserve">
     <value>لكن لا عليك. نحنا هنا لمساعدتك دوماً.</value>
@@ -444,13 +444,13 @@
     <value>أسهل وأفضل طريقة للإتصال بالإنترنت هو باستخدام الكبل Ethernet. قم بتوصيل الكبل بالجهاز ثم صل الطرف الآخر بجهاز Router أو محول Network switch.</value>
   </data>
   <data name="Tutorial.GetConnected.007.h1" xml:space="preserve">
-    <value>اللاسلكي Wi-Fi</value>
+    <value>الإتصال اللاسلكي Wi-Fi</value>
   </data>
   <data name="Tutorial.GetConnected.008.p" xml:space="preserve">
-    <value>برغم أن بعض الأجهزة تأتي معها خاصية الإتصال اللاسلكي ، لكن أغلبها لايدعمها. إذا لا يدعم جهازك هذه الخاصية وعليك شراء موصل لاسلكي يربط بمدخل USB. لا تتردد في الذهاب إلى المتجر وشراؤه. أنا أنتظرك هنا.</value>
+    <value>برغم أن بعض الألواح تأتي معها خاصية الإتصال اللاسلكي ، لكن أغلبها لايدعمها. إذا كان لوحك لا يدعم هذه الخاصية وعليك شراء موصل لاسلكي يربط بمدخل USB. لا تتردد في الذهاب إلى المتجر وشراؤه. أنا بإنتظارك هنا.</value>
   </data>
   <data name="Tutorial.GetConnected.009.p" xml:space="preserve">
-    <value>ألديك واحد؟ ممتاز! لنتصل إذن.</value>
+    <value>ألديك واحد؟ ممتاز! صله ولنتصل إذن.</value>
   </data>
   <data name="Tutorial.GetConnected.010.620x350.image" xml:space="preserve">
     <value>Assets/Tutorials/GetConnected-004.jpg</value>
@@ -541,7 +541,7 @@
     <value>ما ستحتاج إليه هو:</value>
   </data>
   <data name="Tutorial.GetCoding.006.ul" xml:space="preserve">
-    <value>جهاز يعمل بنظام Windows 10</value>
+    <value>جهاز كمبيوتر يعمل بنظام Windows 10</value>
   </data>
   <data name="Tutorial.GetCoding.007.ul" xml:space="preserve">
     <value>اتصال بالأنترنت</value>
