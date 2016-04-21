@@ -146,6 +146,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;IP_ADAPTER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\iotivity-1.0.0\resource\csdk\connectivity\api;..\..\iotivity-1.0.0\resource\csdk\connectivity\inc;..\..\iotivity-1.0.0\resource\csdk\connectivity\lib\libcoap-4.1.1;..\..\iotivity-1.0.0\resource\csdk\connectivity\common\inc;..\..\iotivity-1.0.0\resource\c_common\oic_malloc\include;..\..\iotivity-1.0.0\resource\c_common\oic_string\include;..\..\iotivity-1.0.0\resource\c_common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -160,6 +161,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;IP_ADAPTER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\iotivity-1.0.0\resource\csdk\connectivity\api;..\..\iotivity-1.0.0\resource\csdk\connectivity\inc;..\..\iotivity-1.0.0\resource\csdk\connectivity\lib\libcoap-4.1.1;..\..\iotivity-1.0.0\resource\csdk\connectivity\common\inc;..\..\iotivity-1.0.0\resource\c_common\oic_malloc\include;..\..\iotivity-1.0.0\resource\c_common\oic_string\include;..\..\iotivity-1.0.0\resource\c_common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -174,6 +176,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;IP_ADAPTER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\iotivity-1.0.0\resource\csdk\connectivity\api;..\..\iotivity-1.0.0\resource\csdk\connectivity\inc;..\..\iotivity-1.0.0\resource\csdk\connectivity\lib\libcoap-4.1.1;..\..\iotivity-1.0.0\resource\csdk\connectivity\common\inc;..\..\iotivity-1.0.0\resource\c_common\oic_malloc\include;..\..\iotivity-1.0.0\resource\c_common\oic_string\include;..\..\iotivity-1.0.0\resource\c_common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -188,6 +191,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;IP_ADAPTER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\iotivity-1.0.0\resource\csdk\connectivity\api;..\..\iotivity-1.0.0\resource\csdk\connectivity\inc;..\..\iotivity-1.0.0\resource\csdk\connectivity\lib\libcoap-4.1.1;..\..\iotivity-1.0.0\resource\csdk\connectivity\common\inc;..\..\iotivity-1.0.0\resource\c_common\oic_malloc\include;..\..\iotivity-1.0.0\resource\c_common\oic_string\include;..\..\iotivity-1.0.0\resource\c_common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -202,6 +206,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;IP_ADAPTER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\iotivity-1.0.0\resource\csdk\connectivity\api;..\..\iotivity-1.0.0\resource\csdk\connectivity\inc;..\..\iotivity-1.0.0\resource\csdk\connectivity\lib\libcoap-4.1.1;..\..\iotivity-1.0.0\resource\csdk\connectivity\common\inc;..\..\iotivity-1.0.0\resource\c_common\oic_malloc\include;..\..\iotivity-1.0.0\resource\c_common\oic_string\include;..\..\iotivity-1.0.0\resource\c_common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -216,6 +221,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;IP_ADAPTER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\iotivity-1.0.0\resource\csdk\connectivity\api;..\..\iotivity-1.0.0\resource\csdk\connectivity\inc;..\..\iotivity-1.0.0\resource\csdk\connectivity\lib\libcoap-4.1.1;..\..\iotivity-1.0.0\resource\csdk\connectivity\common\inc;..\..\iotivity-1.0.0\resource\c_common\oic_malloc\include;..\..\iotivity-1.0.0\resource\c_common\oic_string\include;..\..\iotivity-1.0.0\resource\c_common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

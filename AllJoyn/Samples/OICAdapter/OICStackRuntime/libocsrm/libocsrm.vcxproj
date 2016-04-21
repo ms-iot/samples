@@ -140,6 +140,7 @@
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\..\iotivity-1.0.0\extlibs\cjson;..\..\iotivity-1.0.0\resource\csdk\logger\include;..\..\iotivity-1.0.0\resource\csdk\ocrandom\include;..\..\iotivity-1.0.0\resource\csdk\stack\include;..\..\iotivity-1.0.0\resource\csdk\stack\include\internal;..\..\iotivity-1.0.0\resource\csdk\connectivity\lib\libcoap-4.1.1;..\..\iotivity-1.0.0\resource\csdk\connectivity\external\inc;..\..\iotivity-1.0.0\resource\csdk\connectivity\inc;..\..\iotivity-1.0.0\resource\csdk\connectivity\api;..\..\iotivity-1.0.0\resource\csdk\security\include;..\..\iotivity-1.0.0\resource\csdk\security\include\internal;..\..\iotivity-1.0.0\resource\oc_logger\include;..\..\iotivity-1.0.0\resource\c_common\oic_malloc\include;..\..\iotivity-1.0.0\resource\c_common\oic_string\include;..\..\iotivity-1.0.0\resource\c_common;..\..\iotivity-1.0.0\resource\csdk\connectivity\common\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -154,6 +155,7 @@
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\..\iotivity-1.0.0\extlibs\cjson;..\..\iotivity-1.0.0\resource\csdk\logger\include;..\..\iotivity-1.0.0\resource\csdk\ocrandom\include;..\..\iotivity-1.0.0\resource\csdk\stack\include;..\..\iotivity-1.0.0\resource\csdk\stack\include\internal;..\..\iotivity-1.0.0\resource\csdk\connectivity\lib\libcoap-4.1.1;..\..\iotivity-1.0.0\resource\csdk\connectivity\external\inc;..\..\iotivity-1.0.0\resource\csdk\connectivity\inc;..\..\iotivity-1.0.0\resource\csdk\connectivity\api;..\..\iotivity-1.0.0\resource\csdk\security\include;..\..\iotivity-1.0.0\resource\csdk\security\include\internal;..\..\iotivity-1.0.0\resource\oc_logger\include;..\..\iotivity-1.0.0\resource\c_common\oic_malloc\include;..\..\iotivity-1.0.0\resource\c_common\oic_string\include;..\..\iotivity-1.0.0\resource\c_common;..\..\iotivity-1.0.0\resource\csdk\connectivity\common\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -168,6 +170,7 @@
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\..\iotivity-1.0.0\extlibs\cjson;..\..\iotivity-1.0.0\resource\csdk\logger\include;..\..\iotivity-1.0.0\resource\csdk\ocrandom\include;..\..\iotivity-1.0.0\resource\csdk\stack\include;..\..\iotivity-1.0.0\resource\csdk\stack\include\internal;..\..\iotivity-1.0.0\resource\csdk\connectivity\lib\libcoap-4.1.1;..\..\iotivity-1.0.0\resource\csdk\connectivity\external\inc;..\..\iotivity-1.0.0\resource\csdk\connectivity\inc;..\..\iotivity-1.0.0\resource\csdk\connectivity\api;..\..\iotivity-1.0.0\resource\csdk\security\include;..\..\iotivity-1.0.0\resource\csdk\security\include\internal;..\..\iotivity-1.0.0\resource\oc_logger\include;..\..\iotivity-1.0.0\resource\c_common\oic_malloc\include;..\..\iotivity-1.0.0\resource\c_common\oic_string\include;..\..\iotivity-1.0.0\resource\c_common;..\..\iotivity-1.0.0\resource\csdk\connectivity\common\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -182,6 +185,7 @@
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\..\iotivity-1.0.0\extlibs\cjson;..\..\iotivity-1.0.0\resource\csdk\logger\include;..\..\iotivity-1.0.0\resource\csdk\ocrandom\include;..\..\iotivity-1.0.0\resource\csdk\stack\include;..\..\iotivity-1.0.0\resource\csdk\stack\include\internal;..\..\iotivity-1.0.0\resource\csdk\connectivity\lib\libcoap-4.1.1;..\..\iotivity-1.0.0\resource\csdk\connectivity\external\inc;..\..\iotivity-1.0.0\resource\csdk\connectivity\inc;..\..\iotivity-1.0.0\resource\csdk\connectivity\api;..\..\iotivity-1.0.0\resource\csdk\security\include;..\..\iotivity-1.0.0\resource\csdk\security\include\internal;..\..\iotivity-1.0.0\resource\oc_logger\include;..\..\iotivity-1.0.0\resource\c_common\oic_malloc\include;..\..\iotivity-1.0.0\resource\c_common\oic_string\include;..\..\iotivity-1.0.0\resource\c_common;..\..\iotivity-1.0.0\resource\csdk\connectivity\common\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -196,6 +200,7 @@
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\..\iotivity-1.0.0\extlibs\cjson;..\..\iotivity-1.0.0\resource\csdk\logger\include;..\..\iotivity-1.0.0\resource\csdk\ocrandom\include;..\..\iotivity-1.0.0\resource\csdk\stack\include;..\..\iotivity-1.0.0\resource\csdk\stack\include\internal;..\..\iotivity-1.0.0\resource\csdk\connectivity\lib\libcoap-4.1.1;..\..\iotivity-1.0.0\resource\csdk\connectivity\external\inc;..\..\iotivity-1.0.0\resource\csdk\connectivity\inc;..\..\iotivity-1.0.0\resource\csdk\connectivity\api;..\..\iotivity-1.0.0\resource\csdk\security\include;..\..\iotivity-1.0.0\resource\csdk\security\include\internal;..\..\iotivity-1.0.0\resource\oc_logger\include;..\..\iotivity-1.0.0\resource\c_common\oic_malloc\include;..\..\iotivity-1.0.0\resource\c_common\oic_string\include;..\..\iotivity-1.0.0\resource\c_common;..\..\iotivity-1.0.0\resource\csdk\connectivity\common\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -210,6 +215,7 @@
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\..\iotivity-1.0.0\extlibs\cjson;..\..\iotivity-1.0.0\resource\csdk\logger\include;..\..\iotivity-1.0.0\resource\csdk\ocrandom\include;..\..\iotivity-1.0.0\resource\csdk\stack\include;..\..\iotivity-1.0.0\resource\csdk\stack\include\internal;..\..\iotivity-1.0.0\resource\csdk\connectivity\lib\libcoap-4.1.1;..\..\iotivity-1.0.0\resource\csdk\connectivity\external\inc;..\..\iotivity-1.0.0\resource\csdk\connectivity\inc;..\..\iotivity-1.0.0\resource\csdk\connectivity\api;..\..\iotivity-1.0.0\resource\csdk\security\include;..\..\iotivity-1.0.0\resource\csdk\security\include\internal;..\..\iotivity-1.0.0\resource\oc_logger\include;..\..\iotivity-1.0.0\resource\c_common\oic_malloc\include;..\..\iotivity-1.0.0\resource\c_common\oic_string\include;..\..\iotivity-1.0.0\resource\c_common;..\..\iotivity-1.0.0\resource\csdk\connectivity\common\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>

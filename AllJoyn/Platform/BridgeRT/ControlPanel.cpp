@@ -478,7 +478,7 @@ QStatus ControlPanelUniversal::Initialize(_In_ alljoyn_busattachment bus, _In_z_
         {
             // create a unique, control relative, name for each widget
             allJoynWidgetName = "Widget";
-            allJoynWidgetName += std::_Integral_to_string("%d", idx);
+            allJoynWidgetName += std::to_string(idx);
 
             // Ask the Control Panel Handler for the label and type of the specified property
             std::string label = ConvertTo<std::string>(cntrlPanelHandler->GetLabel(sourcePropertyForControl));
