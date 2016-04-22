@@ -318,7 +318,7 @@
     <value>The first, and most basic thing a board should do is blink.</value>
   </data>
   <data name="TutorialBlinkyBody2Text" xml:space="preserve">
-    <value>As mentioned in the "Get Started" section, all the source code for this open source are available on www.windowsondevices.com (look for the IoTCoreDefaultApp).</value>
+    <value>As mentioned in the "Get Started" section, all of the source code for this is open source and is available on www.windowsondevices.com (look for the IoTCoreDefaultApp).</value>
   </data>
   <data name="TutorialBlinkyBody3Text" xml:space="preserve">
     <value>No set up is required. Just press start.</value>
