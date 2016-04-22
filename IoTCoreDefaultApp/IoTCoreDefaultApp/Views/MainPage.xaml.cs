@@ -142,6 +142,11 @@ namespace IoTCoreDefaultApp
             ShutdownDropdown.IsOpen = true;
         }
 
+        private void CommandLineButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            NavigationUtils.NavigateToScreen(typeof(CommandLinePage));
+        }
+
         private void SettingsButton_Clicked(object sender, RoutedEventArgs e)
         {
             NavigationUtils.NavigateToScreen(typeof(Settings));

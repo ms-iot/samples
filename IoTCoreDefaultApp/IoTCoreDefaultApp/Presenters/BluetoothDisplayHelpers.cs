@@ -63,7 +63,6 @@ namespace IoTCoreDefaultApp
         public BluetoothDeviceInformationDisplay(DeviceInformation deviceInfoIn)
         {
             deviceInfo = deviceInfoIn;
-            UpdateGlyphBitmapImage();
         }
 
         public DeviceInformationKind Kind
@@ -190,19 +189,8 @@ namespace IoTCoreDefaultApp
             OnPropertyChanged("DevicePairingStateText");
             OnPropertyChanged("PairButtonVisiblilty");
             OnPropertyChanged("UnpairButtonVisiblilty");
-            UpdateGlyphBitmapImage();
         }
 
-        private async void UpdateGlyphBitmapImage()
-        {
-            // Not available on Athens
-            //DeviceThumbnail deviceThumbnail = await deviceInfo.GetGlyphThumbnailAsync();
-            //BitmapImage glyphBitmapImage = new BitmapImage();
-            //await glyphBitmapImage.SetSourceAsync(deviceThumbnail);
-            //GlyphBitmapImage = glyphBitmapImage;
-            //OnPropertyChanged("GlyphBitmapImage");
-        }
-        
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string name)
         {
