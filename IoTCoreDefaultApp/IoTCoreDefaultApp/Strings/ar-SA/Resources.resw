@@ -623,7 +623,7 @@
     <comment>Format string for message displayed when ConfirmOnly ceremony is invoked</comment>
   </data>
   <data name="BluetoothConfirmPinMatchFormat" xml:space="preserve">
-    <value>هل يتطابق رقم PIN الظاهر على الجهاز مع {0} ؟<value>
+    <value>هل يتطابق رقم PIN الظاهر على الجهاز مع {0} ؟</value>
     <comment>Format string for message displayed when ConfirmPinMatch ceremony is invoked</comment>
   </data>
   <data name="BluetoothDisplayPinFormat" xml:space="preserve">
