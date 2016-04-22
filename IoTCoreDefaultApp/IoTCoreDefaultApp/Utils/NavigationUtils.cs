@@ -45,7 +45,10 @@ namespace IoTCoreDefaultApp
                     NavigationUtils.NavigateToScreen(typeof(TutorialHelloBlinkyPage), newDocName);
                     return;
                 }
+// Disable unreachable code warning
+#pragma warning disable 162
                 newDocName = Constants.TutorialDocNames[++index];
+#pragma warning restore 162
             }
 
             NavigationUtils.NavigateToScreen(typeof(TutorialContentPage), newDocName);

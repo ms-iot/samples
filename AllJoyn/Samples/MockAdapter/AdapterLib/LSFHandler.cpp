@@ -230,13 +230,26 @@ LSFHandler::LampState_Version::get()
 bool 
 LSFHandler::LampState_OnOff::get()
 {
-    return m_parentDevice->LampState->IsOn;
+    // IsOn type is Platform::IBox<bool>^ which means that it can be equal to nullptr, true or false
+    // unlike bool which only can be true or false
+    if (m_parentDevice->LampState->IsOn != nullptr)
+    {
+        return m_parentDevice->LampState->IsOn->Value;
+    }
+    else
+    {
+        // assume false if nullptr
+        return false;
+    }
 }
 
 void 
 LSFHandler::LampState_OnOff::set(bool isOn)
 {
-    if (m_parentDevice->LampState->IsOn == isOn)
+    // IsOn type is Platform::IBox<bool>^ which means that it can be equal to nullptr, true or false
+    // unlike bool which only can be true or false
+    if (m_parentDevice->LampState->IsOn != nullptr &&
+        m_parentDevice->LampState->IsOn->Value == isOn)
     {
         return;
     }
@@ -249,13 +262,24 @@ LSFHandler::LampState_OnOff::set(bool isOn)
 uint32 
 LSFHandler::LampState_Brightness::get()
 {
-    return m_parentDevice->LampState->Brightness;
+    // Brightness type is Platform::IBox<uint32>^ which means that unlike uint32 it can be equal to nullptr
+    if (m_parentDevice->LampState->Brightness != nullptr)
+    {
+        return m_parentDevice->LampState->Brightness->Value;
+    }
+    else
+    {
+        // assume 0 if nullptr
+        return 0;
+    }
 }
 
 void
 LSFHandler::LampState_Brightness::set(uint32 brightness)
 {
-    if (m_parentDevice->LampState->Brightness == brightness)
+    // Brightness type is Platform::IBox<uint32>^ which means that unlike uint32 it can be equal to nullptr
+    if (m_parentDevice->LampState->Brightness != nullptr &&
+        m_parentDevice->LampState->Brightness->Value == brightness)
     {
         return;
     }
@@ -268,13 +292,24 @@ LSFHandler::LampState_Brightness::set(uint32 brightness)
 uint32 
 LSFHandler::LampState_Hue::get()
 {
-    return m_parentDevice->LampState->Hue;
+    // Hue type is Platform::IBox<uint32>^ which means that unlike uint32 it can be equal to nullptr
+    if (m_parentDevice->LampState->Hue != nullptr)
+    {
+        return m_parentDevice->LampState->Hue->Value;
+    }
+    else
+    {
+        // assume 0 if nullptr
+        return 0;
+    }
 }
 
 void 
 LSFHandler::LampState_Hue::set(uint32 hue)
 {
-    if (m_parentDevice->LampState->Hue == hue)
+    // Hue type is Platform::IBox<uint32>^ which means that unlike uint32 it can be equal to nullptr
+    if (m_parentDevice->LampState->Hue != nullptr &&
+        m_parentDevice->LampState->Hue->Value == hue)
     {
         return;
     }
@@ -287,13 +322,24 @@ LSFHandler::LampState_Hue::set(uint32 hue)
 uint32 
 LSFHandler::LampState_Saturation::get()
 {
-    return m_parentDevice->LampState->Saturation;
+    // Saturation type is Platform::IBox<uint32>^ which means that unlike uint32 it can be equal to nullptr
+    if (m_parentDevice->LampState->Saturation != nullptr)
+    {
+        return m_parentDevice->LampState->Saturation->Value;
+    }
+    else
+    {
+        // assume 0 if nullptr
+        return 0;
+    }
 }
 
 void
 LSFHandler::LampState_Saturation::set(uint32 saturation)
 {
-    if (m_parentDevice->LampState->Saturation == saturation)
+    // Saturation type is Platform::IBox<uint32>^ which means that unlike uint32 it can be equal to nullptr
+    if (m_parentDevice->LampState->Saturation != nullptr &&
+        m_parentDevice->LampState->Saturation->Value == saturation)
     {
         return;
     }
@@ -306,13 +352,24 @@ LSFHandler::LampState_Saturation::set(uint32 saturation)
 uint32 
 LSFHandler::LampState_ColorTemp::get()
 {
-    return m_parentDevice->LampState->ColorTemp;
+    // ColorTemp type is Platform::IBox<uint32>^ which means that unlike uint32 it can be equal to nullptr
+    if (m_parentDevice->LampState->ColorTemp != nullptr)
+    {
+        return m_parentDevice->LampState->ColorTemp->Value;
+    }
+    else
+    {
+        // assume 0 if nullptr
+        return 0;
+    }
 }
 
 void
 LSFHandler::LampState_ColorTemp::set(uint32 colorTemp)
 {
-    if (m_parentDevice->LampState->ColorTemp == colorTemp)
+    // ColorTemp type is Platform::IBox<uint32>^ which means that unlike uint32 it can be equal to nullptr
+    if (m_parentDevice->LampState->ColorTemp != nullptr &&
+        m_parentDevice->LampState->ColorTemp->Value == colorTemp)
     {
         return;
     }
