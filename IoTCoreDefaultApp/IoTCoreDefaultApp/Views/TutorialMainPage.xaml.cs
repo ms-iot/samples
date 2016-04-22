@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 
-
+using IoTCoreDefaultApp.Utils;
 using System;
 using System.Globalization;
 using Windows.System;
@@ -110,6 +110,11 @@ namespace IoTCoreDefaultApp
                     ShutdownHelper(ShutdownKind.Restart);
                     break;
             }
+        }
+
+        private void CommandLineButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            NavigationUtils.NavigateToScreen(typeof(CommandLinePage));
         }
 
         private void SettingsButton_Clicked(object sender, RoutedEventArgs e)
