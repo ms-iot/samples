@@ -65,6 +65,14 @@
       <Name>_wingpio.pyd</Name>
       <PythonExtension>windevices\Win32\_wingpio.pyd</PythonExtension>
     </Reference>
+    <Reference Include="windevices\x64\_wingpio_d.pyd" Condition=" '$(RedistConfiguration)|$(Platform)' == 'Debug|x64' ">
+      <Name>_wingpio_d.pyd</Name>
+      <PythonExtension>windevices\x64\_wingpio_d.pyd</PythonExtension>
+    </Reference>
+    <Reference Include="windevices\x64\_wingpio.pyd" Condition=" '$(RedistConfiguration)|$(Platform)' == 'Retail|x64' ">
+      <Name>_wingpio.pyd</Name>
+      <PythonExtension>windevices\x64\_wingpio.pyd</PythonExtension>
+    </Reference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>

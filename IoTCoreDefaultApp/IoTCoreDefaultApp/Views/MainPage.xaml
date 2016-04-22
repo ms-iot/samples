@@ -61,6 +61,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="56" />
                 <ColumnDefinition Width="Auto" />
@@ -80,7 +81,20 @@
                 <TextBlock Grid.Row="2" Text="{Binding [DeviceInfoText]}" Style="{StaticResource CaptionTextBlockStyle}" TextAlignment="Center" Margin="0,5,0,0"/>
             </Grid>
 
-            <Button Grid.Column="1" x:Name="Tutorials" Style="{StaticResource ShutdownButtonStyle}" Background="Transparent" BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="Tutorials_Clicked">
+            <Button Grid.Column="1" x:Name="CommandLine" Style="{StaticResource ShutdownButtonStyle}" Background="Transparent" BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="CommandLineButton_Clicked">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="1" FontFamily="{StaticResource IconFontFamily}" FontSize="24" Text="{StaticResource IconCommandLine}" TextAlignment="Center"/>
+                    <TextBlock Grid.Row="2" Text="{Binding [CommandLineText]}" Style="{StaticResource CaptionTextBlockStyle}" TextAlignment="Center" Margin="0,5,0,0"/>
+                </Grid>
+            </Button>
+
+            <Button Grid.Column="2" x:Name="Tutorials" Style="{StaticResource ShutdownButtonStyle}" Background="Transparent" BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="Tutorials_Clicked">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
@@ -93,13 +107,13 @@
                 </Grid>
             </Button>
 
-            <TextBlock Grid.Column="2" x:Name="CurrentTime" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Right" Style="{StaticResource IoTCoreDefaultAppBodyTextBlockStyle}" VerticalAlignment="Center" Padding="0,0,14,0"/>
+            <TextBlock Grid.Column="3" x:Name="CurrentTime" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Right" Style="{StaticResource IoTCoreDefaultAppBodyTextBlockStyle}" VerticalAlignment="Center" Padding="0,0,14,0"/>
 
-            <Button Grid.Column="4" x:Name="SettingsButton" Style="{StaticResource ShutdownButtonStyle}" Content="{StaticResource IconSettings}" FontFamily="{StaticResource IconFontFamily}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Click="SettingsButton_Clicked" Background="Transparent" BorderThickness="0" Height="48" Width="48" />
+            <Button Grid.Column="5" x:Name="SettingsButton" Style="{StaticResource ShutdownButtonStyle}" Content="{StaticResource IconSettings}" FontFamily="{StaticResource IconFontFamily}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Click="SettingsButton_Clicked" Background="Transparent" BorderThickness="0" Height="48" Width="48" />
 
-            <Button Grid.Column="6" x:Name="ShutdownButton" Style="{StaticResource ShutdownButtonStyle}" Content="{StaticResource IconShutdown}" FontFamily="{StaticResource IconFontFamily}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Click="ShutdownButton_Clicked" Background="Transparent" BorderThickness="0" Height="48" Width="48" />
+            <Button Grid.Column="7" x:Name="ShutdownButton" Style="{StaticResource ShutdownButtonStyle}" Content="{StaticResource IconShutdown}" FontFamily="{StaticResource IconFontFamily}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Click="ShutdownButton_Clicked" Background="Transparent" BorderThickness="0" Height="48" Width="48" />
 
-            <Popup Grid.Column="6" x:Name="ShutdownDropdown" HorizontalAlignment="Left" IsLightDismissEnabled="True" VerticalOffset="72" Opened="ShutdownDropdown_Opened">
+            <Popup Grid.Column="7" x:Name="ShutdownDropdown" HorizontalAlignment="Left" IsLightDismissEnabled="True" VerticalOffset="72" Opened="ShutdownDropdown_Opened">
                 <ListView x:Name="ShutdownListView" Background="White" ItemContainerStyle="{StaticResource IoTCoreDefaultAppShutdownListViewItemStyle}" BorderThickness="2.0" BorderBrush="{StaticResource ShutdownBorderBrush}" ItemClick="ShutdownListView_ItemClick" IsItemClickEnabled="True" IsTabStop="True" >
                     <ListViewItem HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Height="40" Margin="0,5,0,0" >
                         <TextBlock x:Name="ShutdownOption" Text="{Binding [ShutdownText]}" Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource IoTCoreDefaultAppDarkBodyTextBlockStyle}" Margin="20,0,20,0"/>

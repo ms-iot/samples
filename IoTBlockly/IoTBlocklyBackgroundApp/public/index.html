@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>IoTCore Blockly Demo</title>
+    <link rel="stylesheet" href="css/foundation.css" />
+
+    <script src="blockly/blockly_compressed.js"></script>
+    <script src="blockly/blocks_compressed.js"></script>
+    <script src="blockly/javascript_compressed.js"></script>
+    <script src="blockly/msg/js/en.js"></script>
+
+    <script src="blockly/blocks-custom.js"></script>
+    <script src="blockly/javascript-custom.js"></script>
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            background-color: #fff;
+            font-family: sans-serif;
+        }
+
+        table {
+            height: 100%;
+            width: 100%;
+        }
+
+        .header {
+            color: white;
+            background-color: #1583cc;
+            padding: 10px 10px 5px 20px;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-family: "Segoe UI Light","Segoe UI Web Light","Segoe UI Web Regular","Segoe UI","Segoe UI Symbol","HelveticaNeue-Light","Helvetica Neue",Arial,sans-serif !important;
+        }
+
+        #generatedCodeArea {
+            border:solid;
+            border-width:thin;
+            border-color:darkgray;
+            height: 99%;
+            padding:10px 10px 10px 10px;
+            overflow:auto;
+        }
+
+        @media screen and (min-width: 40em) {
+            .javascript-output {
+                margin-top: 0px;
+                padding: 10px 10px 10px 10px;
+            }
+        }
+        @media screen and (min-width: 64em) {
+            .javascript-output{
+                margin-top:-25px;
+                padding:0px 10px 10px 40px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="small-12 large-12">
+        <div class="header">
+            <h1>Blockly + JavaScript</h1>
+            <p>A simple demo showing how to generate and run code from blocks</p>
+        </div>
+        <p style="padding-left:10px;">
+            <button onclick="runCode()" class="medium button">Run</button>
+            <button onclick="stopCode()" class="medium button">Stop</button>
+            <button onclick="showCode()" class="medium button">Convert to JavaScript</button>
+            <button onclick="showXML()" class="medium button">Convert to XML</button>
+            <button style="margin-left:100px;" onclick="loadSample('heartbeat')" class="medium button success">Heartbeat</button>
+            <button onclick="loadSample('randomBars')" class="medium button success">Random bars</button>
+            <button onclick="loadSample('gravityBall')" class="medium button success">Gravity ball</button>
+        </p>
+    </div>
+    <div class="">
+        <div id="blocklyDiv" class="small-12 large-8 columns"></div>
+        <div class="small-12 large-4 columns javascript-output">
+            Javascript (or xml):
+            <div id="generatedCodeArea"></div>
+        </div>
+    </div>
+    
+    <xml id="toolbox" style="display: none">
+      <category name="Basic" colour="190">
+        <block type="device_show_number">
+          <value name="NUMBER">
+            <shadow type="math_number">
+              <field name="NUM">2</field>
+            </shadow>
+          </value>
+        </block>
+        <block type="device_show_leds">
+        </block>
+        <block type="device_print_message">
+          <value name="MESSAGE">
+            <shadow type="text">
+              <field name="TEXT">Hello!</field>
+            </shadow>
+          </value>
+        </block>
+        <block type="device_clear_display"></block>
+        <block type="device_clear_display_no_update"></block>
+        <block type="device_forever"></block>
+        <block type="device_pause">
+          <value name="PAUSE">
+            <shadow type="math_number">
+              <field name="NUM">100</field>
+            </shadow>
+          </value>
+        </block>
+        <block type="device_set_onboard_led">
+        </block>
+      </category>
+      <category name="Logic" colour="210">
+        <block type="controls_if"></block>
+        <block type="logic_compare"></block>
+        <block type="logic_operation"></block>
+        <block type="logic_negate"></block>
+        <block type="logic_boolean"></block>
+      </category>
+      <category name="Loops" colour="120">
+        <block type="controls_repeat_ext">
+          <value name="TIMES">
+            <block type="math_number">
+              <field name="NUM">10</field>
+            </block>
+          </value>
+        </block>
+        <block type="controls_whileUntil"></block>
+      </category>
+      <category name="Math" colour="230">
+        <block type="math_number"></block>
+        <block type="math_arithmetic"></block>
+        <block type="device_random">
+          <value name="LIMIT">
+            <shadow type="math_number">
+              <field name="NUM">4</field>
+            </shadow>
+          </value>
+        </block>
+        <block type="math_single"></block>
+      </category>
+      <category name="Input" colour="3">
+        <block type="device_get_acceleration"></block>
+      </category>
+      <category name="Images" colour="45">
+        <block type="device_create_image"></block>
+        <block type="device_create_small_image"></block>
+        <block type="device_show_image_offset">
+          <value name="OFFSETX">
+            <shadow type="math_number">
+              <field name="NUM">0</field>
+            </shadow>
+          </value>
+          <value name="OFFSETY">
+            <shadow type="math_number">
+              <field name="NUM">0</field>
+            </shadow>
+          </value>
+        </block>
+      </category>
+      <category name="Text" colour="160">
+        <block type="text"></block>
+        <block type="text_length"></block>
+      </category>
+      <category name="Pins" colour="351">
+        <block type="device_digital_write_pin">
+          <value name="VALUE">
+            <shadow type="math_number">
+              <field name="NUM">1</field>
+            </shadow>
+          </value>
+          <value name="PIN">
+            <shadow type="math_number">
+              <field name="NUM">5</field>
+            </shadow>
+          </value>
+        </block>
+      </category>
+      <category name="Variables" colour="330">
+          <block type="variables_set"></block>
+          <block type="variables_get"></block>
+      </category>
+    </xml>
+
+    <xml id="sampleBlinky" style="display: none">
+      <block type="device_forever" x="20" y="20">
+        <statement name="DO">
+          <block type="device_set_onboard_led">
+            <field name="STATE">1</field>
+            <next>
+              <block type="device_pause">
+                <value name="PAUSE">
+                  <shadow type="math_number">
+                    <field name="NUM">100</field>
+                  </shadow>
+                </value>
+                <next>
+                  <block type="device_set_onboard_led">
+                    <field name="STATE">0</field>
+                    <next>
+                      <block type="device_pause">
+                        <value name="PAUSE">
+                          <shadow type="math_number">
+                            <field name="NUM">100</field>
+                          </shadow>
+                        </value>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </statement>
+      </block>
+    </xml>
+
+    <xml id="heartbeat" style="display: none">
+      <block type="device_print_message" x="76" y="45">
+        <value name="MESSAGE">
+          <shadow type="text">
+            <field name="TEXT">Hello!</field>
+          </shadow>
+          <block type="text">
+            <field name="TEXT">Welcome to //build 2016</field>
+          </block>
+        </value>
+        <next>
+          <block type="device_forever">
+            <statement name="DO">
+              <block type="device_clear_display">
+                <next>
+                  <block type="device_pause">
+                    <value name="PAUSE">
+                      <shadow type="math_number">
+                        <field name="NUM">100</field>
+                      </shadow>
+                      <block type="math_number">
+                        <field name="NUM">300</field>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="device_show_leds">
+                        <field name="COLOR">Windows.UI.Colors.red</field>
+                        <field name="LED00">FALSE</field>
+                        <field name="LED10">FALSE</field>
+                        <field name="LED20">FALSE</field>
+                        <field name="LED30">FALSE</field>
+                        <field name="LED40">FALSE</field>
+                        <field name="LED50">FALSE</field>
+                        <field name="LED60">FALSE</field>
+                        <field name="LED70">FALSE</field>
+                        <field name="LED01">FALSE</field>
+                        <field name="LED11">TRUE</field>
+                        <field name="LED21">TRUE</field>
+                        <field name="LED31">FALSE</field>
+                        <field name="LED41">FALSE</field>
+                        <field name="LED51">TRUE</field>
+                        <field name="LED61">TRUE</field>
+                        <field name="LED71">FALSE</field>
+                        <field name="LED02">TRUE</field>
+                        <field name="LED12">TRUE</field>
+                        <field name="LED22">TRUE</field>
+                        <field name="LED32">TRUE</field>
+                        <field name="LED42">TRUE</field>
+                        <field name="LED52">TRUE</field>
+                        <field name="LED62">TRUE</field>
+                        <field name="LED72">TRUE</field>
+                        <field name="LED03">TRUE</field>
+                        <field name="LED13">TRUE</field>
+                        <field name="LED23">TRUE</field>
+                        <field name="LED33">TRUE</field>
+                        <field name="LED43">TRUE</field>
+                        <field name="LED53">TRUE</field>
+                        <field name="LED63">TRUE</field>
+                        <field name="LED73">TRUE</field>
+                        <field name="LED04">FALSE</field>
+                        <field name="LED14">TRUE</field>
+                        <field name="LED24">TRUE</field>
+                        <field name="LED34">TRUE</field>
+                        <field name="LED44">TRUE</field>
+                        <field name="LED54">TRUE</field>
+                        <field name="LED64">TRUE</field>
+                        <field name="LED74">FALSE</field>
+                        <field name="LED05">FALSE</field>
+                        <field name="LED15">FALSE</field>
+                        <field name="LED25">TRUE</field>
+                        <field name="LED35">TRUE</field>
+                        <field name="LED45">TRUE</field>
+                        <field name="LED55">TRUE</field>
+                        <field name="LED65">FALSE</field>
+                        <field name="LED75">FALSE</field>
+                        <field name="LED06">FALSE</field>
+                        <field name="LED16">FALSE</field>
+                        <field name="LED26">FALSE</field>
+                        <field name="LED36">TRUE</field>
+                        <field name="LED46">TRUE</field>
+                        <field name="LED56">FALSE</field>
+                        <field name="LED66">FALSE</field>
+                        <field name="LED76">FALSE</field>
+                        <field name="LED07">FALSE</field>
+                        <field name="LED17">FALSE</field>
+                        <field name="LED27">FALSE</field>
+                        <field name="LED37">FALSE</field>
+                        <field name="LED47">FALSE</field>
+                        <field name="LED57">FALSE</field>
+                        <field name="LED67">FALSE</field>
+                        <field name="LED77">FALSE</field>
+                        <next>
+                          <block type="device_pause">
+                            <value name="PAUSE">
+                              <shadow type="math_number">
+                                <field name="NUM">100</field>
+                              </shadow>
+                              <block type="math_number">
+                                <field name="NUM">300</field>
+                              </block>
+                            </value>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </statement>
+          </block>
+        </next>
+      </block>
+    </xml>
+      
+    <xml id="randomBars" style="display: none">
+      <block type="device_print_message" x="113" y="71">
+        <value name="MESSAGE">
+          <shadow type="text">
+            <field name="TEXT">Hello!</field>
+          </shadow>
+          <block type="text">
+            <field name="TEXT">Random bars</field>
+          </block>
+        </value>
+        <next>
+          <block type="device_clear_display">
+            <next>
+              <block type="variables_set">
+                <field name="VAR">bar</field>
+                <value name="VALUE">
+                  <block type="device_create_image">
+                    <field name="LED00">TRUE</field>
+                    <field name="LED10">FALSE</field>
+                    <field name="LED20">FALSE</field>
+                    <field name="LED30">FALSE</field>
+                    <field name="LED40">FALSE</field>
+                    <field name="LED50">FALSE</field>
+                    <field name="LED60">FALSE</field>
+                    <field name="LED70">FALSE</field>
+                    <field name="LED01">TRUE</field>
+                    <field name="LED11">FALSE</field>
+                    <field name="LED21">FALSE</field>
+                    <field name="LED31">FALSE</field>
+                    <field name="LED41">FALSE</field>
+                    <field name="LED51">FALSE</field>
+                    <field name="LED61">FALSE</field>
+                    <field name="LED71">FALSE</field>
+                    <field name="LED02">TRUE</field>
+                    <field name="LED12">FALSE</field>
+                    <field name="LED22">FALSE</field>
+                    <field name="LED32">FALSE</field>
+                    <field name="LED42">FALSE</field>
+                    <field name="LED52">FALSE</field>
+                    <field name="LED62">FALSE</field>
+                    <field name="LED72">FALSE</field>
+                    <field name="LED03">TRUE</field>
+                    <field name="LED13">FALSE</field>
+                    <field name="LED23">FALSE</field>
+                    <field name="LED33">FALSE</field>
+                    <field name="LED43">FALSE</field>
+                    <field name="LED53">FALSE</field>
+                    <field name="LED63">FALSE</field>
+                    <field name="LED73">FALSE</field>
+                    <field name="LED04">TRUE</field>
+                    <field name="LED14">FALSE</field>
+                    <field name="LED24">FALSE</field>
+                    <field name="LED34">FALSE</field>
+                    <field name="LED44">FALSE</field>
+                    <field name="LED54">FALSE</field>
+                    <field name="LED64">FALSE</field>
+                    <field name="LED74">FALSE</field>
+                    <field name="LED05">TRUE</field>
+                    <field name="LED15">FALSE</field>
+                    <field name="LED25">FALSE</field>
+                    <field name="LED35">FALSE</field>
+                    <field name="LED45">FALSE</field>
+                    <field name="LED55">FALSE</field>
+                    <field name="LED65">FALSE</field>
+                    <field name="LED75">FALSE</field>
+                    <field name="LED06">TRUE</field>
+                    <field name="LED16">FALSE</field>
+                    <field name="LED26">FALSE</field>
+                    <field name="LED36">FALSE</field>
+                    <field name="LED46">FALSE</field>
+                    <field name="LED56">FALSE</field>
+                    <field name="LED66">FALSE</field>
+                    <field name="LED76">FALSE</field>
+                    <field name="LED07">TRUE</field>
+                    <field name="LED17">FALSE</field>
+                    <field name="LED27">FALSE</field>
+                    <field name="LED37">FALSE</field>
+                    <field name="LED47">FALSE</field>
+                    <field name="LED57">FALSE</field>
+                    <field name="LED67">FALSE</field>
+                    <field name="LED77">FALSE</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="device_forever">
+                    <statement name="DO">
+                      <block type="variables_set">
+                        <field name="VAR">x</field>
+                        <value name="VALUE">
+                          <block type="math_number">
+                            <field name="NUM">0</field>
+                          </block>
+                        </value>
+                        <next>
+                          <block type="controls_repeat_ext">
+                            <value name="TIMES">
+                              <block type="math_number">
+                                <field name="NUM">8</field>
+                              </block>
+                            </value>
+                            <statement name="DO">
+                              <block type="variables_set">
+                                <field name="VAR">y</field>
+                                <value name="VALUE">
+                                  <block type="device_random">
+                                    <value name="LIMIT">
+                                      <shadow type="math_number">
+                                        <field name="NUM">4</field>
+                                      </shadow>
+                                      <block type="math_number">
+                                        <field name="NUM">7</field>
+                                      </block>
+                                    </value>
+                                  </block>
+                                </value>
+                                <next>
+                                  <block type="device_show_image_offset">
+                                    <field name="COLOR">Windows.UI.Colors.green</field>
+                                    <value name="SPRITE">
+                                      <block type="variables_get">
+                                        <field name="VAR">bar</field>
+                                      </block>
+                                    </value>
+                                    <value name="OFFSETX">
+                                      <shadow type="math_number">
+                                        <field name="NUM">0</field>
+                                      </shadow>
+                                      <block type="variables_get">
+                                        <field name="VAR">x</field>
+                                      </block>
+                                    </value>
+                                    <value name="OFFSETY">
+                                      <shadow type="math_number">
+                                        <field name="NUM">0</field>
+                                      </shadow>
+                                      <block type="variables_get">
+                                        <field name="VAR">y</field>
+                                      </block>
+                                    </value>
+                                    <next>
+                                      <block type="device_show_image_offset">
+                                        <field name="COLOR">Windows.UI.Colors.black</field>
+                                        <value name="SPRITE">
+                                          <block type="variables_get">
+                                            <field name="VAR">bar</field>
+                                          </block>
+                                        </value>
+                                        <value name="OFFSETX">
+                                          <shadow type="math_number">
+                                            <field name="NUM">0</field>
+                                          </shadow>
+                                          <block type="variables_get">
+                                            <field name="VAR">x</field>
+                                          </block>
+                                        </value>
+                                        <value name="OFFSETY">
+                                          <shadow type="math_number">
+                                            <field name="NUM">0</field>
+                                          </shadow>
+                                          <block type="math_arithmetic">
+                                            <field name="OP">MINUS</field>
+                                            <value name="A">
+                                              <block type="variables_get">
+                                                <field name="VAR">y</field>
+                                              </block>
+                                            </value>
+                                            <value name="B">
+                                              <block type="math_number">
+                                                <field name="NUM">8</field>
+                                              </block>
+                                            </value>
+                                          </block>
+                                        </value>
+                                        <next>
+                                          <block type="device_pause">
+                                            <value name="PAUSE">
+                                              <shadow type="math_number">
+                                                <field name="NUM">100</field>
+                                              </shadow>
+                                              <block type="math_number">
+                                                <field name="NUM">50</field>
+                                              </block>
+                                            </value>
+                                            <next>
+                                              <block type="variables_set">
+                                                <field name="VAR">x</field>
+                                                <value name="VALUE">
+                                                  <block type="math_arithmetic">
+                                                    <field name="OP">ADD</field>
+                                                    <value name="A">
+                                                      <block type="variables_get">
+                                                        <field name="VAR">x</field>
+                                                      </block>
+                                                    </value>
+                                                    <value name="B">
+                                                      <block type="math_number">
+                                                        <field name="NUM">1</field>
+                                                      </block>
+                                                    </value>
+                                                  </block>
+                                                </value>
+                                              </block>
+                                            </next>
+                                          </block>
+                                        </next>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </next>
+                              </block>
+                            </statement>
+                          </block>
+                        </next>
+                      </block>
+                    </statement>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </xml>
+    
+    <xml id="gravityBall" style="display: none">
+      <block type="device_print_message" x="102" y="79">
+        <value name="MESSAGE">
+          <shadow type="text">
+            <field name="TEXT">Hello!</field>
+          </shadow>
+          <block type="text">
+            <field name="TEXT">Gravity ball</field>
+          </block>
+        </value>
+        <next>
+          <block type="device_forever">
+            <statement name="DO">
+              <block type="variables_set">
+                <field name="VAR">x</field>
+                <value name="VALUE">
+                  <block type="math_arithmetic">
+                    <field name="OP">ADD</field>
+                    <value name="A">
+                      <block type="math_arithmetic">
+                        <field name="OP">DIVIDE</field>
+                        <value name="A">
+                          <block type="device_get_acceleration">
+                            <field name="AXIS">0</field>
+                          </block>
+                        </value>
+                        <value name="B">
+                          <block type="math_number">
+                            <field name="NUM">200</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <value name="B">
+                      <block type="math_number">
+                        <field name="NUM">2</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <next>
+                  <block type="variables_set">
+                    <field name="VAR">y</field>
+                    <value name="VALUE">
+                      <block type="math_arithmetic">
+                        <field name="OP">ADD</field>
+                        <value name="A">
+                          <block type="math_arithmetic">
+                            <field name="OP">DIVIDE</field>
+                            <value name="A">
+                              <block type="device_get_acceleration">
+                                <field name="AXIS">1</field>
+                              </block>
+                            </value>
+                            <value name="B">
+                              <block type="math_number">
+                                <field name="NUM">200</field>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                        <value name="B">
+                          <block type="math_number">
+                            <field name="NUM">2</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="device_clear_display_no_update">
+                        <next>
+                          <block type="device_show_image_offset">
+                            <field name="COLOR">Windows.UI.Colors.green</field>
+                            <value name="SPRITE">
+                              <block type="device_create_small_image">
+                                <field name="LED00">FALSE</field>
+                                <field name="LED10">TRUE</field>
+                                <field name="LED20">TRUE</field>
+                                <field name="LED30">FALSE</field>
+                                <field name="LED01">TRUE</field>
+                                <field name="LED11">TRUE</field>
+                                <field name="LED21">TRUE</field>
+                                <field name="LED31">TRUE</field>
+                                <field name="LED02">TRUE</field>
+                                <field name="LED12">TRUE</field>
+                                <field name="LED22">TRUE</field>
+                                <field name="LED32">TRUE</field>
+                                <field name="LED03">FALSE</field>
+                                <field name="LED13">TRUE</field>
+                                <field name="LED23">TRUE</field>
+                                <field name="LED33">FALSE</field>
+                              </block>
+                            </value>
+                            <value name="OFFSETX">
+                              <shadow type="math_number">
+                                <field name="NUM">0</field>
+                              </shadow>
+                              <block type="variables_get">
+                                <field name="VAR">x</field>
+                              </block>
+                            </value>
+                            <value name="OFFSETY">
+                              <shadow type="math_number">
+                                <field name="NUM">0</field>
+                              </shadow>
+                              <block type="variables_get">
+                                <field name="VAR">y</field>
+                              </block>
+                            </value>
+                            <next>
+                              <block type="device_pause">
+                                <value name="PAUSE">
+                                  <shadow type="math_number">
+                                    <field name="NUM">100</field>
+                                  </shadow>
+                                  <block type="math_number">
+                                    <field name="NUM">10</field>
+                                  </block>
+                                </value>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </statement>
+          </block>
+        </next>
+      </block>
+    </xml>
+
+    <script src="js/vendor/jquery.min.js"></script>
+    <script>
+        var blocklyDiv = document.getElementById('blocklyDiv');
+        var generatedCodeArea = document.getElementById('generatedCodeArea');
+        var codePrefix = 'var basic = new IoTBlocklyHelper.Basic();\nvar gpio = new IoTBlocklyHelper.Gpio();\nvar senseHat = new IoTBlocklyHelper.SenseHat();\n\n';
+
+        var onresize = function (e)
+        {
+            var bodyheight = $(window).height();
+            var tempHeight = bodyheight - blocklyDiv.offsetTop - 10;
+            if (tempHeight < 0) {
+
+            } else {
+                $("#blocklyDiv").height(tempHeight);
+            }
+            tempHeight = bodyheight - generatedCodeArea.offsetTop - 50;
+            if (tempHeight < 0)
+            {
+
+            } else {
+                $("#generatedCodeArea").height(tempHeight);
+            }
+        }
+        $(document).ready(function() {
+            onresize();
+            $(window).resize(function () {
+                onresize();
+            });
+        });
+
+        var workspace = Blockly.inject(blocklyDiv, {
+                media: 'blockly/media/',
+                toolbox: document.getElementById('toolbox'),
+                zoom: {
+                  controls: true,
+                  wheel: true,
+                  startScale: 1.0,
+                  maxScale: 3,
+                  minScale: 0.3,
+                  scaleSpeed: 1.2
+                }
+            });
+
+        initBlocks();
+
+        function initBlocks() {
+            var loadOnce = null;
+            try {
+                loadOnce = window.sessionStorage.loadOnceBlocks;
+            } catch (e) {
+            }
+            if (loadOnce) {
+                var xml = Blockly.Xml.textToDom(loadOnce);
+                Blockly.Xml.domToWorkspace(workspace, xml);
+            }
+            else {
+                loadSample('heartbeat');
+            }
+        }
+        
+        function loadSample(sampleId) {
+            workspace.clear();
+            Blockly.Xml.domToWorkspace(workspace, document.getElementById(sampleId));
+        }
+
+        function showCode() {
+            // Generate JavaScript code and display it.
+            Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+            var jscode = Blockly.JavaScript.workspaceToCode(workspace);
+            jscode = codePrefix + jscode;
+            var generatedCodeArea = document.getElementById('generatedCodeArea');
+            generatedCodeArea.innerText = jscode;
+        }
+
+        function showXML() {
+            // Convert to XML and display it.
+            Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+            var xml = Blockly.Xml.workspaceToDom(workspace);
+            var text = Blockly.Xml.domToPrettyText(xml);
+            var generatedCodeArea = document.getElementById('generatedCodeArea');
+            generatedCodeArea.innerText = text;
+        }
+
+        function runCode() {
+            if (window.sessionStorage) {
+                var xml = Blockly.Xml.workspaceToDom(workspace);
+                var text = Blockly.Xml.domToText(xml);
+                window.sessionStorage.loadOnceBlocks = text;
+            }
+            Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+            var jscode = Blockly.JavaScript.workspaceToCode(workspace);
+            jscode = codePrefix + jscode;
+            post('runcode', { code: jscode });
+        }
+
+        function stopCode() {
+            if (window.sessionStorage) {
+                var xml = Blockly.Xml.workspaceToDom(workspace);
+                var text = Blockly.Xml.domToText(xml);
+                window.sessionStorage.loadOnceBlocks = text;
+            }
+            post('stopcode', { });
+        }
+
+        function post(path, params, method) {
+            method = method || "post"; // Set method to post by default if not specified.
+
+            // The rest of this code assumes you are not using a library.
+            // It can be made less wordy if you use one.
+            var form = document.createElement("form");
+            form.setAttribute("method", method);
+            form.setAttribute("action", path);
+
+            for (var key in params) {
+                if (params.hasOwnProperty(key)) {
+                    var hiddenField = document.createElement("input");
+                    hiddenField.setAttribute("type", "hidden");
+                    hiddenField.setAttribute("name", key);
+                    hiddenField.setAttribute("value", params[key]);
+
+                    form.appendChild(hiddenField);
+                }
+            }
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+
+    </script>
+    <script src="js/vendor/what-input.min.js"></script>
+    <script src="js/foundation.min.js"></script>
+</body>
+</html>
