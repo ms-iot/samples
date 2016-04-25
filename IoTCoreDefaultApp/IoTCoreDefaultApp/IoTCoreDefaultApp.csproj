@@ -41,7 +41,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
-    <CompilerResponseFile>$(MSBuildProjectDirectory)\CscOptions.rsp</CompilerResponseFile>  
+    <CompilerResponseFile>$(MSBuildProjectDirectory)\CscOptions.rsp</CompilerResponseFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
     <OutputPath>bin\ARM\Release\</OutputPath>
@@ -129,6 +129,9 @@
     <Compile Include="Utils\NativeTimeMethods.cs" />
     <Compile Include="Utils\NavigationUtils.cs" />
     <Compile Include="Utils\WifiGlyphConverter.cs" />
+    <Compile Include="Views\CommandLinePage.xaml.cs">
+      <DependentUpon>CommandLinePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -216,6 +219,10 @@
       </SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Views\CommandLinePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>

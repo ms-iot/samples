@@ -715,4 +715,33 @@
     <value>&lt;no device name&gt;</value>
     <comment>This is shown when we fail to retrieve a valid device name (very strange case)</comment>
   </data>
+  <data name="CommandLineText" xml:space="preserve">
+    <value>Command line</value>
+    <comment>Title for command line page</comment>
+  </data>
+  <data name="CommandLinePlaceholderText" xml:space="preserve">
+    <value>{0}&gt; Enter command line</value>
+    <comment>Placeholder for command line input text box</comment>
+  </data>
+  <data name="ClearPageText" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="CdNotSupported" xml:space="preserve">
+    <value>Change Directory not currently supported. Please use full paths in your commands.</value>
+  </data>
+  <data name="CmdNotEnabled" xml:space="preserve">
+    <value>Your device is not allowed to run the command line processor.
+To enable it, run the following command as "Administrator" on your device:
+
+    reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
+
+You can run the command in IoT Windows Device Portal's Processes page. Or use PowerShell to connect to your Windows IoT device.
+For more information, please visit http://go.microsoft.com/fwlink/p/?LinkId=698488
+    </value>
+    <comment>New lines need to be preserved</comment>
+  </data>
+  <data name="ExecAsDefaultAccount" xml:space="preserve">
+    <value>Executing commands as DefaultAccount
+    </value>
+  </data>
 </root>
