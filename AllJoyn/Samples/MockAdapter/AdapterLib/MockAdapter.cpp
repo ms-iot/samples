@@ -23,6 +23,9 @@
 #include "LSFHandler.h"
 #include "MockLampDevice.h"
 #include "MockLampConsts.h"
+#include <cctype>
+#include <functional>
+#include "bridgeutils.h"
 
 using namespace Platform;
 using namespace Platform::Collections;
@@ -30,7 +33,7 @@ using namespace Windows::Foundation::Collections;
 using namespace Windows::Storage;
 
 using namespace BridgeRT;
-using namespace DsbCommon;
+
 
 namespace AdapterLib
 {
@@ -49,7 +52,9 @@ namespace AdapterLib
         this->adapterName = ref new String(cAdapterName.c_str());
         // the adapter prefix must be something like "com.mycompany" (only alpha num and dots)
         // it is used by the Device System Bridge as root string for all services and interfaces it exposes
-        this->exposedAdapterPrefix = ref new String(cAdapterPrefix.c_str());
+        std::wstring adapterPrefix = cDomainPrefix + L"." + cVendor;
+        std::transform(adapterPrefix.begin(), adapterPrefix.end(), adapterPrefix.begin(), std::tolower);
+        this->exposedAdapterPrefix = ref new String(adapterPrefix.c_str());
         this->exposedApplicationGuid = Platform::Guid(APPLICATION_GUID);
 
         if (nullptr != package &&
@@ -68,6 +73,36 @@ namespace AdapterLib
 
     MockAdapter::~MockAdapter()
     {
+    }
+
+    uint32
+    MockAdapter::StringToArray(String^ SourceString, Array<BYTE>^* TargetDataArrayPtr)
+    {
+        uint32 status = ERROR_SUCCESS;
+        int stringByteLen = 0;
+
+        if ((SourceString == nullptr) || (TargetDataArrayPtr == nullptr))
+        {
+            status = ERROR_INVALID_PARAMETER;
+            goto done;
+        }
+
+        stringByteLen = (SourceString->Length() + 1) * sizeof(wchar_t);
+
+        try
+        {
+            (*TargetDataArrayPtr) = ref new Array<BYTE>(stringByteLen);
+
+            CopyMemory((*TargetDataArrayPtr)->Data, SourceString->Data(), stringByteLen);
+        }
+        catch (OutOfMemoryException^ ex)
+        {
+            status = WIN32_FROM_HRESULT(ex->HResult);
+            goto done;
+        }
+
+    done:
+        return status;
     }
 
 
@@ -379,7 +414,7 @@ namespace AdapterLib
             int mmapkey = Signal->GetHashCode();
 
             // Sync access to listeners list
-            AutoLock sync(&this->lock, true);
+            AutoLock sync(this->lock);
 
             // check if the listener is already registered for the signal
             auto handlers = this->signalListeners.equal_range(mmapkey);
@@ -422,7 +457,7 @@ namespace AdapterLib
         int mmapkey = Signal->GetHashCode();
 
         // Sync access to listeners list
-        AutoLock sync(&this->lock, true);
+        AutoLock sync(this->lock);
 
         // get all the listeners for the SignalHandle
         auto handlers = this->signalListeners.equal_range(mmapkey);
@@ -455,7 +490,7 @@ namespace AdapterLib
         int mmapkey = Signal->GetHashCode();
 
         // Sync access to listeners list
-        AutoLock sync(&this->lock, true);
+        AutoLock sync(this->lock);
 
         //search for the listeners
         auto handlers = signalListeners.equal_range(mmapkey);

@@ -41,6 +41,8 @@
     <ClCompile Include="LampState.cpp" />
     <ClCompile Include="LSF.cpp" />
     <ClCompile Include="LSFSignalHandler.cpp" />
+    <ClCompile Include="BridgeUtils.cpp" />
+    <ClCompile Include="AdapterBridgeServiceImplementation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -86,5 +88,7 @@
     <ClInclude Include="LSFConsts.h" />
     <ClInclude Include="LSFSignalHandler.h" />
     <ClInclude Include="LSFEnums.h" />
+    <ClInclude Include="BridgeUtils.h" />
+    <ClInclude Include="AdapterBridgeServiceImplementation.h" />
   </ItemGroup>
 </Project>

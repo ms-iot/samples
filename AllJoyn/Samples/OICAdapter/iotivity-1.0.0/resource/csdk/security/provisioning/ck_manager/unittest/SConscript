@@ -1,0 +1,100 @@
+# //******************************************************************
+# //
+# // Copyright 2015 Samsung Electronics All Rights Reserved.
+# //
+# //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+# //
+# // Licensed under the Apache License, Version 2.0 (the "License");
+# // you may not use this file except in compliance with the License.
+# // You may obtain a copy of the License at
+# //
+# //      http://www.apache.org/licenses/LICENSE-2.0
+# //
+# // Unless required by applicable law or agreed to in writing, software
+# // distributed under the License is distributed on an "AS IS" BASIS,
+# // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# // See the License for the specific language governing permissions and
+# // limitations under the License.
+# //
+# //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# SConscript file for Local PKI google tests
+
+Import('env')
+
+import os
+import os.path
+pki_test_env = env.Clone()
+
+src_dir = pki_test_env.get('SRC_DIR')
+
+######################################################################
+# Build flags
+######################################################################
+pki_test_env.PrependUnique(CPPPATH = ['../include/',
+				'../include/internal',
+				'../../include',
+				'../../include/internal',
+				'../../../include',
+				'../../../include/internal',
+				'../../../../connectivity/inc',
+				'../../../../connectivity/api',
+				'../../../../logger/include',
+				'../../../../stack/include',
+				'../../../../../oc_logger/include',
+				'../../../../../../extlibs/gtest/gtest-1.7.0/include',
+				'../../../../../../extlibs/asn1cert',
+				'../../../../../../extlibs/tinydtls',
+				'../../../../../../extlibs/tinydtls/ecc',
+				'../../../../../../extlibs/tinydtls/sha2'
+		])
+pki_test_env.AppendUnique(CXXFLAGS = ['-std=c++0x', '-Wall', '-pthread'])
+pki_test_env.AppendUnique(LIBS = ['pthread'])
+pki_test_env.AppendUnique(LIBPATH = [env.get('BUILD_DIR')])
+pki_test_env.AppendUnique(LIBPATH = [src_dir + '/extlibs/gtest/gtest-1.7.0/lib/.libs'])
+
+pki_test_env.AppendUnique(LIBS = ['octbstack'])
+pki_test_env.AppendUnique(LIBS = ['CKManager'])
+pki_test_env.AppendUnique(LIBS = ['asn1'])
+pki_test_env.AppendUnique(LIBS = ['gtest'])
+pki_test_env.AppendUnique(LIBS = ['gtest_main'])
+
+if env.get('SECURED') == '1':
+    pki_test_env.AppendUnique(LIBS = ['tinydtls'])
+
+if not env.get('RELEASE'):
+	pki_test_env.AppendUnique(CPPDEFINES = ['TB_LOG'])
+
+######################################################################
+# Source files and Targets
+######################################################################
+unittest = pki_test_env.Program('unittest', ['pki_test.cpp'])
+
+Alias("test", [unittest])
+
+
+
+unittest_src_dir = src_dir + '/resource/csdk/security/provisioning/ck_manager/unittest/test_data/'
+unittest_build_dir = env.get('BUILD_DIR') +'/resource/csdk/security/provisioning/ck_manager/unittest'
+
+pki_test_env.Alias("install",env.Install( unittest_build_dir, [ unittest_src_dir + '01.der',
+								unittest_src_dir + 'cacert.der',
+								unittest_src_dir + 'capub.der',
+								unittest_src_dir + 'cert_chain.dat',
+								unittest_src_dir + 'chain.der',
+								unittest_src_dir + 'CKMInfo.json' ]))
+
+env.AppendTarget('test')
+if env.get('TEST') == '1':
+	target_os = env.get('TARGET_OS')
+	if target_os == 'linux':
+		out_dir = env.get('BUILD_DIR')
+		result_dir = env.get('BUILD_DIR') + '/test_out/'
+		if not os.path.isdir(result_dir):
+			os.makedirs(result_dir)
+		pki_test_env.AppendENVPath('GTEST_OUTPUT', ['xml:'+ result_dir])
+		pki_test_env.AppendENVPath('LD_LIBRARY_PATH', [out_dir])
+		pki_test_env.AppendENVPath('LD_LIBRARY_PATH', [src_dir + '/extlibs/gtest/gtest-1.7.0/lib/.libs'])
+ 		ut = pki_test_env.Command ('ut', None, out_dir + '/resource/csdk/security/unittest/unittest')
+AlwaysBuild ('ut')
+

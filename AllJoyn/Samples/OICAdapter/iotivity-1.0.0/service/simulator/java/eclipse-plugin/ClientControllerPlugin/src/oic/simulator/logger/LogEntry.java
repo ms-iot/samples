@@ -1,0 +1,58 @@
+/*
+ * Copyright 2015 Samsung Electronics All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package oic.simulator.logger;
+
+import java.util.Date;
+
+import oic.simulator.clientcontroller.manager.LogManager;
+
+/**
+ * Class for log entry.
+ */
+public class LogEntry {
+    private final int    severity;
+    private final Date   date;
+    private final String message;
+
+    public LogEntry(int severity, Date date, String message) {
+        this.severity = severity;
+        this.date = date;
+        this.message = message;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public int getSeverity() {
+        return severity;
+    }
+
+    @Override
+    public String toString() {
+        String newline = System.getProperty("line.separator");
+        String out = date.toString() + newline;
+        out += "Severity: " + LogManager.getSeverityName(severity) + newline;
+        out += "Message: " + message + newline;
+        out += "===============================" + newline + newline;
+        return out;
+    }
+}

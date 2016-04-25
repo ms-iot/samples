@@ -1,0 +1,2 @@
+# use sha256 for pdb hash
+/checksumalgorithm:SHA256

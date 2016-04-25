@@ -1,0 +1,29 @@
+import os, sys, platform, subprocess
+
+Import('env')
+
+env = env.Clone()
+ndk_env = env.Clone()
+SConscript('../../../build_common/external_libs.scons')
+
+target_os = env.get('TARGET_OS')
+host_os = sys.platform
+print host_os
+SConscript('../../../build_common/external_libs.scons')
+######################################################################
+# Build flags
+######################################################################
+src_dir = env.get('SRC_DIR')
+
+path = os.path.join(src_dir, 'extlibs', 'android', 'gradle', 'gradle-2.2.1')
+
+# check 'gradle' library, if it doesn't exits, ask user to download it
+if not os.path.exists(path):
+	gradle_zip = env.Download('gradle2.2.1.zip', 'https://services.gradle.org/distributions/gradle-2.2.1-all.zip')
+	gradle_dir = env.UnpackAll('gradle-2.2.1', gradle_zip)
+	print '''
+***********************************************************************
+* Downloading gradle:                    *
+*******************************************************************************
+'''
+

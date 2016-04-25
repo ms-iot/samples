@@ -1,0 +1,77 @@
+{
+    "acl": [
+        {
+            "sub": "MTExMTExMTExMTExMTExMQ==",
+            "rsrc": [
+				"/oic/light",
+				"/oic/fan"
+			],
+			"perms": 255,
+			"ownrs" : [
+				"MjIyMjIyMjIyMjIyMjIyMg=="
+			]
+		},
+		{
+            "sub": "MzMzMzMzMzMzMzMzMzMzMw==",
+            "rsrc": [
+				"/oic/light",
+				"/oic/garage"
+			],
+			"perms": 255,
+			"ownrs" : [
+				"MjIyMjIyMjIyMjIyMjIyMg==",
+                "NDQ0NDQ0NDQ0NDQ0NDQ0NA=="
+			]
+		}
+	],
+
+	"pstat":	{
+		"isop":	false,
+		"deviceid":	"ZGV2aWNlaWQAAAAAABhanw==",
+		"ch":	1234,
+		"cm":	63,
+		"tm":	48,
+		"om":	0,
+		"sm":	[3, 1]
+	},
+
+    "amacl": [
+        {
+            "rsrc": ["/a/led", "/a/fan"],
+            "amss": [
+                "NTU1NTU1NTU1NTU1NTU1NQ==", 
+                "NjY2NjY2NjY2NjY2NjY2Ng=="
+            ],
+			"ownrs" : [
+				"MjIyMjIyMjIyMjIyMjIyMg=="
+			]
+		},
+        {
+            "rsrc": ["/b/led", "/b/fan"],
+            "amss": [
+                "NTU1NTU1NTU1NTU1NTU1NQ==", 
+                "NjY2NjY2NjY2NjY2NjY2Ng=="
+            ],
+			"ownrs" : [
+				"MjIyMjIyMjIyMjIyMjIyMg=="
+			]
+		}
+	],
+
+"svc": [
+        {
+            "svcdid": "NTU1NTU1NTU1NTU1NTU1NQ==",
+			"svct": 1,
+			"ownrs" : [
+				"OTk5OTk5OTk5OTk5OTk5OQ=="
+			]
+		},
+        {
+            "svcdid": "NjY2NjY2NjY2NjY2NjY2Ng==",
+			"svct": 1,
+			"ownrs" : [
+				"OTk5OTk5OTk5OTk5OTk5OQ=="
+			]
+		}
+	]
+}

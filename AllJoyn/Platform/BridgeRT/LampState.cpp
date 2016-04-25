@@ -5,6 +5,7 @@
 #include "AllJoynHelper.h"
 #include "LSF.h"
 #include "BridgeDevice.h"
+#include "BridgeUtils.h"
 
 using namespace BridgeRT;
 using namespace Windows::Foundation;
@@ -18,11 +19,13 @@ LampState::LampState(LSF* pLightingService)
 
 LampState::~LampState()
 {
-    if (m_pLightingService != nullptr)
+    if (m_lampStateInterface != nullptr)
     {
-        delete m_pLightingService;
-        m_pLightingService = nullptr;
+        alljoyn_busattachment_deleteinterface(m_pLightingService->GetBus(), m_lampStateInterface);
+        m_lampStateInterface = nullptr;
     }
+    m_pLSFSignalHandler = nullptr;
+    m_pLightingService = nullptr;
 }
 
 QStatus
@@ -666,7 +669,7 @@ LampState::RaiseStateChangedSignal()
     if (QCC_TRUE == signalFound)
     {
         IAdapterValue^ pLampIDParam = m_pLampState_LampStateChanged->Params->GetAt(0);
-        std::string srcContent = DsbCommon::To_Ascii_String(pLampIDParam->Data->ToString());
+        std::string srcContent = ConvertTo<std::string>(pLampIDParam->Data->ToString());
         str_arg = alljoyn_msgarg_create();
         CHK_POINTER(str_arg);
         CHK_AJSTATUS(alljoyn_msgarg_set(str_arg, ARG_STRING_STR, srcContent.c_str()));

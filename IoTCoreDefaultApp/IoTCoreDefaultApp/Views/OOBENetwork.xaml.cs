@@ -3,13 +3,11 @@
 
 using System;
 using Windows.Devices.WiFi;
+using Windows.Networking.Connectivity;
 using Windows.Security.Credentials;
-using Windows.System.Threading;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
-using Windows.Networking.Connectivity;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -202,7 +200,7 @@ namespace IoTCoreDefaultApp
             NavigationUtils.NavigateToScreen(typeof(MainPage));
         }
 
-        private void ConnectAutomaticallyCheckBox_Checked(object sender, RoutedEventArgs e)
+        private void ConnectAutomaticallyCheckBox_Changed(object sender, RoutedEventArgs e)
         {
             var checkbox = sender as CheckBox;
 
@@ -217,7 +215,18 @@ namespace IoTCoreDefaultApp
 
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
+            RefreshButton.IsEnabled = false;
             SetupWifi();
+            RefreshButton.IsEnabled = true;
+        }
+
+        private void WifiPasswordBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            var passwordBox = sender as PasswordBox;
+            if (passwordBox != null)
+            {
+                passwordBox.Focus(FocusState.Programmatic);
+            }
         }
     }
 }

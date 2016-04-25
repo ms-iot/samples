@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.2">
+  <CommandSet xml:lang="en-us" Name="CommandSet_en-us">
+    <AppName> Living Room </AppName>
+    <Example> Turn off Living Room Hue device</Example>
+
+    <!-- Handled by the background task -->
+    <Command Name="enterLivingRoom">
+      <Example> Enter Living Room </Example>
+      <ListenFor RequireAppName="ExplicitlySpecified"> [Would] [you] [please] turn on [my] {builtin:AppName} </ListenFor>
+      <ListenFor RequireAppName="ExplicitlySpecified"> [I've] entered [my] {builtin:AppName} </ListenFor>
+      <Feedback> Welcome Home </Feedback>
+      <VoiceCommandService Target="VoiceCommandService"/>
+    </Command>
+    <Command Name="leaveLivingRoom">
+      <Example> Leave Living Room </Example>
+      <ListenFor RequireAppName="ExplicitlySpecified"> [Would] [you] [please] turn off [my] {builtin:AppName} </ListenFor>
+      <ListenFor RequireAppName="ExplicitlySpecified"> [I'm] leaving [my] {builtin:AppName} </ListenFor>
+      <Feedback> Hope to see you soon </Feedback>
+      <VoiceCommandService Target="VoiceCommandService"/>
+    </Command>
+
+    <!-- Handled by the App itself -->
+    <Command Name="showRoom">
+      <Example> Show my Living Room </Example>
+      <ListenFor RequireAppName="ExplicitlySpecified"> [Would] [you] [please] show [me] [my] {builtin:AppName} </ListenFor>
+      <Feedback> Showing Living Room </Feedback>
+      <Navigate />
+    </Command>
+    <Command Name="showDevice">
+      <Example> Show me TV in Living Room </Example>
+      <ListenFor RequireAppName="ExplicitlySpecified"> [Would] [you] [please] show [me] [my] {device} in [my] {builtin:AppName} </ListenFor>
+      <Feedback> Showing {device} </Feedback>
+      <Navigate />
+    </Command>
+
+    <PhraseList Label="device">
+    </PhraseList>
+  </CommandSet>
+</VoiceCommands>

@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\connectivity\common\src\camutex_pthreads_windows.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\connectivity\common\src\caremotehandler.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\connectivity\common\src\cathreadpool_pthreads.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\connectivity\common\src\logger.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\connectivity\common\src\oic_console_logger.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\connectivity\common\src\oic_logger.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\connectivity\common\src\uarraylist.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\connectivity\common\src\uqueue.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\connectivity\src\adapter_util\caadapterutils.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\connectivity\src\caconnectivitymanager.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\connectivity\src\cainterfacecontroller.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\connectivity\src\camessagehandler.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\connectivity\src\canetworkconfigurator.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\connectivity\src\caprotocolmessage.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\connectivity\src\caqueueingthread.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\connectivity\src\caretransmission.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\connectivity\src\ip_adapter\caipadapter.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\connectivity\src\ip_adapter\caipserver.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\connectivity\src\ip_adapter\windows\caipnwmonitor.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\connectivity\src\adapter_util\cafragmentation.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\connectivity\common\src\ulinklist.c" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,85 @@
+#******************************************************************
+#
+# Copyright 2015 Intel Mobile Communications GmbH All Rights Reserved.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+##
+# Plugin Interface build script
+##
+
+import os.path
+
+Import('env')
+
+target_os = env.get('TARGET_OS')
+src_dir = env.get('SRC_DIR')
+pi_path = os.path.join(src_dir, 'plugins')
+
+print"Reading PI script"
+
+######################################################################
+# Build flags
+######################################################################
+
+env.PrependUnique(CPPPATH = [ os.path.join(src_dir, 'resource', 'c_common', 'oic_malloc', 'include'),
+                              os.path.join(src_dir, 'resource', 'c_common', 'oic_string', 'include'),
+                              os.path.join(src_dir, 'resource', 'oc_logger', 'include'),
+                              os.path.join(src_dir, 'resource', 'csdk', 'logger', 'include'),
+                              os.path.join(src_dir, 'resource', 'csdk', 'stack', 'include'),
+                              os.path.join(src_dir, 'resource', 'csdk', 'connectivity', 'lib', 'libcoap-4.1.1')
+                            ])
+env.AppendUnique(CPPPATH = [ os.path.join(pi_path, 'include'),
+                             os.path.join(pi_path, 'include', 'internal'),
+                             os.path.join(pi_path, 'zigbee_wrapper', 'include'),
+                             os.path.join(pi_path, 'include', 'internal')
+                           ])
+
+if target_os not in ['arduino', 'windows', 'winrt']:
+	env.AppendUnique(CPPDEFINES = ['WITH_POSIX'])
+
+if target_os in ['darwin','ios']:
+	env.AppendUnique(CPPDEFINES = ['_DARWIN_C_SOURCE'])
+
+env.AppendUnique(CXXFLAGS = ['-std=c++0x', '-Wall', '-Wextra', '-Werror'])
+env.AppendUnique(RPATH = [env.get('BUILD_DIR')])
+env.AppendUnique(LIBPATH = [env.get('BUILD_DIR')])
+
+env.PrependUnique(LIBS = ['zigbee_wrapper'])
+
+if env.get('LOGGING'):
+	env.AppendUnique(CPPDEFINES = ['TB_LOG'])
+
+#####################################################################
+# Source files and Target(s)
+######################################################################
+pi_src = [
+         os.path.join(src_dir, 'resource', 'csdk', 'logger', 'src', 'logger.c'),
+         'pluginlist.c',
+         'plugininterface.c',
+	     ]
+
+env.AppendUnique(PI_SRC = pi_src)
+
+print "Include path is %s" % env.get('CPPPATH')
+print "Files path is %s" % env.get('PI_SRC')
+if target_os in ['android', 'tizen']:
+	calib = env.SharedLibrary('plugin_interface', env.get('PI_SRC'))
+else:
+	calib = env.StaticLibrary('plugin_interface', env.get('PI_SRC'))
+env.InstallTarget(calib, 'libplugin_interface')
+env.UserInstallTargetLib(calib, 'libplugin_interface')
+

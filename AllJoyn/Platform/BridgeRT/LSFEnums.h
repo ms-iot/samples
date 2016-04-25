@@ -16,6 +16,7 @@
 
 #pragma once
 #include "AdapterDefinitions.h"
+
 namespace BridgeRT
 {
     //Values pulled from : https://git.allseenalliance.org/cgit/lighting/service_framework.git/tree/common/inc/LampValues.h 

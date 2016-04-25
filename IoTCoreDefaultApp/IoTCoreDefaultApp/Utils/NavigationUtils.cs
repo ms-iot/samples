@@ -39,13 +39,16 @@ namespace IoTCoreDefaultApp
             if (newDocName == "HelloBlinky")
             {
 #if (!ALWAYS_SHOW_BLINKY)
-                if (DeviceTypeInformation.Type == DeviceTypes.RPI2 || DeviceTypeInformation.Type == DeviceTypes.DB410)
+                if (DeviceTypeInformation.IsRaspberryPi || DeviceTypeInformation.Type == DeviceTypes.DB410)
 #endif
                 {
                     NavigationUtils.NavigateToScreen(typeof(TutorialHelloBlinkyPage), newDocName);
                     return;
                 }
+// Disable unreachable code warning
+#pragma warning disable 162
                 newDocName = Constants.TutorialDocNames[++index];
+#pragma warning restore 162
             }
 
             NavigationUtils.NavigateToScreen(typeof(TutorialContentPage), newDocName);

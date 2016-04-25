@@ -17,7 +17,7 @@
 
 #include "AdapterDefinitions.h"
 #include "BACnetNotification.h"
-#include "Misc.h"
+#include "BridgeUtils.h"
 #include "Thread.h"
 #include "AdapterConfig.h"
 
@@ -27,7 +27,6 @@ namespace AdapterLib
     static const std::wstring cVendor = L"Microsoft";
     static const std::wstring cAdapterName = L"BACnet Bridge";
     static const std::wstring cDomainPrefix = L"com";
-    static const std::wstring cAdapterPrefix = cDomainPrefix + L"." + DsbCommon::ToLower(cVendor.c_str())->Data();
 
     //
     // BACnetAdapter class.
@@ -195,7 +194,7 @@ namespace AdapterLib
         std::vector<BridgeRT::IAdapterSignal^> signals;
 
         // Sync object
-        DsbCommon::CSLock lock;
+        std::recursive_mutex lock;
 
         //
         // Signal listener entry
@@ -233,7 +232,7 @@ namespace AdapterLib
         std::map<ULONG, BridgeRT::IAdapterDevice^> deviceLookup;
 
         // The device discovery thread
-        DsbCommon::MemberThread<BACnetAdapter> deviceDiscoveryThread;
+        MemberThread<BACnetAdapter> deviceDiscoveryThread;
 
         // The BACnet stack interface
         BACnetInterface^ stackInterface;

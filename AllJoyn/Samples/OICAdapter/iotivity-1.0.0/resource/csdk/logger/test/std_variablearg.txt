@@ -1,0 +1,4 @@
+DEBUG: VariableArg: this is a char: A
+DEBUG: VariableArg: this is an integer: 123
+DEBUG: VariableArg: this is a string: hello
+DEBUG: VariableArg: this is a float: 123.45

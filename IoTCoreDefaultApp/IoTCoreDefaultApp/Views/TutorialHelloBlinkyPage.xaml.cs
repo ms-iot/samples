@@ -1,25 +1,15 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 
-
+using IoTCoreDefaultApp.Utils;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Devices.Gpio;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.System;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using IoTCoreDefaultApp.Utils;
 
 namespace IoTCoreDefaultApp
 {
@@ -39,9 +29,17 @@ namespace IoTCoreDefaultApp
         {
             this.InitializeComponent();
 
-            if (DeviceTypeInformation.Type == DeviceTypes.DB410)
+            switch (DeviceTypeInformation.Type)
             {
-                LED_PIN = 115; // on-board LED on the DB410c
+                case DeviceTypes.RPI2:
+                    LED_PIN = 47; // onboard LED
+                    break;
+                case DeviceTypes.RPI3:
+                    LED_PIN = 5;
+                    break;
+                case DeviceTypes.DB410:
+                    LED_PIN = 115;
+                    break;
             }
 
             var rootFrame = Window.Current.Content as Frame;
@@ -67,6 +65,19 @@ namespace IoTCoreDefaultApp
 
                 loader = new Windows.ApplicationModel.Resources.ResourceLoader();
                 BlinkyStartStop.Content = loader.GetString("BlinkyStart");
+
+                switch (DeviceTypeInformation.Type)
+                {
+                    case DeviceTypes.RPI2:
+                        GpioPinInstructions.Text = "";
+                        break;
+                    case DeviceTypes.RPI3:
+                        GpioPinInstructions.Text = loader.GetString("TutorialBlinkyBody6Text_Rpi3");
+                        break;
+                    case DeviceTypes.DB410:
+                        GpioPinInstructions.Text = loader.GetString("TutorialBlinkyBody6Text_Dragonboard");
+                        break;
+                }
             };
         }
 
@@ -134,6 +145,11 @@ namespace IoTCoreDefaultApp
         private void SettingsButton_Clicked(object sender, RoutedEventArgs e)
         {
             NavigationUtils.NavigateToScreen(typeof(Settings));
+        }
+
+        private void CommandLineButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            NavigationUtils.NavigateToScreen(typeof(CommandLinePage));
         }
 
         private void BackButton_Clicked(object sender, RoutedEventArgs e)

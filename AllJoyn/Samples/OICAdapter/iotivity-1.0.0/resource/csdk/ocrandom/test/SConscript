@@ -1,0 +1,66 @@
+#******************************************************************
+#
+# Copyright 2014 Intel Mobile Communications GmbH All Rights Reserved.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+Import('env')
+import os
+import os.path
+randomtest_env = env.Clone()
+
+src_dir = randomtest_env.get('SRC_DIR')
+
+######################################################################
+# Build flags
+######################################################################
+randomtest_env.PrependUnique(CPPPATH = [
+        '../include',
+		'../../logger/include',
+		'../../../oc_logger/include',
+		'../../../../extlibs/gtest/gtest-1.7.0/include'
+		])
+
+randomtest_env.AppendUnique(CXXFLAGS = ['-std=c++0x', '-Wall', '-pthread'])
+randomtest_env.AppendUnique(LIBS = ['-lpthread'])
+randomtest_env.AppendUnique(LIBPATH = [env.get('BUILD_DIR')])
+randomtest_env.AppendUnique(LIBPATH = [src_dir + '/extlibs/gtest/gtest-1.7.0/lib/.libs'])
+randomtest_env.PrependUnique(LIBS = ['m',
+                                    'octbstack',
+                                    'uuid',
+                                    'gtest',
+                                    'gtest_main'])
+
+
+if env.get('LOGGING'):
+	randomtest_env.AppendUnique(CPPDEFINES = ['TB_LOG'])
+
+######################################################################
+# Source files and Targets
+######################################################################
+randomtests = randomtest_env.Program('randomtests', ['linux/randomtest.cpp'])
+
+Alias("test", [randomtests])
+
+env.AppendTarget('test')
+if env.get('TEST') == '1':
+	target_os = env.get('TARGET_OS')
+	if target_os == 'linux':
+                from tools.scons.RunTest import *
+                run_test(randomtest_env,
+                         'resource_csdk_random_test.memcheck',
+                         'resource/csdk/ocrandom/test/randomtests')

@@ -158,14 +158,14 @@
     <value>Verbinden</value>
   </data>
   <data name="DirectConnectionsText" xml:space="preserve">
-    <value>Direktverbindungen</value>
+    <value>Direkte Verbindungen</value>
   </data>
   <data name="EthernetText" xml:space="preserve">
     <value>Ethernet</value>
     <comment>Field label</comment>
   </data>
   <data name="NetworkConnectingMessageText" xml:space="preserve">
-    <value>Netzwerkanforderungen werden überprüft</value>
+    <value>Netzwerkanforderungen werden überprüft.</value>
   </data>
   <data name="NetworkPasswordPromptText" xml:space="preserve">
     <value>Netzwerksicherheitsschlüssel eingeben</value>
@@ -180,7 +180,7 @@
     <value>Lassen Sie uns zunächst einige grundlegende Dinge klären.</value>
   </data>
   <data name="OOBELanguageSelectText" xml:space="preserve">
-    <value>Sprache wählen</value>
+    <value>Sprache auswählen</value>
   </data>
   <data name="OOBENetworkTitleText" xml:space="preserve">
     <value>Verbindung herstellen</value>
@@ -192,23 +192,31 @@
     <value>Raspberry Pi 2</value>
     <comment>Board name</comment>
   </data>
+  <data name="Rpi3Name" xml:space="preserve">
+    <value>Raspberry Pi 3</value>
+    <comment>Board name</comment>
+  </data>
   <data name="DB410Name" xml:space="preserve">
     <value>DragonBoard 410c</value>
     <comment>Board name</comment>
   </data>
   <data name="SkipStepText" xml:space="preserve">
-    <value>Schritt überspringen</value>
+    <value>Diesen Schritt überspringen,</value>
   </data>
   <data name="WifiText" xml:space="preserve">
     <value>WLAN</value>
     <comment>Label for Wi-Fi list in options page</comment>
   </data>
   <data name="StartDevelopingText" xml:space="preserve">
-    <value> um mit der Entwicklung zu beginnen.</value>
+    <value> um mit der Entwicklung zu beginnen.</value>
     <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
   </data>
   <data name="VisitText" xml:space="preserve">
     <value>Besuchen Sie</value>
+    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
+  </data>
+  <data name="WindowsOnDevicesUrlText" xml:space="preserve">
+    <value> www.windowsondevices.com</value>
     <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
   </data>
   <data name="KeyboardTitleText" xml:space="preserve">
@@ -216,7 +224,7 @@
     <comment>Field label</comment>
   </data>
   <data name="LanguageTitleText" xml:space="preserve">
-    <value>Sprachen</value>
+    <value>Sprache</value>
     <comment>Field label</comment>
   </data>
   <data name="NetworkConnectedText" xml:space="preserve">
@@ -224,6 +232,10 @@
   </data>
   <data name="NetworkPreferencesText" xml:space="preserve">
     <value>Netzwerk &amp; WLAN</value>
+  </data>
+  <data name="BluetoothPreferencesText" xml:space="preserve">
+    <value>Bluetooth</value>
+    <comment>Label for Setting item tp control Bluetooth pairing</comment>
   </data>
   <data name="SettingsPreferencesText" xml:space="preserve">
     <value>Grundeinstellungen</value>
@@ -238,8 +250,7 @@
     <value>Geräteinfo</value>
   </data>
   <data name="TutorialsText" xml:space="preserve">
-    <value>Lern-
-programme</value>
+    <value>Lernprogramme</value>
     <comment>Text under the Tutorials button on the top bar</comment>
   </data>
   <data name="ConnectedDevicesText" xml:space="preserve">
@@ -317,6 +328,12 @@ programme</value>
   </data>
   <data name="TutorialBlinkyBody5Text" xml:space="preserve">
     <value>Haftungsausschluss: Microsoft haftet nicht für Schäden, die dadurch entstehen, dass Sie große Technopartys mit der kleinen blinkenden LED auf dem Board veranstalten.</value>
+  </data>
+  <data name="TutorialBlinkyBody6Text_Rpi3" xml:space="preserve">
+    <value>Verbinden Sie beim Raspberry Pi 3 eine LED mit GPIO-Pin 5.</value>
+  </data>
+  <data name="TutorialBlinkyBody6Text_Dragonboard" xml:space="preserve">
+    <value>Verbinden Sie beim DragonBoard 410c eine LED mit GPIO-Pin 115.</value>
   </data>
   <data name="TutorialBlinkyTitle1Text" xml:space="preserve">
     <value>Hello Blinky</value>
@@ -427,6 +444,10 @@ programme</value>
   <data name="Tutorial.GetConnected.009.p" xml:space="preserve">
     <value>Sie haben einen? Wunderbar, schließen Sie ihn an!</value>
   </data>
+  <data name="Tutorial.GetConnected.010.620x350.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetConnected-004.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.011.p" xml:space="preserve">
     <value>In der oberen rechten Ecke Ihres Bildschirms befindet sich ein Zahnrad-Symbol. Klicken Sie auf dieses Symbol, und navigieren Sie zu „Netzwerk und WLAN“. Hier können Sie eine Verbindung mit Ihrem lokalen Netzwerk herstellen.</value>
   </data>
@@ -474,6 +495,14 @@ programme</value>
   </data>
   <data name="Tutorial.GetConnected.026.p" xml:space="preserve">
     <value>Wir haben einige erweiterte Netzwerkdiagnose-Funktionen auf der Hauptseite hinzugefügt, um Ihnen das Debuggen von Problemen zu erleichtern. Weitere Unterstützung erhalten Sie unter „www.windowsondevices.com“.</value>
+  </data>
+  <data name="Tutorial.GetConnected.027.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetConnected-006.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetCoding.001.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetCoding.jpg</value>
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetCoding.002.title" xml:space="preserve">
     <value>Einstieg in die Programmierung</value>
@@ -548,5 +577,106 @@ programme</value>
   </data>
   <data name="ProblemsInitializingGPIOPin" xml:space="preserve">
     <value>Bei der Initialisierung des GPIO-Pins sind Probleme aufgetreten.</value>
+  </data>
+  <data name="BluetoothAttemptingToPairFormat" xml:space="preserve">
+    <value>Es wird versucht, mit {0} ({1}) zu koppeln.</value>
+    <comment>Format string for message displayed when pairing attempt starts</comment>
+  </data>
+  <data name="BluetoothConfirmOnlyFormat" xml:space="preserve">
+    <value>Kopplung mit {0} ({1}) wird ausgeführt.</value>
+    <comment>Format string for message displayed when ConfirmOnly ceremony is invoked</comment>
+  </data>
+  <data name="BluetoothConfirmPinMatchFormat" xml:space="preserve">
+    <value>Stimmt die auf dem Gerät angezeigte PIN mit {0} überein?</value>
+    <comment>Format string for message displayed when ConfirmPinMatch ceremony is invoked</comment>
+  </data>
+  <data name="BluetoothDisplayPinFormat" xml:space="preserve">
+    <value>Geben Sie diese PIN auf dem Gerät ein, mit dem die Kopplung erfolgt: {0}</value>
+    <comment>Format string for message displayed when DisplayPin ceremony is invoked</comment>
+  </data>
+  <data name="BluetoothInboundRegistrationAlreadyDoneFormat" xml:space="preserve">
+    <value>Registrierung für eingehende Kopplung wurde bereits ausgeführt, unterstützte Zeremonien: {0}</value>
+    <comment>Format string for message displayed when Inbound pairing handler registration already done</comment>
+  </data>
+  <data name="BluetoothInboundRegistrationFailed" xml:space="preserve">
+    <value>Fehler beim Registrieren für eingehende Kopplung</value>
+    <comment>Message displayed when Inbound pairing handler registration fails</comment>
+  </data>
+  <data name="BluetoothInboundRegistrationSucceededFormat" xml:space="preserve">
+    <value>Registrierung für eingehende Kopplung war erfolgreich, unterstützte Zeremonien: {0}</value>
+    <comment>Format string for message displayed when Inbound pairing handler registration succeeds</comment>
+  </data>
+  <data name="BluetoothPairingFailureFormat" xml:space="preserve">
+    <value>Ergebnis der Kopplung war {0}: Fehler beim Koppeln mit {1} ({2})</value>
+    <comment>Format string for message displayed when pairing attempt fails</comment>
+  </data>
+  <data name="BluetoothPairingSuccessFormat" xml:space="preserve">
+    <value>Erfolgreich mit {0} ({1}) gekoppelt</value>
+    <comment>Format string for message displayed when pairing attempt succeeds</comment>
+  </data>
+  <data name="BluetoothStartedWatching" xml:space="preserve">
+    <value>Ihr Gerät sucht nach Bluetooth-Geräten und ist für andere sichtbar.</value>
+    <comment>Message display when "Start Watcher" button is pressed</comment>
+  </data>
+  <data name="BluetoothStoppedWatching" xml:space="preserve">
+    <value>Die Suche nach Bluetooth-Geräten wurde beendet.</value>
+    <comment>Message display when "Stop Watcher" button is pressed</comment>
+  </data>
+  <data name="BluetoothUnpairingFailureFormat" xml:space="preserve">
+    <value>Ergebnis der Entkopplung war {0}: Fehler beim Entkoppeln von {1} ({2})</value>
+    <comment>Format string for message displayed when unpairing attempt fails</comment>
+  </data>
+  <data name="BluetoothUnpairingSuccessFormat" xml:space="preserve">
+    <value>Erfolgreich von {0} ({1}) entkoppelt</value>
+    <comment>Format string for message displayed when unpairing attempt succeeds</comment>
+  </data>
+  <data name="PinLabelTextBox.Text" xml:space="preserve">
+    <value>PIN eingeben:</value>
+    <comment>Message on flyout control for PIN entry for ProvidePin ceremony</comment>
+  </data>
+  <data name="BluetoothPairButtonContent" xml:space="preserve">
+    <value>Koppeln</value>
+    <comment>Text displayed on the button to pair Bluetooth list item</comment>
+  </data>
+  <data name="BluetoothUnpairButtonContent" xml:space="preserve">
+    <value>Entkoppeln</value>
+    <comment>Text displayed on the button to unpair Bluetooth list item</comment>
+  </data>
+  <data name="BluetoothDeviceStatePairedText" xml:space="preserve">
+    <value>Gekoppelt</value>
+  </data>
+  <data name="BluetoothDeviceStateReadyToPairText" xml:space="preserve">
+    <value>Koppelungsbereit</value>
+  </data>
+  <data name="BluetoothManageDevicesText" xml:space="preserve">
+    <value>Bluetooth-Geräte verwalten</value>
+  </data>
+  <data name="BluetoothWatcherToggleLabel" xml:space="preserve">
+    <value>Bluetooth</value>
+    <comment>Label text for Bluetooth watcher toggle switch</comment>
+  </data>
+  <data name="BluetoothNoDeviceAvailableFormat" xml:space="preserve">
+    <value>Auf diesem Computer wurde kein verwendbarer Bluetooth-Adapter gefunden:
+{0}</value>
+    <comment>Message displayed on systems which do not have a Bluetooth adapter. The new line before {0} is deliberate and should be kept</comment>
+  </data>
+  <data name="BluetoothEnterPINText" xml:space="preserve">
+    <value>Geben Sie die PIN ein:</value>
+  </data>
+  <data name="BluetoothDeviceStateUnknownText" xml:space="preserve">
+    <value>Unbekannter Status</value>
+  </data>
+  <data name="BluetoothInboundPairingRequestFormat" xml:space="preserve">
+    <value>Eingehende Anforderung: {0}
+{1}</value>
+    <comment>Format for message displayed when an inbounbd pairing request is received</comment>
+  </data>
+  <data name="EnableScreensaverText" xml:space="preserve">
+    <value>Bildschirmschoner</value>
+    <comment>Toggle switch for enabling the screensaver</comment>
+  </data>
+  <data name="NoDeviceName" xml:space="preserve">
+    <value>&lt;kein Gerätename&gt;</value>
+    <comment>This is shown when we fail to retrieve a valid device name (very strange case)</comment>
   </data>
 </root>

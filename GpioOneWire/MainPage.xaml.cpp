@@ -25,7 +25,7 @@ using namespace Windows::Devices::Gpio;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
-void GpioOneWire::Dht11::Init (GpioPin^ Pin)
+void GpioOneWire::DhtSensor::Init (GpioPin^ Pin)
 {
     // Use InputPullUp if supported, otherwise fall back to Input (floating)
     this->inputDriveMode =
@@ -37,9 +37,9 @@ void GpioOneWire::Dht11::Init (GpioPin^ Pin)
 }
 
 _Use_decl_annotations_
-HRESULT GpioOneWire::Dht11::Sample (GpioOneWire::Dht11Reading& Reading)
+HRESULT GpioOneWire::DhtSensor::Sample (GpioOneWire::DhtSensorReading& Reading)
 {
-    Reading = Dht11Reading();
+    Reading = DhtSensorReading();
 
     LARGE_INTEGER qpf;
     QueryPerformanceFrequency(&qpf);
@@ -141,14 +141,14 @@ void GpioOneWire::MainPage::Page_Loaded(
 
     GpioPin^ pin;
     try {
-        pin = controller->OpenPin(DHT11_PIN_NUMBER);
+        pin = controller->OpenPin(DHT_PIN_NUMBER);
     } catch (Exception^ ex) {
         this->statusText->Text = L"Failed to open GPIO pin: " + ex->Message;
         return;
     }
 
-    this->dht11.Init(pin);
-    this->pullResistorText->Text = this->dht11.PullResistorRequired() ?
+    this->dhtSensor.Init(pin);
+    this->pullResistorText->Text = this->dhtSensor.PullResistorRequired() ?
         L"10k pull-up resistor required." : L"Pull-up resistor not required.";
 
     // Create a periodic timer to sample from the DHT11 every 2 seconds
@@ -165,38 +165,40 @@ void GpioOneWire::MainPage::timerElapsed (
     )
 {
     HRESULT sensorHr;
-    Dht11Reading reading;
+    DhtSensorReading reading;
 
     int retryCount = 0;
     do {
-        sensorHr = this->dht11.Sample(reading);
+        sensorHr = this->dhtSensor.Sample(reading);
     } while (FAILED(sensorHr) && (++retryCount < 20));
 
-    this->Dispatcher->RunAsync(
-        CoreDispatcherPriority::Normal,
-        ref new DispatchedHandler([this, reading, sensorHr, retryCount] ()
-    {
-        if (FAILED(sensorHr)) {
-            this->humidityText->Text = L"Humidity: (failed)";
-            this->temperatureText->Text = L"Temperature: (failed)";
+    String^ statusString;
+    String^ humidityString;
+    String^ temperatureString;
 
-            switch (sensorHr) {
-            case __HRESULT_FROM_WIN32(ERROR_IO_DEVICE):
-                this->statusText->Text = L"Did not catch all falling edges";
-                break;
-            case __HRESULT_FROM_WIN32(ERROR_TIMEOUT):
-                this->statusText->Text = L"Timed out waiting for sample";
-                break;
-            case __HRESULT_FROM_WIN32(ERROR_INVALID_DATA):
-                this->statusText->Text = L"Checksum validation failed";
-                break;
-            default:
-                this->statusText->Text = L"Failed to get reading";
-            }
+    if (FAILED(sensorHr)) {
+        humidityString = L"Humidity: (failed)";
+        temperatureString = L"Temperature: (failed)";
 
-            return;
+        switch (sensorHr) {
+        case __HRESULT_FROM_WIN32(ERROR_IO_DEVICE):
+            statusString = L"Did not catch all falling edges";
+            break;
+        case __HRESULT_FROM_WIN32(ERROR_TIMEOUT):
+            statusString = L"Timed out waiting for sample";
+            break;
+        case __HRESULT_FROM_WIN32(ERROR_INVALID_DATA):
+            statusString = L"Checksum validation failed";
+            break;
+        default:
+            statusString = L"Failed to get reading";
         }
-
+    }
+    else
+    {
+        double humidity = reading.Humidity();
+        double temperature = reading.Temperature();
+        
         HRESULT hr;
         wchar_t buf[128];
 
@@ -204,23 +206,23 @@ void GpioOneWire::MainPage::timerElapsed (
             buf,
             ARRAYSIZE(buf),
             L"Humidity: %.1f%% RH",
-            reading.Humidity());
+            humidity);
         if (FAILED(hr)) {
             throw ref new Exception(hr, L"Failed to print string");
         }
 
-        this->humidityText->Text = ref new String(buf);
+        humidityString = ref new String(buf);
 
         hr = StringCchPrintfW(
             buf,
             ARRAYSIZE(buf),
             L"Temperature: %.1f \u00B0C",
-            reading.Temperature());
+            temperature);
         if (FAILED(hr)) {
             throw ref new Exception(hr, L"Failed to print string");
         }
 
-        this->temperatureText->Text = ref new String(buf);
+        temperatureString = ref new String(buf);
 
         hr = StringCchPrintfW(
             buf,
@@ -232,6 +234,16 @@ void GpioOneWire::MainPage::timerElapsed (
             throw ref new Exception(hr, L"Failed to print string");
         }
 
-        this->statusText->Text = ref new String(buf);
+        statusString = ref new String(buf);
+    }
+
+    this->Dispatcher->RunAsync(
+        CoreDispatcherPriority::Normal,
+        ref new DispatchedHandler([=] ()
+    {
+        this->statusText->Text = statusString;
+        this->humidityText->Text = humidityString;
+        this->temperatureText->Text = temperatureString;
     }));
 }
+

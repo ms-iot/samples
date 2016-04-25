@@ -1,0 +1,89 @@
+//******************************************************************
+//
+// Copyright 2015 Samsung Electronics All Rights Reserved.
+//
+//-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+//-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+/**
+@page ca_functional CA Functional design/implementation
+
+- @ref caf_overview
+  - @ref caf_ovr_communication
+    - @ref caf_ovr_comm_netinterface
+      - @ref caf_ovr_comm_netinterface_msg
+      - @ref caf_ovr_comm_netinterface_control
+      - @ref caf_ovr_comm_netinterface_eth
+      - @ref caf_ovr_comm_netinterface_wifi
+      - @ref caf_ovr_comm_netinterface_edr
+      - @ref caf_ovr_comm_netinterface_le
+      - @ref caf_ovr_comm_netinterface_detail
+
+<hr>
+
+@section caf_overview Overview
+
+The following are assorted implementation notes/references in regards to
+@ref ca_overview
+
+@subsection caf_ovr_communication Communication Adapters
+
+@subsubsection caf_ovr_comm_netinterface Network Interface Creation
+
+Interface connections are created at program startup. A Message Handler is
+started by invoking the CAInitialize() command. This in turn establishes
+the needed data structures and callbacks.
+
+@dotfile ca_arch_sketch.gv
+
+@paragraph caf_ovr_comm_netinterface_msg Message Handler
+
+The message handler owns athread pool and send and reive queue.
+
+@paragraph caf_ovr_comm_netinterface_control Interface controller
+
+This directly controls the individual adapters. Calling CAInitializeAdapters(ca_thread_pool_t handle)
+will invoke whatever config had been established by compile-time flags.
+
+@paragraph caf_ovr_comm_netinterface_eth Ethernet Adapter
+
+An interface adapter implemented to support Ethernet connections. It is
+created by calling CAInitializeEthernet()
+
+@paragraph caf_ovr_comm_netinterface_wifi WiFi Adapter
+
+An interface adapter implemented to support WiFi connections. It is created
+by calling CAInitializeWifi()
+
+@paragraph caf_ovr_comm_netinterface_edr EDR Adapter
+
+An interface adapter implemented to support EDR connections. It is created
+by calling CAInitializeEDR()
+
+@paragraph caf_ovr_comm_netinterface_le LE Adapter
+
+An interface adapter implemented to support LE connections. It is created
+by calling CAInitializeLE()
+
+@paragraph caf_ovr_comm_netinterface_detail Detailed Structure
+
+The following is a more detailed breakdown on the main types involved.
+Several structs and function details are present. However the diagram
+is more of a sketch and is not 100% complete.
+
+@dotfile ca_arch.gv
+
+*/

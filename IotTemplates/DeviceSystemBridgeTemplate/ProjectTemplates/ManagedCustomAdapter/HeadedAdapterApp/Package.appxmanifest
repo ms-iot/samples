@@ -14,7 +14,7 @@
   <mp:PhoneIdentity PhoneProductId="bc92112e-2368-400b-943a-70c048c7d6ce" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>HeadedAdapterApp</DisplayName>
+    <DisplayName>ms-resource:ApplicationDisplayName</DisplayName>
     <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -32,14 +32,21 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="HeadedAdapterApp.App">
       <uap:VisualElements
-        DisplayName="HeadedAdapterApp"
+        DisplayName="ms-resource:ApplicationDisplayName"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="HeadedAdapterApp"
+        Description="ms-resource:ApplicationDescription"
         BackgroundColor="#464646">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
+      <Extensions>
+        <Extension Category="windows.backgroundTasks" EntryPoint="AdapterLib.HeadedBackgroundTask">
+          <BackgroundTasks>
+            <Task Type="general" />
+          </BackgroundTasks>
+        </Extension>
+      </Extensions>
     </Application>
   </Applications>
 

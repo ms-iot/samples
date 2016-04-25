@@ -10,12 +10,12 @@
   <Identity
     Name="BACnetHeadedAdapterApp"
     Publisher="CN=MSFT"
-    Version="1.0.0.0" />
+    Version="1.0.1.0" />
 
   <mp:PhoneIdentity PhoneProductId="4d5303c5-5111-43fc-b466-4d88f126a115" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>BACnetHeadedAdapterApp</DisplayName>
+    <DisplayName>ms-resource:ApplicationDisplayName</DisplayName>
     <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -33,14 +33,21 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="HeadedAdapterApp.App">
       <uap:VisualElements
-        DisplayName="BACnetHeadedAdapterApp"
+        DisplayName="ms-resource:ApplicationDisplayName"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="BACnetHeadedAdapterApp"
+        Description="ms-resource:ApplicationDescription"
         BackgroundColor="#464646">
-		<uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
+		    <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
+      <Extensions>
+        <Extension Category="windows.backgroundTasks" EntryPoint="AdapterLib.HeadedBackgroundTask">
+          <BackgroundTasks>
+            <Task Type="general" />
+          </BackgroundTasks>
+        </Extension>
+      </Extensions>
     </Application>
   </Applications>
 

@@ -1,0 +1,61 @@
+##
+# 'resource' sub-project main build script
+#
+##
+
+Import('env')
+
+target_os = env.get('TARGET_OS')
+transport = env.get('TARGET_TRANSPORT')
+secured = env.get('SECURED')
+
+OIC_LIB = 'oic'
+root_dir = env.get('ROOT_DIR')
+build_dir = env.get('BUILD_DIR')
+sample_dir = build_dir
+
+env.AppendUnique(CFLAGS = ['-std=c99', '-fPIC', '-D__TIZEN__','-DWITH_POSIX', '-Wall', '-DSLP_SDK_LOG', '-g','-D_GNU_SOURCE','-DTIZEN_DEBUG_ENABLE', '-DTB_LOG','`pkg-config', '--cflags', '--libs','dlog', 'com.oic.ca', 'capi-network-wifi',
+				'gobject-2.0','glib-2.0`'])
+
+env.Append(LIBPATH=[root_dir +'/lib/tizen/ble/libs/',])
+env.Append(LIBS=[
+  '-lm', '-lpthread', '-lrt', '-ldl', '-lstdc++', '-lgobject-2.0', '-lgio-2.0', '-lglib-2.0', '-lcapi-network-wifi', '-ldlog', '-lcapi-network-bluetooth', '-lconnectivity_abstraction', 'coap',
+])
+
+if secured == '1':
+	env.PrependUnique(CPPPATH = [root_dir + '/external/inc/'])
+	env.AppendUnique(CPPDEFINES = ['__WITH_DTLS__'])
+	env.Append(LIBS=['-ltinydtls'])
+
+env.Prepend(RPATH=[root_dir +'/lib/tizen/ble/libs/',])
+if 'ALL' in transport:
+		env.AppendUnique(CPPDEFINES = ['IP_ADAPTER','EDR_ADAPTER','LE_ADAPTER','BT_ADAPTER_TEST','BLE_ADAPTER_TEST'])
+		print "CA Transport is ALL"
+else:
+	if 'BT' in transport:
+		env.AppendUnique(CPPDEFINES = ['EDR_ADAPTER','BT_ADAPTER_TEST'])
+		print "CA Transport is BT"
+	else:
+		env.AppendUnique(CPPDEFINES = ['NO_EDR_ADAPTER'])
+
+	if 'BLE' in transport:
+		env.AppendUnique(CPPDEFINES = ['LE_ADAPTER','BLE_ADAPTER_TEST'])
+		print "CA Transport is BLE"
+	else:
+		env.AppendUnique(CPPDEFINES = ['NO_LE_ADAPTER'])
+
+	if 'IP' in transport:
+		env.AppendUnique(CPPDEFINES = ['IP_ADAPTER'])
+		print "CA Transport is IP"
+	else:
+		env.AppendUnique(CPPDEFINES = ['NO_IP_ADAPTER'])
+
+
+ca_sample_src = [sample_dir + '/casample.c']
+
+print " ca sample src %s" % ca_sample_src
+
+env.Program('ca_sample', [ca_sample_src,])
+
+
+

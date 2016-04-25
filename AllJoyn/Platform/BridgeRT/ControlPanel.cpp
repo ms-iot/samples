@@ -22,6 +22,7 @@
 #include "WidgetPropertySwitch.h"
 #include "WidgetPropertyLabel.h"
 #include "Bridge.h"
+#include "BridgeUtils.h"
 
 using namespace BridgeRT;
 
@@ -154,8 +155,8 @@ QStatus ControlPanel::Initialize(_In_ alljoyn_busattachment bus, _In_z_ const wc
     }
 
     // Narrow source strings for alljoyn compatibility
-    narrowDeviceName = DsbCommon::To_Ascii_String(deviceName);
-    narrowPanelName = DsbCommon::To_Ascii_String(panelName);
+    narrowDeviceName = ConvertTo<std::string>(deviceName);
+    narrowPanelName = ConvertTo<std::string>(panelName);
 
     // save bus attachment and reset members
     m_bus = bus;
@@ -294,14 +295,14 @@ QStatus ControlPanelSimple::Initialize(_In_ alljoyn_busattachment bus, _In_z_ co
     IControlPanelHandlerSimple^ cntrlPanelHandler = (IControlPanelHandlerSimple^)GetControlPanelHandler();
     CHK_AJSTATUS(ControlPanel::Initialize(bus, deviceName, panelName));
 
-    adapterName = DsbCommon::To_Ascii_String(deviceName);
+    adapterName = ConvertTo<std::string>(deviceName);
 
     WidgetContainer* pRoot = GetRootContainer();
 
     // Attach a switch to the root container widget if the Switch Value is non-null
     if (cntrlPanelHandler->SwitchValue)
     {
-        std::string label = DsbCommon::To_Ascii_String(cntrlPanelHandler->SwitchLabel);
+        std::string label = ConvertTo<std::string>(cntrlPanelHandler->SwitchLabel);
         m_pSwitch = new (std::nothrow) WidgetPropertySwitch(this, cntrlPanelHandler->SwitchProperty, cntrlPanelHandler->SwitchValue);
         CHK_POINTER(m_pSwitch);
         CHK_AJSTATUS(m_pSwitch->Initialize(pRoot, "Switch", label.c_str()));
@@ -310,7 +311,7 @@ QStatus ControlPanelSimple::Initialize(_In_ alljoyn_busattachment bus, _In_z_ co
     // Attach label to root container widget if the Label Output Value and OutputValue label is non-null
     if ((cntrlPanelHandler->OutputValue != nullptr) && (cntrlPanelHandler->OutputValueLabel != nullptr))
     {
-        std::string label = DsbCommon::To_Ascii_String(cntrlPanelHandler->OutputValueLabel);
+        std::string label = ConvertTo<std::string>(cntrlPanelHandler->OutputValueLabel);
         m_pOutputLabel = new (std::nothrow) WidgetPropertyLabel(this, cntrlPanelHandler->OutputValue);
         CHK_POINTER(m_pOutputLabel);
         CHK_AJSTATUS(m_pOutputLabel->Initialize(pRoot, "OutputValue", label.c_str()));
@@ -322,7 +323,7 @@ QStatus ControlPanelSimple::Initialize(_In_ alljoyn_busattachment bus, _In_z_ co
         std::string labelName;
         if (cntrlPanelHandler->RunEntryBoxLabel != nullptr)
         {
-            labelName = DsbCommon::To_Ascii_String(cntrlPanelHandler->RunEntryBoxLabel);
+            labelName = ConvertTo<std::string>(cntrlPanelHandler->RunEntryBoxLabel);
             // Attach a text entry box to the root container widget
             m_pRunEditBox = new (std::nothrow) WidgetPropertyTextBox(this);
             m_pRunEditBox->Set("");
@@ -330,7 +331,7 @@ QStatus ControlPanelSimple::Initialize(_In_ alljoyn_busattachment bus, _In_z_ co
             CHK_AJSTATUS(m_pRunEditBox->Initialize(pRoot, "RunEditBox", labelName.c_str()));
         }
 
-        labelName = DsbCommon::To_Ascii_String(cntrlPanelHandler->RunButtonLabel);
+        labelName = ConvertTo<std::string>(cntrlPanelHandler->RunButtonLabel);
         // Attach a text entry box to the root container widget
         m_pRunButton = new (std::nothrow) WidgetAction(this, &ControlPanelSimple::ButtonHandler);
         CHK_POINTER(m_pRunButton);
@@ -383,7 +384,7 @@ QStatus ControlPanelSimple::RunButton()
         {
             std::wstring unicodeArgument;
             std::string asciiArgument(m_pRunEditBox->Get());
-            unicodeArgument = DsbCommon::String_To_Wstring(asciiArgument);
+            unicodeArgument = ConvertTo<std::wstring>(asciiArgument);
             runArgument = ref new Platform::String(unicodeArgument.c_str());
         }
 
@@ -458,7 +459,7 @@ ControlPanelUniversal::~ControlPanelUniversal()
 QStatus ControlPanelUniversal::Initialize(_In_ alljoyn_busattachment bus, _In_z_ const wchar_t *deviceName, _In_z_ const wchar_t* panelName)
 {
     QStatus status = ER_OK;
-    std::string adapterName = DsbCommon::To_Ascii_String(deviceName);
+    std::string adapterName = ConvertTo<std::string>(deviceName);
     IControlPanelHandlerUniversal^ cntrlPanelHandler = (IControlPanelHandlerUniversal^)GetControlPanelHandler();
 
     // Initialize Control Panel base class
@@ -477,10 +478,10 @@ QStatus ControlPanelUniversal::Initialize(_In_ alljoyn_busattachment bus, _In_z_
         {
             // create a unique, control relative, name for each widget
             allJoynWidgetName = "Widget";
-            allJoynWidgetName += std::_Integral_to_string("%d", idx);
+            allJoynWidgetName += std::to_string(idx);
 
             // Ask the Control Panel Handler for the label and type of the specified property
-            std::string label = DsbCommon::To_Ascii_String(cntrlPanelHandler->GetLabel(sourcePropertyForControl));
+            std::string label = ConvertTo<std::string>(cntrlPanelHandler->GetLabel(sourcePropertyForControl));
             auto type = cntrlPanelHandler->GetType(sourcePropertyForControl);
 
             // Based on the Property's Control Panel Type, create the appropriate widget for it and add it to the list of widgets

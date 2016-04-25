@@ -1,0 +1,142 @@
+# //******************************************************************
+# //
+# // Copyright 2015 Intel Mobile Communications GmbH All Rights Reserved.
+# //
+# //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+# //
+# // Licensed under the Apache License, Version 2.0 (the "License");
+# // you may not use this file except in compliance with the License.
+# // You may obtain a copy of the License at
+# //
+# //      http://www.apache.org/licenses/LICENSE-2.0
+# //
+# // Unless required by applicable law or agreed to in writing, software
+# // distributed under the License is distributed on an "AS IS" BASIS,
+# // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# // See the License for the specific language governing permissions and
+# // limitations under the License.
+# //
+# //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# libocsrm (share library) build script
+##
+
+Import('env')
+
+lib_env = env.Clone()
+SConscript(env.get('SRC_DIR') + '/resource/third_party_libs.scons', 'lib_env')
+
+libocsrm_env = lib_env.Clone()
+
+target_os = env.get('TARGET_OS')
+# As in the source code, it includes arduino Time library (C++)
+# It requires compile the .c with g++
+if target_os == 'arduino':
+	libocsrm_env.Replace(CC = env.get('CXX'))
+	libocsrm_env.Replace(CFLAGS = env.get('CXXFLAGS'))
+
+######################################################################
+# Build flags
+######################################################################
+libocsrm_env.PrependUnique(CPPPATH = [
+		'../../../extlibs/cjson/',
+		'../../../extlibs/tinydtls/',
+		'../logger/include',
+		'../ocrandom/include',
+		'../stack/include',
+		'../stack/include/internal',
+		'../../oc_logger/include',
+		'../connectivity/lib/libcoap-4.1.1',
+		'../connectivity/external/inc',
+		'../connectivity/common/inc',
+		'../connectivity/inc',
+		'../connectivity/api',
+		'../security/include',
+		'../security/include/internal'
+		])
+
+if target_os not in ['arduino', 'windows', 'winrt']:
+	libocsrm_env.AppendUnique(CPPDEFINES  = ['WITH_POSIX'])
+	libocsrm_env.AppendUnique(CFLAGS = ['-std=c99'])
+	libocsrm_env.AppendUnique(CPPDEFINES = ['HAVE_STRINGS_H'])
+
+if target_os not in ['windows', 'winrt']:
+	libocsrm_env.AppendUnique(CFLAGS = ['-Wall'])
+
+libocsrm_env.AppendUnique(LIBPATH = [env.get('BUILD_DIR')])
+libocsrm_env.AppendUnique(LIBS = ['coap', 'm'])
+
+if target_os == 'arduino':
+	libocsrm_env.AppendUnique(CPPDEFINES = ['NDEBUG', 'WITH_ARDUINO'])
+else:
+	libocsrm_env.AppendUnique(CFLAGS = ['-fPIC'])
+
+if target_os in ['darwin', 'ios']:
+	libocsrm_env.AppendUnique(CPPDEFINES = ['_DARWIN_C_SOURCE'])
+	libocsrm_env.AppendUnique(LIBPATH = [env.get('BUILD_DIR')])
+	libocsrm_env.AppendUnique(LIBS = ['coap'])
+
+if not env.get('RELEASE'):
+	libocsrm_env.AppendUnique(CPPDEFINES = ['TB_LOG'])
+
+if env.get('DTLS_WITH_X509') == '1':
+	libocsrm_env.AppendUnique(CPPDEFINES = ['__WITH_X509__'])
+
+######################################################################
+# Source files and Targets
+######################################################################
+OCSRM_SRC = 'src/'
+if env.get('SECURED') == '1':
+	libocsrm_src = [
+		OCSRM_SRC + 'secureresourcemanager.c',
+		OCSRM_SRC + 'resourcemanager.c',
+		OCSRM_SRC + 'aclresource.c',
+		OCSRM_SRC + 'amaclresource.c',
+		OCSRM_SRC + 'amsmgr.c',
+		OCSRM_SRC + 'pstatresource.c',
+		OCSRM_SRC + 'doxmresource.c',
+		OCSRM_SRC + 'credresource.c',
+		OCSRM_SRC + 'svcresource.c',
+		OCSRM_SRC + 'policyengine.c',
+		OCSRM_SRC + 'psinterface.c',
+		OCSRM_SRC + 'srmresourcestrings.c',
+		OCSRM_SRC + 'srmutility.c',
+		OCSRM_SRC + 'iotvticalendar.c',
+		OCSRM_SRC + 'oxmpincommon.c',
+		OCSRM_SRC + 'base64.c',
+		#pbkdf2.c is required to PIN based OxM only.
+		#But we did not use a separate build options to prevent the build command becomes complicated.
+		OCSRM_SRC + 'pbkdf2.c'
+		]
+else:
+	libocsrm_src = [
+		OCSRM_SRC + 'secureresourcemanager.c',
+		OCSRM_SRC + 'resourcemanager.c',
+		OCSRM_SRC + 'aclresource.c',
+		OCSRM_SRC + 'amaclresource.c',
+		OCSRM_SRC + 'amsmgr.c',
+		OCSRM_SRC + 'pstatresource.c',
+		OCSRM_SRC + 'doxmresource.c',
+		OCSRM_SRC + 'credresource.c',
+		OCSRM_SRC + 'svcresource.c',
+		OCSRM_SRC + 'policyengine.c',
+		OCSRM_SRC + 'psinterface.c',
+		OCSRM_SRC + 'srmresourcestrings.c',
+		OCSRM_SRC + 'srmutility.c',
+		OCSRM_SRC + 'iotvticalendar.c',
+		OCSRM_SRC + 'base64.c'
+		]
+
+if env.get('DTLS_WITH_X509') == '1' and env.get('SECURED') == '1':
+	crl_src = [OCSRM_SRC + 'crlresource.c']
+	libocsrm_src  = libocsrm_src + crl_src
+
+
+libocsrm = libocsrm_env.StaticLibrary('libocsrm', libocsrm_src)
+
+libocsrm_env.InstallTarget(libocsrm, 'libocsrm')
+libocsrm_env.UserInstallTargetLib(libocsrm, 'libocsrm')
+
+if target_os in ['linux', 'android', 'tizen'] and env.get('SECURED') == '1':
+	SConscript('provisioning/SConscript')
+

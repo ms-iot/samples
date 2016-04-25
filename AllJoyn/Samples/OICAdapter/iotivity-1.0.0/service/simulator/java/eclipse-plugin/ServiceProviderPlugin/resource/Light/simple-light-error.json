@@ -1,0 +1,23 @@
+{
+  "id": "simple.light#",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Simple Light",
+  "$ref": "#/definitions/light",
+  "definitions": {
+    "light": {
+      "type": "object",
+      "properties": {
+		"resourceType": {
+          "type": "string",
+          "description": "Description about resource type",
+          "default": "sample.light"
+        },
+        "intensity":  {
+          "type": "string",
+          "description": "ReadOnly, Comma separated min,max values for intensity on this device",
+          "default": "1,20"
+        }
+      }
+    }
+  }
+}

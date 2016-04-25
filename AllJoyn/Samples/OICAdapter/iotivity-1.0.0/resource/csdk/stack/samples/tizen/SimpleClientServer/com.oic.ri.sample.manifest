@@ -1,0 +1,26 @@
+<manifest>
+	<define>
+	  <domain name="risample" />
+	  <permit>
+         	<smack permit="system::use_internet" type="rwx"/>
+	  </permit>
+         <request>
+                <smack request="system::use_internet" type="rwx"/>
+                <smack request="bt-service" type="rwx"/>
+		<smack request="sap" type="rwx"/>
+                <smack request="bt-service::spp" type="rwx"/>
+                <smack request="bt-service::gap" type="rwx"/>
+                <smack request="bt-service::admin" type="rwx"/>
+                <smack request="bt-service::manager" type="rwx"/>
+                <smack request="bt-service::public" type="rwx"/>
+		  <smack request="bt-service::platform" type="rwx"/>
+         </request>
+	</define>
+	<assign>
+		<filesystem path="/opt/apps/com.oic.ri.sample/bin/sample" exec_label="sample" />
+	</assign>
+	<request>
+		<domain name="risample" />
+	</request>
+</manifest>
+

@@ -1,0 +1,162 @@
+Release notes
+****************************************************************************
+Release date: Sept 30th, 2014.
+OS: Ubuntu 12.0.4 and above
+Requires boost version 1.55 to build.
+Code buildable in gcc 4.6.3 and above.
+NOTE: Boost is not distributed but should be installed in the Ubuntu machine.
+*****************************************************************************
+
+What is new?
+
+--------------------------------------------
+Class OCPlatform (Header file: OCPlatform.h)
+--------------------------------------------
+
+*****************
+setDefaultDeviceEntityHandler API
+*****************
+
+This new API allows the server side app developer to provide a default device entity handler.
+If server receives a request in which the resource URI does not match any of the existing
+resource URIs, base will invoke this default entity handler. It is app developer's responsibility
+to handle the implementation of default device entity handler accordingly.
+If the default device entity handler is not configured and the URI in the request does not match
+any of the existing resource URIs, server will return OC_STACK_NO_RESOURCE.
+
+
+NOTE: This applies to server side functionality.
+
+--------------------------------------------
+Class OCResource (Header file: OCResource.h)
+--------------------------------------------
+
+*****************
+post API
+*****************
+
+This new API allows the client to perform POST operation on a resource.
+
+NOTE: This applies to client side functionality.
+
+--------------------------------------------
+Class OCRepresentation (Header file: OCApi.h)
+--------------------------------------------
+
+OCRepresentation has modifications which provides
+- Ability to get/set OCRepresenation (JSON object) in the OCRepresentation.
+- Ability to get/set vector of strings, booleans, double, integers, null.
+- Has additional functions
+
+*****************
+erase API
+*****************
+This removes an attribute from the representation
+
+*****************
+setNULL API
+*****************
+This sets given attribute to null
+
+*****************
+isNULL API
+*****************
+This returns true if the given attribute is null
+
+*****************
+hasAttribute API
+*****************
+This returns true if the attribute exists in the representation
+
+*****************
+numberOfAttributes API
+*****************
+This returns the number of attributes in the representation
+
+--------------------------------------------
+ Header file: OCStack.h (in base)
+--------------------------------------------
+
+*****************
+OCSetDefaultDeviceEntityHandler API
+*****************
+
+This new API allows the server side app developer to provide a default device entity handler.
+If server receives a request in which the resource URI does not match any of the existing
+resource URIs, base will invoke this default entity handler. It is app developer's responsibility
+to handle the implementation of default device entity handler accordingly.
+If the default device entity handler is not configured and the URI in the request does not match
+any of the existing resource URIs, server will return OC_STACK_NO_RESOURCE.
+
+NOTE: This applies to server side functionality only.
+
+------------
+Other Notes:
+------------
+
+Security model is still open.
+APIs have OCStackResult as return type. This is will indicate success or failure for the API operation.
+
+Maximum length of URI supported is 64 bytes (sent from the client)
+Maximum length of query supported is 64 bytes (sent from the client)
+Maximum length of request and response from server for Ardunio is is 256 bytes
+Maximum length of request and response from server for non-Ardunio is is 1024 bytes
+
+OIC base now supports Arduino WiFi shield.
+This support has been tested with Arduino Mega 2560 and with Arduino 1.0.5 WiFi library.
+Please refer to oic-resource/csdk/README file for building OIC base with WiFi support.
+
+Bug fixes:
+IOT-36
+Minor bugs fixed
+
+Known issues:
+1. POST operation does not create new resources
+2. Header options from client to server and vice-versa is not available.
+3. Setting CON/NON-CON option is possible only during initialization configuration.
+-------------
+How to build:
+-------------
+
+REFER https://oic-review.01.org/gerrit for more details on getting oic-resource repo.
+If the code is not cloned:
+Clone the oic-resource repo using this command: git clone oic:oic-resource
+Clone the oic-utilities repo using this command: git clone oic:oic-utilities
+
+NOTE: If the repo is already cloned, use 'git pull' inside oic-resource folder to get the latest code.
+
+In repo oic-core, root folder ccf-opensource consists of 'OIC' folder.  Inside OIC folder there is a Makefile.
+
+Before building, make sure to have contents from oic-utilities repo at the folder level where oic-resource is.
+
+Inside oic-resource directory, use 'make'to build the entire OIC code. This would build the C++ SDK, core(i.e base) and samples.
+
+Use 'make BUILD=debug' to build the entire OIC code in debug mode. This would build the C++ SDK, core(i.e base) and samples. All the executables for debug build
+are in 'oic-resource/debug'.
+
+--------
+Samples:
+--------
+
+New Samples added:
+oic-resource/examples/garageclient.cpp
+oic-resource/examples/garageserver.cpp
+
+Garage samples provide usage of OCRepresentation, get/set attribute values
+
+oic-resource/examples/fridgeclient.cpp
+oic-resource/examples/fridgeserver.cpp
+
+Fridge samples provide usage of constructResourceObject API, std bind (for mapping request and responses) and default
+device entity handler
+
+After building the code in oic-resource, executables for samples are in directory named 'oic-resource/samples/release'.
+After building the code in oic-resource, executables are in directory named 'oic-resource/release'.
+A sample for hosting a resource on a server and a sample for client for discovering resources are provided in the following paths:
+
+Server sample location: oic-resource/examples/simpleserver.cpp
+Client sample location: oic-resource/examples/simpleclient.cpp
+Server and client mode (mode type both) location: oic-resource/examples/simpleclientserver.cpp
+
+Sample with basic presence feature for server side: oic-resource/examples/presenceserver.cpp
+Sample with basic presence feature for client side: oic-resource/examples/presenceclient.cpp

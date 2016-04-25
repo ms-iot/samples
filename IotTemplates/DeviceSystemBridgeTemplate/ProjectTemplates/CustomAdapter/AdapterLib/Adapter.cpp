@@ -15,6 +15,10 @@
 #include "pch.h"
 #include "Adapter.h"
 #include "AdapterDevice.h"
+#include <cctype>
+#include <functional>
+#include <algorithm>
+#include "bridgeutils.h"
 
 using namespace Platform;
 using namespace Platform::Collections;
@@ -22,7 +26,7 @@ using namespace Windows::Foundation::Collections;
 using namespace Windows::Storage;
 
 using namespace BridgeRT;
-using namespace DsbCommon;
+
 
 namespace AdapterLib
 {
@@ -39,7 +43,10 @@ namespace AdapterLib
         this->adapterName = L"$saferootprojectname$";
         // the adapter prefix must be something like "com.mycompany" (only alpha num and dots)
         // it is used by the Device System Bridge as root string for all services and interfaces it exposes
-        this->exposedAdapterPrefix = L"com." + DsbCommon::ToLower(this->vendor->Data());
+        std::wstring adapterPrefix(L"com.");
+        adapterPrefix.append(this->vendor->Data());
+        std::transform(adapterPrefix.begin(), adapterPrefix.end(), adapterPrefix.begin(), tolower);
+        this->exposedAdapterPrefix = ref new String(adapterPrefix.c_str());
         this->exposedApplicationGuid = Platform::Guid(APPLICATION_GUID);
 
         if (nullptr != package &&
@@ -254,7 +261,7 @@ namespace AdapterLib
             return ERROR_INVALID_HANDLE;
         }
 
-        AutoLock sync(&this->lock, true);
+        AutoLock sync(this->lock);
 
         this->signalListeners.insert(
             {
@@ -292,7 +299,7 @@ namespace AdapterLib
             return ERROR_INVALID_HANDLE;
         }
 
-        AutoLock sync(&this->lock, true);
+        AutoLock sync(this->lock);
 
         auto handlerRange = this->signalListeners.equal_range(Signal->GetHashCode());
 

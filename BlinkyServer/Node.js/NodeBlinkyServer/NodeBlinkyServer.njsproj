@@ -67,31 +67,5 @@
     <PlatformAware>true</PlatformAware>
     <AvailablePlatforms>x86,x64,ARM</AvailablePlatforms>
   </PropertyGroup>
-  <ProjectExtensions>
-    <VisualStudio>
-      <FlavorProperties GUID="{00251f00-ba30-4ce4-96a2-b8a1085f37aa}" Configuration="Debug" Platform="x86">
-        <NodejsUwpProjectFlavorCfg />
-      </FlavorProperties>
-      <FlavorProperties GUID="{00251f00-ba30-4ce4-96a2-b8a1085f37aa}" Configuration="Release" Platform="x86">
-        <NodejsUwpProjectFlavorCfg />
-      </FlavorProperties>
-      <FlavorProperties GUID="{00251f00-ba30-4ce4-96a2-b8a1085f37aa}" Configuration="Debug" Platform="x64">
-        <NodejsUwpProjectFlavorCfg />
-      </FlavorProperties>
-      <FlavorProperties GUID="{00251f00-ba30-4ce4-96a2-b8a1085f37aa}" Configuration="Release" Platform="x64">
-        <NodejsUwpProjectFlavorCfg />
-      </FlavorProperties>
-      <FlavorProperties GUID="{00251f00-ba30-4ce4-96a2-b8a1085f37aa}" Configuration="Debug" Platform="ARM">
-        <NodejsUwpProjectFlavorCfg>
-          <NodeExeArguments>--debug</NodeExeArguments>
-          <DebuggerMachineName>10.125.152.143</DebuggerMachineName>
-          <ScriptArguments>
-          </ScriptArguments>
-        </NodejsUwpProjectFlavorCfg>
-      </FlavorProperties>
-      <FlavorProperties GUID="{00251f00-ba30-4ce4-96a2-b8a1085f37aa}" Configuration="Release" Platform="ARM">
-        <NodejsUwpProjectFlavorCfg />
-      </FlavorProperties>
-    </VisualStudio>
-  </ProjectExtensions>
+  <ProjectExtensions />
 </Project>

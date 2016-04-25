@@ -33,7 +33,7 @@
     <RootNamespace>BridgeRT</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
-    <WindowsTargetPlatformVersion>10.0.10240.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.10586.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformMinVersion>10.0.10240.0</WindowsTargetPlatformMinVersion>
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
@@ -129,9 +129,9 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>28204;4267;</DisableSpecificWarnings>
-      <AdditionalIncludeDirectories>..\Common;$(WindowsSdkDir_UAP)\Include\$(TargetPlatformResourceVersion)\um\AllJoyn;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(WindowsSdkDir_UAP)\Include\$(TargetPlatformResourceVersion)\um\AllJoyn;$(ProjectDir)..\BackgroundHost\BackgroundHost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ExceptionHandling>Async</ExceptionHandling>
@@ -154,9 +154,9 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>28204;4267;</DisableSpecificWarnings>
-      <AdditionalIncludeDirectories>..\Common;$(WindowsSdkDir_UAP)\Include\$(TargetPlatformResourceVersion)\um\AllJoyn;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(WindowsSdkDir_UAP)\Include\$(TargetPlatformResourceVersion)\um\AllJoyn;$(ProjectDir)..\BackgroundHost\BackgroundHost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
       <ExceptionHandling>Async</ExceptionHandling>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -175,9 +175,9 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>28204;4267;</DisableSpecificWarnings>
-      <AdditionalIncludeDirectories>..\Common;$(WindowsSdkDir_UAP)\Include\$(TargetPlatformResourceVersion)\um\AllJoyn;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(WindowsSdkDir_UAP)\Include\$(TargetPlatformResourceVersion)\um\AllJoyn;$(ProjectDir)..\BackgroundHost\BackgroundHost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
       <ExceptionHandling>Sync</ExceptionHandling>
     </ClCompile>
@@ -195,9 +195,9 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>28204;4267;</DisableSpecificWarnings>
-      <AdditionalIncludeDirectories>..\Common;$(WindowsSdkDir_UAP)\Include\$(TargetPlatformResourceVersion)\um\AllJoyn;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(WindowsSdkDir_UAP)\Include\$(TargetPlatformResourceVersion)\um\AllJoyn;$(ProjectDir)..\BackgroundHost\BackgroundHost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
       <ExceptionHandling>Sync</ExceptionHandling>
     </ClCompile>
@@ -217,9 +217,9 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>28204;4267;</DisableSpecificWarnings>
-      <AdditionalIncludeDirectories>..\Common;$(WindowsSdkDir_UAP)\Include\$(TargetPlatformResourceVersion)\um\AllJoyn;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(WindowsSdkDir_UAP)\Include\$(TargetPlatformResourceVersion)\um\AllJoyn;$(ProjectDir)..\BackgroundHost\BackgroundHost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -238,9 +238,9 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>28204;4267;</DisableSpecificWarnings>
-      <AdditionalIncludeDirectories>..\Common;$(WindowsSdkDir_UAP)\Include\$(TargetPlatformResourceVersion)\um\AllJoyn;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(WindowsSdkDir_UAP)\Include\$(TargetPlatformResourceVersion)\um\AllJoyn;$(ProjectDir)..\BackgroundHost\BackgroundHost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
       <ExceptionHandling>Sync</ExceptionHandling>
     </ClCompile>
@@ -252,6 +252,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AdapterBridgeServiceImplementation.h" />
     <ClInclude Include="AdapterConstants.h" />
     <ClInclude Include="AllJoynAboutIcon.h" />
     <ClInclude Include="ILSFHandler.h" />
@@ -263,6 +264,7 @@
     <ClInclude Include="LSFConsts.h" />
     <ClInclude Include="LSFEnums.h" />
     <ClInclude Include="LSFSignalHandler.h" />
+    <ClInclude Include="BridgeUtils.h" />
     <ClInclude Include="WidgetAction.h" />
     <ClInclude Include="AllJoynAbout.h" />
     <ClInclude Include="AllJoynFileTransfer.h" />
@@ -297,6 +299,7 @@
     <ClInclude Include="WidgetSignalHandler.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AdapterBridgeServiceImplementation.cpp" />
     <ClCompile Include="AllJoynAboutIcon.cpp" />
     <ClCompile Include="LampDetails.cpp" />
     <ClCompile Include="LampParameters.cpp" />
@@ -304,6 +307,7 @@
     <ClCompile Include="LampState.cpp" />
     <ClCompile Include="LSF.cpp" />
     <ClCompile Include="LSFSignalHandler.cpp" />
+    <ClCompile Include="BridgeUtils.cpp" />
     <ClCompile Include="WidgetAction.cpp" />
     <ClCompile Include="AllJoynAbout.cpp" />
     <ClCompile Include="AllJoynFileTransfer.cpp" />
@@ -340,8 +344,8 @@
     <ClCompile Include="WidgetSignalHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.vcxproj">
-      <Project>{4d445253-3bba-455d-b324-ece00d4fe480}</Project>
+    <ProjectReference Include="..\BackgroundHost\BackgroundHost\BackgroundHost.vcxproj">
+      <Project>{98b5350d-3b67-4109-9cd5-1a675295c461}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

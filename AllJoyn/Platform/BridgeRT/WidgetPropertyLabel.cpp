@@ -18,6 +18,7 @@
 #include "pch.h"
 #include "WidgetConsts.h"
 #include "WidgetPropertyLabel.h"
+#include "BridgeUtils.h"
 
 using namespace BridgeRT;
 
@@ -57,7 +58,7 @@ QStatus WidgetPropertyLabel::GetValue(_Out_ alljoyn_msgarg val) const
 {
     QStatus status = ER_OK;
 
-    std::string srcContent = DsbCommon::To_Ascii_String(m_srcValue->Data->ToString());
+    std::string srcContent = ConvertTo<std::string>(m_srcValue->Data->ToString());
     alljoyn_msgarg variantarg = alljoyn_msgarg_create();
     CHK_POINTER(variantarg);
     CHK_AJSTATUS(alljoyn_msgarg_set(variantarg, ARG_STRING_STR, srcContent.c_str()));

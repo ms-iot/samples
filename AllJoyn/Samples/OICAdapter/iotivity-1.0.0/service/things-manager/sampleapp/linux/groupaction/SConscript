@@ -1,0 +1,64 @@
+#******************************************************************
+#
+# Copyright 2014 Samsung Electronics All Rights Reserved.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+##
+# linux sample app  build script
+##
+
+Import('env')
+
+# Add third party libraries
+lib_env = env.Clone()
+SConscript(env.get('SRC_DIR') + '/service/third_party_libs.scons', 'lib_env')
+linux_sample_env = lib_env.Clone()
+
+######################################################################
+# Build flags
+######################################################################
+linux_sample_env.AppendUnique(CPPPATH = ['include'])
+linux_sample_env.AppendUnique(CPPPATH = ['../../../../../extlibs/timer'])
+linux_sample_env.AppendUnique(CPPPATH = ['../../../sdk/inc'])
+linux_sample_env.AppendUnique(CPPPATH = ['../../../sdk/src'])
+linux_sample_env.AppendUnique(CXXFLAGS = ['-std=c++0x', '-Wall', '-DLINUX', '-pthread'])
+linux_sample_env.AppendUnique(CPPDEFINES = ['LINUX'])
+linux_sample_env.AppendUnique(LIBPATH = [env.get('BUILD_DIR')])
+linux_sample_env.AppendUnique(LIBS = ['libTGMSDKLibrary', 'oc', 'octbstack',
+                                      'connectivity_abstraction',
+                                      'libcoap', 'liboc_logger', 'dl', 'pthread'])
+if env.get('SECURED') == '1':
+    linux_sample_env.AppendUnique(LIBS = ['tinydtls'])
+
+# On some platforms link order can miss functions so librt needs to be
+# re-scanned at the end if present. gcc 4.6 is one with this issue.
+if 'rt' in linux_sample_env.get('LIBS'):
+    linux_sample_env.Append(LIBS = ['rt'])
+
+######################################################################
+#build sampleapp
+######################################################################
+groupserver = linux_sample_env.Program('groupserver', 'groupserver.cpp')
+lightserver = linux_sample_env.Program('lightserver', 'lightserver.cpp')
+bookmark = linux_sample_env.Program('bookmark', 'bookmark.cpp')
+Alias("GroupServerApp", groupserver)
+Alias("LightServerApp", lightserver)
+Alias("BookmarkApp", bookmark)
+env.AppendTarget('GroupServerApp')
+env.AppendTarget('LightServerApp')
+env.AppendTarget('BookmarkApp')

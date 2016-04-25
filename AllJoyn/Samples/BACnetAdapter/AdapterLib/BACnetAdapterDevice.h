@@ -17,7 +17,7 @@
 
 #include "AdapterDefinitions.h"
 #include "BACnetObjects.h"
-
+#include "BACnetAdapter.h"
 
 namespace AdapterLib
 {
@@ -111,9 +111,9 @@ namespace AdapterLib
             Platform::String^ get() { return this->interfaceHint; }
         }
 
-        virtual property Platform::Object^ Parent
+        virtual property BridgeRT::IAdapterDevice^ Parent
         {
-            Platform::Object^ get() { return this->parent; }
+            BridgeRT::IAdapterDevice^ get() { return this->parent; }
         }
 
         // Attributes
@@ -126,8 +126,8 @@ namespace AdapterLib
         }
 
     internal:
-        BACnetAdapterProperty(Platform::String^ Name, Platform::Object^ ParentObject, Platform::String^ ifHint = L"");
-        BACnetAdapterProperty(ULONG BACnetObjectId, Platform::Object^ ParentObject, Platform::String^ ifHint = L"");
+        BACnetAdapterProperty(Platform::String^ Name, BridgeRT::IAdapterDevice^ ParentObject, Platform::String^ ifHint = L"");
+        BACnetAdapterProperty(ULONG BACnetObjectId, BridgeRT::IAdapterDevice^ ParentObject, Platform::String^ ifHint = L"");
         BACnetAdapterProperty(const BACnetAdapterProperty^ Other);
 
         uint32 Set(BridgeRT::IAdapterProperty^ Other);
@@ -155,10 +155,11 @@ namespace AdapterLib
         void Relinquish(bool IsOnlyModified);
 
     private:
+        
         // Generic
         Platform::String^ name;
         Platform::String^ interfaceHint;
-        Platform::Object^ parent;
+        BridgeRT::IAdapterDevice^ parent;
 
         std::vector<BridgeRT::IAdapterAttribute^> attributes;
 
@@ -332,9 +333,9 @@ namespace AdapterLib
         {
             Platform::String^ get() { return this->name; }
         }
-        virtual property Platform::Object^ Parent
+        virtual property BACnetAdapter^ Parent
         {
-            Platform::Object^ get() { return this->parent; }
+            BACnetAdapter^ get() { return this->parent; }
         }
 
         //
@@ -417,8 +418,8 @@ namespace AdapterLib
         }
 
     internal:
-        BACnetAdapterDevice(Platform::String^ Name, Platform::Object^ ParentObject);
-        BACnetAdapterDevice(Platform::Object^ ParentObject);
+        BACnetAdapterDevice(Platform::String^ Name, BACnetAdapter^ ParentObject);
+        BACnetAdapterDevice(BACnetAdapter^ ParentObject);
 
         uint32 Init(
                 UINT32 DeviceId,
@@ -481,7 +482,7 @@ namespace AdapterLib
     private:
         // Generic
         Platform::String^ name;
-        Platform::Object^ parent;
+        BACnetAdapter^ parent;
 
         // Device information
         Platform::String^ vendor;
@@ -492,7 +493,7 @@ namespace AdapterLib
         Platform::String^ description;
 
         // Sync object
-        DsbCommon::CSLock lock;
+        std::recursive_mutex lock;
 
         // The BACnet adapter
         BACnetAdapter^ bacnetAdapter;

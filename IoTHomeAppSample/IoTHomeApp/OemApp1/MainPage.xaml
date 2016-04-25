@@ -1,0 +1,23 @@
+﻿<Page
+    x:Class="OemApp1.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:OemApp1"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="DarkRed">
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical">
+            <TextBlock Text="OEM Application 1" Foreground="White" FontSize="30" HorizontalAlignment="Center"/>
+            <Button HorizontalAlignment="Center" Margin="0,30,0,0" Background="Transparent" Click="Home_Click">
+                <Button.Content>
+                    <StackPanel>
+                        <Image Source="/Assets/home.png" Width="30" Height="30"/>
+                        <TextBlock Text="Home" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Page>

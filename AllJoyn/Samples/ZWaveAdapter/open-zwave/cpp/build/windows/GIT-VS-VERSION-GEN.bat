@@ -143,24 +143,10 @@ GOTO :EOF
 :: --------------------
 :: Precedence is Git, VERSION_FILE, then DEFAULT_VERSION.
 :: Check if git is available by testing git describe.
-CALL git describe>NUL 2>&1
-IF NOT ERRORLEVEL 1 (
-  SET fGIT_AVAILABLE=1
-  :: Parse git version string
-  CALL :PARSE_GIT_STRING
-) ELSE (
-  :: Use the VERSION_FILE if it exists.
-  IF EXIST "%VERSION_FILE%" (
-    FOR /F "tokens=3" %%A IN (%VERSION_FILE%) DO (
-      SET strFILE_VERSION=%%A
-    )
-  ) ELSE (
-    :: Default to the DEFAULT_VERSION
-    SET strFILE_VERSION=%DEFAULT_VERSION%
-  )
-)
+:: Use the VERSION_FILE if it exists.
+SET strFILE_VERSION=%DEFAULT_VERSION%
 SET strFILE_VERSION=%strFILE_VERSION:~1%
-SET strFILE_VERSION=%strFILE_VERSION:-=.%
+SET strFILE_VERSION=%strFILE_VERSION:-=.% 
 GOTO :EOF
 
 :: --------------------

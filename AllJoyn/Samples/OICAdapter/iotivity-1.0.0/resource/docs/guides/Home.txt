@@ -1,0 +1,13 @@
+/*!
+
+@mainpage Welcome
+
+IoTivity is an open source software framework enabling seamless device-to-device connectivity to address the emerging needs of the Internet of Things. These API references are for any developer trying to utilize the IoTivity project for building applications.
+
+\li <a href="annotated.html"><strong>API References</strong></a><br />Provides a reference to all public APIs available to utilize the power of IoTivity.
+
+\li <a href="https://www.iotivity.org/documentation"><strong>Getting Started Guides and Tutorials</strong></a><br />Detailed getting started guides and tutorials can be found on the iotivity.org website.
+
+\li <a href="https://wiki.iotivity.org"><strong>Wiki</strong></a><br />Additional documentation can be found on the IoTivity Wiki.
+
+*/

@@ -1,18 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.22803.0
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BridgeRT", "..\..\..\Platform\BridgeRT\BridgeRT.vcxproj", "{2783A617-8E1D-40D1-9684-DFAEB8DD5406}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Common", "..\..\..\Platform\Common\Common.vcxproj", "{4D445253-3BBA-455D-B324-ECE00D4FE480}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HeadedAdapterApp", "HeadedAdapterApp\HeadedAdapterApp.vcxproj", "{56824402-BEAC-47D0-9FCE-60C17B843863}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HeadlessAdapterApp", "HeadlessAdapterApp\HeadlessAdapterApp.vcxproj", "{FF83E5D3-4F9D-47ED-82B6-B1FD087CDBCA}"
 	ProjectSection(ProjectDependencies) = postProject
 		{2783A617-8E1D-40D1-9684-DFAEB8DD5406} = {2783A617-8E1D-40D1-9684-DFAEB8DD5406}
-		{4D445253-3BBA-455D-B324-ECE00D4FE480} = {4D445253-3BBA-455D-B324-ECE00D4FE480}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AdapterLib", "AdapterLib\AdapterLib.vcxproj", "{8D539C08-EA54-475F-B691-7BD8B8B67956}"
@@ -43,22 +40,6 @@ Global
 		{2783A617-8E1D-40D1-9684-DFAEB8DD5406}.Release|x64.ActiveCfg = Release|x64
 		{2783A617-8E1D-40D1-9684-DFAEB8DD5406}.Release|x64.Build.0 = Release|x64
 		{2783A617-8E1D-40D1-9684-DFAEB8DD5406}.Release|x64.Deploy.0 = Release|x64
-		{4D445253-3BBA-455D-B324-ECE00D4FE480}.Debug|ARM.ActiveCfg = Debug|ARM
-		{4D445253-3BBA-455D-B324-ECE00D4FE480}.Debug|ARM.Build.0 = Debug|ARM
-		{4D445253-3BBA-455D-B324-ECE00D4FE480}.Debug|Win32.ActiveCfg = Debug|Win32
-		{4D445253-3BBA-455D-B324-ECE00D4FE480}.Debug|Win32.Build.0 = Debug|Win32
-		{4D445253-3BBA-455D-B324-ECE00D4FE480}.Debug|Win32.Deploy.0 = Debug|Win32
-		{4D445253-3BBA-455D-B324-ECE00D4FE480}.Debug|x64.ActiveCfg = Debug|x64
-		{4D445253-3BBA-455D-B324-ECE00D4FE480}.Debug|x64.Build.0 = Debug|x64
-		{4D445253-3BBA-455D-B324-ECE00D4FE480}.Debug|x64.Deploy.0 = Debug|x64
-		{4D445253-3BBA-455D-B324-ECE00D4FE480}.Release|ARM.ActiveCfg = Release|ARM
-		{4D445253-3BBA-455D-B324-ECE00D4FE480}.Release|ARM.Build.0 = Release|ARM
-		{4D445253-3BBA-455D-B324-ECE00D4FE480}.Release|Win32.ActiveCfg = Release|Win32
-		{4D445253-3BBA-455D-B324-ECE00D4FE480}.Release|Win32.Build.0 = Release|Win32
-		{4D445253-3BBA-455D-B324-ECE00D4FE480}.Release|Win32.Deploy.0 = Release|Win32
-		{4D445253-3BBA-455D-B324-ECE00D4FE480}.Release|x64.ActiveCfg = Release|x64
-		{4D445253-3BBA-455D-B324-ECE00D4FE480}.Release|x64.Build.0 = Release|x64
-		{4D445253-3BBA-455D-B324-ECE00D4FE480}.Release|x64.Deploy.0 = Release|x64
 		{56824402-BEAC-47D0-9FCE-60C17B843863}.Debug|ARM.ActiveCfg = Debug|ARM
 		{56824402-BEAC-47D0-9FCE-60C17B843863}.Debug|ARM.Build.0 = Debug|ARM
 		{56824402-BEAC-47D0-9FCE-60C17B843863}.Debug|ARM.Deploy.0 = Debug|ARM

@@ -1,0 +1,101 @@
+#******************************************************************
+#
+# Copyright 2014 Samsung Electronics All Rights Reserved.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+##
+# NotificationManager build script
+##
+
+Import('env')
+
+if env.get('RELEASE'):
+	env.AppendUnique(CCFLAGS = ['-Os'])
+	env.AppendUnique(CPPDEFINES = ['NDEBUG'])
+else:
+	env.AppendUnique(CCFLAGS = ['-g'])
+
+if env.get('LOGGING'):
+	env.AppendUnique(CPPDEFINES = ['TB_LOG'])
+
+lib_env = env.Clone()
+SConscript(env.get('SRC_DIR') + '/service/third_party_libs.scons', 'lib_env')
+resourcehosting_env = lib_env.Clone()
+
+target_os = env.get('TARGET_OS')
+######################################################################
+# Build flags
+######################################################################
+resourcehosting_env.AppendUnique(CPPPATH = ['include'])
+resourcehosting_env.AppendUnique(CPPPATH = ['../resource-encapsulation/include'])
+resourcehosting_env.AppendUnique(CPPPATH = ['../resource-encapsulation/src/common/primitiveResource/include'])
+
+resourcehosting_env.PrependUnique(LIBS = [
+	'rcs_client',
+	'rcs_server',
+	'rcs_common',
+	'oc',
+	'octbstack',
+	'oc_logger',
+	'connectivity_abstraction',
+	'libcoap'
+	])
+
+if target_os not in ['windows', 'winrt']:
+	resourcehosting_env.AppendUnique(CXXFLAGS = ['-O2', '-g', '-Wall', '-fmessage-length=0', '-std=c++0x'])
+
+if target_os not in ['darwin', 'ios', 'windows', 'winrt']:
+	resourcehosting_env.AppendUnique(LINKFLAGS = ['-Wl,--no-undefined'])
+
+if target_os == 'linux':
+	resourcehosting_env.AppendUnique(LIBS = ['pthread'])
+
+if target_os == 'android':
+	resourcehosting_env.AppendUnique(CXXFLAGS = ['-frtti', '-fexceptions'])
+	resourcehosting_env.AppendUnique(LIBS = ['gnustl_shared','log'])
+
+	if not env.get('RELEASE'):
+		resourcehosting_env.AppendUnique(LIBS = ['log'])
+
+######################################################################
+# Source files and Targets
+######################################################################
+HOSTING_SRC_DIR = 'src/'
+resourcehosting_src = [
+        HOSTING_SRC_DIR + 'Hosting.cpp',
+        HOSTING_SRC_DIR + 'ResourceHosting.cpp',
+        HOSTING_SRC_DIR + 'HostingObject.cpp',
+        HOSTING_SRC_DIR + 'RequestObject.cpp'
+        ]
+
+if target_os in ['tizen','android'] :
+    resourcehostingsdk = resourcehosting_env.SharedLibrary('resource_hosting', resourcehosting_src)
+else :
+    resourcehostingsdk = resourcehosting_env.StaticLibrary('resource_hosting', resourcehosting_src)
+
+resourcehosting_env.InstallTarget(resourcehostingsdk, 'libresource_hosting')
+resourcehosting_env.UserInstallTargetLib(resourcehostingsdk, 'libresource_hosting')
+resourcehosting_env.UserInstallTargetHeader('include/Hosting.h',\
+	'service/resource-hosting', 'Hosting.h')
+
+# Go to build Unit test
+if target_os == 'linux':
+	SConscript('src/unittest/SConscript')
+
+# Go to build sample apps
+SConscript('SampleApp/SConscript')

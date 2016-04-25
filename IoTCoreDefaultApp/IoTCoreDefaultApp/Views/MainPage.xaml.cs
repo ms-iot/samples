@@ -1,9 +1,8 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 
-using IoTOnboardingService;
+using IoTCoreDefaultApp.Utils;
 using System;
 using System.Globalization;
-using System.Threading.Tasks;
 using Windows.Networking.Connectivity;
 using Windows.Storage;
 using Windows.System;
@@ -21,7 +20,6 @@ namespace IoTCoreDefaultApp
         private CoreDispatcher MainPageDispatcher;
         private DispatcherTimer timer;
         private ConnectedDevicePresenter connectedDevicePresenter;
-        private OnboardingService OnboardingService;
 
         public CoreDispatcher UIThreadDispatcher
         {
@@ -48,8 +46,6 @@ namespace IoTCoreDefaultApp
 
             NetworkInformation.NetworkStatusChanged += NetworkInformation_NetworkStatusChanged;
 
-            OnboardingService = new OnboardingService();
-
             this.NavigationCacheMode = NavigationCacheMode.Enabled;
 
             this.DataContext = LanguageManager.GetInstance();
@@ -63,7 +59,7 @@ namespace IoTCoreDefaultApp
 
                 timer = new DispatcherTimer();
                 timer.Tick += timer_Tick;
-                timer.Interval = TimeSpan.FromSeconds(30);
+                timer.Interval = TimeSpan.FromSeconds(10);
                 timer.Start();
             };
             this.Unloaded += (sender, e) =>
@@ -79,8 +75,6 @@ namespace IoTCoreDefaultApp
             {
                 ApplicationData.Current.LocalSettings.Values[Constants.HasDoneOOBEKey] = Constants.HasDoneOOBEValue;
             }
-
-            Task.Run(() => OnboardingService.Start());
 
             base.OnNavigatedTo(e);
         }
@@ -121,8 +115,12 @@ namespace IoTCoreDefaultApp
 
         private void UpdateDateTime()
         {
-            var t = DateTime.Now;
-            this.CurrentTime.Text = t.ToString("t", CultureInfo.CurrentCulture) + Environment.NewLine + t.ToString("d", CultureInfo.CurrentCulture);
+            // Using DateTime.Now is simpler, but the time zone is cached. So, we use a native method insead.
+            SYSTEMTIME localTime;
+            NativeTimeMethods.GetLocalTime(out localTime);
+
+            DateTime t = localTime.ToDateTime();
+            CurrentTime.Text = t.ToString("t", CultureInfo.CurrentCulture) + Environment.NewLine + t.ToString("d", CultureInfo.CurrentCulture);
         }
 
         private async void UpdateNetworkInfo()
@@ -142,6 +140,11 @@ namespace IoTCoreDefaultApp
         private void ShutdownButton_Clicked(object sender, RoutedEventArgs e)
         {
             ShutdownDropdown.IsOpen = true;
+        }
+
+        private void CommandLineButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            NavigationUtils.NavigateToScreen(typeof(CommandLinePage));
         }
 
         private void SettingsButton_Clicked(object sender, RoutedEventArgs e)

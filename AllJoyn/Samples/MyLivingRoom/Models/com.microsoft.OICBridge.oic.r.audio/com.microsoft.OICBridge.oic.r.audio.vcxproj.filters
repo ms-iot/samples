@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resources">
+      <UniqueIdentifier>4a4be16c-3bd3-4bff-a4e1-c668d2e3eb92</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="AllJoynBusObjectManager.cpp" />
+    <ClCompile Include="AllJoynHelpers.cpp" />
+    <ClCompile Include="audioConsumer.cpp" />
+    <ClCompile Include="audioProducer.cpp" />
+    <ClCompile Include="audioServiceEventAdapter.cpp" />
+    <ClCompile Include="audioServiceEventArgs.cpp" />
+    <ClCompile Include="audioSignals.cpp" />
+    <ClCompile Include="audioWatcher.cpp" />
+    <ClCompile Include="TypeConversionHelpers.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="AllJoynBusObjectManager.h" />
+    <ClInclude Include="AllJoynHelpers.h" />
+    <ClInclude Include="audioConsumer.h" />
+    <ClInclude Include="audioEventArgs.h" />
+    <ClInclude Include="audioMethodResults.h" />
+    <ClInclude Include="audioProducer.h" />
+    <ClInclude Include="audioServiceEventAdapter.h" />
+    <ClInclude Include="audioServiceEventArgs.h" />
+    <ClInclude Include="audioSignals.h" />
+    <ClInclude Include="audioStructures.h" />
+    <ClInclude Include="audioWatcher.h" />
+    <ClInclude Include="IaudioService.h" />
+    <ClInclude Include="TypeConversionHelpers.h" />
+  </ItemGroup>
+</Project>

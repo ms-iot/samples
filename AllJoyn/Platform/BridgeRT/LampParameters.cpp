@@ -15,11 +15,13 @@ LampParameters::LampParameters(LSF* pLightingService)
 
 LampParameters::~LampParameters()
 {
-    if (m_pLightingService != nullptr)
+    if (m_lampParametersInterface != nullptr)
     {
-        delete m_pLightingService;
-        m_pLightingService = nullptr;
+        alljoyn_busattachment_deleteinterface(m_pLightingService->GetBus(), m_lampParametersInterface);
+        m_lampParametersInterface = nullptr;
     }
+
+    m_pLightingService = nullptr;
 }
 
 QStatus

@@ -18,16 +18,16 @@
 #include <string>
 
 #include "AdapterConfig.h"
-#include "Misc.h"
+#include "BridgeUtils.h"
+#include "AdapterUtils.h"
 
+using namespace AdapterLib;
 using namespace Platform;
 using namespace Windows::Data::Xml::Dom;
 using namespace Windows::Storage;
 using namespace Windows::ApplicationModel;
 using namespace concurrency;
 using namespace std;
-
-using namespace DsbCommon;
 
 
 //
@@ -395,7 +395,9 @@ AdapterConfig::fromXml(XmlDocument^ XmlDoc)
                 // Skip the sample filter...
                 if (_wcsicmp(allowedDev->InnerText->Data(), BACNET_DEVICE_FILTER_TOKEN_SAMPLE) != 0)
                 {
-                    tempConfig.AllowedDeviceList.push_back(ToLower(allowedDev->InnerText->Data()));
+                    wstring innerText(allowedDev->InnerText->Data());
+                    std::transform(innerText.begin(), innerText.end(), innerText.begin(), tolower);
+                    tempConfig.AllowedDeviceList.push_back(ref new String(innerText.c_str()));
                 }
 
                 // Next filter...
@@ -488,8 +490,9 @@ AdapterConfig::toXml(XmlDocument^& XmlDoc)
             for (String^ devModelToken : this->AllowedDeviceList)
             {
                 XmlElement^ allowedFilterElement = XmlDoc->CreateElement(GENERAL_CFG_XML_ALLOWED_DEVICE_LIST_ALLOWED);
-
-                allowedFilterElement->InnerText = ToLower(devModelToken->Data());
+                wstring devModel(devModelToken->Data());
+                std::transform(devModel.begin(), devModel.end(), devModel.begin(), tolower);
+                allowedFilterElement->InnerText = ref new String(devModel.c_str());
                 allowedDevicesElement->AppendChild(allowedFilterElement);
             }
             adapterConfigElement->AppendChild(allowedDevicesElement);

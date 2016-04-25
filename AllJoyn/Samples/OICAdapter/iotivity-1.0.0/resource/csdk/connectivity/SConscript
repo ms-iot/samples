@@ -1,0 +1,88 @@
+##
+# CA build script
+##
+
+Import('env')
+
+target_os = env.get('TARGET_OS')
+transport = env.get('TARGET_TRANSPORT')
+build_sample = env.get('BUILD_SAMPLE')
+with_ra = env.get('WITH_RA')
+with_tcp = env.get('WITH_TCP')
+
+print "Given Transport is %s" % transport
+print "Given OS is %s" % target_os
+print "BUILD_SAMPLE is %s" % build_sample
+
+targets_disallow_multitransport = ['arduino']
+
+if target_os in targets_disallow_multitransport:
+    if ('ALL' in transport) or (len(transport) != 1):
+        print "*** Error invalid option values: TARGET_TRANSPORT"
+        print "%s disallowed until testing can validate use of multiple transports on %s %d" % (transport, target_os, len(transport))
+        Exit(1)
+
+if 'ALL' in transport:
+	if with_ra == True:
+			env.AppendUnique(CPPDEFINES = ['RA_ADAPTER'])
+	if with_tcp == True:
+			env.AppendUnique(CPPDEFINES = ['TCP_ADAPTER'])
+	if target_os == 'linux':
+		env.AppendUnique(CPPDEFINES = ['IP_ADAPTER','NO_EDR_ADAPTER','LE_ADAPTER'])
+	elif target_os == 'tizen':
+		env.AppendUnique(CPPDEFINES = ['IP_ADAPTER','EDR_ADAPTER','LE_ADAPTER'])
+	elif target_os in['darwin','ios']:
+		env.AppendUnique(CPPDEFINES = ['IP_ADAPTER','NO_EDR_ADAPTER','NO_LE_ADAPTER'])
+	else:
+		env.AppendUnique(CPPDEFINES = ['IP_ADAPTER','EDR_ADAPTER','LE_ADAPTER'])
+	print "CA Transport is ALL"
+else:
+	if 'BT' in transport:
+		if target_os == 'linux':
+			print "CA Transport BT is not supported in Linux"
+			Exit(1)
+		else:
+			env.AppendUnique(CPPDEFINES = ['EDR_ADAPTER'])
+			print "CA Transport is BT"
+	else:
+		env.AppendUnique(CPPDEFINES = ['NO_EDR_ADAPTER'])
+
+	if 'BLE' in transport:
+		env.AppendUnique(CPPDEFINES = ['LE_ADAPTER'])
+		print "CA Transport is BLE"
+	else:
+		env.AppendUnique(CPPDEFINES = ['NO_LE_ADAPTER'])
+
+	if 'IP' in transport:
+		env.AppendUnique(CPPDEFINES = ['IP_ADAPTER'])
+		print "CA Transport is IP"
+	else:
+		env.AppendUnique(CPPDEFINES = ['NO_IP_ADAPTER'])
+
+	if with_tcp == True:
+		if target_os in['linux']:
+			env.AppendUnique(CPPDEFINES = ['TCP_ADAPTER'])
+			print "CA Transport is TCP"
+		else:
+			print "CA Transport TCP is not supported "
+			Exit(1)
+	else:
+		env.AppendUnique(CPPDEFINES = ['NO_TCP_ADAPTER'])
+
+env.SConscript('./src/SConscript')
+
+if build_sample == 'ON':
+	if target_os in ['linux', 'arduino', 'darwin']:
+		target_path = target_os
+
+		if target_os == 'darwin':
+			target_path = 'linux'
+		env.SConscript('./samples/' + target_path + '/SConscript')
+
+	elif target_os in ['android']:
+		env.SConscript('./samples/' + target_os + '/SConscript')
+
+		#to build sample apk, uncomment below line after ca libraries are built
+		#while building ca libraries comment the below line, to avoid build errors
+
+		#env.SConscript('./samples/' + target_os + '/casample/SConscript')

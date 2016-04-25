@@ -1,0 +1,3 @@
+This sample shows a very simple example of building an Arduino Wiring library and referencing it from a C# app. We've added a public WinRT class to the Arduino Wiring project that exposes basic LED control and calls into the functions defined in the standard ".ino" file. The C# project simply references this component and is able to directly use that public library. 
+
+https://developer.microsoft.com/en-us/windows/iot/win10/arduinowiringprojectguide

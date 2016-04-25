@@ -1,0 +1,50 @@
+#******************************************************************
+#
+# Copyright 2015 Samsung Electronics All Rights Reserved.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+import os
+Import('env')
+lib_env = env.Clone()
+SConscript(env.get('SRC_DIR') + '/service/third_party_libs.scons', 'lib_env')
+raml_env = lib_env.Clone()
+
+######################################################################
+# Build flags
+######################################################################
+raml_env.AppendUnique(CPPPATH = ['../../../extlibs/timer'])
+raml_env.AppendUnique(CPPPATH = ['raml/model','raml/jsonSchemaParser','raml', '../../../extlibs/yaml/yaml/src' , '../../../extlibs/yaml/yaml/include'])
+raml_env.AppendUnique(CXXFLAGS = ['-std=c++0x', '-Wall', '-pthread'])
+raml_env.AppendUnique(CPPDEFINES = ['LINUX'])
+
+raml_env.AppendUnique(CPPPATH = ['../../../extlibs/cjson/'])
+raml_env.PrependUnique(LIBS = ['oc', 'octbstack', 'oc_logger', 'connectivity_abstraction', 'libcoap','YamlParser'])
+raml_env.AppendUnique(LIBS = ['pthread'])
+
+raml_env.AppendUnique(CXXFLAGS = ['-O2', '-g', '-Wall', '-fmessage-length=0', '-std=c++0x'])
+
+######################################################################
+# Source files and Targets
+######################################################################
+raml_src = [env.Glob('raml/model/*.cpp'), env.Glob('raml/jsonSchemaParser/*.cpp'), env.Glob('raml/*.cpp')]
+ramlsdk = raml_env.SharedLibrary('RamlParser', raml_src)
+
+raml_env.InstallTarget(ramlsdk, 'libRaml')
+
+SConscript('../../../extlibs/yaml/SConscript')
+SConscript('example/SConscript')

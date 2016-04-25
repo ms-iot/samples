@@ -14,15 +14,13 @@
 //
 
 #include "pch.h"
-
+#include <mutex>
 #include "BACnetDef.h"
 #include "BACnetObjects.h"
 #include "BACnetInterface.h"
 
 using namespace Platform;
-
 using namespace BridgeRT;
-using namespace DsbCommon;
 
 
 //
@@ -148,19 +146,19 @@ namespace AdapterLib
 
     private:
 
-        static CSLock lock;
+        static std::recursive_mutex lock;
         static BACnetServiceHandlers* instancePtr;
 
         BACnetInterface^ stackInterface;
     };
-    CSLock BACnetServiceHandlers::lock;
+    std::recursive_mutex BACnetServiceHandlers::lock;
     BACnetServiceHandlers* BACnetServiceHandlers::instancePtr = nullptr;
 
 
     BACnetServiceHandlers*
     BACnetServiceHandlers::Instance()
     {
-        AutoLock sync(&BACnetServiceHandlers::lock, true);
+        AutoLock sync(BACnetServiceHandlers::lock);
 
         if (BACnetServiceHandlers::instancePtr == nullptr)
         {
@@ -174,7 +172,7 @@ namespace AdapterLib
     void
     BACnetServiceHandlers::Dispose()
     {
-        AutoLock sync(&BACnetServiceHandlers::lock, true);
+        AutoLock sync(BACnetServiceHandlers::lock);
 
         if (BACnetServiceHandlers::instancePtr != nullptr)
         {
@@ -815,9 +813,9 @@ namespace AdapterLib
         )
     {
         DWORD status = ERROR_SUCCESS;
-        std::string networkInterface = To_Ascii_String(ConfigInfo.NetworkInterface->Data());
+        std::string networkInterface = ConvertTo<std::string>(ConfigInfo.NetworkInterface);
         const char* networkInterfaceSz = networkInterface.empty() ? nullptr : networkInterface.c_str();
-        std::string bbmdAddress = To_Ascii_String(ConfigInfo.BbmdIpAddress->Data());
+        std::string bbmdAddress = ConvertTo<std::string>(ConfigInfo.BbmdIpAddress);
 
         this->notificationListener = NotificationListener;
 
@@ -967,50 +965,53 @@ namespace AdapterLib
         IAdapterIoRequest^* adapterIoRequestPtr
         )
     {
-        AutoLock sync(&this->lock, true);
+        DWORD status = 0;
+        BACnetIoRequest^ bacnetIoRequest = nullptr;
 
-        if (adapterIoRequestPtr != nullptr)
         {
-            *adapterIoRequestPtr = nullptr;
-        }
+            AutoLock sync(this->lock);
 
-        //
-        // Set IO parameters and submit the request
-        //
+            if (adapterIoRequestPtr != nullptr)
+            {
+                *adapterIoRequestPtr = nullptr;
+            }
 
-        BACnetAdapterIoRequest::IO_PARAMETERS ioParams;
-        ioParams.Type = IoType_StartDeviceDiscovery;
-
-        IAdapterIoRequest^ ioRequest;
-        DWORD status = this->doIo(&ioParams, CompletionRoutinePtr, ContextPtr, &ioRequest);
-        if (status != ERROR_IO_PENDING)
-        {
             //
-            // Something probably failed, otherwise
-            // we should get ERROR_IO_PENDING since
-            // we only queue the request for device enumeration.
+            // Set IO parameters and submit the request
             //
-            DSB_ASSERT(status != ERROR_SUCCESS);
 
-            return status;
-        }
+            BACnetAdapterIoRequest::IO_PARAMETERS ioParams;
+            ioParams.Type = IoType_StartDeviceDiscovery;
 
-        BACnetIoRequest^ bacnetIoRequest = dynamic_cast<BACnetIoRequest^>(ioRequest);
-        DSB_ASSERT(bacnetIoRequest);
+            IAdapterIoRequest^ ioRequest;
+            status = this->doIo(&ioParams, CompletionRoutinePtr, ContextPtr, &ioRequest);
+            if (status != ERROR_IO_PENDING)
+            {
+                //
+                // Something probably failed, otherwise
+                // we should get ERROR_IO_PENDING since
+                // we only queue the request for device enumeration.
+                //
+                DSB_ASSERT(status != ERROR_SUCCESS);
 
-        if (adapterIoRequestPtr != nullptr)
-        {
-            *adapterIoRequestPtr = ioRequest;
+                return status;
+            }
 
-            return ERROR_IO_PENDING;
-        }
-        else
-        {
-            // Since we implicitly asked for the request
-            bacnetIoRequest->Dereference();
-        }
+            bacnetIoRequest = dynamic_cast<BACnetIoRequest^>(ioRequest);
+            DSB_ASSERT(bacnetIoRequest);
 
-        sync.Unlock();
+            if (adapterIoRequestPtr != nullptr)
+            {
+                *adapterIoRequestPtr = ioRequest;
+
+                return ERROR_IO_PENDING;
+            }
+            else
+            {
+                // Since we implicitly asked for the request
+                bacnetIoRequest->Dereference();
+            }
+        }        
 
         status = bacnetIoRequest->Wait(INFINITE, NULL);
         if (status == ERROR_SUCCESS)
@@ -1113,7 +1114,7 @@ namespace AdapterLib
     BACnetInterface::addDevice(BACNET_DEVICE_ID* newDeviceIdPtr)
     {
         // Sync access to device database
-        AutoLock sync(&this->lock, true);
+        AutoLock sync(this->lock);
         bool isNewDevice = false;
 
         try
@@ -1301,7 +1302,7 @@ namespace AdapterLib
     BACnetIoRequest^
     BACnetInterface::getStackPendingRequest(UINT32 RequestId)
     {
-        AutoLock sync(&this->pendingStackRequestsLock, true);
+        AutoLock sync(this->pendingStackRequestsLock);
 
         auto iter = this->pendingStackRequests.find(RequestId);
 
@@ -1351,7 +1352,7 @@ namespace AdapterLib
     uint32
     BACnetInterface::delStackPendingRequest(BACnetIoRequest^ Request)
     {
-        AutoLock sync(&this->pendingStackRequestsLock, true);
+        AutoLock sync(this->pendingStackRequestsLock);
 
         for (auto iter = this->pendingStackRequests.begin();
              iter != this->pendingStackRequests.end();
@@ -1523,7 +1524,7 @@ namespace AdapterLib
             // to avoid a race condition where the handler is called before
             // the request is added to the 'pending requests' list.
             //
-            AutoLock sync(&this->pendingStackRequestsLock, true);
+            AutoLock sync(this->pendingStackRequestsLock);
 
             BACnetAdapterIoRequest->InvokeId = Send_Read_Property_Request(
                                         objPropDescPtr->DeviceId,
@@ -1586,7 +1587,7 @@ namespace AdapterLib
             // to avoid a race condition where the handler is called before
             // the request is added to the 'pending requests' list.
             //
-            AutoLock sync(&this->pendingStackRequestsLock, true);
+            AutoLock sync(this->pendingStackRequestsLock);
 
             BACnetAdapterIoRequest->InvokeId = Send_Write_Property_Request(
                                         objPropDescPtr->DeviceId,
@@ -1651,7 +1652,7 @@ namespace AdapterLib
             // to avoid a race condition where the handler is called before
             // the request is added to the 'pending requests' list.
             //
-            AutoLock sync(&this->pendingStackRequestsLock, true);
+            AutoLock sync(this->pendingStackRequestsLock);
 
             BACNET_SUBSCRIBE_COV_DATA covData = { 0 };
             covData.monitoredObjectIdentifier.type = UINT16(objPropDescPtr->ObjectType);
@@ -1771,7 +1772,7 @@ namespace AdapterLib
         DWORD status
         )
     {
-        AutoLock sync(&this->lock, true);
+        AutoLock sync(this->lock);
 
         Request->SetCancelRoutine(nullptr);
 

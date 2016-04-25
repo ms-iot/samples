@@ -18,14 +18,14 @@
 #include "BACnetDef.h"
 #include "BACnetObjects.h"
 #include "BfiDefinitions.h"
-#include "Misc.h"
-
+#include "BridgeUtils.h"
+#include "AdapterUtils.h"
 using namespace Platform;
 using namespace Platform::Collections;
 using namespace Windows::Foundation;
 
 using namespace BridgeRT;
-using namespace DsbCommon;
+
 
 
 namespace AdapterLib

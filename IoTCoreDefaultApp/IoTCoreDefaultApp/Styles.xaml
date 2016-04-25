@@ -32,6 +32,8 @@
     <x:String x:Key="IconDeviceDiscovery">&#xEBDE;</x:String>
     <x:String x:Key="IconShutdown">&#xE7E8;</x:String>
     <x:String x:Key="IconSettings">&#xE713;</x:String>
+    <x:String x:Key="IconRun">&#xE768;</x:String>
+    <x:String x:Key="IconCommandLine">&#xE756;</x:String>
     <x:String x:Key="IconLaptop">&#xE770;</x:String>
     <x:String x:Key="IconEthernet">&#xE839;</x:String>
     <x:String x:Key="IconWifiFull">&#xE908;</x:String>

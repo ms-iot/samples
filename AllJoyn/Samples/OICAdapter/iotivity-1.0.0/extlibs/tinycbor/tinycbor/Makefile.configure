@@ -1,0 +1,29 @@
+ALLTESTS = open_memstream funopen gc_sections \
+	   system-cjson cjson
+MAKEFILE := $(lastword $(MAKEFILE_LIST))
+OUT :=
+
+PROGRAM-open_memstream = extern int open_memstream(); int main() { return open_memstream(); }
+PROGRAM-funopen = extern int funopen(); int main() { return funopen(); }
+PROGRAM-gc_sections = int main() {}
+CCFLAGS-gc_sections = -Wl,--gc-sections
+
+PROGRAM-cjson  = \#include <stdlib.h>\n
+PROGRAM-cjson += \#include <cJSON.h>\n
+PROGRAM-cjson += int main() { return cJSON_False; }
+CCFLAGS-cjson = -I$(dir $(MAKEFILE))src/cjson
+PROGRAM-system-cjson = $(PROGRAM-cjson)
+CCLFAGS-system-cjson = -lcJSON
+
+sink:
+	@echo >&2 Please run from the top-level Makefile.
+
+configure: $(foreach it,$(ALLTESTS),check-$(it))
+
+check-%:
+	@echo $(subst check-,,$@)-tested := 1 $(OUT)
+	$(if $(V),,@)if echo -e "$($(subst check-,PROGRAM-,$@))" | \
+	    $(CC) -xc $($(subst check-,CCFLAGS-,$@)) -o /dev/null - $(if $(V),,>/dev/null 2>&1); \
+	then \
+	    echo $(subst check-,,$@)-pass := 1 $(OUT); \
+	fi

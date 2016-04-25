@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">RCSampleClientApp</string>
+    <string name="container_resource">Discover Container Resource</string>
+    <string name="discover_resource">Discover Resource</string>
+</resources>

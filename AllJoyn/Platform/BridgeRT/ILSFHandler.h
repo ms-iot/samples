@@ -20,15 +20,15 @@
 
 namespace BridgeRT
 {
-
+  
     public ref struct State sealed
     {
     public:
-        property bool IsOn;
-        property uint32 Brightness;
-        property uint32 Hue;
-        property uint32 Saturation;
-        property uint32 ColorTemp;
+        property Platform::IBox<bool>^ IsOn; 
+	property Platform::IBox<uint32>^ Brightness; 
+	property Platform::IBox<uint32>^ Hue; 
+	property Platform::IBox<uint32>^ Saturation; 
+	property Platform::IBox<uint32>^ ColorTemp; 
     };
 
     // *********************************************************************************************************************************************************

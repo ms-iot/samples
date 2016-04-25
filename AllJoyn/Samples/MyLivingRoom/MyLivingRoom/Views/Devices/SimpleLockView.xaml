@@ -1,0 +1,25 @@
+﻿<vw:BasePageView
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="using:Windows.UI"
+    xmlns:vm="using:MyLivingRoom.ViewModels"
+    xmlns:vw="using:MyLivingRoom.Views"
+
+    x:Class="MyLivingRoom.Views.SimpleLockView"
+    >
+    <StackPanel>
+        <vw:DeviceHeaderView DataContext="{x:Bind ViewModel.TopicDefinition}" />
+
+        <TextBlock
+            Style="{StaticResource TitleTextBlockStyle}"
+            Text="Controls"
+            />
+
+        <ToggleSwitch
+            Margin="0,20,0,0"
+            Header="Lock State" OffContent="Unlocked" OnContent="Locked"
+            IsOn="{x:Bind ViewModel.IsLocked,Mode=TwoWay}"
+            />
+
+    </StackPanel>
+</vw:BasePageView>

@@ -13,7 +13,7 @@
     <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
   </TemplateData>
   <TemplateContent>
-    <Project TargetFileName="HeadlessAdapterApp.vcxproj" File="HeadlessAdapterApp.vcxproj" ReplaceParameters="false">
+    <Project TargetFileName="HeadlessAdapterApp.vcxproj" File="HeadlessAdapterApp.vcxproj" ReplaceParameters="true">
       <ProjectItem ReplaceParameters="false" TargetFileName="HeadlessAdapterApp.vcxproj.filters">HeadlessAdapterApp.vcxproj.filters</ProjectItem>
       <ProjectItem ReplaceParameters="false" TargetFileName="LockScreenLogo.scale-200.png">Assets\LockScreenLogo.scale-200.png</ProjectItem>
       <ProjectItem ReplaceParameters="false" TargetFileName="SplashScreen.scale-200.png">Assets\SplashScreen.scale-200.png</ProjectItem>
@@ -24,8 +24,7 @@
       <ProjectItem ReplaceParameters="false" TargetFileName="Wide310x150Logo.scale-200.png">Assets\Wide310x150Logo.scale-200.png</ProjectItem>
       <ProjectItem ReplaceParameters="false" TargetFileName="pch.cpp">pch.cpp</ProjectItem>
       <ProjectItem ReplaceParameters="false" TargetFileName="pch.h">pch.h</ProjectItem>
-      <ProjectItem ReplaceParameters="false" TargetFileName="StartupTask.cpp">StartupTask.cpp</ProjectItem>
-      <ProjectItem ReplaceParameters="false" TargetFileName="StartupTask.h">StartupTask.h</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Resources.resw">Resources\en-US\Resources.resw</ProjectItem>  
       <ProjectItem ReplaceParameters="true" TargetFileName="Package.appxmanifest">Package.appxmanifest</ProjectItem>
       <ProjectItem ReplaceParameters="false" TargetFileName="HeadlessAdapterApp_TemporaryKey.pfx">HeadlessAdapterApp_TemporaryKey.pfx</ProjectItem>
     </Project>
@@ -33,5 +32,9 @@
   <WizardExtension>
     <Assembly>CustomWizard, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</Assembly>
     <FullClassName>CustomWizard.ChildWizard</FullClassName>
+  </WizardExtension>
+  <WizardExtension>
+    <Assembly>Microsoft.VisualStudio.Universal.TemplateWizards, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</Assembly>
+    <FullClassName>Microsoft.VisualStudio.Universal.TemplateWizards.PlatformVersion.Wizard</FullClassName>
   </WizardExtension>
 </VSTemplate>

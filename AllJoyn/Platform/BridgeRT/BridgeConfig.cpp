@@ -16,6 +16,7 @@
 
 #include "pch.h"
 #include "BridgeConfig.h"
+#include "BridgeUtils.h"
 
 #pragma warning(disable:4127)
 

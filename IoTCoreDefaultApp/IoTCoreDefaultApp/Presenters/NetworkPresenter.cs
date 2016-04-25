@@ -94,18 +94,26 @@ namespace IoTCoreDefaultApp
             {
                 var name = icp.ProfileName;
 
-                var hostnames = NetworkInformation.GetHostNames();
-
-                foreach (var hn in hostnames)
+                try
                 {
-                    if (hn.IPInformation != null &&
-                        hn.IPInformation.NetworkAdapter != null &&
-                        hn.IPInformation.NetworkAdapter.NetworkAdapterId != null &&
-                        hn.IPInformation.NetworkAdapter.NetworkAdapterId == icp.NetworkAdapter.NetworkAdapterId &&
-                        hn.Type == HostNameType.Ipv4)
+                    var hostnames = NetworkInformation.GetHostNames();
+
+                    foreach (var hn in hostnames)
                     {
-                        return hn.CanonicalName;
+                        if (hn.IPInformation != null &&
+                            hn.IPInformation.NetworkAdapter != null &&
+                            hn.IPInformation.NetworkAdapter.NetworkAdapterId != null &&
+                            hn.IPInformation.NetworkAdapter.NetworkAdapterId == icp.NetworkAdapter.NetworkAdapterId &&
+                            hn.Type == HostNameType.Ipv4)
+                        {
+                            return hn.CanonicalName;
+                        }
                     }
+                }
+                catch (Exception)
+                {
+                    // do nothing
+                    // in some (strange) cases NetworkInformation.GetHostNames() fails... maybe a bug in the API...
                 }
             }
 
@@ -304,45 +312,54 @@ namespace IoTCoreDefaultApp
         public static async Task<IList<NetworkInfo>> GetNetworkInformation()
         {
             var networkList = new Dictionary<Guid, NetworkInfo>();
-            var hostNamesList = NetworkInformation.GetHostNames();
-            var resourceLoader = ResourceLoader.GetForCurrentView();
 
-            foreach (var hostName in hostNamesList)
+            try
             {
-                if ((hostName.Type == HostNameType.Ipv4 || hostName.Type == HostNameType.Ipv6) &&
-                    (hostName != null && hostName.IPInformation != null && hostName.IPInformation.NetworkAdapter != null))
+                var hostNamesList = NetworkInformation.GetHostNames();
+                var resourceLoader = ResourceLoader.GetForCurrentView();
+
+                foreach (var hostName in hostNamesList)
                 {
-                    var profile = await hostName.IPInformation.NetworkAdapter.GetConnectedProfileAsync();
-                    if (profile != null)
+                    if ((hostName.Type == HostNameType.Ipv4 || hostName.Type == HostNameType.Ipv6) &&
+                        (hostName != null && hostName.IPInformation != null && hostName.IPInformation.NetworkAdapter != null))
                     {
-                        NetworkInfo info;
-                        var found = networkList.TryGetValue(hostName.IPInformation.NetworkAdapter.NetworkAdapterId, out info);
-                        if (!found)
+                        var profile = await hostName.IPInformation.NetworkAdapter.GetConnectedProfileAsync();
+                        if (profile != null)
                         {
-                            info = new NetworkInfo();
-                            networkList[hostName.IPInformation.NetworkAdapter.NetworkAdapterId] = info;
-                            if (hostName.IPInformation.NetworkAdapter.IanaInterfaceType == WirelessInterfaceIanaType &&
-                                profile.ProfileName.Equals("Ethernet"))
+                            NetworkInfo info;
+                            var found = networkList.TryGetValue(hostName.IPInformation.NetworkAdapter.NetworkAdapterId, out info);
+                            if (!found)
                             {
-                                info.NetworkName = "Wireless LAN Adapter";
+                                info = new NetworkInfo();
+                                networkList[hostName.IPInformation.NetworkAdapter.NetworkAdapterId] = info;
+                                if (hostName.IPInformation.NetworkAdapter.IanaInterfaceType == WirelessInterfaceIanaType &&
+                                    profile.ProfileName.Equals("Ethernet"))
+                                {
+                                    info.NetworkName = "Wireless LAN Adapter";
+                                }
+                                else
+                                {
+                                    info.NetworkName = profile.ProfileName;
+                                }
+                                var statusTag = profile.GetNetworkConnectivityLevel().ToString();
+                                info.NetworkStatus = resourceLoader.GetString("NetworkConnectivityLevel_" + statusTag);
+                            }
+                            if (hostName.Type == HostNameType.Ipv4)
+                            {
+                                info.NetworkIpv4 = hostName.CanonicalName;
                             }
                             else
                             {
-                                info.NetworkName = profile.ProfileName;
+                                info.NetworkIpv6 = hostName.CanonicalName;
                             }
-                            var statusTag = profile.GetNetworkConnectivityLevel().ToString();
-                            info.NetworkStatus = resourceLoader.GetString("NetworkConnectivityLevel_" + statusTag);
-                        }
-                        if (hostName.Type == HostNameType.Ipv4)
-                        {
-                            info.NetworkIpv4 = hostName.CanonicalName;
-                        }
-                        else
-                        {
-                            info.NetworkIpv6 = hostName.CanonicalName;
                         }
                     }
                 }
+            }
+            catch (Exception)
+            {
+                // do nothing
+                // in some (strange) cases NetworkInformation.GetHostNames() fails... maybe a bug in the API...
             }
 
             var res = new List<NetworkInfo>();

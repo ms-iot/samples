@@ -3,16 +3,14 @@
 
 using System;
 using System.Collections.ObjectModel;
-using Windows.Devices.WiFi;
-using Windows.Devices.Enumeration;
-using Windows.Foundation;
-using Windows.Devices.Bluetooth;
 using Windows.Devices.Bluetooth.Rfcomm;
+using Windows.Devices.Enumeration;
+using Windows.Devices.WiFi;
+using Windows.Foundation;
 using Windows.Security.Credentials;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
@@ -66,6 +64,7 @@ namespace IoTCoreDefaultApp
             this.Loaded += (sender, e) =>
             {
                 SetupLanguages();
+                screensaverToggleSwitch.IsOn = Screensaver.IsScreensaverEnabled;
             };
         }
 
@@ -73,8 +72,11 @@ namespace IoTCoreDefaultApp
         {
             languageManager = LanguageManager.GetInstance();
 
-            LanguageListBox.ItemsSource = languageManager.LanguageDisplayNames;
-            LanguageListBox.SelectedItem = LanguageManager.GetCurrentLanguageDisplayName();
+            LanguageComboBox.ItemsSource = languageManager.LanguageDisplayNames;
+            LanguageComboBox.SelectedItem = LanguageManager.GetCurrentLanguageDisplayName();
+
+            InputLanguageComboBox.ItemsSource = languageManager.InputLanguageDisplayNames;
+            InputLanguageComboBox.SelectedItem = LanguageManager.GetCurrentInputLanguageDisplayName();
         }
 
         private void SetupNetwork()
@@ -189,17 +191,27 @@ namespace IoTCoreDefaultApp
             NavigationUtils.GoBack();
         }
 
-        private void LanguageListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void LanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var listBox = sender as ListBox;
-            if (listBox.SelectedItem == null)
+            var comboBox = sender as ComboBox;
+            if (comboBox.SelectedItem == null)
             {
                 return;
             }
 
-            languageManager.UpdateLanguage(listBox.SelectedItem as string);
+            languageManager.UpdateLanguage(comboBox.SelectedItem as string);
         }
 
+        private void InputLanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var comboBox = sender as ComboBox;
+            if (comboBox.SelectedItem == null)
+            {
+                return;
+            }
+
+            languageManager.UpdateInputLanguage(comboBox.SelectedItem as string);
+        }
 
         private void SetupEthernet()
         {
@@ -334,10 +346,12 @@ namespace IoTCoreDefaultApp
                 item.ContentTemplate = template;
             }
 
+
+
             return item;
         }
 
-        private void ConnectAutomaticallyCheckBox_Checked(object sender, RoutedEventArgs e)
+        private void ConnectAutomaticallyCheckBox_Changed(object sender, RoutedEventArgs e)
         {
             var checkbox = sender as CheckBox;
 
@@ -397,7 +411,9 @@ namespace IoTCoreDefaultApp
 
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
+            RefreshButton.IsEnabled = false;
             SetupWifi();
+            RefreshButton.IsEnabled = true;
         }
 
         /// <summary>
@@ -949,6 +965,21 @@ namespace IoTCoreDefaultApp
             else
             {
                 StopWatchingAndDisplayConfirmationMessage();
+            }
+        }
+
+        private void Screensaver_Toggled(object sender, RoutedEventArgs e)
+        {
+            var screensaverToggleSwitch = sender as ToggleSwitch;
+            Screensaver.IsScreensaverEnabled = screensaverToggleSwitch.IsOn;
+        }
+
+        private void WifiPasswordBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            var passwordBox = sender as PasswordBox;
+            if (passwordBox != null)
+            {
+                passwordBox.Focus(FocusState.Programmatic);
             }
         }
     }

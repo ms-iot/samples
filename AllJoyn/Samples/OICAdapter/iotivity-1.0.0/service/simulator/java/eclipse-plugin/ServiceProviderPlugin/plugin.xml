@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="oic.simulator.serviceprovider.perspective.PerspectiveFactory"
+            icon="icons/oic_logo_16x16.png"
+            id="oic.simulator.serviceprovider.perspective"
+            name="Service Provider">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+         <category
+            id="oic.simulator.serviceprovider.category"
+            name="Service Provider">
+         </category>
+         <view category="oic.simulator.serviceprovider.category"
+            class="oic.simulator.serviceprovider.view.ResourceManagerView"
+            icon="icons/oic_logo_16x16.png"
+            id="oic.simulator.serviceprovider.view.resourcemanager"
+            name="Resource Manager"
+            restorable="true">
+         </view>
+         <view category="oic.simulator.serviceprovider.category"
+            class="oic.simulator.serviceprovider.view.AttributeView"
+            icon="icons/oic_logo_16x16.png"
+            id="oic.simulator.serviceprovider.view.attribute"
+            name="Attribute Manager"
+            restorable="true">
+         </view>
+         <view category="oic.simulator.serviceprovider.category"
+            class="oic.simulator.serviceprovider.view.MultiResourceOrchestrationView"
+            icon="icons/oic_logo_16x16.png"
+            id="oic.simulator.serviceprovider.view.orchestration"
+            name="Multi-Resource Automation"
+            restorable="true">
+         </view>
+         <view category="oic.simulator.serviceprovider.category"
+            class="oic.simulator.serviceprovider.view.LogView"
+            icon="icons/oic_logo_16x16.png"
+            id="oic.simulator.serviceprovider.view.log"
+            name="Simulator Log"
+            restorable="true">
+         </view>
+         <view category="oic.simulator.serviceprovider.category"
+            class="oic.simulator.serviceprovider.view.MetaPropertiesView"
+            icon="icons/oic_logo_16x16.png"
+            id="oic.simulator.serviceprovider.view.metaproperties"
+            name="Properties"
+            restorable="true">
+         </view>
+         <view category="oic.simulator.serviceprovider.category"
+            class="oic.simulator.serviceprovider.view.ResourceObserverView"
+            icon="icons/oic_logo_16x16.png"
+            id="oic.simulator.serviceprovider.view.observer"
+            name="Resource Observers"
+            restorable="true">
+         </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="*">
+         <perspectiveShortcut
+               id="oic.simulator.serviceprovider.perspective">
+         </perspectiveShortcut>
+      </perspectiveExtension>
+      <perspectiveExtension
+            targetID="oic.simulator.serviceprovider.perspective">
+         <viewShortcut
+               id="oic.simulator.serviceprovider.view.resourcemanager">
+         </viewShortcut>
+         <viewShortcut
+               id="oic.simulator.serviceprovider.view.attribute">
+         </viewShortcut>
+         <viewShortcut
+               id="oic.simulator.serviceprovider.view.orchestration">
+         </viewShortcut>
+         <viewShortcut
+               id="oic.simulator.serviceprovider.view.log">
+         </viewShortcut>
+         <viewShortcut
+               id="oic.simulator.serviceprovider.view.metaproperties">
+         </viewShortcut>
+         <viewShortcut
+               id="oic.simulator.serviceprovider.view.observer">
+         </viewShortcut>
+      </perspectiveExtension>
+   </extension>
+</plugin>

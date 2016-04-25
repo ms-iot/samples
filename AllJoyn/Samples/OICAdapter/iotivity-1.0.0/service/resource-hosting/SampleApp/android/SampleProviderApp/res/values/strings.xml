@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SampleProvider</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+    <string name="received">Received</string>
+    <string name="current_log">Current Log</string>
+    <string name="none">None</string>
+    <string name="quit">Quit</string>
+</resources>

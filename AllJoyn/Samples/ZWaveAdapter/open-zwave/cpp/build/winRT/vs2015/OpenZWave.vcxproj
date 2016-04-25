@@ -482,7 +482,7 @@
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
-    <WindowsTargetPlatformVersion>10.0.10240.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.10586.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformMinVersion>10.0.10240.0</WindowsTargetPlatformMinVersion>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
   </PropertyGroup>
@@ -570,6 +570,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WINRT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\..\tinyxml;..\..\..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -578,7 +579,7 @@
     </Link>
     <PreBuildEvent>
       <Command>del ..\..\windows\winversion.cpp
-CALL "$(ProjectDir)\..\..\windows\GIT-VS-VERSION-GEN.bat" "$(ProjectDir)\" "..\..\windows\winversion.cpp"
+CALL "$(ProjectDir)..\..\windows\GIT-VS-VERSION-GEN.bat" "$(ProjectDir)" "..\..\windows\winversion.cpp"
 Xcopy /E /I /Y ..\..\..\..\config config\
 exit 0</Command>
     </PreBuildEvent>
@@ -590,6 +591,7 @@ exit 0</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WINRT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\..\tinyxml;..\..\..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -598,7 +600,7 @@ exit 0</Command>
     </Link>
     <PreBuildEvent>
       <Command>del ..\..\windows\winversion.cpp
-CALL "$(ProjectDir)\..\..\windows\GIT-VS-VERSION-GEN.bat" "$(ProjectDir)\" "..\..\windows\winversion.cpp"
+CALL "$(ProjectDir)..\..\windows\GIT-VS-VERSION-GEN.bat" "$(ProjectDir)" "..\..\windows\winversion.cpp"
 Xcopy /E /I /Y ..\..\..\..\config config\
 exit 0</Command>
     </PreBuildEvent>
@@ -610,6 +612,7 @@ exit 0</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>LITTLE_ENDIAN;WINRT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\..\tinyxml;..\..\..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -618,7 +621,7 @@ exit 0</Command>
     </Link>
     <PreBuildEvent>
       <Command>del ..\..\windows\winversion.cpp
-CALL "$(ProjectDir)\..\..\windows\GIT-VS-VERSION-GEN.bat" "$(ProjectDir)\" "..\..\windows\winversion.cpp"
+CALL "$(ProjectDir)..\..\windows\GIT-VS-VERSION-GEN.bat" "$(ProjectDir)" "..\..\windows\winversion.cpp"
 Xcopy /E /I /Y ..\..\..\..\config config\
 exit 0</Command>
     </PreBuildEvent>
@@ -630,6 +633,7 @@ exit 0</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>LITTLE_ENDIAN;WINRT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\..\tinyxml;..\..\..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -638,7 +642,7 @@ exit 0</Command>
     </Link>
     <PreBuildEvent>
       <Command>del ..\..\windows\winversion.cpp
-CALL "$(ProjectDir)\..\..\windows\GIT-VS-VERSION-GEN.bat" "$(ProjectDir)\" "..\..\windows\winversion.cpp"
+CALL "$(ProjectDir)..\..\windows\GIT-VS-VERSION-GEN.bat" "$(ProjectDir)" "..\..\windows\winversion.cpp"
 Xcopy /E /I /Y ..\..\..\..\config config\
 exit 0</Command>
     </PreBuildEvent>
@@ -650,6 +654,7 @@ exit 0</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WINRT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\..\tinyxml;..\..\..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -658,7 +663,7 @@ exit 0</Command>
     </Link>
     <PreBuildEvent>
       <Command>del ..\..\windows\winversion.cpp
-CALL "$(ProjectDir)\..\..\windows\GIT-VS-VERSION-GEN.bat" "$(ProjectDir)\" "..\..\windows\winversion.cpp"
+CALL "$(ProjectDir)..\..\windows\GIT-VS-VERSION-GEN.bat" "$(ProjectDir)" "..\..\windows\winversion.cpp"
 Xcopy /E /I /Y ..\..\..\..\config config\
 exit 0</Command>
     </PreBuildEvent>
@@ -673,6 +678,7 @@ exit 0</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WINRT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\..\tinyxml;..\..\..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -681,7 +687,7 @@ exit 0</Command>
     </Link>
     <PreBuildEvent>
       <Command>del ..\..\windows\winversion.cpp
-CALL "$(ProjectDir)\..\..\windows\GIT-VS-VERSION-GEN.bat" "$(ProjectDir)\" "..\..\windows\winversion.cpp"
+CALL "$(ProjectDir)..\..\windows\GIT-VS-VERSION-GEN.bat" "$(ProjectDir)" "..\..\windows\winversion.cpp"
 Xcopy /E /I /Y ..\..\..\..\config config\
 exit 0</Command>
     </PreBuildEvent>

@@ -1,0 +1,159 @@
+Release notes
+****************************************************************************
+Release date: Oct 14th, 2014.
+OS: Ubuntu 12.0.4 and above
+Requires boost version 1.55 to build.
+Code buildable in gcc 4.6.3 and above.
+NOTE: Boost is not distributed but should be installed in the Ubuntu machine.
+*****************************************************************************
+
+What is new?
+
+--------------------------------------------
+Class OCPlatform (Header file: OCPlatform.h)
+--------------------------------------------
+
+OCPlatform has new set of overloaded APIs for QoS support
+- findResource
+- notifyAllObservers
+- notifyListOfObservers
+
+These overloaded APIs allow app developers to specify QoS level. Please see 'Other notes' section for
+details in QoS.
+
+--------------------------------------------
+Class OCResource (Header file: OCResource.h)
+--------------------------------------------
+
+OCResource has new set of overloaded APIs for QoS support
+- get
+- put
+- post
+- observe
+- cancelObserve
+- deleteResource
+
+These overloaded APIs allow app developers to specify QoS level. Please see 'Other notes' section for
+details in QoS.
+
+*****************
+deleteResource API
+*****************
+
+This new API allows the client to perform Delete operations on a resource.
+
+NOTE: This applies to client side functionality.
+
+*****************
+setHeaderOptions API
+*****************
+
+This new API allows the client to set header options.
+
+NOTE: Once headers options are set, it will be applicable to GET, PUT and observe request.
+NOTE: This applies to client side functionality.
+
+*****************
+unsetHeaderOptions API
+*****************
+
+This new API allows the client to unset header options.
+NOTE: This applies to client side functionality.
+
+--------------------------------------------
+Class OCHeaderOption (Header file: OCHeaderOption.h)
+--------------------------------------------
+OCHeaderOption class allows to create instances which comprises optionID
+and optionData as members. These are used in setting Header options.
+After creating instances of OCHeaderOptions, setHeaderOptions API
+(in OCResource.h) can be used to set header Options.
+NOTE: HeaderOptionID  is an unsigned integer value which MUST be within
+range of 2048 to 3000 inclusive of lower and upper bound.
+HeaderOptions instance creation fails if above condition is not satisfied.
+
+Refer 'Other Notes' section for more details on Header options.
+------------
+Other Notes:
+------------
+
+Security model is still open.
+
+Maximum length of URI supported is 64 bytes (sent from the client)
+Maximum length of query supported is 64 bytes (sent from the client)
+Maximum length of request and response from server for Ardunio is is 256 bytes
+Maximum length of request and response from server for non-Ardunio is is 1024 bytes
+
+OIC base supports Arduino WiFi shield.
+This support has been tested with Arduino Mega 2560 and with Arduino 1.0.5 WiFi library.
+Please refer to oic-resource/csdk/README file for building OIC base with WiFi support.
+
+Bug fixes:
+IOT-58
+
+QoS
+-QoSlevels support LowQoS, MidQoS, HighQoS and NaQoS.
+-LowQoS and MidQoS are translated to non-conifirmable in CoAP.
+-HighQoS translated to confirmable in CoAP.
+-NaQoS allows the base to choose appropriate QoS level. It defaults to LowQoS.
+-In observe notifications, it uses the same QoS level the observer used in the observe registration request.
+
+On graceful server shutdown:
+-Client-observers will now be notified when the resource they are observing is being deleted.
+-Also applies for presence notifications.
+
+Header options support:
+- This support provides the client to send custom header options to server and vice-versa.
+- Server handles the header options received from the clients in the entity handler.
+- Header options sent from the server are received in get, put, post, delete, observe callbacks.
+- Sample shown in fridge samples.
+
+Entity handler modification:
+-Returns OCEntityHandlerResult instead of void.
+-OCEntityHandlerResult return types are OC_EH_RESOURCE_CREATED and OC_EH_RESOURCE_DELETED.
+
+Exception handling:
+-This release includes enhancements in exception handling.
+-------------
+How to build:
+-------------
+
+REFER https://oic-review.01.org/gerrit for more details on getting oic-resource repo.
+If the code is not cloned:
+Clone the oic-resource repo using this command: git clone oic:oic-resource
+Clone the oic-utilities repo using this command: git clone oic:oic-utilities
+
+NOTE: If the repo is already cloned, use 'git pull' inside oic-resource folder to get the latest code.
+
+In repo oic-core, root folder ccf-opensource consists of 'OIC' folder.  Inside OIC folder there is a Makefile.
+
+Before building, make sure to have contents from oic-utilities repo at the folder level where oic-resource is.
+
+Inside oic-resource directory, use 'make'to build the entire OIC code. This would build the C++ SDK, core(i.e base) and samples.
+
+Use 'make BUILD=debug' to build the entire OIC code in debug mode. This would build the C++ SDK, core(i.e base) and samples. All the executables for debug build
+are in 'oic-resource/debug'.
+
+--------
+Samples:
+--------
+
+Garage samples provide usage of OCRepresentation, get/set attribute values
+
+oic-resource/examples/fridgeclient.cpp
+oic-resource/examples/fridgeserver.cpp
+
+Fridge samples provide usage of constructResourceObject API, std bind (for mapping request and responses), default
+device entity handler, header options support and Delete operation.
+
+Simpleserver and simpleclient samples provide examples for doing POST operation.
+
+After building the code in oic-resource, executables for samples are in directory named 'oic-resource/samples/release'.
+After building the code in oic-resource, executables are in directory named 'oic-resource/release'.
+A sample for hosting a resource on a server and a sample for client for discovering resources are provided in the following paths:
+
+Server sample location: oic-resource/examples/simpleserver.cpp
+Client sample location: oic-resource/examples/simpleclient.cpp
+Server and client mode (mode type both) location: oic-resource/examples/simpleclientserver.cpp
+
+Sample with basic presence feature for server side: oic-resource/examples/presenceserver.cpp
+Sample with basic presence feature for client side: oic-resource/examples/presenceclient.cpp

@@ -1,0 +1,119 @@
+Release notes
+****************************************************************************
+Release date: Nov 15th, 2014.
+OS: Ubuntu 12.0.4 and above
+Requires boost version 1.55 to build.
+Code buildable in gcc 4.6.3 and above.
+NOTE: Boost is not distributed but should be installed in the Ubuntu machine.
+*****************************************************************************
+
+Release commit number: acf4c1
+
+What is new?
+
+--------------------------------------------
+Class OCPlatform (Header file: OCPlatform.h)
+--------------------------------------------
+
+***************
+subscribePresence API
+***************
+Existing subscribePresence API has been overloaded with a resource type parameter.
+Client can now subscribe presence with interested resource type.
+This release also supports multicast presence subscription.
+
+Available subscription options are:
+
+Unicast presence subscription without resource type.
+Multicast presence subscription without resource type.
+Unicast presence subscription with resource type.
+Multicast presence subscription with resource type.
+
+------------
+Other Notes:
+------------
+
+Maximum length of URI supported is 64 bytes (sent from the client)
+Maximum length of query supported is 64 bytes (sent from the client)
+Maximum length of request and response from server for Ardunio is is 256 bytes
+Maximum length of request and response from server for non-Ardunio is is 1024 bytes
+
+OIC base supports Arduino WiFi shield.
+This support has been tested with Arduino Mega 2560 and with Arduino 1.0.5 WiFi library.
+Please refer to oic-resource/csdk/README file for building OIC base with WiFi support.
+
+Security:
+1. OCStack is compiled with security only if a valid libtinydtls.a is available
+under oic-resource/resource/csdk/tinydtls directory.
+2. Currently, security credentials for resource and client are hard-coded in the stack source files.
+3. Currently, tinyDTLS does not support establishing new associations with existing parameters.
+Due to this limitation, if the client application is re-started and attempts to create a new DTLS
+session with an existing server, tinyDTLS server rejects the request.
+4. Security is NOT supported for Arduino platform.
+
+Known issues:
+
+1. When observation is used, server shutdown causes an error.
+
+Active discovery-
+1. In case of unicast presence with rt, only one rt is permitted per IP address for
+subscribePresence. If multiple subscriptions are done, only first subscribePresence’s rt is used.
+2. For multicast presence, server shutdown (ungraceful) scenario is not notified to the client,
+but graceful shutdowns are notified.
+3. IOT 65
+4. IOT 79
+5. IOT 85
+
+-------------
+How to build:
+-------------
+
+REFER https://oic-review.01.org/gerrit for more details on getting oic-resource repo.
+If the code is not cloned:
+Clone the oic-resource repo using this command: git clone oic:oic-resource
+
+NOTE: If the repo is already cloned, use 'git pull' inside oic-resource folder to get the
+latest code.
+
+In repo oic-resource, root folder consists of 'resource' folder.  Inside OIC folder there
+is a Makefile.
+
+Inside oic-resource directory, use 'make'to build the entire OIC code. This would build the C++ SDK,
+core(i.e base) and samples.
+
+Use 'make BUILD=debug' to build the entire OIC code in debug mode. This would build the C++ SDK,
+core(i.e base) and samples.
+
+--------
+Samples:
+--------
+
+A basic sample for hosting a resource on a server and a sample for client for discovering resources
+are provided here:
+Simple server sample location: oic-resource/examples/simpleserver.cpp
+Simple client sample location: oic-resource/examples/simpleclient.cpp
+Server and client mode (mode type both) location: oic-resource/examples/simpleclientserver.cpp
+Simpleserver and simpleclient samples also provide examples for doing POST operation.
+
+Garage samples provide usage of OCRepresentation, get/set attribute values
+oic-resource/examples/garageclient.cpp
+oic-resource/examples/garageserver.cpp
+
+Fridge samples provide usage of constructResourceObject API, std bind
+(for mapping request and responses), default
+device entity handler, header options support and Delete operation.
+oic-resource/examples/fridgeclient.cpp
+oic-resource/examples/fridgeserver.cpp
+
+Presence samples provides examples to use presence APIs
+Sample with basic presence feature for server side: oic-resource/examples/presenceserver.cpp
+Sample with basic presence feature for client side: oic-resource/examples/presenceclient.cpp
+
+Room samples provides examples to use resource collection.
+oic-resource/examples/roomclient.cpp
+oic-resource/examples/roomserver.cpp
+
+After building the code in oic-resource, executables for samples are in directory named
+'oic-resource/samples/release'.
+After building the code in oic-resource, executables are in directory named 'oic-resource/release'.
+

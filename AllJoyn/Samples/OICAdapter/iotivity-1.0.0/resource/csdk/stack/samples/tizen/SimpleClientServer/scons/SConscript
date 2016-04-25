@@ -1,0 +1,79 @@
+#******************************************************************
+#
+# Copyright 2014 Intel Mobile Communications GmbH All Rights Reserved.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+Import('env')
+
+target_os = env.get('TARGET_OS')
+transport = env.get('TARGET_TRANSPORT')
+secured = env.get('SECURED')
+routing = env.get('ROUTING')
+OIC_LIB = 'oic'
+root_dir = env.get('ROOT_DIR')
+build_dir = env.get('BUILD_DIR')
+sample_dir = build_dir
+
+env.AppendUnique(CPPFLAGS = ['-std=c++0x', '-fPIC', '-D__TIZEN__','-DWITH_POSIX', '-Wall', '-DSLP_SDK_LOG', '-g','-D_GNU_SOURCE','-DTIZEN_DEBUG_ENABLE', '-DTB_LOG','`pkg-config', '--cflags', '--libs','dlog', 'com.oic.ri', 'capi-network-wifi',
+				'gobject-2.0','glib-2.0`'])
+
+if routing == 'GW':
+	env.AppendUnique(CPPDEFINES = ['ROUTING_GATEWAY'])
+elif routing == 'EP':
+	env.AppendUnique(CPPDEFINES = ['ROUTING_EP'])
+
+env.Append(LIBS=[
+  '-lm', '-lpthread', '-lrt', '-ldl', '-lstdc++', '-lgobject-2.0', '-lgio-2.0', '-lglib-2.0', '-lcapi-network-wifi', '-ldlog', '-lcapi-network-bluetooth', '-lconnectivity_abstraction', 'coap', '-loctbstack', 'ocsrm', 'c_common'
+])
+
+if secured == '1':
+	env.PrependUnique(CPPPATH = [root_dir + '/external/inc/'])
+	env.AppendUnique(CPPDEFINES = ['__WITH_DTLS__'])
+	env.Append(LIBS=['-ltinydtls'])
+
+if 'ALL' in transport:
+		env.AppendUnique(CPPDEFINES = ['IP_ADAPTER','EDR_ADAPTER','LE_ADAPTER','BT_ADAPTER_TEST','BLE_ADAPTER_TEST'])
+		print "CA Transport is ALL"
+else:
+	if 'BT' in transport:
+		env.AppendUnique(CPPDEFINES = ['EDR_ADAPTER','BT_ADAPTER_TEST'])
+		print "CA Transport is BT"
+	else:
+		env.AppendUnique(CPPDEFINES = ['NO_EDR_ADAPTER'])
+
+	if 'BLE' in transport:
+		env.AppendUnique(CPPDEFINES = ['LE_ADAPTER','BLE_ADAPTER_TEST'])
+		print "CA Transport is BLE"
+	else:
+		env.AppendUnique(CPPDEFINES = ['NO_LE_ADAPTER'])
+
+	if 'IP' in transport:
+		env.AppendUnique(CPPDEFINES = ['IP_ADAPTER'])
+		print "CA Transport is IP"
+	else:
+		env.AppendUnique(CPPDEFINES = ['NO_IP_ADAPTER'])
+
+#ri_sample_src = [sample_dir + '/occlient.cpp']
+
+#print " ri sample src %s" % ri_sample_src
+
+#env.Program('ri_sample', [ri_sample_src,])
+
+env.Program('occlient', [sample_dir + 'occlient.cpp', sample_dir + 'common.cpp'])
+env.Program('ocserver', [sample_dir + 'ocserver.cpp', sample_dir + 'common.cpp'])
+env.Program('ocrouting', [sample_dir + 'ocrouting.cpp', sample_dir + 'common.cpp'])

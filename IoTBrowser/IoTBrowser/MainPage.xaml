@@ -51,6 +51,11 @@
         <!--Web view control-->
         <WebView x:Name="webView" Grid.Row="1"/>
 
+        <StackPanel x:Name="MessageStackPanel" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed" >
+            <TextBlock x:Name="Message" FontSize="30" Text="Display message here"/>
+            <Button x:Name="MessageDismiss" Content="Ok" HorizontalAlignment="Center" Click="OnMessageDismiss_Click"/>
+        </StackPanel>
+
         <!--Favorites buttons-->
         <ScrollViewer Grid.Row="2" HorizontalAlignment="Center" HorizontalScrollBarVisibility ="Auto" VerticalScrollBarVisibility="Auto">
             <Grid >

@@ -1,0 +1,58 @@
+#******************************************************************
+#
+# Copyright 2014 Intel Mobile Communications GmbH All Rights Reserved.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+##
+# 'hippomocks' script to check if Hippo Mocks Unit Test library is installed.
+# If not, get it and install it
+#
+##
+
+import os, sys
+
+Import('env')
+
+target_os = env.get('TARGET_OS')
+src_dir = env.get('SRC_DIR')
+
+# Only verify/install on linux
+if target_os == 'linux':
+	print '*** Checking for installation of hippomocks ***'
+
+	hippomocks_sha      = '2f40aa11e31499432283b67f9d3449a3cd7b9c4d'
+	hippomocks_dir_src  = src_dir + '/extlibs/hippomocks-' + hippomocks_sha
+	hippomocks_dir_dest = src_dir + '/extlibs/hippomocks-master'
+	hippomocks_zip_file = src_dir + '/extlibs/hippomocks-' + hippomocks_sha + '.zip'
+	hippomocks_url      = 'https://github.com/dascandy/hippomocks/archive/' + hippomocks_sha + '.zip'
+
+	if not os.path.exists(hippomocks_dir_dest):
+		# If the hippomocks zip file is not already present, download it
+		if not os.path.exists(hippomocks_zip_file):
+			hippomocks_zip = env.Download(hippomocks_zip_file, hippomocks_url)
+		else:
+			hippomocks_zip = hippomocks_zip_file
+
+		# Unzip hippomocks
+		print 'Unzipping hippomocks'
+		env.UnpackAll(hippomocks_dir_src, hippomocks_zip)
+		print 'Renaming hippomocks directory'
+		os.rename(hippomocks_dir_src, hippomocks_dir_dest)
+
+
+

@@ -20,8 +20,6 @@
 #include <alljoyn_c/AboutData.h>
 #include <alljoyn_c/AboutObj.h>
 
-#include "Misc.h"
-
 namespace BridgeRT
 {
     class BridgeAuthHandler

@@ -1,0 +1,45 @@
+<node name="/ControlPanel/AirConditioner/rootContainer">
+  <node name="en">
+    <node name="airconSet"/>
+    <node name="set_CurrentTemperature"/>
+    <node name="set_temperature"/>
+    <node name="airconSet2"/>
+    <node name="airconSet3"/>
+    <node name="airconSet4"/>
+    <node name="airconSet5"/>
+    <node name="OffReservation"/>
+    <node name="airconSet6"/>
+    <node name="OnReservation"/>
+    <node name="SleepReservation"/>
+  </node>
+  <interface name="org.alljoyn.ControlPanel.ControlPanel">
+      <property name="Version" type="q" access="read"/>
+  </interface>
+  <interface name="org.alljoyn.ControlPanel.Container">
+    <property name="Version" type="q" access="read"/>
+    <property name="States" type="u" access="read"/>
+    <property name="OptParams" type="a{qv}" access="read"/>
+    <signal name="MetadataChanged">
+    </signal>
+  </interface>
+  <interface name="org.alljoyn.ControlPanel.Property">
+    <property name="Version" type="q" access="read"/>
+    <property name="States" type="u" access="read"/>
+    <property name="OptParams" type="a{qv}" access="read"/>
+    <property name="Value" type="v" access="readwrite"/>
+    <signal name="MetadataChanged" />
+    <signal name="ValueChanged" type="v"/>
+  </interface>
+  <!--
+  <interface name="org.allseen.Introspectable">
+    <method name="GetDescriptionLanguages">
+      <arg name="languageTags" type="as" direction="out"/>
+    </method>
+    <method name="IntrospectWithDescription">
+      <arg name="languageTag" type="s" direction="in"/>
+      <arg name="data" type="s" direction="out"/>
+    </method>
+    <annotation name="org.alljoyn.Bus.Secure" value="off"/>
+  </interface>
+  -->
+</node>

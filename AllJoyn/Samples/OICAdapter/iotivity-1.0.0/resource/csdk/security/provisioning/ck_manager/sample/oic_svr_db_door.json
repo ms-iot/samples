@@ -1,0 +1,47 @@
+{
+    "acl": [
+        {
+            "sub": "Kg==",
+            "rsrc": [
+                "/oic/res",
+                "/oic/res/d",
+                "/oic/res/types/d",
+                "/oic/presence"
+			],
+			"perms": 2,
+			"ownrs" : [
+				"ZG9vckRldmljZVVVSUQwMA=="
+			]
+		},
+        {
+            "sub": "Kg==",
+            "rsrc": [
+                "/oic/sec/doxm",
+                "/oic/sec/pstat",
+                "/oic/sec/acl",
+                "/oic/sec/crl",
+                "/oic/sec/cred"
+             ],
+             "perms": 6,
+             "ownrs" : [
+                 "ZG9vckRldmljZVVVSUQwMA=="
+             ]
+        }
+	],
+	"pstat":	{
+		"isop":	false,
+		"deviceid":	"ZG9vckRldmljZVVVSUQwMA==",
+		"commithash": 0,
+		"cm":	0,
+		"tm":	0,
+		"om":	3,
+		"sm":	[3]
+	},
+	"doxm":	{
+		"oxm":	[0],
+		"oxmsel": 0,
+		"sct": 1,
+		"owned": false,
+		"deviceid":	"ZG9vckRldmljZVVVSUQwMA=="
+	}
+}

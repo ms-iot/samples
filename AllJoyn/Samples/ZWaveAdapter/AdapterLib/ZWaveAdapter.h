@@ -17,7 +17,6 @@
 
 #include "AdapterDefinitions.h"
 #include "AdapterConfig.h"
-#include "Misc.h"
 
 #include "Manager.h"
 #include "Notification.h"
@@ -31,7 +30,6 @@ namespace AdapterLib
     static const std::wstring cVendor = L"Microsoft";
     static const std::wstring cAdapterName = L"ZWave Bridge";
     static const std::wstring cDomainPrefix = L"com";
-    static const std::wstring cAdapterPrefix = cDomainPrefix + L"." + DsbCommon::ToLower(cVendor.c_str())->Data();
 
     //
     // ZWaveAdapter class.
@@ -192,9 +190,9 @@ namespace AdapterLib
         std::vector<BridgeRT::IAdapterSignal^> m_signals;
 
         // Sync object
-        DsbCommon::CSLock m_configLock;
-        DsbCommon::CSLock m_deviceListLock;
-        DsbCommon::CSLock m_signalLock;
+        std::recursive_mutex m_configLock;
+        std::recursive_mutex m_deviceListLock;
+        std::recursive_mutex m_signalLock;
 
         //Adapter Config
         AdapterConfig m_adapterConfig;

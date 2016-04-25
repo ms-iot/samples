@@ -17,6 +17,7 @@
 #include "pch.h"
 #include "AllJoynHelper.h"
 #include "DeviceMain.h"
+#include "BridgeUtils.h"
 
 using namespace Platform;
 using namespace Platform::Collections;
@@ -25,7 +26,7 @@ using namespace Windows::Foundation;
 
 using namespace BridgeRT;
 using namespace std;
-using namespace DsbCommon;
+
 
 AllJoynHelper::AllJoynHelper()
 {
@@ -697,8 +698,8 @@ template<typename T>
 QStatus AllJoynHelper::GetArrayFromMsgArg(_In_ alljoyn_msgarg msgArg, _In_ const std::string& ajSignature, _Out_ Platform::Array<T>^* arrayArg)
 {
     QStatus status = ER_OK;
-    alljoyn_msgarg entries;
     size_t numVals = 0;
+    T* temp = nullptr;
 
     if (ajSignature.length() != 2 && ajSignature[0] != 'a')
     {
@@ -706,20 +707,14 @@ QStatus AllJoynHelper::GetArrayFromMsgArg(_In_ alljoyn_msgarg msgArg, _In_ const
         goto leave;
     }
 
-    status = alljoyn_msgarg_get(msgArg, ajSignature.c_str(), &numVals, &entries);
+    status = alljoyn_msgarg_get(msgArg, ajSignature.c_str(), &numVals, &temp);
     if (ER_OK == status)
     {
         *arrayArg = ref new Platform::Array<T>(numVals);
 
-        T temp;
         for (size_t i = 0; i < numVals; i++)
         {
-            status = alljoyn_msgarg_get(alljoyn_msgarg_array_element(entries, i), &ajSignature[1], &temp);
-            if (ER_OK != status)
-            {
-                goto leave;
-            }
-            (*arrayArg)[i] = temp;
+            (*arrayArg)[i] = temp[i];
         }
     }
 
