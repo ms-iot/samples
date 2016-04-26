@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "PushButton", "PushButton\PushButton.njsproj", "{F6607C56-FB68-4BDA-8304-EF4A1F7CBC3C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM = Debug|ARM
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|ARM = Release|ARM
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F6607C56-FB68-4BDA-8304-EF4A1F7CBC3C}.Debug|ARM.ActiveCfg = Debug|ARM
+		{F6607C56-FB68-4BDA-8304-EF4A1F7CBC3C}.Debug|ARM.Build.0 = Debug|ARM
+		{F6607C56-FB68-4BDA-8304-EF4A1F7CBC3C}.Debug|ARM.Deploy.0 = Debug|ARM
+		{F6607C56-FB68-4BDA-8304-EF4A1F7CBC3C}.Debug|x64.ActiveCfg = Debug|x64
+		{F6607C56-FB68-4BDA-8304-EF4A1F7CBC3C}.Debug|x64.Build.0 = Debug|x64
+		{F6607C56-FB68-4BDA-8304-EF4A1F7CBC3C}.Debug|x64.Deploy.0 = Debug|x64
+		{F6607C56-FB68-4BDA-8304-EF4A1F7CBC3C}.Debug|x86.ActiveCfg = Debug|x86
+		{F6607C56-FB68-4BDA-8304-EF4A1F7CBC3C}.Debug|x86.Build.0 = Debug|x86
+		{F6607C56-FB68-4BDA-8304-EF4A1F7CBC3C}.Debug|x86.Deploy.0 = Debug|x86
+		{F6607C56-FB68-4BDA-8304-EF4A1F7CBC3C}.Release|ARM.ActiveCfg = Release|ARM
+		{F6607C56-FB68-4BDA-8304-EF4A1F7CBC3C}.Release|ARM.Build.0 = Release|ARM
+		{F6607C56-FB68-4BDA-8304-EF4A1F7CBC3C}.Release|ARM.Deploy.0 = Release|ARM
+		{F6607C56-FB68-4BDA-8304-EF4A1F7CBC3C}.Release|x64.ActiveCfg = Release|x64
+		{F6607C56-FB68-4BDA-8304-EF4A1F7CBC3C}.Release|x64.Build.0 = Release|x64
+		{F6607C56-FB68-4BDA-8304-EF4A1F7CBC3C}.Release|x64.Deploy.0 = Release|x64
+		{F6607C56-FB68-4BDA-8304-EF4A1F7CBC3C}.Release|x86.ActiveCfg = Release|x86
+		{F6607C56-FB68-4BDA-8304-EF4A1F7CBC3C}.Release|x86.Build.0 = Release|x86
+		{F6607C56-FB68-4BDA-8304-EF4A1F7CBC3C}.Release|x86.Deploy.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

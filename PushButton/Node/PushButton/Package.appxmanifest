@@ -1,0 +1,69 @@
+﻿<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:iot="http://schemas.microsoft.com/appx/manifest/iot/windows10"
+  IgnorableNamespaces="uap mp iot">
+
+  <Identity Name="PushButton" Publisher="CN=MSFT" Version="1.0.0.0" />
+
+  <mp:PhoneIdentity PhoneProductId="57da8d7e-3ba6-4568-a0c2-03a1c19fc6e9" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+
+  <Properties>
+    <DisplayName>PushButton</DisplayName>
+    <PublisherDisplayName>MSFT</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+
+  <Resources>
+    <Resource Language="x-generate"/>
+  </Resources>
+  
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
+  </Dependencies>
+
+  <Applications>
+    <Application Id="App">
+      <uap:VisualElements
+        DisplayName="nodeuwp"
+        Description="nodeuwp"
+        BackgroundColor="transparent"
+        Square150x150Logo="Assets\Square150x150Logo.png"
+        Square44x44Logo="Assets\Square44x44Logo.png"
+        AppListEntry="none">
+
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
+        <uap:SplashScreen Image="Assets\splashscreen.png" />
+
+      </uap:VisualElements>
+      <Extensions>
+        <Extension Category="windows.backgroundTasks" EntryPoint="nodeuwp.StartupTask">
+          <BackgroundTasks>
+            <iot:Task Type="startup" />
+          </BackgroundTasks>
+        </Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+  
+  <Capabilities>
+    <iot:Capability Name="systemManagement" />
+    <!-- Uncomment the capability below to enable GPIO -->
+    <DeviceCapability Name="916EF1CB-8426-468D-A6F7-9AE8076881B3"/>
+    <DeviceCapability Name="serialcommunication">
+      <Device Id="any">
+        <Function Type="name:serialPort" />
+      </Device>
+    </DeviceCapability>
+  </Capabilities>
+
+  <Extensions>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>nodeuwp.dll</Path>
+        <ActivatableClass ActivatableClassId="nodeuwp.StartupTask" ThreadingModel="MTA" />
+      </InProcessServer>
+    </Extension>
+  </Extensions>
+</Package>

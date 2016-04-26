@@ -1,0 +1,10 @@
+{
+  "name": "PushButton",
+  "version": "0.0.0",
+  "description": "PushButton",
+  "main": "server.js",
+  "author": {
+    "name": "trmck",
+    "email": ""
+  }
+}
