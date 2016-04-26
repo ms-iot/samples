@@ -14,6 +14,13 @@ namespace CustomWizard
     {
         private static readonly int NUMBER_OF_PROJECTS = 5;
 
+        // this value come from VSLangProj.PrjKind.prjKindCSharpProject
+        private const string prjKindCSharpProject = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}";
+
+        private const string _rspFileName = "\\CscOptions.rsp";
+        private string[] _cscOptions = { "/checksumalgorithm:SHA256" };
+        private static string _destinationDir;
+
         // Indices are found by iterating through the EnvDTE.DTE.Solution.Projects
         private static readonly int ADAPTERLIB_PROJECT_INDEX = 2;
         private static readonly int BRIDGERT_PROJECT_INDEX = 4;
@@ -29,6 +36,16 @@ namespace CustomWizard
 
         public void ProjectFinishedGenerating(Project project)
         {
+            // if necessary C# compiler options that will be used by all CS projects 
+            if (null != project &&
+                project.Kind == prjKindCSharpProject)
+            {
+                string fileName = _destinationDir + _rspFileName;
+                if (!File.Exists(fileName))
+                {
+                    File.WriteAllLines(fileName, _cscOptions);
+                }
+            }
         }
 
         // This method is only called for item templates,
@@ -68,6 +85,9 @@ namespace CustomWizard
 
             // Place $username$ to Global Dictionary
             GlobalDictionary["$safeusername$"] = replacementsDictionary["$username$"];
+
+            // save away destination directory
+            _destinationDir = replacementsDictionary["$destinationdirectory$"];
         }
 
         // This method is only called for item templates,
