@@ -1,0 +1,10 @@
+{
+  "name": "WebCamSample",
+  "version": "0.0.0",
+  "description": "WebCamSample",
+  "main": "server.js",
+  "author": {
+    "name": "trmck",
+    "email": ""
+  }
+}

@@ -1,0 +1,223 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Web Camera Sample</title>
+    <link href="/Stylesheets/fabric.min.css" type="text/css" rel="stylesheet" />
+    <link href="/Stylesheets/fabric.components.min.css" type="text/css" rel="stylesheet" />
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.0.min.js"></script>
+    <script type="text/javascript">
+        function enableButton(name, enabled) {
+            if(enabled){
+                $('#'+name).removeAttr('disabled');
+            }
+            else{
+                $('#' + name).attr('disabled', 'disabled');
+            }
+        }
+
+        function longPoll_Status() {
+            $.ajax({
+                cache: false,
+                dataType: 'json',
+                type: 'GET',
+                url: '/listener/status',
+                error: function (err) {
+                    console.log('Could not query audio/video recorder status');
+                    setTimeout(longPoll_Status, 5 * 1000);
+                },
+                success: function (status) {
+                    if (status.status != $('#status').text()) {
+                        $('#status').text(status.status);
+                    }
+                    setTimeout(longPoll_Status, 1 * 1000);
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            $('#btnInitVideo').click(function () {
+                $.ajax({
+                    cache: false,
+                    dataType: 'json',
+                    type: 'GET',
+                    url: '/listener/initvideo',
+                    error: function () {
+                        console.log('error!');
+                        alert('Could not initialize video recorder.');
+                    },
+                    success: function (status) {
+                        console.log('success!');
+                        enableButton('btnTakePhoto', true);
+                        $('#btnInitVideo').attr('disabled', 'disabled');
+                        $('#btnStartVideo').removeAttr('disabled');
+                    }
+                })
+            })
+
+            $('#btnStartVideo').click(function () {
+                $.ajax({
+                    cache: false,
+                    dataType: 'json',
+                    type: 'GET',
+                    url: '/listener/startvideo',
+                    error: function () {
+                        console.log('error!');
+                        alert('Could not start video recorder.');
+                    },
+                    success: function (status) {
+                        console.log('success!');
+                        $('#btnStartVideo').attr('disabled', 'disabled');
+                        $('#btnStopVideo').removeAttr('disabled');
+                    }
+                })
+            })
+
+            $('#btnStopVideo').click(function () {
+                $.ajax({
+                    cache: false,
+                    dataType: 'json',
+                    type: 'GET',
+                    url: '/listener/stopvideo',
+                    error: function () {
+                        console.log('error!');
+                        alert('Could not stop video recorder.');
+                    },
+                    success: function (status) {
+                        console.log('success!');
+                        $('#btnStopVideo').attr('disabled', 'disabled');
+                        $('#btnStartVideo').removeAttr('disabled');
+                    }
+                })
+            })
+
+            $('#btnInitAudio').click(function () {
+                $.ajax({
+                    cache: false,
+                    dataType: 'json',
+                    type: 'GET',
+                    url: '/listener/initaudio',
+                    error: function () {
+                        console.log('error!');
+                        alert('Could not initialize audio recorder.');
+                    },
+                    success: function (status) {
+                        console.log('success!');
+                        $('#btnInitAudio').attr('disabled', 'disabled');
+                        $('#btnStartAudio').removeAttr('disabled');
+                    }
+                })
+            })
+
+            $('#btnStartAudio').click(function () {
+                $.ajax({
+                    cache: false,
+                    dataType: 'json',
+                    type: 'GET',
+                    url: '/listener/startaudio',
+                    error: function () {
+                        console.log('error!');
+                        alert('Could not start audio recorder.');
+                    },
+                    success: function (status) {
+                        console.log('success!');
+                        $('#btnStartAudio').attr('disabled', 'disabled');
+                        $('#btnStopAudio').removeAttr('disabled');
+                    }
+                })
+            })
+
+            $('#btnStopAudio').click(function () {
+                $.ajax({
+                    cache: false,
+                    dataType: 'json',
+                    type: 'GET',
+                    url: '/listener/stopaudio',
+                    error: function () {
+                        console.log('error!');
+                        alert('Could not stop audio recorder.');
+                    },
+                    success: function (status) {
+                        console.log('success!');
+                        $('#btnStopAudio').attr('disabled', 'disabled');
+                        $('#btnStartAudio').removeAttr('disabled');
+                    }
+                })
+            })
+
+            $('#btnTakePhoto').click(function () {
+                $.ajax({
+                    cache: false,
+                    dataType: 'json',
+                    type: 'GET',
+                    url: '/listener/takephoto',
+                    error: function () {
+                        console.log('error!');
+                        alert('Could not init camera.');
+                    },
+                    success: function (status) {
+                        console.log('success!');
+                    }
+                })
+            })
+
+            longPoll_Status();
+        });
+    </script>
+</head>
+<body>
+    <h2>Web Camera Sample</h2>
+    <div class="ms-Grid">
+        <div class="ms-Grid-row">
+            <div class="ms-Grid-col ms-u-sm4 ms-u-md4 ms-u-lg4">
+
+            </div>
+            <div class="ms-Grid-col ms-u-sm4 ms-u-md4 ms-u-lg4">
+
+            </div>
+            <div class="ms-Grid-col ms-u-sm4 ms-u-md4 ms-u-lg4">
+
+            </div>
+        </div>
+        <div class="ms-Grid-row">
+            <div class="ms-Grid-col ms-u-sm2 ms-u-md2 ms-u-lg2">
+                &nbsp;
+            </div>
+            <div class="ms-Grid-col ms-u-sm6 ms-u-md6 ms-u-lg6">
+                <button id="btnInitVideo">Initialize Audio and Video</button>
+            </div>
+            <div class="ms-Grid-col ms-u-sm4 ms-u-md4 ms-u-lg4">
+                <button id="btnInitAudio">Initialize Audio Only</button>
+            </div>
+        </div>
+        <div class="ms-Grid-row">
+            <div class="ms-Grid-col ms-u-sm4 ms-u-md4 ms-u-lg4">
+                <button id="btnStartVideo" disabled="disabled">Start Video</button> 
+            </div>
+            <div class="ms-Grid-col ms-u-sm4 ms-u-md4 ms-u-lg4">
+                <button id="btnTakePhoto" disabled="disabled">Take Photo</button>
+            </div>
+            <div class="ms-Grid-col ms-u-sm4 ms-u-md4 ms-u-lg4">
+                <button id="btnStartAudio" disabled="disabled">Start Audio</button>
+            </div>
+        </div>
+        <div class="ms-Grid-row">
+            <div class="ms-Grid-col ms-u-sm4 ms-u-md4 ms-u-lg4">
+                <button id="btnStopVideo" disabled="disabled">Stop Video</button> 
+            </div>
+            <div class="ms-Grid-col ms-u-sm4 ms-u-md4 ms-u-lg4">
+                &nbsp;
+            </div>
+            <div class="ms-Grid-col ms-u-sm4 ms-u-md4 ms-u-lg4">
+                <button id="btnStopAudio" disabled="disabled">Stop Audio</button>
+            </div>
+        </div>
+        <div class="ms-Grid-row">
+            <div class="ms-Grid-col ms-u-sm12 ms-u-md12 ms-u-lg12">
+                <span id="status"></span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
