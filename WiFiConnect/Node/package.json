@@ -1,0 +1,10 @@
+{
+  "name": "WiFiConnect",
+  "version": "0.0.0",
+  "description": "WiFiConnect",
+  "main": "server.js",
+  "author": {
+    "name": "trmck",
+    "email": ""
+  }
+}
