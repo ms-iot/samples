@@ -46,6 +46,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="server.js" />
+    <Content Include="default.html" />
     <Content Include="package.json" />
   </ItemGroup>
   <ItemGroup>

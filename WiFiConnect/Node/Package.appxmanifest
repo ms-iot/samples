@@ -48,7 +48,8 @@
   </Applications>
   
   <Capabilities>
-    <Capability Name="internetClient" />
+    <Capability Name="internetClientServer" />
+    <Capability Name="privateNetworkClientServer" />
     <iot:Capability Name="systemManagement" />
     <DeviceCapability Name="wifiControl" />
     <DeviceCapability Name="serialcommunication">

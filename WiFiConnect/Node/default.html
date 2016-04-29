@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>WiFi Connect Sample</title>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.0.min.js"></script>
+    <script type="text/javascript">
+        var _networkList = [];
+
+        function setStatus(status) {
+            var old = $('#status').text();
+            if (old != status) {
+                $('#status').text(status);
+            }
+        }
+
+        function populateNetworks(networks) {
+            $('#networksList li').remove();
+            $.each(networks, function (i) {
+                var network = networks[i];
+                var action = (network.connectivityLevel == 'Not Connected') ? ' - <a href="/listener/connect?id=' + i + '" data-security="' + network.authenticationType + '" class="btnAction">Connect</a>' : '';
+                var item = $('<li/>')
+                    .html(network.ssid + ' (' + network.connectivityLevel + ')' + action)
+                    .appendTo($('#networksList'));
+            });
+        }
+
+        function displayErrors(errors) {
+            $.each(errors, function (i) {
+                var error = errors[i];
+                alert(error);
+            })
+        }
+
+        function longPoll_State() {
+            $.ajax({
+                cache: false,
+                dataType: 'json',
+                type: 'GET',
+                url: '/listener/state',
+                error: function (err) {
+                    console.log('An error occurred querying the lastest state. Error: ' + err);
+                    setTimeout(longPoll_State, 10 * 1000);
+                },
+                success: function (res) {
+                    console.log(res);
+                    if (res.status != null) {
+                        setStatus(res.status);
+                    }
+                    else {
+                        setStatus('Ready to scan');
+                    }
+                    populateNetworks(res.results);
+                    displayErrors(res.errors);
+                    setTimeout(longPoll_State, 5 * 1000);
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            longPoll_State();
+
+            $('#btnScan').click(function () {
+                setStatus('Scanning...');
+                $.ajax({
+                    cache: false,
+                    dataType: 'json',
+                    type: 'GET',
+                    url: '/listener/scan',
+                    error: function (err) {
+                        setStatus('Scan failed!');
+                        alert('Scan failed!');
+                        console.log(err);
+                    }
+                });
+            });
+
+            $(document).on('click', '.btnAction', function (e) {
+                e.preventDefault();
+                var url = $(this).attr('href');
+                var authenticationType = $(this).attr('data-security');
+
+                if(authenticationType != 0 && authenticationType != 2){
+                    var networkKey = prompt('Please enter the network key');
+                    url += '&key=' + networkKey;
+                }
+
+                $.ajax({
+                    cache: false,
+                    dataType: 'json',
+                    type: 'GET',
+                    url: url,
+                    error: function (err) {
+                        alert('Connection failed!');
+                        console.log(err);
+                    },
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h2>Windows 10 IoT Core WiFi Connect Sample - Node.js</h2><hr />
+    <div id="status_container">
+        <span id="status">Ready</span>
+    </div>
+    <div id="networks_container">
+        <ul id="networksList" style="list-style-type:none;"></ul>
+    </div>
+    <div>
+        <button id="btnScan">Scan Available WiFi Networks</button>
+    </div>
+</body>
+</html>
