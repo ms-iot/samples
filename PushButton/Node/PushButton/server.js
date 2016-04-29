@@ -1,8 +1,8 @@
 var uwp = require('uwp');
 uwp.projectNamespace('Windows');
 
-var LED_PIN = 6;
 var BUTTON_PIN = 5;
+var LED_PIN = 6;
 
 var ledPin;
 var buttonPin;
