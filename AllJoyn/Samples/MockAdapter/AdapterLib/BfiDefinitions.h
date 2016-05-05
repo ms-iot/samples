@@ -33,5 +33,6 @@ namespace AdapterLib
     // Mock adapter signals and parameters names
     //
 
-    //...
+    // Heartbeat signal
+    static Platform::String^ HEARTBEAT_SIGNAL = ref new Platform::String(L"HeartbeatSignal");
 }

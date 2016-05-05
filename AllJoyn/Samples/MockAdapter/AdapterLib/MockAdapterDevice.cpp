@@ -27,6 +27,7 @@ using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 using namespace Windows::Storage::Streams;
 using namespace Windows::Storage::FileProperties;
+using namespace Windows::System::Threading;
 
 using namespace BridgeRT;
 
@@ -454,6 +455,12 @@ namespace AdapterLib
     }
 
 
+    MockAdapterDevice::~MockAdapterDevice()
+    {
+        this->heartbeatTimer->Cancel();
+    }
+
+
     IAdapterMethodVector^
     MockAdapterDevice::Methods::get()
     {
@@ -611,6 +618,23 @@ namespace AdapterLib
 
             this->signals.push_back(std::move(signal));
         }
+
+        // Heartbeat signal
+        {
+            MockAdapterSignal^ signal = ref new MockAdapterSignal(HEARTBEAT_SIGNAL, this);
+            this->signals.push_back(std::move(signal));
+
+            // Fire the timer every 5s
+            this->heartbeatTimer = ThreadPoolTimer::CreatePeriodicTimer(
+                ref new TimerElapsedHandler(this, &MockAdapterDevice::heartbeatTimerElapsed), TimeSpan{ 50000000L });
+        }
+    }
+    
+
+    void
+    MockAdapterDevice::heartbeatTimerElapsed(ThreadPoolTimer^ timer)
+    {
+        this->SendSignal(HEARTBEAT_SIGNAL, nullptr, nullptr);
     }
 
 
