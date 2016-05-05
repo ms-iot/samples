@@ -83,6 +83,7 @@ namespace BackgroundHost { namespace Headed { namespace Tasks
         void Shutdown(IBackgroundTaskInstance^ taskInstance)
         {
             _serviceImplementation->Stop();
+            _heartbeatTimer->Cancel();
             _taskInstance = nullptr;
             _onShutdown.notify_all();
             _deferral->Complete();
@@ -95,7 +96,12 @@ namespace BackgroundHost { namespace Headed { namespace Tasks
 
         void TimerElapsed(ThreadPoolTimer^ timer)
         {
-            _taskInstance->Progress = TaskProgress::Heartbeat;
+            IBackgroundTaskInstance^ taskInstance = _taskInstance;
+
+            if (taskInstance)
+            {
+                taskInstance->Progress = TaskProgress::Heartbeat;
+            }
         }
 
     private:

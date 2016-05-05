@@ -380,5 +380,5 @@ void DeviceMain::HandleSignal(_In_ IAdapterSignal ^adapterSignal)
     }
 
     // send signal to alljoyn
-    signal->second->SendSignal(adapterSignal);
+    signal->second->SendSignal();
 }

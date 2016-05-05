@@ -89,19 +89,13 @@ leave:
     return status;
 }
 
-void DeviceSignal::SendSignal(_In_ IAdapterSignal ^adapterSignal)
+void DeviceSignal::SendSignal()
 {
     QStatus status = ER_OK;
     size_t nbOfArgs = 0;
     alljoyn_msgarg args = NULL;
     alljoyn_interfacedescription_member signalDescription;
     QCC_BOOL signalFound = QCC_FALSE;
-
-    if (nullptr != adapterSignal)
-    {
-        // can't do anything
-        return;
-    }
 
     // create out arguments if necessary
     if (m_adapterSignal->Params->Size != 0)
