@@ -10,7 +10,7 @@
 ;    INF file for installing HID Injector minidriver
 ;
 ;Installation Notes:
-;    Using Devcon: Type "devcon install HidInjectorKd.inf root\HidInjectorKd" to install
+;    Using Devcon: Type "devcon install HidInjectorKd.inf root\HidInjector" to install
 ;
 ;--*/
 [Version]
@@ -88,6 +88,6 @@ KMDriverCopy=12
 ProviderString     = "MS"
 ManufacturerString = "Microsoft"
 ClassName          = "HID Injector Class"
-DeviceDesc         = "HID Injector Device"
+DeviceDesc         = "HID Injection Sample"
 ServiceDesc        = "HID Injector Service"
 DiskDesc           = "HID Injector Installation Disk"

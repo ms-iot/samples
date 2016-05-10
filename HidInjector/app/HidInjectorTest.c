@@ -198,21 +198,6 @@ SendTestInput(
 	HANDLE File
 	)
 {
-    /*
-	SendMousePosition(g_hFile, 3200, 800, MOUSEEVENTF_LEFTDOWN);
-	SendMousePosition(g_hFile, 3200, 800, MOUSEEVENTF_LEFTUP);
-	SendMousePosition(g_hFile, 800, 800, MOUSEEVENTF_LEFTDOWN);
-	SendMousePosition(g_hFile, 800, 800, MOUSEEVENTF_LEFTUP);
-
-	SendMousePosition(g_hFile, 3200, 800, MOUSEEVENTF_LEFTDOWN);
-	SendMousePosition(g_hFile, 3200, 800, MOUSEEVENTF_LEFTUP);
-	SendMousePosition(g_hFile, 800, 800, MOUSEEVENTF_LEFTDOWN);
-	SendMousePosition(g_hFile, 800, 800, MOUSEEVENTF_LEFTUP);
-
-	SendMousePosition(g_hFile, 0, 0, 0);
-	SendMousePosition(g_hFile, 0x3fff, 0x3fff, 0);
-
-    */
     SendSingleTouch(g_hFile, 0, 320, 200, POINTER_FLAG_INCONTACT);
     SendSingleTouch(g_hFile, 0, 320, 200, 0);
 
@@ -222,11 +207,11 @@ SendTestInput(
 		InjectKeyDown(VK_RETURN);
 		InjectKeyUp(VK_RETURN);
 	}
+    */
 	InjectUnicode('a');
 	InjectScanKeyDown(42);
 	InjectUnicode('A');
 	InjectScanKeyUp(42);
-	*/
 	/*
 	SendRawKey(File, 0x28);
 	SendRawKey(File, 0x28);
@@ -241,6 +226,21 @@ SendTestInput(
 	SendMouseDelta(File, -25, -25);
 	SendMouseDelta(File, -25, -25);
 	*/
-	return TRUE;
+    /*
+    SendMousePosition(g_hFile, 3200, 800, MOUSEEVENTF_LEFTDOWN);
+    SendMousePosition(g_hFile, 3200, 800, MOUSEEVENTF_LEFTUP);
+    SendMousePosition(g_hFile, 800, 800, MOUSEEVENTF_LEFTDOWN);
+    SendMousePosition(g_hFile, 800, 800, MOUSEEVENTF_LEFTUP);
+
+    SendMousePosition(g_hFile, 3200, 800, MOUSEEVENTF_LEFTDOWN);
+    SendMousePosition(g_hFile, 3200, 800, MOUSEEVENTF_LEFTUP);
+    SendMousePosition(g_hFile, 800, 800, MOUSEEVENTF_LEFTDOWN);
+    SendMousePosition(g_hFile, 800, 800, MOUSEEVENTF_LEFTUP);
+
+    SendMousePosition(g_hFile, 0, 0, 0);
+    SendMousePosition(g_hFile, 0x3fff, 0x3fff, 0);
+
+    */
+    return TRUE;
 }
  
