@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <Package
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
@@ -8,15 +8,15 @@
   IgnorableNamespaces="uwp mp iot">
 
   <Identity
-	  Name="PythonBlinkyServer"
-	  Publisher="CN=MSFT"
+	  Name="PythonAccelerometer"
+	  Publisher="CN=Microsoft"
 	  Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="ac22653a-2e90-4cd2-9c01-4148645a1baf" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="7a00156d-b219-4b13-9ff9-a3d30fa26ca9" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>PythonBlinkyServer</DisplayName>
-    <PublisherDisplayName>MSFT</PublisherDisplayName>
+    <DisplayName>PythonAccelerometer</DisplayName>
+    <PublisherDisplayName>Microsoft</PublisherDisplayName>
     <Logo>StoreLogo.png</Logo>
   </Properties>
 
@@ -31,10 +31,10 @@
   <Applications>
     <Application Id="App">
       <uwp:VisualElements
-			  DisplayName="PythonBlinkyServer"
+			  DisplayName="PythonAccelerometer"
 			  Square150x150Logo="Logo.png"
 			  Square44x44Logo="SmallLogo.png"
-			  Description="PythonBlinkyServer"
+			  Description="PythonAccelerometer"
 			  BackgroundColor="#464646"
         AppListEntry="none">
         <uwp:SplashScreen Image="SplashScreen.png" />

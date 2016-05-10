@@ -8,7 +8,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ApplicationType>Windows Store</ApplicationType>
     <WindowsTargetPlatformVersion>10.0.10586.0</WindowsTargetPlatformVersion>
-    <WindowsTargetPlatformMinVersion>10.0.10240.0</WindowsTargetPlatformMinVersion>
+    <WindowsTargetPlatformMinVersion>10.0.10586.0</WindowsTargetPlatformMinVersion>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
     <AppContainerApplication>true</AppContainerApplication>
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
@@ -49,6 +49,18 @@
     <None Include="PythonBlinkyServer_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="windevices\ARM\Microsoft.IoT.Lightning.Providers.dll" Condition=" '$(Platform)' == 'ARM' ">
+      <Name>Microsoft.IoT.Lightning.Providers.dll</Name>
+      <PythonExtension>windevices\ARM\Microsoft.IoT.Lightning.Providers.dll</PythonExtension>
+    </Reference>
+    <Reference Include="windevices\Win32\Microsoft.IoT.Lightning.Providers.dll" Condition=" '$(Platform)' == 'x86' ">
+      <Name>Microsoft.IoT.Lightning.Providers.dll</Name>
+      <PythonExtension>windevices\Win32\Microsoft.IoT.Lightning.Providers.dll</PythonExtension>
+    </Reference>
+    <Reference Include="windevices\x64\Microsoft.IoT.Lightning.Providers.dll" Condition=" '$(Platform)' == 'x64' ">
+      <Name>Microsoft.IoT.Lightning.Providers.dll</Name>
+      <PythonExtension>windevices\x64\Microsoft.IoT.Lightning.Providers.dll</PythonExtension>
+    </Reference>
     <Reference Include="windevices\ARM\_wingpio_d.pyd" Condition=" '$(RedistConfiguration)|$(Platform)' == 'Debug|ARM' ">
       <Name>_wingpio_d.pyd</Name>
       <PythonExtension>windevices\ARM\_wingpio_d.pyd</PythonExtension>
