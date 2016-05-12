@@ -19,8 +19,6 @@ namespace $safeprojectname$
             {
                 loop();
             }
-
-            deferral->Complete();
         }
     };
 }
