@@ -494,10 +494,12 @@ namespace AdapterLib
             }
         }
 
+        virtual ~MockAdapterDevice();
+
     internal:
         MockAdapterDevice(Platform::String^ Name, AdapterLib::MockAdapter^ ParentObject);
         MockAdapterDevice(const MOCK_DEVICE_DESCRIPTOR* MockDeviceDescPtr, MockAdapter^ ParentObject);
-
+        
         void AddProperty(_In_ BridgeRT::IAdapterProperty^ NewProperty);
         void AddMethod(_In_ BridgeRT::IAdapterMethod^ NewMethod);
         void AddSignal(_In_ BridgeRT::IAdapterSignal^ NewSignal);
@@ -538,6 +540,7 @@ namespace AdapterLib
         void createSignals();
 
         void methodReset(_Inout_ BridgeRT::IAdapterMethod^ Method);
+        void heartbeatTimerElapsed(Windows::System::Threading::ThreadPoolTimer^ timer);
 
     private:
         // Generic
@@ -566,6 +569,9 @@ namespace AdapterLib
 
         // Device signals
         std::vector<BridgeRT::IAdapterSignal^> signals;
+
+        // Timer for heartbeat signal
+        Windows::System::Threading::ThreadPoolTimer^ heartbeatTimer;
     };
 
 } // namespace AdapterLib

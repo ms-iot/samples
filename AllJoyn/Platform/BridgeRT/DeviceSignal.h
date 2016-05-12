@@ -27,7 +27,7 @@ namespace BridgeRT
         virtual ~DeviceSignal();
 
         QStatus Initialize(_In_ DeviceMain *parent, IAdapterSignal ^adapterSignal);
-        void SendSignal(_In_ IAdapterSignal ^adapterSignal);
+        void SendSignal();
         inline std::string &GetName()
         {
             return m_exposedName;
