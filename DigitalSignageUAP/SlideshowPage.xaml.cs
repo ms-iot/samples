@@ -307,8 +307,20 @@ namespace DigitalSignageUAP
                             DisplayObject DO = new DisplayObject();
                             string filename = fileElement.Attribute("path").Value.Substring(fileElement.Attribute("path").Value.LastIndexOf('/') + 1);
                             StorageFile file = await tmp.CreateFileAsync(filename, CreationCollisionOption.ReplaceExisting);
-                            byte[] bytes = File.ReadAllBytes(filename);
-                            await FileIO.WriteBufferAsync(file, WindowsRuntimeBufferExtensions.AsBuffer(bytes));
+                            Uri fileElementUri;
+
+                            if (Uri.TryCreate(fileElement.Attribute("path").Value, UriKind.Absolute, out fileElementUri)
+                                && Uri.CheckSchemeName(fileElementUri.Scheme))      // check if URL or local media
+                            {
+                                HttpClient client = new HttpClient();
+                                HttpResponseMessage response = await client.GetAsync(fileElementUri);
+                                await FileIO.WriteBufferAsync(file, await response.Content.ReadAsBufferAsync());
+                            }
+                            else
+                            {
+                                byte[] bytes = File.ReadAllBytes(filename);
+                                await FileIO.WriteBufferAsync(file, WindowsRuntimeBufferExtensions.AsBuffer(bytes));
+                            }
 
                             if (fileElement.Attribute("duration") != null) // this is an image
                                 DO.duration = Convert.ToInt32(fileElement.Attribute("duration").Value);
