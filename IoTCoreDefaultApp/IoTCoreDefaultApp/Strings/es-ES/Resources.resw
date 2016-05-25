@@ -318,7 +318,7 @@
     <value>Lo primero y más básico que un panel debe hacer es parpadear.</value>
   </data>
   <data name="TutorialBlinkyBody2Text" xml:space="preserve">
-    <value>Como hemos mencionado en la sección "Introducción", todo el código fuente de este código abierto está disponible en www.windowsondevices.com (busca IoTCoreDefaultApp).</value>
+    <value>Tal como hemos mencionado en la sección "Introducción", todo el código fuente de este código abierto está disponible en www.windowsondevices.com (solo debes buscar IoTCoreDefaultApp).</value>
   </data>
   <data name="TutorialBlinkyBody3Text" xml:space="preserve">
     <value>No se requiere instalación. Solo tienes que presionar el botón de encendido.</value>
@@ -714,5 +714,34 @@
   <data name="NoDeviceName" xml:space="preserve">
     <value>&lt;no hay nombre de dispositivo&gt;</value>
     <comment>This is shown when we fail to retrieve a valid device name (very strange case)</comment>
+  </data>
+  <data name="CommandLineText" xml:space="preserve">
+    <value>Línea de comandos</value>
+    <comment>Title for command line page</comment>
+  </data>
+  <data name="CommandLinePlaceholderText" xml:space="preserve">
+    <value>{0}&gt; Escribe una línea de comandos</value>
+    <comment>Placeholder for command line input text box</comment>
+  </data>
+  <data name="ClearPageText" xml:space="preserve">
+    <value>Borrar</value>
+  </data>
+  <data name="CdNotSupported" xml:space="preserve">
+    <value>No se puede cambiar de directorio. Usa rutas de acceso completas en los comandos.</value>
+  </data>
+  <data name="CmdNotEnabled" xml:space="preserve">
+    <value>El dispositivo no puede ejecutar el procesador de línea de comandos.
+Para habilitarlo, ejecuta el siguiente comando como "administrador" en el dispositivo:
+
+ reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
+
+Puedes ejecutar el comando en la página Procesos de IoT Windows Device Portal. De lo contrario, también puedes usar PowerShell para conectarte al dispositivo de Windows IoT.
+Si quieres obtener más información, visita http://go.microsoft.com/fwlink/p/?LinkId=698488
+    </value>
+    <comment>New lines need to be preserved</comment>
+  </data>
+  <data name="ExecAsDefaultAccount" xml:space="preserve">
+    <value>Ejecutar comandos como DefaultAccount
+    </value>
   </data>
 </root>

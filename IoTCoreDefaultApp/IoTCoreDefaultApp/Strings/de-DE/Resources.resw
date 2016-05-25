@@ -398,6 +398,10 @@
   <data name="Tutorial.GetStarted.014.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
+  <data name="Tutorial.GetStarted.014a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetStarted.015.p" xml:space="preserve">
     <value>Klicken Sie auf das Lernprogramm „Einstieg in die Codierung“, um weitere Informationen zu erhalten.</value>
   </data>
@@ -415,6 +419,10 @@
   </data>
   <data name="Tutorial.GetStarted.020.p" xml:space="preserve">
     <value>Verwenden Sie dieses Beispiel als Ausgangsbasis für die Entwicklung einer eigenen Anwendung.</value>
+  </data>
+  <data name="Tutorial.GetStarted.021.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.001.620x400.image" xml:space="preserve">
     <value>Assets/Tutorials/GetConnected-{0}.jpg</value>
@@ -463,6 +471,10 @@
   <data name="Tutorial.GetConnected.015.ul" xml:space="preserve">
     <value>Ein Ethernetkabel zum Verbinden Ihres Entwicklungscomputers mit Ihrem IoT Core-Gerät</value>
   </data>
+  <data name="Tutorial.GetConnected.015a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.016.p" xml:space="preserve">
     <value>Folgen Sie den unten angegebenen Anweisungen, um die gemeinsame Nutzung der Internetverbindung (Internet Connection Sharing, ICS) auf Ihrem PC zu aktivieren.</value>
   </data>
@@ -481,6 +493,10 @@
   <data name="Tutorial.GetConnected.021.ul" xml:space="preserve">
     <value>Klicken Sie auf die Registerkarte „Freigabe“, und aktivieren Sie das Kontrollkästchen „Anderen Benutzern im Netzwerk gestatten, diese Verbindung des Computers als Internetverbindung zu verwenden“.</value>
   </data>
+  <data name="Tutorial.GetConnected.021a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.022.p" xml:space="preserve">
     <value>Nachdem Sie ICS auf Ihrem PC aktiviert haben, können Sie Ihr Windows 10 IoT Core-Gerät jetzt direkt an Ihren PC anschließen. Schließen Sie dazu ein Ende des Ethernet-Ersatzkabels an den zusätzlichen Ethernet-Anschluss am PC und das andere Ende an den Ethernet-Anschluss Ihres IoT Core-Geräts an.</value>
   </data>
@@ -490,6 +506,10 @@
   <data name="Tutorial.GetConnected.024.ul" xml:space="preserve">
     <value>Die Registerkarte „Freigabe“ ist nicht verfügbar, wenn Sie nur über eine Netzwerkverbindung verfügen.</value>
   </data>
+  <data name="Tutorial.GetConnected.024a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.025.h1" xml:space="preserve">
     <value>Probleme?</value>
   </data>
@@ -498,6 +518,10 @@
   </data>
   <data name="Tutorial.GetConnected.027.620x400.image" xml:space="preserve">
     <value>Assets/Tutorials/GetConnected-006.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetConnected.028.br" xml:space="preserve">
+    <value />
     <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetCoding.001.620x400.image" xml:space="preserve">
@@ -528,6 +552,10 @@
   <data name="Tutorial.GetCoding.009.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
+  <data name="Tutorial.GetCoding.009a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetCoding.010.h1" xml:space="preserve">
     <value>Einrichten von Visual Studio 2015 auf Ihrem PC</value>
   </data>
@@ -539,6 +567,14 @@
   </data>
   <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
     <value>Wenn Sie in die Treiberentwicklung einsteigen möchten, installieren Sie das WDK.</value>
+  </data>
+  <data name="Tutorial.GetCoding.016a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetCoding.019.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="NetworkConnectivityLevel_ConstrainedInternetAccess" xml:space="preserve">
     <value>Eingeschränkter Internetzugriff</value>
@@ -678,5 +714,34 @@
   <data name="NoDeviceName" xml:space="preserve">
     <value>&lt;kein Gerätename&gt;</value>
     <comment>This is shown when we fail to retrieve a valid device name (very strange case)</comment>
+  </data>
+  <data name="CommandLineText" xml:space="preserve">
+    <value>Befehlszeile</value>
+    <comment>Title for command line page</comment>
+  </data>
+  <data name="CommandLinePlaceholderText" xml:space="preserve">
+    <value>{0}&gt; Befehlszeile eingeben</value>
+    <comment>Placeholder for command line input text box</comment>
+  </data>
+  <data name="ClearPageText" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
+  <data name="CdNotSupported" xml:space="preserve">
+    <value>Der Verzeichniswechsel wird derzeit nicht unterstützt. Verwenden Sie in Ihren Befehlen vollständige Pfade.</value>
+  </data>
+  <data name="CmdNotEnabled" xml:space="preserve">
+    <value>Ihr Gerät ist nicht zur Ausführung des Befehlszeilenprozessors berechtigt.
+Führen Sie den folgenden Befehl auf Ihrem Gerät als „Administrator“ aus, um es zu aktivieren:
+
+    reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
+
+Sie können den Befehl auf der Seite für Prozesse im IoT Windows Device Portal ausführen oder PowerShell verwenden, um eine Verbindung mit Ihrem Windows IoT-Gerät herzustellen.
+Weitere Informationen finden Sie unter „http://go.microsoft.com/fwlink/p/?LinkId=698488“.
+    </value>
+    <comment>New lines need to be preserved</comment>
+  </data>
+  <data name="ExecAsDefaultAccount" xml:space="preserve">
+    <value>Befehle werden unter DefaultAccount ausgeführt.
+    </value>
   </data>
 </root>

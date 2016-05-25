@@ -715,4 +715,33 @@
     <value>&lt;無裝置名稱&gt;</value>
     <comment>This is shown when we fail to retrieve a valid device name (very strange case)</comment>
   </data>
+  <data name="CommandLineText" xml:space="preserve">
+    <value>命令列</value>
+    <comment>Title for command line page</comment>
+  </data>
+  <data name="CommandLinePlaceholderText" xml:space="preserve">
+    <value>{0}&gt; 輸入命令列</value>
+    <comment>Placeholder for command line input text box</comment>
+  </data>
+  <data name="ClearPageText" xml:space="preserve">
+    <value>清除</value>
+  </data>
+  <data name="CdNotSupported" xml:space="preserve">
+    <value>目前不支援變更目錄。請在您的命令中使用完整路徑。</value>
+  </data>
+  <data name="CmdNotEnabled" xml:space="preserve">
+    <value>不允許您的裝置執行命令列處理程式。
+若要啟用它，請以裝置上的 "Administrator" 身分執行下列命令:
+
+    reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
+
+您可以在 IoT Windows Device Portal 的的 [處理程序] 頁面執行此命令。或者，使用 PowerShell 連線到您的 Windows IoT 裝置。
+如需詳細資訊，請瀏覽 http://go.microsoft.com/fwlink/p/?LinkId=698488
+    </value>
+    <comment>New lines need to be preserved</comment>
+  </data>
+  <data name="ExecAsDefaultAccount" xml:space="preserve">
+    <value>正在以 DefaultAccount 的身分執行命令
+    </value>
+  </data>
 </root>

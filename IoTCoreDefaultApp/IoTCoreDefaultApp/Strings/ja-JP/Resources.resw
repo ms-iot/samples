@@ -318,7 +318,7 @@
     <value>ボードを使って一番初めに行う最も基本的なことは点滅です。</value>
   </data>
   <data name="TutorialBlinkyBody2Text" xml:space="preserve">
-    <value>「はじめに」セクションで説明したとおり、このオープン ソースのソース コードは www. windowsondevices.com からダウンロードできます (IoTCoreDefaultApp を探してみてください)。</value>
+    <value>「はじめに」セクションで説明したとおり、ソース コードはすべてオープン ソースであり、www.windowsondevices.com からダウンロードできます (IoTCoreDefaultApp を探してみてください)。</value>
   </data>
   <data name="TutorialBlinkyBody3Text" xml:space="preserve">
     <value>セットアップは必要ありません。[開始] を押すだけです。</value>
@@ -398,6 +398,10 @@
   <data name="Tutorial.GetStarted.014.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
+  <data name="Tutorial.GetStarted.014a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetStarted.015.p" xml:space="preserve">
     <value>詳細については、[コードを取得] チュートリアルをクリックしてください</value>
   </data>
@@ -415,6 +419,10 @@
   </data>
   <data name="Tutorial.GetStarted.020.p" xml:space="preserve">
     <value>これは、独自のアプリケーションを構築する際のテンプレートとしてご自由にお使いください</value>
+  </data>
+  <data name="Tutorial.GetStarted.021.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.001.620x400.image" xml:space="preserve">
     <value>Assets/Tutorials/GetConnected-{0}.jpg</value>
@@ -460,6 +468,10 @@
   <data name="Tutorial.GetConnected.015.ul" xml:space="preserve">
     <value>開発コンピューターと IoT Core デバイスを接続するイーサネット ケーブル。</value>
   </data>
+  <data name="Tutorial.GetConnected.015a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.016.p" xml:space="preserve">
     <value>以下の手順に従って、PC のインターネット接続の共有 (ICS) を有効にします</value>
   </data>
@@ -478,6 +490,10 @@
   <data name="Tutorial.GetConnected.021.ul" xml:space="preserve">
     <value>[共有] タブをクリックし、[ネットワークのほかのユーザーに、このコンピューターのインターネット接続をとおしての接続を許可する] チェック ボックスをオンにします。</value>
   </data>
+  <data name="Tutorial.GetConnected.021a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.022.p" xml:space="preserve">
     <value>PC で ICS が有効になったので、Windows 10 IoT Core デバイスを PC に直接接続できます。接続するには、余っているイーサネット ケーブルの一方の端を PC の空いているイーサネット ポートに挿し、ケーブルのもう一方の端を IoT Core デバイスのイーサネット ポートに挿します。</value>
   </data>
@@ -487,6 +503,10 @@
   <data name="Tutorial.GetConnected.024.ul" xml:space="preserve">
     <value>ネットワーク接続が 1 つだけの場合は、[共有] タブを使用できません。</value>
   </data>
+  <data name="Tutorial.GetConnected.024a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.025.h1" xml:space="preserve">
     <value>問題が発生した場合</value>
   </data>
@@ -495,6 +515,10 @@
   </data>
   <data name="Tutorial.GetConnected.027.620x400.image" xml:space="preserve">
     <value>Assets/Tutorials/GetConnected-006.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetConnected.028.br" xml:space="preserve">
+    <value />
     <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetCoding.001.620x400.image" xml:space="preserve">
@@ -525,6 +549,10 @@
   <data name="Tutorial.GetCoding.009.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
+  <data name="Tutorial.GetCoding.009a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetCoding.010.h1" xml:space="preserve">
     <value>PC での Visual Studio 2015 のセットアップ</value>
   </data>
@@ -536,6 +564,14 @@
   </data>
   <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
     <value>ドライバーを開発する場合は、WDK をインストールします。</value>
+  </data>
+  <data name="Tutorial.GetCoding.016a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetCoding.019.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="NetworkConnectivityLevel_ConstrainedInternetAccess" xml:space="preserve">
     <value>制限付きインターネット アクセス</value>
@@ -675,5 +711,34 @@
   <data name="NoDeviceName" xml:space="preserve">
     <value>&lt;デバイス名がありません&gt;</value>
     <comment>This is shown when we fail to retrieve a valid device name (very strange case)</comment>
+  </data>
+  <data name="CommandLineText" xml:space="preserve">
+    <value>コマンド ライン</value>
+    <comment>Title for command line page</comment>
+  </data>
+  <data name="CommandLinePlaceholderText" xml:space="preserve">
+    <value>{0}&gt; コマンド ラインを入力してください</value>
+    <comment>Placeholder for command line input text box</comment>
+  </data>
+  <data name="ClearPageText" xml:space="preserve">
+    <value>クリア</value>
+  </data>
+  <data name="CdNotSupported" xml:space="preserve">
+    <value>ディレクトリの変更は現在サポートされていません。コマンドの完全パスを使用してください。</value>
+  </data>
+  <data name="CmdNotEnabled" xml:space="preserve">
+    <value>お使いのデバイスではコマンド ライン プロセッサを実行できません。
+有効にするには、お使いのデバイスで、管理者として次のコマンドを実行してください:
+
+    reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
+
+このコマンドは、IoT Windows Device Portal の [プロセス] ページで実行できます。または、PowerShell を使用して、Windows IoT デバイスに接続してください。
+詳細については、http://go.microsoft.com/fwlink/p/?LinkId=698488 をご覧ください。
+    </value>
+    <comment>New lines need to be preserved</comment>
+  </data>
+  <data name="ExecAsDefaultAccount" xml:space="preserve">
+    <value>DefaultAccount としてコマンドを実行中
+    </value>
   </data>
 </root>
