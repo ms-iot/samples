@@ -318,7 +318,7 @@
     <value>La prima cosa che una scheda deve fare è lampeggiare.</value>
   </data>
   <data name="TutorialBlinkyBody2Text" xml:space="preserve">
-    <value>Come indicato nella sezione "Per iniziare", tutto il codice sorgente è open source e disponibile all'indirizzo www. windowsondevices.com (cerca IoTCoreDefaultApp).</value>
+    <value>Come indicato nella sezione "Per iniziare", tutto il codice sorgente è open source e disponibile all'indirizzo www.windowsondevices.com (cerca IoTCoreDefaultApp).</value>
   </data>
   <data name="TutorialBlinkyBody3Text" xml:space="preserve">
     <value>Non occorre alcuna configurazione. È sufficiente avviare.</value>
@@ -714,5 +714,34 @@
   <data name="NoDeviceName" xml:space="preserve">
     <value>&lt;nessun nome di dispositivo&gt;</value>
     <comment>This is shown when we fail to retrieve a valid device name (very strange case)</comment>
+  </data>
+  <data name="CommandLineText" xml:space="preserve">
+    <value>Riga di comando</value>
+    <comment>Title for command line page</comment>
+  </data>
+  <data name="CommandLinePlaceholderText" xml:space="preserve">
+    <value>{0}&gt; Immetti la riga di comando</value>
+    <comment>Placeholder for command line input text box</comment>
+  </data>
+  <data name="ClearPageText" xml:space="preserve">
+    <value>Cancella</value>
+  </data>
+  <data name="CdNotSupported" xml:space="preserve">
+    <value>La modifica della directory attualmente non è supportata. Usa i percorsi completi nei comandi.</value>
+  </data>
+  <data name="CmdNotEnabled" xml:space="preserve">
+    <value>Il dispositivo non può eseguire il processore della riga di comando.
+Per abilitarlo, esegui il comando seguente come "Amministratore" nel dispositivo:
+
+    reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
+
+Puoi eseguire il comando nella pagina Processi di Windows Device Portal IoT. In alternativa, usa PowerShell per connetterti al dispositivo Windows IoT.
+Per altre informazioni, visita http://go.microsoft.com/fwlink/p/?LinkId=698488
+    </value>
+    <comment>New lines need to be preserved</comment>
+  </data>
+  <data name="ExecAsDefaultAccount" xml:space="preserve">
+    <value>Esecuzione dei comandi come DefaultAccount
+    </value>
   </data>
 </root>

@@ -318,7 +318,7 @@
     <value>Первое и самое простое, что должна делать плата, — это мигать.</value>
   </data>
   <data name="TutorialBlinkyBody2Text" xml:space="preserve">
-    <value>Как уже упоминалось в разделе "Начало работы", весь исходный код открыт и доступен по адресу www. windowsondevices.com (ищите IoTCoreDefaultApp).</value>
+    <value>Как уже упоминалось в разделе "Начало работы", весь исходный код открыт и доступен по адресу www.windowsondevices.com (ищите IoTCoreDefaultApp).</value>
   </data>
   <data name="TutorialBlinkyBody3Text" xml:space="preserve">
     <value>Настройка не требуется. Просто нажмите кнопку запуска.</value>
@@ -711,5 +711,34 @@
   <data name="NoDeviceName" xml:space="preserve">
     <value>&lt;нет имени устройства&gt;</value>
     <comment>This is shown when we fail to retrieve a valid device name (very strange case)</comment>
+  </data>
+  <data name="CommandLineText" xml:space="preserve">
+    <value>Командная строка</value>
+    <comment>Title for command line page</comment>
+  </data>
+  <data name="CommandLinePlaceholderText" xml:space="preserve">
+    <value>{0}&gt; введите командную строку</value>
+    <comment>Placeholder for command line input text box</comment>
+  </data>
+  <data name="ClearPageText" xml:space="preserve">
+    <value>Очистить</value>
+  </data>
+  <data name="CdNotSupported" xml:space="preserve">
+    <value>Изменение каталога пока не поддерживается. Используйте в командах полные пути.</value>
+  </data>
+  <data name="CmdNotEnabled" xml:space="preserve">
+    <value>На вашем устройстве запрещается запускать процессор командной строки.
+Чтобы включить его, выполните на своем устройстве от имени администратора следующую команду:
+
+    reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
+
+Эту команду можно выполнить на странице процессов портала IoT Windows Device. Для подключения к устройству с Windows IoT также можно использовать PowerShell.
+Дополнительные сведения см. на веб-странице http://go.microsoft.com/fwlink/p/?LinkId=698488
+    </value>
+    <comment>New lines need to be preserved</comment>
+  </data>
+  <data name="ExecAsDefaultAccount" xml:space="preserve">
+    <value>Выполнение команд в роли DefaultAccount
+    </value>
   </data>
 </root>
