@@ -38,13 +38,13 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Inf Include="HidInjectorKd.inx">
-      <Filter>Driver Files</Filter>
-    </Inf>
-  </ItemGroup>
-  <ItemGroup>
     <ResourceCompile Include="HidInjectorKd.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Inf Include="HidInjectorSample.inx">
+      <Filter>Driver Files</Filter>
+    </Inf>
   </ItemGroup>
 </Project>
