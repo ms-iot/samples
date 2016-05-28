@@ -10,7 +10,7 @@ static class AzureIoTHub
 {
     public static async Task SendDeviceToCloudMessageAsync()
     {
-        TpmDevice myDevice = new TpmDevice(1); // Use logical device 0 on the TPM by default
+        TpmDevice myDevice = new TpmDevice(0); // Use logical device 0 on the TPM by default
         string hubUri = myDevice.GetHostName();
         string deviceId = myDevice.GetDeviceId();
         string sasToken = myDevice.GetSASToken();
@@ -20,11 +20,8 @@ static class AzureIoTHub
             AuthenticationMethodFactory.
                 CreateAuthenticationWithToken(deviceId, sasToken), TransportType.Amqp);
 
-#if WINDOWS_UWP
-        var str = "Hello, Cloud from a secure UWP C# app!";
-#else
-        var str = "Hello, Cloud from a secure C# app!";
-#endif
+        var str = "Hello, Cloud from a secure C# UWP app!";
+
         var message = new Message(Encoding.ASCII.GetBytes(str));
 
         await deviceClient.SendEventAsync(message);
