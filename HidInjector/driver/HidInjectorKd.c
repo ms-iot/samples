@@ -81,7 +81,9 @@ HID_REPORT_DESCRIPTOR       G_DefaultReportDescriptor[] = {
 	0x75, 0x08,                    //     REPORT_SIZE (8)
 	0x81, 0x03,                    //     INPUT (Cnst,Var,Abs)
 	0xc0,                          //   END_COLLECTION
-	// Touch
+    0xc0,                          // END_COLLECTION
+                                   
+    // Touch
 	0x05, 0x0d,                     // USAGE_PAGE (Digitizers)
 	0x09, 0x04,                     // USAGE (Touch Screen)
 	0xa1, 0x01,                     // COLLECTION (Application)
@@ -153,6 +155,11 @@ HID_DESCRIPTOR              G_DefaultHidDescriptor = {
 #pragma alloc_text(PAGE, HIDINJECTOR_EvtDeviceAdd)
 #pragma alloc_text(PAGE, HIDINJECTOR_EvtDeviceSelfManagedIoInit)
 #pragma alloc_text(PAGE, HIDINJECTOR_EvtDeviceSelfManagedIoCleanup)
+#pragma alloc_text(PAGE, HIDINJECTOR_VhfInitialize)
+#pragma alloc_text(PAGE, HIDINJECTOR_VhfSubmitReadReport)
+#pragma alloc_text(PAGE, HIDINJECTOR_GetFeatureReport)
+#pragma alloc_text(PAGE, HIDINJECTOR_VhfAsyncOperationGetFeature)
+
 #endif // ALLOC_PRAGMA
 
 NTSTATUS
@@ -241,7 +248,6 @@ Return Value:
 	WDF_PNPPOWER_EVENT_CALLBACKS    wdfPnpPowerCallbacks;
 
 
-	// TODO; make sure correct functions are marked as paged and pragma'ed correctly.
 	PAGED_CODE();
 
     KdPrint(("Enter HIDINJECTOR_EvtDeviceAdd\n"));

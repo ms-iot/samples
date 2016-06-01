@@ -198,40 +198,39 @@ SendTestInput(
 	HANDLE File
 	)
 {
-    /*
-	SendMousePosition(g_hFile, 3200, 800, MOUSEEVENTF_LEFTDOWN);
-	SendMousePosition(g_hFile, 3200, 800, MOUSEEVENTF_LEFTUP);
-	SendMousePosition(g_hFile, 800, 800, MOUSEEVENTF_LEFTDOWN);
-	SendMousePosition(g_hFile, 800, 800, MOUSEEVENTF_LEFTUP);
+    // Uncomment out the block to see how to inject various inputs
 
-	SendMousePosition(g_hFile, 3200, 800, MOUSEEVENTF_LEFTDOWN);
-	SendMousePosition(g_hFile, 3200, 800, MOUSEEVENTF_LEFTUP);
-	SendMousePosition(g_hFile, 800, 800, MOUSEEVENTF_LEFTDOWN);
-	SendMousePosition(g_hFile, 800, 800, MOUSEEVENTF_LEFTUP);
-
-	SendMousePosition(g_hFile, 0, 0, 0);
-	SendMousePosition(g_hFile, 0x3fff, 0x3fff, 0);
-
-    */
+    // The following tests show how to inject a single touch event.
     SendSingleTouch(g_hFile, 0, 320, 200, POINTER_FLAG_INCONTACT);
     SendSingleTouch(g_hFile, 0, 320, 200, 0);
 
-    /*
-	for (int i = 0; i < 5; i++)
-	{
-		InjectKeyDown(VK_RETURN);
-		InjectKeyUp(VK_RETURN);
-	}
+    // The following tests show how to inject various keys
 	InjectUnicode('a');
 	InjectScanKeyDown(42);
 	InjectUnicode('A');
 	InjectScanKeyUp(42);
-	*/
-	/*
+    
+    /*
+    // Send multiple return events.
+
+    for (int i = 0; i < 5; i++)
+    {
+    InjectKeyDown(VK_RETURN);
+    InjectKeyUp(VK_RETURN);
+    }
+    */
+    
+    /*
+    // Send Raw keyboard events.
+
 	SendRawKey(File, 0x28);
 	SendRawKey(File, 0x28);
 	SendRawKey(File, 0x28);
 	SendRawKey(File, 0x28);
+    */
+
+    /*
+    Send mouse delta events
 	SendMouseDelta(File, 25, 25);
 	SendMouseDelta(File, 25, 25);
 	SendMouseDelta(File, 25, 25);
@@ -241,6 +240,23 @@ SendTestInput(
 	SendMouseDelta(File, -25, -25);
 	SendMouseDelta(File, -25, -25);
 	*/
-	return TRUE;
+
+    /*
+    Send specific mouse position events.
+    SendMousePosition(g_hFile, 3200, 800, MOUSEEVENTF_LEFTDOWN);
+    SendMousePosition(g_hFile, 3200, 800, MOUSEEVENTF_LEFTUP);
+    SendMousePosition(g_hFile, 800, 800, MOUSEEVENTF_LEFTDOWN);
+    SendMousePosition(g_hFile, 800, 800, MOUSEEVENTF_LEFTUP);
+
+    SendMousePosition(g_hFile, 3200, 800, MOUSEEVENTF_LEFTDOWN);
+    SendMousePosition(g_hFile, 3200, 800, MOUSEEVENTF_LEFTUP);
+    SendMousePosition(g_hFile, 800, 800, MOUSEEVENTF_LEFTDOWN);
+    SendMousePosition(g_hFile, 800, 800, MOUSEEVENTF_LEFTUP);
+
+    SendMousePosition(g_hFile, 0, 0, 0);
+    SendMousePosition(g_hFile, 0x3fff, 0x3fff, 0);
+
+    */
+    return TRUE;
 }
  

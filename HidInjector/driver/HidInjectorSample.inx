@@ -4,13 +4,10 @@
 ;
 ;Module Name:
 ;
-;    HidInjectorKd.inf
+;    HidInjectorSample.inf
 ;
 ;Abstract:
 ;    INF file for installing HID Injector minidriver
-;
-;Installation Notes:
-;    Using Devcon: Type "devcon install HidInjectorKd.inf root\HidInjectorKd" to install
 ;
 ;--*/
 [Version]
@@ -39,45 +36,50 @@ HKR,,Security,,"D:P(A;;GA;;;SY)(A;;GA;;;BA)(A;;GA;;;WD)"
 
 ; Works on Win7 and later because we use inbox HID-KMDF mapper
 [Microsoft.NT$ARCH$.6.1]
-%DeviceDesc%=HidInjectorKd, root\HidInjectorKd
+%DeviceDesc%=HidInjectorSample, root\HidInjectorSample
 
-[HidInjectorKd.NT]
+[HidInjectorSample.NT]
 CopyFiles=KMDriverCopy
 
-[HidInjectorKd.NT.hw]
-AddReg=HidInjectorKd_AddReg
+[HidInjectorSample.NT.hw]
+AddReg=HidInjectorSample_AddReg
 
-[HidInjectorKd.NT.Services]
-AddService=HidInjectorKd,0x2,HidInjectorKd_Service_Inst ;flag 0x2 sets this as the service for the device
-;AddService=mshidkmdf,0x00000002,mshidkmdf_Service_Inst 
+[HidInjectorSample.NT.Services]
+AddService=HidInjectorSample,0x2,HidInjectorSample_Service_Inst ;flag 0x2 sets this as the service for the device
 
-[HidInjectorKd_AddReg]
-;HKR,,"LowerFilters",0x00010008,"HidInjectorKd" ; FLG_ADDREG_TYPE_MULTI_SZ | FLG_ADDREG_APPEND
+[HidInjectorSample_AddReg]
 HKR,,"LowerFilters",0x00010000,"vhf"
 
-[HidInjectorKd_Service_Inst]
+[HidInjectorSample_Service_Inst]
 DisplayName    = %ServiceDesc%
 ServiceType    = 1
 StartType      = 3
 ErrorControl   = 1
-ServiceBinary  = %12%\HidInjectorKd.sys
+ServiceBinary  = %12%\HidInjectorSample.sys
 
-[HidInjectorKd.NT.Wdf]
-KmdfService=HidInjectorKd, HidInjectorKd_wdfsect
+[HidInjectorSample.NT.Wdf]
+KmdfService=HidInjectorSample, HidInjectorSample_wdfsect
 
-[HidInjectorKd_wdfsect]
+[HidInjectorSample_wdfsect]
 KmdfLibraryVersion=$KMDFVERSION$
+
+; ================= create device node ==============
+[DeviceInstall32]
+AddDevice = ROOT\HidInjectorSample\0,,HidInjectorSample_RootDevice_Inst
+
+[HidInjectorSample_RootDevice_Inst]
+HardwareIds = ROOT\HidInjectorSample
 
 ; ================= copy files =====================
 
 [KMDriverCopy]
-HidInjectorKd.sys
+HidInjectorSample.sys
 
 [SourceDisksNames]
 1=%DiskDesc%,,,
 
 [SourceDisksFiles]
-HidInjectorKd.sys=1
+HidInjectorSample.sys=1
 
 [DestinationDirs]
 KMDriverCopy=12
@@ -88,6 +90,6 @@ KMDriverCopy=12
 ProviderString     = "MS"
 ManufacturerString = "Microsoft"
 ClassName          = "HID Injector Class"
-DeviceDesc         = "HID Injector Device"
+DeviceDesc         = "HID Injection Sample"
 ServiceDesc        = "HID Injector Service"
 DiskDesc           = "HID Injector Installation Disk"

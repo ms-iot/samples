@@ -34,7 +34,7 @@
     <Platform Condition="'$(Platform)' == ''">Win32</Platform>
     <SampleGuid>{FBE937B8-E7D3-4F76-AEE5-8E21378A6E64}</SampleGuid>
     <WindowsTargetPlatformVersion>10.0.10586.0</WindowsTargetPlatformVersion>
-    <ProjectName>HidInjectorKd</ProjectName>
+    <ProjectName>HidInjectorSample</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -108,29 +108,29 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
   </ImportGroup>
   <ItemGroup Label="WrappedTaskItems">
-    <Inf Include="HidInjectorKd.inx">
+    <Inf Include="HidInjectorSample.inx">
       <Architecture>$(InfArch)</Architecture>
       <SpecifyArchitecture>true</SpecifyArchitecture>
-      <CopyOutput>.\$(IntDir)\HidInjectorKd.inf</CopyOutput>
+      <CopyOutput>.\$(IntDir)\HidInjectorSample.inf</CopyOutput>
     </Inf>
   </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <TargetName>HidInjectorKd</TargetName>
+    <TargetName>HidInjectorSample</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <TargetName>HidInjectorKd</TargetName>
+    <TargetName>HidInjectorSample</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <TargetName>HidInjectorKd</TargetName>
+    <TargetName>HidInjectorSample</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
-    <TargetName>HidInjectorKd</TargetName>
+    <TargetName>HidInjectorSample</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <TargetName>HidInjectorKd</TargetName>
+    <TargetName>HidInjectorSample</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
-    <TargetName>HidInjectorKd</TargetName>
+    <TargetName>HidInjectorSample</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -246,31 +246,31 @@
       <AdditionalDependencies>$(DDK_LIB_PATH)vhfkm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-        <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-        <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-        <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-        <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
-        <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
-        <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
-        <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
-        <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
-    </PropertyGroup>
-    <ItemGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+    <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+    <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <ItemGroup>
     <ClCompile Include="HidInjectorKd.c" />
     <ClCompile Include="rawpdo.c" />
     <ClCompile Include="util.c" />
