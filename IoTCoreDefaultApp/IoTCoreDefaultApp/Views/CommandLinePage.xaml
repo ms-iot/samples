@@ -44,7 +44,7 @@
         <Grid Grid.Row="1" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="28"></RowDefinition>
+                <RowDefinition Height="32"></RowDefinition>
                 <RowDefinition Height="2"></RowDefinition>
             </Grid.RowDefinitions>
             <ScrollViewer Name="StdOutputScroller"  Grid.Row="0" HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
@@ -61,7 +61,7 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBox Grid.Column="0" x:Name="CommandLine" PlaceholderText="{Binding [CommandLinePlaceholderText]}" Background="Transparent" BorderThickness="2" BorderBrush="Transparent" FontFamily="Lucida Console" FontSize="14" Padding="6 6" KeyUp="CommandLine_KeyUp" Height="24" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                <TextBox Grid.Column="0" x:Name="CommandLine" PlaceholderText="{Binding [CommandLinePlaceholderText]}" Background="Transparent" BorderThickness="2" BorderBrush="Transparent" FontFamily="Lucida Console" FontSize="14" Padding="6 6" KeyUp="CommandLine_KeyUp" Height="24" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsSpellCheckEnabled="False"/>
                 <Button Grid.Column="1" x:Name="RunButton" Content="{StaticResource IconRun}" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" FontFamily="{StaticResource IconFontFamily}" FontSize="16" Click="RunButton_Click" Height="24" Width="32" VerticalAlignment="Center"/>
                 <Button Grid.Column="2" x:Name="ClearButton" Content="{Binding [ClearPageText]}" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" FontSize="14" Click="ClearButton_Click" Height="28" Width="Auto" VerticalAlignment="Center"/>
             </Grid>
