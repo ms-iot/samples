@@ -318,7 +318,7 @@
     <value>电路板首要的最基本功能是闪烁。</value>
   </data>
   <data name="TutorialBlinkyBody2Text" xml:space="preserve">
-    <value>正如“入门”部分中所述，此开放源代码的所有源代码均可在 www. windowsondevices.com 上找到(查找 IoTCoreDefaultApp)。</value>
+    <value>正如“入门”部分中所述，此应用的所有源代码均为开放源代码，可在 www. windowsondevices.com 上找到(查找 IoTCoreDefaultApp)。</value>
   </data>
   <data name="TutorialBlinkyBody3Text" xml:space="preserve">
     <value>无需设置。只需按“启动”。</value>
@@ -714,5 +714,34 @@
   <data name="NoDeviceName" xml:space="preserve">
     <value>&lt;无设备名称&gt;</value>
     <comment>This is shown when we fail to retrieve a valid device name (very strange case)</comment>
+  </data>
+  <data name="CommandLineText" xml:space="preserve">
+    <value>命令行</value>
+    <comment>Title for command line page</comment>
+  </data>
+  <data name="CommandLinePlaceholderText" xml:space="preserve">
+    <value>{0}&gt; 输入命令行</value>
+    <comment>Placeholder for command line input text box</comment>
+  </data>
+  <data name="ClearPageText" xml:space="preserve">
+    <value>清除</value>
+  </data>
+  <data name="CdNotSupported" xml:space="preserve">
+    <value>更改当前不支持的目录。请在命令中使用完整路径。</value>
+  </data>
+  <data name="CmdNotEnabled" xml:space="preserve">
+    <value>不允许你的设备运行命令行处理器。
+若要启用它，请以 "Administrator" 身份在你的设备上运行以下命令:
+
+    reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
+
+You can run the command in IoT Windows Device Portal's Processes page. Or use PowerShell to connect to your Windows IoT device.
+For more information, please visit http://go.microsoft.com/fwlink/p/?LinkId=698488
+    </value>
+    <comment>New lines need to be preserved</comment>
+  </data>
+  <data name="ExecAsDefaultAccount" xml:space="preserve">
+    <value>正在以 DefaultAccount 身份执行命令
+    </value>
   </data>
 </root>

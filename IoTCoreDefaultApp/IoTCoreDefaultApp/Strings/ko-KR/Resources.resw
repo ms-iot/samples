@@ -216,7 +216,7 @@
     <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
   </data>
   <data name="WindowsOnDevicesUrlText" xml:space="preserve">
-    <value> www.windowsondevices.com을</value>
+    <value> www.windowsondevices.com</value>
     <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
   </data>
   <data name="KeyboardTitleText" xml:space="preserve">
@@ -318,7 +318,7 @@
     <value>보드에서 가장 기본적인 첫 번째 항목은 깜박임입니다.</value>
   </data>
   <data name="TutorialBlinkyBody2Text" xml:space="preserve">
-    <value>"시작하기" 섹션에서 설명한 대로 이 오픈 소스의 모든 소스 코드는 www. windowsondevices.com(IoTCoreDefaultApp 검색)에서 사용할 수 있습니다.</value>
+    <value>"시작" 섹션에서 설명한 대로 모든 소스 코드는 오픈 소스이며 www. windowsondevices.com(IoTCoreDefaultApp 검색)에서 사용할 수 있습니다.</value>
   </data>
   <data name="TutorialBlinkyBody3Text" xml:space="preserve">
     <value>설정은 필요하지 않습니다. [시작]을 누르기만 하세요.</value>
@@ -711,5 +711,34 @@
   <data name="NoDeviceName" xml:space="preserve">
     <value>&lt;디바이스 이름 없음&gt;</value>
     <comment>This is shown when we fail to retrieve a valid device name (very strange case)</comment>
+  </data>
+  <data name="CommandLineText" xml:space="preserve">
+    <value>명령줄</value>
+    <comment>Title for command line page</comment>
+  </data>
+  <data name="CommandLinePlaceholderText" xml:space="preserve">
+    <value>{0}&gt; 명령줄 입력</value>
+    <comment>Placeholder for command line input text box</comment>
+  </data>
+  <data name="ClearPageText" xml:space="preserve">
+    <value>지우기</value>
+  </data>
+  <data name="CdNotSupported" xml:space="preserve">
+    <value>디렉터리 변경이 현재 지원되지 않습니다. 명령에 전체 경로를 사용하세요.</value>
+  </data>
+  <data name="CmdNotEnabled" xml:space="preserve">
+    <value>디바이스에서 명령줄 처리기를 실행하도록 허용되지 않았습니다.
+사용하도록 설정하려면 장치에서 "관리자"로 다음 명령을 실행하세요.
+
+    reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
+
+IoT Windows Device Portal의 Processes(프로세스) 페이지에서 명령을 실행할 수 있습니다. PowerShell을 사용하여 Windows IoT 디바이스에 연결해도 됩니다.
+자세한 내용은 다음 페이지를 참조하세요. http://go.microsoft.com/fwlink/p/?LinkId=698488
+    </value>
+    <comment>New lines need to be preserved</comment>
+  </data>
+  <data name="ExecAsDefaultAccount" xml:space="preserve">
+    <value>DefaultAccount로 명령 실행 중
+    </value>
   </data>
 </root>

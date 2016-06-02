@@ -318,7 +318,7 @@
     <value>La première chose (et la plus basique) qu’une carte devrait faire, c’est clignoter.</value>
   </data>
   <data name="TutorialBlinkyBody2Text" xml:space="preserve">
-    <value>Comme indiqué dans la section Prise en main, l’intégralité de ce code source est en open source et disponible sur www. windowsondevices.com (recherchez IoTCoreDefaultApp).</value>
+    <value>Comme indiqué dans la section « Prise en main », l’intégralité de ce code source est en open source et disponible sur www.windowsondevices.com (recherchez IoTCoreDefaultApp).</value>
   </data>
   <data name="TutorialBlinkyBody3Text" xml:space="preserve">
     <value>Aucune configuration n’est requise. Il suffit d’appuyer sur Démarrer.</value>
@@ -714,5 +714,34 @@
   <data name="NoDeviceName" xml:space="preserve">
     <value>&lt;no device name&gt;</value>
     <comment>This is shown when we fail to retrieve a valid device name (very strange case)</comment>
+  </data>
+  <data name="CommandLineText" xml:space="preserve">
+    <value>Ligne de commande</value>
+    <comment>Title for command line page</comment>
+  </data>
+  <data name="CommandLinePlaceholderText" xml:space="preserve">
+    <value>{0}&gt; Entrer la ligne de commande</value>
+    <comment>Placeholder for command line input text box</comment>
+  </data>
+  <data name="ClearPageText" xml:space="preserve">
+    <value>Effacer</value>
+  </data>
+  <data name="CdNotSupported" xml:space="preserve">
+    <value>La modification du répertoire n’est pas prise en charge pour le moment. Utilisez des chemins complets dans vos commandes.</value>
+  </data>
+  <data name="CmdNotEnabled" xml:space="preserve">
+    <value>Votre appareil n’est pas autorisé à exécuter le processeur de lignes de commande.
+Pour l’autoriser, exécutez la commande suivante en tant qu’Administrateur sur votre appareil :
+
+    reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
+
+Vous pouvez exécuter la commande sur la page des processus du portail IoT Windows Device Portal. Vous pouvez également utiliser PowerShell pour vous connecter à votre appareil Windows IoT.
+Pour plus d’informations, visitez http://go.microsoft.com/fwlink/p/?LinkId=698488
+    </value>
+    <comment>New lines need to be preserved</comment>
+  </data>
+  <data name="ExecAsDefaultAccount" xml:space="preserve">
+    <value>Exécution des commandes en tant que DefaultAccount
+    </value>
   </data>
 </root>
