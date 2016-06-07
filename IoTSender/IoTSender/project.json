@@ -1,0 +1,25 @@
+﻿{
+  "dependencies": {
+    "Microsoft.Azure.Amqp": "1.1.5",
+    "Microsoft.Azure.Devices.Client": "1.0.11",
+    "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
+    "Newtonsoft.Json": "8.0.3",
+    "PCLCrypto": "2.0.147",
+    "PInvoke.BCrypt": "0.3.2",
+    "PInvoke.Kernel32": "0.3.2",
+    "PInvoke.NCrypt": "0.3.2",
+    "PInvoke.Windows.Core": "0.3.2",
+    "Validation": "2.2.8"
+  },
+  "frameworks": {
+    "uap10.0": {}
+  },
+  "runtimes": {
+    "win10-arm": {},
+    "win10-arm-aot": {},
+    "win10-x86": {},
+    "win10-x86-aot": {},
+    "win10-x64": {},
+    "win10-x64-aot": {}
+  }
+}
