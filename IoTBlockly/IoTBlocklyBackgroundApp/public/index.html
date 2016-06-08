@@ -80,13 +80,14 @@
             <button onclick="loadSample('gravityBall')" class="medium button success">Gravity ball</button>
         </p>
     </div>
-    <div class="">
-        <div id="blocklyDiv" class="small-12 large-8 columns"></div>
+    <div class="expanded row" style="padding-left:10px;">
+        <div id="blocklyArea" class="small-12 large-8 columns"></div>
         <div class="small-12 large-4 columns javascript-output">
             Javascript (or xml):
             <div id="generatedCodeArea"></div>
         </div>
     </div>
+    <div id="blocklyDiv" style="position: absolute"></div>
     
     <xml id="toolbox" style="display: none">
       <category name="Basic" colour="190">
@@ -698,6 +699,7 @@
 
     <script src="js/vendor/jquery.min.js"></script>
     <script>
+        var blocklyArea = document.getElementById('blocklyArea');
         var blocklyDiv = document.getElementById('blocklyDiv');
         var generatedCodeArea = document.getElementById('generatedCodeArea');
         var codePrefix = 'var basic = new IoTBlocklyHelper.Basic();\nvar gpio = new IoTBlocklyHelper.Gpio();\nvar senseHat = new IoTBlocklyHelper.SenseHat();\n\n';
@@ -705,11 +707,11 @@
         var onresize = function (e)
         {
             var bodyheight = $(window).height();
-            var tempHeight = bodyheight - blocklyDiv.offsetTop - 10;
+            var tempHeight = bodyheight - blocklyArea.offsetTop - 26;
             if (tempHeight < 0) {
 
             } else {
-                $("#blocklyDiv").height(tempHeight);
+                $("#blocklyArea").height(tempHeight);
             }
             tempHeight = bodyheight - generatedCodeArea.offsetTop - 50;
             if (tempHeight < 0)
@@ -718,6 +720,20 @@
             } else {
                 $("#generatedCodeArea").height(tempHeight);
             }
+            // Compute the absolute coordinates and dimensions of blocklyArea.
+            var element = blocklyArea;
+            var x = 0;
+            var y = 0;
+            do {
+              x += element.offsetLeft;
+              y += element.offsetTop;
+              element = element.offsetParent;
+            } while (element);
+            // Position blocklyDiv over blocklyArea.
+            blocklyDiv.style.left = x + 'px';
+            blocklyDiv.style.top = y + 'px';
+            blocklyDiv.style.width = blocklyArea.offsetWidth + 'px';
+            blocklyDiv.style.height = blocklyArea.offsetHeight + 'px';            
         }
         $(document).ready(function() {
             onresize();
