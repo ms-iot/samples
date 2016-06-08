@@ -151,6 +151,7 @@
       </category>
       <category name="Input" colour="3">
         <block type="device_get_acceleration"></block>
+        <block type="device_analog_read_channel"></block>
       </category>
       <category name="Images" colour="45">
         <block type="device_create_image"></block>
@@ -702,7 +703,7 @@
         var blocklyArea = document.getElementById('blocklyArea');
         var blocklyDiv = document.getElementById('blocklyDiv');
         var generatedCodeArea = document.getElementById('generatedCodeArea');
-        var codePrefix = 'var basic = new IoTBlocklyHelper.Basic();\nvar gpio = new IoTBlocklyHelper.Gpio();\nvar senseHat = new IoTBlocklyHelper.SenseHat();\n\n';
+        var codePrefix = 'var basic = new IoTBlocklyHelper.Basic();\nvar gpio = new IoTBlocklyHelper.Gpio();\nvar senseHat = new IoTBlocklyHelper.SenseHat();\nvar adc = new IoTBlocklyHelper.Adc();\n\n';
 
         var onresize = function (e)
         {

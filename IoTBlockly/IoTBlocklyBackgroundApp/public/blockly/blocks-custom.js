@@ -36,6 +36,17 @@ var accelAxisDropdown = [
   ["z", "2"]
 ]
 
+var analogChannelDropdown = [
+  ["0", "0"],
+  ["1", "1"],
+  ["2", "2"],
+  ["3", "3"],
+  ["4", "4"],
+  ["5", "5"],
+  ["6", "6"],
+  ["7", "7"]
+]
+
 Blockly.Blocks['device_pause'] = {
   init: function() {
     this.setHelpUrl('https://www.microbit.co.uk/functions/pause');
@@ -239,7 +250,6 @@ Blockly.Blocks['device_get_acceleration'] = {
     }
 };
 
-
 Blockly.Blocks['device_set_onboard_led'] = {
     init: function () {
         // TODO (alecont): link below is not right
@@ -272,5 +282,19 @@ Blockly.Blocks['device_digital_write_pin'] = {
         this.setPreviousStatement(true);
         this.setNextStatement(true);
         this.setTooltip('Turn a specific a GPIO pin on or off.');
+    }
+};
+
+Blockly.Blocks['device_analog_read_channel'] = {
+    init: function () {
+        this.setHelpUrl('https://www.microbit.co.uk/functions/acceleration');
+        this.setColour(blockColors.input);
+        this.appendDummyInput()
+            .appendField("analog value");
+        this.appendDummyInput()
+            .appendField(new Blockly.FieldDropdown(analogChannelDropdown), "CHANNEL");
+        this.setInputsInline(true);
+        this.setOutput(true, "Number");
+        this.setTooltip('Get the analog input from the specific channel (value returned is between 0 and 1023).');
     }
 };

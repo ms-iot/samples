@@ -108,6 +108,9 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdcMcp3008ControllerProvider.cs" />
+    <Compile Include="AdcMcp3008Provider.cs" />
+    <Compile Include="Adc.cs" />
     <Compile Include="Basic.cs" />
     <Compile Include="Gpio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

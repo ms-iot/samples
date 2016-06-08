@@ -123,3 +123,10 @@ Blockly.JavaScript['device_show_image_offset'] = function(block) {
     var offsetY = Blockly.JavaScript.valueToCode(block, 'OFFSETY', Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
     return 'senseHat.drawLedMatrix(' + matrix + ', ' + color + ', ' + offsetX + ', ' + offsetY + ', true);\n';
 };
+
+Blockly.JavaScript['device_analog_read_channel'] = function(block) {
+    // Get the analog input from the specific channel (value returned is between 0 and 1023)
+    var channel = String(Number(block.getFieldValue('CHANNEL')));
+    var code = 'adc.getValueFromChannel(' + channel + ')';
+    return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
