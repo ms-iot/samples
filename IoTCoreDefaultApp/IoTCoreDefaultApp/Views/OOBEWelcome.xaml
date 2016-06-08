@@ -30,7 +30,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-  <ScrollViewer HorizontalScrollMode="Disabled" >
     <Grid Background="{StaticResource AccentBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" MaxWidth="40"/>
@@ -44,7 +43,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="5*"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
 
@@ -52,23 +51,25 @@
         <TextBlock Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Text="{Binding [OOBEIntroText]}" Style="{ThemeResource BodyTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,14,0,0"/>
 
         <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding [OOBELanguageSelectText]}" Style="{ThemeResource BaseTextBlockStyle}" HorizontalAlignment="Left" FontWeight="Normal" VerticalAlignment="Top" Margin="0,54,0,0"/>
-        <ListView Grid.Column="1" Grid.Row="4" x:Name="LanguagesListView" ItemContainerStyle="{ThemeResource LanguageSelectionListViewItemStyle}" Margin="0,14,20,0" HorizontalAlignment="Left" Width="446" VerticalAlignment="Top" SelectionMode="Single" HorizontalContentAlignment="Stretch" SelectionChanged="LanguagesListBox_SelectionChanged" />
+        <ListView Grid.Column="1" Grid.Row="4" x:Name="LanguagesListView" ItemContainerStyle="{ThemeResource LanguageSelectionListViewItemStyle}" Margin="0,14,20,0" SelectionMode="Single" HorizontalContentAlignment="Stretch" SelectionChanged="LanguagesListBox_SelectionChanged" />
 
         <Grid Grid.Column="2" Grid.Row="4">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="*" MaxHeight="120" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0">
-                <TextBlock Text="{Binding [MainPageDeviceNameText]}" Style="{StaticResource BaseTextBlockStyle}" />
-                <TextBlock x:Name="DeviceName" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}" />
-                <TextBlock Text="{Binding [MainPageIPAddressText]}" x:Name="IPAddressCaption" Style="{StaticResource BaseTextBlockStyle}" Margin="0,16,0,0" />
-                <TextBlock x:Name="IPAddress1" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}"/>
-                <TextBlock Text="{Binding [MainPageOSVersionText]}" x:Name="OSVersionCaption" Style="{StaticResource BaseTextBlockStyle}" Margin="0,16,0,0" />
-                <TextBlock x:Name="OSVersion" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}"/>
-            </StackPanel>
+            <ScrollViewer Grid.Row="0">
+                <StackPanel>
+                    <TextBlock Text="{Binding [MainPageDeviceNameText]}" Style="{StaticResource BaseTextBlockStyle}" />
+                    <TextBlock x:Name="DeviceName" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}" />
+                    <TextBlock Text="{Binding [MainPageIPAddressText]}" x:Name="IPAddressCaption" Style="{StaticResource BaseTextBlockStyle}" Margin="0,16,0,0" />
+                    <TextBlock x:Name="IPAddress1" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}"/>
+                    <TextBlock Text="{Binding [MainPageOSVersionText]}" x:Name="OSVersionCaption" Style="{StaticResource BaseTextBlockStyle}" Margin="0,16,0,0" />
+                    <TextBlock x:Name="OSVersion" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}"/>
+                </StackPanel>
+            </ScrollViewer>
 
             <StackPanel x:Name="ChooseDefaultLanguage" Grid.Row="2" Visibility="Collapsed">
                 <TextBlock Text="{Binding [DefaultLanguageTimeoutText]}" TextWrapping="Wrap"/>
@@ -88,5 +89,4 @@
         </Grid>
 
     </Grid>
-  </ScrollViewer>
 </Page>
