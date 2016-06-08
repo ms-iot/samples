@@ -130,3 +130,10 @@ Blockly.JavaScript['device_analog_read_channel'] = function(block) {
     var code = 'adc.getValueFromChannel(' + channel + ')';
     return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
+
+Blockly.JavaScript['device_plot_bar_graph'] = function(block) {
+    // Graph
+    var value = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
+    var high = Blockly.JavaScript.valueToCode(block, 'HIGH', Blockly.JavaScript.ORDER_ASSIGNMENT) || '1023';
+    return 'senseHat.plotBarGraph(' + value + ', ' +  high + ');\n';
+};

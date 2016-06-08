@@ -153,6 +153,20 @@
         <block type="device_get_acceleration"></block>
         <block type="device_analog_read_channel"></block>
       </category>
+      <category name="Led" colour="300">
+        <block type="device_plot_bar_graph">
+            <value name="VALUE">
+                <shadow type="math_number">
+                    <field name="NUM">0</field>
+                </shadow>
+            </value>
+            <value name="HIGH">
+                <shadow type="math_number">
+                    <field name="NUM">1023</field>
+                </shadow>
+            </value>
+        </block>
+      </category>
       <category name="Images" colour="45">
         <block type="device_create_image"></block>
         <block type="device_create_small_image"></block>
@@ -191,39 +205,6 @@
           <block type="variables_set"></block>
           <block type="variables_get"></block>
       </category>
-    </xml>
-
-    <xml id="sampleBlinky" style="display: none">
-      <block type="device_forever" x="20" y="20">
-        <statement name="DO">
-          <block type="device_set_onboard_led">
-            <field name="STATE">1</field>
-            <next>
-              <block type="device_pause">
-                <value name="PAUSE">
-                  <shadow type="math_number">
-                    <field name="NUM">100</field>
-                  </shadow>
-                </value>
-                <next>
-                  <block type="device_set_onboard_led">
-                    <field name="STATE">0</field>
-                    <next>
-                      <block type="device_pause">
-                        <value name="PAUSE">
-                          <shadow type="math_number">
-                            <field name="NUM">100</field>
-                          </shadow>
-                        </value>
-                      </block>
-                    </next>
-                  </block>
-                </next>
-              </block>
-            </next>
-          </block>
-        </statement>
-      </block>
     </xml>
 
     <xml id="heartbeat" style="display: none">

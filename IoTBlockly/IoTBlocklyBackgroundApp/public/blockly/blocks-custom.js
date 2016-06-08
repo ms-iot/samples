@@ -298,3 +298,21 @@ Blockly.Blocks['device_analog_read_channel'] = {
         this.setTooltip('Get the analog input from the specific channel (value returned is between 0 and 1023).');
     }
 };
+
+Blockly.Blocks['device_plot_bar_graph'] = {
+  init: function() {
+    this.setHelpUrl('https://www.microbit.co.uk/functions/plot-bar-graph');
+    this.setColour(blockColors.led);
+    this.appendDummyInput()
+        .appendField("plot bar graph");
+    this.appendValueInput("VALUE")
+        .setCheck("Number")
+        .appendField("of");
+    this.appendValueInput("HIGH")
+        .setCheck("Number")
+        .appendField("up to");
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setTooltip('Displays a bar graph of the value compared to high.');
+  }
+};

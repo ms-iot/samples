@@ -135,6 +135,70 @@ namespace IoTBlocklyHelper
 
         }
 
+        //        export function plotBarGraph(value: number, high: number): void {
+        //        let now = input.runningTime();
+        //        serial.writeString(value.toString() + "\r\n");
+        //        value = Math.abs(value);
+
+        //        if (high != 0) barGraphHigh = high;
+        //        else if (value > barGraphHigh || now - barGraphHighLast > 5000) {
+        //            barGraphHigh = value;
+        //            barGraphHighLast = now;
+        //        }
+
+        //    barGraphHigh = Math.max(barGraphHigh, 16);
+
+        //        let v = (value * 15) / barGraphHigh;
+        //    let k = 0;
+        //        for (let y = 4; y >= 0; --y) {
+        //            for (let x = 0; x< 3; ++x) {
+        //                if (k > v) {
+        //                    unplot(2 - x, y);
+        //                    unplot(2 + x, y);
+        //} else {
+        //                    plot(2 - x, y);
+        //                    plot(2 + x, y);
+        //                }
+        //                ++k;
+        //            }
+        //        }
+        //    }
+
+        public void PlotBarGraph(int value, int high)
+        {
+            value = Math.Abs(value);
+            high = Math.Abs(high);
+
+            Color background = Colors.Black;
+            Color foreground = Colors.Salmon;
+
+            // TODO (alecont): implement the barGraphHigh logic when high == 0
+
+            high = Math.Max(high, 32);
+            var v = (value * 31) / high;
+            int k = 0;
+            for (int y = 7; y >= 0; --y)
+            {
+                for (int x = 0; x < 4; ++x)
+                {
+                    if (k > v)
+                    {
+                        senseHat.Display.Screen[3 - x, y] = background;
+                        senseHat.Display.Screen[4 + x, y] = background;
+                    }
+                    else
+                    {
+                        // TODO (alecont): use more colors :-)
+                        senseHat.Display.Screen[3 - x, y] = foreground;
+                        senseHat.Display.Screen[4 + x, y] = foreground;
+                    }
+                    ++k;
+                }
+            }
+            // Update the physical display.
+            senseHat.Display.Update();
+        }
+
         private static IEnumerable<byte> FontBytes
         {
             get
