@@ -97,6 +97,11 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="AzureIoTHub.cs" />
+    <Compile Include="HttpManager.cs" />
+    <Compile Include="Interfaces\Http\NavConstants.cs" />
+    <Compile Include="Interfaces\Http\WebHelper.cs" />
+    <Compile Include="Interfaces\Http\WebServer.cs" />
+    <Compile Include="LocationProvider.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -109,7 +114,7 @@
     <None Include="IoTSender_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Web\default.htm" />
+    <Content Include="Assets\Web\views\default.htm" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

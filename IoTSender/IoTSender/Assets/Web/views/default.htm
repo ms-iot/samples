@@ -1,25 +1,28 @@
-<!doctype html> 
+﻿<!doctype html> 
 <html lang="en"> 
  	<head> 
  		<meta charset="utf-8"> 
  		<link rel="Stylesheet" href='http://ms-iot.github.io/content/css/bootstrap.css' />
  	  <title> IoTSender - Main Page </title> 
  		<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
- 		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>  
- 		#head# 
+ 		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
    </head> 
    <body> 
      <div class='main'> 
        <div class='container'> 
          <div class='row'> 
            <div class='col-md-12 headerbar'> 
-             #title# 
            </div> 
          </div> 
          <div class='row'> 
-             <p> hello world! </p>       
-            
-          
+            <p> hello world! </p>
+            <a href="/message/1"> send 1 message</a>
+             <a href="/message/10"> send 10 messages</a>
+             <a href="/message/100">send 100 messages</a>
+             <h2> Message Log </h2>
+             <ul id="msg-log">
+                 #msgList#
+             </ul>
          </div> 
        </div> 
      </div> 

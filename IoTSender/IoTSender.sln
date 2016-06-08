@@ -5,8 +5,6 @@ VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoTSender", "IoTSender\IoTSender.csproj", "{C0A25883-7C86-41FE-961E-20AA7B61AAA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoTSenderManager", "IoTSenderManager\IoTSenderManager.csproj", "{6F3FC249-07B1-4F88-9776-05FB45BDBB01}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -35,24 +33,6 @@ Global
 		{C0A25883-7C86-41FE-961E-20AA7B61AAA9}.Release|x86.ActiveCfg = Release|x86
 		{C0A25883-7C86-41FE-961E-20AA7B61AAA9}.Release|x86.Build.0 = Release|x86
 		{C0A25883-7C86-41FE-961E-20AA7B61AAA9}.Release|x86.Deploy.0 = Release|x86
-		{6F3FC249-07B1-4F88-9776-05FB45BDBB01}.Debug|ARM.ActiveCfg = Debug|ARM
-		{6F3FC249-07B1-4F88-9776-05FB45BDBB01}.Debug|ARM.Build.0 = Debug|ARM
-		{6F3FC249-07B1-4F88-9776-05FB45BDBB01}.Debug|ARM.Deploy.0 = Debug|ARM
-		{6F3FC249-07B1-4F88-9776-05FB45BDBB01}.Debug|x64.ActiveCfg = Debug|x64
-		{6F3FC249-07B1-4F88-9776-05FB45BDBB01}.Debug|x64.Build.0 = Debug|x64
-		{6F3FC249-07B1-4F88-9776-05FB45BDBB01}.Debug|x64.Deploy.0 = Debug|x64
-		{6F3FC249-07B1-4F88-9776-05FB45BDBB01}.Debug|x86.ActiveCfg = Debug|x86
-		{6F3FC249-07B1-4F88-9776-05FB45BDBB01}.Debug|x86.Build.0 = Debug|x86
-		{6F3FC249-07B1-4F88-9776-05FB45BDBB01}.Debug|x86.Deploy.0 = Debug|x86
-		{6F3FC249-07B1-4F88-9776-05FB45BDBB01}.Release|ARM.ActiveCfg = Release|ARM
-		{6F3FC249-07B1-4F88-9776-05FB45BDBB01}.Release|ARM.Build.0 = Release|ARM
-		{6F3FC249-07B1-4F88-9776-05FB45BDBB01}.Release|ARM.Deploy.0 = Release|ARM
-		{6F3FC249-07B1-4F88-9776-05FB45BDBB01}.Release|x64.ActiveCfg = Release|x64
-		{6F3FC249-07B1-4F88-9776-05FB45BDBB01}.Release|x64.Build.0 = Release|x64
-		{6F3FC249-07B1-4F88-9776-05FB45BDBB01}.Release|x64.Deploy.0 = Release|x64
-		{6F3FC249-07B1-4F88-9776-05FB45BDBB01}.Release|x86.ActiveCfg = Release|x86
-		{6F3FC249-07B1-4F88-9776-05FB45BDBB01}.Release|x86.Build.0 = Release|x86
-		{6F3FC249-07B1-4F88-9776-05FB45BDBB01}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
