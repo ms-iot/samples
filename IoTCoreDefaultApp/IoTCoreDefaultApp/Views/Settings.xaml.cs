@@ -107,7 +107,7 @@ namespace IoTCoreDefaultApp
                 {
                     if (deviceWatcher == null  ||  (DeviceWatcherStatus.Stopped == deviceWatcher.Status) )
                     {
-                        StartWatcher();
+                        StartWatchingAndDisplayConfirmationMessage();
                     }
                 }
             }
@@ -152,11 +152,6 @@ namespace IoTCoreDefaultApp
                     DisplayMessagePanel(confirmationMessage, MessageType.InformationalMessage);
                 });
             }
-        }
-
-        private void StartWatcherButton_Click(object sender, RoutedEventArgs e)
-        {
-            StartWatchingAndDisplayConfirmationMessage();
         }
 
         private void StartWatchingAndDisplayConfirmationMessage()
