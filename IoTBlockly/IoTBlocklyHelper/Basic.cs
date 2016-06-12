@@ -6,6 +6,7 @@ namespace IoTBlocklyHelper
     public sealed class Basic
     {
         private readonly ManualResetEventSlim waitEvent = new ManualResetEventSlim(false);
+        private readonly DateTime startTime = DateTime.Now;
 
         public Basic()
         {
@@ -14,6 +15,11 @@ namespace IoTBlocklyHelper
         public void Pause(double milliseconds)
         {
             waitEvent.Wait(TimeSpan.FromMilliseconds(milliseconds));
+        }
+
+        public double RunningTime()
+        {
+            return (DateTime.Now - startTime).TotalMilliseconds;
         }
     }
 }

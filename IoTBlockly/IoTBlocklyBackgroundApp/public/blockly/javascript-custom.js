@@ -15,6 +15,19 @@ Blockly.JavaScript['device_pause'] = function(block) {
     return 'basic.pause(' + pause + ');\n';
 };
 
+Blockly.JavaScript['device_pause_until'] = function(block) {
+    // Pause statement with condition
+    var pause = Blockly.JavaScript.valueToCode(block, 'PAUSE', Blockly.JavaScript.ORDER_ASSIGNMENT) || '100';
+    var condition = Blockly.JavaScript.valueToCode(block, 'CONDITION', Blockly.JavaScript.ORDER_ASSIGNMENT);
+    var branch = Blockly.JavaScript.statementToCode(block, 'DO');
+    return 'pause_until_target = basic.runningTime() + ' + pause + ';\n' +
+           'while (basic.runningTime() < pause_until_target) {\n' +
+           '  if (' + condition + ') {\n' +
+           '    ' + branch + 'break;\n' +
+           '  }\n' +
+           '}\n';
+};
+
 Blockly.JavaScript['device_print_message'] = function(block) {
     // print statement.
     var msg = Blockly.JavaScript.valueToCode(block, 'MESSAGE', Blockly.JavaScript.ORDER_ASSIGNMENT) || 'Hello!';
@@ -81,6 +94,12 @@ Blockly.JavaScript['device_get_acceleration'] = function(block) {
     return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
 
+Blockly.JavaScript['device_get_compass'] = function(block) {
+    // Find which direction on a compass the device is facing
+    var code = 'senseHat.getCompassHeading()';
+    return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
 Blockly.JavaScript['device_create_image'] = function(block) {
     // Image value (sprite) 
     var matrix = '';
@@ -136,4 +155,11 @@ Blockly.JavaScript['device_plot_bar_graph'] = function(block) {
     var value = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
     var high = Blockly.JavaScript.valueToCode(block, 'HIGH', Blockly.JavaScript.ORDER_ASSIGNMENT) || '1023';
     return 'senseHat.plotBarGraph(' + value + ', ' +  high + ');\n';
+};
+
+Blockly.JavaScript['device_get_joystick_state'] = function(block) {
+    // Check whether a joystick button is pressed right now
+    var button = String(block.getFieldValue('BUTTON'));
+    var code = 'senseHat.getJoystickState(' + button + ') > 0';
+    return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };

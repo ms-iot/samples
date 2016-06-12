@@ -34,7 +34,7 @@ var accelAxisDropdown = [
   ["x", "0"],
   ["y", "1"],
   ["z", "2"]
-]
+];
 
 var analogChannelDropdown = [
   ["0", "0"],
@@ -45,7 +45,16 @@ var analogChannelDropdown = [
   ["5", "5"],
   ["6", "6"],
   ["7", "7"]
-]
+];
+
+var joystickButtonDropdown = [
+  ["fire", "IoTBlocklyHelper.SenseHatJoystickButton.enter"],
+  ["up", "IoTBlocklyHelper.SenseHatJoystickButton.up"],
+  ["down", "IoTBlocklyHelper.SenseHatJoystickButton.down"],
+  ["left", "IoTBlocklyHelper.SenseHatJoystickButton.left"],
+  ["right", "IoTBlocklyHelper.SenseHatJoystickButton.right"],
+  ["any", "IoTBlocklyHelper.SenseHatJoystickButton.any"]
+];
 
 Blockly.Blocks['device_pause'] = {
   init: function() {
@@ -59,6 +68,25 @@ Blockly.Blocks['device_pause'] = {
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setTooltip('Stop execution for the given delay, hence allowing other threads of execution to run.');
+  }
+};
+
+Blockly.Blocks['device_pause_until'] = {
+  init: function() {
+    this.setHelpUrl('https://www.microbit.co.uk/functions/pause');
+    this.setColour(blockColors.basic);
+    this.appendValueInput("PAUSE")
+        .setCheck("Number")
+        .appendField("pause (ms)");
+    this.appendValueInput("CONDITION")
+        .setCheck("Boolean")
+        .appendField(" or, if ");
+    this.appendStatementInput('DO')
+        .appendField("do");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setTooltip('Stop execution for the given delay, or until a certain condition is met.');
   }
 };
 
@@ -250,6 +278,18 @@ Blockly.Blocks['device_get_acceleration'] = {
     }
 };
 
+Blockly.Blocks['device_get_compass'] = {
+    init: function () {
+        this.setColour(blockColors.input);
+        this.appendDummyInput()
+            .appendField("compass heading (°)");
+        this.setInputsInline(true);
+        this.setOutput(true, "Number");
+        this.setTooltip('Find which direction on a compass the device is facing.');
+    }
+};
+
+
 Blockly.Blocks['device_set_onboard_led'] = {
     init: function () {
         // TODO (alecont): link below is not right
@@ -287,10 +327,9 @@ Blockly.Blocks['device_digital_write_pin'] = {
 
 Blockly.Blocks['device_analog_read_channel'] = {
     init: function () {
-        this.setHelpUrl('https://www.microbit.co.uk/functions/acceleration');
-        this.setColour(blockColors.input);
+        this.setColour(blockColors.pins);
         this.appendDummyInput()
-            .appendField("analog value");
+            .appendField("analog read pin");
         this.appendDummyInput()
             .appendField(new Blockly.FieldDropdown(analogChannelDropdown), "CHANNEL");
         this.setInputsInline(true);
@@ -315,4 +354,19 @@ Blockly.Blocks['device_plot_bar_graph'] = {
     this.setNextStatement(true);
     this.setTooltip('Displays a bar graph of the value compared to high.');
   }
+};
+
+Blockly.Blocks['device_get_joystick_state'] = {
+    init: function () {
+        this.setColour(blockColors.input);
+        this.appendDummyInput()
+            .appendField("joystick button");
+        this.appendDummyInput()
+            .appendField(new Blockly.FieldDropdown(joystickButtonDropdown), "BUTTON");
+        this.appendDummyInput()
+            .appendField("is pressed");
+        this.setInputsInline(true);
+        this.setOutput(true, "Boolean");
+        this.setTooltip('Check whether a joystick button is pressed right now.');
+    }
 };

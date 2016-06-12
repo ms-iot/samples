@@ -17,6 +17,17 @@ namespace IoTBlocklyHelper
     // Thanks so much for this suberb library and samples. It made creating the block implementations
     // a walk in the park :-)
 
+    public enum SenseHatJoystickButton
+    {
+        None = 0x00,
+        Enter = 0x01,
+        Up = 0x02,
+        Down = 0x04,
+        Right = 0x08,
+        Left = 0x10,
+        Any = Enter | Up | Down | Right | Left
+    }
+
     public sealed class SenseHat
     {
         // notice how we keep the "hat" static so that it can be reused when we stop/restart/modify the js script
@@ -135,34 +146,8 @@ namespace IoTBlocklyHelper
 
         }
 
-        //        export function plotBarGraph(value: number, high: number): void {
-        //        let now = input.runningTime();
-        //        serial.writeString(value.toString() + "\r\n");
-        //        value = Math.abs(value);
-
-        //        if (high != 0) barGraphHigh = high;
-        //        else if (value > barGraphHigh || now - barGraphHighLast > 5000) {
-        //            barGraphHigh = value;
-        //            barGraphHighLast = now;
-        //        }
-
-        //    barGraphHigh = Math.max(barGraphHigh, 16);
-
-        //        let v = (value * 15) / barGraphHigh;
-        //    let k = 0;
-        //        for (let y = 4; y >= 0; --y) {
-        //            for (let x = 0; x< 3; ++x) {
-        //                if (k > v) {
-        //                    unplot(2 - x, y);
-        //                    unplot(2 + x, y);
-        //} else {
-        //                    plot(2 - x, y);
-        //                    plot(2 + x, y);
-        //                }
-        //                ++k;
-        //            }
-        //        }
-        //    }
+        static DateTime barGraphHighLast = DateTime.Now;
+        static int barGraphHigh = 0;
 
         public void PlotBarGraph(int value, int high)
         {
@@ -172,7 +157,16 @@ namespace IoTBlocklyHelper
             Color background = Colors.Black;
             Color foreground = Colors.Salmon;
 
-            // TODO (alecont): implement the barGraphHigh logic when high == 0
+            if (high == 0)
+            {
+                var now = DateTime.Now;
+                if ((value > barGraphHigh) || (now - barGraphHighLast).Seconds > 5)
+                {
+                    barGraphHigh = value;
+                    barGraphHighLast = now;
+                    high = barGraphHigh;
+                }
+            }
 
             high = Math.Max(high, 32);
             var v = (value * 31) / high;
@@ -197,6 +191,55 @@ namespace IoTBlocklyHelper
             }
             // Update the physical display.
             senseHat.Display.Update();
+        }
+
+        public SenseHatJoystickButton GetJoystickState(SenseHatJoystickButton mask)
+        {
+            senseHat.Joystick.Update();
+
+            SenseHatJoystickButton state = SenseHatJoystickButton.None;
+            if (senseHat.Joystick.EnterKey == KeyState.Pressed)
+            {
+                state |= SenseHatJoystickButton.Enter;
+            }
+            if (senseHat.Joystick.LeftKey == KeyState.Pressed)
+            {
+                state |= SenseHatJoystickButton.Left;
+            }
+            if (senseHat.Joystick.RightKey == KeyState.Pressed)
+            {
+                state |= SenseHatJoystickButton.Right;
+            }
+            if (senseHat.Joystick.UpKey == KeyState.Pressed)
+            {
+                state |= SenseHatJoystickButton.Up;
+            }
+            if (senseHat.Joystick.DownKey == KeyState.Pressed)
+            {
+                state |= SenseHatJoystickButton.Down;
+            }
+
+            state &= mask;
+
+            return state;
+        }
+
+        public int GetCompassHeading()
+        {
+            const double fullCircle = Math.PI * 2;
+
+            senseHat.Sensors.ImuSensor.Update();
+
+            if (!senseHat.Sensors.Pose.HasValue)
+            {
+                return -1003; // same as micro:bit (see https://m.pxt.io/reference/input/compass-heading)
+            }
+            double northAngle = senseHat.Sensors.Pose.Value.Z;
+            if (northAngle < 0)
+            {
+                northAngle += fullCircle;
+            }
+            return ((int)(northAngle / fullCircle * 360));
         }
 
         private static IEnumerable<byte> FontBytes

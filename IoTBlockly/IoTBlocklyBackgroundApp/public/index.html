@@ -117,7 +117,12 @@
             </shadow>
           </value>
         </block>
-        <block type="device_set_onboard_led">
+        <block type="device_pause_until">
+          <value name="PAUSE">
+            <shadow type="math_number">
+              <field name="NUM">100</field>
+            </shadow>
+          </value>
         </block>
       </category>
       <category name="Logic" colour="210">
@@ -151,7 +156,8 @@
       </category>
       <category name="Input" colour="3">
         <block type="device_get_acceleration"></block>
-        <block type="device_analog_read_channel"></block>
+        <block type="device_get_compass"></block>
+        <block type="device_get_joystick_state"></block>
       </category>
       <category name="Led" colour="300">
         <block type="device_plot_bar_graph">
@@ -200,6 +206,7 @@
             </shadow>
           </value>
         </block>
+        <block type="device_analog_read_channel"></block>
       </category>
       <category name="Variables" colour="330">
           <block type="variables_set"></block>
@@ -214,7 +221,7 @@
             <field name="TEXT">Hello!</field>
           </shadow>
           <block type="text">
-            <field name="TEXT">Welcome to //build 2016</field>
+            <field name="TEXT">Welcome to Windows 10 IoTCore</field>
           </block>
         </value>
         <next>
@@ -684,7 +691,11 @@
         var blocklyArea = document.getElementById('blocklyArea');
         var blocklyDiv = document.getElementById('blocklyDiv');
         var generatedCodeArea = document.getElementById('generatedCodeArea');
-        var codePrefix = 'var basic = new IoTBlocklyHelper.Basic();\nvar gpio = new IoTBlocklyHelper.Gpio();\nvar senseHat = new IoTBlocklyHelper.SenseHat();\nvar adc = new IoTBlocklyHelper.Adc();\n\n';
+        var codePrefix = 'var basic = new IoTBlocklyHelper.Basic();\n' +
+                         'var gpio = new IoTBlocklyHelper.Gpio();\n' +
+                         'var senseHat = new IoTBlocklyHelper.SenseHat();\n' +
+                         'var adc = new IoTBlocklyHelper.Adc();\n' +
+                         'var pause_until_target = 0;\n\n';
 
         var onresize = function (e)
         {
