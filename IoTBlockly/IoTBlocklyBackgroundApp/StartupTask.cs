@@ -31,15 +31,18 @@ namespace IoTBlocklyBackgroundApp
 
             server.UseStatic(publicFolder);
 
-            server.Post("/runcode", async (req, res) => {
+            server.Post("/runcode", async (req, res) =>
+            {
                 var code = req.GetValue("code");
-                if (!String.IsNullOrEmpty(code)) {
+                if (!String.IsNullOrEmpty(code))
+                {
                     host.runScriptAsync(code);
                 }
                 await res.RedirectAsync("..");
             });
 
-            server.Post("/stopcode", async (req, res) => {
+            server.Post("/stopcode", async (req, res) =>
+            {
                 host.haltScript();
                 await res.RedirectAsync("..");
             });
