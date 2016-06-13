@@ -12,20 +12,7 @@ Blockly.JavaScript['device_forever'] = function(block) {
 Blockly.JavaScript['device_pause'] = function(block) {
     // Pause statement.
     var pause = Blockly.JavaScript.valueToCode(block, 'PAUSE', Blockly.JavaScript.ORDER_ASSIGNMENT) || '100';
-    return 'basic.pause(' + pause + ');\n';
-};
-
-Blockly.JavaScript['device_pause_until'] = function(block) {
-    // Pause statement with condition
-    var pause = Blockly.JavaScript.valueToCode(block, 'PAUSE', Blockly.JavaScript.ORDER_ASSIGNMENT) || '100';
-    var condition = Blockly.JavaScript.valueToCode(block, 'CONDITION', Blockly.JavaScript.ORDER_ASSIGNMENT);
-    var branch = Blockly.JavaScript.statementToCode(block, 'DO');
-    return 'pause_until_target = basic.runningTime() + ' + pause + ';\n' +
-           'while (basic.runningTime() < pause_until_target) {\n' +
-           '  if (' + condition + ') {\n' +
-           '    ' + branch + 'break;\n' +
-           '  }\n' +
-           '}\n';
+    return 'pauseHelper(' + pause + ');\n';
 };
 
 Blockly.JavaScript['device_print_message'] = function(block) {
@@ -100,6 +87,30 @@ Blockly.JavaScript['device_get_compass'] = function(block) {
     return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
 
+Blockly.JavaScript['device_get_temperature'] = function(block) {
+    // Returns the temperature measured in Celsius (metric)
+    var code = 'senseHat.getTemperature()';
+    return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+Blockly.JavaScript['device_get_humidity'] = function(block) {
+    // Find the humidity level where you are.  Humidity is measured in % (0 - 100 % rH)
+    var code = 'senseHat.getHumidity()';
+    return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+Blockly.JavaScript['device_get_pressure'] = function(block) {
+    // Find the barometric pressure level where you are. Absolute pressure is measured in hPA (260 to 1260 hPa)
+    var code = 'senseHat.getPressure()';
+    return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+Blockly.JavaScript['device_get_running_time'] = function(block) {
+    // Find how long it has been since the program started
+    var code = '(basic.runningTime() | 0)';
+    return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
 Blockly.JavaScript['device_create_image'] = function(block) {
     // Image value (sprite) 
     var matrix = '';
@@ -162,4 +173,18 @@ Blockly.JavaScript['device_get_joystick_state'] = function(block) {
     var button = String(block.getFieldValue('BUTTON'));
     var code = 'senseHat.getJoystickState(' + button + ') > 0';
     return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+Blockly.JavaScript['device_joystick_event'] = function(block) {
+    // React to a button press
+    var button = String(block.getFieldValue('BUTTON'));
+    var condition = 'senseHat.getJoystickState(' + button + ') > 0';
+    var branch = Blockly.JavaScript.statementToCode(block, 'HANDLER');
+    return '// EVENT HANDLER START\n' +
+           'eventsQueue.push(function() {\n' +
+           '  if (' + condition + ') {\n' +
+           '    ' + branch +
+           '  }\n' +
+           '});\n' +
+           '// EVENT HANDLER END';
 };

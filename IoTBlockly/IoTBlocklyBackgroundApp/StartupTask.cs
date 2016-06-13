@@ -31,20 +31,107 @@ namespace IoTBlocklyBackgroundApp
 
             server.UseStatic(publicFolder);
 
-            server.Post("/runcode", async (req, res) => {
+            server.Post("/runcode", async (req, res) =>
+            {
                 var code = req.GetValue("code");
-                if (!String.IsNullOrEmpty(code)) {
+                if (!String.IsNullOrEmpty(code))
+                {
                     host.runScriptAsync(code);
                 }
                 await res.RedirectAsync("..");
             });
 
-            server.Post("/stopcode", async (req, res) => {
+            server.Post("/stopcode", async (req, res) =>
+            {
                 host.haltScript();
                 await res.RedirectAsync("..");
             });
 
             server.Listen(8000);
+
+
+            //            var code =
+            //@"
+            //var basic = new IoTBlocklyHelper.Basic();
+            //var gpio = new IoTBlocklyHelper.Gpio();
+            //var senseHat = new IoTBlocklyHelper.SenseHat();
+            //var adc = new IoTBlocklyHelper.Adc();
+            //var eventsQueue = [];
+
+            //function pauseHelper(ms) {
+            //  if (eventsQueue.length == 0) {
+            //    basic.pause(ms);
+            //  }
+            //  else {
+            //    // senseHat.print(eventsQueue.length, Windows.UI.Colors.black, Windows.UI.Colors.blue);
+            //    var pauseUntilTarget = basic.runningTime() + ms;
+            //    while (basic.runningTime() < pauseUntilTarget) {
+            //      for (var i = 0; i < eventsQueue.length; ++i) {
+            //        //senseHat.print(i, Windows.UI.Colors.black, Windows.UI.Colors.blue);
+            //        eventsQueue[i]();
+            //      }
+            //    }
+            //  }
+            //}
+
+            //// CODE START
+
+            //while (true) {
+            //  senseHat.clear(true);
+            //  pauseHelper(300);
+            //  senseHat.drawLedMatrix('00000000|01100110|11111111|11111111|01111110|00111100|00011000|00000000|', Windows.UI.Colors.red, 0, 0, true);
+            //  pauseHelper(300);
+            //}
+
+            //// EVENT START
+            //eventsQueue.push(function() {
+            //  //senseHat.print('q', Windows.UI.Colors.black, Windows.UI.Colors.blue);
+            //  if (senseHat.getJoystickState(IoTBlocklyHelper.SenseHatJoystickButton.enter) > 0)
+            //            {
+            //                senseHat.print('Welcome to Windows 10 IoT Core', Windows.UI.Colors.black, Windows.UI.Colors.blue);
+            //            }
+            //        });
+            //// EVENT END
+
+            //";
+
+            //            var code = @"
+            //var basic = new IoTBlocklyHelper.Basic();
+            //var gpio = new IoTBlocklyHelper.Gpio();
+            //var senseHat = new IoTBlocklyHelper.SenseHat();
+            //var adc = new IoTBlocklyHelper.Adc();
+            //var eventsQueue = [];
+
+            //function pauseHelper(ms) {
+            //    if (eventsQueue.length == 0) {
+            //        basic.pause(ms);
+            //    }
+            //    else {
+            //        var pauseUntilTarget = basic.runningTime() + ms;
+            //        while (basic.runningTime() < pauseUntilTarget) {
+            //            for (var i = 0; i < eventsQueue.length; ++i) {
+            //                eventsQueue[i]();
+            //            }
+            //        }
+            //    }
+            //}
+
+            //eventsQueue.push(function () {
+            //    if (senseHat.getJoystickState(IoTBlocklyHelper.SenseHatJoystickButton.enter) > 0) {
+            //        senseHat.print('IoT Core', Windows.UI.Colors.black, Windows.UI.Colors.blue);
+            //    }
+            //});
+
+
+            //while (true) {
+            //    senseHat.clear(true);
+            //    pauseHelper(300);
+            //    senseHat.drawLedMatrix('00000000|01100110|11111111|11111111|01111110|00111100|00011000|00000000|', Windows.UI.Colors.red, 0, 0, true);
+            //    pauseHelper(300);
+            //}
+            //";
+
+            //            host.runScriptAsync(code);
         }
     }
 }

@@ -71,25 +71,6 @@ Blockly.Blocks['device_pause'] = {
   }
 };
 
-Blockly.Blocks['device_pause_until'] = {
-  init: function() {
-    this.setHelpUrl('https://www.microbit.co.uk/functions/pause');
-    this.setColour(blockColors.basic);
-    this.appendValueInput("PAUSE")
-        .setCheck("Number")
-        .appendField("pause (ms)");
-    this.appendValueInput("CONDITION")
-        .setCheck("Boolean")
-        .appendField(" or, if ");
-    this.appendStatementInput('DO')
-        .appendField("do");
-    this.setInputsInline(true);
-    this.setPreviousStatement(true);
-    this.setNextStatement(true);
-    this.setTooltip('Stop execution for the given delay, or until a certain condition is met.');
-  }
-};
-
 Blockly.Blocks['device_forever'] = {
   init: function() {
     this.setHelpUrl('https://www.microbit.co.uk/functions/forever');
@@ -289,6 +270,49 @@ Blockly.Blocks['device_get_compass'] = {
     }
 };
 
+Blockly.Blocks['device_get_temperature'] = {
+    init: function () {
+        this.setColour(blockColors.input);
+        this.appendDummyInput()
+            .appendField("temperature (°C)");
+        this.setInputsInline(true);
+        this.setOutput(true, "Number");
+        this.setTooltip('Returns the temperature measured in Celsius (metric).');
+    }
+};
+
+Blockly.Blocks['device_get_humidity'] = {
+    init: function () {
+        this.setColour(blockColors.input);
+        this.appendDummyInput()
+            .appendField("humidity");
+        this.setInputsInline(true);
+        this.setOutput(true, "Number");
+        this.setTooltip('Find the humidity level where you are. Humidity is measured in % (0 - 100 % rH).');
+    }
+};
+
+Blockly.Blocks['device_get_pressure'] = {
+    init: function () {
+        this.setColour(blockColors.input);
+        this.appendDummyInput()
+            .appendField("barometric pressure");
+        this.setInputsInline(true);
+        this.setOutput(true, "Number");
+        this.setTooltip('Find the barometric pressure level where you are. Absolute pressure is measured in hPA (260 to 1260 hPa). 1 hPa is 1 millibar.');
+    }
+};
+
+Blockly.Blocks['device_get_running_time'] = {
+    init: function () {
+        this.setColour(blockColors.input);
+        this.appendDummyInput()
+            .appendField("running time (ms)");
+        this.setInputsInline(true);
+        this.setOutput(true, "Number");
+        this.setTooltip('Find how long it has been since the program started.');
+    }
+};
 
 Blockly.Blocks['device_set_onboard_led'] = {
     init: function () {
@@ -369,4 +393,22 @@ Blockly.Blocks['device_get_joystick_state'] = {
         this.setOutput(true, "Boolean");
         this.setTooltip('Check whether a joystick button is pressed right now.');
     }
+};
+
+Blockly.Blocks['device_joystick_event'] = {
+  init: function() {
+    this.setHelpUrl('https://www.microbit.co.uk/functions/on-button-pressed');
+    this.setColour(blockColors.input);
+    this.appendDummyInput()
+        .appendField("on joystick button");
+    this.appendDummyInput()
+        .appendField(new Blockly.FieldDropdown(joystickButtonDropdown), "BUTTON");
+    this.appendDummyInput()
+        .appendField("pressed");
+    this.appendStatementInput("HANDLER")
+        .setAlign(Blockly.ALIGN_RIGHT)
+        .appendField("do");
+    this.setInputsInline(true);
+    this.setTooltip('React to a button press.');
+  }
 };

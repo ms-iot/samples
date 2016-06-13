@@ -242,6 +242,36 @@ namespace IoTBlocklyHelper
             return ((int)(northAngle / fullCircle * 360));
         }
 
+        public int GetTemperature()
+        {
+            senseHat.Sensors.HumiditySensor.Update();
+            if (!senseHat.Sensors.Temperature.HasValue)
+            {
+                return 0;
+            }
+            return (int)Math.Round(senseHat.Sensors.Temperature.Value);
+        }
+
+        public int GetHumidity()
+        {
+            senseHat.Sensors.HumiditySensor.Update();
+            if (!senseHat.Sensors.Humidity.HasValue)
+            {
+                return 0;
+            }
+            return (int)Math.Round(senseHat.Sensors.Humidity.Value);
+        }
+
+        public int GetPressure()
+        {
+            senseHat.Sensors.PressureSensor.Update();
+            if (!senseHat.Sensors.Pressure.HasValue)
+            {
+                return 0;
+            }
+            return (int)Math.Round(senseHat.Sensors.Pressure.Value);
+        }
+
         private static IEnumerable<byte> FontBytes
         {
             get
