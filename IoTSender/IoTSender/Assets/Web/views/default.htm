@@ -3,6 +3,7 @@
  	<head> 
  		<meta charset="utf-8"> 
  		<link rel="Stylesheet" href='http://ms-iot.github.io/content/css/bootstrap.css' />
+         <link rel="stylesheet" href="../css/default.css"/>
  	  <title> IoTSender - Main Page </title> 
  		<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
  		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
@@ -14,15 +15,45 @@
            <div class='col-md-12 headerbar'> 
            </div> 
          </div> 
-         <div class='row'> 
-            <p> hello world! </p>
-            <a href="/message/1"> send 1 message</a>
-             <a href="/message/10"> send 10 messages</a>
-             <a href="/message/100">send 100 messages</a>
+           <div class="row">
+               <div class="col-md-12-headerbar">
+                   <h1> Azure IoT Hub Demo Client </h1>
+               </div>
+           </div>
+           <div class="row">
+               <h3 id="dev-loc"> Device Location: #location#</h3>
+           </div>
+           <div class="row">
+               <h2> Send Messages to Azure</h2>
+           </div>
+         <div class='row indent' >
+                <div class="msg-btn-wrapper">
+                    <a class="msg-btn" href="/message/1"> send 1 message</a>
+
+                </div>
+             <div class="msg-btn-wrapper">
+                 <a class="msg-btn" href="/message/10"> send 10 messages</a>
+             </div>
+             <div class="msg-btn-wrapper">
+                 <a class="msg-btn" href="/message/100">send 100 messages</a>
+             </div>
+             <div class="msg-btn-wrapper">
+                 <a class="msg-btn" href="/stop">stop</a>
+             </div>    
+         </div>
+           <div class="row">
              <h2> Message Log </h2>
-             <ul id="msg-log">
-                 #msgList#
-             </ul>
+               <div id="log" class="log-container">
+                   <ul id="msg-log">
+                       <p id='start-list'>#msgList#</p>
+                   </ul>
+               </div>
+               <div class="log-container">
+                   <div class="msg-btn-wrapper" id="clear-log-wrapper">
+                       <a class="msg-btn" href="/clear">clear message log</a>
+                   </div> 
+               </div>
+             
          </div> 
        </div> 
      </div> 

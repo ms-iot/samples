@@ -32,14 +32,14 @@ namespace IoTSender
         private WebHelper helper;
         private LocationProvider lp;
         private Dictionary<string, string> htmlPages;
-
+        private bool sendMsg;
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="serverPort">Port to start server on</param>
         internal HttpInterfaceManager(int serverPort)
         {
-
+            sendMsg = true;
             helper = new WebHelper();
             listener = new StreamSocketListener();
             lp = new LocationProvider();
@@ -147,39 +147,114 @@ namespace IoTSender
                     {
                         // Generate the default config page
                         html = await GeneratePageHtml(NavConstants.DEFAULT_PAGE);
+                        string loc = await lp.GetLocation();
+                        html = html.Replace("#location#", loc);
                         htmlPages.Add(NavConstants.DEFAULT_PAGE, html);
                     } 
                     await WebHelper.WriteToStream(html, os);
 
                 } else if (request.Contains(NavConstants.SEND_MESSAGE))
                 {
+                    sendMsg = true;
                     string[] messages = request.Split('/');
                     int numMsg = Int32.Parse(messages[messages.Length - 1]);
                     string listElements = "";
                     for(int i = 0; i < numMsg; i++)
                     {
-                        string msg = await lp.GetLocation();
-                        var str = new
+                        if(sendMsg)
                         {
-                            message = msg,
-                            time = DateTime.Now.ToString()
-                        };
-                        var fullMsg = JsonConvert.SerializeObject(str);
-                        await AzureIoTHub.SendDeviceToCloudMessageAsync(fullMsg);
-                        await Task.Delay(TimeSpan.FromSeconds(1));
-                        string newElement = "<li>" + fullMsg + "</li>\n";
-                        listElements= newElement+listElements;
+                            string msg = await lp.GetLocation();
+                            string[] parsedmsg = msg.Split(',');
+                            var coords = new
+                            {
+                                type = "coordinates",
+                                latitude = parsedmsg[0],
+                                longitude = parsedmsg[1]
+                            };
+                            var str = new
+                            {
+                                message = coords,
+                                time = DateTime.Now.ToString()
+                            };
+                            var fullMsg = JsonConvert.SerializeObject(str);
+                            await AzureIoTHub.SendDeviceToCloudMessageAsync(fullMsg);
+                            await Task.Delay(TimeSpan.FromSeconds(1));
+                            string newElement = "<li class='msg'>" + fullMsg + "</li>\n";
+                            listElements = newElement + listElements;
+                        } else
+                        {
+                            Debug.WriteLine("MESSAGES STOPPED");
+                        }
+                        
                         
                     }
-                    if (htmlPages.ContainsKey(NavConstants.DEFAULT_PAGE))
+                    if (htmlPages.ContainsKey(NavConstants.DEFAULT_PAGE) )
                     {
                         string html = htmlPages[NavConstants.DEFAULT_PAGE];
-                        listElements = "#msgList#\n" + listElements;
-                        html = html.Replace("#msgList#", listElements);
+                        listElements = "<p id='start-list'>#msgList#</p> \n" + listElements;
+                        html = html.Replace("<p id='start-list'>#msgList#</p>", listElements);
                         htmlPages[NavConstants.DEFAULT_PAGE] = html;
                         await WebHelper.WriteToStream(html, os);
                     }
 
+                } else if(request.Contains(NavConstants.CANCEL_MESSAGE))
+                {
+                    sendMsg = false;
+                }
+                else
+                {
+                    using (Stream resp = os.AsStreamForWrite())
+                    {
+                        bool exists = true;
+                        try
+                        {
+                            var folder = Windows.ApplicationModel.Package.Current.InstalledLocation;
+
+                            // Map the requested path to Assets\Web folder
+                            string filePath = NavConstants.ASSETSWEB + request.Replace('/', '\\');
+
+                            // Open the file and write it to the stream
+                            using (Stream fs = await folder.OpenStreamForReadAsync(filePath))
+                            {
+                                string contentType = "";
+                                if (request.Contains("css"))
+                                {
+                                    contentType = "Content-Type: text/css\r\n";
+                                }
+                                if (request.Contains("htm"))
+                                {
+                                    contentType = "Content-Type: text/html\r\n";
+                                }
+                                string header = String.Format("HTTP/1.1 200 OK\r\n" +
+                                                "Content-Length: {0}\r\n{1}" +
+                                                "Connection: close\r\n\r\n",
+                                                fs.Length,
+                                                contentType);
+                                byte[] headerArray = Encoding.UTF8.GetBytes(header);
+                                await resp.WriteAsync(headerArray, 0, headerArray.Length);
+                                await fs.CopyToAsync(resp);
+                            }
+                        }
+                        catch (FileNotFoundException ex)
+                        {
+                            exists = false;
+
+                            // Log telemetry event about this exception
+                            var events = new Dictionary<string, string> { { "WebServer", ex.Message } };
+                        }
+
+                        // Send 404 not found if can't find file
+                        if (!exists)
+                        {
+                            byte[] headerArray = Encoding.UTF8.GetBytes(
+                                                  "HTTP/1.1 404 Not Found\r\n" +
+                                                  "Content-Length:0\r\n" +
+                                                  "Connection: close\r\n\r\n");
+                            await resp.WriteAsync(headerArray, 0, headerArray.Length);
+                        }
+
+                        await resp.FlushAsync();
+                    }
                 }
             }
             catch (Exception ex)

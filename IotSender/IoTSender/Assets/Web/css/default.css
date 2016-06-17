@@ -1,0 +1,43 @@
+
+#start-list {
+    opacity: 0;
+}
+.msg-btn-wrapper {
+    width:200px;
+    height:40px;
+    display: inline-block;
+    background-color: rebeccapurple;
+    text-align:center;
+}
+.msg-btn {
+    position: relative;
+    top:15%;
+    font-size:20px;
+    color:white;
+}
+.msg-btn:hover{
+    text-decoration:none;
+}
+#dev-loc{
+    margin: 50px 0px;
+}
+.indent {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+.log-container {
+    display:inline-block;
+    width:49%;
+    vertical-align:middle;
+}
+#log{
+    height:200px;
+    overflow-y:scroll;
+    border: 1px solid gray;
+}
+#clear-log-wrapper {
+    margin-left: 20px;
+}
+.msg {
+    list-style-type: none;
+}
