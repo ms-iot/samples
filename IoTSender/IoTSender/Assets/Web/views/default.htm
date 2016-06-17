@@ -7,6 +7,15 @@
  	  <title> IoTSender - Main Page </title> 
  		<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
  		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
+         <script>
+             $(document).ready(function () {
+                 $(".send-btn").click(function () {
+                     if ($('#sending').length < 1) {
+                         $("#status-update").append("<h4 id='sending'> Sending messages to Azure...</h4>");
+                     }
+                 })
+             })
+         </script>
    </head> 
    <body> 
      <div class='main'> 
@@ -20,7 +29,7 @@
                    <h1> Azure IoT Hub Demo Client </h1>
                </div>
            </div>
-           <div class="row">
+           <div class="row" id="status-update">
                <h3 id="dev-loc"> Device Location: #location#</h3>
            </div>
            <div class="row">
@@ -28,14 +37,14 @@
            </div>
          <div class='row indent' >
                 <div class="msg-btn-wrapper">
-                    <a class="msg-btn" href="/message/1"> send 1 message</a>
+                    <a class="msg-btn send-btn" href="/message/1"> send 1 message</a>
 
                 </div>
              <div class="msg-btn-wrapper">
-                 <a class="msg-btn" href="/message/10"> send 10 messages</a>
+                 <a class="msg-btn send-btn" href="/message/10"> send 10 messages</a>
              </div>
              <div class="msg-btn-wrapper">
-                 <a class="msg-btn" href="/message/100">send 100 messages</a>
+                 <a class="msg-btn send-btn" href="/message/100">send 100 messages</a>
              </div>
              <div class="msg-btn-wrapper">
                  <a class="msg-btn" href="/stop">stop</a>
@@ -49,8 +58,11 @@
                    </ul>
                </div>
                <div class="log-container">
-                   <div class="msg-btn-wrapper" id="clear-log-wrapper">
-                       <a class="msg-btn" href="/clear">clear message log</a>
+                   <div class="msg-btn-wrapper log-btn">
+                       <a class="msg-btn" id="clear-log"href="/clear">clear</a>
+                   </div> 
+                   <div class="msg-btn-wrapper log-btn" >
+                       <a class="msg-btn" id="refresh-log" href="/refresh">refresh </a>
                    </div> 
                </div>
              

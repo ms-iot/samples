@@ -10,11 +10,20 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="1.5*"/>
-            <RowDefinition Height="7*"/>
-            <RowDefinition Height="1.5*" />
+            <RowDefinition Height="1.25*"/>
+            <RowDefinition Height="6.5*"/>
+            <RowDefinition Height="1.25*" />
         </Grid.RowDefinitions>
         
         <maps:MapControl x:Name="myMap" Grid.Row="1" Margin="20" MapServiceToken="nSpxRW98b2nEdBPt7dJ2~o0Os-cfzI4utkCAC8CaHMw~ArikLpbltiClL_hHSEOEeV-obeDUfI-b2wo9sEv4bn965FMscvOlxKGEHzuBVXvg"/>
+        <Grid Grid.Row="2" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="7*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <ListView x:Name="myMessages" Grid.Row="2" Grid.Column="0"/>
+            <Button x:Name="ClearLog" Grid.Row="2" Grid.Column="1" Content="Clear" Margin="10" HorizontalAlignment="Right"/>
+        </Grid>
+        
     </Grid>
 </Page>

@@ -32,7 +32,10 @@ namespace IoTSender
         private WebHelper helper;
         private LocationProvider lp;
         private Dictionary<string, string> htmlPages;
+        private Dictionary<string, string> originalPages;
         private bool sendMsg;
+        private string devloc;
+        
         /// <summary>
         /// Constructor
         /// </summary>
@@ -44,6 +47,7 @@ namespace IoTSender
             listener = new StreamSocketListener();
             lp = new LocationProvider();
             htmlPages = new Dictionary<string, string>();
+            originalPages = new Dictionary<string, string>();
             port = serverPort;
             listener.ConnectionReceived += (s, e) =>
             {
@@ -127,7 +131,53 @@ namespace IoTSender
                 Debug.WriteLine("Exception in processRequestAsync(): " + ex.Message);
             }
         }
+        private async Task SendMessages(string request)
+        {
+            sendMsg = true;
+            string[] messages = request.Split('/');
+            int numMsg = Int32.Parse(messages[messages.Length - 1]);
+            string listElements = "";
+            for (int i = 0; i < numMsg; i++)
+            {
+                if (sendMsg)
+                {
+                    string msg = await lp.GetLocation();
+                    string[] parsedmsg = msg.Split(',');
+                    var coords = new
+                    {
+                        type = "coordinates",
+                        latitude = parsedmsg[0],
+                        longitude = parsedmsg[1]
+                    };
+                    var str = new
+                    {
+                        message = coords,
+                        time = DateTime.Now.ToString()
+                    };
+                    var fullMsg = JsonConvert.SerializeObject(str);
+                    await AzureIoTHub.SendDeviceToCloudMessageAsync(fullMsg);
+                    await Task.Delay(TimeSpan.FromSeconds(1));
+                    string newElement = "<li class='msg'>" + fullMsg + "</li>\n";
+                    listElements = newElement + listElements;
+                }
+                else
+                {
+                    Debug.WriteLine("MESSAGES STOPPED");
+                    break;
+                }
 
+
+            }
+            if (htmlPages.ContainsKey(NavConstants.DEFAULT_PAGE))
+            {
+                string html = htmlPages[NavConstants.DEFAULT_PAGE];
+                listElements = "<p id='start-list'>#msgList#</p> \n" + listElements;
+                html = html.Replace("<p id='start-list'>#msgList#</p>", listElements);
+                htmlPages[NavConstants.DEFAULT_PAGE] = html;
+                //await WebHelper.WriteToStream(html, os);
+            }
+
+        }
         private async Task writeResponseAsync(string request, IOutputStream os, StreamSocketInformation socketInfo)
         {
             try
@@ -148,58 +198,36 @@ namespace IoTSender
                         // Generate the default config page
                         html = await GeneratePageHtml(NavConstants.DEFAULT_PAGE);
                         string loc = await lp.GetLocation();
-                        html = html.Replace("#location#", loc);
+                        devloc = "Device Location: " + loc;
+                        html = html.Replace("Device Location: #location#", devloc);
                         htmlPages.Add(NavConstants.DEFAULT_PAGE, html);
+                        originalPages.Add(NavConstants.DEFAULT_PAGE, html);
                     } 
                     await WebHelper.WriteToStream(html, os);
 
                 } else if (request.Contains(NavConstants.SEND_MESSAGE))
                 {
-                    sendMsg = true;
-                    string[] messages = request.Split('/');
-                    int numMsg = Int32.Parse(messages[messages.Length - 1]);
-                    string listElements = "";
-                    for(int i = 0; i < numMsg; i++)
-                    {
-                        if(sendMsg)
-                        {
-                            string msg = await lp.GetLocation();
-                            string[] parsedmsg = msg.Split(',');
-                            var coords = new
-                            {
-                                type = "coordinates",
-                                latitude = parsedmsg[0],
-                                longitude = parsedmsg[1]
-                            };
-                            var str = new
-                            {
-                                message = coords,
-                                time = DateTime.Now.ToString()
-                            };
-                            var fullMsg = JsonConvert.SerializeObject(str);
-                            await AzureIoTHub.SendDeviceToCloudMessageAsync(fullMsg);
-                            await Task.Delay(TimeSpan.FromSeconds(1));
-                            string newElement = "<li class='msg'>" + fullMsg + "</li>\n";
-                            listElements = newElement + listElements;
-                        } else
-                        {
-                            Debug.WriteLine("MESSAGES STOPPED");
-                        }
-                        
-                        
-                    }
-                    if (htmlPages.ContainsKey(NavConstants.DEFAULT_PAGE) )
-                    {
-                        string html = htmlPages[NavConstants.DEFAULT_PAGE];
-                        listElements = "<p id='start-list'>#msgList#</p> \n" + listElements;
-                        html = html.Replace("<p id='start-list'>#msgList#</p>", listElements);
-                        htmlPages[NavConstants.DEFAULT_PAGE] = html;
-                        await WebHelper.WriteToStream(html, os);
-                    }
+                    SendMessages(request);
 
                 } else if(request.Contains(NavConstants.CANCEL_MESSAGE))
                 {
                     sendMsg = false;
+                } else if (request.Contains(NavConstants.CLEAR_LOG))
+                {
+                    string loc = await lp.GetLocation();
+                    loc = "Device Location: " + loc;
+                    string html = originalPages[NavConstants.DEFAULT_PAGE].Replace(devloc, loc);
+                    devloc = loc;
+                    htmlPages[NavConstants.DEFAULT_PAGE] = html;
+                    await WebHelper.WriteToStream(htmlPages[NavConstants.DEFAULT_PAGE], os);
+                } else if (request.Contains(NavConstants.REFRESH_LOG))
+                {
+                    string loc = await lp.GetLocation();
+                    loc = "Device Location: " + loc;
+                    string html = htmlPages[NavConstants.DEFAULT_PAGE].Replace(devloc, loc);
+                    devloc = loc;
+                    htmlPages[NavConstants.DEFAULT_PAGE] = html;
+                    await WebHelper.WriteToStream(htmlPages[NavConstants.DEFAULT_PAGE], os);
                 }
                 else
                 {

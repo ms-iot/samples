@@ -35,9 +35,12 @@
     overflow-y:scroll;
     border: 1px solid gray;
 }
-#clear-log-wrapper {
-    margin-left: 20px;
-}
+
 .msg {
     list-style-type: none;
+}
+.log-btn{
+    display:block;
+    margin-bottom: 20px;
+    margin-left: 20px;
 }

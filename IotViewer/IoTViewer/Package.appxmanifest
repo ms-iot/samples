@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="f55d4235-de8e-46ae-92fc-a772dd73f3f0" Publisher="CN=t-dimaha" Version="1.0.0.0" />
+  <Identity Name="23931t-dimaha.AzureIoTHubSampleViewer" Publisher="CN=B898B9E4-E41E-42AB-8B27-16AE9478117E" Version="1.1.0.0" />
   <mp:PhoneIdentity PhoneProductId="f55d4235-de8e-46ae-92fc-a772dd73f3f0" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>IoTViewer</DisplayName>
+    <DisplayName>Azure IoTHub Sample Viewer</DisplayName>
     <PublisherDisplayName>t-dimaha</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -15,7 +15,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="IoTViewer.App">
-      <uap:VisualElements DisplayName="IoTViewer" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="IoTViewer" BackgroundColor="transparent">
+      <uap:VisualElements DisplayName="Azure IoTHub Sample Viewer" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="IoTViewer" BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png">
         </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />

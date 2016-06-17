@@ -28,11 +28,14 @@ namespace IoTViewer
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private MapManager mapManager;
+        private MessageManager msgManager;
+        private MapIcon deviceLoc;
         public MainPage()
         {
             this.InitializeComponent();
-            mapManager = new MapManager(myMap);
+            msgManager = new MessageManager(this);
+            deviceLoc = new MapIcon();
+            myMap.MapElements.Add(deviceLoc);
             myMap.Loaded += MyMap_Loaded;
             ReceiveLocation("0");
             ReceiveLocation("1");
@@ -41,20 +44,35 @@ namespace IoTViewer
     private async void ReceiveLocation(string partition)
         {
             DateTime start = DateTime.UtcNow;
-            while(true)
-            {
-                Message loc = await AzureIoT.ReceiveMessages(partition, DateTime.UtcNow - TimeSpan.FromMinutes(1), mapManager);
-                //SetMapLocation(loc);
-            }
+            await AzureIoT.ReceiveMessages(partition, DateTime.UtcNow - TimeSpan.FromMinutes(1), msgManager);
 
         }
         private async void MyMap_Loaded(object sender, RoutedEventArgs e)
         {
-            // center on Notre Dame Cathedral  
             Message currLoc = SimulatedAzureIoT.GetResults();
-            mapManager.SetMapLocation(currLoc);
+            msgManager.SetMapLocation(currLoc);
         }
 
+        public async void SetMapLocation(double lat, double lng, string timestamp)
+        {
+            var center =
+               new Geopoint(new BasicGeoposition()
+               {
+                   Latitude = lat,
+                   Longitude = lng
+
+               });
+
+            // retrieve map
+            await myMap.TrySetSceneAsync(MapScene.CreateFromLocationAndRadius(center, 250));
+            deviceLoc.Location = center;
+            deviceLoc.Title = timestamp;
+
+        }
+        public void AddMessageToLog(string msg)
+        {
+            this.myMessages.Items.Insert(0, msg);
+        }
     }
 }
 

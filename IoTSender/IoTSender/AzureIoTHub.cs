@@ -10,7 +10,7 @@ static class AzureIoTHub
     // Note: this connection string is specific to the device "dimaha01". To configure other devices,
     // see information on iothub-explorer at http://aka.ms/iothubgetstartedVSCS
     //
-    const string deviceConnectionString = "HostName=hub-dimaha.azure-devices.net;DeviceId=dimaha01;SharedAccessKey=Pp+rGghQKmhx4Rdl4OaUGF9dcwHZ+n+Zt3jQwO3xFic=";
+    const string deviceConnectionString = "...";
 
     //
     // To monitor messages sent to device "dimaha01" use iothub-explorer as follows:

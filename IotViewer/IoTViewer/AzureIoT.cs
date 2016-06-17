@@ -18,21 +18,13 @@ namespace IoTViewer
 {
     class AzureIoT
     {
-        private const string ENDPOINT = "Endpoint";
-        private const string SHARED_ACCESS_KEY_NAME = "SharedAccessKeyName";
-        private const string SHARED_ACCESS_KEY = "SharedAccessKey";
-        private const string SHARED_ACCESS_SIGNATURE = "SharedAccessSignature";
-        private const string ENTITY_PATH = "EntityPath";
-        private const string PUBLISHER = "Publisher";
-        private const string TRANSPORT_TYPE = "TransportType";
-        const string deviceConnectionString = "HostName=hub-dimaha.azure-devices.net;DeviceId=dimaha01;SharedAccessKey=Pp+rGghQKmhx4Rdl4OaUGF9dcwHZ+n+Zt3jQwO3xFic=";
-        static string port = "ihsuprodbyres039dednamespace.servicebus.windows.net";
-        static string eventHubEntity = "iothub-ehub-hub-dimaha-42362-31f5229b77";
+        static string port = "...";
+        static string eventHubEntity = "...";
         static string keyname = "iothubowner";
-        static string key = "JSqXsxpMIi/VFmts3/GRFXUgjhzLGerci4XVkhH+yHA=";
+        static string key = "...";
         private static readonly long StartOfEpoch = (new DateTime(1970, 1, 1, 0, 0, 0, 0)).Ticks;
         
-        public static async Task<Message> ReceiveMessages(string partition, DateTime offset, MapManager mappy)
+        public static async Task ReceiveMessages(string partition, DateTime offset, MessageManager msgman)
         {
             Address address = new Address(port, 5671, keyname, key, "/", "amqps");
             Connection connection = await Connection.Factory.CreateAsync(address);
@@ -52,7 +44,7 @@ namespace IoTViewer
                     FilterSet = filters
                 }, null);
             Amqp.Types.Symbol deviceIdKey = new Amqp.Types.Symbol("iothub-connection-device-id");
-            string deviceId = "dimaha01";
+            string deviceId = "...";
             while (true)
             {
                 Amqp.Message m = await receiver.ReceiveAsync(10000);
@@ -64,37 +56,14 @@ namespace IoTViewer
                         receiver.Accept(m);
                         Data data = (Data)m.BodySection;
                         string msg = System.Text.Encoding.UTF8.GetString(data.Binary, 0, data.Binary.Length);
-                        JObject jsonMsg = JObject.Parse(msg);
-                        Debug.WriteLine(jsonMsg);
-                        if (validateMessage(jsonMsg))
-                        {
-                            string type = jsonMsg["message"]["type"].ToString();
-                            if (type == "coordinates")
-                            {
-                                mappy.SetMapLocation(new Message(jsonMsg["message"]["latitude"].ToString(), jsonMsg["message"]["longitude"].ToString(), jsonMsg["time"].ToString()));
-                            }
-                        }
+                        msgman.parseMessage(msg);
+                        
                     }
                    
                 }
             }
         }
-        private static  bool validateMessage(JObject msg)
-        {
-            if(msg["message"] == null)
-            {
-                return false;
-            }
-            if(msg["message"]["type"] == null)
-            {
-                return false;
-            }
-            if(msg["time"] == null)
-            {
-                return false;
-            }
-            return true;
-        }
+        
 
 
     }

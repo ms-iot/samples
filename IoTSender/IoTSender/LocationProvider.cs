@@ -25,6 +25,7 @@ namespace IoTSender
             {
                 case GeolocationAccessStatus.Allowed:
                     Geolocator gl = new Geolocator();
+                    gl.DesiredAccuracy = PositionAccuracy.High;
                     Geoposition pos = await gl.GetGeopositionAsync();
                     coords = pos.Coordinate.Latitude.ToString() + ", " + pos.Coordinate.Longitude.ToString();
                     break;
