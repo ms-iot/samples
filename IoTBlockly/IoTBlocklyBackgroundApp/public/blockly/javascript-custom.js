@@ -6,7 +6,7 @@ Blockly.JavaScript['device_forever'] = function(block) {
     // Do while(true) loop.
     var branch = Blockly.JavaScript.statementToCode(block, 'DO');
     branch = Blockly.JavaScript.addLoopTrap(branch, block.id);
-    return 'while (true) {\n' + branch + '}\n';
+    return 'while (true) {\nrunEventsHelper();\n' + branch + '}\n';
 };
 
 Blockly.JavaScript['device_pause'] = function(block) {
