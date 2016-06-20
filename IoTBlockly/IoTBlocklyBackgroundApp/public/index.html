@@ -1853,29 +1853,44 @@
       </block>
     </xml>
 
+<!-- INCLUDE xml for last-script -->
+
     <script src="js/vendor/jquery.min.js"></script>
     <script>
         var blocklyArea = document.getElementById('blocklyArea');
         var blocklyDiv = document.getElementById('blocklyDiv');
         var generatedCodeArea = document.getElementById('generatedCodeArea');
-        var codePrefix = 'var basic = new IoTBlocklyHelper.Basic();\n' +
-                         'var gpio = new IoTBlocklyHelper.Gpio();\n' +
-                         'var senseHat = new IoTBlocklyHelper.SenseHat();\n' +
-                         'var adc = new IoTBlocklyHelper.Adc();\n' +
-                         'var eventsQueue = [];\n\n' +
-                         'function pauseHelper(ms) {\n' +
-                         '  if (eventsQueue.length == 0) {\n' +
-                         '    basic.pause(ms);\n' +
-                         '  }\n' +
-                         '  else {\n' +
-                         '    var pauseUntilTarget = basic.runningTime() + ms;\n' +
-                         '    while (basic.runningTime() < pauseUntilTarget) {\n' +
-                         '      for (var i = 0; i < eventsQueue.length; ++i) {\n' +
-                         '        eventsQueue[i]();\n' +
-                         '      }\n' +
-                         '    }\n' +
-                         '  }\n' +
-                         '}\n\n';
+        var codePrefix = 
+          'var basic = new IoTBlocklyHelper.Basic();\n' +
+          'var gpio = new IoTBlocklyHelper.Gpio();\n' +
+          'var senseHat = new IoTBlocklyHelper.SenseHat();\n' +
+          'var adc = new IoTBlocklyHelper.Adc();\n' +
+          'var eventsQueue = [];\n\n' +
+          'function pauseHelper(ms) {\n' +
+          '  if (eventsQueue.length == 0) {\n' +
+          '    basic.pause(ms);\n' +
+          '  }\n' +
+          '  else {\n' +
+          '    var pauseUntilTarget = basic.runningTime() + ms;\n' +
+          '    while (basic.runningTime() < pauseUntilTarget) {\n' +
+          '      for (var i = 0; i < eventsQueue.length; ++i) {\n' +
+          '        eventsQueue[i]();\n' +
+          '      }\n' +
+          '    }\n' +
+          '  }\n' +
+          '}\n\n' +
+          'function runEventsHelper() {\n' +
+          '  for (var i = 0; i < eventsQueue.length; ++i) {\n' +
+          '    eventsQueue[i]();\n' +
+          '  }\n' +
+          '}\n\n';
+        var codePostfix =
+          '\n' +
+          'if (eventsQueue.length > 0) {\n' +
+          '  while (true) {\n' +
+          '    runEventsHelper();\n' +
+          '  }\n' +
+          '}\n';
 
         var onresize = function (e)
         {
@@ -1941,7 +1956,11 @@
                 Blockly.Xml.domToWorkspace(workspace, xml);
             }
             else {
-                loadSample('heartbeat');
+                var startBlocksId = 'last-script';
+                if (!document.getElementById(startBlocksId)) {
+                    startBlocksId = 'heartbeat';
+                }
+                loadSample(startBlocksId);
             }
         }
         
@@ -1982,7 +2001,7 @@
                 }
             }
 
-            jscode = codePrefix + jscode;
+            jscode = codePrefix + jscode + codePostfix;
             return jscode;
         }
 
@@ -2003,13 +2022,13 @@
         }
 
         function runCode() {
+            var xml = Blockly.Xml.workspaceToDom(workspace);
+            var text = Blockly.Xml.domToText(xml);
             if (window.sessionStorage) {
-                var xml = Blockly.Xml.workspaceToDom(workspace);
-                var text = Blockly.Xml.domToText(xml);
                 window.sessionStorage.loadOnceBlocks = text;
             }
             var jscode = getCode();
-            post('runcode', { code: jscode });
+            post('runcode', { code: jscode, blocks: text });
         }
 
         function stopCode() {
