@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="23931t-dimaha.AzureIoTHubSampleViewer" Publisher="CN=B898B9E4-E41E-42AB-8B27-16AE9478117E" Version="1.1.0.0" />
+  <Identity Name="Microsoft.AzureIoTHubSampleViewer" Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" Version="1.1.0.0" />
   <mp:PhoneIdentity PhoneProductId="f55d4235-de8e-46ae-92fc-a772dd73f3f0" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Azure IoTHub Sample Viewer</DisplayName>
-    <PublisherDisplayName>t-dimaha</PublisherDisplayName>
+    <PublisherDisplayName>Microsoft Corporation</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>

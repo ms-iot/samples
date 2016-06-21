@@ -12,8 +12,8 @@ namespace IoTViewer
 {
     class MessageManager
     {
-        MainPage m_view;
-        public MessageManager(MainPage view)
+        MapPage m_view;
+        public MessageManager(MapPage view)
         {
             m_view = view;
         }
