@@ -11,6 +11,7 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock FontSize="30">IoTHub Viewer</TextBlock>
             <Button x:Name="LoginButton" Content="Log in" Click="LoginButton_Click" Visibility="Collapsed"/>
             <TextBlock x:Name="UserIdTextBlock"/>
             <TextBlock x:Name="UserNameTextBlock"/>

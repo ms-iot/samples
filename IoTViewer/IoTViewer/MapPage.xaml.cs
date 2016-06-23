@@ -54,8 +54,6 @@ namespace IoTViewer
         }
         private async void MyMap_Loaded(object sender, RoutedEventArgs e)
         {
-            Message currLoc = SimulatedAzureIoT.GetResults();
-            msgManager.SetMapLocation(currLoc);
         }
 
         public async void SetMapLocation(double lat, double lng, string timestamp)
@@ -76,7 +74,7 @@ namespace IoTViewer
         }
         public void AddMessageToLog(string msg)
         {
-            //this.myMessages.Items.Insert(0, msg);
+            this.myMessages.Items.Insert(0, msg);
         }
         private async Task SignOutAccountAsync(WebAccount account)
         {
@@ -86,18 +84,13 @@ namespace IoTViewer
         }
         private async void SignOutButton_Click(object sender, RoutedEventArgs e)
         {
-            string providerId = ApplicationData.Current.LocalSettings.Values["CurrentUserProviderId"]?.ToString();
-            string accountId = ApplicationData.Current.LocalSettings.Values["CurrentUserId"]?.ToString();
-
-            if (null == providerId || null == accountId)
-            {
-                return;
-            }
-
-            WebAccountProvider provider = await WebAuthenticationCoreManager.FindAccountProviderAsync(providerId);
-            WebAccount account = await WebAuthenticationCoreManager.FindAccountAsync(provider, accountId);
-            await this.SignOutAccountAsync(account);
+            await AccountManager.SignOut();
             this.Frame.Navigate(typeof(MainPage));
+        }
+
+        private void ClearLog_Click(object sender, RoutedEventArgs e)
+        {
+            this.myMessages.Items.Clear();
         }
     }
 }

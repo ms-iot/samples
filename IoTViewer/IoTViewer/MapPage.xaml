@@ -23,7 +23,7 @@
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
             <ListView x:Name="myMessages" Grid.Row="2" Grid.Column="0"/>
-            <Button x:Name="ClearLog" Grid.Row="2" Grid.Column="1" Content="Clear" Margin="10" HorizontalAlignment="Right"/>
+            <Button x:Name="ClearLog" Grid.Row="2" Grid.Column="1" Content="Clear" Margin="10" HorizontalAlignment="Right" Click="ClearLog_Click"/>
         </Grid>
 
     </Grid>

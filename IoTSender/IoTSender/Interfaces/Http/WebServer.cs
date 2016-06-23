@@ -35,6 +35,7 @@ namespace IoTSender
         private Dictionary<string, string> originalPages;
         private bool sendMsg;
         private string devloc;
+        private string status;
         
         /// <summary>
         /// Constructor
@@ -43,6 +44,7 @@ namespace IoTSender
         internal HttpInterfaceManager(int serverPort)
         {
             sendMsg = true;
+            status = "Ready to send messages";
             helper = new WebHelper();
             listener = new StreamSocketListener();
             lp = new LocationProvider();
@@ -173,8 +175,9 @@ namespace IoTSender
                 string html = htmlPages[NavConstants.DEFAULT_PAGE];
                 listElements = "<p id='start-list'>#msgList#</p> \n" + listElements;
                 html = html.Replace("<p id='start-list'>#msgList#</p>", listElements);
+                html = html.Replace(status, "Ready to send messages");
+                status = "Ready to send messages";
                 htmlPages[NavConstants.DEFAULT_PAGE] = html;
-                //await WebHelper.WriteToStream(html, os);
             }
 
         }
@@ -208,6 +211,11 @@ namespace IoTSender
                 } else if (request.Contains(NavConstants.SEND_MESSAGE))
                 {
                     SendMessages(request);
+                    string html = htmlPages[NavConstants.DEFAULT_PAGE];
+                    html = html.Replace(status, "Sending messages to Azure...");
+                    status = "Sending messages to Azure...";
+                    htmlPages[NavConstants.DEFAULT_PAGE] = html;
+                    await WebHelper.WriteToStream(htmlPages[NavConstants.DEFAULT_PAGE], os);
 
                 } else if(request.Contains(NavConstants.CANCEL_MESSAGE))
                 {

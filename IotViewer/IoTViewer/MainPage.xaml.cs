@@ -25,6 +25,7 @@ using Windows.Data.Json;
 using Windows.Web.Http;
 using Windows.Security.Credentials;
 using Windows.Storage;
+using Windows.Security.Authentication.Web;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -40,10 +41,12 @@ namespace IoTViewer
         public MainPage()
         {
             this.InitializeComponent();
-            
+            string URI = string.Format("ms-appx-web://Microsoft.AAD.BrokerPlugIn/{0}", WebAuthenticationBroker.GetCurrentApplicationCallbackUri().Host.ToUpper());
+
+
         }
 
-    
+
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             AccountsSettingsPane.Show();
@@ -59,105 +62,20 @@ namespace IoTViewer
         private async void BuildPaneAsync(AccountsSettingsPane s,
     AccountsSettingsPaneCommandsRequestedEventArgs e)
         {
-            var deferral = e.GetDeferral();
-            var msaProvider = await WebAuthenticationCoreManager.FindAccountProviderAsync(
-        "https://login.microsoft.com", "consumers");
-            var command = new WebAccountProviderCommand(msaProvider, GetMsaTokenAsync);
-
-            e.WebAccountProviderCommands.Add(command);
-
-
-            deferral.Complete();
+            AccountManager.OnAccountCommandsRequested(s, e, this);
             
         }
-        private async void GetMsaTokenAsync(WebAccountProviderCommand command)
+        public void NavigateToMap(string name)
         {
-            string token = await GetTokenSilentlyAsync();
-            if (token == null) {
-                WebTokenRequest request = new WebTokenRequest(command.WebAccountProvider, "wl.basic");
-                WebTokenRequestResult result = await WebAuthenticationCoreManager.RequestTokenAsync(request);
-                if (result.ResponseStatus == WebTokenRequestStatus.Success)
-                {
-                    WebAccount account = result.ResponseData[0].WebAccount;
-                    StoreWebAccount(account);
-                    token = result.ResponseData[0].Token;
-                }
-            }
-            LoginWithToken(token);
-
+            this.Frame.Navigate(typeof(MapPage), name);
         }
-        private async void LoginWithToken(string token)
-        {
-            var restApi = new Uri(@"https://apis.live.net/v5.0/me?access_token=" + token);
-            string name = "";
-            using (var client = new HttpClient())
-            {
-                var infoResult = await client.GetAsync(restApi);
-                string content = await infoResult.Content.ReadAsStringAsync();
-
-                var jsonObject = JsonObject.Parse(content);
-                string id = jsonObject["id"].GetString();
-                name = jsonObject["name"].GetString();
-                m_name = name;
-                UserIdTextBlock.Text = "Id: " + id;
-                UserNameTextBlock.Text = "Name: " + name;
-                LoginButton.Visibility = Visibility.Collapsed;
-                SignOutButton.Visibility = Visibility.Visible;
-                this.Frame.Navigate(typeof(MapPage), name);
-            }
-        }
-        private async void StoreWebAccount(WebAccount account)
-        {
-            ApplicationData.Current.LocalSettings.Values["CurrentUserProviderId"] = account.WebAccountProvider.Id;
-            ApplicationData.Current.LocalSettings.Values["CurrentUserId"] = account.Id;
-        }
-        private async Task<string> GetTokenSilentlyAsync()
-        {
-            string providerId = ApplicationData.Current.LocalSettings.Values["CurrentUserProviderId"]?.ToString();
-            string accountId = ApplicationData.Current.LocalSettings.Values["CurrentUserId"]?.ToString();
-
-            if (null == providerId || null == accountId)
-            {
-                return null;
-            }
-
-            WebAccountProvider provider = await WebAuthenticationCoreManager.FindAccountProviderAsync(providerId);
-            WebAccount account = await WebAuthenticationCoreManager.FindAccountAsync(provider, accountId);
-
-            WebTokenRequest request = new WebTokenRequest(provider, "wl.basic");
-
-            WebTokenRequestResult result = await WebAuthenticationCoreManager.GetTokenSilentlyAsync(request, account);
-            if (result.ResponseStatus == WebTokenRequestStatus.UserInteractionRequired)
-            {
-                // Unable to get a token silently - you'll need to show the UI
-                return null;
-            }
-            else if (result.ResponseStatus == WebTokenRequestStatus.Success)
-            {
-                // Success
-                return result.ResponseData[0].Token;
-            }
-            else
-            {
-                // Other error 
-                return null;
-            }
-        }
-        private async Task SignOutAccountAsync(WebAccount account)
-        {
-            ApplicationData.Current.LocalSettings.Values.Remove("CurrentUserProviderId");
-            ApplicationData.Current.LocalSettings.Values.Remove("CurrentUserId");
-            account.SignOutAsync();
-        }
-
         private async void On_Loaded(object sender, RoutedEventArgs e)
         {
-            string token = await GetTokenSilentlyAsync();
-            if(token != null)
+            string name = await AccountManager.LoginSilently();
+            if(name != null)
             {
-                LoginWithToken(token);
                 SignOutButton.Visibility = Windows.UI.Xaml.Visibility.Visible;
-                //this.Frame.Navigate(typeof(MapPage), name);
+                this.Frame.Navigate(typeof(MapPage), name);
             } else
             {
                 LoginButton.Visibility = Windows.UI.Xaml.Visibility.Visible;
@@ -166,17 +84,7 @@ namespace IoTViewer
 
         private async void SignOutButton_Click(object sender, RoutedEventArgs e)
         {
-            string providerId = ApplicationData.Current.LocalSettings.Values["CurrentUserProviderId"]?.ToString();
-            string accountId = ApplicationData.Current.LocalSettings.Values["CurrentUserId"]?.ToString();
-
-            if (null == providerId || null == accountId)
-            {
-                return;
-            }
-
-            WebAccountProvider provider = await WebAuthenticationCoreManager.FindAccountProviderAsync(providerId);
-            WebAccount account = await WebAuthenticationCoreManager.FindAccountAsync(provider, accountId);
-            await this.SignOutAccountAsync(account);
+            await AccountManager.SignOut();
             LoginButton.Visibility = Windows.UI.Xaml.Visibility.Visible;
             SignOutButton.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             UserIdTextBlock.Text = "Id: ";

@@ -14,7 +14,7 @@ static class AzureIoTHub
 
     //
     // To monitor messages sent to device "dimaha01" use iothub-explorer as follows:
-    //    iothub-explorer HostName=hub-dimaha.azure-devices.net;SharedAccessKeyName=service;SharedAccessKey=XCKVcZS+dRV6be8cBqveTeJIeO6HyJ9uiIKohaDLjDY= monitor-events "dimaha01"
+    //    iothub-explorer HostName=hub-dimaha.azure-devices.net;SharedAccessKeyName=service;SharedAccessKey= monitor-events "dimaha01"
     //
 
     // Refer to http://aka.ms/azure-iot-hub-vs-cs-wiki for more information on Connected Service for Azure IoT Hub

@@ -44,7 +44,7 @@ namespace IoTViewer
                     FilterSet = filters
                 }, null);
             Amqp.Types.Symbol deviceIdKey = new Amqp.Types.Symbol("iothub-connection-device-id");
-            string deviceId = "...";
+            string deviceId = "dimaha01";
             while (true)
             {
                 Amqp.Message m = await receiver.ReceiveAsync(10000);

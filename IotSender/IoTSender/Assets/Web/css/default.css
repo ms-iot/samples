@@ -17,7 +17,9 @@
 }
 .msg-btn:hover{
     text-decoration:none;
+    color: gray;
 }
+
 #dev-loc{
     margin: 50px 0px;
 }
