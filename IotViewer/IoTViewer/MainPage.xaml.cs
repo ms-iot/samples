@@ -26,6 +26,8 @@ using Windows.Web.Http;
 using Windows.Security.Credentials;
 using Windows.Storage;
 using Windows.Security.Authentication.Web;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Windows.UI.Popups;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 

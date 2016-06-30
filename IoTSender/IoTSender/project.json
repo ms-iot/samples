@@ -2,6 +2,7 @@
   "dependencies": {
     "Microsoft.Azure.Amqp": "1.1.5",
     "Microsoft.Azure.Devices.Client": "1.0.11",
+    "Microsoft.Devices.Tpm": "1.0.0",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
     "Newtonsoft.Json": "8.0.3",
     "PCLCrypto": "2.0.147",

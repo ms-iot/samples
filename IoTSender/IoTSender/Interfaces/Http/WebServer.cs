@@ -36,7 +36,14 @@ namespace IoTSender
         private bool sendMsg;
         private string devloc;
         private string status;
-        
+        private string loginStatus = "#status#";
+        private const string  AccountContainer ="AccountContainer";
+        private const string HostKey = "HostName";
+        private const string DeviceKey = "DeviceID";
+        private const string SharedKey = "SharedKey";
+        private const string ProvisionKey = "DeviceProvision";
+        private AzureIoTHub msgHub;
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -139,6 +146,7 @@ namespace IoTSender
             string[] messages = request.Split('/');
             int numMsg = Int32.Parse(messages[messages.Length - 1]);
             string listElements = "";
+            string postStatus = "Ready to send messages";
             for (int i = 0; i < numMsg; i++)
             {
                 if (sendMsg)
@@ -157,7 +165,15 @@ namespace IoTSender
                         time = DateTime.Now.ToString()
                     };
                     var fullMsg = JsonConvert.SerializeObject(str);
-                    await AzureIoTHub.SendDeviceToCloudMessageAsync(fullMsg);
+                    try
+                    {
+                        await msgHub.SendDeviceToCloudMessageAsync(fullMsg);
+                    } catch (System.Exception e )
+                    {
+                        postStatus = "an error occurred when sending your message. Please sign in with your correct credentials";
+                        break;
+                    }
+                    
                     await Task.Delay(TimeSpan.FromSeconds(1));
                     string newElement = "<li class='msg'>" + fullMsg + "</li>\n";
                     listElements = newElement + listElements;
@@ -170,16 +186,145 @@ namespace IoTSender
 
 
             }
-            if (htmlPages.ContainsKey(NavConstants.DEFAULT_PAGE))
-            {
-                string html = htmlPages[NavConstants.DEFAULT_PAGE];
-                listElements = "<p id='start-list'>#msgList#</p> \n" + listElements;
-                html = html.Replace("<p id='start-list'>#msgList#</p>", listElements);
-                html = html.Replace(status, "Ready to send messages");
-                status = "Ready to send messages";
-                htmlPages[NavConstants.DEFAULT_PAGE] = html;
-            }
+            string html = await LoadPage(NavConstants.DEFAULT_PAGE);
+            listElements = "<p id='start-list'>#msgList#</p> \n" + listElements;
+            html = html.Replace("<p id='start-list'>#msgList#</p>", listElements);
+            html = html.Replace(status, postStatus);
+            status = postStatus;
+            htmlPages[NavConstants.DEFAULT_PAGE] = html;
 
+        }
+        private void SignOutDevice()
+        {
+            if(ApplicationData.Current.LocalSettings.Containers.ContainsKey(AccountContainer))
+            {
+                ApplicationDataContainer appcontainer = ApplicationData.Current.LocalSettings.Containers[AccountContainer];
+                if (appcontainer.Values.ContainsKey(HostKey))
+                {
+                    appcontainer.Values.Remove(HostKey);
+
+                }
+                if (appcontainer.Values.ContainsKey(DeviceKey))
+                {
+                    appcontainer.Values.Remove(DeviceKey);
+
+                }
+                if (appcontainer.Values.ContainsKey(SharedKey))
+                {
+                    appcontainer.Values.Remove(SharedKey);
+
+                }
+                if (appcontainer.Values.ContainsKey(ProvisionKey))
+                {
+                    appcontainer.Values.Remove(ProvisionKey);
+
+                }
+                ApplicationData.Current.LocalSettings.DeleteContainer(AccountContainer);
+            }
+            
+        }
+        private async Task<string> LoadPage(string page)
+        {
+            string html = "";
+            if (htmlPages.ContainsKey(page))
+            {
+                html = htmlPages[page];
+            }
+            else
+            {
+                string fullpath = @"\views\" + page;
+                html = await GeneratePageHtml(fullpath);
+                htmlPages.Add(page, html);
+                originalPages.Add(page, html);
+            }
+            return html;
+        }
+        private async Task<string> LoadLoginPage(string lstatus)
+        {
+            string html = await LoadPage(NavConstants.LOGIN);
+            html = html.Replace(loginStatus, lstatus);
+            return html;
+        }
+        private async Task<string> LoginWithDevice()
+        {
+            string html = "";
+            ApplicationDataContainer appcontainer = ApplicationData.Current.LocalSettings.Containers[AccountContainer];
+            try
+            {
+                if(appcontainer.Values.ContainsKey(ProvisionKey))
+                {
+                    string provKey = appcontainer.Values[ProvisionKey] as string;
+                    if (provKey.ToLower() == "on")
+                    {
+                        msgHub = new AzureIoTHub();
+                    }
+                } else
+                {
+                    string connectionString = DeviceConnectionStringBuilder.CreateWithDeviceInfo(appcontainer.Values[HostKey] as string, appcontainer.Values[DeviceKey] as string, appcontainer.Values[SharedKey] as string);
+
+                    msgHub = new AzureIoTHub(connectionString);
+
+                }
+                html = await LoadPage(NavConstants.DEFAULT_PAGE);
+                string loc = await lp.GetLocation();
+                devloc = "Device Location: " + loc;
+                html = html.Replace("Device Location: #location#", devloc);
+                htmlPages[NavConstants.DEFAULT_PAGE] = html;
+                originalPages[NavConstants.DEFAULT_PAGE] = html;
+            }
+            catch (System.Exception e)
+            {
+                html = await LoadLoginPage("Something went wrong. Please enter the correct credentials below");
+            }
+            return html;
+        }
+        private bool ParseLoginData(IDictionary<string, string> parameters)
+        {
+            ApplicationDataContainer appcontainer = ApplicationData.Current.LocalSettings.Containers[AccountContainer];
+            bool isValid = false;
+            if(parameters.ContainsKey(ProvisionKey))
+            {
+                appcontainer.Values[ProvisionKey] = parameters[ProvisionKey];
+                isValid = true;
+            } else if (parameters.ContainsKey(HostKey) && parameters.ContainsKey(DeviceKey) && parameters.ContainsKey(SharedKey))
+            {
+                appcontainer.Values[HostKey] = parameters[HostKey];
+                appcontainer.Values[DeviceKey] = parameters[DeviceKey];
+                appcontainer.Values[SharedKey] = parameters[SharedKey];
+                isValid = true;
+
+            }
+            return isValid;
+
+        }
+        private async Task UpdateLog(IDictionary<string, string> pages)
+        {
+            string html = await LoadPage(NavConstants.DEFAULT_PAGE);
+            string loc = await lp.GetLocation();
+            loc = "Device Location: " + loc;
+            html = pages[NavConstants.DEFAULT_PAGE].Replace(devloc, loc);
+            devloc = loc;
+            htmlPages[NavConstants.DEFAULT_PAGE] = html;
+        }
+        private bool ValidateLoginRequest(string request)
+        {
+            if (string.IsNullOrEmpty(request))
+            {
+                return false;
+            }
+            IDictionary<string, string> parameters = WebHelper.ParseGetParametersFromUrl(new Uri(string.Format("http://0.0.0.0/{0}", request)));
+            if(!ParseLoginData(parameters))
+            {
+                return false;
+            }
+            return true;
+        }
+        private void CreateContainerIfNotCreated()
+        {
+            if(!ApplicationData.Current.LocalSettings.Containers.ContainsKey(AccountContainer))
+            {
+                ApplicationData.Current.LocalSettings.CreateContainer(AccountContainer, ApplicationDataCreateDisposition.Always);
+            }
         }
         private async Task writeResponseAsync(string request, IOutputStream os, StreamSocketInformation socketInfo)
         {
@@ -190,24 +335,33 @@ namespace IoTSender
                 string[] requestParts = request.Split('/');
 
                 // Request for the root page, so redirect to home page
-                if (request.Equals("/") || request.Contains(NavConstants.DEFAULT_PAGE))
+                if (request.Contains(NavConstants.DEFAULT_PAGE))
                 {
+
                     string html = "";
-                    if (htmlPages.ContainsKey(NavConstants.DEFAULT_PAGE))
+                    CreateContainerIfNotCreated();
+                    if (!ValidateLoginRequest(request))
                     {
-                        html = htmlPages[NavConstants.DEFAULT_PAGE];
+
+                        html = await LoadLoginPage("Something went wrong. Please enter the correct credentials below.");
                     } else
                     {
-                        // Generate the default config page
-                        html = await GeneratePageHtml(NavConstants.DEFAULT_PAGE);
-                        string loc = await lp.GetLocation();
-                        devloc = "Device Location: " + loc;
-                        html = html.Replace("Device Location: #location#", devloc);
-                        htmlPages.Add(NavConstants.DEFAULT_PAGE, html);
-                        originalPages.Add(NavConstants.DEFAULT_PAGE, html);
-                    } 
+                        html = await LoginWithDevice();   
+                    }
                     await WebHelper.WriteToStream(html, os);
 
+                } else if (request.Equals("/") || request.Contains(NavConstants.LOGIN))
+                {
+                    string html = "";
+                    //silent login- if the data exists, then login wiht the device otherwise show the login page
+                    if (!ApplicationData.Current.LocalSettings.Containers.ContainsKey(AccountContainer))
+                    {
+                        html = await LoadLoginPage("Please enter your credentials below");
+                    } else
+                    {
+                        html = await LoginWithDevice();
+                    }
+                    await WebHelper.WriteToStream(html, os);
                 } else if (request.Contains(NavConstants.SEND_MESSAGE))
                 {
                     SendMessages(request);
@@ -220,22 +374,24 @@ namespace IoTSender
                 } else if(request.Contains(NavConstants.CANCEL_MESSAGE))
                 {
                     sendMsg = false;
+                    string html = await LoadPage(NavConstants.DEFAULT_PAGE);
+                    html = html.Replace(status, "Ready to send messages");
+                    status = "Ready to send messages";
+                    htmlPages[NavConstants.DEFAULT_PAGE] = html;
+                    await WebHelper.WriteToStream(htmlPages[NavConstants.DEFAULT_PAGE], os);
                 } else if (request.Contains(NavConstants.CLEAR_LOG))
                 {
-                    string loc = await lp.GetLocation();
-                    loc = "Device Location: " + loc;
-                    string html = originalPages[NavConstants.DEFAULT_PAGE].Replace(devloc, loc);
-                    devloc = loc;
-                    htmlPages[NavConstants.DEFAULT_PAGE] = html;
+                    await UpdateLog(originalPages);
                     await WebHelper.WriteToStream(htmlPages[NavConstants.DEFAULT_PAGE], os);
                 } else if (request.Contains(NavConstants.REFRESH_LOG))
                 {
-                    string loc = await lp.GetLocation();
-                    loc = "Device Location: " + loc;
-                    string html = htmlPages[NavConstants.DEFAULT_PAGE].Replace(devloc, loc);
-                    devloc = loc;
-                    htmlPages[NavConstants.DEFAULT_PAGE] = html;
+                    await UpdateLog(htmlPages);
                     await WebHelper.WriteToStream(htmlPages[NavConstants.DEFAULT_PAGE], os);
+                } else if (request.Contains(NavConstants.SIGN_OUT))
+                {
+                    this.SignOutDevice();
+                    string html = await LoadLoginPage("Please enter your credentials below");
+                    await WebHelper.WriteToStream(html, os);
                 }
                 else
                 {
@@ -274,9 +430,6 @@ namespace IoTSender
                         catch (FileNotFoundException ex)
                         {
                             exists = false;
-
-                            // Log telemetry event about this exception
-                            var events = new Dictionary<string, string> { { "WebServer", ex.Message } };
                         }
 
                         // Send 404 not found if can't find file
@@ -296,10 +449,6 @@ namespace IoTSender
             catch (Exception ex)
             {
                 Debug.WriteLine("Exception in writeResponseAsync(): " + ex.Message);
-                Debug.WriteLine(ex.StackTrace);
-
-                // Log telemetry event about this exception
-                var events = new Dictionary<string, string> { { "WebServer", ex.Message } };
                 Debug.WriteLine(ex.StackTrace.ToString());
                 try
                 {

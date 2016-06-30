@@ -26,7 +26,7 @@ namespace IoTSender
     public sealed partial class MainPage : Page
     {
 
-        private static Uri ConnectUri = new Uri(@"http://localhost:8001");
+        private static Uri ConnectUri = new Uri(@"http://localhost:8001/");
         private HttpManager httpmanager;
         public MainPage()
         {

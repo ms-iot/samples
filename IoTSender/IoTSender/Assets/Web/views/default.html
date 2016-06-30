@@ -11,45 +11,46 @@
    <body> 
      <div class='main'> 
        <div class='container'> 
-         <div class='row'> 
-           <div class='col-md-12 headerbar'> 
-           </div> 
-         </div> 
            <div class="row">
-               <div class="col-md-12-headerbar">
-                   <h1> Azure IoT Hub Demo Client </h1>
+                <a id="sign-out" href="/signout"> connect a different device</a>
+           </div>
+           <div class="row" id = 'title-row'>
+               <div class="col-md-12-headerbar" id="title-col">
+                   <h1> azure iothub client </h1>
                </div>
            </div>
            <div class="row" id="status-update">
-               <h3 id="dev-loc"> Device Location: #location#</h3>
-               <h4 id="sending">Ready to send messages</h4>
+              <div class="col-md-6 status-col" id="dev-col">
+                <h4 id="dev-loc">Device Location: #location#</h4>
+             </div>
+              <div class="col-md-6 status-col">
+                <h4 id="sending">Status: Ready to send messages</h4>
+             </div>
+               
            </div>
-           <div class="row">
-               <h2> Send Messages to Azure</h2>
-           </div>
-         <div class='row indent' >
+           <div class="row" id="messaging-row">
+               <h1> messaging </h1>
+            <div class='send-messages' >
                 <div class="msg-btn-wrapper">
                     <a class="msg-btn send-btn" href="/message/1"> send 1 message</a>
 
                 </div>
-             <div class="msg-btn-wrapper">
-                 <a class="msg-btn send-btn" href="/message/10"> send 10 messages</a>
-             </div>
-             <div class="msg-btn-wrapper">
-                 <a class="msg-btn send-btn" href="/message/100">send 100 messages</a>
-             </div>
-             <div class="msg-btn-wrapper">
-                 <a class="msg-btn" href="/stop">stop</a>
-             </div>    
-         </div>
-           <div class="row">
-             <h2> Message Log </h2>
+               <div class="msg-btn-wrapper">
+                   <a class="msg-btn send-btn" href="/message/10"> send 10 messages</a>
+               </div>
+               <div class="msg-btn-wrapper">
+                   <a class="msg-btn send-btn" href="/message/100">send 100 messages</a>
+               </div>
+               <div class="msg-btn-wrapper">
+                   <a class="msg-btn" href="/stop">stop</a>
+               </div>    
+          </div>
                <div id="log" class="log-container">
                    <ul id="msg-log">
                        <p id='start-list'>#msgList#</p>
                    </ul>
                </div>
-               <div class="log-container">
+               <div class="log-container" id="log-btn-container">
                    <div class="msg-btn-wrapper log-btn">
                        <a class="msg-btn" id="clear-log"href="/clear">clear</a>
                    </div> 
@@ -57,8 +58,8 @@
                        <a class="msg-btn" id="refresh-log" href="/refresh">refresh </a>
                    </div> 
                </div>
-             
-         </div> 
+         
+           </div>
        </div> 
      </div> 
    </body> 

@@ -14,14 +14,15 @@ using System.Diagnostics;
 using Amqp.Types;
 using Newtonsoft.Json.Linq;
 
+
 namespace IoTViewer
 {
     class AzureIoT
     {
-        static string port = "...";
-        static string eventHubEntity = "...";
+        static string port = "ihsuprodbyres039dednamespace.servicebus.windows.net";
+        static string eventHubEntity = "iothub-ehub-hub-dimaha-42362-31f5229b77";
         static string keyname = "iothubowner";
-        static string key = "...";
+        static string key = "JSqXsxpMIi/VFmts3/GRFXUgjhzLGerci4XVkhH+yHA=";
         private static readonly long StartOfEpoch = (new DateTime(1970, 1, 1, 0, 0, 0, 0)).Ticks;
         
         public static async Task ReceiveMessages(string partition, DateTime offset, MessageManager msgman)

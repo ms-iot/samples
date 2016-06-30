@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using Windows.Security.Authentication.Web.Core;
 using Windows.Security.Credentials;
 using Windows.Storage;
 using Windows.UI.ApplicationSettings;
+
 
 namespace IoTViewer
 {
@@ -29,7 +31,7 @@ namespace IoTViewer
         const string MicrosoftAccountScopeRequested = "wl.basic";
         const string tenant = "iothubviewer.onmicrosoft.com";
         const string authority = "https://login.microsoftonline.com/" + tenant;
-        const string AzureActiveDirectoryClientId = "";
+        const string AzureActiveDirectoryClientId = "5cec90d8-14eb-41ac-9b2c-b3e8a7d95da5";
         const string AzureActiveDirectoryScopeRequested = "wl.basic";
         private static MainPage mp;
         public static async void OnAccountCommandsRequested(
@@ -152,6 +154,11 @@ namespace IoTViewer
                 StoreWebAccount(account);
                 string token = result.ResponseData[0].Token;
                 string name = account.UserName;
+                string test = await LoginWithToken(token);
+                if(name == "")
+                {
+                    name = await LoginWithToken(token);
+                }
                 mp.NavigateToMap(name);
 
             }
@@ -160,15 +167,18 @@ namespace IoTViewer
         private static async Task<string> LoginWithToken(string token)
         {
             var restApi = new Uri(@"https://apis.live.net/v5.0/me?access_token=" + token);
+            restApi = new Uri(@"https://management.azure.com/subscriptions?api-version=2015-01-01");
             string name = "";
+
             using (var client = new HttpClient())
             {
-                var infoResult = await client.GetAsync(restApi);
-                string content = await infoResult.Content.ReadAsStringAsync();
 
-                var jsonObject = JsonObject.Parse(content);
-                string id = jsonObject["id"].GetString();
-                name = jsonObject["name"].GetString();
+                //client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+                //client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                //var infoResult = await client.GetAsync(restApi);
+                //string content = await infoResult.Content.ReadAsStringAsync();
+                //var jsonObject = JsonObject.Parse(content);
+                
             }
             return name;
         }
@@ -192,7 +202,7 @@ namespace IoTViewer
             ApplicationData.Current.LocalSettings.Values["CurrentAuthority"] = account.WebAccountProvider.Authority;
 
         }
-        private static async Task<WebAccount> GetTokenSilentlyAsync()
+        private static async Task<string> GetTokenSilentlyAsync()
         {
             string providerId = ApplicationData.Current.LocalSettings.Values["CurrentUserProviderId"]?.ToString();
             string accountId = ApplicationData.Current.LocalSettings.Values["CurrentUserId"]?.ToString();
@@ -227,7 +237,13 @@ namespace IoTViewer
             else if (result.ResponseStatus == WebTokenRequestStatus.Success)
             {
                 // Success
-                return account;
+                string name = account.UserName;
+                string test = await LoginWithToken(result.ResponseData[0].Token);
+                if(name == "")
+                {
+                    name = await LoginWithToken(result.ResponseData[0].Token);
+                }
+                return name;
             }
             else
             {
@@ -270,11 +286,10 @@ namespace IoTViewer
         }
         public static async Task<string> LoginSilently()
         {
-            WebAccount token = await GetTokenSilentlyAsync();
+            string token = await GetTokenSilentlyAsync();
             if(token != null)
             {
-                string name = token.UserName;
-                return name;
+                return token;
             }
             return null;
         }

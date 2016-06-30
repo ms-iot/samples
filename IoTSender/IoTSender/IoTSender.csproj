@@ -97,6 +97,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="AzureIoTHub.cs" />
+    <Compile Include="DeviceConnectionStringBuilder.cs" />
     <Compile Include="HttpManager.cs" />
     <Compile Include="Interfaces\Http\NavConstants.cs" />
     <Compile Include="Interfaces\Http\WebHelper.cs" />
@@ -115,7 +116,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Web\css\default.css" />
-    <Content Include="Assets\Web\views\default.htm" />
+    <Content Include="Assets\Web\css\login.css" />
+    <Content Include="Assets\Web\views\default.html" />
+    <Content Include="Assets\Web\views\login.html" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

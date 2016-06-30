@@ -3,6 +3,7 @@
     "AMQPNetLite": "1.1.8",
     "Microsoft.Azure.Devices": "1.0.10",
     "Microsoft.Azure.Devices.Client": "1.0.12",
+    "Microsoft.IdentityModel.Clients.ActiveDirectory": "3.10.305231913",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
     "WindowsAzure.Storage": "7.0.0"
   },
