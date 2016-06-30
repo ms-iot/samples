@@ -22,15 +22,13 @@ void StartupTask::Run(IBackgroundTaskInstance^ taskInstance)
 	Deferral = taskInstance->GetDeferral();
 
 	String^ aqs = I2cDevice::GetDeviceSelector("I2C1");
-	auto deviceEnumTask = create_task(DeviceInformation::FindAllAsync(aqs));
 
-	deviceEnumTask.then([this](DeviceInformationCollection^ devices) {
-		auto getDeviceTask = create_task(I2cDevice::FromIdAsync(devices->GetAt(0)->Id, ref new I2cConnectionSettings(0x40)));
-		getDeviceTask.then([this](I2cDevice^ device)
-		{
-			Device = device;
-		});
+	auto getDeviceTask = create_task(I2cDevice::GetDefaultAsync(ref new I2cConnectionSettings(0x40)));
+	getDeviceTask.then([this](I2cDevice^ device)
+	{
+		Device = device;
 	});
+
 
 	TimerElapsedHandler ^handler = ref new TimerElapsedHandler(
 		[this](ThreadPoolTimer ^timer)
