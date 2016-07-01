@@ -35,7 +35,7 @@ namespace IoTSender
         private Dictionary<string, string> originalPages;
         private bool sendMsg;
         private string devloc;
-        private string status;
+        private string status = "Ready to send messages";
         private string loginStatus = "#status#";
         private const string  AccountContainer ="AccountContainer";
         private const string HostKey = "HostName";
@@ -51,7 +51,6 @@ namespace IoTSender
         internal HttpInterfaceManager(int serverPort)
         {
             sendMsg = true;
-            status = "Ready to send messages";
             helper = new WebHelper();
             listener = new StreamSocketListener();
             lp = new LocationProvider();
@@ -170,7 +169,7 @@ namespace IoTSender
                         await msgHub.SendDeviceToCloudMessageAsync(fullMsg);
                     } catch (System.Exception e )
                     {
-                        postStatus = "an error occurred when sending your message. Please sign in with your correct credentials";
+                        postStatus = "An error occurred when sending your message. Please sign in with your correct credentials";
                         break;
                     }
                     
@@ -239,10 +238,11 @@ namespace IoTSender
             }
             return html;
         }
-        private async Task<string> LoadLoginPage(string lstatus)
+        private async Task<string> LoadandUpdateStatus(string currentStatus, string postStatus, string page)
         {
-            string html = await LoadPage(NavConstants.LOGIN);
-            html = html.Replace(loginStatus, lstatus);
+            string html = await LoadPage(page);
+            html = html.Replace(currentStatus, postStatus);
+            htmlPages[page] = html;
             return html;
         }
         private async Task<string> LoginWithDevice()
@@ -268,13 +268,13 @@ namespace IoTSender
                 html = await LoadPage(NavConstants.DEFAULT_PAGE);
                 string loc = await lp.GetLocation();
                 devloc = "Device Location: " + loc;
-                html = html.Replace("Device Location: #location#", devloc);
-                htmlPages[NavConstants.DEFAULT_PAGE] = html;
+                html = await LoadandUpdateStatus("Device Location: #location#", devloc, NavConstants.DEFAULT_PAGE);
                 originalPages[NavConstants.DEFAULT_PAGE] = html;
             }
             catch (System.Exception e)
             {
-                html = await LoadLoginPage("Something went wrong. Please enter the correct credentials below");
+                html = await LoadandUpdateStatus(loginStatus, Constants.LOGIN_ERROR, NavConstants.LOGIN);
+                loginStatus = Constants.LOGIN_ERROR;
             }
             return html;
         }
@@ -306,6 +306,7 @@ namespace IoTSender
             devloc = loc;
             htmlPages[NavConstants.DEFAULT_PAGE] = html;
         }
+
         private bool ValidateLoginRequest(string request)
         {
             if (string.IsNullOrEmpty(request))
@@ -330,11 +331,11 @@ namespace IoTSender
         {
             try
             {
-                request = request.TrimEnd('\0'); //remove possible null from POST request
+                request = request.TrimEnd('\0'); //remove possible null from request
 
                 string[] requestParts = request.Split('/');
 
-                // Request for the root page, so redirect to home page
+                //home page
                 if (request.Contains(NavConstants.DEFAULT_PAGE))
                 {
 
@@ -342,8 +343,8 @@ namespace IoTSender
                     CreateContainerIfNotCreated();
                     if (!ValidateLoginRequest(request))
                     {
-
-                        html = await LoadLoginPage("Something went wrong. Please enter the correct credentials below.");
+                        html = await LoadandUpdateStatus(loginStatus, Constants.LOGIN_ERROR, NavConstants.LOGIN);
+                        loginStatus = Constants.LOGIN_ERROR;
                     } else
                     {
                         html = await LoginWithDevice();   
@@ -356,7 +357,8 @@ namespace IoTSender
                     //silent login- if the data exists, then login wiht the device otherwise show the login page
                     if (!ApplicationData.Current.LocalSettings.Containers.ContainsKey(AccountContainer))
                     {
-                        html = await LoadLoginPage("Please enter your credentials below");
+                        html = await LoadandUpdateStatus(loginStatus, Constants.LOGIN_STD_MSG, NavConstants.LOGIN);
+                        loginStatus = Constants.LOGIN_STD_MSG;
                     } else
                     {
                         html = await LoginWithDevice();
@@ -365,20 +367,16 @@ namespace IoTSender
                 } else if (request.Contains(NavConstants.SEND_MESSAGE))
                 {
                     SendMessages(request);
-                    string html = htmlPages[NavConstants.DEFAULT_PAGE];
-                    html = html.Replace(status, "Sending messages to Azure...");
-                    status = "Sending messages to Azure...";
-                    htmlPages[NavConstants.DEFAULT_PAGE] = html;
-                    await WebHelper.WriteToStream(htmlPages[NavConstants.DEFAULT_PAGE], os);
+                    string html = await LoadandUpdateStatus(status, Constants.SENDING_AZURE, NavConstants.DEFAULT_PAGE);
+                    status = Constants.SENDING_AZURE;
+                    await WebHelper.WriteToStream(html, os);
 
                 } else if(request.Contains(NavConstants.CANCEL_MESSAGE))
                 {
                     sendMsg = false;
-                    string html = await LoadPage(NavConstants.DEFAULT_PAGE);
-                    html = html.Replace(status, "Ready to send messages");
-                    status = "Ready to send messages";
-                    htmlPages[NavConstants.DEFAULT_PAGE] = html;
-                    await WebHelper.WriteToStream(htmlPages[NavConstants.DEFAULT_PAGE], os);
+                    string html = await LoadandUpdateStatus(status, Constants.READY_AZURE, NavConstants.DEFAULT_PAGE);
+                    status = Constants.READY_AZURE;
+                    await WebHelper.WriteToStream(html, os);
                 } else if (request.Contains(NavConstants.CLEAR_LOG))
                 {
                     await UpdateLog(originalPages);
@@ -390,47 +388,16 @@ namespace IoTSender
                 } else if (request.Contains(NavConstants.SIGN_OUT))
                 {
                     this.SignOutDevice();
-                    string html = await LoadLoginPage("Please enter your credentials below");
+                    string html = await LoadandUpdateStatus(loginStatus, Constants.LOGIN_STD_MSG, NavConstants.LOGIN);
+                    loginStatus = Constants.LOGIN_STD_MSG;
                     await WebHelper.WriteToStream(html, os);
                 }
                 else
                 {
                     using (Stream resp = os.AsStreamForWrite())
                     {
-                        bool exists = true;
-                        try
-                        {
-                            var folder = Windows.ApplicationModel.Package.Current.InstalledLocation;
-
-                            // Map the requested path to Assets\Web folder
-                            string filePath = NavConstants.ASSETSWEB + request.Replace('/', '\\');
-
-                            // Open the file and write it to the stream
-                            using (Stream fs = await folder.OpenStreamForReadAsync(filePath))
-                            {
-                                string contentType = "";
-                                if (request.Contains("css"))
-                                {
-                                    contentType = "Content-Type: text/css\r\n";
-                                }
-                                if (request.Contains("htm"))
-                                {
-                                    contentType = "Content-Type: text/html\r\n";
-                                }
-                                string header = String.Format("HTTP/1.1 200 OK\r\n" +
-                                                "Content-Length: {0}\r\n{1}" +
-                                                "Connection: close\r\n\r\n",
-                                                fs.Length,
-                                                contentType);
-                                byte[] headerArray = Encoding.UTF8.GetBytes(header);
-                                await resp.WriteAsync(headerArray, 0, headerArray.Length);
-                                await fs.CopyToAsync(resp);
-                            }
-                        }
-                        catch (FileNotFoundException ex)
-                        {
-                            exists = false;
-                        }
+                        bool exists = await loadCSSPage(request, resp);
+                        
 
                         // Send 404 not found if can't find file
                         if (!exists)
@@ -462,7 +429,46 @@ namespace IoTSender
                 }
             }
         }
+        private async Task<bool> loadCSSPage(string request, Stream resp)
+        {
 
+            bool exists = true;
+            try
+            {
+                var folder = Windows.ApplicationModel.Package.Current.InstalledLocation;
+
+                // Map the requested path to Assets\Web folder
+                string filePath = NavConstants.ASSETSWEB + request.Replace('/', '\\');
+
+                // Open the file and write it to the stream
+                using (Stream fs = await folder.OpenStreamForReadAsync(filePath))
+                {
+                    string contentType = "";
+                    if (request.Contains("css"))
+                    {
+                        contentType = "Content-Type: text/css\r\n";
+                    }
+                    if (request.Contains("htm"))
+                    {
+                        contentType = "Content-Type: text/html\r\n";
+                    }
+                    string header = String.Format("HTTP/1.1 200 OK\r\n" +
+                                    "Content-Length: {0}\r\n{1}" +
+                                    "Connection: close\r\n\r\n",
+                                    fs.Length,
+                                    contentType);
+                    byte[] headerArray = Encoding.UTF8.GetBytes(header);
+                    await resp.WriteAsync(headerArray, 0, headerArray.Length);
+                    await fs.CopyToAsync(resp);
+                }
+            }
+            catch (FileNotFoundException ex)
+            {
+                exists = false;
+            }
+            return exists;
+
+        }
         /// <summary>
         /// Get basic html for requested page, with list of stations populated
         /// </summary>
