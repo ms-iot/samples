@@ -68,7 +68,8 @@ namespace I2cPortExpander
             
           
             var i2cSettings = new I2cConnectionSettings(PORT_EXPANDER_I2C_ADDRESS);
-            i2cPortExpander = await I2cDevice.GetDefaultAsync(i2cSettings);
+            var controller = await I2cController.GetDefaultAsync();
+            i2cPortExpander = controller.GetDevice(i2cSettings);
 
 
             // initialize I2C Port Expander registers

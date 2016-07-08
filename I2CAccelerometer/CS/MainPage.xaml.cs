@@ -46,7 +46,8 @@ namespace I2CAccelerometer
 
             var settings = new I2cConnectionSettings(ACCEL_I2C_ADDR); 
             settings.BusSpeed = I2cBusSpeed.FastMode;
-            I2CAccel = await I2cDevice.GetDefaultAsync(settings);    /* Create an I2cDevice with our selected bus controller and I2C settings */
+            var controller = await I2cController.GetDefaultAsync();
+            I2CAccel = controller.GetDevice(settings);    /* Create an I2cDevice with our selected bus controller and I2C settings */
 
 
             /* 

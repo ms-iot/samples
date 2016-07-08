@@ -107,9 +107,8 @@ namespace Lpd8806Sample
         /// <returns>Task of type SpiDevice, whose result will be the SpiDevice requested if successful</returns>
         private async Task<SpiDevice> getSpiDevice()
         {
-            string spiSelector = SpiDevice.GetDeviceSelector(SpiControllerName);
-            DeviceInformationCollection devicesInfo = await DeviceInformation.FindAllAsync(spiSelector);
-            return await SpiDevice.FromIdAsync(devicesInfo[0].Id, this.settings);
+            var controller = await SpiController.GetDefaultAsync(); 
+            return  controller.GetDevice(this.settings);
         }
     }
 }
