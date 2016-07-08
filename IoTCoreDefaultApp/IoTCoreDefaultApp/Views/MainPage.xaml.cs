@@ -159,7 +159,10 @@ namespace IoTCoreDefaultApp
 
         private void ShutdownHelper(ShutdownKind kind)
         {
-            ShutdownManager.BeginShutdown(kind, TimeSpan.FromSeconds(0.5));
+            new System.Threading.Tasks.Task(() =>
+            {
+                ShutdownManager.BeginShutdown(kind, TimeSpan.FromSeconds(0));
+            }).Start();
         }
 
         private void ShutdownListView_ItemClick(object sender, ItemClickEventArgs e)
