@@ -22,9 +22,10 @@ namespace WeatherStation
         public async void Run(IBackgroundTaskInstance taskInstance)
         {
             deferral = taskInstance.GetDeferral();
-            
+
             //Ox40 was determined by looking at the datasheet for the device
-            sensor = await I2cDevice.GetDefaultAsync(new I2cConnectionSettings(0x40));
+            var controller = await I2cController.GetDefaultAsync();
+            sensor = controller.GetDevice(new I2cConnectionSettings(0x40));
                
             timer = ThreadPoolTimer.CreatePeriodicTimer(Timer_Tick, TimeSpan.FromMilliseconds(500));
 

@@ -21,13 +21,11 @@ void StartupTask::Run(IBackgroundTaskInstance^ taskInstance)
 {
 	Deferral = taskInstance->GetDeferral();
 
-	String^ aqs = I2cDevice::GetDeviceSelector("I2C1");
-
-	auto getDeviceTask = create_task(I2cDevice::GetDefaultAsync(ref new I2cConnectionSettings(0x40)));
-	getDeviceTask.then([this](I2cDevice^ device)
-	{
-		Device = device;
+	auto controllerTask = create_task(I2cController::GetDefaultAsync());
+	controllerTask.then([this](I2cController^ controller) {
+		Device = controller->GetDevice(ref new I2cConnectionSettings(0x40));
 	});
+	
 
 
 	TimerElapsedHandler ^handler = ref new TimerElapsedHandler(

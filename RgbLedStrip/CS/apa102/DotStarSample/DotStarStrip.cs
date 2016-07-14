@@ -73,7 +73,8 @@ namespace DotStarSample
         /// <returns>Task representing the async action</returns>
         public async Task Begin()
         {
-            this.spiDevice = await this.getSpiDevice();
+            var controller = await SpiController.GetDefaultAsync();
+            this.spiDevice = controller.GetDevice(this.settings); 
         }
 
         /// <summary>
@@ -108,15 +109,6 @@ namespace DotStarSample
             this.spiDevice.Write(spiDataBytes.ToArray());
         }
 
-        /// <summary>
-        /// Gets the SpiDevice handle
-        /// </summary>
-        /// <returns>Task of type SpiDevice, whose result will be the SpiDevice requested if successful</returns>
-        private async Task<SpiDevice> getSpiDevice()
-        {
-            string spiSelector = SpiDevice.GetDeviceSelector(SpiControllerName);
-            DeviceInformationCollection devicesInfo = await DeviceInformation.FindAllAsync(spiSelector);
-            return await SpiDevice.FromIdAsync(devicesInfo[0].Id, this.settings);
-        }
+
     }
 }
