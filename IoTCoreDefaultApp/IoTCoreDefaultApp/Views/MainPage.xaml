@@ -32,11 +32,11 @@
     x:Name="rootPage">
 
     <Page.Resources>
-        <ItemsPanelTemplate x:Name="NetworkInfoPanelTemplate">
-            <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="2" />
+        <ItemsPanelTemplate x:Name="NetworkInfoPanelTemplate" >
+            <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="2" IsHitTestVisible="False" ItemHeight="230"/>
         </ItemsPanelTemplate>
         <DataTemplate x:Name="NetworkInfoDataTemplate">
-            <StackPanel>
+            <StackPanel Margin="4,0,0,4" >
                 <TextBlock Text="{Binding NetworkName}" Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,4,0,0" />
                 <TextBlock Text="{Binding ElementName='rootPage', Path=DataContext[Ipv6Text]}" Style="{StaticResource BaseTextBlockStyle}" Margin="0,4,0,0" />
                 <TextBlock Text="{Binding NetworkIpv6}" Foreground="{StaticResource PaleTextBrush}" Style="{StaticResource BodyTextBlockStyle}" Margin="0,0,0,0" />
@@ -166,7 +166,16 @@
 
                     <TextBlock Grid.Row="4" Text="{Binding [NetworkInformationText]}" FontFamily="Segoe UI Regular" FontSize="16"/>
 
-                    <ListView Grid.Row="5" x:Name="NetworkInfo" ItemsPanel="{StaticResource NetworkInfoPanelTemplate}" ItemTemplate="{StaticResource NetworkInfoDataTemplate}"  />
+                    <ListView Grid.Row="5" x:Name="NetworkInfo" ItemsPanel="{StaticResource NetworkInfoPanelTemplate}" ItemTemplate="{StaticResource NetworkInfoDataTemplate}" >
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="VerticalContentAlignment" Value="Top" />
+                                <Setter Property="HorizontalAlignment" Value="Left" />
+                                <Setter Property="VerticalAlignment" Value="Top" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                    </ListView>
 
                 </Grid>
 

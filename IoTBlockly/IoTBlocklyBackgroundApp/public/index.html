@@ -75,18 +75,22 @@
             <button onclick="stopCode()" class="medium button">Stop</button>
             <button onclick="showCode()" class="medium button">Convert to JavaScript</button>
             <button onclick="showXML()" class="medium button">Convert to XML</button>
-            <button style="margin-left:100px;" onclick="loadSample('heartbeat')" class="medium button success">Heartbeat</button>
+            <button style="margin-left:100px;" onclick="loadSample('')" class="medium button success">Blank canvas</button>
+            <button onclick="loadSample('heartbeat')" class="medium button success">Heartbeat</button>
             <button onclick="loadSample('randomBars')" class="medium button success">Random bars</button>
             <button onclick="loadSample('gravityBall')" class="medium button success">Gravity ball</button>
+            <button onclick="loadSample('sensors')" class="medium button success">Sensors</button>
+            <button onclick="loadSample('pong')" class="medium button success">Pong</button>
         </p>
     </div>
-    <div class="">
-        <div id="blocklyDiv" class="small-12 large-8 columns"></div>
+    <div class="expanded row" style="padding-left:10px;">
+        <div id="blocklyArea" class="small-12 large-8 columns"></div>
         <div class="small-12 large-4 columns javascript-output">
             Javascript (or xml):
             <div id="generatedCodeArea"></div>
         </div>
     </div>
+    <div id="blocklyDiv" style="position: absolute"></div>
     
     <xml id="toolbox" style="display: none">
       <category name="Basic" colour="190">
@@ -115,8 +119,6 @@
               <field name="NUM">100</field>
             </shadow>
           </value>
-        </block>
-        <block type="device_set_onboard_led">
         </block>
       </category>
       <category name="Logic" colour="210">
@@ -149,7 +151,28 @@
         <block type="math_single"></block>
       </category>
       <category name="Input" colour="3">
+        <block type="device_joystick_event"></block>
+        <block type="device_get_joystick_state"></block>
         <block type="device_get_acceleration"></block>
+        <block type="device_get_compass"></block>
+        <block type="device_get_temperature"></block>
+        <block type="device_get_humidity"></block>
+        <block type="device_get_pressure"></block>
+        <block type="device_get_running_time"></block>
+      </category>
+      <category name="Led" colour="300">
+        <block type="device_plot_bar_graph">
+            <value name="VALUE">
+                <shadow type="math_number">
+                    <field name="NUM">0</field>
+                </shadow>
+            </value>
+            <value name="HIGH">
+                <shadow type="math_number">
+                    <field name="NUM">1023</field>
+                </shadow>
+            </value>
+        </block>
       </category>
       <category name="Images" colour="45">
         <block type="device_create_image"></block>
@@ -184,6 +207,7 @@
             </shadow>
           </value>
         </block>
+        <block type="device_analog_read_channel"></block>
       </category>
       <category name="Variables" colour="330">
           <block type="variables_set"></block>
@@ -191,27 +215,96 @@
       </category>
     </xml>
 
-    <xml id="sampleBlinky" style="display: none">
-      <block type="device_forever" x="20" y="20">
+    <xml id="heartbeat" style="display: none">
+      <block type="device_forever" y="141" x="101">
         <statement name="DO">
-          <block type="device_set_onboard_led">
-            <field name="STATE">1</field>
+          <block type="device_clear_display">
             <next>
               <block type="device_pause">
                 <value name="PAUSE">
                   <shadow type="math_number">
                     <field name="NUM">100</field>
                   </shadow>
+                  <block type="math_number">
+                    <field name="NUM">300</field>
+                  </block>
                 </value>
                 <next>
-                  <block type="device_set_onboard_led">
-                    <field name="STATE">0</field>
+                  <block type="device_show_leds">
+                    <field name="COLOR">Windows.UI.Colors.red</field>
+                    <field name="LED00">FALSE</field>
+                    <field name="LED10">FALSE</field>
+                    <field name="LED20">FALSE</field>
+                    <field name="LED30">FALSE</field>
+                    <field name="LED40">FALSE</field>
+                    <field name="LED50">FALSE</field>
+                    <field name="LED60">FALSE</field>
+                    <field name="LED70">FALSE</field>
+                    <field name="LED01">FALSE</field>
+                    <field name="LED11">TRUE</field>
+                    <field name="LED21">TRUE</field>
+                    <field name="LED31">FALSE</field>
+                    <field name="LED41">FALSE</field>
+                    <field name="LED51">TRUE</field>
+                    <field name="LED61">TRUE</field>
+                    <field name="LED71">FALSE</field>
+                    <field name="LED02">TRUE</field>
+                    <field name="LED12">TRUE</field>
+                    <field name="LED22">TRUE</field>
+                    <field name="LED32">TRUE</field>
+                    <field name="LED42">TRUE</field>
+                    <field name="LED52">TRUE</field>
+                    <field name="LED62">TRUE</field>
+                    <field name="LED72">TRUE</field>
+                    <field name="LED03">TRUE</field>
+                    <field name="LED13">TRUE</field>
+                    <field name="LED23">TRUE</field>
+                    <field name="LED33">TRUE</field>
+                    <field name="LED43">TRUE</field>
+                    <field name="LED53">TRUE</field>
+                    <field name="LED63">TRUE</field>
+                    <field name="LED73">TRUE</field>
+                    <field name="LED04">FALSE</field>
+                    <field name="LED14">TRUE</field>
+                    <field name="LED24">TRUE</field>
+                    <field name="LED34">TRUE</field>
+                    <field name="LED44">TRUE</field>
+                    <field name="LED54">TRUE</field>
+                    <field name="LED64">TRUE</field>
+                    <field name="LED74">FALSE</field>
+                    <field name="LED05">FALSE</field>
+                    <field name="LED15">FALSE</field>
+                    <field name="LED25">TRUE</field>
+                    <field name="LED35">TRUE</field>
+                    <field name="LED45">TRUE</field>
+                    <field name="LED55">TRUE</field>
+                    <field name="LED65">FALSE</field>
+                    <field name="LED75">FALSE</field>
+                    <field name="LED06">FALSE</field>
+                    <field name="LED16">FALSE</field>
+                    <field name="LED26">FALSE</field>
+                    <field name="LED36">TRUE</field>
+                    <field name="LED46">TRUE</field>
+                    <field name="LED56">FALSE</field>
+                    <field name="LED66">FALSE</field>
+                    <field name="LED76">FALSE</field>
+                    <field name="LED07">FALSE</field>
+                    <field name="LED17">FALSE</field>
+                    <field name="LED27">FALSE</field>
+                    <field name="LED37">FALSE</field>
+                    <field name="LED47">FALSE</field>
+                    <field name="LED57">FALSE</field>
+                    <field name="LED67">FALSE</field>
+                    <field name="LED77">FALSE</field>
                     <next>
                       <block type="device_pause">
                         <value name="PAUSE">
                           <shadow type="math_number">
                             <field name="NUM">100</field>
                           </shadow>
+                          <block type="math_number">
+                            <field name="NUM">300</field>
+                          </block>
                         </value>
                       </block>
                     </next>
@@ -222,119 +315,20 @@
           </block>
         </statement>
       </block>
-    </xml>
-
-    <xml id="heartbeat" style="display: none">
-      <block type="device_print_message" x="76" y="45">
-        <value name="MESSAGE">
-          <shadow type="text">
-            <field name="TEXT">Hello!</field>
-          </shadow>
-          <block type="text">
-            <field name="TEXT">Welcome to //build 2016</field>
-          </block>
-        </value>
-        <next>
-          <block type="device_forever">
-            <statement name="DO">
-              <block type="device_clear_display">
-                <next>
-                  <block type="device_pause">
-                    <value name="PAUSE">
-                      <shadow type="math_number">
-                        <field name="NUM">100</field>
-                      </shadow>
-                      <block type="math_number">
-                        <field name="NUM">300</field>
-                      </block>
-                    </value>
-                    <next>
-                      <block type="device_show_leds">
-                        <field name="COLOR">Windows.UI.Colors.red</field>
-                        <field name="LED00">FALSE</field>
-                        <field name="LED10">FALSE</field>
-                        <field name="LED20">FALSE</field>
-                        <field name="LED30">FALSE</field>
-                        <field name="LED40">FALSE</field>
-                        <field name="LED50">FALSE</field>
-                        <field name="LED60">FALSE</field>
-                        <field name="LED70">FALSE</field>
-                        <field name="LED01">FALSE</field>
-                        <field name="LED11">TRUE</field>
-                        <field name="LED21">TRUE</field>
-                        <field name="LED31">FALSE</field>
-                        <field name="LED41">FALSE</field>
-                        <field name="LED51">TRUE</field>
-                        <field name="LED61">TRUE</field>
-                        <field name="LED71">FALSE</field>
-                        <field name="LED02">TRUE</field>
-                        <field name="LED12">TRUE</field>
-                        <field name="LED22">TRUE</field>
-                        <field name="LED32">TRUE</field>
-                        <field name="LED42">TRUE</field>
-                        <field name="LED52">TRUE</field>
-                        <field name="LED62">TRUE</field>
-                        <field name="LED72">TRUE</field>
-                        <field name="LED03">TRUE</field>
-                        <field name="LED13">TRUE</field>
-                        <field name="LED23">TRUE</field>
-                        <field name="LED33">TRUE</field>
-                        <field name="LED43">TRUE</field>
-                        <field name="LED53">TRUE</field>
-                        <field name="LED63">TRUE</field>
-                        <field name="LED73">TRUE</field>
-                        <field name="LED04">FALSE</field>
-                        <field name="LED14">TRUE</field>
-                        <field name="LED24">TRUE</field>
-                        <field name="LED34">TRUE</field>
-                        <field name="LED44">TRUE</field>
-                        <field name="LED54">TRUE</field>
-                        <field name="LED64">TRUE</field>
-                        <field name="LED74">FALSE</field>
-                        <field name="LED05">FALSE</field>
-                        <field name="LED15">FALSE</field>
-                        <field name="LED25">TRUE</field>
-                        <field name="LED35">TRUE</field>
-                        <field name="LED45">TRUE</field>
-                        <field name="LED55">TRUE</field>
-                        <field name="LED65">FALSE</field>
-                        <field name="LED75">FALSE</field>
-                        <field name="LED06">FALSE</field>
-                        <field name="LED16">FALSE</field>
-                        <field name="LED26">FALSE</field>
-                        <field name="LED36">TRUE</field>
-                        <field name="LED46">TRUE</field>
-                        <field name="LED56">FALSE</field>
-                        <field name="LED66">FALSE</field>
-                        <field name="LED76">FALSE</field>
-                        <field name="LED07">FALSE</field>
-                        <field name="LED17">FALSE</field>
-                        <field name="LED27">FALSE</field>
-                        <field name="LED37">FALSE</field>
-                        <field name="LED47">FALSE</field>
-                        <field name="LED57">FALSE</field>
-                        <field name="LED67">FALSE</field>
-                        <field name="LED77">FALSE</field>
-                        <next>
-                          <block type="device_pause">
-                            <value name="PAUSE">
-                              <shadow type="math_number">
-                                <field name="NUM">100</field>
-                              </shadow>
-                              <block type="math_number">
-                                <field name="NUM">300</field>
-                              </block>
-                            </value>
-                          </block>
-                        </next>
-                      </block>
-                    </next>
-                  </block>
-                </next>
+      <block type="device_joystick_event" y="135" x="462">
+        <field name="BUTTON">IoTBlocklyHelper.SenseHatJoystickButton.any</field>
+        <statement name="HANDLER">
+          <block type="device_print_message">
+            <value name="MESSAGE">
+              <shadow type="text">
+                <field name="TEXT">Hello!</field>
+              </shadow>
+              <block type="text">
+                <field name="TEXT">Hello from IoT Core</field>
               </block>
-            </statement>
+            </value>
           </block>
-        </next>
+        </statement>
       </block>
     </xml>
       
@@ -696,20 +690,1216 @@
       </block>
     </xml>
 
+    <xml id="sensors" style="display: none">
+      <block type="device_forever" y="60" x="87">
+        <statement name="DO">
+          <block type="device_print_message">
+            <value name="MESSAGE">
+              <shadow type="text">
+                <field name="TEXT">Hello!</field>
+              </shadow>
+              <block type="text">
+                <field name="TEXT">Temperature: </field>
+              </block>
+            </value>
+            <next>
+              <block type="device_show_number">
+                <value name="NUMBER">
+                  <shadow type="math_number">
+                    <field name="NUM">2</field>
+                  </shadow>
+                  <block type="device_get_temperature"></block>
+                </value>
+                <next>
+                  <block type="device_pause">
+                    <value name="PAUSE">
+                      <shadow type="math_number">
+                        <field name="NUM">100</field>
+                      </shadow>
+                      <block type="math_number">
+                        <field name="NUM">300</field>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="device_print_message">
+                        <value name="MESSAGE">
+                          <shadow type="text">
+                            <field name="TEXT">Hello!</field>
+                          </shadow>
+                          <block type="text">
+                            <field name="TEXT">Compass: </field>
+                          </block>
+                        </value>
+                        <next>
+                          <block type="device_show_number">
+                            <value name="NUMBER">
+                              <shadow type="math_number">
+                                <field name="NUM">2</field>
+                              </shadow>
+                              <block type="device_get_compass"></block>
+                            </value>
+                            <next>
+                              <block type="device_pause">
+                                <value name="PAUSE">
+                                  <shadow type="math_number">
+                                    <field name="NUM">100</field>
+                                  </shadow>
+                                  <block type="math_number">
+                                    <field name="NUM">300</field>
+                                  </block>
+                                </value>
+                                <next>
+                                  <block type="device_print_message">
+                                    <value name="MESSAGE">
+                                      <shadow type="text">
+                                        <field name="TEXT">Hello!</field>
+                                      </shadow>
+                                      <block type="text">
+                                        <field name="TEXT">Humidity: </field>
+                                      </block>
+                                    </value>
+                                    <next>
+                                      <block type="device_show_number">
+                                        <value name="NUMBER">
+                                          <shadow type="math_number">
+                                            <field name="NUM">2</field>
+                                          </shadow>
+                                          <block type="device_get_humidity"></block>
+                                        </value>
+                                        <next>
+                                          <block type="device_pause">
+                                            <value name="PAUSE">
+                                              <shadow type="math_number">
+                                                <field name="NUM">100</field>
+                                              </shadow>
+                                              <block type="math_number">
+                                                <field name="NUM">300</field>
+                                              </block>
+                                            </value>
+                                            <next>
+                                              <block type="device_print_message">
+                                                <value name="MESSAGE">
+                                                  <shadow type="text">
+                                                    <field name="TEXT">Hello!</field>
+                                                  </shadow>
+                                                  <block type="text">
+                                                    <field name="TEXT">Pressure: </field>
+                                                  </block>
+                                                </value>
+                                                <next>
+                                                  <block type="device_show_number">
+                                                    <value name="NUMBER">
+                                                      <shadow type="math_number">
+                                                        <field name="NUM">2</field>
+                                                      </shadow>
+                                                      <block type="device_get_pressure"></block>
+                                                    </value>
+                                                    <next>
+                                                      <block type="device_pause">
+                                                        <value name="PAUSE">
+                                                          <shadow type="math_number">
+                                                            <field name="NUM">100</field>
+                                                          </shadow>
+                                                          <block type="math_number">
+                                                            <field name="NUM">300</field>
+                                                          </block>
+                                                        </value>
+                                                      </block>
+                                                    </next>
+                                                  </block>
+                                                </next>
+                                              </block>
+                                            </next>
+                                          </block>
+                                        </next>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </statement>
+      </block>
+    </xml>
+
+    <xml id="pong" style="display: none">
+      <block type="device_joystick_event" x="645" y="35">
+        <field name="BUTTON">IoTBlocklyHelper.SenseHatJoystickButton.left</field>
+        <statement name="HANDLER">
+          <block type="controls_if">
+            <value name="IF0">
+              <block type="logic_compare">
+                <field name="OP">EQ</field>
+                <value name="A">
+                  <block type="variables_get">
+                    <field name="VAR">state</field>
+                  </block>
+                </value>
+                <value name="B">
+                  <block type="text">
+                    <field name="TEXT">playing</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <statement name="DO0">
+              <block type="controls_if">
+                <value name="IF0">
+                  <block type="logic_compare">
+                    <field name="OP">GT</field>
+                    <value name="A">
+                      <block type="variables_get">
+                        <field name="VAR">paddleX</field>
+                      </block>
+                    </value>
+                    <value name="B">
+                      <block type="math_number">
+                        <field name="NUM">0</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <statement name="DO0">
+                  <block type="device_show_image_offset">
+                    <field name="COLOR">Windows.UI.Colors.black</field>
+                    <value name="SPRITE">
+                      <block type="variables_get">
+                        <field name="VAR">paddle</field>
+                      </block>
+                    </value>
+                    <value name="OFFSETX">
+                      <shadow type="math_number">
+                        <field name="NUM">0</field>
+                      </shadow>
+                      <block type="variables_get">
+                        <field name="VAR">paddleX</field>
+                      </block>
+                    </value>
+                    <value name="OFFSETY">
+                      <shadow type="math_number">
+                        <field name="NUM">0</field>
+                      </shadow>
+                      <block type="math_number">
+                        <field name="NUM">7</field>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="variables_set">
+                        <field name="VAR">paddleX</field>
+                        <value name="VALUE">
+                          <block type="math_arithmetic">
+                            <field name="OP">MINUS</field>
+                            <value name="A">
+                              <block type="variables_get">
+                                <field name="VAR">paddleX</field>
+                              </block>
+                            </value>
+                            <value name="B">
+                              <block type="math_number">
+                                <field name="NUM">1</field>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                        <next>
+                          <block type="device_show_image_offset">
+                            <field name="COLOR">Windows.UI.Colors.blue</field>
+                            <value name="SPRITE">
+                              <block type="variables_get">
+                                <field name="VAR">paddle</field>
+                              </block>
+                            </value>
+                            <value name="OFFSETX">
+                              <shadow type="math_number">
+                                <field name="NUM">0</field>
+                              </shadow>
+                              <block type="variables_get">
+                                <field name="VAR">paddleX</field>
+                              </block>
+                            </value>
+                            <value name="OFFSETY">
+                              <shadow type="math_number">
+                                <field name="NUM">0</field>
+                              </shadow>
+                              <block type="math_number">
+                                <field name="NUM">7</field>
+                              </block>
+                            </value>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </statement>
+              </block>
+            </statement>
+          </block>
+        </statement>
+      </block>
+      <block type="variables_set" x="160" y="96">
+        <field name="VAR">speed</field>
+        <value name="VALUE">
+          <block type="math_number">
+            <field name="NUM">100</field>
+          </block>
+        </value>
+        <next>
+          <block type="variables_set">
+            <field name="VAR">x</field>
+            <value name="VALUE">
+              <block type="math_number">
+                <field name="NUM">3</field>
+              </block>
+            </value>
+            <next>
+              <block type="variables_set">
+                <field name="VAR">y</field>
+                <value name="VALUE">
+                  <block type="math_number">
+                    <field name="NUM">6</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="variables_set">
+                    <field name="VAR">dirX</field>
+                    <value name="VALUE">
+                      <block type="math_number">
+                        <field name="NUM">-1</field>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="variables_set">
+                        <field name="VAR">dirY</field>
+                        <value name="VALUE">
+                          <block type="math_number">
+                            <field name="NUM">-1</field>
+                          </block>
+                        </value>
+                        <next>
+                          <block type="variables_set">
+                            <field name="VAR">paddleX</field>
+                            <value name="VALUE">
+                              <block type="math_number">
+                                <field name="NUM">2</field>
+                              </block>
+                            </value>
+                            <next>
+                              <block type="variables_set">
+                                <field name="VAR">state</field>
+                                <value name="VALUE">
+                                  <block type="text">
+                                    <field name="TEXT">playing</field>
+                                  </block>
+                                </value>
+                                <next>
+                                  <block type="variables_set">
+                                    <field name="VAR">ball</field>
+                                    <value name="VALUE">
+                                      <block type="device_create_small_image">
+                                        <field name="LED00">TRUE</field>
+                                        <field name="LED10">FALSE</field>
+                                        <field name="LED20">FALSE</field>
+                                        <field name="LED30">FALSE</field>
+                                        <field name="LED01">FALSE</field>
+                                        <field name="LED11">FALSE</field>
+                                        <field name="LED21">FALSE</field>
+                                        <field name="LED31">FALSE</field>
+                                        <field name="LED02">FALSE</field>
+                                        <field name="LED12">FALSE</field>
+                                        <field name="LED22">FALSE</field>
+                                        <field name="LED32">FALSE</field>
+                                        <field name="LED03">FALSE</field>
+                                        <field name="LED13">FALSE</field>
+                                        <field name="LED23">FALSE</field>
+                                        <field name="LED33">FALSE</field>
+                                      </block>
+                                    </value>
+                                    <next>
+                                      <block type="variables_set">
+                                        <field name="VAR">paddleLength</field>
+                                        <value name="VALUE">
+                                          <block type="math_number">
+                                            <field name="NUM">3</field>
+                                          </block>
+                                        </value>
+                                        <next>
+                                          <block type="variables_set">
+                                            <field name="VAR">paddle</field>
+                                            <value name="VALUE">
+                                              <block type="device_create_small_image">
+                                                <field name="LED00">TRUE</field>
+                                                <field name="LED10">TRUE</field>
+                                                <field name="LED20">TRUE</field>
+                                                <field name="LED30">FALSE</field>
+                                                <field name="LED01">FALSE</field>
+                                                <field name="LED11">FALSE</field>
+                                                <field name="LED21">FALSE</field>
+                                                <field name="LED31">FALSE</field>
+                                                <field name="LED02">FALSE</field>
+                                                <field name="LED12">FALSE</field>
+                                                <field name="LED22">FALSE</field>
+                                                <field name="LED32">FALSE</field>
+                                                <field name="LED03">FALSE</field>
+                                                <field name="LED13">FALSE</field>
+                                                <field name="LED23">FALSE</field>
+                                                <field name="LED33">FALSE</field>
+                                              </block>
+                                            </value>
+                                            <next>
+                                              <block type="device_clear_display">
+                                                <next>
+                                                  <block type="device_show_image_offset">
+                                                    <field name="COLOR">Windows.UI.Colors.green</field>
+                                                    <value name="SPRITE">
+                                                      <block type="variables_get">
+                                                        <field name="VAR">ball</field>
+                                                      </block>
+                                                    </value>
+                                                    <value name="OFFSETX">
+                                                      <shadow type="math_number">
+                                                        <field name="NUM">0</field>
+                                                      </shadow>
+                                                      <block type="variables_get">
+                                                        <field name="VAR">x</field>
+                                                      </block>
+                                                    </value>
+                                                    <value name="OFFSETY">
+                                                      <shadow type="math_number">
+                                                        <field name="NUM">0</field>
+                                                      </shadow>
+                                                      <block type="variables_get">
+                                                        <field name="VAR">y</field>
+                                                      </block>
+                                                    </value>
+                                                    <next>
+                                                      <block type="device_show_image_offset">
+                                                        <field name="COLOR">Windows.UI.Colors.blue</field>
+                                                        <value name="SPRITE">
+                                                          <block type="variables_get">
+                                                            <field name="VAR">paddle</field>
+                                                          </block>
+                                                        </value>
+                                                        <value name="OFFSETX">
+                                                          <shadow type="math_number">
+                                                            <field name="NUM">0</field>
+                                                          </shadow>
+                                                          <block type="variables_get">
+                                                            <field name="VAR">paddleX</field>
+                                                          </block>
+                                                        </value>
+                                                        <value name="OFFSETY">
+                                                          <shadow type="math_number">
+                                                            <field name="NUM">0</field>
+                                                          </shadow>
+                                                          <block type="math_number">
+                                                            <field name="NUM">7</field>
+                                                          </block>
+                                                        </value>
+                                                        <next>
+                                                          <block type="device_forever">
+                                                            <statement name="DO">
+                                                              <block type="device_pause">
+                                                                <value name="PAUSE">
+                                                                  <shadow type="math_number">
+                                                                    <field name="NUM">100</field>
+                                                                  </shadow>
+                                                                  <block type="variables_get">
+                                                                    <field name="VAR">speed</field>
+                                                                  </block>
+                                                                </value>
+                                                                <next>
+                                                                  <block type="device_show_image_offset">
+                                                                    <field name="COLOR">Windows.UI.Colors.black</field>
+                                                                    <value name="SPRITE">
+                                                                      <block type="variables_get">
+                                                                        <field name="VAR">ball</field>
+                                                                      </block>
+                                                                    </value>
+                                                                    <value name="OFFSETX">
+                                                                      <shadow type="math_number">
+                                                                        <field name="NUM">0</field>
+                                                                      </shadow>
+                                                                      <block type="variables_get">
+                                                                        <field name="VAR">x</field>
+                                                                      </block>
+                                                                    </value>
+                                                                    <value name="OFFSETY">
+                                                                      <shadow type="math_number">
+                                                                        <field name="NUM">0</field>
+                                                                      </shadow>
+                                                                      <block type="variables_get">
+                                                                        <field name="VAR">y</field>
+                                                                      </block>
+                                                                    </value>
+                                                                    <next>
+                                                                      <block type="variables_set">
+                                                                        <field name="VAR">x</field>
+                                                                        <value name="VALUE">
+                                                                          <block type="math_arithmetic">
+                                                                            <field name="OP">ADD</field>
+                                                                            <value name="A">
+                                                                              <block type="variables_get">
+                                                                                <field name="VAR">x</field>
+                                                                              </block>
+                                                                            </value>
+                                                                            <value name="B">
+                                                                              <block type="variables_get">
+                                                                                <field name="VAR">dirX</field>
+                                                                              </block>
+                                                                            </value>
+                                                                          </block>
+                                                                        </value>
+                                                                        <next>
+                                                                          <block type="variables_set">
+                                                                            <field name="VAR">y</field>
+                                                                            <value name="VALUE">
+                                                                              <block type="math_arithmetic">
+                                                                                <field name="OP">ADD</field>
+                                                                                <value name="A">
+                                                                                  <block type="variables_get">
+                                                                                    <field name="VAR">y</field>
+                                                                                  </block>
+                                                                                </value>
+                                                                                <value name="B">
+                                                                                  <block type="variables_get">
+                                                                                    <field name="VAR">dirY</field>
+                                                                                  </block>
+                                                                                </value>
+                                                                              </block>
+                                                                            </value>
+                                                                            <next>
+                                                                              <block type="controls_if">
+                                                                                <value name="IF0">
+                                                                                  <block type="logic_compare">
+                                                                                    <field name="OP">LT</field>
+                                                                                    <value name="A">
+                                                                                      <block type="variables_get">
+                                                                                        <field name="VAR">x</field>
+                                                                                      </block>
+                                                                                    </value>
+                                                                                    <value name="B">
+                                                                                      <block type="math_number">
+                                                                                        <field name="NUM">0</field>
+                                                                                      </block>
+                                                                                    </value>
+                                                                                  </block>
+                                                                                </value>
+                                                                                <statement name="DO0">
+                                                                                  <block type="variables_set">
+                                                                                    <field name="VAR">x</field>
+                                                                                    <value name="VALUE">
+                                                                                      <block type="math_number">
+                                                                                        <field name="NUM">1</field>
+                                                                                      </block>
+                                                                                    </value>
+                                                                                    <next>
+                                                                                      <block type="variables_set">
+                                                                                        <field name="VAR">dirX</field>
+                                                                                        <value name="VALUE">
+                                                                                          <block type="math_arithmetic">
+                                                                                            <field name="OP">MULTIPLY</field>
+                                                                                            <value name="A">
+                                                                                              <block type="variables_get">
+                                                                                                <field name="VAR">dirX</field>
+                                                                                              </block>
+                                                                                            </value>
+                                                                                            <value name="B">
+                                                                                              <block type="math_number">
+                                                                                                <field name="NUM">-1</field>
+                                                                                              </block>
+                                                                                            </value>
+                                                                                          </block>
+                                                                                        </value>
+                                                                                      </block>
+                                                                                    </next>
+                                                                                  </block>
+                                                                                </statement>
+                                                                                <next>
+                                                                                  <block type="controls_if">
+                                                                                    <value name="IF0">
+                                                                                      <block type="logic_compare">
+                                                                                        <field name="OP">GT</field>
+                                                                                        <value name="A">
+                                                                                          <block type="variables_get">
+                                                                                            <field name="VAR">x</field>
+                                                                                          </block>
+                                                                                        </value>
+                                                                                        <value name="B">
+                                                                                          <block type="math_number">
+                                                                                            <field name="NUM">7</field>
+                                                                                          </block>
+                                                                                        </value>
+                                                                                      </block>
+                                                                                    </value>
+                                                                                    <statement name="DO0">
+                                                                                      <block type="variables_set">
+                                                                                        <field name="VAR">x</field>
+                                                                                        <value name="VALUE">
+                                                                                          <block type="math_number">
+                                                                                            <field name="NUM">6</field>
+                                                                                          </block>
+                                                                                        </value>
+                                                                                        <next>
+                                                                                          <block type="variables_set">
+                                                                                            <field name="VAR">dirX</field>
+                                                                                            <value name="VALUE">
+                                                                                              <block type="math_arithmetic">
+                                                                                                <field name="OP">MULTIPLY</field>
+                                                                                                <value name="A">
+                                                                                                  <block type="variables_get">
+                                                                                                    <field name="VAR">dirX</field>
+                                                                                                  </block>
+                                                                                                </value>
+                                                                                                <value name="B">
+                                                                                                  <block type="math_number">
+                                                                                                    <field name="NUM">-1</field>
+                                                                                                  </block>
+                                                                                                </value>
+                                                                                              </block>
+                                                                                            </value>
+                                                                                          </block>
+                                                                                        </next>
+                                                                                      </block>
+                                                                                    </statement>
+                                                                                    <next>
+                                                                                      <block type="controls_if">
+                                                                                        <value name="IF0">
+                                                                                          <block type="logic_compare">
+                                                                                            <field name="OP">LT</field>
+                                                                                            <value name="A">
+                                                                                              <block type="variables_get">
+                                                                                                <field name="VAR">y</field>
+                                                                                              </block>
+                                                                                            </value>
+                                                                                            <value name="B">
+                                                                                              <block type="math_number">
+                                                                                                <field name="NUM">0</field>
+                                                                                              </block>
+                                                                                            </value>
+                                                                                          </block>
+                                                                                        </value>
+                                                                                        <statement name="DO0">
+                                                                                          <block type="variables_set">
+                                                                                            <field name="VAR">y</field>
+                                                                                            <value name="VALUE">
+                                                                                              <block type="math_number">
+                                                                                                <field name="NUM">1</field>
+                                                                                              </block>
+                                                                                            </value>
+                                                                                            <next>
+                                                                                              <block type="variables_set">
+                                                                                                <field name="VAR">dirY</field>
+                                                                                                <value name="VALUE">
+                                                                                                  <block type="math_arithmetic">
+                                                                                                    <field name="OP">MULTIPLY</field>
+                                                                                                    <value name="A">
+                                                                                                      <block type="variables_get">
+                                                                                                        <field name="VAR">dirY</field>
+                                                                                                      </block>
+                                                                                                    </value>
+                                                                                                    <value name="B">
+                                                                                                      <block type="math_number">
+                                                                                                        <field name="NUM">-1</field>
+                                                                                                      </block>
+                                                                                                    </value>
+                                                                                                  </block>
+                                                                                                </value>
+                                                                                              </block>
+                                                                                            </next>
+                                                                                          </block>
+                                                                                        </statement>
+                                                                                        <next>
+                                                                                          <block type="controls_if">
+                                                                                            <value name="IF0">
+                                                                                              <block type="logic_compare">
+                                                                                                <field name="OP">GT</field>
+                                                                                                <value name="A">
+                                                                                                  <block type="variables_get">
+                                                                                                    <field name="VAR">y</field>
+                                                                                                  </block>
+                                                                                                </value>
+                                                                                                <value name="B">
+                                                                                                  <block type="math_number">
+                                                                                                    <field name="NUM">6</field>
+                                                                                                  </block>
+                                                                                                </value>
+                                                                                              </block>
+                                                                                            </value>
+                                                                                            <statement name="DO0">
+                                                                                              <block type="controls_if">
+                                                                                                <mutation else="1"></mutation>
+                                                                                                <value name="IF0">
+                                                                                                  <block type="logic_operation">
+                                                                                                    <field name="OP">AND</field>
+                                                                                                    <value name="A">
+                                                                                                      <block type="logic_compare">
+                                                                                                        <field name="OP">GTE</field>
+                                                                                                        <value name="A">
+                                                                                                          <block type="variables_get">
+                                                                                                            <field name="VAR">x</field>
+                                                                                                          </block>
+                                                                                                        </value>
+                                                                                                        <value name="B">
+                                                                                                          <block type="variables_get">
+                                                                                                            <field name="VAR">paddleX</field>
+                                                                                                          </block>
+                                                                                                        </value>
+                                                                                                      </block>
+                                                                                                    </value>
+                                                                                                    <value name="B">
+                                                                                                      <block type="logic_compare">
+                                                                                                        <field name="OP">LT</field>
+                                                                                                        <value name="A">
+                                                                                                          <block type="variables_get">
+                                                                                                            <field name="VAR">x</field>
+                                                                                                          </block>
+                                                                                                        </value>
+                                                                                                        <value name="B">
+                                                                                                          <block type="math_arithmetic">
+                                                                                                            <field name="OP">ADD</field>
+                                                                                                            <value name="A">
+                                                                                                              <block type="variables_get">
+                                                                                                                <field name="VAR">paddleX</field>
+                                                                                                              </block>
+                                                                                                            </value>
+                                                                                                            <value name="B">
+                                                                                                              <block type="variables_get">
+                                                                                                                <field name="VAR">paddleLength</field>
+                                                                                                              </block>
+                                                                                                            </value>
+                                                                                                          </block>
+                                                                                                        </value>
+                                                                                                      </block>
+                                                                                                    </value>
+                                                                                                  </block>
+                                                                                                </value>
+                                                                                                <statement name="DO0">
+                                                                                                  <block type="variables_set">
+                                                                                                    <field name="VAR">y</field>
+                                                                                                    <value name="VALUE">
+                                                                                                      <block type="math_number">
+                                                                                                        <field name="NUM">5</field>
+                                                                                                      </block>
+                                                                                                    </value>
+                                                                                                    <next>
+                                                                                                      <block type="variables_set">
+                                                                                                        <field name="VAR">dirY</field>
+                                                                                                        <value name="VALUE">
+                                                                                                          <block type="math_arithmetic">
+                                                                                                            <field name="OP">MULTIPLY</field>
+                                                                                                            <value name="A">
+                                                                                                              <block type="variables_get">
+                                                                                                                <field name="VAR">dirY</field>
+                                                                                                              </block>
+                                                                                                            </value>
+                                                                                                            <value name="B">
+                                                                                                              <block type="math_number">
+                                                                                                                <field name="NUM">-1</field>
+                                                                                                              </block>
+                                                                                                            </value>
+                                                                                                          </block>
+                                                                                                        </value>
+                                                                                                      </block>
+                                                                                                    </next>
+                                                                                                  </block>
+                                                                                                </statement>
+                                                                                                <statement name="ELSE">
+                                                                                                  <block type="variables_set">
+                                                                                                    <field name="VAR">state</field>
+                                                                                                    <value name="VALUE">
+                                                                                                      <block type="text">
+                                                                                                        <field name="TEXT">game over</field>
+                                                                                                      </block>
+                                                                                                    </value>
+                                                                                                    <next>
+                                                                                                      <block type="controls_repeat_ext">
+                                                                                                        <value name="TIMES">
+                                                                                                          <block type="math_number">
+                                                                                                            <field name="NUM">5</field>
+                                                                                                          </block>
+                                                                                                        </value>
+                                                                                                        <statement name="DO">
+                                                                                                          <block type="device_show_image_offset">
+                                                                                                            <field name="COLOR">Windows.UI.Colors.black</field>
+                                                                                                            <value name="SPRITE">
+                                                                                                              <block type="variables_get">
+                                                                                                                <field name="VAR">ball</field>
+                                                                                                              </block>
+                                                                                                            </value>
+                                                                                                            <value name="OFFSETX">
+                                                                                                              <shadow type="math_number">
+                                                                                                                <field name="NUM">0</field>
+                                                                                                              </shadow>
+                                                                                                              <block type="variables_get">
+                                                                                                                <field name="VAR">x</field>
+                                                                                                              </block>
+                                                                                                            </value>
+                                                                                                            <value name="OFFSETY">
+                                                                                                              <shadow type="math_number">
+                                                                                                                <field name="NUM">0</field>
+                                                                                                              </shadow>
+                                                                                                              <block type="variables_get">
+                                                                                                                <field name="VAR">y</field>
+                                                                                                              </block>
+                                                                                                            </value>
+                                                                                                            <next>
+                                                                                                              <block type="device_pause">
+                                                                                                                <value name="PAUSE">
+                                                                                                                  <shadow type="math_number">
+                                                                                                                    <field name="NUM">100</field>
+                                                                                                                  </shadow>
+                                                                                                                  <block type="math_number">
+                                                                                                                    <field name="NUM">200</field>
+                                                                                                                  </block>
+                                                                                                                </value>
+                                                                                                                <next>
+                                                                                                                  <block type="device_show_image_offset">
+                                                                                                                    <field name="COLOR">Windows.UI.Colors.red</field>
+                                                                                                                    <value name="SPRITE">
+                                                                                                                      <block type="variables_get">
+                                                                                                                        <field name="VAR">ball</field>
+                                                                                                                      </block>
+                                                                                                                    </value>
+                                                                                                                    <value name="OFFSETX">
+                                                                                                                      <shadow type="math_number">
+                                                                                                                        <field name="NUM">0</field>
+                                                                                                                      </shadow>
+                                                                                                                      <block type="variables_get">
+                                                                                                                        <field name="VAR">x</field>
+                                                                                                                      </block>
+                                                                                                                    </value>
+                                                                                                                    <value name="OFFSETY">
+                                                                                                                      <shadow type="math_number">
+                                                                                                                        <field name="NUM">0</field>
+                                                                                                                      </shadow>
+                                                                                                                      <block type="variables_get">
+                                                                                                                        <field name="VAR">y</field>
+                                                                                                                      </block>
+                                                                                                                    </value>
+                                                                                                                    <next>
+                                                                                                                      <block type="device_pause">
+                                                                                                                        <value name="PAUSE">
+                                                                                                                          <shadow type="math_number">
+                                                                                                                            <field name="NUM">100</field>
+                                                                                                                          </shadow>
+                                                                                                                          <block type="math_number">
+                                                                                                                            <field name="NUM">200</field>
+                                                                                                                          </block>
+                                                                                                                        </value>
+                                                                                                                      </block>
+                                                                                                                    </next>
+                                                                                                                  </block>
+                                                                                                                </next>
+                                                                                                              </block>
+                                                                                                            </next>
+                                                                                                          </block>
+                                                                                                        </statement>
+                                                                                                        <next>
+                                                                                                          <block type="device_pause">
+                                                                                                            <value name="PAUSE">
+                                                                                                              <shadow type="math_number">
+                                                                                                                <field name="NUM">100</field>
+                                                                                                              </shadow>
+                                                                                                              <block type="math_number">
+                                                                                                                <field name="NUM">1000</field>
+                                                                                                              </block>
+                                                                                                            </value>
+                                                                                                            <next>
+                                                                                                              <block type="device_show_image_offset">
+                                                                                                                <field name="COLOR">Windows.UI.Colors.black</field>
+                                                                                                                <value name="SPRITE">
+                                                                                                                  <block type="variables_get">
+                                                                                                                    <field name="VAR">ball</field>
+                                                                                                                  </block>
+                                                                                                                </value>
+                                                                                                                <value name="OFFSETX">
+                                                                                                                  <shadow type="math_number">
+                                                                                                                    <field name="NUM">0</field>
+                                                                                                                  </shadow>
+                                                                                                                  <block type="variables_get">
+                                                                                                                    <field name="VAR">x</field>
+                                                                                                                  </block>
+                                                                                                                </value>
+                                                                                                                <value name="OFFSETY">
+                                                                                                                  <shadow type="math_number">
+                                                                                                                    <field name="NUM">0</field>
+                                                                                                                  </shadow>
+                                                                                                                  <block type="variables_get">
+                                                                                                                    <field name="VAR">y</field>
+                                                                                                                  </block>
+                                                                                                                </value>
+                                                                                                                <next>
+                                                                                                                  <block type="device_show_image_offset">
+                                                                                                                    <field name="COLOR">Windows.UI.Colors.black</field>
+                                                                                                                    <value name="SPRITE">
+                                                                                                                      <block type="variables_get">
+                                                                                                                        <field name="VAR">paddle</field>
+                                                                                                                      </block>
+                                                                                                                    </value>
+                                                                                                                    <value name="OFFSETX">
+                                                                                                                      <shadow type="math_number">
+                                                                                                                        <field name="NUM">0</field>
+                                                                                                                      </shadow>
+                                                                                                                      <block type="variables_get">
+                                                                                                                        <field name="VAR">paddleX</field>
+                                                                                                                      </block>
+                                                                                                                    </value>
+                                                                                                                    <value name="OFFSETY">
+                                                                                                                      <shadow type="math_number">
+                                                                                                                        <field name="NUM">0</field>
+                                                                                                                      </shadow>
+                                                                                                                      <block type="math_number">
+                                                                                                                        <field name="NUM">7</field>
+                                                                                                                      </block>
+                                                                                                                    </value>
+                                                                                                                    <next>
+                                                                                                                      <block type="variables_set">
+                                                                                                                        <field name="VAR">x</field>
+                                                                                                                        <value name="VALUE">
+                                                                                                                          <block type="math_number">
+                                                                                                                            <field name="NUM">3</field>
+                                                                                                                          </block>
+                                                                                                                        </value>
+                                                                                                                        <next>
+                                                                                                                          <block type="variables_set">
+                                                                                                                            <field name="VAR">y</field>
+                                                                                                                            <value name="VALUE">
+                                                                                                                              <block type="math_number">
+                                                                                                                                <field name="NUM">6</field>
+                                                                                                                              </block>
+                                                                                                                            </value>
+                                                                                                                            <next>
+                                                                                                                              <block type="variables_set">
+                                                                                                                                <field name="VAR">dirX</field>
+                                                                                                                                <value name="VALUE">
+                                                                                                                                  <block type="math_number">
+                                                                                                                                    <field name="NUM">-1</field>
+                                                                                                                                  </block>
+                                                                                                                                </value>
+                                                                                                                                <next>
+                                                                                                                                  <block type="variables_set">
+                                                                                                                                    <field name="VAR">dirY</field>
+                                                                                                                                    <value name="VALUE">
+                                                                                                                                      <block type="math_number">
+                                                                                                                                        <field name="NUM">-1</field>
+                                                                                                                                      </block>
+                                                                                                                                    </value>
+                                                                                                                                    <next>
+                                                                                                                                      <block type="variables_set">
+                                                                                                                                        <field name="VAR">paddleX</field>
+                                                                                                                                        <value name="VALUE">
+                                                                                                                                          <block type="math_number">
+                                                                                                                                            <field name="NUM">2</field>
+                                                                                                                                          </block>
+                                                                                                                                        </value>
+                                                                                                                                        <next>
+                                                                                                                                          <block type="device_show_image_offset">
+                                                                                                                                            <field name="COLOR">Windows.UI.Colors.blue</field>
+                                                                                                                                            <value name="SPRITE">
+                                                                                                                                              <block type="variables_get">
+                                                                                                                                                <field name="VAR">paddle</field>
+                                                                                                                                              </block>
+                                                                                                                                            </value>
+                                                                                                                                            <value name="OFFSETX">
+                                                                                                                                              <shadow type="math_number">
+                                                                                                                                                <field name="NUM">0</field>
+                                                                                                                                              </shadow>
+                                                                                                                                              <block type="variables_get">
+                                                                                                                                                <field name="VAR">paddleX</field>
+                                                                                                                                              </block>
+                                                                                                                                            </value>
+                                                                                                                                            <value name="OFFSETY">
+                                                                                                                                              <shadow type="math_number">
+                                                                                                                                                <field name="NUM">0</field>
+                                                                                                                                              </shadow>
+                                                                                                                                              <block type="math_number">
+                                                                                                                                                <field name="NUM">7</field>
+                                                                                                                                              </block>
+                                                                                                                                            </value>
+                                                                                                                                            <next>
+                                                                                                                                              <block type="variables_set">
+                                                                                                                                                <field name="VAR">state</field>
+                                                                                                                                                <value name="VALUE">
+                                                                                                                                                  <block type="text">
+                                                                                                                                                    <field name="TEXT">playing</field>
+                                                                                                                                                  </block>
+                                                                                                                                                </value>
+                                                                                                                                              </block>
+                                                                                                                                            </next>
+                                                                                                                                          </block>
+                                                                                                                                        </next>
+                                                                                                                                      </block>
+                                                                                                                                    </next>
+                                                                                                                                  </block>
+                                                                                                                                </next>
+                                                                                                                              </block>
+                                                                                                                            </next>
+                                                                                                                          </block>
+                                                                                                                        </next>
+                                                                                                                      </block>
+                                                                                                                    </next>
+                                                                                                                  </block>
+                                                                                                                </next>
+                                                                                                              </block>
+                                                                                                            </next>
+                                                                                                          </block>
+                                                                                                        </next>
+                                                                                                      </block>
+                                                                                                    </next>
+                                                                                                  </block>
+                                                                                                </statement>
+                                                                                              </block>
+                                                                                            </statement>
+                                                                                            <next>
+                                                                                              <block type="device_show_image_offset">
+                                                                                                <field name="COLOR">Windows.UI.Colors.green</field>
+                                                                                                <value name="SPRITE">
+                                                                                                  <block type="variables_get">
+                                                                                                    <field name="VAR">ball</field>
+                                                                                                  </block>
+                                                                                                </value>
+                                                                                                <value name="OFFSETX">
+                                                                                                  <shadow type="math_number">
+                                                                                                    <field name="NUM">0</field>
+                                                                                                  </shadow>
+                                                                                                  <block type="variables_get">
+                                                                                                    <field name="VAR">x</field>
+                                                                                                  </block>
+                                                                                                </value>
+                                                                                                <value name="OFFSETY">
+                                                                                                  <shadow type="math_number">
+                                                                                                    <field name="NUM">0</field>
+                                                                                                  </shadow>
+                                                                                                  <block type="variables_get">
+                                                                                                    <field name="VAR">y</field>
+                                                                                                  </block>
+                                                                                                </value>
+                                                                                              </block>
+                                                                                            </next>
+                                                                                          </block>
+                                                                                        </next>
+                                                                                      </block>
+                                                                                    </next>
+                                                                                  </block>
+                                                                                </next>
+                                                                              </block>
+                                                                            </next>
+                                                                          </block>
+                                                                        </next>
+                                                                      </block>
+                                                                    </next>
+                                                                  </block>
+                                                                </next>
+                                                              </block>
+                                                            </statement>
+                                                          </block>
+                                                        </next>
+                                                      </block>
+                                                    </next>
+                                                  </block>
+                                                </next>
+                                              </block>
+                                            </next>
+                                          </block>
+                                        </next>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+      <block type="device_joystick_event" x="646" y="298">
+        <field name="BUTTON">IoTBlocklyHelper.SenseHatJoystickButton.right</field>
+        <statement name="HANDLER">
+          <block type="controls_if">
+            <value name="IF0">
+              <block type="logic_compare">
+                <field name="OP">EQ</field>
+                <value name="A">
+                  <block type="variables_get">
+                    <field name="VAR">state</field>
+                  </block>
+                </value>
+                <value name="B">
+                  <block type="text">
+                    <field name="TEXT">playing</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <statement name="DO0">
+              <block type="controls_if">
+                <value name="IF0">
+                  <block type="logic_compare">
+                    <field name="OP">LT</field>
+                    <value name="A">
+                      <block type="math_arithmetic">
+                        <field name="OP">ADD</field>
+                        <value name="A">
+                          <block type="variables_get">
+                            <field name="VAR">paddleX</field>
+                          </block>
+                        </value>
+                        <value name="B">
+                          <block type="variables_get">
+                            <field name="VAR">paddleLength</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <value name="B">
+                      <block type="math_number">
+                        <field name="NUM">8</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <statement name="DO0">
+                  <block type="device_show_image_offset">
+                    <field name="COLOR">Windows.UI.Colors.black</field>
+                    <value name="SPRITE">
+                      <block type="variables_get">
+                        <field name="VAR">paddle</field>
+                      </block>
+                    </value>
+                    <value name="OFFSETX">
+                      <shadow type="math_number">
+                        <field name="NUM">0</field>
+                      </shadow>
+                      <block type="variables_get">
+                        <field name="VAR">paddleX</field>
+                      </block>
+                    </value>
+                    <value name="OFFSETY">
+                      <shadow type="math_number">
+                        <field name="NUM">0</field>
+                      </shadow>
+                      <block type="math_number">
+                        <field name="NUM">7</field>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="variables_set">
+                        <field name="VAR">paddleX</field>
+                        <value name="VALUE">
+                          <block type="math_arithmetic">
+                            <field name="OP">ADD</field>
+                            <value name="A">
+                              <block type="variables_get">
+                                <field name="VAR">paddleX</field>
+                              </block>
+                            </value>
+                            <value name="B">
+                              <block type="math_number">
+                                <field name="NUM">1</field>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                        <next>
+                          <block type="device_show_image_offset">
+                            <field name="COLOR">Windows.UI.Colors.blue</field>
+                            <value name="SPRITE">
+                              <block type="variables_get">
+                                <field name="VAR">paddle</field>
+                              </block>
+                            </value>
+                            <value name="OFFSETX">
+                              <shadow type="math_number">
+                                <field name="NUM">0</field>
+                              </shadow>
+                              <block type="variables_get">
+                                <field name="VAR">paddleX</field>
+                              </block>
+                            </value>
+                            <value name="OFFSETY">
+                              <shadow type="math_number">
+                                <field name="NUM">0</field>
+                              </shadow>
+                              <block type="math_number">
+                                <field name="NUM">7</field>
+                              </block>
+                            </value>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </statement>
+              </block>
+            </statement>
+          </block>
+        </statement>
+      </block>
+    </xml>
+
+<!-- INCLUDE xml for last-script -->
+
     <script src="js/vendor/jquery.min.js"></script>
     <script>
+        var blocklyArea = document.getElementById('blocklyArea');
         var blocklyDiv = document.getElementById('blocklyDiv');
         var generatedCodeArea = document.getElementById('generatedCodeArea');
-        var codePrefix = 'var basic = new IoTBlocklyHelper.Basic();\nvar gpio = new IoTBlocklyHelper.Gpio();\nvar senseHat = new IoTBlocklyHelper.SenseHat();\n\n';
+        var codePrefix = 
+          'var basic = new IoTBlocklyHelper.Basic();\n' +
+          'var gpio = new IoTBlocklyHelper.Gpio();\n' +
+          'var senseHat = new IoTBlocklyHelper.SenseHat();\n' +
+          'var adc = new IoTBlocklyHelper.Adc();\n' +
+          'var eventsQueue = [];\n\n' +
+          'function pauseHelper(ms) {\n' +
+          '  if (eventsQueue.length == 0) {\n' +
+          '    basic.pause(ms);\n' +
+          '  }\n' +
+          '  else {\n' +
+          '    var pauseUntilTarget = basic.runningTime() + ms;\n' +
+          '    while (basic.runningTime() < pauseUntilTarget) {\n' +
+          '      for (var i = 0; i < eventsQueue.length; ++i) {\n' +
+          '        eventsQueue[i]();\n' +
+          '      }\n' +
+          '    }\n' +
+          '  }\n' +
+          '}\n\n' +
+          'function runEventsHelper() {\n' +
+          '  for (var i = 0; i < eventsQueue.length; ++i) {\n' +
+          '    eventsQueue[i]();\n' +
+          '  }\n' +
+          '}\n\n';
+        var codePostfix =
+          '\n' +
+          'if (eventsQueue.length > 0) {\n' +
+          '  while (true) {\n' +
+          '    runEventsHelper();\n' +
+          '  }\n' +
+          '}\n';
 
         var onresize = function (e)
         {
             var bodyheight = $(window).height();
-            var tempHeight = bodyheight - blocklyDiv.offsetTop - 10;
+            var tempHeight = bodyheight - blocklyArea.offsetTop - 26;
             if (tempHeight < 0) {
 
             } else {
-                $("#blocklyDiv").height(tempHeight);
+                $("#blocklyArea").height(tempHeight);
             }
             tempHeight = bodyheight - generatedCodeArea.offsetTop - 50;
             if (tempHeight < 0)
@@ -718,6 +1908,20 @@
             } else {
                 $("#generatedCodeArea").height(tempHeight);
             }
+            // Compute the absolute coordinates and dimensions of blocklyArea.
+            var element = blocklyArea;
+            var x = 0;
+            var y = 0;
+            do {
+              x += element.offsetLeft;
+              y += element.offsetTop;
+              element = element.offsetParent;
+            } while (element);
+            // Position blocklyDiv over blocklyArea.
+            blocklyDiv.style.left = x + 'px';
+            blocklyDiv.style.top = y + 'px';
+            blocklyDiv.style.width = blocklyArea.offsetWidth + 'px';
+            blocklyDiv.style.height = blocklyArea.offsetHeight + 'px';            
         }
         $(document).ready(function() {
             onresize();
@@ -752,20 +1956,58 @@
                 Blockly.Xml.domToWorkspace(workspace, xml);
             }
             else {
-                loadSample('heartbeat');
+                var startBlocksId = 'last-script';
+                if (!document.getElementById(startBlocksId)) {
+                    startBlocksId = 'heartbeat';
+                }
+                loadSample(startBlocksId);
             }
         }
         
         function loadSample(sampleId) {
             workspace.clear();
-            Blockly.Xml.domToWorkspace(workspace, document.getElementById(sampleId));
+            if (sampleId != '') {
+              Blockly.Xml.domToWorkspace(workspace, document.getElementById(sampleId));
+            }
+        }
+
+        function getCode() {
+            Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+            var jscode = Blockly.JavaScript.workspaceToCode(workspace);
+
+            // make sure event handlers are always before the actual code (i.e. just after the prefix)
+            var lines = jscode.split(/\r?\n/);
+            jscode = '';
+            var handlerFound = false;
+            var handlerStartTag = '// EVENT HANDLER START';
+            var handlerEndTag = '// EVENT HANDLER END';
+            var handler = '';
+            for (var i = 0; i < lines.length; ++i)
+            {
+                if (!handlerFound) {
+                    if (lines[i] == handlerStartTag) {
+                        handlerFound = true;
+                        handler = '';
+                    } else {
+                        jscode += lines[i] + '\n';
+                    }
+                } else {
+                    if (lines[i] == handlerEndTag) {
+                        handlerFound = false;
+                        jscode = handler + '\n\n' + jscode;
+                    } else {
+                        handler += lines[i] + '\n';
+                    }
+                }
+            }
+
+            jscode = codePrefix + jscode + codePostfix;
+            return jscode;
         }
 
         function showCode() {
             // Generate JavaScript code and display it.
-            Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
-            var jscode = Blockly.JavaScript.workspaceToCode(workspace);
-            jscode = codePrefix + jscode;
+            var jscode = getCode();
             var generatedCodeArea = document.getElementById('generatedCodeArea');
             generatedCodeArea.innerText = jscode;
         }
@@ -780,15 +2022,13 @@
         }
 
         function runCode() {
+            var xml = Blockly.Xml.workspaceToDom(workspace);
+            var text = Blockly.Xml.domToText(xml);
             if (window.sessionStorage) {
-                var xml = Blockly.Xml.workspaceToDom(workspace);
-                var text = Blockly.Xml.domToText(xml);
                 window.sessionStorage.loadOnceBlocks = text;
             }
-            Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
-            var jscode = Blockly.JavaScript.workspaceToCode(workspace);
-            jscode = codePrefix + jscode;
-            post('runcode', { code: jscode });
+            var jscode = getCode();
+            post('runcode', { code: jscode, blocks: text });
         }
 
         function stopCode() {

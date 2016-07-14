@@ -80,9 +80,8 @@ namespace Accelerometer
                 var settings = new I2cConnectionSettings(ACCEL_I2C_ADDR);       
                 settings.BusSpeed = I2cBusSpeed.FastMode;                       /* 400KHz bus speed */
 
-                string aqs = I2cDevice.GetDeviceSelector();                     /* Get a selector string that will return all I2C controllers on the system */
-                var dis = await DeviceInformation.FindAllAsync(aqs);            /* Find the I2C bus controller devices with our selector string             */
-                I2CAccel = await I2cDevice.FromIdAsync(dis[0].Id, settings);    /* Create an I2cDevice with our selected bus controller and I2C settings    */
+              
+                I2CAccel = await I2cDevice.GetDefaultAsync(settings);    /* Create an I2cDevice with our selected bus controller and I2C settings    */
                 if (I2CAccel == null)
                 {
                     Text_Status.Text = string.Format(

@@ -59,6 +59,7 @@ namespace IoTUtilities
             }
 
             private string[] splitRawRequest;
+            private string[] values;
 
             public Request(string rawRequestString)
             {
@@ -69,18 +70,24 @@ namespace IoTUtilities
                 {
                     RawRequestMethod = splitRawRequest[0];
                     RequestPart = RawRequestMethod.Split(' ');
+                    var valuePart = splitRawRequest[splitRawRequest.Length - 1];
+                    if (!valuePart.StartsWith("\0"))
+                    {
+                        values = valuePart.Split('&');
+                    }
                 }
             }
 
             public string GetValue(string key)
             {
+                if (values == null) { return null; }
                 string result = null;
                 key += "=";
-                foreach (var s in splitRawRequest)
+                foreach (var v in values)
                 {
-                    if (s.StartsWith(key))
+                    if (v.StartsWith(key))
                     {
-                        var value = s.Substring(key.Length);
+                        var value = v.Substring(key.Length);
                         result = System.Net.WebUtility.UrlDecode(value);
                         break;
                     }
@@ -111,6 +118,20 @@ namespace IoTUtilities
                     {
                         await WriteHeaderNoFlushAsync(resp, 200, "OK", file.Length);
                         await file.CopyToAsync(resp);
+                        await resp.FlushAsync();
+                    }
+                }
+            }
+
+            public async Task SendFileContentAsync(string fileContent)
+            {
+                using (var outputStream = socket.OutputStream)
+                {
+                    using (Stream resp = outputStream.AsStreamForWrite())
+                    {
+                        byte[] fileContentArray = Encoding.UTF8.GetBytes(fileContent);
+                        await WriteHeaderNoFlushAsync(resp, 200, "OK", fileContentArray.Length);
+                        await resp.WriteAsync(fileContentArray, 0, fileContentArray.Length);
                         await resp.FlushAsync();
                     }
                 }
@@ -181,6 +202,8 @@ namespace IoTUtilities
         }
 
         public delegate Task RouteCallback(Request req, Response res);
+
+        public delegate Task<string> Filter(Stream input);
 
         const uint BufferSize = 8192;
         StreamSocketListener listener;
@@ -310,7 +333,7 @@ namespace IoTUtilities
             }
         }
 
-        private async Task WriteStaticResponse(Request req, Response res, StorageFolder root)
+        public static async Task WriteStaticResponse(Request req, Response res, StorageFolder root)
         {
             try
             {
@@ -323,6 +346,34 @@ namespace IoTUtilities
                 using (Stream fs = await root.OpenStreamForReadAsync(filePath))
                 {
                     await res.SendFileAsync(fs);
+                }
+            }
+            catch (FileNotFoundException)
+            {
+                await res.SendStatusAsync(404);
+            }
+            catch (Exception)
+            {
+                await res.SendStatusAsync(500);
+            }
+        }
+
+        public static async Task WriteStaticResponseFilter(Request req, Response res, StorageFolder root, Filter filter)
+        {
+            // very rudimentary filtering for static web pages
+            try
+            {
+                string requestedFile = req.Path;
+                if (requestedFile == "/")
+                {
+                    requestedFile += "index.html";
+                }
+                string filePath = requestedFile.Replace('/', '\\');
+                using (Stream fs = await root.OpenStreamForReadAsync(filePath))
+                {
+                    // TODO: we should not await on the full content, but just filter as we read the stream...
+                    var content = await filter(fs);
+                    await res.SendFileContentAsync(content);
                 }
             }
             catch (FileNotFoundException)

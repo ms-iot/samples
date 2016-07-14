@@ -22,7 +22,7 @@ namespace IoTBlocklyHelper
             }
         }
 
-        public bool Valid()
+        public static bool Valid()
         {
             return (controller != null);
         }
@@ -57,7 +57,7 @@ namespace IoTBlocklyHelper
             }
         }
 
-        private GpioPin GetPin(int pinNumber)
+        private static GpioPin GetPin(int pinNumber)
         {
             if (!Valid()) { return null; }
             if (!pins.ContainsKey(pinNumber))
