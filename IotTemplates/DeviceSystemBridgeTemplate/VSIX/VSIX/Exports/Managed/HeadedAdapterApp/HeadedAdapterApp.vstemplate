@@ -25,7 +25,6 @@
       <ProjectItem ReplaceParameters="false" TargetFileName="App.xaml">App.xaml</ProjectItem>
       <ProjectItem ReplaceParameters="false" TargetFileName="App.xaml.cs">App.xaml.cs</ProjectItem>
       <ProjectItem ReplaceParameters="false" TargetFileName="HeadedAdapterApp_TemporaryKey.pfx">HeadedAdapterApp_TemporaryKey.pfx</ProjectItem>
-      <ProjectItem ReplaceParameters="false" TargetFileName="ApplicationInsights.config">ApplicationInsights.config</ProjectItem>
       <ProjectItem ReplaceParameters="false" TargetFileName="project.json">project.json</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="resources.resw">Resources\en-US\resources.resw</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="Package.appxmanifest">Package.appxmanifest</ProjectItem>
