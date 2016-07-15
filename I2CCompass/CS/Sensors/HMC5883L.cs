@@ -291,7 +291,8 @@ namespace I2CCompass.Sensors
             i2cSettings.BusSpeed = I2cBusSpeed.FastMode;
 
             // Create an I2cDevice with our selected bus controller ID and I2C settings
-            _i2cController = await I2cDevice.GetDefaultAsync(i2cSettings);
+            var controller = await I2cController.GetDefaultAsync();
+            _i2cController = controller.GetDevice(i2cSettings);
 
 
             IsInitialized = true;

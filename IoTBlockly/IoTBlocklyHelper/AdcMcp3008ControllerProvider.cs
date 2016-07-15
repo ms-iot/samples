@@ -48,20 +48,14 @@ namespace Microsoft.IoT.AdcMcp3008
 
                 // Ask Windows for the list of SpiDevices
 
-                // Get a selector string that will return all SPI controllers on the system 
-                string aqs = SpiDevice.GetDeviceSelector();
 
-                // Find the SPI bus controller devices with our selector string           
-                var dis = await DeviceInformation.FindAllAsync(aqs);
-
-                // Create an SpiDevice with our bus controller and SPI settings           
-                spiController = await SpiDevice.FromIdAsync(dis[0].Id, settings);
+                var controller = await SpiController.GetDefaultAsync();
+                spiController = controller.GetDevice(settings);
 
                 if (spiController == null)
                 {
                     Debug.WriteLine(
-                        "SPI Controller {0} is currently in use by another application. Please ensure that no other applications are using SPI.",
-                        dis[0].Id);
+                        "SPI Controller is currently in use by another application. Please ensure that no other applications are using SPI.");
                     throw new Exception();
                 }
 
