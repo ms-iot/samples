@@ -1,0 +1,63 @@
+﻿<!doctype html> 
+<html lang="en"> 
+ 	<head> 
+ 		<meta charset="utf-8"> 
+ 		<link rel="Stylesheet" href='http://ms-iot.github.io/content/css/bootstrap.css' />
+         <link rel="stylesheet" href="../css/default.css"/>
+ 	  <title> IoTHubBuddyClient - Main Page </title> 
+ 		<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+ 		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
+   </head> 
+   <body> 
+     <div class='main'> 
+       <div class='container'>
+           <div class="row" id = 'title-row'>
+               <div class="col-md-12-headerbar" id="title-col">
+                   <h1> azure iothub client </h1>
+               </div>
+           </div>
+           <div class="row" id="status-update">
+              <div class="col-md-6 status-col" id="dev-col">
+                <h4 id="dev-loc">Device Location: #location#</h4>
+             </div>
+              <div class="col-md-6 status-col">
+                <h4 id="sending">Status: Ready to send messages</h4>
+             </div>
+               
+           </div>
+           <div class="row" id="messaging-row">
+               <h1> messaging </h1>
+            <div class='send-messages' >
+                <div class="msg-btn-wrapper">
+                    <a class="msg-btn send-btn" href="/message/1"> send 1 message</a>
+
+                </div>
+               <div class="msg-btn-wrapper">
+                   <a class="msg-btn send-btn" href="/message/10"> send 10 messages</a>
+               </div>
+               <div class="msg-btn-wrapper">
+                   <a class="msg-btn send-btn" href="/message/100">send 100 messages</a>
+               </div>
+               <div class="msg-btn-wrapper">
+                   <a class="msg-btn" href="/stop">stop</a>
+               </div>    
+          </div>
+               <div id="log" class="log-container">
+                   <ul id="msg-log">
+                       <p id='start-list'>#msgList#</p>
+                   </ul>
+               </div>
+               <div class="log-container" id="log-btn-container">
+                   <div class="msg-btn-wrapper log-btn">
+                       <a class="msg-btn" id="clear-log"href="/clear">clear</a>
+                   </div> 
+                   <div class="msg-btn-wrapper log-btn" >
+                       <a class="msg-btn" id="refresh-log" href="/refresh">refresh </a>
+                   </div> 
+               </div>
+         
+           </div>
+       </div> 
+     </div> 
+   </body> 
+ </html> 

@@ -1,7 +1,0 @@
-﻿{
-  "ProviderId": "Microsoft.AzureIoTHubService",
-  "Version": "1.4.0",
-  "GettingStartedDocument": {
-    "Uri": "http://aka.ms/azure-iot-hub-vs-cs-cs"
-  }
-}
