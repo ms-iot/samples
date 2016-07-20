@@ -32,7 +32,7 @@ namespace IoTHubBuddy
                 var type = message["type"];
                 if(type != null)
                 {
-                    var time = message["time"];
+                    var time = jsonMsg["time"];
                     if(time != null)
                     {
                         if(type.ToString() == "coordinates")

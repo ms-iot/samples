@@ -101,7 +101,11 @@ namespace IoTHubBuddy
                 String accountID = value as String;
                 String providerID = AccountListContainer.Containers[ProviderIdSubContainer].Values[accountID] as String;
                 String authority = AccountListContainer.Containers[AuthoritySubContainer].Values[accountID] as String;
-
+                //KNOWN BUG: storing the authority for organization accounts for some reason doesn't work. Will look into once auth has been finalized
+                if (authority == null)
+                {
+                    authority = "organizations";
+                }
                 WebAccountProvider provider = await GetProvider(providerID, authority);
 
                     WebAccount loadedAccount = await WebAuthenticationCoreManager.FindAccountAsync(provider, accountID);
