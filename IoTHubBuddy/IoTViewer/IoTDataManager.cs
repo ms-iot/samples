@@ -3,6 +3,7 @@ using Microsoft.Azure.Devices;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -15,6 +16,8 @@ namespace IoTHubBuddy
     static class IoTDataManager
     {
         private const string AzureResourceUri = "https://management.azure.com/";
+        private const string AzureResourceApi = "2015-01-01";
+        private const string IoTHubApi = "2016-02-03";
 
         /// <summary>
         /// check validity for returned json object. If it doesn't contain a value, then there was an error in gathering the data
@@ -24,11 +27,7 @@ namespace IoTHubBuddy
         /// <returns></returns>
         private static bool checkJsonObject(JsonObject jo)
         {
-            if (!jo.ContainsKey("value"))
-            {
-                return false;
-            }
-            return true;
+            return jo.ContainsKey("value");
         }
         /// <summary>
         /// sends a GET resquest to azure management REST API
@@ -36,28 +35,39 @@ namespace IoTHubBuddy
         /// <param name="token"></param>
         /// <param name="relative"></param>
         /// <returns></returns>
-        public static async Task<JsonObject> GetIoTData(string token, string relative)
+        public static async Task<JsonObject> GetIoTData(string relative)
         {
-            if(token == null)
+            try
             {
-                return null;
-            }
-            using(var client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                var restApi = new Uri(AzureResourceUri + relative);
-                var infoResult = await client.GetAsync(restApi);
-                string content = await infoResult.Content.ReadAsStringAsync();
-                var jsonObject = JsonObject.Parse(content);
-                if(checkJsonObject(jsonObject))
+                string token = await AccountManager.GetTokenSilentlyAsync();
+                using (var client = new HttpClient())
                 {
-                   return jsonObject;
-                } else
-                {
-                    return null;
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+                    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                    var restApi = new Uri(AzureResourceUri + relative);
+                    var infoResult = await client.GetAsync(restApi);
+                    string content = await infoResult.Content.ReadAsStringAsync();
+                    var jsonObject = JsonObject.Parse(content);
+                    if (checkJsonObject(jsonObject))
+                    {
+                        return jsonObject;
+                    }
+                    else
+                    {
+                        string message = "The response object was malformed.";
+                        if(jsonObject.ContainsKey("error"))
+                        {
+                            message = jsonObject.GetObject().GetNamedValue("error").GetString();
+                        }
+                        throw new System.Exception(message);
+                        
+                    }
                 }
+            } catch (System.Exception e)
+            {
+                throw new System.Exception(e.Message);
             }
+            
 
         }
         /// <summary>
@@ -67,32 +77,36 @@ namespace IoTHubBuddy
         /// <returns></returns>
         public static async Task<JsonObject> PostIoTData(string relative)
         {
-            string token = await AccountManager.GetTokenSilentlyAsync();
-            if(token == null)
+            try
             {
-                return null;
-            }
-            using(var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri("https://management.azure.com/");
-                var message = new HttpRequestMessage(HttpMethod.Post, relative);
-
-                message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-                message.Headers.AcceptLanguage.TryParseAdd("en-US");
-                message.Headers.Add("x-ms-version", "2013-11-01");
-                message.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                var infoResult = await client.SendAsync(message);
-                string content = await infoResult.Content.ReadAsStringAsync();
-                var jsonObject = JsonObject.Parse(content);
-                if (!checkJsonObject(jsonObject))
+                string token = await AccountManager.GetTokenSilentlyAsync();
+                using (var client = new HttpClient())
                 {
-                    return null;
+                    client.BaseAddress = new Uri("https://management.azure.com/");
+                    var message = new HttpRequestMessage(HttpMethod.Post, relative);
+
+                    message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                    message.Headers.AcceptLanguage.TryParseAdd("en-US");
+                    message.Headers.Add("x-ms-version", "2013-11-01");
+                    message.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    var infoResult = await client.SendAsync(message);
+                    string content = await infoResult.Content.ReadAsStringAsync();
+                    var jsonObject = JsonObject.Parse(content);
+                    if (checkJsonObject(jsonObject))
+                    {
+                        return jsonObject;
+                    }
+                    throw new System.Exception(jsonObject.GetObject().GetNamedValue("error").GetString());
+                    
                 }
-                return jsonObject;
+            } catch (System.Exception e)
+            {
+                throw e;
             }
-            
+
+
         }
         /// <summary>
         /// Get a list of azure subscriptions
@@ -102,17 +116,20 @@ namespace IoTHubBuddy
         public static async Task<ICollection<string>> GetSubscription(string token)
         {
             List<string> subscriptionIds = new List<string>();
-            string relative = "subscriptions?api-version=2015-01-01";
-            JsonObject result = await GetIoTData(token, relative);
-            if(result != null)
+            string relative = "subscriptions?api-version="+AzureResourceApi;
+            try
             {
-                var subscriptions = result["value"].GetArray();
-                foreach (var subscription in subscriptions)
+                JsonObject result = await GetIoTData(relative);
+                if (result != null)
                 {
-                    string idContent = subscription.GetObject().GetNamedValue("subscriptionId").GetString();
-                    subscriptionIds.Add(idContent);
+                    var subscriptions = result["value"].GetArray();
+                    subscriptionIds.AddRange(subscriptions.Select(_ => _.GetObject().GetNamedValue("subscriptionId").GetString()));
                 }
+            } catch(System.Exception e)
+            {
+                Debug.WriteLine(e.Message);
             }
+            
             
             return subscriptionIds;
         }
@@ -124,18 +141,21 @@ namespace IoTHubBuddy
         public static async Task<ICollection<string>> GetResourceGroups(string subId)
         {
             List<string> groupNames = new List<string>();
-            var relative = "subscriptions/" + subId + "/resourcegroups?api-version=2015-01-01";
-            string token = await AccountManager.GetTokenSilentlyAsync();
-            JsonObject result = await GetIoTData(token, relative);
-            if(result != null)
+            var relative = "subscriptions/" + subId + "/resourcegroups?api-version="+AzureResourceApi;
+            try
             {
-                var groups = result["value"].GetArray();
-                foreach (var group in groups)
+                JsonObject result = await GetIoTData(relative);
+                if (result != null)
                 {
-                    string idContent = group.GetObject().GetNamedValue("name").GetString();
-                    groupNames.Add(idContent);
+                    var groups = result["value"].GetArray();
+                    groupNames.AddRange(groups.Select(_ => _.GetObject().GetNamedValue("name").GetString()));
                 }
+            } catch(System.Exception e)
+            {
+
+                Debug.WriteLine(e.Message);
             }
+            
             
             return groupNames;
         }
@@ -147,26 +167,28 @@ namespace IoTHubBuddy
         public static async Task<ICollection<EventHubData>> GetIoTHubs(string subId)
         {
             List<EventHubData> iothubs = new List<EventHubData>();
-            string relative = "subscriptions/" + subId + "/providers/Microsoft.Devices/IotHubs?api-version=2016-02-03";
-            string token = await AccountManager.GetTokenSilentlyAsync();
-            JsonObject result = await GetIoTData(token,relative);
-            if(result != null)
+            string relative = "subscriptions/" + subId + "/providers/Microsoft.Devices/IotHubs?api-version="+IoTHubApi;
+            try
             {
-                var hubs = result["value"].GetArray();
-                foreach (var hub in hubs)
+                JsonObject result = await GetIoTData(relative);
+                if (result != null)
                 {
-                    var events = hub.GetObject().GetNamedValue("properties").GetObject().GetNamedValue("eventHubEndpoints").GetObject().GetNamedValue("events").GetObject();
-                    string idContent = hub.GetObject().GetNamedValue("name").GetString();
-                    var partIds = events.GetNamedValue("partitionIds").GetArray();
-                    List<string> ids = new List<string>();
-                    foreach (var id in partIds)
+                    var hubs = result["value"].GetArray();
+                    foreach (var hub in hubs)
                     {
-                        ids.Add(id.GetString());
+                        var events = hub.GetObject().GetNamedValue("properties").GetObject().GetNamedValue("eventHubEndpoints").GetObject().GetNamedValue("events").GetObject();
+                        string idContent = hub.GetObject().GetNamedValue("name").GetString();
+                        var partIds = events.GetNamedValue("partitionIds").GetArray();
+                        List<string> ids = partIds.Select(_=>_.GetString()).ToList();
+                        string path = events.GetNamedValue("path").GetString();
+                        string endpoint = events.GetNamedValue("endpoint").GetString();
+                        iothubs.Add(new EventHubData(ids, path, endpoint, idContent));
                     }
-                    string path = events.GetNamedValue("path").GetString();
-                    string endpoint = events.GetNamedValue("endpoint").GetString();
-                    iothubs.Add(new EventHubData(ids, path, endpoint, idContent));
                 }
+            
+            } catch(System.Exception e)
+            {
+                Debug.WriteLine(e.Message);
             }
             
             return iothubs;
@@ -183,22 +205,21 @@ namespace IoTHubBuddy
         {
            
             string relative = "subscriptions/" + subId + "/resourceGroups/" + group + "/providers/Microsoft.Devices/IotHubs/" + hubName + "/IoTHubKeys/listKeys?api-version=2015-08-15-preview";
-            JsonObject result = await PostIoTData(relative);
-            string key = null;
-            if(result != null)
+            try
             {
-                var keys = result["value"].GetArray();
-                foreach (var k in keys)
+                JsonObject result = await PostIoTData(relative);
+                string key = null;
+                var keys = result["value"].GetArray().SkipWhile(k => k.GetObject().GetNamedValue("keyName").GetString() != policy);
+                if(keys.Count() != 0)
                 {
-                    string keyName = k.GetObject().GetNamedValue("keyName").GetString();
-                    if (keyName == policy)
-                    {
-                        key = k.GetObject().GetNamedValue("primaryKey").GetString();
-                    }
-
+                    return keys.First().GetObject().GetNamedValue("primaryKey").GetString();
                 }
+            } catch (System.Exception e)
+            {
+                throw e;
             }
-            return key;
+            throw new System.Exception("Accessing the primary key failed");
+            
         }
         /// <summary>
         /// get a list of iot devices
@@ -210,18 +231,22 @@ namespace IoTHubBuddy
         /// <returns></returns>
         public static async Task<ICollection<string>> GetIoTDevices(string subId, string group, string hubname, string policy)
         {
-            string key = await GetPrimaryKey(subId, group, hubname, policy);
             List<string> devices = new List<string>();
-            if(key != null)
+            try
             {
-                var connectionString = "HostName=" + hubname + ".azure-devices.net;SharedAccessKeyName=" + policy + ";SharedAccessKey=" + key;
-                var registryManager = RegistryManager.CreateFromConnectionString(connectionString);
-                var devs = await registryManager.GetDevicesAsync(1000);
-                foreach (var dev in devs)
+                string key = await GetPrimaryKey(subId, group, hubname, policy);
+                if (key != null)
                 {
-                    devices.Add(dev.Id);
+                    var connectionString = "HostName=" + hubname + ".azure-devices.net;SharedAccessKeyName=" + policy + ";SharedAccessKey=" + key;
+                    var registryManager = RegistryManager.CreateFromConnectionString(connectionString);
+                    var devs = await registryManager.GetDevicesAsync(1000);
+                    devices.AddRange(devs.Select(_ => _.Id));
                 }
+            } catch (System.Exception e)
+            {
+                Debug.WriteLine(e);
             }
+            
             return devices;
         }
     }

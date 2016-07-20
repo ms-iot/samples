@@ -188,16 +188,12 @@ namespace IoTHubBuddy
         {
             WebTokenRequest request = new WebTokenRequest(provider, scope, client);
             Debug.WriteLine("provider: " + provider.Id + " scope: " + scope + " client: " + client);
-            if (provider.Id == "https://login.microsoft.com")
-            {
-                request.Properties.Add("resource", "https://management.azure.com/");
-            }
+            request.Properties.Add("resource", "https://management.azure.com/");
             WebTokenRequestResult result = await WebAuthenticationCoreManager.RequestTokenAsync(request);
             if (result.ResponseStatus == WebTokenRequestStatus.Success)
             {
                 WebAccount account = result.ResponseData[0].WebAccount;
                 StoreWebAccount(account);
-                var sure = result.ResponseData[0];
                 string token = result.ResponseData[0].Token;
 
                 Debug.WriteLine("token: " + token);
@@ -213,7 +209,7 @@ namespace IoTHubBuddy
         /// NOTE: this will likely change soon
         /// </summary>
         /// <param name="account"></param>
-        private static async void StoreWebAccount(WebAccount account)
+        private static void StoreWebAccount(WebAccount account)
         {
             ApplicationDataContainer accountsContainer = ApplicationData.Current.LocalSettings.Containers[AccountsContainer];
 
@@ -245,7 +241,7 @@ namespace IoTHubBuddy
 
             if (null == providerId || null == accountId)
             {
-                return null;
+                return "";
             }
 
             WebAccountProvider provider = await WebAuthenticationCoreManager.FindAccountProviderAsync(providerId, authority);
@@ -265,7 +261,7 @@ namespace IoTHubBuddy
             if (result.ResponseStatus == WebTokenRequestStatus.UserInteractionRequired)
             {
                 // Unable to get a token silently - you'll need to show the UI
-                return null;
+                throw new System.Exception("Unable to get token silently");
             }
             else if (result.ResponseStatus == WebTokenRequestStatus.Success)
             {
@@ -275,7 +271,7 @@ namespace IoTHubBuddy
             else
             {
                 // Other error 
-                return null;
+                throw new System.Exception("Unknown error when requesting token silently");
             }
         }
         /// <summary>
@@ -326,12 +322,8 @@ namespace IoTHubBuddy
         /// <returns></returns>
         public static async Task<string> LoginSilently()
         {
-            string token = await GetTokenSilentlyAsync();
-            if(token != null)
-            {
-                return token;
-            }
-            return null;
+            return await GetTokenSilentlyAsync();
+            
         }
         /// <summary>
         /// build containers for storage

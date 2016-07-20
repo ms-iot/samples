@@ -33,17 +33,17 @@ namespace IoTHubBuddy
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             IoTAccountData account = e.Parameter as IoTAccountData;
-            if(checkValidity(account))
+            if(CheckValidity(account))
             {
                 
                 data = account;
                 hubs = await IoTDataManager.GetIoTHubs(data.Subscription);
                 if(hubs.Count == 0)
                 {
-                    showError("You have no IoTHubs registered under this subscription.");
+                    ShowError("You have no IoTHubs registered under this subscription.");
                 } else
                 {
-                    hideErrors();
+                    HideErrors();
                     foreach (EventHubData h in hubs)
                     {
                         HubList.Items.Add(h.HubName);
@@ -52,7 +52,7 @@ namespace IoTHubBuddy
                 
             } else
             {
-                showError("An error occurred. Please try logging in again", true);
+                ShowError("An error occurred. Please try logging in again", true);
             }
             
             
@@ -69,14 +69,8 @@ namespace IoTHubBuddy
         }
         private EventHubData EventSelected(string hubName)
         {
-            foreach(EventHubData e in hubs)
-            {
-                if(e.HubName == hubName)
-                {
-                    return e;
-                }
-            }
-            return null;
+            IEnumerable<EventHubData> selected = hubs.SkipWhile(hub => hub.HubName != hubName);
+            return selected.First<EventHubData>();
         }
         private void Back_Click(object sender, RoutedEventArgs e)
         {
@@ -84,7 +78,7 @@ namespace IoTHubBuddy
             account.Subscription = data.Subscription;
             this.Frame.Navigate(typeof(ResourceGroupPage), account);
         }
-        private void showError(string error, bool showLoginBtn = false)
+        private void ShowError(string error, bool showLoginBtn = false)
         {
             HubList.Visibility = Visibility.Collapsed;
             ErrorMessage.Text = error;
@@ -95,7 +89,7 @@ namespace IoTHubBuddy
             }
 
         }
-        private void hideErrors()
+        private void HideErrors()
         {
             HubList.Visibility = Visibility.Visible;
             ErrorMessage.Visibility = Visibility.Collapsed;
@@ -105,7 +99,7 @@ namespace IoTHubBuddy
         {
             this.Frame.Navigate(typeof(MainPage));
         }
-        private bool checkValidity(IoTAccountData account)
+        private bool CheckValidity(IoTAccountData account)
         {
             if (account == null)
             {

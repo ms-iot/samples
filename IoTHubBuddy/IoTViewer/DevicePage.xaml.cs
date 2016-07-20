@@ -31,7 +31,7 @@ namespace IoTHubBuddy
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             IoTAccountData account = e.Parameter as IoTAccountData;
-            if (checkValidity(account))
+            if (CheckValidity(account))
             {
                 data = account;
                 data.SharedAccessPolicy = "iothubowner";
@@ -39,10 +39,10 @@ namespace IoTHubBuddy
                 data.PrimaryKey = await IoTDataManager.GetPrimaryKey(data.Subscription, data.ResourceGroup, data.HubName, data.SharedAccessPolicy);
                 if (devices.Count == 0)
                 {
-                    showError("You have no devices registered in this hub");
+                    ShowError("You have no devices registered in this hub");
                 } else
                 {
-                    hideErrors();
+                    HideErrors();
                     foreach (string dev in devices)
                     {
                         DeviceList.Items.Add(dev);
@@ -51,7 +51,7 @@ namespace IoTHubBuddy
                 
             } else
             {
-                showError("An error occurred. Please try logging in again.", true);
+                ShowError("An error occurred. Please try logging in again.", true);
             }
             
 
@@ -62,7 +62,7 @@ namespace IoTHubBuddy
             data.DeviceName = device;;
             this.Frame.Navigate(typeof(MapPage), data);
         }
-        private bool checkValidity(IoTAccountData account)
+        private bool CheckValidity(IoTAccountData account)
         {
             if (account == null)
             {
@@ -74,7 +74,7 @@ namespace IoTHubBuddy
             }
             return true;
         }
-        private void showError(string error, bool showLoginBtn = false)
+        private void ShowError(string error, bool showLoginBtn = false)
         {
             DeviceList.Visibility = Visibility.Collapsed;
             ErrorMessage.Text = error;
@@ -86,7 +86,7 @@ namespace IoTHubBuddy
             }
 
         }
-        private void hideErrors()
+        private void HideErrors()
         {
             DeviceList.Visibility = Visibility.Visible;
             ErrorMessage.Visibility = Visibility.Collapsed;

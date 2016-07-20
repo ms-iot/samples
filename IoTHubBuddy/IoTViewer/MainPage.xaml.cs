@@ -106,11 +106,11 @@ namespace IoTHubBuddy
             List<string> partitionIds = new List<string>();
             partitionIds.Add("0");
             partitionIds.Add("1");
-            string entity = "iothub-ehub-hub-dimaha-42362-31f5229b77"; //should start with "iothub-ehub-<hub name>-<random numbers>"
-            string port = "sb://ihsuprodbyres039dednamespace.servicebus.windows.net/"; //should start with "sb://" and end with "sevicebus.windows.net/"
-            string name = "hub-dimaha.azure-devices.net"; //iothub name
-            string deviceName = "dimaha01"; //name of iot device you want to listen to
-            string primaryKey = "JSqXsxpMIi/VFmts3/GRFXUgjhzLGerci4XVkhH+yHA=";
+            string entity = "..."; //should start with "iothub-ehub-<hub name>-<random numbers>"
+            string port = "sb://.../"; //should start with "sb://" and end with "sevicebus.windows.net/"
+            string name = "..."; //iothub name
+            string deviceName = "..."; //name of iot device you want to listen to
+            string primaryKey = "...";
             IoTAccountData a = new IoTAccountData();
             a.EventHubInfo = new EventHubData(partitionIds, entity, port, name);
             a.DeviceName = deviceName;
