@@ -343,8 +343,7 @@ namespace IoTHubBuddy
             {
                 await SignOutAccountAsync(account);
             }
-
-            accounts = null;
+            
         }
     }
 }
