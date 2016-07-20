@@ -277,7 +277,7 @@ namespace IoTHubBuddyClient
         {
             if (string.IsNullOrEmpty(request))
             {
-                return null;
+                throw new System.Exception("Request is null");
             }
 
             IDictionary<string, string> parameters = WebHelper.ParseGetParametersFromUrl(new Uri(string.Format("http://0.0.0.0/{0}", request)));
@@ -330,16 +330,34 @@ namespace IoTHubBuddyClient
                 {
 
                     string html = "";
-                    IDictionary<string, string> parameters = ParseParametersFromRequest(request);
-                    if (!ValidateLoginRequest(parameters))
+                    try
                     {
-                        html = await LoadandUpdateStatus(loginStatus, Constants.LOGIN_ERROR, NavConstants.LOGIN);
-                        loginStatus = Constants.LOGIN_ERROR;
-                    } else
+                        IDictionary<string, string> parameters = ParseParametersFromRequest(request);
+                        if (!ValidateLoginRequest(parameters))
+                        {
+                            html = await LoadandUpdateStatus(loginStatus, Constants.LOGIN_ERROR, NavConstants.LOGIN);
+                            loginStatus = Constants.LOGIN_ERROR;
+                        }
+                        else
+                        {
+                            html = await LoginWithCredentials(parameters[HostKey], parameters[DeviceKey], parameters[SharedKey]);
+                        }
+                        await WebHelper.WriteToStream(html, os);
+                    } catch (System.Exception ex)
                     {
-                        html = await LoginWithCredentials(parameters[HostKey], parameters[DeviceKey], parameters[SharedKey]);   
+                        try
+                        {
+                            // Try to send an error page back if there was a problem servicing the request
+                            html = helper.GenerateErrorPage("There's been an error: " + ex.Message + "<br><br>" + ex.StackTrace);
+                            await WebHelper.WriteToStream(html, os);
+                        }
+                        catch (Exception e)
+                        {
+                            System.Diagnostics.Debug.WriteLine(e.StackTrace.ToString());
+                        }
+
                     }
-                    await WebHelper.WriteToStream(html, os);
+                    
 
                 } else if (request.Equals("/") || request.Contains(NavConstants.LOGIN))
                 {

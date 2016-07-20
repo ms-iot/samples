@@ -25,19 +25,25 @@ namespace IoTHubBuddy
         {
             JObject jsonMsg = JObject.Parse(msg);
             Debug.WriteLine(jsonMsg);
-            if (validateMessage(jsonMsg))
+            string status = "An invalid message was sent. Please check your IoT device";
+            var message = jsonMsg["message"];
+            if(message != null)
             {
-                string type = jsonMsg["message"]["type"].ToString();
-                if (type == "coordinates")
+                var type = message["type"];
+                if(type != null)
                 {
-                    this.SetMapLocation(new Message(jsonMsg["message"]["latitude"].ToString(), jsonMsg["message"]["longitude"].ToString(), jsonMsg["time"].ToString()));
+                    var time = message["time"];
+                    if(time != null)
+                    {
+                        if(type.ToString() == "coordinates")
+                        {
+                            this.SetMapLocation(new Message(jsonMsg["message"]["latitude"].ToString(), jsonMsg["message"]["longitude"].ToString(), jsonMsg["time"].ToString()));
+                            status = msg;
+                        }
+                    }
                 }
-                this.AddToLog(msg);
             }
-            else
-            {
-                this.AddToLog("An invalid message was sent. Please check your IoT device");
-            }
+            this.AddToLog(status);
         }
         /// <summary>
         /// set the pin location on the ui map
@@ -55,26 +61,6 @@ namespace IoTHubBuddy
         {
             m_view.AddMessageToLog(locMsg);
         }
-        /// <summary>
-        /// ensure validity of message format by checking for the necessary fields
-        /// </summary>
-        /// <param name="msg"></param>
-        /// <returns></returns>
-        private static bool validateMessage(JObject msg)
-        {
-            if (msg["message"] == null)
-            {
-                return false;
-            }
-            if (msg["message"]["type"] == null)
-            {
-                return false;
-            }
-            if (msg["time"] == null)
-            {
-                return false;
-            }
-            return true;
-        }
+       
     }
 }

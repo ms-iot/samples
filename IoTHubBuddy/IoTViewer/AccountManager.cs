@@ -99,13 +99,9 @@ namespace IoTHubBuddy
             foreach (Object value in AccountListContainer.Containers[ProviderIdSubContainer].Values.Keys)
             {
                 String accountID = value as String;
-                //AccountListContainer.Containers[ProviderIdSubContainer].Values.Remove(accountID);
                 String providerID = AccountListContainer.Containers[ProviderIdSubContainer].Values[accountID] as String;
                 String authority = AccountListContainer.Containers[AuthoritySubContainer].Values[accountID] as String;
-                if(authority == null)
-                {
-                    authority = "organizations";
-                }
+
                 WebAccountProvider provider = await GetProvider(providerID, authority);
 
                     WebAccount loadedAccount = await WebAuthenticationCoreManager.FindAccountAsync(provider, accountID);

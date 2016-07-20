@@ -151,7 +151,6 @@ namespace IoTHubBuddyClient
         {
             using (Stream resp = os.AsStreamForWrite())
             {
-                bool exists = true;
                 try
                 {
                     using (Stream fs = await file.OpenStreamForReadAsync())
@@ -163,25 +162,18 @@ namespace IoTHubBuddyClient
                         byte[] headerArray = Encoding.UTF8.GetBytes(header);
                         await resp.WriteAsync(headerArray, 0, headerArray.Length);
                         await fs.CopyToAsync(resp);
+
                     }
                 }
                 catch (FileNotFoundException ex)
                 {
-                    exists = false;
-
-                    // Log telemetry event about this exception
-                    var events = new Dictionary<string, string> { { "WebHelper", ex.Message } };
-                }
-
-                if (!exists)
-                {
                     byte[] headerArray = Encoding.UTF8.GetBytes(
-                                          "HTTP/1.1 404 Not Found\r\n" +
-                                          "Content-Length:0\r\n" +
-                                          "Connection: close\r\n\r\n");
+                                         "HTTP/1.1 404 Not Found\r\n" +
+                                         "Content-Length:0\r\n" +
+                                         "Connection: close\r\n\r\n");
                     await resp.WriteAsync(headerArray, 0, headerArray.Length);
-                }
 
+                }
                 await resp.FlushAsync();
             }
         }
