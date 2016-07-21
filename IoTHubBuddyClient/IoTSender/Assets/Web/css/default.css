@@ -1,0 +1,91 @@
+
+body {
+	background-color: #4B9AC4;
+}
+
+.row {
+	padding: 10px;
+	margin-top: 10px;
+}
+#title-row {
+	position:relative;
+	height: 100px;
+	color: white;
+	text-align: center;
+}
+
+#status-update {
+	height: 50px;
+	text-align: center;
+	color: white;
+}
+.status-col {
+	height: 100%;
+}
+#dev-col {
+	border-right: 1px solid #EFEFEF;
+}
+
+.msg-btn-wrapper {
+	width: 200px;
+	height: 40px;
+	display: inline-block;
+	background-color: white;
+	text-align: center;
+	padding-top: 5px;
+	margin-left: 10px;
+	margin-bottom: 5px;
+}
+.msg-btn {
+	color: #4B9AC4;
+	transition: color 0.5s ease;
+	font-size: 20px;
+}
+.msg-btn:hover {
+	text-decoration: none;
+}
+#sign-out {
+    color: white;
+    font-size: 16px;
+    float:right;
+	transition: color 0.5s ease;
+    border: 3px solid white;
+    padding: 10px;
+}
+#sign-out:hover {
+    color: black;
+    text-decoration: none;
+}
+.log-container {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+#log {
+	height: 250px;
+	overflow-y: scroll;
+	border: 1px solid gray;
+	width: 75%;
+	background-color: #EFEFEF;
+}
+#log-btn-container {
+	width: 24%;
+}
+#messaging-row {
+	text-align: center;
+	color: white;
+}
+.send-messages {
+	margin: 40px 20px;
+}
+#start-list {
+	display: none;
+}
+.msg-col {
+	margin-left: 10px;
+}
+
+.msg {
+    color: black;
+    list-style-type:none;
+}
