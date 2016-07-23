@@ -18,6 +18,7 @@ namespace IoTHubBuddy
         private const string AzureResourceUri = "https://management.azure.com/";
         private const string AzureResourceApi = "2015-01-01";
         private const string IoTHubApi = "2016-02-03";
+        private static string token;
 
         /// <summary>
         /// check validity for returned json object. If it doesn't contain a value, then there was an error in gathering the data
@@ -35,11 +36,15 @@ namespace IoTHubBuddy
         /// <param name="token"></param>
         /// <param name="relative"></param>
         /// <returns></returns>
-        public static async Task<JsonObject> GetIoTData(string relative)
+        public static async Task<JsonObject> GetIoTData(string relative, string tenant="common")
         {
             try
             {
-                string token = await AccountManager.GetTokenSilentlyAsync();
+                if(token == null)
+                {
+                    token = await AccountManager.GetAzureAuthenticationToken(tenant);
+
+                }
                 using (var client = new HttpClient())
                 {
                     client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
@@ -79,7 +84,6 @@ namespace IoTHubBuddy
         {
             try
             {
-                string token = await AccountManager.GetTokenSilentlyAsync();
                 using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri("https://management.azure.com/");
@@ -113,13 +117,14 @@ namespace IoTHubBuddy
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
-        public static async Task<ICollection<string>> GetSubscription(string token)
+        public static async Task<ICollection<string>> GetSubscription(string tenant)
         {
             List<string> subscriptionIds = new List<string>();
             string relative = "subscriptions?api-version="+AzureResourceApi;
             try
             {
-                JsonObject result = await GetIoTData(relative);
+                token = null;
+                JsonObject result = await GetIoTData(relative, tenant);
                 if (result != null)
                 {
                     var subscriptions = result["value"].GetArray();
@@ -248,6 +253,28 @@ namespace IoTHubBuddy
             }
             
             return devices;
+        }
+
+        public static async Task<ICollection<string>> GetTenants()
+        {
+            List<string> tenantIds = new List<string>();
+            string relative = "tenants?api-version=" + AzureResourceApi;
+            try
+            {
+                JsonObject result = await GetIoTData(relative);
+                if (result != null)
+                {
+                    var tenants = result["value"].GetArray();
+                    tenantIds.AddRange(tenants.Select(_ => _.GetObject().GetNamedValue("tenantId").GetString()));
+                }
+            }
+            catch (System.Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+
+
+            return tenantIds;
         }
     }
 }

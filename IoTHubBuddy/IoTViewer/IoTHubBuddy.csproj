@@ -122,8 +122,12 @@
       <DependentUpon>ResourceGroupPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="SimulatedAzureIoT.cs" />
+    <Compile Include="StringExtension.cs" />
     <Compile Include="SubscriptionPage.xaml.cs">
       <DependentUpon>SubscriptionPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TenantPage.xaml.cs">
+      <DependentUpon>TenantPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -169,6 +173,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SubscriptionPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TenantPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

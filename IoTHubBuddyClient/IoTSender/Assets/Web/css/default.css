@@ -1,91 +1,95 @@
-
-body {
-	background-color: #4B9AC4;
+@font-face {
+    font-family: WebManagementSymbols;
+    src: url(../fonts/IOTMDL2.1.8.woff);
 }
 
 .row {
-	padding: 10px;
-	margin-top: 10px;
+	margin: 0px;
 }
 #title-row {
-	position:relative;
-	height: 100px;
+	background-color: rgb(36, 117, 181);
 	color: white;
-	text-align: center;
+	height: 150px;
+}
+#title-col {
+	
+	margin-top:40px;
 }
 
-#status-update {
-	height: 50px;
-	text-align: center;
-	color: white;
+#title {
+	font-size: 30px;
 }
-.status-col {
-	height: 100%;
+#subtitle {
+	font-size: 12px;
 }
-#dev-col {
-	border-right: 1px solid #EFEFEF;
+.client-row {
+	margin-top: 40px;
 }
-
-.msg-btn-wrapper {
-	width: 200px;
-	height: 40px;
-	display: inline-block;
-	background-color: white;
-	text-align: center;
-	padding-top: 5px;
-	margin-left: 10px;
-	margin-bottom: 5px;
+.info-row{
+	margin-top: 20px;
 }
-.msg-btn {
-	color: #4B9AC4;
-	transition: color 0.5s ease;
-	font-size: 20px;
+.info-symbol {
+    font-size: 15px;
 }
-.msg-btn:hover {
-	text-decoration: none;
+.messaging-col {
+	margin-top: 20px;
 }
-#sign-out {
-    color: white;
-    font-size: 16px;
-    float:right;
-	transition: color 0.5s ease;
-    border: 3px solid white;
-    padding: 10px;
+#start-list {
+    display:none;
 }
-#sign-out:hover {
-    color: black;
-    text-decoration: none;
-}
-.log-container {
-	display: inline-block;
-	vertical-align: middle;
-}
-
 #log {
 	height: 250px;
 	overflow-y: scroll;
-	border: 1px solid gray;
-	width: 75%;
 	background-color: #EFEFEF;
 }
-#log-btn-container {
-	width: 24%;
+#button-row {
+	margin-top: 10px;
 }
-#messaging-row {
+.button-col {
+	float:right;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+.msg-btn-wrapper {
+	background-color: lightgray;
+	height: 30px;
 	text-align: center;
+	padding-top: 5px;
+}
+a.msg-btn {
+	text-decoration: none;
+	color: black;
+}
+input[type=radio] {
+    display:none; 
+    margin:10px;
+}
+input[type=radio] + label {
+    display:inline-block;
+    margin:-2px;
+    padding: 10px 12px;
+    width: 100%;
+    height: 40px;
+    margin-bottom: 10px;
+    background-color: #e7e7e7;
+    border-color: #ddd;
+    text-align: center;
+}
+input[type=radio]:checked + label { 
+   background-image: none;
+    background-color:#d0d0d0;
+    border: 2px solid black;
+}
+input[type=submit] {
+	background-color: rgb(36, 117, 181);
 	color: white;
 }
-.send-messages {
-	margin: 40px 20px;
+.symbol {
+    font-family: WebManagementSymbols;
 }
-#start-list {
-	display: none;
-}
-.msg-col {
-	margin-left: 10px;
-}
-
-.msg {
-    color: black;
-    list-style-type:none;
+#azurelogo {
+    font-size: 80px;
+    position:absolute;
+    top:25px;
+    margin-left: 30px;
 }

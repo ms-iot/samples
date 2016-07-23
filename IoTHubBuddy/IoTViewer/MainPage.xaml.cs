@@ -55,19 +55,24 @@ namespace IoTHubBuddy
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            AccountsSettingsPane.Show();
+            // AccountsSettingsPane.Show();
+            bool login = await AccountManager.LoginWithCredentials();
+            if(login)
+            {
+                this.Frame.Navigate(typeof(TenantPage));
+            }
         }
         
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            AccountsSettingsPane.GetForCurrentView().AccountCommandsRequested += BuildPaneAsync;
+            //AccountsSettingsPane.GetForCurrentView().AccountCommandsRequested += BuildPaneAsync;
 
         }
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            AccountsSettingsPane.GetForCurrentView().AccountCommandsRequested -= BuildPaneAsync;
+            //AccountsSettingsPane.GetForCurrentView().AccountCommandsRequested -= BuildPaneAsync;
         }
         /// <summary>
         /// populate the account window pane with cached accounts and the add account button
@@ -77,7 +82,7 @@ namespace IoTHubBuddy
         private async void BuildPaneAsync(AccountsSettingsPane s,
     AccountsSettingsPaneCommandsRequestedEventArgs e)
         {
-            AccountManager.OnAccountCommandsRequested(s, e, this);
+            //AccountManager.OnAccountCommandsRequested(s, e, this);
             
         }
         /// <summary>
@@ -92,9 +97,13 @@ namespace IoTHubBuddy
         /// load an instance of Subscription.xaml
         /// </summary>
         /// <param name="token"></param>
-        public void NavigateToSubscription(string token)
+        public void NavigateToSubscription()
         {
-            this.Frame.Navigate(typeof(SubscriptionPage), token);
+            this.Frame.Navigate(typeof(SubscriptionPage));
+        }
+        public void DisplayErrorMessage(string error)
+        {
+            this.ErrorMessage.Text = error;
         }
         /// <summary>
         /// sign in silently first. If that fails, then bring up gui
@@ -111,17 +120,15 @@ namespace IoTHubBuddy
             string name = "..."; //iothub name
             string deviceName = "..."; //name of iot device you want to listen to
             string primaryKey = "...";
-            IoTAccountData a = new IoTAccountData();
-            a.EventHubInfo = new EventHubData(partitionIds, entity, port, name);
-            a.DeviceName = deviceName;
-            a.PrimaryKey = primaryKey;
-            a.SharedAccessPolicy = "iothubowner";
+
+            EventHubData eventhub = new EventHubData(partitionIds, entity, port, name);
+            IoTAccountData a = new IoTAccountData(null, null, null, null, null, deviceName, "iothubowner", primaryKey, eventhub);
             //NavigateToMap(a);
         }
 
         private async void SignOutButton_Click(object sender, RoutedEventArgs e)
         {
-            await AccountManager.SignOut();
+            //await AccountManager.SignOut();
             LoginButton.Visibility = Windows.UI.Xaml.Visibility.Visible;
             SignOutButton.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
         }

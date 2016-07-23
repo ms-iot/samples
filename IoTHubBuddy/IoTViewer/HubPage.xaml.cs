@@ -74,8 +74,7 @@ namespace IoTHubBuddy
         }
         private void Back_Click(object sender, RoutedEventArgs e)
         {
-            IoTAccountData account = new IoTAccountData();
-            account.Subscription = data.Subscription;
+            IoTAccountData account = IoTAccountData.Clone(data);
             this.Frame.Navigate(typeof(ResourceGroupPage), account);
         }
         private void ShowError(string error, bool showLoginBtn = false)

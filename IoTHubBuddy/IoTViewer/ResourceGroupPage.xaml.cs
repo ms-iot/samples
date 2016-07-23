@@ -76,7 +76,7 @@ namespace IoTHubBuddy
         private void ItemSelected(object sender, ItemClickEventArgs e)
         {
             string group = e.ClickedItem.ToString();
-            IoTAccountData account = new IoTAccountData();
+            IoTAccountData account = IoTAccountData.Clone(data);
             account.Subscription = data.Subscription;
             account.ResourceGroup = group;
             this.Frame.Navigate(typeof(HubPage), account);

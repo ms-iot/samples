@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IoTHubBuddy.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,7 +13,6 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using IoTHubBuddy.Models;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -21,45 +21,39 @@ namespace IoTHubBuddy
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class SubscriptionPage : Page
+    public sealed partial class TenantPage : Page
     {
-        private IoTAccountData data;
-        public SubscriptionPage()
+        public TenantPage()
         {
             this.InitializeComponent();
         }
         private void ItemSelected(object sender, ItemClickEventArgs e)
         {
-            string subscription = e.ClickedItem.ToString();
-            IoTAccountData tmp = IoTAccountData.Clone(data);
-            this.Frame.Navigate(typeof(ResourceGroupPage), tmp);
+            string tenant = e.ClickedItem.ToString();
+            IoTAccountData data = new IoTAccountData();
+            data.Tenant = tenant;
+            this.Frame.Navigate(typeof(SubscriptionPage), data);
         }
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            var tmp = e.Parameter as IoTAccountData;
-            if(e != null)
+            ICollection<string> tenants = await IoTDataManager.GetTenants();
+            if (tenants.Count == 0)
             {
-                data = tmp;
-                ICollection<string> subscriptions = await IoTDataManager.GetSubscription(data.Tenant);
-                if (subscriptions.Count == 0)
+                showError("You do not have any tenants under this account");
+            }
+            else
+            {
+                hideErrors();
+                foreach (var tenant in tenants)
                 {
-                    showError("You do not have any Azure subscriptions under this account");
-                }
-                else
-                {
-                    hideErrors();
-                    foreach (var sub in subscriptions)
-                    {
-                        SubscriptionList.Items.Add(sub.ToString());
-                    }
+                    TenantList.Items.Add(tenant.ToString());
                 }
             }
-            
-            
+
         }
         private void showError(string error, bool showLoginBtn = false)
         {
-            SubscriptionList.Visibility = Visibility.Collapsed;
+            TenantList.Visibility = Visibility.Collapsed;
             ErrorMessage.Text = error;
             ErrorMessage.Visibility = Visibility.Visible;
             if (showLoginBtn)
@@ -71,7 +65,7 @@ namespace IoTHubBuddy
         }
         private void hideErrors()
         {
-            SubscriptionList.Visibility = Visibility.Visible;
+            TenantList.Visibility = Visibility.Visible;
             ErrorMessage.Visibility = Visibility.Collapsed;
             Login.Visibility = Visibility.Collapsed;
             BackButton.Visibility = Visibility.Visible;
@@ -82,7 +76,7 @@ namespace IoTHubBuddy
         }
         private void Back_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(TenantPage));
+            this.Frame.Navigate(typeof(MainPage));
         }
     }
 }

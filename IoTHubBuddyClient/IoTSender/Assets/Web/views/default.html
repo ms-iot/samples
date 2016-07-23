@@ -2,60 +2,85 @@
 <html lang="en"> 
  	<head> 
  		<meta charset="utf-8"> 
- 		<link rel="Stylesheet" href='http://ms-iot.github.io/content/css/bootstrap.css' />
+ 		<link rel="Stylesheet" href= 'https://assets.onestore.ms/cdnfiles/external/webcore/4.13.1/stylesheets/WebCore.4.13.1.ltr.light.min.css' />
          <link rel="stylesheet" href="../css/default.css"/>
- 	  <title> IoTHubBuddyClient - Main Page </title> 
- 		<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+ 	  <title> IoTHubBuddyClient </title> 
+ 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="https://assets.onestore.ms/cdnfiles/external/webcore/4.13.1/scripts/bootstrap.js "></script> 
  		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
    </head> 
    <body> 
      <div class='main'> 
+     <div class="row" id = 'title-row'>
+         <div class="col-md-2">
+             <span class="symbol" id="azurelogo">&#xEB6A</span>
+         </div>
+               <div class="col-md-12" id="title-col">
+                   <h1 id="title icon-row"> IotHub Buddy Client </h1>
+                   <p id="subtitle">Send messages to Azure</p>
+               </div>
+           </div>
        <div class='container'>
-           <div class="row" id = 'title-row'>
-               <div class="col-md-12-headerbar" id="title-col">
-                   <h1> azure iothub client </h1>
+           
+           <div class="row client-row">
+               <p>Send messages to your IoTHub from your device. Download IoTHubClient to receive these messages on your Windows device.</p>
+           </div>
+           <div class="row client-row">
+             <h3> Info</h3>
+             <hr>
+             <div class= "row info-row">
+                 <div class="col-md-1">
+                     <span class="symbol info-symbol">&#xE820</span>
+                 </div>
+                 <div class="col-md-12">
+                     <p class="info-element"> Device Location: #location# </p>
+                 </div>
+             </div>
+               <div class="row info-row">
+                   <div class="col-md-1">
+                       <span class="symbol info-symbol">&#xE96C</span>
+                   </div>
+                   <div class="col-md-12">
+                       <p class="info-element"> Status: Ready to send messages </p>
+                   </div>
+                   
                </div>
            </div>
-           <div class="row" id="status-update">
-              <div class="col-md-6 status-col" id="dev-col">
-                <h4 id="dev-loc">Device Location: #location#</h4>
-             </div>
-              <div class="col-md-6 status-col">
-                <h4 id="sending">Status: Ready to send messages</h4>
-             </div>
-               
-           </div>
-           <div class="row" id="messaging-row">
-               <h1> messaging </h1>
-            <div class='send-messages' >
-                <div class="msg-btn-wrapper">
-                    <a class="msg-btn send-btn" href="/message/1"> send 1 message</a>
+           <div class="row client-row">
+             <h3> Messaging</h3>
+             <hr>
+             <div class="col-md-4 messaging-col">
+               <form action="message" method="post">
 
-                </div>
-               <div class="msg-btn-wrapper">
-                   <a class="msg-btn send-btn" href="/message/10"> send 10 messages</a>
-               </div>
-               <div class="msg-btn-wrapper">
-                   <a class="msg-btn send-btn" href="/message/100">send 100 messages</a>
-               </div>
-               <div class="msg-btn-wrapper">
-                   <a class="msg-btn" href="/stop">stop</a>
-               </div>    
-          </div>
-               <div id="log" class="log-container">
+                     <input type="radio" id="radio1" name="msgs" value="1" >
+                            <label for="radio1">Send 1 message</label>
+                         <input type="radio" id="radio2" name="msgs" value="10">
+                            <label for="radio2">Send 10 messages</label>
+                         <input type="radio" id="radio3" name="msgs" value="100">
+                            <label for="radio3">Send 100 messages</label> 
+                     <input type="submit" value="Send">
+               </form>
+             </div>
+             <div class="col-md-20 messaging-col">
+               <div id="log" class="row log-container">
                    <ul id="msg-log">
                        <p id='start-list'>#msgList#</p>
                    </ul>
                </div>
-               <div class="log-container" id="log-btn-container">
-                   <div class="msg-btn-wrapper log-btn">
-                       <a class="msg-btn" id="clear-log"href="/clear">clear</a>
+               <div class="row" id="button-row">
+                <div class="col-md-3 button-col">
+                  <div class="msg-btn-wrapper">
+                       <a class="msg-btn" id="clear-log"href="/clear">Clear</a>
                    </div> 
-                   <div class="msg-btn-wrapper log-btn" >
-                       <a class="msg-btn" id="refresh-log" href="/refresh">refresh </a>
+                </div>
+                <div class="col-md-3 button-col">
+                   <div class="msg-btn-wrapper" >
+                       <a class="msg-btn" id="refresh-log" href="/refresh">Refresh </a>
                    </div> 
+                </div>
                </div>
-         
+             </div>
+             
            </div>
        </div> 
      </div> 

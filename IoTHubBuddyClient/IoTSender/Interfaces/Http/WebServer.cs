@@ -379,11 +379,19 @@ namespace IoTHubBuddyClient
                     await WebHelper.WriteToStream(html, os);
                 } else if (request.Contains(NavConstants.SEND_MESSAGE))
                 {
-                    string[] messages = request.Split('/');
-                    int numMsg = Int32.Parse(messages[messages.Length - 1]);
-                    SendMessages(numMsg);
-                    string html = await LoadandUpdateStatus(status, Constants.SENDING_AZURE, NavConstants.DEFAULT_PAGE);
-                    status = Constants.SENDING_AZURE;
+                    IDictionary<string, string> parameters = ParseParametersFromRequest(request);
+                    string html = "";
+                    if (parameters.ContainsKey("msgs"))
+                    {
+                        int numMsg = Int32.Parse(parameters["msgs"]);
+                        SendMessages(numMsg);
+                        html = await LoadandUpdateStatus(status, Constants.SENDING_AZURE, NavConstants.DEFAULT_PAGE);
+                        status = Constants.SENDING_AZURE;
+                    } else
+                    {
+                        html = await LoadandUpdateStatus(status, Constants.ERROR_AZURE, NavConstants.DEFAULT_PAGE);
+                    }
+                    
                     await WebHelper.WriteToStream(html, os);
 
                 } else if(request.Contains(NavConstants.CANCEL_MESSAGE))

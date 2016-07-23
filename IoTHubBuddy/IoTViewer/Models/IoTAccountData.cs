@@ -9,7 +9,7 @@ namespace IoTHubBuddy.Models
 {
     public class IoTAccountData
     {
-
+        public string Tenant { get; set; }
         public string Name { get; set; }
 
         public string Subscription { get; set; }
@@ -26,7 +26,24 @@ namespace IoTHubBuddy.Models
 
         public EventHubData EventHubInfo { get; set; }
 
+        public IoTAccountData()
+        {
 
+        }
+        public IoTAccountData(string tenant, string name, string subscription, string rg, string hub, string device, string policy, string key, EventHubData data)
+        {
+            this.Tenant = tenant;
+            this.Name = name;
+            this.Subscription = subscription;
+            this.ResourceGroup = rg;
+            this.SharedAccessPolicy = policy;
+            this.PrimaryKey = key;
+            this.EventHubInfo = data;
+        }
+        public static IoTAccountData Clone(IoTAccountData data)
+        {
+            return new IoTAccountData(data.Tenant, data.Name, data.Subscription, data.ResourceGroup, data.HubName, data.DeviceName, data.SharedAccessPolicy, data.PrimaryKey, data.EventHubInfo);
+        }
         
     }
 }

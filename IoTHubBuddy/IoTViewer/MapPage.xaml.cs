@@ -91,7 +91,7 @@ namespace IoTHubBuddy
         }
         private async void SignOutButton_Click(object sender, RoutedEventArgs e)
         {
-            await AccountManager.SignOut();
+            //await AccountManager.SignOut();
             this.Frame.Navigate(typeof(MainPage));
         }
 
