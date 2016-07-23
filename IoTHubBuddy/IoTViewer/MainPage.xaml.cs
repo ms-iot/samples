@@ -58,10 +58,15 @@ namespace IoTHubBuddy
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             // AccountsSettingsPane.Show();
-            bool login = await AccountManager.LoginWithCredentials();
-            if(login)
+            //bool login = await AccountManager.LoginWithCredentials();
+            try
             {
-                this.Frame.Navigate(typeof(TenantPage));
+                string token = await AccountManager.GetAzureAuthenticationToken();
+                this.Frame.Navigate(typeof(TenantPage), token);
+
+            } catch(System.Exception ex)
+            {
+                DisplayErrorMessage(ex.Message);
             }
         }
         

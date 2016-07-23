@@ -255,12 +255,13 @@ namespace IoTHubBuddy
             return devices;
         }
 
-        public static async Task<ICollection<string>> GetTenants()
+        public static async Task<ICollection<string>> GetTenants(string tkn)
         {
             List<string> tenantIds = new List<string>();
             string relative = "tenants?api-version=" + AzureResourceApi;
             try
             {
+                token = tkn;
                 JsonObject result = await GetIoTData(relative);
                 if (result != null)
                 {

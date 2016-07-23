@@ -83,7 +83,7 @@ namespace IoTHubBuddy
         }
         private void Back_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(SubscriptionPage));
+            this.Frame.Navigate(typeof(SubscriptionPage), data);
         }
         private void Login_Click(object sender, RoutedEventArgs e)
         {
@@ -95,7 +95,7 @@ namespace IoTHubBuddy
             {
                 return false;
             }
-            if (account.Subscription == null)
+            if (account.Subscription == null || account.Tenant == null)
             {
                 return false;
             }

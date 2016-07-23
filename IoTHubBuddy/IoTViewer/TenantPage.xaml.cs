@@ -36,19 +36,27 @@ namespace IoTHubBuddy
         }
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            ICollection<string> tenants = await IoTDataManager.GetTenants();
-            if (tenants.Count == 0)
+            string token = e.Parameter as string;
+            if(token != null)
             {
-                showError("You do not have any tenants under this account");
-            }
-            else
-            {
-                hideErrors();
-                foreach (var tenant in tenants)
+                ICollection<string> tenants = await IoTDataManager.GetTenants(token);
+                if (tenants.Count == 0)
                 {
-                    TenantList.Items.Add(tenant.ToString());
+                    showError("You do not have any tenants under this account");
                 }
+                else
+                {
+                    hideErrors();
+                    foreach (var tenant in tenants)
+                    {
+                        TenantList.Items.Add(tenant.ToString());
+                    }
+                }
+            } else
+            {
+                showError("Token was null");
             }
+            
 
         }
         private void showError(string error, bool showLoginBtn = false)

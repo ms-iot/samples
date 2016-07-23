@@ -31,28 +31,36 @@ namespace IoTHubBuddy
         private void ItemSelected(object sender, ItemClickEventArgs e)
         {
             string subscription = e.ClickedItem.ToString();
+            data.Subscription = subscription;
             IoTAccountData tmp = IoTAccountData.Clone(data);
             this.Frame.Navigate(typeof(ResourceGroupPage), tmp);
         }
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             var tmp = e.Parameter as IoTAccountData;
-            if(e != null)
+            if(tmp != null)
             {
                 data = tmp;
-                ICollection<string> subscriptions = await IoTDataManager.GetSubscription(data.Tenant);
-                if (subscriptions.Count == 0)
+                if(data.Tenant != null)
                 {
-                    showError("You do not have any Azure subscriptions under this account");
-                }
-                else
-                {
-                    hideErrors();
-                    foreach (var sub in subscriptions)
+                    ICollection<string> subscriptions = await IoTDataManager.GetSubscription(data.Tenant);
+                    if (subscriptions.Count == 0)
                     {
-                        SubscriptionList.Items.Add(sub.ToString());
+                        showError("You do not have any Azure subscriptions under this account");
                     }
+                    else
+                    {
+                        hideErrors();
+                        foreach (var sub in subscriptions)
+                        {
+                            SubscriptionList.Items.Add(sub.ToString());
+                        }
+                    }
+                } else
+                {
+                    showError("Your tenant does not exist. Please try again.");
                 }
+                
             }
             
             
