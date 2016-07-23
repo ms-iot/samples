@@ -23,6 +23,7 @@ call AppxConfig.cmd
 echo Appx Name :%AppxName%
 
 if not defined forceinstall ( set forceinstall=0 )
+if not defined launchapp ( set launchapp=1 )
 if not exist .\logs ( mkdir logs ) else ( del /Q .\logs\*.* )
 
 REM

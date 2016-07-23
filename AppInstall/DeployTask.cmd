@@ -7,6 +7,7 @@ pushd %~dp0
 SETLOCAL
 
 call AppxConfig.cmd
+if not defined launchapp ( set launchapp=1 )
 set installtype=%2
 
 set /p fullappxfamilyname=<.\logs\appxfamname.txt
