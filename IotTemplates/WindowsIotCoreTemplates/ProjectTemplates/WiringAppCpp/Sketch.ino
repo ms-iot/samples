@@ -1,5 +1,5 @@
-// The Arduino Wiring application template is documented at 
-// http://go.microsoft.com/fwlink/?LinkID=533884&clcid=0x409
+// The Arduino Wiring application template is documented at
+// http://go.microsoft.com/fwlink/?LinkID=820766&clcid=0x409
 
 // Use GPIO pin 5
 const unsigned int LED_PIN = GPIO5;
