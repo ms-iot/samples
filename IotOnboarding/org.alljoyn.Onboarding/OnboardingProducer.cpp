@@ -21,6 +21,7 @@
 //-----------------------------------------------------------------------------
 #include "pch.h"
 
+
 using namespace concurrency;
 using namespace Microsoft::WRL;
 using namespace Platform;
@@ -474,9 +475,14 @@ void OnboardingProducer::Start()
     }
     alljoyn_busobject_addinterface_announced(BusObject, interfaceDescription);
 
+
+    // NOTE: The Allseen Alliance onboarding spec (14.12 and earlier) list three possible names for the Wifi Onboarding Configuration method.
+    // (See https://allseenalliance.org/framework/documentation/learn/base-services/onboarding/interface).  There is currently an open
+    // issue with the Allseen Alliance https://jira.allseenalliance.org/browse/ASADOC-57, but we are conforming to the Windows 10 DAFIoT
+    // and Lifx Light-Bulb standard
     result = AddMethodHandler(
         interfaceDescription,
-        "ConfigureWifi",
+        "ConfigureWiFi",
         [](alljoyn_busobject busObject, const alljoyn_interfacedescription_member* member, alljoyn_message message) { UNREFERENCED_PARAMETER(member); CallConfigureWifiHandler(busObject, message); });
     if (result != ER_OK)
     {
@@ -591,10 +597,12 @@ int32 OnboardingProducer::RemoveMemberFromSession(_In_ String^ uniqueName)
 }
 
 PCSTR org::alljoyn::Onboarding::c_OnboardingIntrospectionXml = "<interface name=\"org.alljoyn.Onboarding\">"
+"  <description>A secure onboarding interface.  See https://allseenalliance.org/framework/documentation/learn/base-services/onboarding/interface </description>"
+"  <annotation name=\"org.alljoyn.Bus.Secure\" value=\"true\" />"
 "  <property name=\"Version\" type=\"q\" access=\"read\" />"
 "  <property name=\"State\" type=\"n\" access=\"read\" />"
 "  <property name=\"LastError\" type=\"(ns)\" access=\"read\" />"
-"  <method name=\"ConfigureWifi\">"
+"  <method name=\"ConfigureWiFi\">"
 "    <arg name=\"SSID\" type=\"s\" direction=\"in\" />"
 "    <arg name=\"passphrase\" type=\"s\" direction=\"in\" />"
 "    <arg name=\"authType\" type=\"n\" direction=\"in\" />"

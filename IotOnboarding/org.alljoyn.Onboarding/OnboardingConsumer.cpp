@@ -128,7 +128,7 @@ IAsyncOperation<OnboardingConfigureWifiResult^>^ OnboardingConsumer::ConfigureWi
         QStatus status = alljoyn_proxybusobject_methodcall(
             ProxyBusObject,
             "org.alljoyn.Onboarding",
-            "ConfigureWifi",
+            "ConfigureWiFi",
             inputs,
             argCount,
             message,
