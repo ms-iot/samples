@@ -36,6 +36,8 @@ namespace IoTHubBuddy.Models
             this.Name = name;
             this.Subscription = subscription;
             this.ResourceGroup = rg;
+            this.HubName = hub;
+            this.DeviceName = device;
             this.SharedAccessPolicy = policy;
             this.PrimaryKey = key;
             this.EventHubInfo = data;

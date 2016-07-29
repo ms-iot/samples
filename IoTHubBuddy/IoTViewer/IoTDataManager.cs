@@ -213,7 +213,6 @@ namespace IoTHubBuddy
             try
             {
                 JsonObject result = await PostIoTData(relative);
-                string key = null;
                 var keys = result["value"].GetArray().SkipWhile(k => k.GetObject().GetNamedValue("keyName").GetString() != policy);
                 if(keys.Count() != 0)
                 {
@@ -276,6 +275,41 @@ namespace IoTHubBuddy
 
 
             return tenantIds;
+        }
+        public static async Task<ICollection<IoTAccountData>> GetAllDevices(string tkn)
+        {
+            ICollection<string> tenants = await GetTenants(tkn);
+            List<IoTAccountData> devices = new List<IoTAccountData>();
+            string name = AccountManager.GetUserName();
+            string policy = "iothubowner";
+            foreach (string ten in tenants)
+            {
+                ICollection<string> subscriptions = await GetSubscription(ten);
+                foreach(string sub in subscriptions)
+                {
+                    ICollection<string> resources = await GetResourceGroups(sub);
+                    ICollection<IoTHubBuddy.Models.EventHubData> hubs = await GetIoTHubs(sub);
+                    foreach(string group in resources)
+                    {
+                        foreach(EventHubData hub in hubs)
+                        {
+                            ICollection<string> devs = await GetIoTDevices(sub, group, hub.HubName, policy);
+                            
+                            foreach(string dev in devs)
+                            {
+                                string key = await GetPrimaryKey(sub, group, hub.HubName, policy);
+                                IoTAccountData account = new IoTAccountData(ten, name, sub, group, hub.HubName, dev, policy, key, hub);
+                                devices.Add(account);
+                            }
+                            
+                            
+                        }
+                    }
+
+                }
+
+            }
+            return devices;
         }
     }
 }

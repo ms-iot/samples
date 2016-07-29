@@ -4,7 +4,7 @@
  		<meta charset="utf-8"> 
  		<link rel="Stylesheet" href= 'https://assets.onestore.ms/cdnfiles/external/webcore/4.13.1/stylesheets/WebCore.4.13.1.ltr.light.min.css' />
          <link rel="stylesheet" href="../css/default.css"/>
- 	  <title> IoTHubBuddyClient </title> 
+ 	  <title> IoT Hub Buddy Client </title> 
  		<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <script src="https://assets.onestore.ms/cdnfiles/external/webcore/4.13.1/scripts/bootstrap.js "></script> 
  		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
@@ -16,14 +16,16 @@
              <span class="symbol" id="azurelogo">&#xEB6A</span>
          </div>
                <div class="col-md-12" id="title-col">
-                   <h1 id="title icon-row"> IotHub Buddy Client </h1>
+                   <h1 id="title icon-row"> IoT Hub Buddy Client </h1>
                    <p id="subtitle">Send messages to Azure</p>
                </div>
            </div>
        <div class='container'>
            
            <div class="row client-row">
-               <p>Send messages to your IoTHub from your device. Download IoTHubClient to receive these messages on your Windows device.</p>
+               <p>The application demonstrates how Azure connection information can be securely stored and used in Windows. 
+               The application uses the Azure IoT Hub connection information that is stored in the TPM to send location data to the cloud service. 
+               </p>
            </div>
            <div class="row client-row">
              <h3> Info</h3>
@@ -49,19 +51,29 @@
            <div class="row client-row">
              <h3> Messaging</h3>
              <hr>
-             <div class="col-md-4 messaging-col">
+             <div class="col-md-6 messaging-col">
                <form action="message" method="post">
+                   <div class="form-button">
+                       <input type="radio" id="radio1" name="msgs" value="1">
+                       <label for="radio1">1 message</label>
 
-                     <input type="radio" id="radio1" name="msgs" value="1" >
-                            <label for="radio1">Send 1 message</label>
-                         <input type="radio" id="radio2" name="msgs" value="10">
-                            <label for="radio2">Send 10 messages</label>
-                         <input type="radio" id="radio3" name="msgs" value="100">
-                            <label for="radio3">Send 100 messages</label> 
-                     <input type="submit" value="Send">
+                   </div>
+                    <div class="form-button">
+                        <input type="radio" id="radio2" name="msgs" value="10">
+                        <label for="radio2">10 messages</label>
+
+                    </div>
+                   <div class="form-button">
+                       <input type="radio" id="radio3" name="msgs" value="100">
+                       <label for="radio3">100 messages</label>
+                   </div>
+                       <input type="submit" value="Send" class="msg-btn-wrapper">
                </form>
+                 <div class="msg-btn-wrapper" id="stop-wrapper">
+                     <a class="msg-btn"  id="stop" href="/stop">Stop</a>
+                 </div> 
              </div>
-             <div class="col-md-20 messaging-col">
+             <div class="col-md-18 messaging-col">
                <div id="log" class="row log-container">
                    <ul id="msg-log">
                        <p id='start-list'>#msgList#</p>

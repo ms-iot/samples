@@ -62,7 +62,7 @@ namespace IoTHubBuddy
             try
             {
                 string token = await AccountManager.GetAzureAuthenticationToken();
-                this.Frame.Navigate(typeof(TenantPage), token);
+                this.Frame.Navigate(typeof(DevicePage), token);
 
             } catch(System.Exception ex)
             {
@@ -102,9 +102,9 @@ namespace IoTHubBuddy
         /// load an instance of Subscription.xaml
         /// </summary>
         /// <param name="token"></param>
-        public void NavigateToSubscription()
+        public void NavigateToDevices(string token)
         {
-            this.Frame.Navigate(typeof(SubscriptionPage));
+            this.Frame.Navigate(typeof(DevicePage), token);
         }
         public void DisplayErrorMessage(string error)
         {
@@ -136,6 +136,11 @@ namespace IoTHubBuddy
             //await AccountManager.SignOut();
             LoginButton.Visibility = Windows.UI.Xaml.Visibility.Visible;
             SignOutButton.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+        }
+
+        private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(AboutPage), this);
         }
     }
 }

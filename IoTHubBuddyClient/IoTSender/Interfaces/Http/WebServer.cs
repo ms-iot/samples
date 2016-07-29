@@ -423,6 +423,9 @@ namespace IoTHubBuddyClient
                                                   "Content-Length:0\r\n" +
                                                   "Connection: close\r\n\r\n");
                             await resp.WriteAsync(headerArray, 0, headerArray.Length);
+                        } else
+                        {
+                            Debug.WriteLine("LOADED: " + request);
                         }
 
                         await resp.FlushAsync();

@@ -94,6 +94,9 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutPage.xaml.cs">
+      <DependentUpon>AboutPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AccountManager.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -102,9 +105,6 @@
     <Compile Include="Constants.cs" />
     <Compile Include="DevicePage.xaml.cs">
       <DependentUpon>DevicePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="HubPage.xaml.cs">
-      <DependentUpon>HubPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="IoTDataManager.cs" />
     <Compile Include="Models\EventHubData.cs" />
@@ -118,17 +118,8 @@
     <Compile Include="MessageManager.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResourceGroupPage.xaml.cs">
-      <DependentUpon>ResourceGroupPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="SimulatedAzureIoT.cs" />
     <Compile Include="StringExtension.cs" />
-    <Compile Include="SubscriptionPage.xaml.cs">
-      <DependentUpon>SubscriptionPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="TenantPage.xaml.cs">
-      <DependentUpon>TenantPage.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -152,11 +143,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="DevicePage.xaml">
+    <Page Include="AboutPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="HubPage.xaml">
+    <Page Include="DevicePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -165,18 +156,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="MapPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ResourceGroupPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SubscriptionPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="TenantPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

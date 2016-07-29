@@ -23,30 +23,24 @@ namespace IoTHubBuddy
     /// </summary>
     public sealed partial class DevicePage : Page
     {
-        private IoTAccountData data;
+
         public DevicePage()
         {
             this.InitializeComponent();
         }
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            IoTAccountData account = e.Parameter as IoTAccountData;
-            if (CheckValidity(account))
+            string token = e.Parameter as string;
+            if (!string.IsNullOrEmpty(token))
             {
-                data = account;
-                data.SharedAccessPolicy = "iothubowner";
-                ICollection<string> devices = await IoTDataManager.GetIoTDevices(data.Subscription, data.ResourceGroup, data.HubName, data.SharedAccessPolicy);
-                data.PrimaryKey = await IoTDataManager.GetPrimaryKey(data.Subscription, data.ResourceGroup, data.HubName, data.SharedAccessPolicy);
+                ICollection<IoTAccountData> devices = await IoTDataManager.GetAllDevices(token);
                 if (devices.Count == 0)
                 {
                     ShowError("You have no devices registered in this hub");
                 } else
                 {
                     HideErrors();
-                    foreach (string dev in devices)
-                    {
-                        DeviceList.Items.Add(dev);
-                    }
+                    DeviceList.ItemsSource = devices;
                 }
                 
             } else
@@ -58,22 +52,10 @@ namespace IoTHubBuddy
         }
         private void ItemSelected(object sender, ItemClickEventArgs e)
         {
-            string device = e.ClickedItem.ToString();
-            data.DeviceName = device;;
-            this.Frame.Navigate(typeof(MapPage), data);
+            IoTAccountData device = e.ClickedItem as IoTAccountData;
+            this.Frame.Navigate(typeof(MapPage), device);
         }
-        private bool CheckValidity(IoTAccountData account)
-        {
-            if (account == null)
-            {
-                return false;
-            }
-            if (account.Subscription == null || account.HubName == null || account.ResourceGroup == null || account.EventHubInfo == null)
-            {
-                return false;
-            }
-            return true;
-        }
+        
         private void ShowError(string error, bool showLoginBtn = false)
         {
             DeviceList.Visibility = Visibility.Collapsed;
@@ -82,7 +64,6 @@ namespace IoTHubBuddy
             if (showLoginBtn)
             {
                 Login.Visibility = Visibility.Visible;
-                BackButton.Visibility = Visibility.Collapsed;
             }
 
         }
@@ -91,16 +72,10 @@ namespace IoTHubBuddy
             DeviceList.Visibility = Visibility.Visible;
             ErrorMessage.Visibility = Visibility.Collapsed;
             Login.Visibility = Visibility.Collapsed;
-            BackButton.Visibility = Visibility.Visible;
         }
         private void Login_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(MainPage));
-        }
-        private void Back_Click(object sender, RoutedEventArgs e)
-        {
-            IoTAccountData account = IoTAccountData.Clone(data);
-            this.Frame.Navigate(typeof(HubPage), account);
         }
     }
 }

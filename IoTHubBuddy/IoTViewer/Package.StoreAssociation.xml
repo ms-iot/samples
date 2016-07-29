@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <StoreAssociation xmlns="http://schemas.microsoft.com/appx/2010/storeassociation">
-  <Publisher>CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US</Publisher>
-  <PublisherDisplayName>Microsoft Corporation</PublisherDisplayName>
+  <Publisher>CN=B898B9E4-E41E-42AB-8B27-16AE9478117E</Publisher>
+  <PublisherDisplayName>t-dimaha</PublisherDisplayName>
   <GeneratePackageHash>http://www.w3.org/2001/04/xmlenc#sha256</GeneratePackageHash>
   <SupportedLocales>
     <Language Code="af" InMinimumRequirementSet="true" />
@@ -358,11 +358,15 @@
     <Language Code="zu-za" InMinimumRequirementSet="true" />
   </SupportedLocales>
   <ProductReservedInfo>
-    <MainPackageIdentityName>Microsoft.AzureIoTHubSampleViewer</MainPackageIdentityName>
+    <MainPackageIdentityName>23931t-dimaha.IoTHubBuddy</MainPackageIdentityName>
     <ReservedNames>
-      <ReservedName>Azure IoT Hub Sample Viewer</ReservedName>
+      <ReservedName>IoTHub Buddy</ReservedName>
     </ReservedNames>
   </ProductReservedInfo>
-  <AccountPackageIdentityNames />
-  <PackageInfoList LandingUrl="https://dev.windows.com/dashboard/Application?appId=9NBLGGH4RV2V" />
+  <AccountPackageIdentityNames>
+    <MainPackageIdentityName>23931t-dimaha.AzureIoTHubSampleViewer</MainPackageIdentityName>
+    <MainPackageIdentityName>23931t-dimaha.WAMUWPSample</MainPackageIdentityName>
+    <MainPackageIdentityName>23931t-dimaha.WebAccountManagementSample</MainPackageIdentityName>
+  </AccountPackageIdentityNames>
+  <PackageInfoList LandingUrl="https://dev.windows.com/dashboard/Application?appId=9NBLGGH4TLDH" />
 </StoreAssociation>

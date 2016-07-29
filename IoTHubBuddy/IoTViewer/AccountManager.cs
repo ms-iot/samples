@@ -25,8 +25,7 @@ namespace IoTHubBuddy
         const string azureAuthUri = "https://management.core.windows.net/";
         const string azureUri = "https://management.azure.com/";
         const string graphUri = "https://graph.windows.net/";
-
-        private static MainPage mp;
+        static string userName = "";
 
         private static async Task<AuthenticationResult> GetAuthenticationResult(string currAuthUri, string resourceUri, string tenant)
         {
@@ -41,29 +40,57 @@ namespace IoTHubBuddy
                 throw e;
             }
         }
+        public static async Task<AuthenticationResult> GetAuthenticationResult(string tenant, string authUri, string resourceUri, string user)
+        {
+            var authority = "{0}{1}".FormatInvariant(authUri, tenant);
+            var authContext = new AuthenticationContext(authority, true);
+            var userId = new UserIdentifier(user, UserIdentifierType.OptionalDisplayableId);
+            try
+            {
+                return await authContext.AcquireTokenAsync(resourceUri, AzureActiveDirectoryClientId, publicRedirectUri, PromptBehavior.Auto, userId);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
         public static async Task<string> GetAzureAuthenticationToken(string tenant = "common")
         {
-            var result = await GetAuthenticationResult(authUri, azureAuthUri, tenant);
-            if(result != null)
+            string userid = null;
+            if (ApplicationData.Current.LocalSettings.Values.ContainsKey("CurrentUserId"))
             {
+                userid = ApplicationData.Current.LocalSettings.Values["CurrentUserId"] as string;
+            }
+            AuthenticationResult result = null;
+            if (string.IsNullOrEmpty(userid) || tenant != "common")
+            {
+                result = await GetAuthenticationResult(authUri, azureAuthUri, tenant);
+            } else
+            {
+                string[] user = userid.Split('@');
+                result = await GetAuthenticationResult(user[1], authUri, azureAuthUri, userid);
+            }
+
+            if (result != null)
+            {
+                ApplicationData.Current.LocalSettings.Values["CurrentUserId"] = result.UserInfo.DisplayableId;
+                userName = result.UserInfo.GivenName + " " + result.UserInfo.FamilyName;
                 return result.AccessToken;
             } else
             {
                 throw new System.Exception(result.ErrorDescription);
             }
         }
-        public static async Task<bool> LoginWithCredentials(string tenant="common")
+        public static void SignOut()
         {
-            try
+            if (ApplicationData.Current.LocalSettings.Values.ContainsKey("CurrentUserId"))
             {
-                var result = await GetAuthenticationResult(authUri, azureAuthUri, tenant);
-                return true;
-            } catch (Exception e )
-            {
-                return false;
+                ApplicationData.Current.LocalSettings.Values.Remove("CurrentUserId");
             }
-
-
+        }
+        public static string GetUserName()
+        {
+            return userName;
         }
 
     }

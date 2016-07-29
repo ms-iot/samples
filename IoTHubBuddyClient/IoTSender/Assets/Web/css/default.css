@@ -34,6 +34,15 @@
 .messaging-col {
 	margin-top: 20px;
 }
+#stop-wrapper{
+    background-color: rgb(36, 117, 181);
+    min-width: 120px;
+    max-width:140px;
+    
+}
+#stop {
+    color: white;
+}
 #start-list {
     display:none;
 }
@@ -60,29 +69,22 @@ a.msg-btn {
 	text-decoration: none;
 	color: black;
 }
-input[type=radio] {
-    display:none; 
-    margin:10px;
+.form-button {
+    display:block;
+    width: 100%;
 }
 input[type=radio] + label {
     display:inline-block;
     margin:-2px;
-    padding: 10px 12px;
-    width: 100%;
-    height: 40px;
     margin-bottom: 10px;
-    background-color: #e7e7e7;
-    border-color: #ddd;
     text-align: center;
 }
-input[type=radio]:checked + label { 
-   background-image: none;
-    background-color:#d0d0d0;
-    border: 2px solid black;
-}
+
 input[type=submit] {
 	background-color: rgb(36, 117, 181);
 	color: white;
+    min-width:120px;
+    width:140px;
 }
 .symbol {
     font-family: WebManagementSymbols;
