@@ -301,22 +301,6 @@ NTSTATUS RAWPDO_EvtDeviceSelfManagedIoInit(
 {
 	NTSTATUS status = STATUS_SUCCESS;
     Device;
-/*
-	//
-	// Create a symbolic link so that user mode code to call into this device
-	//
-#define DOS_DEVICE_NAME  L"\\DosDevices\\HidInjectorSample"
-	DECLARE_CONST_UNICODE_STRING(dosDeviceName, DOS_DEVICE_NAME);
-
-	status = WdfDeviceCreateSymbolicLink(
-		Device,
-		&dosDeviceName
-		);
-	if (!NT_SUCCESS(status)) {
-		KdPrint(("WdfDeviceCreateSymbolicLink failed\n"));
-		return status;
-	}
-*/
 	return status;
 }
 
