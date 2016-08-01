@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Windows.Devices.Enumeration;
 using Windows.Media.Capture;
 using Windows.Media.MediaProperties;
@@ -50,7 +51,7 @@ namespace AudioInSample
             if (selected != null)
             {
                 InitCaptureSettings(selected.Id);
-                InitMediaCapture();
+                await InitMediaCapture();
 
                 var storageFile = await Windows.Storage.KnownFolders.VideosLibrary.CreateFileAsync("audioOut.mp3", Windows.Storage.CreationCollisionOption.GenerateUniqueName);
                 audioFileName = storageFile.Name;
@@ -92,7 +93,7 @@ namespace AudioInSample
             captureInitSettings.StreamingCaptureMode = Windows.Media.Capture.StreamingCaptureMode.AudioAndVideo;
         }
 
-        private async void InitMediaCapture()
+        private async Task InitMediaCapture()
         {
             audioCapture = null;
             audioCapture = new Windows.Media.Capture.MediaCapture();
