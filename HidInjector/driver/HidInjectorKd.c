@@ -243,7 +243,8 @@ Return Value:
     NTSTATUS                status;
     WDF_OBJECT_ATTRIBUTES   deviceAttributes;
     WDFDEVICE               device;
-    PHID_DEVICE_CONTEXT         deviceContext;
+    PHID_DEVICE_CONTEXT     deviceContext;
+
     UNREFERENCED_PARAMETER  (Driver);
 	WDF_PNPPOWER_EVENT_CALLBACKS    wdfPnpPowerCallbacks;
 
@@ -287,7 +288,8 @@ Return Value:
 	// Initialize VHF.  This will talk to HIDCLASS for us.
 	//
 	status = HIDINJECTOR_VhfInitialize(device);
-	if (!NT_SUCCESS(status)) {
+	if (!NT_SUCCESS(status)) 
+    {
 		KdPrint(("Failed to init VHF\n"));
 		return status;
 	}
@@ -296,17 +298,18 @@ Return Value:
 	// Create a new queue to handle IOCTLs that will be forwarded to us from
 	// the rawPDO. 
 	//
-	status = RawQueueCreate(
-		device,
-		&deviceContext->RawPdoQueue);
-	if (!NT_SUCCESS(status)) {
+	status = RawQueueCreate(device, &deviceContext->RawPdoQueue);
+	if (!NT_SUCCESS(status)) 
+    {
 		KdPrint(("QueueCreate failed 0x%x\n", status));
 		return status;
 	}
 
-	if (NT_SUCCESS(status)) {
+	if (NT_SUCCESS(status)) 
+    {
 		status = HIDINJECTOR_CreateRawPdo(device);
-		if (!NT_SUCCESS(status)) {
+		if (!NT_SUCCESS(status)) 
+        {
 			KdPrint(("Failed to create Raw Pdo and/or queue\n"));
 			return status;
 		}
