@@ -85,7 +85,7 @@
                 <Button Grid.Row="3" Content="{Binding ElementName='rootPage', Path=DataContext[ConnectButtonContent]}" x:Name="ConnectButton" Width="120" Height="32" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="ConnectButton_Clicked" Margin="102,0,0,0"/>
             </Grid>
         </DataTemplate>
-        <DataTemplate x:Name="WifiDisconnectState">
+        <DataTemplate x:Name="WifiConnectedMoreOptions">
             <Grid Height="100">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>

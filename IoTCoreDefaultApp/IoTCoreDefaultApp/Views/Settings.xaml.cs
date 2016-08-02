@@ -239,10 +239,11 @@ namespace IoTCoreDefaultApp
                     {
                         networks.Remove(connectedNetwork);
                         networks.Insert(0, connectedNetwork);
-                        WifiListView.ItemsSource = networks;
-                        SwitchToItemState(connectedNetwork, WifiConnectedState, true);
                     }
+                    
                     WifiListView.ItemsSource = networks;
+                    SwitchToItemState(connectedNetwork, WifiConnectedState, true);
+
                     NoWifiFoundText.Visibility = Visibility.Collapsed;
                     WifiListView.Visibility = Visibility.Visible;
 
@@ -257,7 +258,7 @@ namespace IoTCoreDefaultApp
         private void WifiListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var listView = sender as ListView;
-
+           // var network = listView.DataContext as WiFiAvailableNetwork;
             foreach (var item in e.RemovedItems)
             {
                 SwitchToItemState(item, WifiInitialState, true);
@@ -268,9 +269,9 @@ namespace IoTCoreDefaultApp
                 Automatic = true;
                 var connectedNetwork = networkPresenter.GetCurrentWifiNetwork();
 
-                if (connectedNetwork != null)
+                if (connectedNetwork == item)
                 {
-                    SwitchToItemState(connectedNetwork, WifiDisconnectState, true);
+                    SwitchToItemState(connectedNetwork, WifiConnectedMoreOptions, true);
                 }
                 else
                 {
@@ -320,7 +321,7 @@ namespace IoTCoreDefaultApp
             var network = button.DataContext as WiFiAvailableNetwork;
             var connectedNetwork = networkPresenter.GetCurrentWifiNetwork();
 
-            if (network==connectedNetwork)
+            if (network == connectedNetwork)
             {
                 networkPresenter.DisconnectNetwork(network);
             }
