@@ -89,6 +89,12 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <Content Include="Assets\Web\fonts\IOTMDL2.1.8.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Assets\Web\fonts\IOTMDL2.1.8.woff">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>

@@ -12,8 +12,10 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock FontSize="30">IoTHub Viewer</TextBlock>
+            <TextBlock x:Name="ErrorMessage"></TextBlock>
             <Button x:Name="LoginButton" Content="Log in" Click="LoginButton_Click" Visibility="Visible"/>
             <Button x:Name="SignOutButton" Content="Sign Out" Click="SignOutButton_Click" Visibility="Collapsed" />
+            <HyperlinkButton Click="HyperlinkButton_Click">About</HyperlinkButton>
         </StackPanel>
 
     </Grid>

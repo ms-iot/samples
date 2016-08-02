@@ -19,6 +19,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using IoTHubBuddy.Models;
+using System.Diagnostics;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -46,7 +47,7 @@ namespace IoTHubBuddy
             hubData= e.Parameter as IoTAccountData;
             if (hubData != null)
             {
-                username.Text = hubData.EventHubInfo.HubName;
+                username.Text = hubData.Name;
                 msgManager = new MessageManager(this);
                 foreach (string partition in hubData.EventHubInfo.PartitionIds)
                 {
@@ -74,30 +75,36 @@ namespace IoTHubBuddy
                });
 
             // retrieve map
-            await myMap.TrySetSceneAsync(MapScene.CreateFromLocationAndRadius(center, 250));
-            deviceLoc.Location = center;
-            deviceLoc.Title = timestamp;
+            try
+            {
+                await myMap.TrySetSceneAsync(MapScene.CreateFromLocationAndRadius(center, 250));
+                deviceLoc.Location = center;
+                deviceLoc.Title = timestamp;
+            } catch (System.Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+            
 
         }
         public void AddMessageToLog(string msg)
         {
             this.myMessages.Items.Insert(0, msg);
         }
-        private async Task SignOutAccountAsync(WebAccount account)
-        {
-            ApplicationData.Current.LocalSettings.Values.Remove("CurrentUserProviderId");
-            ApplicationData.Current.LocalSettings.Values.Remove("CurrentUserId");
-            account.SignOutAsync();
-        }
         private async void SignOutButton_Click(object sender, RoutedEventArgs e)
         {
-            await AccountManager.SignOut();
+            AccountManager.SignOut();
             this.Frame.Navigate(typeof(MainPage));
         }
 
         private void ClearLog_Click(object sender, RoutedEventArgs e)
         {
             this.myMessages.Items.Clear();
+        }
+
+        private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(AboutPage));
         }
     }
 }
