@@ -227,19 +227,22 @@ namespace IoTCoreDefaultApp
         private async void SetupWifi()
         {
             if (await networkPresenter.WifiIsAvailable())
-            {
+            {    
                 var networks = await networkPresenter.GetAvailableNetworks();
-
+             
                 if (networks.Count > 0)
                 {
-                    WifiListView.ItemsSource = networks;
+
                     var connectedNetwork = networkPresenter.GetCurrentWifiNetwork();
 
                     if (connectedNetwork != null)
                     {
+                        networks.Remove(connectedNetwork);
+                        networks.Insert(0, connectedNetwork);
+                        WifiListView.ItemsSource = networks;
                         SwitchToItemState(connectedNetwork, WifiConnectedState, true);
                     }
-
+                    WifiListView.ItemsSource = networks;
                     NoWifiFoundText.Visibility = Visibility.Collapsed;
                     WifiListView.Visibility = Visibility.Visible;
 
@@ -250,7 +253,7 @@ namespace IoTCoreDefaultApp
             NoWifiFoundText.Visibility = Visibility.Visible;
             WifiListView.Visibility = Visibility.Collapsed;
         }
-
+       
         private void WifiListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var listView = sender as ListView;
@@ -263,8 +266,17 @@ namespace IoTCoreDefaultApp
             foreach (var item in e.AddedItems)
             {
                 Automatic = true;
-                SwitchToItemState(item, WifiConnectState, true);
-            }
+                var connectedNetwork = networkPresenter.GetCurrentWifiNetwork();
+
+                if (connectedNetwork != null)
+                {
+                    SwitchToItemState(connectedNetwork, WifiDisconnectState, true);
+                }
+                else
+                {
+                    SwitchToItemState(item, WifiConnectState, true);
+                }
+           }
         }
 
         private void ConnectButton_Clicked(object sender, RoutedEventArgs e)
@@ -299,6 +311,24 @@ namespace IoTCoreDefaultApp
                 var item = SwitchToItemState(network, nextState, false);
                 item.IsSelected = false; 
             });
+            SetupWifi();
+        }
+
+        private void DisconnectButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var network = button.DataContext as WiFiAvailableNetwork;
+            var connectedNetwork = networkPresenter.GetCurrentWifiNetwork();
+
+            if (network==connectedNetwork)
+            {
+                networkPresenter.DisconnectNetwork(network);
+            }
+            else
+            {
+                SwitchToItemState(network, WifiInitialState, true);
+            }
+            SetupWifi();
         }
 
         private void NextButton_Clicked(object sender, RoutedEventArgs e)
@@ -340,9 +370,6 @@ namespace IoTCoreDefaultApp
             {
                 item.ContentTemplate = template;
             }
-
-
-
             return item;
         }
 
