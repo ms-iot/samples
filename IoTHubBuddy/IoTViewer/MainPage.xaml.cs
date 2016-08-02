@@ -135,7 +135,6 @@ namespace IoTHubBuddy
         {
             //await AccountManager.SignOut();
             LoginButton.Visibility = Windows.UI.Xaml.Visibility.Visible;
-            SignOutButton.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
         }
 
         private void HyperlinkButton_Click(object sender, RoutedEventArgs e)

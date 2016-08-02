@@ -45,7 +45,7 @@ namespace IoTHubBuddy
                 
             } else
             {
-                ShowError("An error occurred. Please try logging in again.", true);
+                ShowError("An error occurred. Please try logging in again.");
             }
             
 
@@ -56,20 +56,17 @@ namespace IoTHubBuddy
             this.Frame.Navigate(typeof(MapPage), device);
         }
         
-        private void ShowError(string error, bool showLoginBtn = false)
+        private void ShowError(string error)
         {
-            DeviceList.Visibility = Visibility.Collapsed;
+            DeviceTable.Visibility = Visibility.Collapsed;
             ErrorMessage.Text = error;
             ErrorMessage.Visibility = Visibility.Visible;
-            if (showLoginBtn)
-            {
-                Login.Visibility = Visibility.Visible;
-            }
-
+            Login.Visibility = Visibility.Visible;
+            AccountManager.SignOut();
         }
         private void HideErrors()
         {
-            DeviceList.Visibility = Visibility.Visible;
+            DeviceTable.Visibility = Visibility.Visible;
             ErrorMessage.Visibility = Visibility.Collapsed;
             Login.Visibility = Visibility.Collapsed;
         }

@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Data.Json;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Windows.Security.Authentication.Web.Core;
 using Windows.Storage;
 using Windows.UI.ApplicationSettings;
 using Newtonsoft.Json;
@@ -40,7 +41,7 @@ namespace IoTHubBuddy
                 throw e;
             }
         }
-        public static async Task<AuthenticationResult> GetAuthenticationResult(string tenant, string authUri, string resourceUri, string user)
+        private static async Task<AuthenticationResult> GetAuthenticationResult(string tenant, string authUri, string resourceUri, string user)
         {
             var authority = "{0}{1}".FormatInvariant(authUri, tenant);
             var authContext = new AuthenticationContext(authority, true);
@@ -53,6 +54,66 @@ namespace IoTHubBuddy
             {
                 return null;
             }
+        }
+        private static async Task<JsonObject> GetGraphResource(string token, string relative)
+        {
+            try
+            {
+
+                using (var client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+                    //client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                    var restApi = new Uri(graphUri + relative);
+                    var infoResult = await client.GetAsync(restApi);
+                    string content = await infoResult.Content.ReadAsStringAsync();
+                    var jsonObject = JsonObject.Parse(content);
+                    if (jsonObject.GetObject().ContainsKey("value"))
+                    {
+                        return jsonObject;
+                    }
+                    else
+                    {
+                        string message = "The response object was malformed.";
+                        if (jsonObject.ContainsKey("error"))
+                        {
+                            message = jsonObject.GetObject().GetNamedValue("error").GetString();
+                        }
+                        //throw new System.Exception(message);
+                        return null;
+
+                    }
+                }
+            }
+            catch (System.Exception e)
+            {
+                throw new System.Exception(e.Message);
+            }
+        }
+        public static async Task<string> GetPhoto()
+        {
+            string userid = null;
+            if (ApplicationData.Current.LocalSettings.Values.ContainsKey("CurrentUserId"))
+            {
+                userid = ApplicationData.Current.LocalSettings.Values["CurrentUserId"] as string;
+            }
+            AuthenticationResult result = null;
+            string tenant = "common";
+            if (!string.IsNullOrEmpty(userid))
+            {
+                string[] user = userid.Split('@');
+                tenant = user[1];
+                result = await GetAuthenticationResult(user[1], authUri, graphUri, userid);
+            }
+            if(result != null)
+            {
+                string rel = "v1.0/users/"+result.UserInfo.UniqueId+"/photo?api-version=1.0";
+                var jobj = await GetGraphResource(result.AccessToken, rel); 
+            }
+            return null;
+            
+
+
         }
         public static async Task<string> GetAzureAuthenticationToken(string tenant = "common")
         {
@@ -74,6 +135,7 @@ namespace IoTHubBuddy
             if (result != null)
             {
                 ApplicationData.Current.LocalSettings.Values["CurrentUserId"] = result.UserInfo.DisplayableId;
+                //var s = await GetPhoto(); <-- DOESN'T WORK YET
                 userName = result.UserInfo.GivenName + " " + result.UserInfo.FamilyName;
                 return result.AccessToken;
             } else

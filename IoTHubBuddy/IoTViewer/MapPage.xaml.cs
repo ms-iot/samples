@@ -33,6 +33,7 @@ namespace IoTHubBuddy
         private MessageManager msgManager;
         private MapIcon deviceLoc;
         private IoTAccountData hubData;
+        private bool toggle = false;
         public MapPage()
         {
             this.InitializeComponent();
@@ -47,7 +48,7 @@ namespace IoTHubBuddy
             hubData= e.Parameter as IoTAccountData;
             if (hubData != null)
             {
-                username.Text = hubData.Name;
+                username.Content = hubData.Name;
                 msgManager = new MessageManager(this);
                 foreach (string partition in hubData.EventHubInfo.PartitionIds)
                 {
@@ -105,6 +106,21 @@ namespace IoTHubBuddy
         private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(AboutPage));
+        }
+        private void ToggleUserVisibility()
+        {
+            if(toggle)
+            {
+                this.UserSettings.Visibility = Visibility.Collapsed;
+            } else
+            {
+                this.UserSettings.Visibility = Visibility.Visible;
+            }
+            toggle = !toggle;
+        }
+        private void username_Click(object sender, RoutedEventArgs e)
+        {
+            ToggleUserVisibility();
         }
     }
 }

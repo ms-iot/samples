@@ -9,13 +9,12 @@
     Loaded="On_Loaded"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="#FF2475B5">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock FontSize="30">IoTHub Viewer</TextBlock>
+            <TextBlock FontSize="40" Foreground="White" FontFamily="Segoe UI">IoT Hub Buddy</TextBlock>
             <TextBlock x:Name="ErrorMessage"></TextBlock>
-            <Button x:Name="LoginButton" Content="Log in" Click="LoginButton_Click" Visibility="Visible"/>
-            <Button x:Name="SignOutButton" Content="Sign Out" Click="SignOutButton_Click" Visibility="Collapsed" />
-            <HyperlinkButton Click="HyperlinkButton_Click">About</HyperlinkButton>
+            <Button x:Name="LoginButton" Content="Login" HorizontalAlignment="Center" Background="White" Foreground="#FF2475B5" Click="LoginButton_Click" Visibility="Visible"/>
+            <HyperlinkButton FontSize="10" Foreground="White" HorizontalAlignment="Center" Click="HyperlinkButton_Click" Margin="10">About</HyperlinkButton>
         </StackPanel>
 
     </Grid>
