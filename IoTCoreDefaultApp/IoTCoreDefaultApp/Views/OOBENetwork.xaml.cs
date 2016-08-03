@@ -28,8 +28,6 @@ namespace IoTCoreDefaultApp
             this.InitializeComponent();
             OOBENetworkPageDispatcher = Window.Current.Dispatcher;
 
-            NetworkInformation.NetworkStatusChanged += NetworkInformation_NetworkStatusChanged;
-
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
 
             this.DataContext = LanguageManager.GetInstance();
@@ -78,8 +76,13 @@ namespace IoTCoreDefaultApp
 
                 if (networks.Count > 0)
                 {
+                    var connectedNetwork = networkPresenter.GetCurrentWifiNetwork();
+                    if (connectedNetwork != null)
+                    {
+                        NavigationUtils.NavigateToScreen(typeof(MainPage));
+                    }
                     WifiListView.ItemsSource = networks;
-
+                  
                     NoWifiFoundText.Visibility = Visibility.Collapsed;
                     WifiListView.Visibility = Visibility.Visible;
                     return;
@@ -147,7 +150,7 @@ namespace IoTCoreDefaultApp
                 });
             }
         }
-
+       
         private void NextButton_Clicked(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
