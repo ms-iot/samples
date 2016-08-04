@@ -233,14 +233,19 @@ namespace IoTCoreDefaultApp
                 if (networks.Count > 0)
                 {
 
-                    var connectedNetwork = networkPresenter.GetCurrentWifiNetwork();               
+                    var connectedNetwork = networkPresenter.GetCurrentWifiNetwork();
                     if (connectedNetwork != null)
                     {
                         networks.Remove(connectedNetwork);
                         networks.Insert(0, connectedNetwork);
+                        WifiListView.ItemsSource = networks;
+                        SwitchToItemState(connectedNetwork, WifiConnectedState, true);
                     }
-                    WifiListView.ItemsSource = networks;
-                    SwitchToItemState(connectedNetwork, WifiConnectedState, true);
+                    else
+                    {
+                        WifiListView.ItemsSource = networks;
+                    }
+                   
                
                     NoWifiFoundText.Visibility = Visibility.Collapsed;
                     WifiListView.Visibility = Visibility.Visible;
