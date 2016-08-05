@@ -78,8 +78,9 @@ namespace IoTCoreDefaultApp
 
                 if (networks.Count > 0)
                 {
+                    
                     WifiListView.ItemsSource = networks;
-
+                  
                     NoWifiFoundText.Visibility = Visibility.Collapsed;
                     WifiListView.Visibility = Visibility.Visible;
                     return;
@@ -147,7 +148,7 @@ namespace IoTCoreDefaultApp
                 });
             }
         }
-
+       
         private void NextButton_Clicked(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
