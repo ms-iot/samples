@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <Package xmlns="urn:Microsoft.WindowsPhone/PackageSchema.v8.00"
+    Owner="$(OEMNAME)" OwnerType="OEM" ReleaseType="Production"
+    Platform="arm" Component="Appx" SubComponent="Main">
+    <Components>
+       <OSComponent>
+         <Files>
+             <!-- Copy batch files for appx installation -->
+             <!-- DestinationDir should be always starting with global macros defined in %KITROOT%\Tools\bin\i386\pkggen.cfg.xml-->
+             <File Source="AppInstall.cmd" DestinationDir="$(runtime.root)\AppInstall" Name="AppInstall.cmd"/>
+             <File Source="AppxConfig.cmd" DestinationDir="$(runtime.root)\AppInstall" Name="AppxConfig.cmd"/>
+             <File Source="AppInstall_TH.cmd" DestinationDir="$(runtime.root)\AppInstall" Name="AppInstall_TH.cmd"/>			 
+             <File Source="DeployTask.cmd" DestinationDir="$(runtime.root)\AppInstall" Name="DeployTask.cmd"/>
+			 <!-- this file to trigger installation on boot -->
+			 <File Source="oemcustomization.cmd" />
+			 
+            <!-- Copy appx files and its dependencies -->
+             <File Source="MainAppx_1.0.0.0_x86.appx" DestinationDir="$(runtime.root)\AppInstall" Name="MainAppx_1.0.0.0_x86.appx"/>
+             <File Source="MainAppx_1.0.0.0_x86.cer" DestinationDir="$(runtime.root)\AppInstall" Name="MainAppx_1.0.0.0_x86.cer"/>
+             <File Source="Microsoft.NET.Native.Runtime.1.1.appx" DestinationDir="$(runtime.root)\AppInstall" Name="Microsoft.NET.Native.Runtime.1.1.appx"/>
+             <File Source="Microsoft.NET.Native.Framework.1.2.appx" DestinationDir="$(runtime.root)\AppInstall" Name="Microsoft.NET.Native.Framework.1.2.appx"/>
+             <File Source="Microsoft.VCLibs.x86.14.00.appx" DestinationDir="$(runtime.root)\AppInstall" Name="Microsoft.VCLibs.x86.14.00.appx"/>
+			
+			<!-- Comment out x86 files above and use this for arm version 
+             <File Source="arm\MainAppx_1.0.0.0_arm.appx" DestinationDir="$(runtime.root)\AppInstall" Name="MainAppx_1.0.0.0_arm.appx"/>
+             <File Source="arm\MainAppx_1.0.0.0_arm.cer" DestinationDir="$(runtime.root)\AppInstall" Name="MainAppx_1.0.0.0_arm.cer"/>
+             <File Source="arm\Microsoft.NET.Native.Runtime.1.1.appx" DestinationDir="$(runtime.root)\AppInstall" Name="Microsoft.NET.Native.Runtime.1.1.appx"/>
+             <File Source="arm\Microsoft.NET.Native.Framework.1.2.appx" DestinationDir="$(runtime.root)\AppInstall" Name="Microsoft.NET.Native.Framework.1.2.appx"/>
+             <File Source="arm\Microsoft.VCLibs.arm.14.00.appx" DestinationDir="$(runtime.root)\AppInstall" Name="Microsoft.VCLibs.arm.14.00.appx"/>
+			-->
+        </Files>
+       </OSComponent>
+    </Components>
+ </Package>

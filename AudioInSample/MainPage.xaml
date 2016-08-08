@@ -26,23 +26,26 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="LightBlue">
-        <StackPanel>
-            <Button Click="startRecord" Content="Start To Record" Margin="50,50,0,10"/>
-            <Button Click="endRecord" Content="End Record" Margin="50,10,0,10"/>
-            <Button Click="playRecordedAudio" Content="Play Recorded Audio" Margin="50,10,0,10"/>
-            <!--<
-            x:Name="media" Source="Videos/sample2.mp3" Margin="0,10,0,10" Width="100"
-                      Height="300"
-                      AreTransportControlsEnabled="True"
-                      Volume="1000"
-                      AutoPlay="False">
-
-            </MediaElement>-->
-            <MediaElement x:Name="media" Margin="0,10,0,10" Width="100"
-                      Height="300"
+    <Grid Background="White">
+        <StackPanel Margin="10" Width="500">
+            <ListView x:Name="deviceListView" Header="Audio Devices" Height="200" Margin="10" FontSize="22" FontWeight="Light">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="&#xE767;    " FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding Path=Name}" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <TextBlock x:Name="outputTextBlock" Margin="10"/>
+            <Button x:Name="startRecordButton" Click="startRecord" Content="Start Recording" Margin="10" HorizontalAlignment="Stretch"/>
+            <Button x:Name="endRecordButton" Click="endRecord" Content="End Recording" Margin="10" HorizontalAlignment="Stretch"/>
+            <Button x:Name="playRecordedAudioButton" Click="playRecordedAudio" Content="Play Recorded Audio" Margin="10" HorizontalAlignment="Stretch"/>
+            <MediaElement x:Name="media" Margin="10" Width="100"
+                      Height="100"
                       AreTransportControlsEnabled="False"
-                      AutoPlay="True">
+                      AutoPlay="True" Visibility="Collapsed">
 
             </MediaElement>
             
