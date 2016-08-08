@@ -1,0 +1,2 @@
+MainPackage=C:\Users\t-dimaha\Documents\samples\IoTHubBuddyClient\IoTSender\bin\x64\Debug\IoTHubBuddyClient_1.0.2.0_x64_Debug.appx
+SymbolPackage=C:\Users\t-dimaha\Documents\samples\IoTHubBuddyClient\IoTSender\AppPackages\IoTHubBuddyClient_1.0.2.0_Debug_Test\IoTHubBuddyClient_1.0.2.0_x64_Debug.appxsym
