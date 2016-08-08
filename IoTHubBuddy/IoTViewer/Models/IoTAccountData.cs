@@ -7,6 +7,9 @@ using Newtonsoft.Json;
 
 namespace IoTHubBuddy.Models
 {
+    /// <summary>
+    /// Data object that holds necessary iot hub information
+    /// </summary>
     public class IoTAccountData
     {
         public string Tenant { get; set; }

@@ -15,7 +15,7 @@ namespace IoTHubBuddyClient
         public IAsyncAction Initialize()
         {
             return Task.Run(async () => {
-                this.httpInterfaceManager = new HttpInterfaceManager(8001);
+                this.httpInterfaceManager = new HttpInterfaceManager(Constants.PORT);
                 this.httpInterfaceManager.StartServer();
             }).AsAsyncAction();
         }

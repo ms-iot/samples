@@ -55,10 +55,18 @@ namespace IoTHubBuddy
                     var id = m.MessageAnnotations.Map[deviceIdKey].ToString();
                     if (id == deviceId)
                     {
-                        receiver.Accept(m);
                         Data data = (Data)m.BodySection;
                         string msg = System.Text.Encoding.UTF8.GetString(data.Binary, 0, data.Binary.Length);
-                        msgman.parseMessage(msg);
+                        bool isValid = msgman.parseMessage(msg);
+                        if(isValid)
+                        {
+                            receiver.Accept(m);
+                        } else
+                        {
+                            receiver.Release(m);
+                        }
+                        
+                        
                         
                     }
                    

@@ -29,8 +29,10 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="1.25*"/>
             <RowDefinition Height="9*"/>
+            <RowDefinition Height="0.5*"/>
         </Grid.RowDefinitions>
         <Border Grid.Row="0" Background="#FF2475B5" />
+        <Border Grid.Row="2" Background="#FF2475B5" />
         <TextBlock Grid.Row="0" VerticalAlignment="Bottom" FontSize="20" Foreground="White" Margin="15 10">Select your IoT Device</TextBlock>
         <Grid x:Name="DeviceTable" Grid.Row="1" HorizontalAlignment="Stretch" Background="White">
             <Grid.RowDefinitions>
@@ -60,5 +62,6 @@
         
         <TextBlock x:Name="ErrorMessage" Grid.Row="2" Visibility="Collapsed" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 30" FontSize="16">ERROR HERE</TextBlock>
         <Button x:Name="Login" Content="Back to Login" HorizontalAlignment="Center" Grid.Row="2" Click="Login_Click" Visibility="Collapsed"></Button>
+        <Image Source="Assets/Microsoft-logo_rgb_c-wht.png" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="100"></Image>
     </Grid>
 </Page>

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace IoTHubBuddy.Models
 {
+    /// <summary>
+    /// Data object that holds necessary eventhub information
+    /// </summary>
     public class EventHubData
     {
         public ICollection<string> PartitionIds { get; set; }

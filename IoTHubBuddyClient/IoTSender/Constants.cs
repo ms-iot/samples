@@ -14,5 +14,7 @@ namespace IoTHubBuddyClient
         public const string READY_AZURE = "Ready to send messages";
         public const string ERROR_AZURE = "An error occurred. Please log out and log in with the correct credentials.";
         public const string LIST_HEADER = "<p id='start-list'>#msgList#</p>";
+        public const int PORT = 8001;
+        public const string VERSION = "1.0";
     }
 }

@@ -253,7 +253,11 @@ namespace IoTHubBuddy
             
             return devices;
         }
-
+        /// <summary>
+        /// gets all the tenants that a user belongs to
+        /// </summary>
+        /// <param name="tkn"></param>
+        /// <returns></returns>
         public static async Task<ICollection<string>> GetTenants(string tkn)
         {
             List<string> tenantIds = new List<string>();
@@ -276,6 +280,11 @@ namespace IoTHubBuddy
 
             return tenantIds;
         }
+        /// <summary>
+        /// Given a token from the logged in user, retrieve the list of all devices registered to that user under any IoT Hub
+        /// </summary>
+        /// <param name="tkn"></param>
+        /// <returns></returns>
         public static async Task<ICollection<IoTAccountData>> GetAllDevices(string tkn)
         {
             ICollection<string> tenants = await GetTenants(tkn);

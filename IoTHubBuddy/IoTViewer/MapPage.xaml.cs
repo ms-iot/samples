@@ -43,6 +43,10 @@ namespace IoTHubBuddy
             
             
         }
+        /// <summary>
+        /// parse data to populate fields and start listening to device
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             hubData= e.Parameter as IoTAccountData;
@@ -58,6 +62,10 @@ namespace IoTHubBuddy
             }
             
         }
+        /// <summary>
+        /// Begin recieving data on a given partition
+        /// </summary>
+        /// <param name="partition"></param>
         private async void ReceiveLocation(string partition)
         {
             DateTime start = DateTime.UtcNow;
@@ -65,6 +73,12 @@ namespace IoTHubBuddy
 
         }
 
+        /// <summary>
+        /// update map with pin and given location from device
+        /// </summary>
+        /// <param name="lat"></param>
+        /// <param name="lng"></param>
+        /// <param name="timestamp"></param>
         public async void SetMapLocation(double lat, double lng, string timestamp)
         {
             var center =
@@ -84,29 +98,49 @@ namespace IoTHubBuddy
             } catch (System.Exception e)
             {
                 Debug.WriteLine(e.Message);
+                AddMessageToLog(e.Message);
             }
             
-
         }
+        /// <summary>
+        /// add a message to the UI message log
+        /// </summary>
+        /// <param name="msg"></param>
         public void AddMessageToLog(string msg)
         {
             this.myMessages.Items.Insert(0, msg);
         }
-        private async void SignOutButton_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// sign out of account and show login page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SignOutButton_Click(object sender, RoutedEventArgs e)
         {
             AccountManager.SignOut();
             this.Frame.Navigate(typeof(MainPage));
         }
-
+        /// <summary>
+        /// clear UI message log
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ClearLog_Click(object sender, RoutedEventArgs e)
         {
             this.myMessages.Items.Clear();
         }
-
+        /// <summary>
+        /// navigate to about page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(AboutPage));
         }
+        /// <summary>
+        /// Toggle sign out button visibility
+        /// </summary>
         private void ToggleUserVisibility()
         {
             if(toggle)
@@ -118,6 +152,11 @@ namespace IoTHubBuddy
             }
             toggle = !toggle;
         }
+        /// <summary>
+        /// If the username is clicked, toggle sign out visibility
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void username_Click(object sender, RoutedEventArgs e)
         {
             ToggleUserVisibility();

@@ -10,6 +10,7 @@ class AzureIoTHub
 
     private string devConnectString = "";
     private static DeviceClient deviceClient;
+    private string devID = "";
     
     public AzureIoTHub()
     {
@@ -44,12 +45,16 @@ class AzureIoTHub
     {
         TpmDevice myDevice = new TpmDevice(0);
         string hubUri = myDevice.GetHostName();
-        string deviceId = myDevice.GetDeviceId();
+        devID = myDevice.GetDeviceId();
         string sasToken = myDevice.GetSASToken();
         deviceClient = DeviceClient.Create(hubUri,
-            AuthenticationMethodFactory.CreateAuthenticationWithToken(deviceId, sasToken),
+            AuthenticationMethodFactory.CreateAuthenticationWithToken(devID, sasToken),
             TransportType.Amqp);
 
+    }
+    public string GetDeviceId()
+    {
+        return devID;
     }
     public async Task SendDeviceToCloudMessageAsync(string msg)
     {

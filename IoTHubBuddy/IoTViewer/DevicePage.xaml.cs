@@ -28,6 +28,10 @@ namespace IoTHubBuddy
         {
             this.InitializeComponent();
         }
+        /// <summary>
+        /// Use token to generate a list of devices, show errors if there are no devices
+        /// </summary>
+        /// <param name="e"></param>
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             string token = e.Parameter as string;
@@ -45,17 +49,25 @@ namespace IoTHubBuddy
                 
             } else
             {
-                ShowError("An error occurred. Please try logging in again.");
+                ShowError("Missing token during navigation. Please login again.");
             }
             
 
         }
+        /// <summary>
+        /// Navigate to map page with selected device
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ItemSelected(object sender, ItemClickEventArgs e)
         {
             IoTAccountData device = e.ClickedItem as IoTAccountData;
             this.Frame.Navigate(typeof(MapPage), device);
         }
-        
+        /// <summary>
+        /// hide device grid and show error
+        /// </summary>
+        /// <param name="error"></param>
         private void ShowError(string error)
         {
             DeviceTable.Visibility = Visibility.Collapsed;
@@ -64,12 +76,20 @@ namespace IoTHubBuddy
             Login.Visibility = Visibility.Visible;
             AccountManager.SignOut();
         }
+        /// <summary>
+        /// hide error message and show device grid
+        /// </summary>
         private void HideErrors()
         {
             DeviceTable.Visibility = Visibility.Visible;
             ErrorMessage.Visibility = Visibility.Collapsed;
             Login.Visibility = Visibility.Collapsed;
         }
+        /// <summary>
+        /// Navigate back to main page in order to login again
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Login_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(MainPage));

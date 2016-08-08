@@ -38,7 +38,8 @@
             <ListView x:Name="myMessages" Grid.Row="1"/>    
         </Grid>
         <Border Grid.Row="2" Background="#FF2475B5"/>
-        <HyperlinkButton Grid.Row="2" Foreground="White" Margin="10 0" Click="HyperlinkButton_Click">About</HyperlinkButton> 
+        <HyperlinkButton Grid.Row="2" Foreground="White" Margin="10 0" Click="HyperlinkButton_Click">About</HyperlinkButton>
+        <Image Source="Assets/Microsoft-logo_rgb_c-wht.png" Width="100" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Bottom"></Image>
 
     </Grid>
     

@@ -159,7 +159,9 @@ namespace IoTHubBuddyClient
                     {
                         type = "coordinates",
                         latitude = parsedmsg[0],
-                        longitude = parsedmsg[1]
+                        longitude = parsedmsg[1],
+                        deviceName = msgHub.GetDeviceId(),
+                        version = Constants.VERSION
                     };
                     var str = new
                     {

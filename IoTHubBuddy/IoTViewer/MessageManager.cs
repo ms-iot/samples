@@ -21,29 +21,37 @@ namespace IoTHubBuddy
         /// parse message, check validity of message format, display coordinates or error message accordingly
         /// </summary>
         /// <param name="msg"></param>
-        public void parseMessage(string msg)
+        public bool parseMessage(string msg)
         {
             JObject jsonMsg = JObject.Parse(msg);
             Debug.WriteLine(jsonMsg);
             string status = "An invalid message was sent. Please check your IoT device";
             var message = jsonMsg["message"];
+            bool isValid = false;
             if(message != null)
             {
-                var type = message["type"];
-                if(type != null)
+                var version = message["version"].ToString();
+                if(version == Constants.MESSAGE_VERSION)
                 {
-                    var time = jsonMsg["time"];
-                    if(time != null)
+                    var type = message["type"];
+                    if (type != null)
                     {
-                        if(type.ToString() == "coordinates")
+                        var time = jsonMsg["time"];
+                        if (time != null)
                         {
-                            this.SetMapLocation(new Message(jsonMsg["message"]["latitude"].ToString(), jsonMsg["message"]["longitude"].ToString(), jsonMsg["time"].ToString()));
-                            status = msg;
+                            if (type.ToString() == "coordinates")
+                            {
+                                this.SetMapLocation(new Message(jsonMsg["message"]["latitude"].ToString(), jsonMsg["message"]["longitude"].ToString(), jsonMsg["time"].ToString()));
+                                status = msg;
+                                isValid = true;
+                            }
                         }
                     }
                 }
+                
             }
             this.AddToLog(status);
+            return isValid;
         }
         /// <summary>
         /// set the pin location on the ui map
