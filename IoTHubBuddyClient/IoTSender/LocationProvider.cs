@@ -14,6 +14,9 @@ namespace IoTHubBuddyClient
         {
             this.Initialize();
         }
+        /// <summary>
+        /// request access if user has not yet given permission to use location
+        /// </summary>
         private async void Initialize()
         {
             try
@@ -25,7 +28,10 @@ namespace IoTHubBuddyClient
             }
             
         }
-
+        /// <summary>
+        /// get location if access is permitted
+        /// </summary>
+        /// <returns></returns>
         public async Task<string> GetLocation()
         {
             string coords = "";

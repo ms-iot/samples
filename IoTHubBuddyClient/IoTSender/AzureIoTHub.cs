@@ -16,6 +16,10 @@ class AzureIoTHub
     {
         
     }
+    /// <summary>
+    /// Attempt to connect with a TPM provisioned device
+    /// </summary>
+    /// <returns> true if connection is successful, false otherwise</returns>
     public bool Connect()
     {
         try
@@ -28,6 +32,11 @@ class AzureIoTHub
             return false;
         }
     }
+    /// <summary>
+    /// Attempt to connect with a valid connection string
+    /// </summary>
+    /// <param name="connectionstring"></param>
+    /// <returns> true if connection is successful, false otherwise</returns>
     public bool Connect(string connectionstring)
     {
         try
@@ -41,6 +50,9 @@ class AzureIoTHub
             return false;
         }
     }
+    /// <summary>
+    /// attempt to create a device client with the user credentials stored in the tpm
+    /// </summary>
     public void initializeWithProvisionedDevice()
     {
         TpmDevice myDevice = new TpmDevice(0);
@@ -52,16 +64,30 @@ class AzureIoTHub
             TransportType.Amqp);
 
     }
+    /// <summary>
+    /// return device id
+    /// </summary>
+    /// <returns></returns>
     public string GetDeviceId()
     {
         return devID;
     }
+    /// <summary>
+    /// send a message to the cloud
+    /// </summary>
+    /// <param name="msg"></param>
+    /// <returns></returns>
     public async Task SendDeviceToCloudMessageAsync(string msg)
     {
         var message = new Message(Encoding.ASCII.GetBytes(msg));
 
         await deviceClient.SendEventAsync(message);
     }
+
+    /// <summary>
+    /// receive messages from the cloud
+    /// </summary>
+    /// <returns></returns>
     public async Task<string> ReceiveCloudToDeviceMessageAsync()
     {
         var deviceClient = DeviceClient.CreateFromConnectionString(devConnectString, TransportType.Amqp);

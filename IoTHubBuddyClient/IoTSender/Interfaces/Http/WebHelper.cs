@@ -32,12 +32,20 @@ namespace IoTHubBuddyClient
             this.InstallFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
             await LoadHTMLTemplate(NavConstants.DEFAULT_PAGE);
         }
-
+        /// <summary>
+        /// load page from cache or file
+        /// </summary>
+        /// <param name="page"></param>
+        /// <returns></returns>
         public IAsyncOperation<string> GeneratePage(string page)
         {
             return GeneratePageHelper(page).AsAsyncOperation<string>();
         }
-
+        /// <summary>
+        /// async operation to load page from cache/file
+        /// </summary>
+        /// <param name="page"></param>
+        /// <returns></returns>
         private async Task<string> GeneratePageHelper(string page)
         {
             if (!this.htmlTemplates.ContainsKey(page))
@@ -46,7 +54,11 @@ namespace IoTHubBuddyClient
             }
             return this.htmlTemplates[page];
         }
-
+        /// <summary>
+        /// load html page from file, store in cache
+        /// </summary>
+        /// <param name="page"></param>
+        /// <returns></returns>
         private async Task LoadHTMLTemplate(string page)
         {
             string htmlBody = "";
@@ -146,7 +158,12 @@ namespace IoTHubBuddyClient
         {
             return WriteFileToStreamHelper(file, os).AsAsyncAction();
         }
-
+        /// <summary>
+        /// Async helper to write file to stream
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="os"></param>
+        /// <returns></returns>
         private static async Task WriteFileToStreamHelper(StorageFile file, IOutputStream os)
         {
             using (Stream resp = os.AsStreamForWrite())
@@ -178,17 +195,6 @@ namespace IoTHubBuddyClient
             }
         }
 
-        /// <summary>
-        /// Makes a html hyperlink
-        /// </summary>
-        /// <param name="text">Hyperlink text</param>
-        /// <param name="url">Hyperlink URL</param>
-        /// <param name="newWindow">Should the link open in a new window</param>
-        /// <returns></returns>
-        public static string MakeHyperlink(string text, string url, bool newWindow)
-        {
-            return "<a href='" + url + "' " + ((newWindow) ? "target='_blank'" : "") + ">" + text + "</a>";
-        }
         
     }
 }
