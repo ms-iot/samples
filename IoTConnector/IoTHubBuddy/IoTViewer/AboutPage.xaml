@@ -31,11 +31,15 @@
 
             <HyperlinkButton Click="Back_Click" Grid.Row="0" Margin="5 0 0 0" Foreground="Gray">Back</HyperlinkButton>
             <TextBlock Text="About this App" Grid.Row="1" Margin="10" FontSize="20"></TextBlock>
-            <TextBlock Text="This is our app description" Margin="15" Grid.Row="2"></TextBlock>
+            <TextBlock Margin="15" Grid.Row="2" TextWrapping="Wrap" FontSize="12">
+                IoT Connector is the companion application for the <Hyperlink Click="Sample_Click" >Azure IoT Hub samples for Windows 10 IoT Core</Hyperlink>.
+                The application will show the data send to an Azure IoT Hub by the IoT Connector Client sample application 
+                that runs on the IoT Core device. Use the <Hyperlink Click="Dashboard_Click">IoT Dashboard</Hyperlink> to setup the sample application on the IoT Core device.
+            </TextBlock>
             <TextBlock Text="Privacy Statement" Grid.Row="3" Margin="10" FontSize="20"></TextBlock>
-            <TextBlock Grid.Row="4" Margin="15">Read more about our privacy policy <Hyperlink Click="Policy_Clicked">here</Hyperlink></TextBlock>
+            <TextBlock Grid.Row="4" Margin="15" FontSize="12">Read more about our privacy policy <Hyperlink Click="Policy_Clicked">here</Hyperlink></TextBlock>
             <TextBlock Text="Terms of Use" Grid.Row="5" Margin="10" FontSize="20"></TextBlock>
-            <TextBlock Grid.Row="6" Margin="15">Read more about our terms of use <Hyperlink Click="Legal_Click">here</Hyperlink></TextBlock>
+            <TextBlock Grid.Row="6" Margin="15" FontSize="12">Read more about our terms of use <Hyperlink Click="Legal_Click">here</Hyperlink></TextBlock>
         </Grid>
         <Grid x:Name="policyGrid" Visibility="Collapsed" Grid.Row="2">
             <Grid.RowDefinitions>

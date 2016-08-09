@@ -71,5 +71,15 @@ namespace IoTHubBuddy
         {
             DisplayBrowser(("http://go.microsoft.com/fwlink/p/?LinkID=530144"));
         }
+
+        private void Sample_Click(Windows.UI.Xaml.Documents.Hyperlink sender, Windows.UI.Xaml.Documents.HyperlinkClickEventArgs args)
+        {
+            DisplayBrowser("https://developer.microsoft.com/en-us/windows/iot/docs/cloudintro");
+        }
+
+        private void Dashboard_Click(Windows.UI.Xaml.Documents.Hyperlink sender, Windows.UI.Xaml.Documents.HyperlinkClickEventArgs args)
+        {
+            DisplayBrowser("http://go.microsoft.com/fwlink/?LinkID=708576");
+        }
     }
 }
