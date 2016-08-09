@@ -47,6 +47,25 @@
                 <RowDefinition Height="32"></RowDefinition>
                 <RowDefinition Height="2"></RowDefinition>
             </Grid.RowDefinitions>
+            <Popup x:Name="EnableCmdPopup" Grid.Row="0">
+                <Border BorderThickness="2" BorderBrush="LightGray" Background="Black">
+                    <StackPanel x:Name="EnableCmdStackPanel"  Height="172" Width="400">
+                        <TextBlock Text="{Binding [UsernameText]}" FontSize="14"  Margin="10, 2, 10, 0" />
+                        <TextBox x:Name="Username" FontSize="14" Text="administrator"  Margin="10, 2, 10, 4"/>
+                        <TextBlock Text="{Binding [PasswordText]}" FontSize="14"  Margin="10, 2, 10, 0"/>
+                        <PasswordBox x:Name="Password" FontSize="14"  Margin="10, 2, 10, 10"/>
+                        <Button x:Name="EnableCmdLineButton" Content="{Binding [EnableCmdText]}" HorizontalAlignment="Center" Click="EnableCmdLineButton_Click" />
+                    </StackPanel>
+                </Border>
+            </Popup>
+            <Popup  x:Name="CmdEnabledStatusPopup" Grid.Row="0">
+                <Border BorderThickness="2" BorderBrush="LightGray" Background="Black">
+                    <StackPanel x:Name="StatusStackPanel"  Height="120" Width="300">
+                        <TextBlock x:Name="CmdEnabledStatus" FontSize="14"  Margin="10, 10" TextWrapping="WrapWholeWords" />
+                        <Button x:Name="CloseStatusButton" Content="{Binding [CloseText]}" HorizontalAlignment="Center" Click="CloseStatusButton_Click" />
+                    </StackPanel>
+                </Border>
+            </Popup>
             <ScrollViewer Name="StdOutputScroller"  Grid.Row="0" HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                 <RichTextBlock Name="StdOutputText" TextWrapping="NoWrap" FontFamily="Lucida Console" FontSize="12" IsTextSelectionEnabled="True" Margin="10 10" SizeChanged="StdOutputText_SizeChanged">
                     <Paragraph>
