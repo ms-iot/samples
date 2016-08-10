@@ -9,14 +9,14 @@
 
   <Identity
 	  Name="PythonAccelerometer"
-	  Publisher="CN=Microsoft"
+	  Publisher="CN=MSFT"
 	  Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="7a00156d-b219-4b13-9ff9-a3d30fa26ca9" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>PythonAccelerometer</DisplayName>
-    <PublisherDisplayName>Microsoft</PublisherDisplayName>
+    <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>StoreLogo.png</Logo>
   </Properties>
 

@@ -66,26 +66,11 @@ namespace I2cPortExpander
             byte[] i2CReadBuffer;
             byte bitMask;
             
-            // initialize I2C communications
-            string deviceSelector = I2cDevice.GetDeviceSelector();
-            var i2cDeviceControllers = await DeviceInformation.FindAllAsync(deviceSelector);
-            if (i2cDeviceControllers.Count == 0)
-            {
-                ButtonStatusText.Text = "No I2C controllers were found on this system.";
-                return;
-            }
-            
+          
             var i2cSettings = new I2cConnectionSettings(PORT_EXPANDER_I2C_ADDRESS);
-            i2cPortExpander = await I2cDevice.FromIdAsync(i2cDeviceControllers[0].Id, i2cSettings);
-            if (i2cPortExpander == null)
-            {
-                ButtonStatusText.Text = string.Format(
-                    "Slave address {0} is currently in use on {1}. " +
-                    "Please ensure that no other applications are using I2C.",
-                    i2cSettings.SlaveAddress,
-                    i2cDeviceControllers[0].Id);
-                return;
-            }
+            var controller = await I2cController.GetDefaultAsync();
+            i2cPortExpander = controller.GetDevice(i2cSettings);
+
 
             // initialize I2C Port Expander registers
             try

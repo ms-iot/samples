@@ -6,13 +6,13 @@ Blockly.JavaScript['device_forever'] = function(block) {
     // Do while(true) loop.
     var branch = Blockly.JavaScript.statementToCode(block, 'DO');
     branch = Blockly.JavaScript.addLoopTrap(branch, block.id);
-    return 'while (true) {\n' + branch + '}\n';
+    return 'while (true) {\nrunEventsHelper();\n' + branch + '}\n';
 };
 
 Blockly.JavaScript['device_pause'] = function(block) {
     // Pause statement.
     var pause = Blockly.JavaScript.valueToCode(block, 'PAUSE', Blockly.JavaScript.ORDER_ASSIGNMENT) || '100';
-    return 'basic.pause(' + pause + ');\n';
+    return 'pauseHelper(' + pause + ');\n';
 };
 
 Blockly.JavaScript['device_print_message'] = function(block) {
@@ -81,6 +81,36 @@ Blockly.JavaScript['device_get_acceleration'] = function(block) {
     return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
 
+Blockly.JavaScript['device_get_compass'] = function(block) {
+    // Find which direction on a compass the device is facing
+    var code = 'senseHat.getCompassHeading()';
+    return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+Blockly.JavaScript['device_get_temperature'] = function(block) {
+    // Returns the temperature measured in Celsius (metric)
+    var code = 'senseHat.getTemperature()';
+    return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+Blockly.JavaScript['device_get_humidity'] = function(block) {
+    // Find the humidity level where you are.  Humidity is measured in % (0 - 100 % rH)
+    var code = 'senseHat.getHumidity()';
+    return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+Blockly.JavaScript['device_get_pressure'] = function(block) {
+    // Find the barometric pressure level where you are. Absolute pressure is measured in hPA (260 to 1260 hPa)
+    var code = 'senseHat.getPressure()';
+    return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+Blockly.JavaScript['device_get_running_time'] = function(block) {
+    // Find how long it has been since the program started
+    var code = '(basic.runningTime() | 0)';
+    return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
 Blockly.JavaScript['device_create_image'] = function(block) {
     // Image value (sprite) 
     var matrix = '';
@@ -122,4 +152,39 @@ Blockly.JavaScript['device_show_image_offset'] = function(block) {
     var offsetX = Blockly.JavaScript.valueToCode(block, 'OFFSETX', Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
     var offsetY = Blockly.JavaScript.valueToCode(block, 'OFFSETY', Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
     return 'senseHat.drawLedMatrix(' + matrix + ', ' + color + ', ' + offsetX + ', ' + offsetY + ', true);\n';
+};
+
+Blockly.JavaScript['device_analog_read_channel'] = function(block) {
+    // Get the analog input from the specific channel (value returned is between 0 and 1023)
+    var channel = String(Number(block.getFieldValue('CHANNEL')));
+    var code = 'adc.getValueFromChannel(' + channel + ')';
+    return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+Blockly.JavaScript['device_plot_bar_graph'] = function(block) {
+    // Graph
+    var value = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
+    var high = Blockly.JavaScript.valueToCode(block, 'HIGH', Blockly.JavaScript.ORDER_ASSIGNMENT) || '1023';
+    return 'senseHat.plotBarGraph(' + value + ', ' +  high + ');\n';
+};
+
+Blockly.JavaScript['device_get_joystick_state'] = function(block) {
+    // Check whether a joystick button is pressed right now
+    var button = String(block.getFieldValue('BUTTON'));
+    var code = 'senseHat.getJoystickState(' + button + ') > 0';
+    return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+Blockly.JavaScript['device_joystick_event'] = function(block) {
+    // React to a button press
+    var button = String(block.getFieldValue('BUTTON'));
+    var condition = 'senseHat.getJoystickState(' + button + ') > 0';
+    var branch = Blockly.JavaScript.statementToCode(block, 'HANDLER');
+    return '// EVENT HANDLER START\n' +
+           'eventsQueue.push(function() {\n' +
+           '  if (' + condition + ') {\n' +
+           '    ' + branch +
+           '  }\n' +
+           '});\n' +
+           '// EVENT HANDLER END';
 };

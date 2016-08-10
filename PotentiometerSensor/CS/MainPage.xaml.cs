@@ -70,9 +70,8 @@ namespace PotentiometerSensor
                 settings.ClockFrequency = 500000;   /* 0.5MHz clock rate                                        */
                 settings.Mode = SpiMode.Mode0;      /* The ADC expects idle-low clock polarity so we use Mode0  */
 
-                string spiAqs = SpiDevice.GetDeviceSelector(SPI_CONTROLLER_NAME);
-                var deviceInfo = await DeviceInformation.FindAllAsync(spiAqs);
-                SpiADC = await SpiDevice.FromIdAsync(deviceInfo[0].Id, settings);
+                var controller = await SpiController.GetDefaultAsync();
+                SpiADC = controller.GetDevice(settings);
             }
 
             /* If initialization fails, display the exception and stop running */

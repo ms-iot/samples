@@ -1,0 +1,43 @@
+﻿<Page
+    x:Class="IoTHubBuddy.AboutPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:IoTHubBuddy"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+        <Grid Background="#FF2475B5" Grid.Row="0">
+            <TextBlock VerticalAlignment="Bottom" Foreground="White" FontSize="30" Margin="30 10">IoT Hub Buddy</TextBlock>
+        </Grid>
+        <Grid x:Name="Info" Grid.Row="1" HorizontalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="8*"/>
+            </Grid.RowDefinitions>
+
+            <HyperlinkButton Click="HyperlinkButton_Click" Grid.Row="0" Margin="5 0 0 0" Foreground="Gray">Back</HyperlinkButton>
+            <TextBlock Text="About this App" Grid.Row="1" Margin="10" FontSize="20"></TextBlock>
+            <TextBlock Text="This is our app description" Margin="15" Grid.Row="2"></TextBlock>
+            <TextBlock Text="Privacy Statement" Grid.Row="3" Margin="10" FontSize="20"></TextBlock>
+            <TextBlock Grid.Row="4" Margin="15">Read more about our privacy policy <Hyperlink Click="Hyperlink_Click">here</Hyperlink></TextBlock>
+        </Grid>
+        <Grid x:Name="policyGrid" Visibility="Collapsed" Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="5*"/>
+            </Grid.RowDefinitions>
+            <HyperlinkButton Click="HyperlinkButton_Click_1" Grid.Row="0">Close</HyperlinkButton>
+            <WebView x:Name="policyView" Grid.Row="1" ></WebView>
+        </Grid>
+    </Grid>
+</Page>

@@ -744,4 +744,8 @@ For more information, please visit http://go.microsoft.com/fwlink/p/?LinkId=6984
     <value>Executing commands as DefaultAccount
     </value>
   </data>
+  <data name="DisconnectButtonContent" xml:space="preserve">
+    <value>Disconnect</value>
+    <comment>This disconnects the connected network</comment>
+  </data>
 </root>

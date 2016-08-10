@@ -58,7 +58,7 @@
                     <TextBlock Text="{Binding Ssid}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}"/>
                     <TextBlock Text="{Binding  ElementName='rootPage', Path=DataContext[NetworkConnectedText]}" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 </StackPanel>
-            </Grid>
+               </Grid>
         </DataTemplate>
         <DataTemplate x:Name="WifiConnectState">
             <Grid Height="144">
@@ -83,6 +83,25 @@
                     <TextBlock Text="{Binding ElementName='rootPage', Path=DataContext[ConnectAutomaticallyText]}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}"/>
                 </CheckBox>
                 <Button Grid.Row="3" Content="{Binding ElementName='rootPage', Path=DataContext[ConnectButtonContent]}" x:Name="ConnectButton" Width="120" Height="32" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="ConnectButton_Clicked" Margin="102,0,0,0"/>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Name="WifiConnectedMoreOptions">
+            <Grid Height="100">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="44"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Orientation="Horizontal">
+                    <Border Width="32" Height="32" VerticalAlignment="Center">
+                        <TextBlock Grid.Column="0" Text="{Binding SignalBars, Mode=OneWay, Converter={StaticResource GlyphConverter}}" FontSize="18" FontFamily="{StaticResource IconFontFamily}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Border>
+                    <TextBlock Text="{Binding Ssid}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Margin="5,0,0,0"/>
+                </StackPanel>
+                <Button Grid.Row="1" Content="{Binding ElementName='rootPage', Path=DataContext[DisconnectButtonContent]}" x:Name="DisconnectButton" Width="120" Height="32" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="DisconnectButton_Clicked" Margin="102,0,0,0"/>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Name="WifiPasswordState">

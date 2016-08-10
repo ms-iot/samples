@@ -40,7 +40,7 @@ HRESULT Help(_In_ int Argc, _In_reads_(Argc) wchar_t *Argv[])
     wprintf(HelpText);
 
     if (NULL != g_platformName)
-        wprintf(L"PATFORM: %s\n", g_platformName);
+        wprintf(L"PLATFORM: %s\n", g_platformName);
 
     if (g_dwPlatformNameCode == PLATFORM_NAME_RPI2)
         wprintf(RPi2_PinMappingText);
@@ -106,7 +106,8 @@ bool GetPlatformName()
         g_dwPlatformNameCode = PLATFORM_NAME_RPI2;
     }
 
-    if (0 == wcscmp(g_platformName, L"Minnowboard Max B3 PLATFORM"))
+    if (0 == wcscmp(g_platformName, L"Minnowboard Max B3 PLATFORM") ||
+        0 == wcscmp(g_platformName, L"Minnowboard Max D0 PLATFORM"))
     {
         g_dwPlatformNameCode = PLATFORM_NAME_MBM;
     }

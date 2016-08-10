@@ -126,10 +126,8 @@ namespace TempSensor
                 var settings = new SpiConnectionSettings(SPI_CHIP_SELECT_LINE);
                 settings.ClockFrequency = 500000;// 10000000;
                 settings.Mode = SpiMode.Mode0; //Mode3;
-
-                string spiAqs = SpiDevice.GetDeviceSelector(SPI_CONTROLLER_NAME);
-                var deviceInfo = await DeviceInformation.FindAllAsync(spiAqs);
-                SpiDisplay = await SpiDevice.FromIdAsync(deviceInfo[0].Id, settings);
+                var controller = await SpiController.GetDefaultAsync();
+                SpiDisplay = controller.GetDevice(settings);
             }
 
             /* If initialization fails, display the exception and stop running */

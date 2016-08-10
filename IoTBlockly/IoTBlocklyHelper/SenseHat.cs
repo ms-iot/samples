@@ -17,6 +17,17 @@ namespace IoTBlocklyHelper
     // Thanks so much for this suberb library and samples. It made creating the block implementations
     // a walk in the park :-)
 
+    public enum SenseHatJoystickButton
+    {
+        None = 0x00,
+        Enter = 0x01,
+        Up = 0x02,
+        Down = 0x04,
+        Right = 0x08,
+        Left = 0x10,
+        Any = Enter | Up | Down | Right | Left
+    }
+
     public sealed class SenseHat
     {
         // notice how we keep the "hat" static so that it can be reused when we stop/restart/modify the js script
@@ -133,6 +144,132 @@ namespace IoTBlocklyHelper
                 waitEvent.Wait(TimeSpan.FromMilliseconds(50));
             }
 
+        }
+
+        static DateTime barGraphHighLast = DateTime.Now;
+        static int barGraphHigh = 0;
+
+        public void PlotBarGraph(int value, int high)
+        {
+            value = Math.Abs(value);
+            high = Math.Abs(high);
+
+            Color background = Colors.Black;
+            Color foreground = Colors.Salmon;
+
+            if (high == 0)
+            {
+                var now = DateTime.Now;
+                if ((value > barGraphHigh) || (now - barGraphHighLast).Seconds > 5)
+                {
+                    barGraphHigh = value;
+                    barGraphHighLast = now;
+                    high = barGraphHigh;
+                }
+            }
+
+            high = Math.Max(high, 32);
+            var v = (value * 31) / high;
+            int k = 0;
+            for (int y = 7; y >= 0; --y)
+            {
+                for (int x = 0; x < 4; ++x)
+                {
+                    if (k > v)
+                    {
+                        senseHat.Display.Screen[3 - x, y] = background;
+                        senseHat.Display.Screen[4 + x, y] = background;
+                    }
+                    else
+                    {
+                        // TODO (alecont): use more colors :-)
+                        senseHat.Display.Screen[3 - x, y] = foreground;
+                        senseHat.Display.Screen[4 + x, y] = foreground;
+                    }
+                    ++k;
+                }
+            }
+            // Update the physical display.
+            senseHat.Display.Update();
+        }
+
+        public SenseHatJoystickButton GetJoystickState(SenseHatJoystickButton mask)
+        {
+            senseHat.Joystick.Update();
+
+            SenseHatJoystickButton state = SenseHatJoystickButton.None;
+            if (senseHat.Joystick.EnterKey == KeyState.Pressed)
+            {
+                state |= SenseHatJoystickButton.Enter;
+            }
+            if (senseHat.Joystick.LeftKey == KeyState.Pressed)
+            {
+                state |= SenseHatJoystickButton.Left;
+            }
+            if (senseHat.Joystick.RightKey == KeyState.Pressed)
+            {
+                state |= SenseHatJoystickButton.Right;
+            }
+            if (senseHat.Joystick.UpKey == KeyState.Pressed)
+            {
+                state |= SenseHatJoystickButton.Up;
+            }
+            if (senseHat.Joystick.DownKey == KeyState.Pressed)
+            {
+                state |= SenseHatJoystickButton.Down;
+            }
+
+            state &= mask;
+
+            return state;
+        }
+
+        public int GetCompassHeading()
+        {
+            const double fullCircle = Math.PI * 2;
+
+            senseHat.Sensors.ImuSensor.Update();
+
+            if (!senseHat.Sensors.Pose.HasValue)
+            {
+                return -1003; // same as micro:bit (see https://m.pxt.io/reference/input/compass-heading)
+            }
+            double northAngle = senseHat.Sensors.Pose.Value.Z;
+            if (northAngle < 0)
+            {
+                northAngle += fullCircle;
+            }
+            return ((int)(northAngle / fullCircle * 360));
+        }
+
+        public int GetTemperature()
+        {
+            senseHat.Sensors.HumiditySensor.Update();
+            if (!senseHat.Sensors.Temperature.HasValue)
+            {
+                return 0;
+            }
+            return (int)Math.Round(senseHat.Sensors.Temperature.Value);
+        }
+
+        public int GetHumidity()
+        {
+            senseHat.Sensors.HumiditySensor.Update();
+            if (!senseHat.Sensors.Humidity.HasValue)
+            {
+                return 0;
+            }
+            return (int)Math.Round(senseHat.Sensors.Humidity.Value);
+        }
+
+        public int GetPressure()
+        {
+            senseHat.Sensors.PressureSensor.Update();
+            if (!senseHat.Sensors.Pressure.HasValue)
+            {
+                return 0;
+            }
+            return (int)Math.Round(senseHat.Sensors.Pressure.Value);
         }
 
         private static IEnumerable<byte> FontBytes

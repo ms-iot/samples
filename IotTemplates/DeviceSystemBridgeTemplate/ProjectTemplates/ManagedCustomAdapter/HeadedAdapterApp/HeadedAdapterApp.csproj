@@ -108,9 +108,6 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="HeadedAdapterApp_TemporaryKey.pfx" />
-    <Content Include="ApplicationInsights.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <None Include="project.json">
       <SubType>Designer</SubType>
     </None>
