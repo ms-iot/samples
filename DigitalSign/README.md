@@ -1,7 +1,7 @@
 Windows 10 IoT Core sample code
 ===============
 
-[Documentation for this sample](https://developer.microsoft.com/en-us/windows/iot/samples/iotbrowser) 
+[Documentation for this sample](https://developer.microsoft.com/en-us/windows/iot/samples/digitalsign) 
 
 ## How to download:
 
