@@ -1,0 +1,56 @@
+﻿<!doctype html> 
+<html lang='en'> 
+ 	<head> 
+ 		<meta charset='utf-8'> 
+ 		<link rel='Stylesheet' href='http://ms-iot.github.io/content/css/bootstrap.css' />
+         <link rel='stylesheet' href='../css/login.css'/>
+ 	  <title> IoTConnectorClient - Login </title> 
+ 		<meta http-equiv='X-UA-Compatible' content='IE=edge'> 
+ 		<script src='http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js'></script>
+         <script>
+             showInput = true;
+             $(document).ready(function () {
+                 $('#provisioned').click(function () {
+                     if(showInput) {
+                         showInput = false;
+                         $('.userprovision').hide();
+                     } else {
+                         showInput = true;
+                         $('.userprovision').show();
+                     }
+                 });
+             });
+         </script>
+   </head> 
+   <body> 
+     <div class='main'> 
+       <div class='container'> 
+           <div class='span7 center'> 
+           <div class='row' id = 'title-row'>
+               <div class='col-md-12-headerbar' id='title-col'>
+                   <h1> Connect to Azure </h1>
+               </div>
+           </div>
+               <div class='row'>
+                   <p>#status#</p>
+
+               </div>
+           <div class='row'>
+              <form id='connection-form' action='default.html' method='POST' >
+                  <label><input type='checkbox' name='DeviceProvision' id='provisioned'/> My device is provisioned </label>
+                <p class='userprovision'>Host Name:</p>
+                <input class='userprovision' id='hostname' name='HostName' type='text'>
+                <p class='userprovision' >Device Id: </p>
+                <input class='userprovision' id='deviceid' name='DeviceID' type='text'>
+                <p class='userprovision' > Shared Access Key </p>
+                <input class='userprovision' id='sharedkey' name='SharedKey' type='text'>
+                <input id='submit' type='submit' value='submit'>
+              </form>
+           </div>
+            </div>
+         
+        </div>
+       </div> 
+     </div> 
+   </body> 
+ </html> 

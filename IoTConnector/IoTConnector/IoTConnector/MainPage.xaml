@@ -1,0 +1,22 @@
+﻿<Page
+    x:Class="IoTConnector.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:IoTConnector"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:maps="using:Windows.UI.Xaml.Controls.Maps"
+    Loaded="On_Loaded"
+    mc:Ignorable="d">
+
+    <Grid Background="#FF2475B5">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock FontSize="40" Foreground="White" FontFamily="Segoe UI">IoT Connector</TextBlock>
+            <TextBlock x:Name="ErrorMessage"></TextBlock>
+            <Button x:Name="LoginButton" Content="Login" HorizontalAlignment="Center" Background="White" Foreground="#FF2475B5" Click="LoginButton_Click" Visibility="Visible"/>
+            <HyperlinkButton FontSize="10" Foreground="White" HorizontalAlignment="Center" Click="HyperlinkButton_Click" Margin="10">About</HyperlinkButton>
+        </StackPanel>
+        <Image Source="Assets/Microsoft-logo_rgb_c-wht.png" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="100"></Image>
+
+    </Grid>
+</Page>
