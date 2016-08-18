@@ -1,4 +1,5 @@
-﻿namespace PlantApp
+﻿// Copyright (c) Microsoft. All rights reserved.
+namespace PlantApp
 {
     class FileNames
     {

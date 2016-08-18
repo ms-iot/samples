@@ -1,4 +1,5 @@
-﻿using Windows.Devices.Enumeration;
+﻿// Copyright (c) Microsoft. All rights reserved.
+using Windows.Devices.Enumeration;
 using Windows.Devices.Spi;
 using System;
 using System.Collections.Generic;

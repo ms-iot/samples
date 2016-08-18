@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Copyright (c) Microsoft. All rights reserved.
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -64,16 +65,26 @@ namespace PlantApp
             App.TemperatureList.Clear();
             App.SoilMoistureList.Clear();
         }
+
+        /**
+         * This method records on a timer the data measured by the temperature, brightness, and soil moisture sensor,
+         * then organizes all of the information collected.  
+         * */
         private async void timerCallback(object state)
         {
+            //ensures that the temperature sensor is initialized before it is measured from
             if (BMP280 == null)
             {
                 Debug.WriteLine("BMP280 is null");
             }
             else
             {
+                //receives the value from the temperature sensor and saves 
+                //the data in the SensorDataEventArgs class, which holds
+                //the sensor name, the data point, and the time the value was measured.
+                //this data is then sent back to the main page and the UI is adjusted based
+                //off of the measurement. 
                 float currentTemperature = await BMP280.ReadTemperature();
-                Debug.WriteLine(currentTemperature);
                 var tempArgs = new SensorDataEventArgs()
                 {
                     SensorName = "Temperature",
@@ -82,19 +93,18 @@ namespace PlantApp
                 };
                 OnDataReceived(tempArgs);
             }
+
+            //MCP3008 is an ADC and checks to see if this is initialized. 
+            //the soil moisture sensor and the photocell are on different channels of the ADC
             if (mcp3008 == null)
             {
                 Debug.WriteLine("mcp3008 is null");
             }
             else
             {
-                // Read from the ADC chip the current values of the two pots and the photo cell.
-                int lowPotReadVal = mcp3008.ReadADC(LowPotentiometerADCChannel);
-                int highPotReadVal = mcp3008.ReadADC(HighPotentiometerADCChannel);
+                //The first line reads a value from the ADC from the photo cell sensor usually between 0 and 1023. 
+                //then the second line maps this number to a voltage that represents this number 
                 int cdsReadVal = mcp3008.ReadADC(CDSADCChannel);
-
-                float lowPotVoltage = mcp3008.ADCToVoltage(lowPotReadVal);
-                float highPotVoltage = mcp3008.ADCToVoltage(highPotReadVal);
                 float cdsVoltage = mcp3008.ADCToVoltage(cdsReadVal);
 
                 float currentBrightness = cdsVoltage;

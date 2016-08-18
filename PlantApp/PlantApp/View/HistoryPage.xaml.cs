@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Copyright (c) Microsoft. All rights reserved.
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -227,6 +228,7 @@ namespace PlantApp
          * */
         public Dictionary<DateTime, List<float>> setUpGeneralMasterListPerHour(IList<string> fileList, List<ChartDataPoint> masterList)
         {
+            //creates a dictionary where all of the information is stored.
             Dictionary<DateTime, List<float>>  hourDictionary = new Dictionary<DateTime, List<float>>();
             DateTime upperBound = DateTime.Now;
             TimeSpan fiftySixDays = new TimeSpan(56,0, 0, 0);

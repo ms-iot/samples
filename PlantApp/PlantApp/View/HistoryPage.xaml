@@ -1,4 +1,5 @@
-﻿<Page
+﻿<!-- Copyright (c) Microsoft. All rights reserved. -->
+<Page
     x:Class="PlantApp.HistoryPage"
     xmlns:Charting="using:WinRTXamlToolkit.Controls.DataVisualization.Charting"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"

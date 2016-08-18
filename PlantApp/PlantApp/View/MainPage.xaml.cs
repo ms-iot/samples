@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Copyright (c) Microsoft. All rights reserved.
+using System;
 using System.Threading;
 using Windows.UI;
 using Windows.UI.Core;
