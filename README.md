@@ -1,30 +1,23 @@
-Windows 10 IoT Core Samples
-==============
+# Windows 10 IoT Core Samples
+* To download Windows 10 IoT Core, visit our [Get Started](https://developer.microsoft.com/en-us/windows/iot/GetStarted) page
+* To download these samples, click the **Clone or Download** button above
 
-##Welcome to the Windows 10 IoT Core Samples
+## How to contribute
+We greatly appreciate contributions from the community!
 
-These samples have been validated on Windows IoT Core November Update (10.0.10586.0):
+1. [Get set up](Resources/contribute/get-setup.md)
+2. [Making changes](Resources/contribute/making-changes.md) 
+3. [Guidelines](Resources/contribute/authoring-guidelines.md)
 
-* [Raspberry Pi 2](http://go.microsoft.com/fwlink/?LinkId=691711)
+### Rules
+All of these rules must be met:
 
-* [MinnowBoard Max](http://go.microsoft.com/fwlink/?LinkId=691712)
-
-* [DragonBoard 410c](http://go.microsoft.com/fwlink/?LinkId=691713)
-
-These samples have been validated using these tools:
-
-* [Visual Studio 2015](http://go.microsoft.com/fwlink/?LinkID=534599)
-
-* [Visual Studio 2015 Update 1](http://go.microsoft.com/fwlink/?LinkID=691134)
-
-
-Please download, build, deploy, and contribute!!  For more information and descriptions about the samples found here, see the samples tab [here](http://ms-iot.github.io/content/en-US/win10/StartCoding.htm)
-
-For more information about Windows 10 IoT Core, see our online documentation [here](http://windowsondevices.com)
-
-We are working hard to improve Windows 10 IoT Core and deeply value any feedback we get.
-
-
+1. You must have a page on the [IoT Core samples page](https://developer.microsoft-int.com/en-us/windows/iot/samples) corresponding to your code.
+  * It must contain some explanation of what the sample is and how it works.
+  * The same title must be used everywhere.
+2. You must link back to your sample on ms-iot/samples in the header of your file. 
+  * See [ms-iot sample template](https://github.com/ms-iot/content-private/blob/develop/Resources/contribute/template/sample-template.md).
+3. You must include a Readme with your sample.
+  * Use this [template](Resources/README.md).
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
-
