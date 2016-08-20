@@ -34,7 +34,7 @@ namespace IoTBlocklyBackgroundApp
             deferral = taskInstance.GetDeferral();
             var publicFolder = await localFolder.GetFolderAsync("public");
 
-            await StartMostRecentScript();
+            // await StartMostRecentScript();  // problematic if JS Corrupt when stored
 
             var server = new SimpleWebServer();
 
@@ -54,7 +54,7 @@ namespace IoTBlocklyBackgroundApp
                 var blocks = req.GetValue("blocks");
                 if (!String.IsNullOrEmpty(code))
                 {
-                    await SaveMostRecentScript(code, blocks);
+                    // await SaveMostRecentScript(code, blocks);
                     host.runScriptAsync(code);
                 }
                 await res.RedirectAsync("..");
