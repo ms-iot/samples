@@ -36,12 +36,14 @@ namespace PlantSensor
         {
             this.InitializeComponent();
             twitterTimerHistory = new Timer(timerTwitterHistory, this, 0, 1000);
-            //var user = User.GetUserFromScreenName("Plant_App_Pi");
-            //var tweets = Timeline.GetUserTimeline(user);
-            //foreach(String twitterInUI in tweets)
-            //{
-
-            //}
+            Auth.SetUserCredentials("5no3TPnFYR9oArbzprNa8QpbY", "9kPVZaI2aLOxDD5S1m6EuDsRnDyeovqxuZA7oe43LlmidVin6U", "764234424552558592-zqHPE9eIW5PIOw36J5FELnMGgSA9mKp", "0f9gFGGQ5ahP0AuR8gT1ARtcRjVzyGmYcICXErWTUIila");
+            var user = User.GetAuthenticatedUser();
+            var tweets = Timeline.GetUserTimeline(user);
+            foreach(Tweetinvi.Models.ITweet twitterInUI in tweets)
+            {
+                String twitterStringInUI = twitterInUI.ToString();
+                HistoryTweetList.Items.Add(twitterStringInUI);
+            }
             //get list of user timeline tweets
             //foreach loop: get all of the tweets
             //add them into history timeline tweets
@@ -62,7 +64,6 @@ namespace PlantSensor
 
         private async void twitterTimerLiveMethod(object state)
         {
-            Auth.SetUserCredentials("5no3TPnFYR9oArbzprNa8QpbY", "9kPVZaI2aLOxDD5S1m6EuDsRnDyeovqxuZA7oe43LlmidVin6U", "764234424552558592-zqHPE9eIW5PIOw36J5FELnMGgSA9mKp", "0f9gFGGQ5ahP0AuR8gT1ARtcRjVzyGmYcICXErWTUIila");
             String Tweet = determineTweet();
             //var firstTweet = Tweet.PublishTweet(Tweet);
             String stringIntoFile = Tweet + "," + DateTime.Now + Environment.NewLine;
