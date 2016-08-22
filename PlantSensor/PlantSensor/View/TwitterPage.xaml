@@ -1,0 +1,88 @@
+﻿<!-- Copyright (c) Microsoft. All rights reserved. -->
+<Page
+    x:Class="PlantSensor.TwitterPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PlantSensor"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="#323232">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="7*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.2*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid x:Name="TwitterAppBar" Grid.Row="0" Grid.Column="3">
+            <CommandBar Background="#323232" BorderBrush="#ffffff">
+                <AppBarButton x:Name="TwitterHomeAppBar" Icon="Home" Label="Home" Foreground="#ffffff" Click="TwitterHomeAppBar_Click"/>
+                <AppBarButton x:Name="TwitterCalendarAppBar" Icon="Calendar" Label="History" Foreground="#ffffff" Click="TwitterCalendarAppBar_Click"/>
+                <AppBarButton x:Name="TwitterSettingsAppBar" Icon="Setting" Label="Settings" Foreground="#ffffff" Click="TwitterSettingsAppBar_Click"/>
+                <AppBarButton x:Name="TwitterTwitterAppBar" Icon="Globe" Label="Twitter" Foreground="#ffffff" Click="TwitterTwitterAppBar_Click"/>
+            </CommandBar>
+        </Grid>
+        <Grid x:Name="TitleForTweet" Grid.Row="1" Grid.Column="1">
+            <TextBlock x:Name="TweetText" Text="Twitter" FontSize="100" Foreground="#339194" FontWeight="Light" FontFamily="SegeoUI"/>
+        </Grid>
+        <Grid x:Name="HistoryTweetGrid" Grid.Row="2" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.8*"/>
+                <ColumnDefinition Width="0.2*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.1*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="0.1*"/>
+            </Grid.RowDefinitions>
+            <TextBlock FontSize="30" Text="Tweets History:" Grid.Row="0" Grid.Column="0" Foreground="#A70267"/>
+            <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="1">
+                <Grid x:Name="HistoryTweeterGrid" BorderBrush="#A70267">
+                    <ListView x:Name= "HistoryTweetList" Foreground="#A70267">
+                    </ListView>
+                    <TextBlock x:Name="TwitterStringOfHistory" Foreground="#A70267" FontSize="20" Text=""/>
+                </Grid>
+            </ScrollViewer>
+        </Grid>
+        <Grid x:Name="HowTo" Grid.Row="2" Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid x:Name="EnableTweetsGrid" Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="3.5*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Enable Tweets: " Grid.Column="0" FontSize="30" Foreground="#F6D86B" />
+                <ToggleSwitch x:Name="toggleSwitchTwitter" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#F6D86B" BorderBrush="#F6D86B" Toggled="toggleSwitchTwitter_Toggled"/>
+            </Grid>
+            <TextBlock x:Name="HowToText" Text="How to Tweet:" Foreground="#F6D86B" FontSize="30" Grid.Row="1"/>
+            <TextBlock x:Name="Step1Text" Text="-go to apps.twitter.com" Foreground="#F6D86B" FontSize="30" Grid.Row="2"/>
+            <TextBlock x:Name="Step2Text" Text="-set up account" Foreground="#F6D86B" FontSize="30" Grid.Row="3"/>
+            <TextBlock x:Name="Step3Text" Text="-receive consumer key, " Foreground="#F6D86B" FontSize="30" Grid.Row="4"/>
+            <TextBlock x:Name="Step31Text" Text="consumer secret, access " Foreground="#F6D86B" FontSize="30" Grid.Row="5"/>
+            <TextBlock x:Name="Step32Text" Text="token, and access token " Foreground="#F6D86B" FontSize="30" Grid.Row="6"/>
+            <TextBlock x:Name="Step33Text" Text="secret" Foreground="#F6D86B" FontSize="30" Grid.Row="7"/>
+            <TextBlock x:Name="Step4Text" Text="-set these in Settings" Foreground="#F6D86B" FontSize="30" Grid.Row="8"/>
+        </Grid>
+    </Grid>
+</Page>

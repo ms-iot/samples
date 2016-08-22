@@ -7,8 +7,8 @@
     <ProjectGuid>{75E178AC-7A35-48A1-B019-8404A10D4D19}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PlantApp</RootNamespace>
-    <AssemblyName>PlantApp</AssemblyName>
+    <RootNamespace>PlantSensor</RootNamespace>
+    <AssemblyName>PlantSensor</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>

@@ -15,7 +15,7 @@ using Windows.UI.Xaml.Navigation;
 using WinRTXamlToolkit.Controls.DataVisualization.Charting;
 
 //If the sensors are meausuring, does the history page update when the next hour comes with the sensor measurements?
-namespace PlantApp
+namespace PlantSensor
 {
     public class ChartDataPoint
     {
@@ -222,60 +222,60 @@ namespace PlantApp
 
         }
 
-        /**
-         * sets up the list by hour
-         * returns hourDictionary: the hour dictionary will be used in the day sorting method 
-         * */
-        public Dictionary<DateTime, List<float>> setUpGeneralMasterListPerHour(IList<string> fileList, List<ChartDataPoint> masterList)
+/**
+    * sets up the list by hour
+    * returns hourDictionary: the hour dictionary will be used in the day sorting method 
+    * */
+public Dictionary<DateTime, List<float>> setUpGeneralMasterListPerHour(IList<string> fileList, List<ChartDataPoint> masterList)
+{
+    //creates a dictionary where all of the information is stored.
+    Dictionary<DateTime, List<float>>  hourDictionary = new Dictionary<DateTime, List<float>>();
+    DateTime upperBound = DateTime.Now;
+    TimeSpan fiftySixDays = new TimeSpan(56,0, 0, 0);
+    TimeSpan twentyFourHours = new TimeSpan(24, 0, 0);
+    //the earliest date that the chart will show is in the lowerBound variable
+    DateTime lowerBound = upperBound - fiftySixDays;
+    DateTime currentDate;
+    DateTime comparedDate = DateTime.Now;
+    DateTime oldDate;
+    //goes through every data point that the sensors have collected
+    for(int ii = 0; ii < fileList.Count; ii++)
+    {
+        String nextString = fileList[ii];
+        String[] subStrings = nextString.Split(delimiter);
+        //nextFloat holds the sensor data
+        float nextFloat = float.Parse(subStrings[0]);
+        //currentDate holds the time that the nextFloat value was measured
+        currentDate = DateTime.Parse(subStrings[1]);
+        if (currentDate > lowerBound && currentDate <= upperBound)
         {
-            //creates a dictionary where all of the information is stored.
-            Dictionary<DateTime, List<float>>  hourDictionary = new Dictionary<DateTime, List<float>>();
-            DateTime upperBound = DateTime.Now;
-            TimeSpan fiftySixDays = new TimeSpan(56,0, 0, 0);
-            TimeSpan twentyFourHours = new TimeSpan(24, 0, 0);
-            //the earliest date that the chart will show is in the lowerBound variable
-            DateTime lowerBound = upperBound - fiftySixDays;
-            DateTime currentDate;
-            DateTime comparedDate = DateTime.Now;
-            DateTime oldDate;
-            //goes through every data point that the sensors have collected
-            for(int ii = 0; ii < fileList.Count; ii++)
+            //the minute and the second data is not valuable in the hour view
+            comparedDate = new DateTime(currentDate.Year, currentDate.Month, currentDate.Day, currentDate.Hour, 0, 0);
+            if (hourDictionary.ContainsKey(comparedDate))
             {
-                String nextString = fileList[ii];
-                String[] subStrings = nextString.Split(delimiter);
-                //nextFloat holds the sensor data
-                float nextFloat = float.Parse(subStrings[0]);
-                //currentDate holds the time that the nextFloat value was measured
-                currentDate = DateTime.Parse(subStrings[1]);
-                if (currentDate > lowerBound && currentDate <= upperBound)
-                {
-                    //the minute and the second data is not valuable in the hour view
-                    comparedDate = new DateTime(currentDate.Year, currentDate.Month, currentDate.Day, currentDate.Hour, 0, 0);
-                    if (hourDictionary.ContainsKey(comparedDate))
-                    {
-                        hourDictionary[comparedDate].Add(nextFloat);
-                        //changes the date
-                        oldDate = comparedDate;
-                    }
-                    else
-                    {
-                        List<float> newList = new List<float>();
-                        newList.Add(nextFloat);
-                        hourDictionary.Add(comparedDate, newList);
-                    }
-                }
+                hourDictionary[comparedDate].Add(nextFloat);
+                //changes the date
+                oldDate = comparedDate;
             }
-            foreach(DateTime hour in hourDictionary.Keys)
+            else
             {
-                //we only need the last twenty four hours
-                lowerBound = comparedDate - twentyFourHours;
-                if (hour > lowerBound && hour <= comparedDate)
-                {
-                    masterList.Add(new ChartDataPoint() { Name = hour.ToString("HH:00"), Amount = hourDictionary[hour].Average() });
-                }
+                List<float> newList = new List<float>();
+                newList.Add(nextFloat);
+                hourDictionary.Add(comparedDate, newList);
             }
-            return hourDictionary;
         }
+    }
+    foreach(DateTime hour in hourDictionary.Keys)
+    {
+        //we only need the last twenty four hours
+        lowerBound = comparedDate - twentyFourHours;
+        if (hour > lowerBound && hour <= comparedDate)
+        {
+            masterList.Add(new ChartDataPoint() { Name = hour.ToString("HH:00"), Amount = hourDictionary[hour].Average() });
+        }
+    }
+    return hourDictionary;
+}
 
         /**
          * sets up the list by day

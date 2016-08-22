@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.UI.Core;
 
-namespace PlantApp
+namespace PlantSensor
 {
     public delegate void DataReceivedEventHandler(object sender, SensorDataEventArgs e);
     public class SensorDataProvider
@@ -39,7 +39,7 @@ namespace PlantApp
         public void StartTimer()
         {
             timer = new Timer(timerCallback, this, 0, 3000);
-            writeToFile = new Timer(writeToFileTimerCallback, this, 3000, 9000);
+            writeToFile = new Timer(writeToFileTimerCallback, this, 20000, 9000);
         }
         private async void writeToFileTimerCallback(object state)
         {
@@ -84,6 +84,7 @@ namespace PlantApp
                 //the sensor name, the data point, and the time the value was measured.
                 //this data is then sent back to the main page and the UI is adjusted based
                 //off of the measurement. 
+                //float currentTemperature = (float) rand.NextDouble() * 10;
                 float currentTemperature = await BMP280.ReadTemperature();
                 var tempArgs = new SensorDataEventArgs()
                 {
@@ -107,6 +108,7 @@ namespace PlantApp
                 int cdsReadVal = mcp3008.ReadADC(CDSADCChannel);
                 float cdsVoltage = mcp3008.ADCToVoltage(cdsReadVal);
 
+                //float currentBrightness = (float)rand.NextDouble() * 10; 
                 float currentBrightness = cdsVoltage;
                 var brightnessArgs = new SensorDataEventArgs()
                 {
@@ -116,6 +118,7 @@ namespace PlantApp
                 };
                 OnDataReceived(brightnessArgs);
 
+                //float currentSoilMoisture = (float)rand.NextDouble() * 10;
                 float currentSoilMoisture = mcp3008.ReadADC(SoilMoistureChannel);
                 Debug.WriteLine(currentSoilMoisture);
                 var soilmoistureArgs = new SensorDataEventArgs()

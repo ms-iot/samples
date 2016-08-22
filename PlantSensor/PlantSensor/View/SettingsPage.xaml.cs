@@ -21,7 +21,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-namespace PlantApp
+namespace PlantSensor
 {
     /// <summary>
     /// This settings page allows the user to change the settings relavent to the app and the user experience

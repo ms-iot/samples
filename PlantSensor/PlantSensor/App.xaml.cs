@@ -18,7 +18,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-namespace PlantApp
+namespace PlantSensor
 {    
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
@@ -32,6 +32,7 @@ namespace PlantApp
         public static Windows.Storage.StorageFile BrightnessFile;
         public static Windows.Storage.StorageFile TemperatureFile;
         public static Windows.Storage.StorageFile SoilMoistureFile;
+        public static Windows.Storage.StorageFile TwitterFile;
 
         //this is the folder in which the files are stored
         static Windows.Storage.StorageFolder storageFolder;
@@ -40,6 +41,7 @@ namespace PlantApp
         public static IList<string> Brightnessresult;
         public static IList<string> Temperatureresult;
         public static IList<string> SoilMoistureresult;
+        public static IList<string> Twitterresult;
 
         //these lists are where new data is temporarily stored so that we are not 
         //readong and writing to files that often
@@ -94,9 +96,21 @@ namespace PlantApp
                 Debug.WriteLine("New Files were created");
             }
 
-            Brightnessresult = await Windows.Storage.FileIO.ReadLinesAsync(App.BrightnessFile);
-            Temperatureresult = await Windows.Storage.FileIO.ReadLinesAsync(App.TemperatureFile);
-            SoilMoistureresult = await Windows.Storage.FileIO.ReadLinesAsync(App.SoilMoistureFile);
+            try
+            {
+                TwitterFile = await storageFolder.GetFileAsync(FileNames.TwitterfileName);
+                Debug.WriteLine("Old twitter Files are used");
+            }
+            catch (FileNotFoundException e)
+            {
+                TwitterFile = await storageFolder.CreateFileAsync(FileNames.TwitterfileName);
+                Debug.WriteLine("new twitter Files are used");
+            }
+
+            Brightnessresult = await Windows.Storage.FileIO.ReadLinesAsync(BrightnessFile);
+            Temperatureresult = await Windows.Storage.FileIO.ReadLinesAsync(TemperatureFile);
+            SoilMoistureresult = await Windows.Storage.FileIO.ReadLinesAsync(SoilMoistureFile);
+            Twitterresult = await Windows.Storage.FileIO.ReadLinesAsync(TwitterFile);
 
             BrightnessList = new List<string>();
             TemperatureList = new List<string>();

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Windows.Devices.I2c;
 using Windows.Devices.Enumeration;
 
-namespace PlantApp
+namespace PlantSensor
 {
     public class BMP280_CalibrationData
     {

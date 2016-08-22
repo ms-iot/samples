@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 
-namespace PlantApp
+namespace PlantSensor
 {
     public class MCP3008
     {

@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-namespace PlantApp
+namespace PlantSensor
 {
     public sealed partial class MainPage : Page
     {
@@ -56,6 +56,19 @@ namespace PlantApp
             SolidColorBrushWhite = new SolidColorBrush(colorWhite);
             SolidColorBrushLightRed = new SolidColorBrush(colorlightRed);
             SolidColorBrushRed = new SolidColorBrush(colorRed);
+
+            //DateTime Now = DateTime.Now;
+            //Random rand = new Random();
+            //TimeSpan oneDay = new TimeSpan(1, 0, 0, 0);
+            //TimeSpan oneHour = new TimeSpan(1, 0, 0);
+            //DateTime LowerBound = Now - oneDay;
+            //while(LowerBound<Now)
+            //{
+            //    float randomValue = (float)rand.NextDouble() * 10;
+            //    String nextValue = randomValue + "," + LowerBound + Environment.NewLine;
+            //    App.BrightnessList.Add(nextValue);
+            //    LowerBound += oneHour;
+            //}
         }
 
         /**
@@ -156,6 +169,8 @@ namespace PlantApp
             IdealSoilMoistureNumber.Text = idealSoilMoisture.ToString();
 
             App.SensorProvider.DataReceived += SensorProvider_DataReceived;
+
+
         }
 
         /**
