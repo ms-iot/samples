@@ -4,9 +4,7 @@ using org.alljoyn.Icon;
 using org.alljoyn.Onboarding;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Resources;
 using Windows.Devices.AllJoyn;
 using Windows.Devices.Enumeration;
 using Windows.Devices.WiFi;
@@ -18,6 +16,7 @@ using Windows.Storage.Search;
 using Windows.Storage.Streams;
 using Windows.ApplicationModel;
 using Windows.Data.Xml.Dom;
+using Windows.Security.Cryptography;
 
 namespace IoTOnboardingService
 {
@@ -465,6 +464,24 @@ namespace IoTOnboardingService
             }
         }
 
+        private string ConvertHexToPassPhrase(NetworkAuthenticationType authType, string presharedKey)
+        {
+            // If this is a WPA/WPA2-PSK type network then convert the HEX STRING back to a passphrase
+            // Note that a 64 character WPA/2 network key is expected as a 128 character HEX-ized that will be
+            // converted back to a 64 character network key.
+            if ((authType == NetworkAuthenticationType.WpaPsk) ||
+                (authType == NetworkAuthenticationType.RsnaPsk))
+            {
+                var tempBuffer = CryptographicBuffer.DecodeFromHexString(presharedKey);
+                var hexString = CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, tempBuffer);
+                return hexString;
+            }
+
+            // If this is a WEP key then it should arrive here as a 10 or 26 character hex-ized 
+            // string which will be passed straight through
+            return presharedKey;
+        }
+
         private async Task<WiFiConnectionStatus> ConnectToNetwork(WiFiAdapter adapter, WiFiAvailableNetwork network)
         {
             lock (_stateLock)
@@ -472,15 +489,25 @@ namespace IoTOnboardingService
                 _state = OnboardingState.ConfiguredValidating;
             }
 
+            string resultPassword = "";
             WiFiConnectionResult connectionResult;
-            if (network.SecuritySettings.NetworkAuthenticationType == NetworkAuthenticationType.Open80211)
+
+            // For all open networks (when no PSK was provided) connect without a password
+            // Note, that in test, we have seen some WEP networks identify themselves as Open even though
+            // they required a PSK, so use the PSK as a determining factor
+            if ((network.SecuritySettings.NetworkAuthenticationType == NetworkAuthenticationType.Open80211) &&
+                string.IsNullOrEmpty(_personalApPassword))
             {
                 connectionResult = await adapter.ConnectAsync(network, WiFiReconnectionKind.Automatic);
             }
+            // Otherwise for all WEP/WPA/WPA2 networks convert the PSK back from a hex-ized format back to a passphrase, if necessary,
+            // and onboard this device to the requested network.
             else
-            {                
-                connectionResult = await adapter.ConnectAsync(network, WiFiReconnectionKind.Automatic, 
-                    new PasswordCredential { Password = _personalApPassword });
+            {
+                PasswordCredential pwd = new PasswordCredential();
+                resultPassword = ConvertHexToPassPhrase(network.SecuritySettings.NetworkAuthenticationType, _personalApPassword);
+                pwd.Password = resultPassword;
+                connectionResult = await adapter.ConnectAsync(network, WiFiReconnectionKind.Automatic, pwd);
             }
 
             lock (_stateLock)
@@ -518,9 +545,18 @@ namespace IoTOnboardingService
                                 break;
                             }
                     }
-                }
+                }                
 
             }
+#if DEBUG           
+            var folder = Windows.Storage.ApplicationData.Current.LocalFolder;
+            var file = await folder.CreateFileAsync("ConnectionResult.Txt", Windows.Storage.CreationCollisionOption.ReplaceExisting);
+            string myout = "ConnectionResult= " + connectionResult.ConnectionStatus.ToString() + "\r\n";
+            myout += "Type=" + network.SecuritySettings.NetworkAuthenticationType.ToString() + "\r\n";
+            myout += "InputPassword= " + _personalApPassword + "\r\n";
+            myout += "ResultPassword= " + resultPassword + "\r\n";
+            await Windows.Storage.FileIO.WriteTextAsync(file, myout);
+#endif
             return connectionResult.ConnectionStatus;
 
         }
