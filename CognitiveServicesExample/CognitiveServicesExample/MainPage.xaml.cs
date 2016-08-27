@@ -50,13 +50,6 @@ namespace CognitiveServicesExample
         /// <returns></returns>
         private async Task<Emotion[]> UploadAndDetectEmotions(string url)
         {
-
-            //string subscriptionKey = "";//window.ScenarioControl.SubscriptionKey;
-
-            // -----------------------------------------------------------------------
-            // KEY SAMPLE CODE STARTS HERE
-            // -----------------------------------------------------------------------
-
             Debug.WriteLine("EmotionServiceClient is created");
 
             //
@@ -79,11 +72,6 @@ namespace CognitiveServicesExample
                 Debug.WriteLine(exception.ToString());
                 return null;
             }
-            // -----------------------------------------------------------------------
-            // KEY SAMPLE CODE ENDS HERE  
-
-            // -----------------------------------------------------------------------
-
         }
 
         private async void button_Clicked(object sender, RoutedEventArgs e)
@@ -114,13 +102,8 @@ namespace CognitiveServicesExample
             ImageBrush imageBrush = new ImageBrush();
             imageBrush.ImageSource = bitMapImage;
 
-
-
             //Load image to UI
             ImageCanvas.Background = imageBrush;
-
-
-            //ImageCanvas.Children.Add(mingIsCool);
 
             detectionStatus.Text = "Detecting...";
 
@@ -163,7 +146,6 @@ namespace CognitiveServicesExample
                 index++;
             }
             ResultBox.Items.Add(textToDisplay);
-            //await _speech.Read(textToDisplay);
         }
 
         private string parseResults(Emotion emotion)
