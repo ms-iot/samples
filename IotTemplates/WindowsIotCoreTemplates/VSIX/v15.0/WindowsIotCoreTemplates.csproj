@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="GenerateTemplate; Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
+    <VsixTargetVisualStudioVersion>v15.0</VsixTargetVisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup>
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <MSBuildCommunityTasksPath>$(SolutionDir)\..\..\.build</MSBuildCommunityTasksPath>
@@ -29,7 +32,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\x86\$(Configuration)</OutputPath>
+    <OutputPath>..\..\x86\$(Configuration)\$(VsixTargetVisualStudioVersion)</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -38,7 +41,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\x86\$(Configuration)</OutputPath>
+    <OutputPath>..\..\x86\$(Configuration)\$(VsixTargetVisualStudioVersion)</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -104,54 +107,54 @@
     </ItemGroup>
   </Target>
   <ItemGroup>
-    <BackgroundServiceCppSourceFiles Include="..\..\ProjectTemplates\BackgroundServiceCpp\*.*" Exclude="..\..\ProjectTemplates\BackgroundServiceCpp\*.vstemplate" />
-    <BackgroundServiceCppSourceFiles Include="..\..\ProjectTemplates\v15.0\BackgroundServiceCpp\*.*" />
+    <BackgroundServiceCppSourceFiles Include="..\..\ProjectTemplates\BackgroundServiceCpp\*.*" />
+    <BackgroundServiceCppSourceFiles Include="..\..\ProjectTemplates\$(VsixTargetVisualStudioVersion)\BackgroundServiceCpp\*.*" />
     <BackgroundServiceCppSourceFiles Include="..\..\ProjectTemplates\Common\*.*" />
-    <BackgroundServiceCsSourceFiles Include="..\..\ProjectTemplates\BackgroundServiceCsharp\*.*" Exclude="..\..\ProjectTemplates\BackgroundServiceCsharp\*.vstemplate" />
-    <BackgroundServiceCsSourceFiles Include="..\..\ProjectTemplates\v15.0\BackgroundServiceCsharp\*.*" />
+    <BackgroundServiceCsSourceFiles Include="..\..\ProjectTemplates\BackgroundServiceCsharp\*.*" />
+    <BackgroundServiceCsSourceFiles Include="..\..\ProjectTemplates\$(VsixTargetVisualStudioVersion)\BackgroundServiceCsharp\*.*" />
     <BackgroundServiceCsSourceFiles Include="..\..\ProjectTemplates\Common\*.*" />
-    <BackgroundServiceJsSourceFiles Include="..\..\ProjectTemplates\BackgroundServiceJs\*.*" Exclude="..\..\ProjectTemplates\BackgroundServiceJs\*.vstemplate" />
-    <BackgroundServiceJsSourceFiles Include="..\..\ProjectTemplates\v15.0\BackgroundServiceJs\*.*" />
+    <BackgroundServiceJsSourceFiles Include="..\..\ProjectTemplates\BackgroundServiceJs\*.*" />
+    <BackgroundServiceJsSourceFiles Include="..\..\ProjectTemplates\$(VsixTargetVisualStudioVersion)\BackgroundServiceJs\*.*" />
     <BackgroundServiceJsSourceFiles Include="..\..\ProjectTemplates\Common\*.*" />
-    <BackgroundServiceVbSourceFiles Include="..\..\ProjectTemplates\BackgroundServiceVb\*.*" Exclude="..\..\ProjectTemplates\BackgroundServiceVb\*.vstemplate" />
-    <BackgroundServiceVbSourceFiles Include="..\..\ProjectTemplates\v15.0\BackgroundServiceVb\*.*" />
+    <BackgroundServiceVbSourceFiles Include="..\..\ProjectTemplates\BackgroundServiceVb\*.*" />
+    <BackgroundServiceVbSourceFiles Include="..\..\ProjectTemplates\$(VsixTargetVisualStudioVersion)\BackgroundServiceVb\*.*" />
     <BackgroundServiceVbSourceFiles Include="..\..\ProjectTemplates\Common\*.*" />
-    <BlankConsoleCppSourceFiles Include="..\..\ProjectTemplates\BlankConsoleApplicationCpp\*.*" Exclude="..\..\ProjectTemplates\BlankConsoleApplicationCpp\*.vstemplate" />
-    <BlankConsoleCppSourceFiles Include="..\..\ProjectTemplates\v15.0\BlankConsoleApplicationCpp\*.*" />
-    <WiringAppCpp Include="..\..\ProjectTemplates\WiringAppCpp\*.*" Exclude="..\..\ProjectTemplates\WiringAppCpp\*.vstemplate" />
+    <BlankConsoleCppSourceFiles Include="..\..\ProjectTemplates\BlankConsoleApplicationCpp\*.*" />
+    <BlankConsoleCppSourceFiles Include="..\..\ProjectTemplates\$(VsixTargetVisualStudioVersion)\BlankConsoleApplicationCpp\*.*" />
     <WiringAppCpp Include="..\..\ProjectTemplates\WiringAppCpp\*.*" />
+    <WiringAppCpp Include="..\..\ProjectTemplates\$(VsixTargetVisualStudioVersion)\WiringAppCpp\*.*" />
     <WiringAppCpp Include="..\..\ProjectTemplates\Common\*.*" />
     <WiringAppCppPackages Include="..\..\ProjectTemplates\WiringAppCpp\NugetPackages\*.*" />
   </ItemGroup>
   <Target Name="ExportTemplate">
-    <Copy SourceFiles="@(BackgroundServiceCppSourceFiles)" DestinationFolder="$(OutputPath)\Staged\v15.0\BackgroundServiceCpp" />
-    <Copy SourceFiles="@(BackgroundServiceCppDev15SourceFiles)" DestinationFolder="$(OutputPath)\Staged\v15.0\BackgroundServiceCppDev15" />
-    <Copy SourceFiles="@(BackgroundServiceCsSourceFiles)" DestinationFolder="$(OutputPath)\Staged\v15.0\BackgroundServiceCsharp" />
-    <Copy SourceFiles="@(BackgroundServiceJsSourceFiles)" DestinationFolder="$(OutputPath)\Staged\v15.0\BackgroundServiceJs" />
-    <Copy SourceFiles="@(BackgroundServiceVbSourceFiles)" DestinationFolder="$(OutputPath)\Staged\v15.0\BackgroundServiceVb" />
-    <Copy SourceFiles="@(BlankConsoleCppSourceFiles)" DestinationFolder="$(OutputPath)\Staged\v15.0\BlankConsoleApplicationCpp" />
-    <Copy SourceFiles="@(WiringAppCpp)" DestinationFolder="$(OutputPath)\Staged\v15.0\WiringAppCpp" />
-    <Copy SourceFiles="@(WiringAppCppPackages)" DestinationFolder="$(OutputPath)\Staged\v15.0\WiringAppCpp\NugetPackages" />
+    <Copy SourceFiles="@(BackgroundServiceCppSourceFiles)" DestinationFolder="$(OutputPath)\Staged\BackgroundServiceCpp" />
+    <Copy SourceFiles="@(BackgroundServiceCppDev15SourceFiles)" DestinationFolder="$(OutputPath)\Staged\BackgroundServiceCppDev15" />
+    <Copy SourceFiles="@(BackgroundServiceCsSourceFiles)" DestinationFolder="$(OutputPath)\Staged\BackgroundServiceCsharp" />
+    <Copy SourceFiles="@(BackgroundServiceJsSourceFiles)" DestinationFolder="$(OutputPath)\Staged\BackgroundServiceJs" />
+    <Copy SourceFiles="@(BackgroundServiceVbSourceFiles)" DestinationFolder="$(OutputPath)\Staged\BackgroundServiceVb" />
+    <Copy SourceFiles="@(BlankConsoleCppSourceFiles)" DestinationFolder="$(OutputPath)\Staged\BlankConsoleApplicationCpp" />
+    <Copy SourceFiles="@(WiringAppCpp)" DestinationFolder="$(OutputPath)\Staged\WiringAppCpp" />
+    <Copy SourceFiles="@(WiringAppCppPackages)" DestinationFolder="$(OutputPath)\Staged\WiringAppCpp\NugetPackages" />
   </Target>
   <Target Name="ZipTemplate">
     <ItemGroup>
-      <ToZipBSCpp Include="$(OutputPath)\Staged\v15.0\BackgroundServiceCpp\*.*" />
-      <ToZipBSCppDev15 Include="$(OutputPath)\Staged\v15.0\BackgroundServiceCppDev15\*.*" />
-      <ToZipBSCs Include="$(OutputPath)\Staged\v15.0\BackgroundServiceCsharp\*.*" />
-      <ToZipBSJs Include="$(OutputPath)\Staged\v15.0\BackgroundServiceJs\*.*" />
-      <ToZipBSVb Include="$(OutputPath)\Staged\v15.0\BackgroundServiceVb\*.*" />
-      <ToZipConsole Include="$(OutputPath)\Staged\v15.0\BlankConsoleApplicationCpp\*.*" />
-      <ToZipWiring Include="$(OutputPath)\Staged\v15.0\WiringAppCpp\**\*.*" />
+      <ToZipBSCpp Include="$(OutputPath)\Staged\BackgroundServiceCpp\*.*" />
+      <ToZipBSCppDev15 Include="$(OutputPath)\Staged\BackgroundServiceCppDev15\*.*" />
+      <ToZipBSCs Include="$(OutputPath)\Staged\BackgroundServiceCsharp\*.*" />
+      <ToZipBSJs Include="$(OutputPath)\Staged\BackgroundServiceJs\*.*" />
+      <ToZipBSVb Include="$(OutputPath)\Staged\BackgroundServiceVb\*.*" />
+      <ToZipConsole Include="$(OutputPath)\Staged\BlankConsoleApplicationCpp\*.*" />
+      <ToZipWiring Include="$(OutputPath)\Staged\WiringAppCpp\**\*.*" />
     </ItemGroup>
-    <Zip Files="@(ToZipBSCpp)" WorkingDirectory="$(OutputPath)\Staged\v15.0\BackgroundServiceCpp" ZipFileName="ProjectTemplates\VC\Windows\Windows IoT Core\BackgroundSericeCpp.zip" />
-    <Zip Files="@(ToZipBSCppDev15)" WorkingDirectory="$(OutputPath)\Staged\v15.0\BackgroundServiceCppDev15" ZipFileName="ProjectTemplates\VC\Windows\Windows IoT Core\BackgroundSericeCppDev15.zip" />
-    <Zip Files="@(ToZipBSCs)" WorkingDirectory="$(OutputPath)\Staged\v15.0\BackgroundServiceCsharp" ZipFileName="ProjectTemplates\CSharp\Windows\Windows IoT Core\BackgroundServiceCsharp.zip" />
-    <Zip Files="@(ToZipBSJs)" WorkingDirectory="$(OutputPath)\Staged\v15.0\BackgroundServiceJs" ZipFileName="ProjectTemplates\JavaScript\Windows\Windows IoT Core\BackgroundServiceJs.zip" />
-    <Zip Files="@(ToZipBSVb)" WorkingDirectory="$(OutputPath)\Staged\v15.0\BackgroundServiceVb" ZipFileName="ProjectTemplates\VisualBasic\Windows\Windows IoT Core\BackgroundServiceVb.zip" />
-    <Zip Files="@(ToZipConsole)" WorkingDirectory="$(OutputPath)\Staged\v15.0\BlankConsoleApplicationCpp" ZipFileName="ProjectTemplates\VC\Windows\Windows IoT Core\BlankConsoleApplicationCpp.zip" />
-    <Zip Files="@(ToZipWiring)" WorkingDirectory="$(OutputPath)\Staged\v15.0\WiringAppCpp" ZipFileName="ProjectTemplates\VC\Windows\Windows IoT Core\WiringApplication.zip" />
+    <Zip Files="@(ToZipBSCpp)" WorkingDirectory="$(OutputPath)\Staged\BackgroundServiceCpp" ZipFileName="ProjectTemplates\VC\Windows\Windows IoT Core\BackgroundSericeCpp.zip" />
+    <Zip Files="@(ToZipBSCppDev15)" WorkingDirectory="$(OutputPath)\Staged\BackgroundServiceCppDev15" ZipFileName="ProjectTemplates\VC\Windows\Windows IoT Core\BackgroundSericeCppDev15.zip" />
+    <Zip Files="@(ToZipBSCs)" WorkingDirectory="$(OutputPath)\Staged\BackgroundServiceCsharp" ZipFileName="ProjectTemplates\CSharp\Windows\Windows IoT Core\BackgroundServiceCsharp.zip" />
+    <Zip Files="@(ToZipBSJs)" WorkingDirectory="$(OutputPath)\Staged\BackgroundServiceJs" ZipFileName="ProjectTemplates\JavaScript\Windows\Windows IoT Core\BackgroundServiceJs.zip" />
+    <Zip Files="@(ToZipBSVb)" WorkingDirectory="$(OutputPath)\Staged\BackgroundServiceVb" ZipFileName="ProjectTemplates\VisualBasic\Windows\Windows IoT Core\BackgroundServiceVb.zip" />
+    <Zip Files="@(ToZipConsole)" WorkingDirectory="$(OutputPath)\Staged\BlankConsoleApplicationCpp" ZipFileName="ProjectTemplates\VC\Windows\Windows IoT Core\BlankConsoleApplicationCpp.zip" />
+    <Zip Files="@(ToZipWiring)" WorkingDirectory="$(OutputPath)\Staged\WiringAppCpp" ZipFileName="ProjectTemplates\VC\Windows\Windows IoT Core\WiringApplication.zip" />
   </Target>
   <Target Name="CleanTemplate">
-    <RemoveDir Directories="$(OutputPath)\Staged\v15.0" />
+    <RemoveDir Directories="$(OutputPath)\Staged" />
   </Target>
 </Project>
