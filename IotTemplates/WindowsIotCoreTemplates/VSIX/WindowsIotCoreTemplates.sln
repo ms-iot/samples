@@ -1,8 +1,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsIotCoreTemplates", "v14.0\WindowsIotCoreTemplates.csproj", "{B220EE7C-4144-4519-A6D8-23FB9DCE83EA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsIotCoreTemplatesDev15", "v15.0\WindowsIotCoreTemplatesDev15.csproj", "{D9EA6098-50FA-4FAE-A2BB-7113BD69B3C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsIotCoreTemplatesDev14", "v14.0\WindowsIotCoreTemplatesDev14.csproj", "{B220EE7C-4144-4519-A6D8-23FB9DCE83EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -10,6 +12,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D9EA6098-50FA-4FAE-A2BB-7113BD69B3C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9EA6098-50FA-4FAE-A2BB-7113BD69B3C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9EA6098-50FA-4FAE-A2BB-7113BD69B3C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9EA6098-50FA-4FAE-A2BB-7113BD69B3C4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B220EE7C-4144-4519-A6D8-23FB9DCE83EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B220EE7C-4144-4519-A6D8-23FB9DCE83EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B220EE7C-4144-4519-A6D8-23FB9DCE83EA}.Release|Any CPU.ActiveCfg = Release|Any CPU

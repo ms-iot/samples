@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="GenerateTemplate; Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <VsixTargetVisualStudioVersion>v14.0</VsixTargetVisualStudioVersion>
+    <VsixTargetVisualStudioVersion>v15.0</VsixTargetVisualStudioVersion>
   </PropertyGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
@@ -15,11 +15,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectTypeGuids>{82b43b9b-a64c-4715-b499-d71e9ca2bd60};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{B220EE7C-4144-4519-A6D8-23FB9DCE83EA}</ProjectGuid>
+    <ProjectGuid>{D9EA6098-50FA-4FAE-A2BB-7113BD69B3C4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>VSIX</RootNamespace>
-    <AssemblyName>WindowsIoTCoreTemplates</AssemblyName>
+    <ProjectName>WindowsIoTCoreTemplatesDev15</ProjectName>
+    <AssemblyName>WindowsIoTCoreTemplatesDev15</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <GeneratePkgDefFile>false</GeneratePkgDefFile>
     <IncludeAssemblyInVSIXContainer>false</IncludeAssemblyInVSIXContainer>
@@ -67,7 +68,7 @@
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
-    <None Include="..\packages.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
@@ -77,6 +78,10 @@
     <CallTarget Targets="CleanTemplate" RunEachTargetSeparately="true" />
     <ItemGroup>
       <Content Include="ProjectTemplates\VC\Windows\Windows IoT Core\BackgroundSericeCpp.zip">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <IncludeInVSIX>true</IncludeInVSIX>
+      </Content>
+      <Content Include="ProjectTemplates\VC\Windows\Windows IoT Core\BackgroundSericeCppDev15.zip">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         <IncludeInVSIX>true</IncludeInVSIX>
       </Content>
@@ -124,6 +129,7 @@
   </ItemGroup>
   <Target Name="ExportTemplate">
     <Copy SourceFiles="@(BackgroundServiceCppSourceFiles)" DestinationFolder="$(OutputPath)\Staged\BackgroundServiceCpp" />
+    <Copy SourceFiles="@(BackgroundServiceCppDev15SourceFiles)" DestinationFolder="$(OutputPath)\Staged\BackgroundServiceCppDev15" />
     <Copy SourceFiles="@(BackgroundServiceCsSourceFiles)" DestinationFolder="$(OutputPath)\Staged\BackgroundServiceCsharp" />
     <Copy SourceFiles="@(BackgroundServiceJsSourceFiles)" DestinationFolder="$(OutputPath)\Staged\BackgroundServiceJs" />
     <Copy SourceFiles="@(BackgroundServiceVbSourceFiles)" DestinationFolder="$(OutputPath)\Staged\BackgroundServiceVb" />
@@ -134,6 +140,7 @@
   <Target Name="ZipTemplate">
     <ItemGroup>
       <ToZipBSCpp Include="$(OutputPath)\Staged\BackgroundServiceCpp\*.*" />
+      <ToZipBSCppDev15 Include="$(OutputPath)\Staged\BackgroundServiceCppDev15\*.*" />
       <ToZipBSCs Include="$(OutputPath)\Staged\BackgroundServiceCsharp\*.*" />
       <ToZipBSJs Include="$(OutputPath)\Staged\BackgroundServiceJs\*.*" />
       <ToZipBSVb Include="$(OutputPath)\Staged\BackgroundServiceVb\*.*" />
@@ -141,6 +148,7 @@
       <ToZipWiring Include="$(OutputPath)\Staged\WiringAppCpp\**\*.*" />
     </ItemGroup>
     <Zip Files="@(ToZipBSCpp)" WorkingDirectory="$(OutputPath)\Staged\BackgroundServiceCpp" ZipFileName="ProjectTemplates\VC\Windows\Windows IoT Core\BackgroundSericeCpp.zip" />
+    <Zip Files="@(ToZipBSCppDev15)" WorkingDirectory="$(OutputPath)\Staged\BackgroundServiceCppDev15" ZipFileName="ProjectTemplates\VC\Windows\Windows IoT Core\BackgroundSericeCppDev15.zip" />
     <Zip Files="@(ToZipBSCs)" WorkingDirectory="$(OutputPath)\Staged\BackgroundServiceCsharp" ZipFileName="ProjectTemplates\CSharp\Windows\Windows IoT Core\BackgroundServiceCsharp.zip" />
     <Zip Files="@(ToZipBSJs)" WorkingDirectory="$(OutputPath)\Staged\BackgroundServiceJs" ZipFileName="ProjectTemplates\JavaScript\Windows\Windows IoT Core\BackgroundServiceJs.zip" />
     <Zip Files="@(ToZipBSVb)" WorkingDirectory="$(OutputPath)\Staged\BackgroundServiceVb" ZipFileName="ProjectTemplates\VisualBasic\Windows\Windows IoT Core\BackgroundServiceVb.zip" />
