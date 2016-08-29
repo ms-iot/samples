@@ -24,6 +24,7 @@ Environment:
 
 #include "HidInjectorKd.h"
 #include "Ntstrsafe.h"
+#include <devpkey.h>
 
 ULONG InstanceNo = 0;
 
@@ -58,8 +59,9 @@ Return Value:
     WDF_DEVICE_STATE            deviceState;
 	PHID_DEVICE_CONTEXT             devExt;
 	WDF_PNPPOWER_EVENT_CALLBACKS  pnpPowerCallbacks;
-	DECLARE_CONST_UNICODE_STRING(deviceId,HIDINJECTOR_DEVICE_ID );
-    DECLARE_CONST_UNICODE_STRING(deviceLocation,L"HID Injector\0" );
+    
+    DECLARE_CONST_UNICODE_STRING(deviceId,HIDINJECTOR_DEVICE_ID );
+    DECLARE_CONST_UNICODE_STRING(deviceLocation,L"HID Injector Sample\0" );
 	DECLARE_CONST_UNICODE_STRING(SDDL_MY_PERMISSIONS, L"D:P(A;; GA;;; SY)(A;; GA;;; BA)(A;; GA;;; WD)");
     DECLARE_UNICODE_STRING_SIZE(buffer, MAX_ID_LEN);
 
@@ -138,7 +140,7 @@ Return Value:
     // Since our device is raw device and we don't provide any hardware ID
     // to match with an INF, this text will be displayed in the device manager.
     //
-    status = RtlUnicodeStringPrintf(&buffer,L"HID_Injector_%02d", InstanceNo );
+    status = RtlUnicodeStringPrintf(&buffer,L"HID_Injector_Sample_%02d", InstanceNo );
     if (!NT_SUCCESS(status)) {
         goto Cleanup;
     }
@@ -267,6 +269,7 @@ Return Value:
     }
 	devExt->RawPdo = hChild;
 
+
     //
     // pDeviceInit will be freed by WDF.
     //
@@ -297,22 +300,7 @@ NTSTATUS RAWPDO_EvtDeviceSelfManagedIoInit(
 	)
 {
 	NTSTATUS status = STATUS_SUCCESS;
-
-	//
-	// Create a symbolic link so that user mode code to call into this device
-	//
-#define DOS_DEVICE_NAME  L"\\DosDevices\\HidInjector"
-	DECLARE_CONST_UNICODE_STRING(dosDeviceName, DOS_DEVICE_NAME);
-
-	status = WdfDeviceCreateSymbolicLink(
-		Device,
-		&dosDeviceName
-		);
-	if (!NT_SUCCESS(status)) {
-		KdPrint(("WdfDeviceCreateSymbolicLink failed\n"));
-		return status;
-	}
-
+    Device;
 	return status;
 }
 
