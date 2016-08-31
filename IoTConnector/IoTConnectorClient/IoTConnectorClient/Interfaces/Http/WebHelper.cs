@@ -182,7 +182,7 @@ namespace IoTConnectorClient
 
                     }
                 }
-                catch (FileNotFoundException ex)
+                catch (FileNotFoundException)
                 {
                     byte[] headerArray = Encoding.UTF8.GetBytes(
                                          "HTTP/1.1 404 Not Found\r\n" +
