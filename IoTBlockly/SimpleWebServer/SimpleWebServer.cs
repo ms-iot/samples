@@ -193,7 +193,7 @@ namespace IoTUtilities
                 string header = String.Format(
                     "HTTP/1.1 {0} {1}\r\n" +
                     location +
-                    "Cache-Control:public, max-age=31536000\r\n" + // randon big number to ensure browser gets from cache dglover@microsoft.com 
+                    "Cache-Control:public, max-age=31536000\r\n" + // randon big number to ensure browser gets from cache
                     "Content-Length: {2}\r\n" +
                     "Connection: close\r\n\r\n",
                     statusCode, message,
@@ -216,8 +216,6 @@ namespace IoTUtilities
         public SimpleWebServer()
         {
             listener = new StreamSocketListener();
-            //listener.Control.KeepAlive = true;
-            //listener.Control.NoDelay = true;
             listener.ConnectionReceived += (s, e) => { ProcessRequestAsync(e.Socket); };
         }
 
@@ -264,11 +262,11 @@ namespace IoTUtilities
                 {
                     while (dataRead == BufferSize)
                     {
-                        await Task.Delay(50); // allow time for the data to arrive esp on wifi dglover
+                        await Task.Delay(50); // allow time for the data to arrive esp on wifi
                         var result = await input.ReadAsync(buffer, BufferSize, InputStreamOptions.Partial);
                         request.Append(Encoding.UTF8.GetString(data, 0, (int)result.Length));
                         dataRead = result.Length;
-                    }
+                    }              
                 }
 
                 // build some handy wrapper objects for request and response

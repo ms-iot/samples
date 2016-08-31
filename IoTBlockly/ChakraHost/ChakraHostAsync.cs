@@ -23,14 +23,12 @@ namespace ChakraHost
     {
         private JavaScriptSourceContext currentSourceContext = JavaScriptSourceContext.FromIntPtr(IntPtr.Zero);
         private JavaScriptRuntime runtime;
-       // private Queue taskQueue = new Queue();
 
         public string result { get; private set; }
 
-        private readonly ManualResetEventSlim waitEvent = new ManualResetEventSlim(false);
         private AutoResetEvent newScriptEvent = new AutoResetEvent(false);
 
-        bool initilised = false;
+        bool initialised = false;
         string script;
 
         public ChakraHostAsync()
@@ -38,9 +36,8 @@ namespace ChakraHost
 
         }
 
-        public string init()
+        public string Init()
         {
-
             result = "";
             JavaScriptContext context;
 
@@ -56,7 +53,6 @@ namespace ChakraHost
             // ES6 Promise callback
             JavaScriptPromiseContinuationCallback promiseContinuationCallback = delegate (JavaScriptValue task, IntPtr callbackState)
             {
-               // taskQueue.Enqueue(task);
             };
 
             if (Native.JsSetPromiseContinuationCallback(promiseContinuationCallback, IntPtr.Zero) != JavaScriptErrorCode.NoError)
@@ -68,12 +64,12 @@ namespace ChakraHost
             if (Native.JsProjectWinRTNamespace("IoTBlocklyHelper") != JavaScriptErrorCode.NoError)
                 return "failed to project windows namespace.";
 
-            runtime.MemoryLimit = (UIntPtr)5000000; // limit JS memory dglover@microsoft.com
+            runtime.MemoryLimit = (UIntPtr)5000000; // limit JS memory
 
             return "NoError";
         }
 
-        public string dispose()
+        public string Dispose()
         {
             try
             {
@@ -96,7 +92,6 @@ namespace ChakraHost
             return "";
         }
 
-
         public void ScriptProcessor()
         {
             JavaScriptValue result;
@@ -107,7 +102,7 @@ namespace ChakraHost
                 {
                     newScriptEvent.WaitOne();
 
-                    init();
+                    Init();
 
                     var res = Native.JsRunScript(script, currentSourceContext++, "", out result);
 
@@ -121,30 +116,28 @@ namespace ChakraHost
                     if (runtime.IsValid)
                     {
                         Native.JsDisposeRuntime(runtime);
-                        Pause(250); // not sure really required but I think it makes more stable dglover@microsoft.com
+                        Pause(250); // I think this makes more stable
                     }
                 }
             }
         }
 
-        public void runScriptAsync(string script, bool terminatePreviousScript = true)
+        public void RunScriptAsync(string script, bool terminatePreviousScript = true)
         {
-            if (!initilised)
+            if (!initialised)
             {
-                initilised = true;
+                initialised = true;
                 Task.Run(new Action(ScriptProcessor));
             }
 
             this.script = script;
 
-            haltScript();
+            HaltScript();
 
             newScriptEvent.Set();
         }
 
-
-
-        public string haltScript()
+        public string HaltScript()
         {
             try
             {
@@ -188,10 +181,9 @@ namespace ChakraHost
             return Marshal.PtrToStringUni(message);
         }
 
-        private void Pause(double milliseconds)
+        private void Pause(int milliseconds)
         {
-            waitEvent.Wait(TimeSpan.FromMilliseconds(milliseconds));
+            Task.Delay(milliseconds).Wait();
         }
-
     }
 }
