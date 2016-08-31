@@ -22,7 +22,7 @@ namespace IoTConnectorClient
             try
             {
                 accessStatus = await Geolocator.RequestAccessAsync();
-            } catch (Exception e)
+            } catch (Exception)
             {
                 accessStatus = GeolocationAccessStatus.Denied;
             }
@@ -41,7 +41,7 @@ namespace IoTConnectorClient
                     Geolocator gl = new Geolocator();
                     gl.DesiredAccuracy = PositionAccuracy.High;
                     Geoposition pos = await gl.GetGeopositionAsync();
-                    coords = pos.Coordinate.Latitude.ToString() + ", " + pos.Coordinate.Longitude.ToString();
+                    coords = pos.Coordinate.Point.Position.Latitude + ", " + pos.Coordinate.Point.Position.Longitude;
                     break;
                 default:
                     coords = "Access to location is denied. Please enable location in your device settings.";
