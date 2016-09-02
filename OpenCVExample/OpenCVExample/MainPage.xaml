@@ -8,10 +8,10 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Button x:Name="btn1" Content="Test Image" HorizontalAlignment="Left" Height="31" Margin="19,72,0,0" VerticalAlignment="Top" Width="102" Click="btn1_Click"/>
-        <Image x:Name="img1" HorizontalAlignment="Left" Height="505" Margin="180,10,0,0" VerticalAlignment="Top" Width="955" Stretch="None"/>
-        <Button x:Name="btn2" Content="Canny" HorizontalAlignment="Left" Height="31" Margin="19,146,0,0" VerticalAlignment="Top" Width="102" Click="btn2_Click"/>
-        <Button x:Name="btn3" Content="Detect" HorizontalAlignment="Left" Height="31" Margin="19,221,0,0" VerticalAlignment="Top" Width="102" Click="btn3_Click"/>
+        <Button x:Name="loadImageButton" Content="Test Image" HorizontalAlignment="Left" Height="31" Margin="19,72,0,0" VerticalAlignment="Top" Width="102" Click="loadImageButton_Click"/>
+        <Image x:Name="storedImage" HorizontalAlignment="Left" Height="505" Margin="180,10,0,0" VerticalAlignment="Top" Width="955" Stretch="None"/>
+        <Button x:Name="cannyEdgesButton" Content="Canny" HorizontalAlignment="Left" Height="31" Margin="19,146,0,0" VerticalAlignment="Top" Width="102" Click="cannyEdgesButton_Click"/>
+        <Button x:Name="detectFeaturesButton" Content="Detect" HorizontalAlignment="Left" Height="31" Margin="19,221,0,0" VerticalAlignment="Top" Width="102" Click="detectFeaturesButton_Click"/>
 
     </Grid>
 </Page>
