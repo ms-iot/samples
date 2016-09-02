@@ -32,6 +32,9 @@ using namespace Microsoft::WRL;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
+const cv::String face_cascade_name = "Assets/haarcascade_frontalface_alt.xml";
+const cv::String body_cascade_name = "Assets/haarcascade_fullbody.xml";
+
 MainPage::MainPage()
 {
 	InitializeComponent();
@@ -88,13 +91,9 @@ void OpenCVExample::MainPage::cannyEdgesButton_Click(Platform::Object^ sender, W
 	UpdateImage(result);
 }
 
-cv::String face_cascade_name = "Assets/haarcascade_frontalface_alt.xml";
-cv::CascadeClassifier face_cascade;
 
-cv::String body_cascade_name = "Assets/haarcascade_fullbody.xml";
-cv::CascadeClassifier body_cascade;
 // takes an image (inputImg), runs face and body classifiers on it, and stores the results in objectVector and objectVectorBodies, respectively
-void InternalDetectObjects(cv::Mat& inputImg, std::vector<cv::Rect> & objectVector, std::vector<cv::Rect> & objectVectorBodies)
+void InternalDetectObjects(cv::Mat& inputImg, std::vector<cv::Rect> & objectVector, std::vector<cv::Rect> & objectVectorBodies, cv::CascadeClassifier& face_cascade, cv::CascadeClassifier& body_cascade)
 {
 	cv::Mat frame_gray;
 
@@ -110,6 +109,9 @@ void InternalDetectObjects(cv::Mat& inputImg, std::vector<cv::Rect> & objectVect
 // run the object detection function on the image and draw rectangles around the results
 void OpenCVExample::MainPage::detectFeaturesButton_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
+	cv::CascadeClassifier face_cascade;
+	cv::CascadeClassifier body_cascade;
+
 	if (!face_cascade.load(face_cascade_name)) {
 		printf("Couldnt load Face detector '%s'\n", face_cascade_name);
 		exit(1);
@@ -128,7 +130,7 @@ void OpenCVExample::MainPage::detectFeaturesButton_Click(Platform::Object^ sende
 	std::vector<cv::Rect> faces;
 	std::vector<cv::Rect> bodies;
 	// run object detection
-	InternalDetectObjects(frame, faces, bodies);
+	InternalDetectObjects(frame, faces, bodies, face_cascade, body_cascade);
 	// draw red rectangles around detected faces
 	for (unsigned int i = 0; i < faces.size(); i++)
 	{
