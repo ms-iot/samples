@@ -766,4 +766,7 @@ Alternatively, click the button below to enter the administrator's username/pass
     <value>Disconnect</value>
     <comment>This disconnects the connected network</comment>
   </data>
+  <data name="VirtualNetworkAdapter" xml:space="preserve">
+    <value>Virtual Network Adapter</value>
+  </data>
 </root>

@@ -22,7 +22,7 @@ namespace IoTCoreDefaultApp
         private Dictionary<String, WiFiAdapter> WiFiAdapters = new Dictionary<string, WiFiAdapter>();
         private DeviceWatcher WiFiAdaptersWatcher;
         ManualResetEvent EnumAdaptersCompleted = new ManualResetEvent(false);
-        
+
         public NetworkPresenter()
         {
             WiFiAdaptersWatcher = DeviceInformation.CreateWatcher(WiFiAdapter.GetDeviceSelector());
@@ -320,38 +320,58 @@ namespace IoTCoreDefaultApp
 
                 foreach (var hostName in hostNamesList)
                 {
-                    if ((hostName.Type == HostNameType.Ipv4 || hostName.Type == HostNameType.Ipv6) &&
-                        (hostName != null && hostName.IPInformation != null && hostName.IPInformation.NetworkAdapter != null))
+                    if (hostName.Type == HostNameType.Ipv4 || hostName.Type == HostNameType.Ipv6)
                     {
-                        var profile = await hostName.IPInformation.NetworkAdapter.GetConnectedProfileAsync();
-                        if (profile != null)
+                        NetworkInfo info = null;
+                        if (hostName.IPInformation != null && hostName.IPInformation.NetworkAdapter != null)
                         {
-                            NetworkInfo info;
-                            var found = networkList.TryGetValue(hostName.IPInformation.NetworkAdapter.NetworkAdapterId, out info);
-                            if (!found)
+                            var profile = await hostName.IPInformation.NetworkAdapter.GetConnectedProfileAsync();
+                            if (profile != null)
                             {
-                                info = new NetworkInfo();
-                                networkList[hostName.IPInformation.NetworkAdapter.NetworkAdapterId] = info;
-                                if (hostName.IPInformation.NetworkAdapter.IanaInterfaceType == WirelessInterfaceIanaType &&
-                                    profile.ProfileName.Equals("Ethernet"))
+                                var found = networkList.TryGetValue(hostName.IPInformation.NetworkAdapter.NetworkAdapterId, out info);
+                                if (!found)
                                 {
-                                    info.NetworkName = "Wireless LAN Adapter";
+                                    info = new NetworkInfo();
+                                    networkList[hostName.IPInformation.NetworkAdapter.NetworkAdapterId] = info;
+
+                                    // NetworkAdapter API does not provide a way to tell if this is a physical adapter or virtual one; e.g. soft AP
+                                    // So, provide heuristics to check for virtual network adapter
+                                    if ((hostName.IPInformation.NetworkAdapter.IanaInterfaceType == WirelessInterfaceIanaType &&
+                                        profile.ProfileName.Equals("Ethernet")) ||
+                                        (hostName.IPInformation.NetworkAdapter.IanaInterfaceType == WirelessInterfaceIanaType &&
+                                        hostName.IPInformation.NetworkAdapter.InboundMaxBitsPerSecond == 0 &&
+                                        hostName.IPInformation.NetworkAdapter.OutboundMaxBitsPerSecond == 0)
+                                        )
+                                    {
+                                        info.NetworkName = resourceLoader.GetString("VirtualNetworkAdapter");
+                                    }
+                                    else
+                                    {
+                                        info.NetworkName = profile.ProfileName;
+                                    }
+                                    var statusTag = profile.GetNetworkConnectivityLevel().ToString();
+                                    info.NetworkStatus = resourceLoader.GetString("NetworkConnectivityLevel_" + statusTag);
                                 }
-                                else
-                                {
-                                    info.NetworkName = profile.ProfileName;
-                                }
-                                var statusTag = profile.GetNetworkConnectivityLevel().ToString();
-                                info.NetworkStatus = resourceLoader.GetString("NetworkConnectivityLevel_" + statusTag);
                             }
-                            if (hostName.Type == HostNameType.Ipv4)
-                            {
-                                info.NetworkIpv4 = hostName.CanonicalName;
-                            }
-                            else
-                            {
-                                info.NetworkIpv6 = hostName.CanonicalName;
-                            }
+                        }
+
+                        // No network adapter was found. So, assign the network info to a virtual adapter header
+                        if (info == null)
+                        {
+                            info = new NetworkInfo();
+                            info.NetworkName = resourceLoader.GetString("VirtualNetworkAdapter");
+                            // Assign a new GUID, since we don't have a network adapter
+                            networkList[Guid.NewGuid()] = info;
+                            info.NetworkStatus = resourceLoader.GetString("NetworkConnectivityLevel_LocalAccess");
+                        }
+
+                        if (hostName.Type == HostNameType.Ipv4)
+                        {
+                            info.NetworkIpv4 = hostName.CanonicalName;
+                        }
+                        else
+                        {
+                            info.NetworkIpv6 = hostName.CanonicalName;
                         }
                     }
                 }

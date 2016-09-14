@@ -71,6 +71,7 @@ namespace IoTUtilities
                     RawRequestMethod = splitRawRequest[0];
                     RequestPart = RawRequestMethod.Split(' ');
                     var valuePart = splitRawRequest[splitRawRequest.Length - 1];
+
                     if (!valuePart.StartsWith("\0"))
                     {
                         values = valuePart.Split('&');
@@ -192,6 +193,7 @@ namespace IoTUtilities
                 string header = String.Format(
                     "HTTP/1.1 {0} {1}\r\n" +
                     location +
+                    "Cache-Control:public, max-age=31536000\r\n" + // randon big number to ensure browser gets from cache
                     "Content-Length: {2}\r\n" +
                     "Connection: close\r\n\r\n",
                     statusCode, message,
@@ -205,7 +207,7 @@ namespace IoTUtilities
 
         public delegate Task<string> Filter(Stream input);
 
-        const uint BufferSize = 8192;
+        const uint BufferSize = 2048;
         StreamSocketListener listener;
         List<Tuple<string, RouteCallback>> getRoutes = new List<Tuple<string, RouteCallback>>();
         List<Tuple<string, RouteCallback>> getStaticRoutes = new List<Tuple<string, RouteCallback>>();
@@ -214,8 +216,6 @@ namespace IoTUtilities
         public SimpleWebServer()
         {
             listener = new StreamSocketListener();
-            listener.Control.KeepAlive = true;
-            listener.Control.NoDelay = true;
             listener.ConnectionReceived += (s, e) => { ProcessRequestAsync(e.Socket); };
         }
 
@@ -246,90 +246,104 @@ namespace IoTUtilities
             postRoutes.Add(Tuple.Create<string, RouteCallback>(path, callback));
         }
 
+
         private async void ProcessRequestAsync(StreamSocket socket)
         {
             // very rudimentary web server request processing
-
-            // grab the request
-            StringBuilder request = new StringBuilder();
-            byte[] data = new byte[BufferSize];
-            IBuffer buffer = data.AsBuffer();
-            uint dataRead = BufferSize;
-            using (IInputStream input = socket.InputStream)
+            try
             {
-                while (dataRead == BufferSize)
+                // grab the request
+                StringBuilder request = new StringBuilder();
+                byte[] data = new byte[BufferSize];
+                IBuffer buffer = data.AsBuffer();
+                uint dataRead = BufferSize;
+
+                using (IInputStream input = socket.InputStream)
                 {
-                    await input.ReadAsync(buffer, BufferSize, InputStreamOptions.Partial);
-                    request.Append(Encoding.UTF8.GetString(data, 0, data.Length));
-                    dataRead = buffer.Length;
+                    while (dataRead == BufferSize)
+                    {
+                        await Task.Delay(50); // allow time for the data to arrive esp on wifi
+                        var result = await input.ReadAsync(buffer, BufferSize, InputStreamOptions.Partial);
+                        request.Append(Encoding.UTF8.GetString(data, 0, (int)result.Length));
+                        dataRead = result.Length;
+                    }              
                 }
-            }
 
-            // build some handy wrapper objects for request and response
-            var req = new Request(request.ToString());
-            var res = new Response(socket);
+                // build some handy wrapper objects for request and response
+                var req = new Request(request.ToString());
+                var res = new Response(socket);
 
-            if (req.Method == null)
-            {
-                Debug.WriteLine("Cannot retrieve HTTP method");
-                return;
-            }
+                if (req.Method == null)
+                {
+                    Debug.WriteLine("Cannot retrieve HTTP method");
+                    return;
+                }
 
-            // go through the defined routes to handle the request
-            // TODO: implement route matching based on string patterns
-            var path = req.Path;
-            bool handled = false;
-            switch (req.Method)
-            {
-                case "GET":
-                    foreach (var t in getRoutes)
-                    {
-                        if (t.Item1 == path)
+                // go through the defined routes to handle the request
+                // TODO: implement route matching based on string patterns
+                var path = req.Path;
+                bool handled = false;
+                switch (req.Method)
+                {
+                    case "GET":
+                        foreach (var t in getRoutes)
                         {
-                            await t.Item2(req, res);
-                            handled = true;
-                            break;
-                        }
-                    }
-                    if (!handled)
-                    {
-                        foreach (var t in getStaticRoutes)
-                        {
-                            if (path.StartsWith(t.Item1))
+                            if (t.Item1 == path)
                             {
                                 await t.Item2(req, res);
                                 handled = true;
                                 break;
                             }
                         }
-                    }
-                    if (!handled)
-                    {
-                        // REVIEW: is 404 the right status code to return?
-                        await res.SendStatusAsync(404);
-                    }
-                    break;
-
-                case "POST":
-                    foreach (var t in postRoutes)
-                    {
-                        if (t.Item1 == path)
+                        if (!handled)
                         {
-                            await t.Item2(req, res);
-                            handled = true;
-                            break;
+                            foreach (var t in getStaticRoutes)
+                            {
+                                if (path.StartsWith(t.Item1))
+                                {
+                                    await t.Item2(req, res);
+                                    handled = true;
+                                    break;
+                                }
+                            }
                         }
-                    }
-                    if (!handled)
-                    {
-                        // REVIEW: is 404 the right status code to return?
-                        await res.SendStatusAsync(404);
-                    }
-                    break;
+                        if (!handled)
+                        {
+                            // REVIEW: is 404 the right status code to return?
+                            await res.SendStatusAsync(404);
+                        }
+                        break;
 
-                default:
-                    Debug.WriteLine("HTTP method not supported: " + req.Method);
-                    break;
+                    case "POST":
+                        foreach (var t in postRoutes)
+                        {
+                            if (t.Item1 == path)
+                            {
+                                await t.Item2(req, res);
+                                handled = true;
+                                break;
+                            }
+                        }
+                        if (!handled)
+                        {
+                            // REVIEW: is 404 the right status code to return?
+                            await res.SendStatusAsync(404);
+                        }
+                        break;
+
+                    default:
+                        Debug.WriteLine("HTTP method not supported: " + req.Method);
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+            finally
+            {
+                await socket.CancelIOAsync();
+                socket.Dispose();
             }
         }
 

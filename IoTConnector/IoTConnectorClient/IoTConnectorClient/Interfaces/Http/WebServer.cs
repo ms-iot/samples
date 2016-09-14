@@ -172,7 +172,7 @@ namespace IoTConnectorClient
                     try
                     {
                         await msgHub.SendDeviceToCloudMessageAsync(fullMsg);
-                    } catch (System.Exception e )
+                    } catch (Exception)
                     {
                         postStatus = Constants.ERROR_AZURE;
                         break;
@@ -483,7 +483,7 @@ namespace IoTConnectorClient
                     await fs.CopyToAsync(resp);
                 }
             }
-            catch (FileNotFoundException ex)
+            catch (FileNotFoundException)
             {
                 exists = false;
             }
