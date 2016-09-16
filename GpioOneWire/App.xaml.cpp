@@ -6,6 +6,7 @@
 
 #include "pch.h"
 #include "MainPage.xaml.h"
+#include "App.xaml.h"
 
 using namespace GpioOneWire;
 

@@ -10,10 +10,16 @@
     Loaded="Page_Loaded">
 
     <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBlock x:Name="titleText" FontSize="48" TextWrapping="Wrap" TextAlignment="Center">DHT22/11 Demo</TextBlock>
+        <TextBlock x:Name="titleText" FontSize="48" TextWrapping="Wrap" TextAlignment="Center">DHT22 Demo</TextBlock>
         <TextBlock x:Name="pullResistorText" FontSize="22" Foreground="#777777" TextWrapping="Wrap" TextAlignment="Center" />
         <TextBlock x:Name="humidityText" FontSize="26" Foreground="#0066bb" TextWrapping="Wrap" TextAlignment="Center">Humidity: Not Initialized</TextBlock>
         <TextBlock x:Name="temperatureText"  FontSize="26" Foreground="#0066bb" TextWrapping="Wrap" TextAlignment="Center">Temperature: Not Initialized</TextBlock>
+        <TextBlock x:Name="reliabilityText"  FontSize="26" Foreground="#0066bb" TextWrapping="Wrap" TextAlignment="Center">Successful Samples: 0/0</TextBlock>
         <TextBlock x:Name="statusText" FontSize="32" TextWrapping="Wrap" TextAlignment="Center">Status: Initializing ...</TextBlock>
+        <StackPanel Orientation="Horizontal">
+            <RadioButton x:Name="interruptButton" Checked="radioButton_Checked" IsChecked="True">Interrupts</RadioButton>
+            <RadioButton x:Name="pollingButton" Checked="radioButton_Checked">Polling</RadioButton>
+            <RadioButton x:Name="pauseButton" Checked="radioButton_Checked">Pause</RadioButton>
+        </StackPanel>
     </StackPanel>
 </Page>
