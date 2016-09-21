@@ -5,7 +5,6 @@ using org.alljoyn.Onboarding;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Resources;
 using Windows.Devices.AllJoyn;
 using Windows.Devices.Enumeration;
 using Windows.Devices.WiFi;
@@ -13,9 +12,11 @@ using Windows.Foundation;
 using Windows.Networking.Connectivity;
 using Windows.Security.Credentials;
 using Windows.Storage;
+using Windows.Storage.Search;
 using Windows.Storage.Streams;
 using Windows.ApplicationModel;
 using Windows.Data.Xml.Dom;
+using Windows.Security.Cryptography;
 
 namespace IoTOnboardingService
 {
@@ -34,6 +35,7 @@ namespace IoTOnboardingService
             public string defaultDescription;
             public string defaultManufacturer;
             public string modelNumber;
+            public string presharedKey;
         }
         private AJOnboardingConfig _ajOnboardingConfig;
 
@@ -47,10 +49,12 @@ namespace IoTOnboardingService
         private const string NODE_DEFAULTDESCRIPTIONTEMPLATE = "IoTOnboarding/AllJoynOnboarding/DefaultDescription";
         private const string NODE_DEFAULTMANUFACTURER = "IoTOnboarding/AllJoynOnboarding/DefaultManufacturer";
         private const string NODE_MODELNUMBER = "IoTOnboarding/AllJoynOnboarding/ModelNumber";
+        private const string NODE_ALLJOYNPSK = "IoTOnboarding/AllJoynOnboarding/PresharedKey";
+
         private const string ATTRIBUTE_VALUE = "value";
 
         private const string SOFTAP_SSID_AJONBOARDING_PREFIX = "AJ_";
-         
+
         private static ushort _onboardingInterfaceVersion = 1412;
         private static ushort _iconInterfaceVersion = 1412;
         private static string _onboardingInstanceIdSettingName = "OnboardingInstanceId";
@@ -75,6 +79,8 @@ namespace IoTOnboardingService
         private object _stateLock;
 
         private StorageFile _iconFile;
+        private StorageFileQueryResult _query;
+        private bool _bIgnoreFirstChangeNotification;
 
         private async Task ResetConfig()
         {
@@ -94,9 +100,12 @@ namespace IoTOnboardingService
             configFile = await pkgFile.CopyAsync(localFolder);
         }
 
-        private async Task<bool> ReadConfig()
+        private async Task<Tuple<bool, AJOnboardingConfig, SoftAPConfig>> ReadConfig()
         {
             bool retVal = true;
+
+            AJOnboardingConfig ajOnboardCfg = new AJOnboardingConfig();
+            SoftAPConfig softAPCfg = new SoftAPConfig();
 
             try
             {
@@ -122,42 +131,107 @@ namespace IoTOnboardingService
                 var tempString = GetXmlNodeValue(xmlNode);
                 if (tempString == "true")
                 {
-                    _softAPConfig.enabled = true;
+                    softAPCfg.enabled = true;
                 }
                 else
                 {
-                    _softAPConfig.enabled = false;
+                    softAPCfg.enabled = false;
                 }
                 xmlNode = xmlConfig.SelectSingleNode(NODE_SOFTAPSSIDTEMPLATE);
-                _softAPConfig.ssid = GetXmlNodeValue(xmlNode);
+                softAPCfg.ssid = GetXmlNodeValue(xmlNode);
                 xmlNode = xmlConfig.SelectSingleNode(NODE_SOFTAPPASSWORD);
-                _softAPConfig.password = GetXmlNodeValue(xmlNode);
+                softAPCfg.password = GetXmlNodeValue(xmlNode);
 
                 // AllJoyn Onboarding config
                 xmlNode = xmlConfig.SelectSingleNode(NODE_ALLJOYNONBOARDINGENABLE);
+                tempString = GetXmlNodeValue(xmlNode);
                 if (tempString == "true")
                 {
-                    _ajOnboardingConfig.enabled = true;
+                    ajOnboardCfg.enabled = true;
                 }
                 else
                 {
-                    _ajOnboardingConfig.enabled = false;
+                    ajOnboardCfg.enabled = false;
                 }
                 xmlNode = xmlConfig.SelectSingleNode(NODE_DEFAULTDESCRIPTIONTEMPLATE);
-                _ajOnboardingConfig.defaultDescription = GetXmlNodeValue(xmlNode);
+                ajOnboardCfg.defaultDescription = GetXmlNodeValue(xmlNode);
                 xmlNode = xmlConfig.SelectSingleNode(NODE_DEFAULTMANUFACTURER);
-                _ajOnboardingConfig.defaultManufacturer = GetXmlNodeValue(xmlNode);
+                ajOnboardCfg.defaultManufacturer = GetXmlNodeValue(xmlNode);
                 xmlNode = xmlConfig.SelectSingleNode(NODE_MODELNUMBER);
-                _ajOnboardingConfig.modelNumber = GetXmlNodeValue(xmlNode);
+                ajOnboardCfg.modelNumber = GetXmlNodeValue(xmlNode);
+
+                // For backwards compatbility with original config file.  If the AllJoyn PSK is not found, 
+                // default to the ECDHE_NULL authentication method
+                xmlNode = xmlConfig.SelectSingleNode(NODE_ALLJOYNPSK);
+                if (xmlNode == null)
+                {
+                    ajOnboardCfg.presharedKey = "";
+                }
+                else
+                {
+                    ajOnboardCfg.presharedKey = GetXmlNodeValue(xmlNode);
+                }
+            }
+            catch (Exception)
+            {
+                retVal = false;
+            }
+
+            return new Tuple<bool, AJOnboardingConfig, SoftAPConfig>(retVal, ajOnboardCfg, softAPCfg);
+        }
+
+        private async Task<bool> MonitorConfigFile()
+        {
+            bool retVal = true;
+
+            try
+            {
+                // Watch for all ".xml" files (there is only the config.xml file in this app's data folder)
+                // And add a handler for when the folder contents change
+                var fileTypeQuery = new List<string>();
+                fileTypeQuery.Add(".xml");
+                var options = new Windows.Storage.Search.QueryOptions(Windows.Storage.Search.CommonFileQuery.DefaultQuery, fileTypeQuery);
+                _query = ApplicationData.Current.LocalFolder.CreateFileQueryWithOptions(options);
+                _query.ContentsChanged += FolderContentsChanged;
+
+                // Start Monitoring.  The first time this is called (after starting the query) we want to ignore the notification
+                _bIgnoreFirstChangeNotification = true;
+                var files = await _query.GetFilesAsync();
+
             }
             catch (Exception ex)
             {
                 retVal = false;
             }
 
-
-            return retVal; 
+            return retVal;
         }
+
+        private async void FolderContentsChanged(Windows.Storage.Search.IStorageQueryResultBase sender, object args)
+        {
+            // Ignore the first change notification that gets issued when MonitorConfigFile is called
+            if (_bIgnoreFirstChangeNotification)
+            {
+                _bIgnoreFirstChangeNotification = false;
+                return;
+            }
+
+            // Read the Config file on change
+            var configResult = await ReadConfig();
+            if (configResult.Item1 == true)
+            {
+
+                // If something changed in the config file then restart IotOnboarding 
+                if (!configResult.Item2.Equals(_ajOnboardingConfig) ||
+                    !configResult.Item3.Equals(_softAPConfig))
+                {
+                    sender.ContentsChanged -= FolderContentsChanged;
+                    Stop();
+                    Start();
+                }
+            }
+        }
+
         public OnboardingService()
         {
             _state = OnboardingState.NotConfigured;
@@ -196,17 +270,32 @@ namespace IoTOnboardingService
                 }
 
                 // read configuration
-                bool configOk = await ReadConfig();
-                if (!configOk)
+                var configResult = await ReadConfig();
+                if (!configResult.Item1)
                 {
                     // for some reason config file doesn't seem to be OK
                     // => reset config and try another time 
                     await ResetConfig();
-                    configOk = await ReadConfig();
-                    if(!configOk)
+                    configResult = await ReadConfig();
+                    if (!configResult.Item1)
                     {
                         throw new System.IO.InvalidDataException("Invalid configuration");
                     }
+                }
+                _ajOnboardingConfig = configResult.Item2;
+                _softAPConfig = configResult.Item3;
+
+                bool monitorOk = await MonitorConfigFile();
+                if (!monitorOk)
+                {
+                    throw new System.Exception("Unable to monitor configuration file for changes.  Unexpected.");
+                }
+
+
+                // If everything is disabled, then there's nothing to do.
+                if ((_softAPConfig.enabled == false) && (_ajOnboardingConfig.enabled == false))
+                {
+                    return;
                 }
 
                 // create softAP 
@@ -217,14 +306,14 @@ namespace IoTOnboardingService
                     string prefix = "";
                     string suffix = "";
                     string ssid = "";
-                    if(_ajOnboardingConfig.enabled)
+                    if (_ajOnboardingConfig.enabled)
                     {
                         prefix = SOFTAP_SSID_AJONBOARDING_PREFIX;
                         suffix = "_" + _onboardingInstanceId;
                     }
 
                     ssid = prefix + _softAPConfig.ssid + suffix;
-                    _softAccessPoint = new OnboardingAccessPoint(ssid, _softAPConfig.password);                    
+                    _softAccessPoint = new OnboardingAccessPoint(ssid, _softAPConfig.password);
                 }
 
                 // create AllJoyn related things
@@ -232,13 +321,25 @@ namespace IoTOnboardingService
                     _ajOnboardingConfig.enabled)
                 {
                     _busAttachment = new AllJoynBusAttachment();
-
-                    _busAttachment.AboutData.DefaultDescription = _ajOnboardingConfig.defaultDescription  + " instance Id " + _onboardingInstanceId;
+                    _busAttachment.AboutData.DefaultDescription = _ajOnboardingConfig.defaultDescription + " instance Id " + _onboardingInstanceId;
                     _busAttachment.AboutData.DefaultManufacturer = _ajOnboardingConfig.defaultManufacturer;
                     _busAttachment.AboutData.ModelNumber = _ajOnboardingConfig.modelNumber;
-
                     _onboardingProducer = new OnboardingProducer(_busAttachment);
                     _onboardingProducer.Service = this;
+                    _busAttachment.AuthenticationMechanisms.Clear();
+
+                    if (_ajOnboardingConfig.presharedKey.Length == 0)
+                    {
+                        _busAttachment.AuthenticationMechanisms.Add(AllJoynAuthenticationMechanism.EcdheNull);
+                    }
+                    else
+                    {
+                        _busAttachment.AuthenticationMechanisms.Add(AllJoynAuthenticationMechanism.EcdhePsk);
+                    }
+
+                    _busAttachment.CredentialsRequested += CredentialsRequested;
+                    _busAttachment.CredentialsVerificationRequested += CredentialsVerificationRequested;
+                    _busAttachment.AuthenticationComplete += AuthenticationComplete;
 
                     _iconProducer = new IconProducer(_busAttachment);
                     _iconProducer.Service = this;
@@ -263,35 +364,69 @@ namespace IoTOnboardingService
             }
         }
 
+        private void AuthenticationComplete(AllJoynBusAttachment sender, AllJoynAuthenticationCompleteEventArgs args)
+        {
+        }
+
+        private void CredentialsVerificationRequested(AllJoynBusAttachment sender, AllJoynCredentialsVerificationRequestedEventArgs args)
+        {
+        }
+
+        private void CredentialsRequested(AllJoynBusAttachment sender, AllJoynCredentialsRequestedEventArgs args)
+        {
+            var def = args.GetDeferral();
+
+            if (args.Credentials.AuthenticationMechanism == AllJoynAuthenticationMechanism.EcdhePsk)
+            {
+                args.Credentials.PasswordCredential.Password = _ajOnboardingConfig.presharedKey;
+            }
+
+            def.Complete();
+        }
+
         public void Stop()
         {
+            if (_query != null)
+            {
+                _query = null;
+            }
             if (_onboardingProducer != null)
             {
                 _onboardingProducer.Stop();
+                _onboardingProducer = null;
             }
             if (_iconProducer != null)
             {
                 _iconProducer.Stop();
+                _iconProducer = null;
+            }
+            if (_busAttachment != null)
+            {
+                _busAttachment = null;
             }
             if (_softAccessPoint != null)
             {
                 _softAccessPoint.Stop();
+                _softAccessPoint = null;
             }
             if (_deviceWatcher != null)
             {
                 _deviceWatcher.Stop();
+                _deviceWatcher = null;
             }
+            _wlanAdapterId = null;
+            _state = OnboardingState.NotConfigured;
         }
 
         private string GetXmlNodeValue(IXmlNode xmlNode)
         {
-            if(null == xmlNode)
+            if (null == xmlNode)
             {
                 throw new System.ArgumentNullException("GetXmlNodeValue wrong xmlNode");
             }
 
             var attribute = xmlNode.Attributes.GetNamedItem(ATTRIBUTE_VALUE);
-            if(attribute == null)
+            if (attribute == null)
             {
                 throw new System.IO.InvalidDataException("xml node " + xmlNode.LocalName + " has no attribute named " + ATTRIBUTE_VALUE);
             }
@@ -301,7 +436,7 @@ namespace IoTOnboardingService
 
         private void HandleAdapterAdded(DeviceWatcher sender, DeviceInformation information)
         {
-            if (_wlanAdapterId == null)
+            if (String.IsNullOrEmpty(_wlanAdapterId))
             {
                 _wlanAdapterId = information.Id;
 
@@ -312,38 +447,67 @@ namespace IoTOnboardingService
                         _softAccessPoint.Start();
                     }
                 }
-                _onboardingProducer.Start();
-                _iconProducer.Start();
+                _onboardingProducer?.Start();
+                _iconProducer?.Start();
             }
         }
 
         private void HandleAdapterRemoved(DeviceWatcher sender, DeviceInformationUpdate information)
         {
-            if (_wlanAdapterId != null && _wlanAdapterId == information.Id)
+            if (!String.IsNullOrEmpty(_wlanAdapterId) && _wlanAdapterId == information.Id)
             {
                 _softAccessPoint.Stop();
                 _wlanAdapterId = null;
 
-                _onboardingProducer.Stop();
-                _iconProducer.Stop();
+                _onboardingProducer?.Stop();
+                _iconProducer?.Stop();
             }
         }
 
-        private async void ConnectToNetwork(WiFiAdapter adapter, WiFiAvailableNetwork network)
+        private string ConvertHexToPassPhrase(NetworkAuthenticationType authType, string presharedKey)
+        {
+            // If this is a WPA/WPA2-PSK type network then convert the HEX STRING back to a passphrase
+            // Note that a 64 character WPA/2 network key is expected as a 128 character HEX-ized that will be
+            // converted back to a 64 character network key.
+            if ((authType == NetworkAuthenticationType.WpaPsk) ||
+                (authType == NetworkAuthenticationType.RsnaPsk))
+            {
+                var tempBuffer = CryptographicBuffer.DecodeFromHexString(presharedKey);
+                var hexString = CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, tempBuffer);
+                return hexString;
+            }
+
+            // If this is a WEP key then it should arrive here as a 10 or 26 character hex-ized 
+            // string which will be passed straight through
+            return presharedKey;
+        }
+
+        private async Task<WiFiConnectionStatus> ConnectToNetwork(WiFiAdapter adapter, WiFiAvailableNetwork network)
         {
             lock (_stateLock)
             {
                 _state = OnboardingState.ConfiguredValidating;
             }
 
+            string resultPassword = "";
             WiFiConnectionResult connectionResult;
-            if (network.SecuritySettings.NetworkAuthenticationType == NetworkAuthenticationType.Open80211)
+
+            // For all open networks (when no PSK was provided) connect without a password
+            // Note, that in test, we have seen some WEP networks identify themselves as Open even though
+            // they required a PSK, so use the PSK as a determining factor
+            if ((network.SecuritySettings.NetworkAuthenticationType == NetworkAuthenticationType.Open80211) &&
+                string.IsNullOrEmpty(_personalApPassword))
             {
                 connectionResult = await adapter.ConnectAsync(network, WiFiReconnectionKind.Automatic);
             }
+            // Otherwise for all WEP/WPA/WPA2 networks convert the PSK back from a hex-ized format back to a passphrase, if necessary,
+            // and onboard this device to the requested network.
             else
             {
-                connectionResult = await adapter.ConnectAsync(network, WiFiReconnectionKind.Automatic, new PasswordCredential { Password = _personalApPassword });
+                PasswordCredential pwd = new PasswordCredential();
+                resultPassword = ConvertHexToPassPhrase(network.SecuritySettings.NetworkAuthenticationType, _personalApPassword);
+                pwd.Password = resultPassword;
+                connectionResult = await adapter.ConnectAsync(network, WiFiReconnectionKind.Automatic, pwd);
             }
 
             lock (_stateLock)
@@ -381,8 +545,20 @@ namespace IoTOnboardingService
                                 break;
                             }
                     }
-                }
+                }                
+
             }
+#if DEBUG           
+            var folder = Windows.Storage.ApplicationData.Current.LocalFolder;
+            var file = await folder.CreateFileAsync("ConnectionResult.Txt", Windows.Storage.CreationCollisionOption.ReplaceExisting);
+            string myout = "ConnectionResult= " + connectionResult.ConnectionStatus.ToString() + "\r\n";
+            myout += "Type=" + network.SecuritySettings.NetworkAuthenticationType.ToString() + "\r\n";
+            myout += "InputPassword= " + _personalApPassword + "\r\n";
+            myout += "ResultPassword= " + resultPassword + "\r\n";
+            await Windows.Storage.FileIO.WriteTextAsync(file, myout);
+#endif
+            return connectionResult.ConnectionStatus;
+
         }
 
         public IAsyncOperation<OnboardingConfigureWifiResult> ConfigureWifiAsync(AllJoynMessageInfo info, string interfaceMemberSSID, string interfaceMemberPassphrase, short interfaceMemberAuthType)
@@ -423,11 +599,16 @@ namespace IoTOnboardingService
                 {
                     if (network.Ssid == _personalApSsid)
                     {
-                        _softAccessPoint?.Stop();
-                        this.ConnectToNetwork(adapter, network);
+                        var result = await this.ConnectToNetwork(adapter, network);
+                        if (result == WiFiConnectionStatus.Success)
+                        {
+                            _softAccessPoint?.Stop();
+                            return OnboardingConnectResult.CreateSuccessResult();
+                        }
+                        break;
                     }
                 }
-                return OnboardingConnectResult.CreateSuccessResult();
+                return OnboardingConnectResult.CreateFailureResult(1);
 
             }).AsAsyncOperation();
         }

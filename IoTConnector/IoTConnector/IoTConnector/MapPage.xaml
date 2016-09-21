@@ -1,0 +1,47 @@
+﻿<Page
+    x:Class="IoTConnector.MapPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:IoTConnector"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:maps="using:Windows.UI.Xaml.Controls.Maps"
+    mc:Ignorable="d">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="3.5*"/>
+            <RowDefinition Height="0.5*"/>
+        </Grid.RowDefinitions>
+        <maps:MapControl x:Name="myMap" Grid.Row="0" MapServiceToken="nSpxRW98b2nEdBPt7dJ2~o0Os-cfzI4utkCAC8CaHMw~ArikLpbltiClL_hHSEOEeV-obeDUfI-b2wo9sEv4bn965FMscvOlxKGEHzuBVXvg"/>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Right">
+            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
+                <SymbolIcon HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 25 0 0" Symbol="Contact" Grid.Row="0"></SymbolIcon>
+                <Button x:Name="username" Background="Transparent" Click="username_Click"  BorderThickness="0" HorizontalAlignment="Right" Margin="0 20 20 0" Grid.Row="0">
+                    Username
+                </Button>
+            </StackPanel>
+            <ListView x:Name="UserSettings" Visibility="Collapsed">
+                <ListViewItem Background="LightGray" HorizontalContentAlignment="Center">
+                    <Button Click="SignOutButton_Click" Background="Transparent" BorderThickness="0" >Sign Out</Button>
+                </ListViewItem>
+            </ListView>
+        </StackPanel>
+        
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="4*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Margin="10 10">Messages</TextBlock>
+            <HyperlinkButton x:Name="ClearLog" Grid.Row="0" Margin="10 0" Content="Clear" HorizontalAlignment="Right" Click="ClearLog_Click"/>
+            <ListView x:Name="myMessages" Grid.Row="1"/>    
+        </Grid>
+        <Border Grid.Row="2" Background="#FF2475B5"/>
+        <HyperlinkButton Grid.Row="2" Foreground="White" Margin="10 0" Click="HyperlinkButton_Click">About</HyperlinkButton>
+        <Image Source="Assets/Microsoft-logo_rgb_c-wht.png" Width="100" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Bottom"></Image>
+
+    </Grid>
+    
+</Page>
+

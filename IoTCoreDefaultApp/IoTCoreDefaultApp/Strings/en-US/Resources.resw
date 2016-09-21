@@ -735,8 +735,8 @@ To enable it, run the following command as "Administrator" on your device:
 
     reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
 
-You can run the command in IoT Windows Device Portal's Processes page. Or use PowerShell to connect to your Windows IoT device.
-For more information, please visit http://go.microsoft.com/fwlink/p/?LinkId=698488
+Alternatively, click the button below to enter the administrator's username/password and attempt to execute the command.
+
     </value>
     <comment>New lines need to be preserved</comment>
   </data>
@@ -744,8 +744,29 @@ For more information, please visit http://go.microsoft.com/fwlink/p/?LinkId=6984
     <value>Executing commands as DefaultAccount
     </value>
   </data>
+  <data name="CloseText" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="EnableCmdText" xml:space="preserve">
+    <value>Enable Command Line Processor</value>
+  </data>
+  <data name="UsernameText" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="PasswordText" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="CmdTextEnabledSuccess" xml:space="preserve">
+    <value>Successfully enabled Command Line Processor (cmd.exe) on your device.</value>
+  </data>
+  <data name="CmdTextEnabledFailure" xml:space="preserve">
+    <value>Failed to enable Command Line Processor (cmd.exe) on your device. Status = {0}</value>
+  </data>
   <data name="DisconnectButtonContent" xml:space="preserve">
     <value>Disconnect</value>
     <comment>This disconnects the connected network</comment>
+  </data>
+  <data name="VirtualNetworkAdapter" xml:space="preserve">
+    <value>Virtual Network Adapter</value>
   </data>
 </root>

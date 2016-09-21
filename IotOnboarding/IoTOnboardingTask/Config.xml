@@ -5,6 +5,7 @@
         <DefaultDescription value="IoTCore Onboarding service"/>
         <DefaultManufacturer value="Microsoft"/>
         <ModelNumber value="IoTCore Onboarding"/>
+        <Psk value=""/>
     </AllJoynOnboarding>
     <SoftAP>
         <Enabled value="true"/>
