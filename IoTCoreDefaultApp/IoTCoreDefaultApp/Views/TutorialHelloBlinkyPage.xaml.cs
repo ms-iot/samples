@@ -5,6 +5,7 @@ using System;
 using System.Globalization;
 using Windows.Devices.Gpio;
 using Windows.System;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -50,34 +51,37 @@ namespace IoTCoreDefaultApp
 
             this.DataContext = LanguageManager.GetInstance();
 
-            this.Loaded += (sender, e) =>
+            this.Loaded += async (sender, e) =>
             {
-                UpdateDateTime();
-
-                timer = new DispatcherTimer();
-                timer.Tick += timer_Tick;
-                timer.Interval = TimeSpan.FromSeconds(30);
-                timer.Start();
-
-                blinkyTimer = new DispatcherTimer();
-                blinkyTimer.Interval = TimeSpan.FromMilliseconds(500);
-                blinkyTimer.Tick += Timer_Tick;
-
-                loader = new Windows.ApplicationModel.Resources.ResourceLoader();
-                BlinkyStartStop.Content = loader.GetString("BlinkyStart");
-
-                switch (DeviceTypeInformation.Type)
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
                 {
-                    case DeviceTypes.RPI2:
-                        GpioPinInstructions.Text = "";
-                        break;
-                    case DeviceTypes.RPI3:
-                        GpioPinInstructions.Text = loader.GetString("TutorialBlinkyBody6Text_Rpi3");
-                        break;
-                    case DeviceTypes.DB410:
-                        GpioPinInstructions.Text = loader.GetString("TutorialBlinkyBody6Text_Dragonboard");
-                        break;
-                }
+                    UpdateDateTime();
+
+                    timer = new DispatcherTimer();
+                    timer.Tick += timer_Tick;
+                    timer.Interval = TimeSpan.FromSeconds(30);
+                    timer.Start();
+
+                    blinkyTimer = new DispatcherTimer();
+                    blinkyTimer.Interval = TimeSpan.FromMilliseconds(500);
+                    blinkyTimer.Tick += Timer_Tick;
+
+                    loader = new Windows.ApplicationModel.Resources.ResourceLoader();
+                    BlinkyStartStop.Content = loader.GetString("BlinkyStart");
+
+                    switch (DeviceTypeInformation.Type)
+                    {
+                        case DeviceTypes.RPI2:
+                            GpioPinInstructions.Text = "";
+                            break;
+                        case DeviceTypes.RPI3:
+                            GpioPinInstructions.Text = loader.GetString("TutorialBlinkyBody6Text_Rpi3");
+                            break;
+                        case DeviceTypes.DB410:
+                            GpioPinInstructions.Text = loader.GetString("TutorialBlinkyBody6Text_Dragonboard");
+                            break;
+                    }
+                });
             };
         }
 
