@@ -1,11 +1,11 @@
 Windows 10 IoT Core sample code
 ===============
 
-[Documentation for this sample](https://developer.microsoft.com/en-us/windows/iot/samples/appinstaller) 
+[Documentation for this sample](https://developer.microsoft.com/en-us/windows/iot/samples/helloblinkybackgroundpython)
 
 ## How to download:
 
-Unfortunately, GitHub does not support downloading individual code. 
+Unfortunately, GitHub does not support downloading individual code.
 
 Navigate to [ms-iot/samples](https://github.com/ms-iot/samples) and select **Clone or download** to download the whole repository.
 

@@ -61,10 +61,13 @@ namespace IoTCoreDefaultApp
 
             this.DataContext = LanguageManager.GetInstance();
 
-            this.Loaded += (sender, e) =>
+            this.Loaded += async (sender, e) =>
             {
-                SetupLanguages();
-                screensaverToggleSwitch.IsOn = Screensaver.IsScreensaverEnabled;
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                {
+                    SetupLanguages();
+                    screensaverToggleSwitch.IsOn = Screensaver.IsScreensaverEnabled;
+                });
             };
         }
 
