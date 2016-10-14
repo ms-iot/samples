@@ -46,14 +46,17 @@ namespace IoTCoreDefaultApp
                 }
             };
 
-            this.Loaded += (sender, e) =>
+            this.Loaded += async (sender, e) =>
             {
-                UpdateDateTime();
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                {
+                    UpdateDateTime();
 
-                timer = new DispatcherTimer();
-                timer.Tick += timer_Tick;
-                timer.Interval = TimeSpan.FromSeconds(30);
-                timer.Start();
+                    timer = new DispatcherTimer();
+                    timer.Tick += timer_Tick;
+                    timer.Interval = TimeSpan.FromSeconds(30);
+                    timer.Start();
+                });
             };
             this.Unloaded += (sender, e) =>
             {
