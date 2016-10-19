@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
+// Copyright (c) Microsoft. All rights reserved.
 
 
 using System;
@@ -33,30 +33,21 @@ namespace IoTCoreDefaultApp
         {
             Debug.WriteLine("USB Devices Enumeration Completed");
 
-            await dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
-            {
-                UpdateDevices();
-            });
+            UpdateDevices();
         }
 
         private async void DevicesUpdated(DeviceWatcher sender, DeviceInformationUpdate args)
         {
             Debug.WriteLine("Updated USB device: " + args.Id);
 
-            await dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
-            {
-                UpdateDevices();
-            });
+            UpdateDevices();
         }
 
         private async void DevicesRemoved(DeviceWatcher sender, DeviceInformationUpdate args)
         {
             Debug.WriteLine("Removed USB device: " + args.Id);
 
-            await dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
-            {
-                UpdateDevices();
-            });
+            UpdateDevices();
         }
 
         private async void UpdateDevices()
@@ -64,8 +55,11 @@ namespace IoTCoreDefaultApp
             // Get a list of all enumerated usb devices              
             var deviceInformationCollection = await DeviceInformation.FindAllAsync(usbDevicesSelector);
 
-            // Always start with a clean list                 
-            devices.Clear();  
+            await dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+            {
+                // Always start with a clean list                 
+                devices.Clear();  
+            });
 
             if (deviceInformationCollection == null || deviceInformationCollection.Count == 0)  
             {
@@ -77,7 +71,10 @@ namespace IoTCoreDefaultApp
             {
                 if (device.IsEnabled)
                 {
-                    devices.Add(device.Name);
+                    await dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                    {
+                        devices.Add(device.Name);
+                    });
                 }
             }
         }
