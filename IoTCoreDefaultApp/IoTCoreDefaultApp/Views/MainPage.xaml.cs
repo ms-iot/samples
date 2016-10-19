@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
+// Copyright (c) Microsoft. All rights reserved.
 
 using IoTCoreDefaultApp.Utils;
 using System;
@@ -50,15 +50,15 @@ namespace IoTCoreDefaultApp
 
             this.DataContext = LanguageManager.GetInstance();
 
-            this.Loaded += async (sender, e) => 
+            this.Loaded += (sender, e) => 
             {
-                await MainPageDispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
-                {
-                    UpdateBoardInfo();
-                    UpdateNetworkInfo();
-                    UpdateDateTime();
-                    UpdateConnectedDevices();
+                UpdateBoardInfo();
+                UpdateNetworkInfo();
+                UpdateDateTime(true);
+                UpdateConnectedDevices();
 
+                MainPageDispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                {
                     timer = new DispatcherTimer();
                     timer.Tick += timer_Tick;
                     timer.Interval = TimeSpan.FromSeconds(10);
@@ -84,60 +84,90 @@ namespace IoTCoreDefaultApp
 
         private async void NetworkInformation_NetworkStatusChanged(object sender)
         {
-            await MainPageDispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
-            {
-                UpdateNetworkInfo();
-            });
+            UpdateNetworkInfo();
         }
 
         private void timer_Tick(object sender, object e)
         {
-            UpdateDateTime();
+            UpdateDateTime(false);
         }
 
         private void UpdateBoardInfo()
         {
-            BoardName.Text = DeviceInfoPresenter.GetBoardName();
-            BoardImage.Source = new BitmapImage(DeviceInfoPresenter.GetBoardImageUri());
+            var boardName = DeviceInfoPresenter.GetBoardName();
+            var boardImage = DeviceInfoPresenter.GetBoardImageUri();
+            var osVersion = "";
 
             ulong version = 0;
             if (!ulong.TryParse(Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamilyVersion, out version))
             {
                 var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
-                OSVersion.Text = loader.GetString("OSVersionNotAvailable");
+                osVersion = loader.GetString("OSVersionNotAvailable");
             }
             else
             {
-                OSVersion.Text = String.Format(CultureInfo.InvariantCulture,"{0}.{1}.{2}.{3}",
+                osVersion = String.Format(CultureInfo.InvariantCulture,"{0}.{1}.{2}.{3}",
                     (version & 0xFFFF000000000000) >> 48,
                     (version & 0x0000FFFF00000000) >> 32,
                     (version & 0x00000000FFFF0000) >> 16,
                     version & 0x000000000000FFFF);
             }
+
+            MainPageDispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+            {
+                BoardName.Text = boardName;
+                BoardImage.Source = new BitmapImage(boardImage);
+                OSVersion.Text = osVersion;
+            });
+
         }
 
-        private void UpdateDateTime()
+        private void UpdateDateTime(bool dispatch)
         {
             // Using DateTime.Now is simpler, but the time zone is cached. So, we use a native method insead.
             SYSTEMTIME localTime;
             NativeTimeMethods.GetLocalTime(out localTime);
 
             DateTime t = localTime.ToDateTime();
-            CurrentTime.Text = t.ToString("t", CultureInfo.CurrentCulture) + Environment.NewLine + t.ToString("d", CultureInfo.CurrentCulture);
+            var time = t.ToString("t", CultureInfo.CurrentCulture) + Environment.NewLine + t.ToString("d", CultureInfo.CurrentCulture);
+            if (dispatch)
+            {
+                MainPageDispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                {
+                    CurrentTime.Text = time;
+                });
+            }
+            else
+            {
+                CurrentTime.Text = time;
+            }
         }
 
         private async void UpdateNetworkInfo()
         {
-            this.DeviceName.Text = DeviceInfoPresenter.GetDeviceName();
-            this.IPAddress1.Text = NetworkPresenter.GetCurrentIpv4Address();
-            this.NetworkName1.Text = NetworkPresenter.GetCurrentNetworkName();
-            this.NetworkInfo.ItemsSource = await NetworkPresenter.GetNetworkInformation();
+            var deviceName = DeviceInfoPresenter.GetDeviceName();
+            var ipAddress1 = NetworkPresenter.GetCurrentIpv4Address();
+            var networkName = NetworkPresenter.GetCurrentNetworkName();
+            var networkInfo = await NetworkPresenter.GetNetworkInformation();
+
+            MainPageDispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+            {
+                this.DeviceName.Text = deviceName;
+                this.IPAddress1.Text = ipAddress1;
+                this.NetworkName1.Text = networkName;
+                this.NetworkInfo.ItemsSource = networkInfo;
+            });
         }
 
         private void UpdateConnectedDevices()
         {
             connectedDevicePresenter = new ConnectedDevicePresenter(MainPageDispatcher);
-            this.ConnectedDevices.ItemsSource = connectedDevicePresenter.GetConnectedDevices();
+            var connectedDevices = connectedDevicePresenter.GetConnectedDevices();
+
+            MainPageDispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+            {
+                this.ConnectedDevices.ItemsSource = connectedDevices;
+            });
         }
 
         private void ShutdownButton_Clicked(object sender, RoutedEventArgs e)
