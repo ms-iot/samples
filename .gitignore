@@ -203,3 +203,6 @@ IotTemplates/WindowsIotCoreTemplates/VSIX/ProjectTemplates/VC/Windows/Windows Io
 IotTemplates/WindowsIotCoreTemplates/VSIX/ProjectTemplates/CSharp/Windows/Windows IoT Core/BackgroundServiceCsharp.zip
 IoTCoreDefaultApp/IoTCoreDefaultApp.VC.opendb
 *.pfx
+IoTConnector/IoTConnector/IoTConnector/IoTConnector_StoreKey.pfx
+IoTConnector/IoTConnector/IoTConnector/Package.StoreAssociation.xml
+/IoTConnector/IoTConnector/IoTConnector/BundleArtifacts
