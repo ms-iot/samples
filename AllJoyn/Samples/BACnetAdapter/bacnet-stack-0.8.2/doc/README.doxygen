@@ -1,0 +1,56 @@
+To build the Doxygen documentation for the BACnet Stack:
+- Install doxygen as described at 
+  http://www.stack.nl/~dimitri/doxygen/install.html
+- If you want to generate call graphs (recommended - very nice! - but takes 
+  signficantly longer to build the documents), you must also have 
+  graphviz installed.
+- To build from the command line, just enter
+  doxygen BACnet-stack.doxyfile
+- Output is built in doc/output/html, and there is a convenient
+  starting point at doc/output/BAC_stack.html.
+- If you use Eclipse, 
+  - install the eClox plugin to support doxygen within Eclipse
+  - Build the documents by right clicking on BACnet-stack.doxyfile,
+    and selecting "@ Build Documentation"
+- Feel free to tweak the doxygen output to your tastes, interests, and 
+  choice of output formats.
+- The Latex output could be converted into a PDF (see doxygen manual,
+  and google for your issues).
+- I have tried the PDF, man, and RTF outputs and not liked the results
+  for any of them (500+ pages). I recommend the HTML output, as it is
+  well organized and has an obvious flow, both of which the others lack.
+    
+The doxygen output is not checked into this project because it consists of
+  over 5,000 little files (for HTML with call graphs), and it is easily 
+  regenerated.
+  
+For speed, the function call graphs are not enabled in the SVN version
+  of the doxyfile.  To enable them, edit BACnet-stack.doxyfile (with a
+  text editor or with GUI-based editors in Eclipse or using the 
+  doxywizard application) and change 
+    HAVE_DOT = YES
+    CALLER_GRAPH = YES
+    
+    
+Following the doxygen website's lead, I found the D-Bus project to be a good 
+  example of the sort of documentation we needed to have here.
+  http://dbus.freedesktop.org/doc/dbus/api/html/index.html
+
+
+Output Formats:
+The default output is HTML, which works well and looks good, but as mentioned,
+consists of 5000 files.
+The compiled help format (*.chm) also looks pretty good, and is packed into a
+single file.  Just a big, single file.
+
+I tried the latex-to-pdf route, but did not like the output (far too much
+whitespace, like a function per page, ~600 pages, not usefully organized).
+Ditto for RTF and man output.
+
+I could not find a linux-based compiled help compiler, so I resorted to using
+Microsoft's.  They seem to be pushing some later generation tools, and 
+maybe someone knows if that's a good thing, but I opted for their now
+fairly old HTML Help Workshop, version 4.74.
+Doxygen nicely arranges the html input, so pretty much all you have to do
+is point HTML Help Workshop at BACnet-stack\doc\output\html\index.hhp and
+let the compiler run.

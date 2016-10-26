@@ -1,0 +1,82 @@
+<!DOCTYPE CrossStudio_Project_File>
+<solution Name="bacnet" version="2">
+  <project Name="bacnet">
+    <configuration Name="Common" Platform="AVR" Target="ATmega644P" avr_architecture="V2E" avr_debug_interface="JTAG" avr_flash_size="128K" build_use_hardware_multiplier="Yes" c_preprocessor_definitions="BACDL_MSTP;MAX_APDU=128;BIG_ENDIAN=0;MAX_TSM_TRANSACTIONS=0;MAX_CHARACTER_STRING_BYTES=64;MAX_OCTET_STRING_BYTES=64;BACAPP_BOOLEAN;BACAPP_REAL;BACAPP_OBJECT_ID;BACAPP_UNSIGNED;BACAPP_ENUMERATED;BACAPP_CHARACTER_STRING;WRITE_PROPERTY" c_user_include_directories="$(ProjectDir);$(ProjectDir)/crossworks;$(ProjectDir)/../../include;$(ProjectDir)/../../demo/handler;$(ProjectDir)/../../demo/object" linker_call_stack_size="1024" linker_memory_map_file="$(PackagesDir)/targets/avr/ATmega644P.xml" project_directory="" project_type="Executable"/>
+    <folder Name="Source Files">
+      <configuration Name="Common" filter="c;h;s;asm;inc;s90"/>
+      <file file_name="adc.c">
+        <configuration Name="Common" c_user_include_directories="."/>
+      </file>
+      <file file_name="ai.c"/>
+      <file file_name="av.c"/>
+      <file file_name="bacnet.c"/>
+      <file file_name="bi.c"/>
+      <file file_name="bname.c"/>
+      <file file_name="bo.c"/>
+      <file file_name="device.c"/>
+      <file file_name="dlmstp.c"/>
+      <file file_name="eeprom.c"/>
+      <file file_name="init.c"/>
+      <file file_name="input.c"/>
+      <file file_name="led.c"/>
+      <file file_name="main.c"/>
+      <file file_name="rs485.c"/>
+      <file file_name="seeprom.c"/>
+      <file file_name="serial.c"/>
+      <file file_name="stack.c"/>
+      <file file_name="test.c"/>
+      <file file_name="timer2.c"/>
+      <file file_name="timer.c"/>
+      <file file_name="watchdog.c"/>
+    </folder>
+    <folder Name="System Files" file_name="">
+      <configuration Name="Common" filter="xml"/>
+      <file file_name="$(StudioDir)/src/crt0.asm"/>
+    </folder>
+    <folder Name="BACnet - default handlers">
+      <file file_name="../../demo/handler/h_dcc.c"/>
+      <file file_name="../../demo/handler/h_npdu.c"/>
+      <file file_name="../../demo/handler/h_rd.c"/>
+      <file file_name="../../demo/handler/h_rp.c"/>
+      <file file_name="../../demo/handler/h_rpm.c"/>
+      <file file_name="../../demo/handler/h_whohas.c"/>
+      <file file_name="../../demo/handler/h_whois.c"/>
+      <file file_name="../../demo/handler/h_wp.c"/>
+      <file file_name="../../demo/handler/noserv.c"/>
+      <file file_name="../../demo/handler/s_iam.c"/>
+      <file file_name="../../demo/handler/s_ihave.c"/>
+      <file file_name="../../demo/handler/txbuf.c"/>
+    </folder>
+    <folder Name="BACnet - core">
+      <file file_name="../../src/abort.c"/>
+      <file file_name="../../src/apdu.c"/>
+      <file file_name="../../src/bacaddr.c"/>
+      <file file_name="../../src/bacapp.c"/>
+      <file file_name="../../src/bacdcode.c"/>
+      <file file_name="../../src/bacerror.c"/>
+      <file file_name="../../src/bacint.c"/>
+      <file file_name="../../src/bacreal.c"/>
+      <file file_name="../../src/bacstr.c"/>
+      <file file_name="../../src/crc.c"/>
+      <file file_name="../../src/dcc.c"/>
+      <file file_name="../../src/fifo.c"/>
+      <file file_name="../../src/iam.c"/>
+      <file file_name="../../src/ihave.c"/>
+      <file file_name="../../src/memcopy.c"/>
+      <file file_name="../../src/npdu.c"/>
+      <file file_name="../../src/rd.c"/>
+      <file file_name="../../src/reject.c"/>
+      <file file_name="../../src/ringbuf.c"/>
+      <file file_name="../../src/rp.c"/>
+      <file file_name="../../src/rpm.c"/>
+      <file file_name="../../src/whohas.c"/>
+      <file file_name="../../src/whois.c"/>
+      <file file_name="../../src/wp.c"/>
+    </folder>
+  </project>
+  <configuration Name="AVR Debug" inherited_configurations="AVR;Debug"/>
+  <configuration Name="AVR" Platform="AVR" hidden="Yes"/>
+  <configuration Name="Debug" build_debug_information="Yes" hidden="Yes"/>
+  <configuration Name="AVR Release" inherited_configurations="AVR;Release"/>
+  <configuration Name="Release" build_debug_information="No" c_preprocessor_definitions="NDEBUG" hidden="Yes" optimize_block_locality="Yes" optimize_copy_propagation="Yes" optimize_cross_calling="Standard" optimize_cross_jumping="Yes" optimize_dead_code="Yes" optimize_jump_chaining="Yes" optimize_jump_threading="Yes" optimize_tail_merging="Yes"/>
+</solution>

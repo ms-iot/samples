@@ -1,0 +1,28 @@
+ /* Font Definitions */
+.Heading1 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 24pt;
+}
+.Heading2 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11pt;
+	font-weight: bold;
+}
+.BodyText {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11pt;
+}
+.FooterText {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 7pt;
+}
+
+.TableText {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9pt;
+	padding: 5pt 5pt 5pt 5pt;
+}
+.TableBullet {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9pt;
+}

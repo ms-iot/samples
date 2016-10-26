@@ -1,0 +1,85 @@
+Release notes
+****************************************************************************
+Release date: Jan 17th, 2015.
+OS: Ubuntu 12.0.4 and above
+Requires boost version 1.55 to build.
+Code buildable in gcc 4.6.3 and above.
+NOTE: Boost is not distributed but should be installed in the Ubuntu machine.
+*****************************************************************************
+
+Branch: master
+***************
+
+What is new?
+
+1. OICSensorBoard Sample app added for Intel Edison platform
+- Location: iotivity/examples/OICSensorBoard
+- Details and instructions provided in iotivity/examples/OICSensorBoard/OICSensorBoardREADME.pdf
+
+2. OICMiddle Sample app added for demonstrating OIC Yocto capability
+- Location: iotivity/examples/OICMiddle
+- Details and instructions provided in iotivity/examples/OICMiddle/README
+
+3. Multiple bug fixes updated in Jira.
+
+General notes:
+--------------
+Maximum length of URI supported is 64 bytes (sent from the client)
+Maximum length of query supported is 64 bytes (sent from the client)
+Maximum length of request from client and response from server for Arduino is is 256 bytes
+Maximum length of request from client and response from server for non-Ardunio is is 1024 bytes
+
+OIC base supports Arduino WiFi shield.
+This support has been tested with Arduino Mega 2560 and with Arduino 1.0.5 WiFi library.
+Please refer to oic-resource/csdk/README file for building OIC base with WiFi support.
+
+--------
+Samples:
+--------
+
+C++ Samples
+-----------
+
+A basic sample for hosting a resource on a server and a sample for client for discovering resources
+are provided here:
+Simple server sample location: oic-resource/examples/simpleserver.cpp
+Simple client sample location: oic-resource/examples/simpleclient.cpp
+Server and client mode (mode type both) location: oic-resource/examples/simpleclientserver.cpp
+Simpleserver and simpleclient samples also provide examples for doing POST operation.
+Simpleserver also demonstrates slow response case for a GET request.
+
+Garage samples provide usage of OCRepresentation, get/set attribute values
+oic-resource/examples/garageclient.cpp
+oic-resource/examples/garageserver.cpp
+
+Fridge samples provide usage of constructResourceObject API, std bind
+(for mapping request and responses), default
+device entity handler, header options support and Delete operation.
+oic-resource/examples/fridgeclient.cpp
+oic-resource/examples/fridgeserver.cpp
+
+Presence samples provides examples to use presence APIs
+Sample with basic presence feature for server side: oic-resource/examples/presenceserver.cpp
+Sample with basic presence feature for client side: oic-resource/examples/presenceclient.cpp
+
+Room samples provides examples to use resource collection.
+oic-resource/examples/roomclient.cpp
+oic-resource/examples/roomserver.cpp
+
+After building the code in oic-resource, executables for samples are in directory named
+'oic-resource/samples/release'.
+After building the code in oic-resource, executables are in directory named 'oic-resource/release'.
+
+C Samples
+---------
+Collection samples are demonstrated in:
+ocservercoll and occlientcoll
+
+Slow response feature is demonstrated in:
+ocserverslow and occlientslow
+
+Client and server basic operations -- discovery, GET, PUT, POST (NON messages) demonstrated in:
+ocserverbasicops and occlientbasicops
+
+Client and server - discovery, GET,PUT,POST,DELETE,OBS for both NON and CON demonstrated in:
+ocserver and occlient

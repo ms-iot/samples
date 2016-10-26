@@ -1,0 +1,153 @@
+#******************************************************************
+#
+# Copyright 2015 Samsung Electronics All Rights Reserved.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+=== Prerequisites ===
+
+* 1. Scons
+
+Please refer to the following page to install scons:
+   http://www.scons.org/doc/production/HTML/scons-user.html#chap-build-install
+(Note: on Windows, install Python 2.x before installing scons)
+
+* 2. IDE/SDK Pre-requites
+To build for some OS (Android / Arduino / IOS ...), an IDE/SDK may be required,
+please go to the relative page to download and install the required IDE/SDK.
+
+Note: Connectivity module building has been changed. We have to build connectivity
+      from the iotivity root folder.
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Android Build:
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Steps to build and deploy Easysetup Mediator in Android platform
+1) Compilation using Scons
+    0) Prerequisite exports for Android
+        export ANDROID_HOME=<ANDROID_HOME>
+        export ANDROID_NDK=<ANDROID_NDK>
+
+    a) In the IoTivity root source folder execute
+         scons TARGET_OS=android TARGET_ARCH=armeabi TARGET_TRANSPORT=IP RELEASE=0
+
+    b) If the project is setup correctly, you should see a BUILD SUCCESSFUL message on the terminal
+        You should see the .aar files generated inside of '<iotivity>/android/android_api/base/build/outputs/aar' directory. The .aar files contain jni directory and also a .jar file
+
+    c) Now navigate to the Easysetup NDK folder
+        <iotivity-root>/service/easy-setup/sdk/mediator/android
+
+    d) Execute NDK-Build with the following command to cross compiled Easysetup JNI .so files
+	<iotivity>/extlibs/android/ndk/android-ndk-r10d/ndk-build
+
+    e) Step (d) will generate cross compiled Easysetup JNI .so files in the following folder
+	<iotivity>/service/easy-setup/sdk/mediator/android/libs/armeabi
+
+2) Compilation using Android Studio
+
+    0) Prerequisite for running the Android application
+        Install Android Studio and use the Android SDK manager to update the Android API to 21
+
+    a) Import following projects to the Studio using the "File->New->Import Project"
+        - service\easy-setup\sdk\android\EasySetupCore
+        - service\easy-setup\sampleapp\android\EasySetup
+
+    b) EasySetupCore is dependent on the .aar files generated in 1.b
+        1) To add an .aar file to the 'EasySetupCore' project,
+            a.Right click on EasySetup->New->Module->Import .JAR or .AAR Package
+            b.Select the .aar file(iotivity-armeabi-base-*.aar) from the location in steps 1.b
+            c.Right click on EasySetup->Open Module Settings
+            d.Select each sample app module under 'Modules'->Dependencies->Add->Module Dependency
+
+    c)    Build EasySetupCore project using "Android Studio->Build->Make Module "easySetupCore"
+        If the project is setup correctly, you should see a BUILD SUCCESSFUL in the Android Studio Gradle Build terminal
+            You should see the .aar file generated inside of
+            'iotivity\service\easy-setup\sdk\mediator\android\easySetupCore\build\outputs\aar'
+
+    d) EasySetup application is also dependent on the .so files generated in 1.d step
+        1) Drag and drop the following .so files in to the EasySetup\app\src\main\jniLibs\armeabi folder
+            - libeasysetup-jni.so [Easy Setup file]
+
+    e) EasySetup is also dependent on the .aar files generated in 1.b and 2.c steps
+        1) To add an .aar file to the 'EasySetup' project,
+            a.Right click on EasySetup->New->Module->Import .JAR or .AAR Package
+            b.Select the .aar file from the location in steps 1.b and 2.b above
+            c.Right click on EasySetup->Open Module Settings
+            d.Select each sample app module under 'Modules'->Dependencies->Add->Module Dependency
+            e.The .aar files (easySetupCore-*.aar & iotivity-armeabi-base-*.aar) selected in step 2.c.1.b above should be present. Select it.
+
+
+    e) Run "Easy Setup" as an Android application
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Arduino Build:
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Steps to build and deploy Easysetup Mediator in Arduino platform
+1) Compilation using Scons for Arduino Due
+    a) Set up Arduino first before building. Refer to "connectivity\build\arduino\Arduino_Setup_README.txt" file for help.
+    b) Go to "iotivity/" folder.
+    c) Prerequisite exports for Arduino
+         export ARDUINO_HOME=<ARDUINO_HOME_DIR>
+    d) Start Arduino IDE. Select ""Tools->Port->Programming port"
+    e) scons service TARGET_OS=arduino BOARD=arduino_due_x_dbg TARGET_ARCH=arm SHIELD=WIFI
+        - With debug or logging
+            scons service TARGET_OS=arduino BOARD=arduino_due_x_dbg TARGET_ARCH=arm SHIELD=WIFI RELEASE=0
+        - With installation to Arduino
+            scons service TARGET_OS=arduino BOARD=arduino_due_x_dbg TARGET_ARCH=arm SHIELD=WIFI RELEASE=0 UPLOAD=true
+        NOTE: 1) BOARD=arduino_due_x_dbg|arduino_due_x. Default is arduino_due_x_dbg.
+              2) For Mega board, please use the following options. BOARD=mega & TARGET_ARCH=avr
+
+       Possible values for <transport> are:
+        -> IP :
+        $ scons service TARGET_OS=arduino BOARD=arduino_due_x_dbg TARGET_ARCH=arm SHIELD=WIFI RELEASE=0
+        -> BLE :
+        $ scons service TARGET_OS=arduino BOARD=arduino_due_x_dbg TARGET_ARCH=arm SHIELD=BLE RELEASE=0
+
+        Note :- Only single transport can be built at a time for Arduino
+    f) The above command will build sample. The "enrollee.hex" can be found at "out/arduino/arm/release/service/easy-setup/sampleapp/enrollee/arduino"
+    g) After building sample, script will try to install on "/dev/ttyACM0" port in 'sudo' mode.
+        To skip installation, set command line argument 'UPLOAD=false' or without UPLOAD option
+    h) To set BLE Shield Name, include the option DEVICE_NAME during scons build.
+        -> $ scons service TARGET_OS=arduino BOARD=arduino_due_x_dbg TARGET_ARCH=arm SHIELD=BLE RELEASE=0 DEVICE_NAME=OIC
+
+            Specified Device name length MUST be less than 10 characters. RBL Library has this limitation.
+            By Default DEVICE_NAME=OIC-DEVICE, if device name option is not specified
+
+            To change the port number, please modify  "port" variable in __upload() function in: "/build/arduino/SConscript".
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Folder structure:
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++        
+
+iotivity/
+└── service
+    └── easy-setup/
+        │── SConscript
+        │── sdk
+        │    └── inc
+        │    └── src
+        │    └── android
+        │    └── arduino
+        │        └──wifi
+        │            └──inc
+        │            └──src
+        │── sampleapp
+        │    └──mediator/android
+        │    └──mediator/linux
+        │    └──enrollee/arduino
+        └── Build_Instructions_Android_Arduino.txt - You are reading this.

@@ -1,93 +1,99 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using Windows.Devices.Enumeration;
+using Windows.Media.Capture;
+using Windows.Media.MediaProperties;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
-#region my reference namespace
-using Windows.Media.Capture;
-using Windows.Media.Audio;
-using Windows.Storage;
-using Windows.Media.MediaProperties;
-
-
-#endregion
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace AudioInSample
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// Audio In sample that allows you to record an audio clip and play it back
     /// </summary>
     public sealed partial class MainPage : Page
     {
         Windows.Media.Capture.MediaCapture audioCapture;
         MediaCaptureInitializationSettings captureInitSettings;
-        List<Windows.Devices.Enumeration.DeviceInformation> deviceList;
+        ObservableCollection<DeviceInformation> deviceList;
+        bool isRecording = false;
+        
+        string audioFileName = null;
 
-       // string audioFileName = "audioOut.mp3";
-        string audioFileName=null;
-        void startoPlay()
-        {
-            media.Play();
-        }
         public MainPage()
         {
             this.InitializeComponent();
-            EnumerateAudioDevice();           
+            deviceList = new ObservableCollection<DeviceInformation>();
+            deviceListView.ItemsSource = deviceList;
+            outputTextBlock.Text = "Select an audio device to start recording.";
+            media.MediaEnded += Media_MediaEnded;
+        }
 
+        private void Media_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            outputTextBlock.Text = "Done playing.";
+            refreshUI();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            EnumerateAudioDevice();
+            refreshUI();
         }
 
         private async void startRecord(object sender, RoutedEventArgs e)
         {
-            var storageFile = await Windows.Storage.KnownFolders.VideosLibrary.CreateFileAsync("audioOut.mp3", Windows.Storage.CreationCollisionOption.GenerateUniqueName);
-            audioFileName = storageFile.Name;
-            MediaEncodingProfile profile = null;
-            profile = MediaEncodingProfile.CreateM4a(Windows.Media.MediaProperties.AudioEncodingQuality.Auto);
-            await audioCapture.StartRecordToStorageFileAsync(profile, storageFile);
+            var selected = deviceListView.SelectedItem as DeviceInformation;
+            if (selected != null)
+            {
+                InitCaptureSettings(selected.Id);
+                await InitMediaCapture();
 
+                var storageFile = await Windows.Storage.KnownFolders.VideosLibrary.CreateFileAsync("audioOut.mp3", Windows.Storage.CreationCollisionOption.GenerateUniqueName);
+                audioFileName = storageFile.Name;
+                MediaEncodingProfile profile = null;
+                profile = MediaEncodingProfile.CreateM4a(Windows.Media.MediaProperties.AudioEncodingQuality.Auto);
+                await audioCapture.StartRecordToStorageFileAsync(profile, storageFile);
+                isRecording = true;
+                outputTextBlock.Text = "Recording...";
+            }
+            else
+            {
+                outputTextBlock.Text = "Error: No audio device selected.";
+            }
+
+            refreshUI();
         }
-          private async void EnumerateAudioDevice()
+
+        private async void EnumerateAudioDevice()
         {
-            var devices = await Windows.Devices.Enumeration.DeviceInformation.FindAllAsync(Windows.Devices.Enumeration.DeviceClass.AudioCapture);
-            deviceList = new List<Windows.Devices.Enumeration.DeviceInformation>();
+            deviceList.Clear();
+            var devices = await DeviceInformation.FindAllAsync(DeviceClass.AudioCapture);
             if (devices.Count > 0)
             {
-                for(var i = 0; i < devices.Count; i++)
+                for (var i = 0; i < devices.Count; i++)
                 {
                     deviceList.Add(devices[i]);
                 }
-                InitCaptureSettings();
-                InitMediaCapture();
             }
-
         }
-        private void InitCaptureSettings()
+
+        private void InitCaptureSettings(string id)
         {
             // Set the capture setting
             captureInitSettings = null;
             captureInitSettings = new Windows.Media.Capture.MediaCaptureInitializationSettings();
 
-            captureInitSettings.AudioDeviceId = "";
+            captureInitSettings.AudioDeviceId = id;
 
             captureInitSettings.StreamingCaptureMode = Windows.Media.Capture.StreamingCaptureMode.AudioAndVideo;
-            if (deviceList.Count > 0)
-            {
-                captureInitSettings.AudioDeviceId = deviceList[0].Id;
-            }
         }
-        private async void InitMediaCapture()
+
+        private async Task InitMediaCapture()
         {
             audioCapture = null;
             audioCapture = new Windows.Media.Capture.MediaCapture();
@@ -95,30 +101,45 @@ namespace AudioInSample
             // for dispose purpose
             (App.Current as App).MediaCapture = audioCapture;
             await audioCapture.InitializeAsync(captureInitSettings);
-           // CreateProfile();
 
         }
-        //public void CreateProfile()
-        //{
-        //    _profile = Windows.Media.MediaProperties.MediaEncodingProfile.CreateMp3(Windows.Media.MediaProperties.AudioEncodingQuality.Auto);
-        //}
 
         private async void endRecord(object sender, RoutedEventArgs e)
         {
-            await audioCapture.StopRecordAsync();
+            if (isRecording)
+            {
+                await audioCapture.StopRecordAsync();
+                isRecording = false;
+                refreshUI();
+                outputTextBlock.Text = "Recording stopped.";
+            }
+        }
+
+        private async void refreshUI()
+        {
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+            {
+                startRecordButton.IsEnabled = !isRecording;
+                endRecordButton.IsEnabled = isRecording;
+            });
         }
 
         private async void playRecordedAudio(object sender, RoutedEventArgs e)
         {
             Windows.Storage.StorageFile storageFile = await Windows.Storage.KnownFolders.VideosLibrary.GetFileAsync(audioFileName);
             var stream = await storageFile.OpenAsync(Windows.Storage.FileAccessMode.Read);
-
-
+            
             if (null != stream)
             {
                 media.SetSource(stream, storageFile.ContentType);
-
                 media.Play();
+                outputTextBlock.Text = "Playing audio...";
+
+                startRecordButton.IsEnabled = endRecordButton.IsEnabled = false;
+            }
+            else
+            {
+                outputTextBlock.Text = "Error: No audio file found";
             }
         }
     }

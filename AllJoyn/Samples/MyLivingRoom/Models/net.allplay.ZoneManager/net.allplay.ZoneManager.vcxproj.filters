@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resources">
+      <UniqueIdentifier>f97b0149-3fa6-4485-b031-a52ee6117de0</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="AllJoynBusObjectManager.cpp" />
+    <ClCompile Include="AllJoynHelpers.cpp" />
+    <ClCompile Include="TypeConversionHelpers.cpp" />
+    <ClCompile Include="ZoneManagerConsumer.cpp" />
+    <ClCompile Include="ZoneManagerProducer.cpp" />
+    <ClCompile Include="ZoneManagerServiceEventAdapter.cpp" />
+    <ClCompile Include="ZoneManagerServiceEventArgs.cpp" />
+    <ClCompile Include="ZoneManagerSignals.cpp" />
+    <ClCompile Include="ZoneManagerWatcher.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="AllJoynBusObjectManager.h" />
+    <ClInclude Include="AllJoynHelpers.h" />
+    <ClInclude Include="IZoneManagerService.h" />
+    <ClInclude Include="TypeConversionHelpers.h" />
+    <ClInclude Include="ZoneManagerConsumer.h" />
+    <ClInclude Include="ZoneManagerEventArgs.h" />
+    <ClInclude Include="ZoneManagerMethodResults.h" />
+    <ClInclude Include="ZoneManagerProducer.h" />
+    <ClInclude Include="ZoneManagerServiceEventAdapter.h" />
+    <ClInclude Include="ZoneManagerServiceEventArgs.h" />
+    <ClInclude Include="ZoneManagerSignals.h" />
+    <ClInclude Include="ZoneManagerStructures.h" />
+    <ClInclude Include="ZoneManagerWatcher.h" />
+  </ItemGroup>
+</Project>

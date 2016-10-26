@@ -1,0 +1,73 @@
+From 116451f8fab0df90e87d394d1fa1ac9e739c7dbe Mon Sep 17 00:00:00 2001
+From: Sachin Agrawal <sachin.agrawal@intel.com>
+Date: Tue, 20 Jan 2015 15:57:40 -0800
+Subject: [PATCH 1/1] Fixed issue to pass PSK identity hint to application in
+ callback
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+In cases (with PSK ciphersuite) where Server is sending
+'PSK Identity Hint’ inside ServerKeyExchange message, DTLS library
+is not passing the ‘identity hint’ inside ‘desc’ argument in
+get_psk_info(DTLS_PSK_KEY, desc) callback. Instead, ‘desc’ contains
+the identity of the client itself. The reason for this is that the
+code inside dtls_send_client_key_exchange() method
+overwrites the ‘identity hint’ received earlier.
+
+Change-Id: Ibf447e3a6b33284118908a52aed4cf636038ab23
+Signed-off-by: Sachin Agrawal <sachin.agrawal@intel.com>
+---
+ extlibs/tinydtls/dtls.c |   17 +++++++----------
+ 1 file changed, 7 insertions(+), 10 deletions(-)
+
+diff --git a/extlibs/tinydtls/dtls.c b/extlibs/tinydtls/dtls.c
+index 92222eb..9090f22 100644
+--- a/extlibs/tinydtls/dtls.c
++++ b/extlibs/tinydtls/dtls.c
+@@ -2164,6 +2164,7 @@ static int
+ dtls_send_client_key_exchange(dtls_context_t *ctx, dtls_peer_t *peer)
+ {
+   uint8 buf[DTLS_CKXEC_LENGTH];
++  uint8 client_id[DTLS_PSK_MAX_CLIENT_IDENTITY_LEN];
+   uint8 *p;
+   dtls_handshake_parameters_t *handshake = peer->handshake_params;
+ 
+@@ -2175,28 +2176,24 @@ dtls_send_client_key_exchange(dtls_context_t *ctx, dtls_peer_t *peer)
+     int len;
+ 
+     len = CALL(ctx, get_psk_info, &peer->session, DTLS_PSK_IDENTITY,
+-	       handshake->keyx.psk.identity, handshake->keyx.psk.id_length,
+-	       buf + sizeof(uint16),
+-	       min(sizeof(buf) - sizeof(uint16),
+-		   sizeof(handshake->keyx.psk.identity)));
++               NULL, 0,
++               client_id,
++               sizeof(client_id));
+     if (len < 0) {
+       dtls_crit("no psk identity set in kx\n");
+       return len;
+     }
+ 
+     if (len + sizeof(uint16) > DTLS_CKXEC_LENGTH) {
+-      memset(&handshake->keyx.psk, 0, sizeof(dtls_handshake_parameters_psk_t));
+       dtls_warn("the psk identity is too long\n");
+       return dtls_alert_fatal_create(DTLS_ALERT_INTERNAL_ERROR);
+     }
+-    handshake->keyx.psk.id_length = (unsigned int)len;
+-    memcpy(handshake->keyx.psk.identity, p + sizeof(uint16), len);
+ 
+-    dtls_int_to_uint16(p, handshake->keyx.psk.id_length);
++    dtls_int_to_uint16(p, len);
+     p += sizeof(uint16);
+ 
+-    memcpy(p, handshake->keyx.psk.identity, handshake->keyx.psk.id_length);
+-    p += handshake->keyx.psk.id_length;
++    memcpy(p, client_id, len);
++    p += len;
+ 
+     break;
+   }
+-- 
+1.7.9.5
+

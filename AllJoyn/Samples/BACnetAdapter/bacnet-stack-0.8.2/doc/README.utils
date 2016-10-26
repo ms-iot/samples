@@ -1,0 +1,48 @@
+There are a dozen or so demo applications that are built
+with the default makefiles.  These demo applications are
+copied to the bin/ directory.  They can be used in 
+scripts and batch files to test BACnet devices or query
+information on the BACnet network, as well as simulate
+a BACnet device.
+
+The demo applications make use of Environment Variables
+to configure the network.
+BACNET_IFACE - interface to use for the datalink layer
+  For Linux, this is something like eth0 or /dev/ttyS0.
+  For Windows, this is something like 192.168.0.1 or COM4
+  Defaults to NULL.
+  
+BACNET_IP_PORT - BACnet/IP port number. 
+  Defaults to 47808.
+
+BACNET_BBMD_PORT - BACnet/IP BBMD port number.
+  Defaults to 47808.
+
+BACNET_BBMD_TIMETOLIVE - BACnet/IP BBMD time-to-live seconds.  
+  Defaults to 0xFFFF.
+
+BACNET_BBMD_ADDRESS - dotted IP address or domain name of BBMD.
+  Attempts to register with the BBMD if this variable is present.
+
+BACNET_MAX_INFO_FRAMES - BACnet MS/TP max-info-frames parameter.
+  Defaults to 127.
+  
+BACNET_MSTP_BAUD - BACnet MS/TP baud rate. 
+  Defaults to 38400.
+
+BACNET_MSTP_MAC - BACnet MS/TP MAC address.  
+  Defaults to 127.
+
+The demo client applications can also perform static 
+address binding using the file "address_cache" in the 
+directory where the application is called (defined
+in src/address.c file).  The format of the address_cache 
+is a line by line of device ids and addresses:
+55555 AC:10:56:06:BA:C0 26001 19 50
+where:
+55555=device id in decimal
+AC:10:56:06:BA:C0=MAC address (router address) in hex
+26001=DNET network number in decimal
+19=DADR MAC address in hex.  Use colon to separate multibyte address.
+50=Max APDU
+

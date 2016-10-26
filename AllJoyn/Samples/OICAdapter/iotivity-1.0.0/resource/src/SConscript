@@ -1,0 +1,94 @@
+#******************************************************************
+#
+# Copyright 2014 Intel Mobile Communications GmbH All Rights Reserved.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+##
+# OCLib (share library) build script
+##
+Import('env')
+
+# Add third party libraries
+lib_env = env.Clone()
+SConscript(env.get('SRC_DIR') + '/resource/third_party_libs.scons', 'lib_env')
+
+oclib_env = lib_env.Clone()
+######################################################################
+# Build flags
+######################################################################
+oclib_env.AppendUnique(CPPPATH = [
+		'../include/',
+		'../csdk/stack/include',
+		'../csdk/ocrandom/include',
+		'../csdk/logger/include',
+		'../oc_logger/include',
+		'../csdk/connectivity/lib/libcoap-4.1.1'
+		])
+
+oclib_env.AppendUnique(LIBPATH = [env.get('BUILD_DIR')])
+
+oclib_env.AppendUnique(LIBS = ['octbstack', 'oc_logger'])
+
+target_os = env.get('TARGET_OS')
+if target_os == 'linux':
+	oclib_env.AppendUnique(LIBS = ['pthread'])
+
+if target_os not in ['windows', 'winrt']:
+	oclib_env.AppendUnique(CXXFLAGS = ['-std=c++0x', '-Wall', '-fPIC'])
+
+if target_os not in ['darwin', 'ios', 'windows', 'winrt']:
+	oclib_env.AppendUnique(LINKFLAGS = ['-Wl,--no-undefined'])
+
+if target_os == 'android':
+	oclib_env.AppendUnique(CXXFLAGS = ['-frtti', '-fexceptions'])
+	oclib_env.AppendUnique(LIBS = ['boost_thread', 'gnustl_shared', 'log'])
+
+if target_os == 'tizen':
+	oclib_env.AppendUnique(CPPDEFINES = ['__TIZEN__'])
+
+######################################################################
+# Source files and Targets
+######################################################################
+oclib_src = [
+		'OCPlatform.cpp',
+		'OCPlatform_impl.cpp',
+		'OCResource.cpp',
+		'OCUtilities.cpp',
+		'OCException.cpp',
+		'OCRepresentation.cpp',
+		'InProcServerWrapper.cpp',
+		'InProcClientWrapper.cpp',
+		'OCResourceRequest.cpp'
+	]
+
+oclib = oclib_env.SharedLibrary('oc', oclib_src)
+oclib_env.InstallTarget(oclib, 'liboc')
+oclib_env.UserInstallTargetLib(oclib, 'liboc')
+
+src_dir = env.get('SRC_DIR')
+
+oclib_env.UserInstallTargetHeader(src_dir + '/resource/include/OCApi.h', 'resource', 'OCApi.h')
+oclib_env.UserInstallTargetHeader(src_dir + '/resource/include/OCPlatform.h', 'resource', 'OCPlatform.h')
+oclib_env.UserInstallTargetHeader(src_dir + '/resource/include/OCRepresentation.h', 'resource', 'OCRepresentation.h')
+oclib_env.UserInstallTargetHeader(src_dir + '/resource/include/OCResource.h', 'resource', 'OCResource.h')
+oclib_env.UserInstallTargetHeader(src_dir + '/resource/include/OCResourceRequest.h', 'resource', 'OCResourceRequest.h')
+oclib_env.UserInstallTargetHeader(src_dir + '/resource/include/OCResourceResponse.h', 'resource', 'OCResourceResponse.h')
+
+# Add Provisioning library
+if target_os in ['linux', 'android'] and env.get('SECURED') == '1':
+        SConscript('../provisioning/SConscript')

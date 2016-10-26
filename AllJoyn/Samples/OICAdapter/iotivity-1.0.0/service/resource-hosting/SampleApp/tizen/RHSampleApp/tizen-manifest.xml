@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<manifest xmlns="http://tizen.org/ns/packages" api-version="2.3" package="org.tizen.rhsampleapp" version="1.0.0">
+    <profile name="mobile"/>
+    <ui-application appid="org.tizen.rhsampleapp" exec="rhsampleapp" multiple="false" nodisplay="false" taskmanage="true" type="capp">
+        <label>rhsampleapp</label>
+        <icon>rhsampleapp.png</icon>
+    </ui-application>
+    <privileges>
+        <privilege>http://tizen.org/privilege/network.get</privilege>
+        <privilege>http://tizen.org/privilege/systemsettings</privilege>
+        <privilege>http://tizen.org/privilege/network.set</privilege>
+        <privilege>http://tizen.org/privilege/internet</privilege>
+        <privilege>http://tizen.org/privilege/packagemanager.info</privilege>
+    </privileges>
+    <feature name="http://tizen.org/feature/network.wifi">true</feature>
+</manifest>

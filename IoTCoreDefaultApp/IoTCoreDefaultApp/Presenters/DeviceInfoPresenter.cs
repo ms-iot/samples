@@ -13,39 +13,60 @@ namespace IoTCoreDefaultApp
     {
         public static string GetDeviceName()
         {
-            var hostname = NetworkInformation.GetHostNames()
-                .FirstOrDefault(x => x.Type == HostNameType.DomainName);
-            if (hostname != null)
+            try
             {
-                return hostname.CanonicalName;
+                var hostname = NetworkInformation.GetHostNames()
+                    .FirstOrDefault(x => x.Type == HostNameType.DomainName);
+                if (hostname != null)
+                {
+                    return hostname.CanonicalName;
+                }
             }
-            return "<no device name>";
+            catch (Exception)
+            {
+                // do nothing
+                // in some (strange) cases NetworkInformation.GetHostNames() fails... maybe a bug in the API...
+            }
+            var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
+            return loader.GetString("NoDeviceName");
         }
 
         public static string GetBoardName()
         {
             var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
+            string boardName;
 
             switch (DeviceTypeInformation.Type)
             {
+                case DeviceTypes.RPI3:
                 case DeviceTypes.RPI2:
-                    return loader.GetString("Rpi2Name");
+                    boardName = DeviceTypeInformation.ProductName;
+                    if (string.IsNullOrEmpty(boardName))
+                    {
+                        boardName = loader.GetString( (DeviceTypeInformation.Type == DeviceTypes.RPI2) ? "Rpi2Name" : "Rpi3Name");
+                    }
+                    break;
 
                 case DeviceTypes.MBM:
-                    return loader.GetString("MBMName");
+                    boardName = loader.GetString("MBMName");
+                    break;
 
                 case DeviceTypes.DB410:
-                    return loader.GetString("DB410Name");
+                    boardName = loader.GetString("DB410Name");
+                    break;
 
                 default:
-                    return loader.GetString("GenericBoardName");
+                    boardName = loader.GetString("GenericBoardName");
+                    break;
             }
+            return boardName;
         }
 
         public static Uri GetBoardImageUri()
         {
             switch (DeviceTypeInformation.Type)
             {
+                case DeviceTypes.RPI3:
                 case DeviceTypes.RPI2:
                     return new Uri("ms-appx:///Assets/RaspberryPiBoard.png");
 

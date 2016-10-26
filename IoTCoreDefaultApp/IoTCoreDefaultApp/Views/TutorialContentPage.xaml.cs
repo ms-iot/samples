@@ -1,25 +1,17 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 
+using IoTCoreDefaultApp.Utils;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media.Imaging;
-using IoTCoreDefaultApp.Utils;
+using Windows.UI.Xaml.Navigation;
 
 namespace IoTCoreDefaultApp
 {
@@ -47,18 +39,24 @@ namespace IoTCoreDefaultApp
                 // be reloaded.
                 if (e.PropertyName == "Item[]")
                 {
+// Disable await warning
+#pragma warning disable 4014
                     Dispatcher.RunAsync(CoreDispatcherPriority.Low, () => { LoadDocument(docName); });
+#pragma warning restore 4014
                 }
             };
 
-            this.Loaded += (sender, e) =>
+            this.Loaded += async (sender, e) =>
             {
-                UpdateDateTime();
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                {
+                    UpdateDateTime();
 
-                timer = new DispatcherTimer();
-                timer.Tick += timer_Tick;
-                timer.Interval = TimeSpan.FromSeconds(30);
-                timer.Start();
+                    timer = new DispatcherTimer();
+                    timer.Tick += timer_Tick;
+                    timer.Interval = TimeSpan.FromSeconds(30);
+                    timer.Start();
+                });
             };
             this.Unloaded += (sender, e) =>
             {
@@ -67,13 +65,16 @@ namespace IoTCoreDefaultApp
             };
         }
 
-        private async void RootFrame_Navigated(object sender, NavigationEventArgs e)
+        private void RootFrame_Navigated(object sender, NavigationEventArgs e)
         {
             var newDocName = e.Parameter as string;
             if (docName != newDocName && newDocName != null)
             {
                 docName = newDocName;
+// Disable await warning
+#pragma warning disable 4014
                 Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>{ LoadDocument(docName); });
+#pragma warning restore 4014
                 NextButton.Visibility = (NavigationUtils.IsNextTutorialButtonVisible(docName) ? Visibility.Visible : Visibility.Collapsed);
             }
         }
@@ -186,7 +187,7 @@ namespace IoTCoreDefaultApp
         private void UpdateDateTime()
         {
             var t = DateTime.Now;
-            this.CurrentTime.Text = t.ToString("t", CultureInfo.CurrentCulture);
+            this.CurrentTime.Text = t.ToString("t", CultureInfo.CurrentCulture) + Environment.NewLine + t.ToString("d", CultureInfo.CurrentCulture);
         }
 
         private void ShutdownButton_Clicked(object sender, RoutedEventArgs e)
@@ -234,6 +235,11 @@ namespace IoTCoreDefaultApp
         private void SettingsButton_Clicked(object sender, RoutedEventArgs e)
         {
             NavigationUtils.NavigateToScreen(typeof(Settings));
+        }
+
+        private void CommandLineButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            NavigationUtils.NavigateToScreen(typeof(CommandLinePage));
         }
 
         private void BackButton_Clicked(object sender, RoutedEventArgs e)

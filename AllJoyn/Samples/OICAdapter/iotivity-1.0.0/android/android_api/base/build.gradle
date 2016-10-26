@@ -1,0 +1,104 @@
+/*
+ * //******************************************************************
+ * //
+ * // Copyright 2015 Intel Corporation.
+ * //
+ * //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ * //
+ * // Licensed under the Apache License, Version 2.0 (the "License");
+ * // you may not use this file except in compliance with the License.
+ * // You may obtain a copy of the License at
+ * //
+ * //      http://www.apache.org/licenses/LICENSE-2.0
+ * //
+ * // Unless required by applicable law or agreed to in writing, software
+ * // distributed under the License is distributed on an "AS IS" BASIS,
+ * // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * // See the License for the specific language governing permissions and
+ * // limitations under the License.
+ * //
+ * //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ */
+
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "20.0.0"
+    archivesBaseName = "iotivity-base"
+
+    libraryVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.aar')) {
+                def fileName = "${archivesBaseName}-${TARGET_ARCH}-${RELEASE}.aar"
+                output.outputFile = new File(outputFile.parent, fileName)
+            }
+        }
+    }
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'src/main/AndroidManifest.xml'
+            jniLibs.srcDir 'libs'
+            jni.srcDirs = [] //disable automatic ndk-build call
+        }
+    }
+}
+
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+////////////////
+////NDK Support
+////////////////
+//If using this, Android studio will fail run the following to set the environment variable for android studio:
+//launchctl setenv ANDROID_NDK_HOME /Users/boos_patrick/Development/Android/android-ndk-r8e
+//otherwise remove the dependsOn part and run ./gradlew buildNative from the command line
+
+task copyNativeLibs(type: Copy, dependsOn: 'buildNative') {
+    dependsOn 'buildNative'
+    from(new File('libs')) { include '**/*.so' }
+    into new File(buildDir, 'native-libs')
+}
+
+tasks.withType(JavaCompile) { compileTask -> compileTask.dependsOn copyNativeLibs }
+
+clean.dependsOn 'cleanCopyNativeLibs'
+
+tasks.withType(com.android.build.gradle.tasks.PackageApplication) { pkgTask ->
+    pkgTask.jniFolders = new HashSet<File>()
+    pkgTask.jniFolders.add(new File(buildDir, 'native-libs'))
+}
+
+task buildNative(type: Exec) {
+    if (System.env.ANDROID_NDK_HOME != null) {
+        //for windows use 'ndk-build.cmd'
+        //def ndkBuild = new File(System.env.ANDROID_NDK_HOME, 'ndk-build.cmd')
+        def ndkBuild = new File(System.env.ANDROID_NDK_HOME, 'ndk-build')
+        commandLine ndkBuild, "APP_ABI=$TARGET_ARCH", "APP_OPTIM=$RELEASE", "SECURE=$SECURED"
+    } else {
+        println '##################'
+        println 'Skipping NDK build'
+        println 'Reason: ANDROID_NDK_HOME not set.'
+        println '##################'
+    }
+}

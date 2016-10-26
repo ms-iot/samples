@@ -1,0 +1,1960 @@
+From 3a354d276c3375fd0ef20f5ced8f6c4d8c39c419 Mon Sep 17 00:00:00 2001
+From: Oleksii Udod <o.udod@samsung.com>
+Date: Wed, 12 Aug 2015 17:20:21 +0300
+Subject: [PATCH 1/1] add support of X.509 into tinyDTLS external library
+
+Change-Id: I560506e0c0828674969829c9e900ae08bacaeef1
+Signed-off-by: Oleksii Udod <o.udod@samsung.com>
+---
+ extlibs/tinydtls/SConscript          |   5 +-
+ extlibs/tinydtls/configure.in        |   6 +
+ extlibs/tinydtls/crypto.c            |   2 +-
+ extlibs/tinydtls/crypto.h            |   4 +-
+ extlibs/tinydtls/dtls.c              | 257 ++++++++++++++++++++-----
+ extlibs/tinydtls/dtls.h              | 108 ++++++++++-
+ extlibs/tinydtls/dtls_config.h       |  51 +++++
+ extlibs/tinydtls/dtls_config.h.in    |   3 +
+ extlibs/tinydtls/global.h            |   7 +-
+ extlibs/tinydtls/netq.h              |   2 +-
+ extlibs/tinydtls/tests/Makefile.in   |   4 +-
+ extlibs/tinydtls/tests/dtls-client.c | 336 ++++++++++++++++++++++++++++++--
+ extlibs/tinydtls/tests/dtls-server.c | 358 +++++++++++++++++++++++++++++++++--
+ extlibs/tinydtls/tinydtls.h          |   3 +
+ extlibs/tinydtls/tinydtls.h.in       |   3 +
+ 15 files changed, 1065 insertions(+), 84 deletions(-)
+
+diff --git a/extlibs/tinydtls/SConscript b/extlibs/tinydtls/SConscript
+index 4c6b4e1..7ca5ae2 100644
+--- a/extlibs/tinydtls/SConscript
++++ b/extlibs/tinydtls/SConscript
+@@ -31,7 +31,6 @@ if(target_os) == 'arduino':
+ 	env.Replace(CFLAGS = env.get('CXXFLAGS'))
+ 
+ root_dir = './'
+-
+ tinydtls_src_path = root_dir
+ 
+ env.AppendUnique(CPPPATH = [root_dir])
+@@ -62,7 +61,7 @@ tinydtls_src = [
+ env.AppendUnique(TINYDTLS_SRC = tinydtls_src)
+ 
+ if not env.get('RELEASE'):
+-	if(target_os) not in ['arduino']:
++	if(target_os) not in ['android', 'arduino']:
+ 		env.AppendUnique(TINYDTLS_SRC = ['debug.c'])
+ 	else:
+ 		env.AppendUnique(CPPDEFINES = ['NDEBUG'])
+@@ -71,6 +70,7 @@ else:
+ 
+ env.AppendUnique(CPPDEFINES = ['DTLSV12',  'WITH_SHA256', 'DTLS_CHECK_CONTENTTYPE'])
+ 
++
+ libtinydtls = env.StaticLibrary('libtinydtls', env.get('TINYDTLS_SRC'), OBJPREFIX='libtinydtls_')
+ 
+ ######################################################################
+@@ -94,6 +94,7 @@ if not env.get('RELEASE'):
+ 	samples_env.PrependUnique(LIBS = ['tinydtls'])
+ 
+ 	Alias("samples", [dtlsserver, dtlsclient])
++
+ 	samples_env.AppendTarget('samples')
+ 
+ env.InstallTarget(libtinydtls, 'libtinydtls');
+diff --git a/extlibs/tinydtls/configure.in b/extlibs/tinydtls/configure.in
+index 70b9a54..c3ebbf3 100644
+--- a/extlibs/tinydtls/configure.in
++++ b/extlibs/tinydtls/configure.in
+@@ -69,6 +69,12 @@ AC_ARG_WITH(psk,
+   [AC_DEFINE(DTLS_PSK, 1, [Define to 1 if building with PSK support])
+    DTLS_PSK=1])
+ 
++AC_ARG_WITH(x509,
++  [AS_HELP_STRING([--with-x509],[use dtls as transport protocol])],
++  [AC_DEFINE(DTLS_X509, 1, [Define to 1 if building with X.509 support])
++   DTLS_X509=1],
++  [])
++
+ CPPFLAGS="${CPPFLAGS} -DDTLSv12 -DWITH_SHA256"
+ OPT_OBJS="${OPT_OBJS} sha2/sha2.o"
+ 
+diff --git a/extlibs/tinydtls/crypto.c b/extlibs/tinydtls/crypto.c
+index deaf581..7433432 100644
+--- a/extlibs/tinydtls/crypto.c
++++ b/extlibs/tinydtls/crypto.c
+@@ -493,7 +493,7 @@ dtls_psk_pre_master_secret(unsigned char *key, size_t keylen,
+ }
+ #endif /* DTLS_PSK */
+ 
+-#ifdef DTLS_ECC
++#if defined(DTLS_ECC) || defined(DTLS_X509)
+ 
+ int dtls_ec_key_from_uint32_asn1(const uint32_t *key, size_t key_size,
+ 				 unsigned char *buf) {
+diff --git a/extlibs/tinydtls/crypto.h b/extlibs/tinydtls/crypto.h
+index f4cfc66..cade1b2 100644
+--- a/extlibs/tinydtls/crypto.h
++++ b/extlibs/tinydtls/crypto.h
+@@ -131,14 +131,14 @@ typedef struct {
+   dtls_cipher_t cipher;		/**< cipher type */
+   unsigned int do_client_auth:1;
+ 
+-#ifdef DTLS_ECC && DTLS_PSK
++#if defined(DTLS_ECC) && defined(DTLS_PSK)
+   struct keyx_t {
+     dtls_handshake_parameters_ecc_t ecc;
+     dtls_handshake_parameters_psk_t psk;
+   } keyx;
+ #else /* DTLS_ECC && DTLS_PSK */
+   union {
+-#ifdef DTLS_ECC
++#if defined(DTLS_ECC) || defined(DTLS_X509)
+     dtls_handshake_parameters_ecc_t ecc;
+ #endif /* DTLS_ECC */
+ #ifdef DTLS_PSK
+diff --git a/extlibs/tinydtls/dtls.c b/extlibs/tinydtls/dtls.c
+index 6104a08..f1e2486 100644
+--- a/extlibs/tinydtls/dtls.c
++++ b/extlibs/tinydtls/dtls.c
+@@ -479,7 +479,7 @@ static uint8 compression_methods[] = {
+ /** returns true if the cipher matches TLS_ECDHE_ECDSA_WITH_AES_128_CCM_8 */
+ static inline int is_tls_ecdhe_ecdsa_with_aes_128_ccm_8(dtls_cipher_t cipher)
+ {
+-#ifdef DTLS_ECC
++#if defined(DTLS_ECC) || defined(DTLS_X509)
+   return cipher == TLS_ECDHE_ECDSA_WITH_AES_128_CCM_8;
+ #else
+   return 0;
+@@ -532,13 +532,24 @@ static inline int is_psk_supported(dtls_context_t *ctx)
+ static inline int is_ecdsa_supported(dtls_context_t *ctx, int is_client)
+ {
+ #ifdef DTLS_ECC
+-  return ctx && ctx->h && ((!is_client && ctx->h->get_ecdsa_key) || 
++  return ctx && ctx->h && ((!is_client && ctx->h->get_ecdsa_key) ||
+ 			   (is_client && ctx->h->verify_ecdsa_key));
+ #else
+   return 0;
+ #endif /* DTLS_ECC */
+ }
+ 
++/** returns true if the application is configured for x509 */
++static inline int is_x509_supported(dtls_context_t *ctx, int is_client)
++{
++#ifdef DTLS_X509
++  return ctx && ctx->h && ((!is_client && ctx->h->get_x509_cert) ||
++               (is_client && ctx->h->verify_x509_cert));
++#else
++  return 0;
++#endif /* DTLS_X509 */
++}
++
+ /** Returns true if the application is configured for ecdhe_ecdsa with
+   * client authentication */
+ static inline int is_ecdsa_client_auth_supported(dtls_context_t *ctx)
+@@ -550,6 +561,17 @@ static inline int is_ecdsa_client_auth_supported(dtls_context_t *ctx)
+ #endif /* DTLS_ECC */
+ }
+ 
++/** Returns true if the application is configured for x509 with
++  * client authentication */
++static inline int is_x509_client_auth_supported(dtls_context_t *ctx)
++{
++#ifdef DTLS_X509
++  return ctx && ctx->h && ctx->h->get_x509_cert && ctx->h->verify_x509_cert;
++#else
++  return 0;
++#endif /* DTLS_X509 */
++}
++
+ /** returns true if ecdh_anon_with_aes_128_cbc_sha is supported */
+ static inline int is_ecdh_anon_supported(dtls_context_t *ctx)
+ {
+@@ -586,16 +608,19 @@ known_cipher(dtls_context_t *ctx, dtls_cipher_t code, int is_client) {
+   int ecdsa;
+   int ecdh_anon;
+   int ecdhe_psk;
++  int x509;
+ 
+   psk = is_psk_supported(ctx);
+   ecdsa = is_ecdsa_supported(ctx, is_client);
+   ecdh_anon = is_ecdh_anon_supported(ctx);
+   ecdhe_psk = is_ecdhe_psk_supported(ctx);
++  x509 = is_x509_supported(ctx, is_client);
+ 
+   return (psk && is_tls_psk_with_aes_128_ccm_8(code)) ||
+ 	 (ecdsa && is_tls_ecdhe_ecdsa_with_aes_128_ccm_8(code)) ||
+ 	 (ecdh_anon && is_tls_ecdh_anon_with_aes_128_cbc_sha_256(code)) ||
+-	 (ecdhe_psk && is_tls_ecdhe_psk_with_aes_128_cbc_sha_256(code));
++	 (ecdhe_psk && is_tls_ecdhe_psk_with_aes_128_cbc_sha_256(code)) ||
++     (x509 && is_tls_ecdhe_ecdsa_with_aes_128_ccm_8(code));
+ }
+ 
+ /**
+@@ -744,7 +769,7 @@ calculate_key_block(dtls_context_t *ctx,
+     break;
+   }
+ #endif /* DTLS_PSK */
+-#ifdef DTLS_ECC
++#if defined(DTLS_ECC) || defined(DTLS_X509)
+   case TLS_ECDHE_ECDSA_WITH_AES_128_CCM_8:
+   case TLS_ECDH_anon_WITH_AES_128_CBC_SHA_256: {
+     pre_master_len = dtls_ecdh_pre_master_secret(handshake->keyx.ecc.own_eph_priv,
+@@ -870,8 +895,13 @@ static int verify_ext_cert_type(uint8 *data, size_t data_length) {
+     cert_type = dtls_uint8_to_int(data);
+     data += sizeof(uint8);
+ 
++
+     if (cert_type == TLS_CERT_TYPE_RAW_PUBLIC_KEY)
+-      return 0;
++        return 0;
++#ifdef DTLS_X509
++    if (cert_type == TLS_CERT_TYPE_X509)
++        return 0;
++#endif
+   }
+ 
+   dtls_warn("no supported certificate type found\n");
+@@ -962,7 +992,12 @@ dtls_check_tls_extension(dtls_peer_t *peer,
+ 	  if (verify_ext_cert_type(data, j))
+             goto error;
+         } else {
++#ifndef DTLS_X509
+ 	  if (dtls_uint8_to_int(data) != TLS_CERT_TYPE_RAW_PUBLIC_KEY)
++#else
++	  if ((dtls_uint8_to_int(data) != TLS_CERT_TYPE_RAW_PUBLIC_KEY) &&
++	      (dtls_uint8_to_int(data) != TLS_CERT_TYPE_X509))
++#endif
+ 	    goto error;
+         }
+         break;
+@@ -972,7 +1007,12 @@ dtls_check_tls_extension(dtls_peer_t *peer,
+ 	  if (verify_ext_cert_type(data, j))
+             goto error;
+         } else {
++#ifndef DTLS_X509
+ 	  if (dtls_uint8_to_int(data) != TLS_CERT_TYPE_RAW_PUBLIC_KEY)
++#else
++	  if ((dtls_uint8_to_int(data) != TLS_CERT_TYPE_RAW_PUBLIC_KEY) &&
++	      (dtls_uint8_to_int(data) != TLS_CERT_TYPE_X509))
++#endif
+ 	    goto error;
+         }
+         break;
+@@ -1138,7 +1178,7 @@ check_client_keyexchange(dtls_context_t *ctx,
+ 			 dtls_handshake_parameters_t *handshake,
+ 			 uint8 *data, size_t length) {
+ 
+-#ifdef DTLS_ECC
++#if defined(DTLS_ECC) || defined(DTLS_X509)
+   if (is_tls_ecdhe_ecdsa_with_aes_128_ccm_8(handshake->cipher) ||
+        is_tls_ecdh_anon_with_aes_128_cbc_sha_256(handshake->cipher) ) {
+ 
+@@ -1529,7 +1569,6 @@ dtls_prepare_record(dtls_peer_t *peer, dtls_security_parameters_t *security,
+     memcpy(A_DATA + 8,  &DTLS_RECORD_HEADER(sendbuf)->content_type, 3); /* type and version */
+     dtls_int_to_uint16(A_DATA + 11, res - 8); /* length */
+ 
+-
+     res = dtls_encrypt(start + 8, res - 8, start + 8, nonce,
+                dtls_kb_local_write_key(security, peer->role),
+                dtls_kb_key_size(security, peer->role),
+@@ -1841,7 +1880,7 @@ dtls_verify_peer(dtls_context_t *ctx,
+ #undef mycookie
+ }
+ 
+-#ifdef DTLS_ECC
++#if defined(DTLS_ECC) || defined(DTLS_X509)
+ static int
+ dtls_check_ecdsa_signature_elem(uint8 *data, size_t data_length,
+ 				unsigned char **result_r,
+@@ -2025,8 +2064,13 @@ dtls_send_server_hello(dtls_context_t *ctx, dtls_peer_t *peer)
+     /* length of this extension type */
+     dtls_int_to_uint16(p, 1);
+     p += sizeof(uint16);
++#ifdef DTLS_X509
++    if (CALL(ctx, is_x509_active) == 0)
++      dtls_int_to_uint8(p, TLS_CERT_TYPE_X509);
++    else
++#endif /* DTLS_X509 */
++      dtls_int_to_uint8(p, TLS_CERT_TYPE_RAW_PUBLIC_KEY);
+ 
+-    dtls_int_to_uint8(p, TLS_CERT_TYPE_RAW_PUBLIC_KEY);
+     p += sizeof(uint8);
+ 
+     /* client certificate type extension */
+@@ -2037,7 +2081,13 @@ dtls_send_server_hello(dtls_context_t *ctx, dtls_peer_t *peer)
+     dtls_int_to_uint16(p, 1);
+     p += sizeof(uint16);
+ 
+-    dtls_int_to_uint8(p, TLS_CERT_TYPE_RAW_PUBLIC_KEY);
++#ifdef DTLS_X509
++    if (CALL(ctx, is_x509_active) == 0)
++      dtls_int_to_uint8(p, TLS_CERT_TYPE_X509);
++    else
++#endif /* DTLS_X509 */
++      dtls_int_to_uint8(p, TLS_CERT_TYPE_RAW_PUBLIC_KEY);
++
+     p += sizeof(uint8);
+ 
+     /* ec_point_formats */
+@@ -2072,7 +2122,7 @@ dtls_send_certificate_ecdsa(dtls_context_t *ctx, dtls_peer_t *peer,
+   uint8 buf[DTLS_CE_LENGTH];
+   uint8 *p;
+ 
+-  /* Certificate 
++  /* Certificate
+    *
+    * Start message construction at beginning of buffer. */
+   p = buf;
+@@ -2097,7 +2147,46 @@ dtls_send_certificate_ecdsa(dtls_context_t *ctx, dtls_peer_t *peer,
+   return dtls_send_handshake_msg(ctx, peer, DTLS_HT_CERTIFICATE,
+ 				 buf, p - buf);
+ }
++#endif /* DTLS_ECC */
++
++#ifdef DTLS_X509
++static int
++dtls_send_certificate_x509(dtls_context_t *ctx, dtls_peer_t *peer)
++{
++  uint8 buf[DTLS_MAX_CERT_SIZE];
++  uint8 *p;
++  int ret;
++  unsigned char *cert;
++  size_t cert_size;
++
++  dtls_info("\n dtls_send_certificate_ecdsa\n");
++  ret = CALL(ctx, get_x509_cert, &peer->session,
++          (const unsigned char **)&cert, &cert_size);
++
++  if (ret < 0) {
++    dtls_alert_fatal_create(DTLS_ALERT_HANDSHAKE_FAILURE);
++    return ret;
++  }
++
++  /* Certificate
++   *
++   * Start message construction at beginning of buffer. */
++  p = buf;
++
++  dtls_int_to_uint24(p, cert_size); /* certificates length */
++  p += sizeof(uint24);
++
++  memcpy(p, cert, cert_size);
++  p += cert_size;
++
++  assert(p - buf <= sizeof(buf));
++
++  return dtls_send_handshake_msg(ctx, peer, DTLS_HT_CERTIFICATE,
++				 buf, p - buf);
++}
++#endif /* DTLS_X509 */
+ 
++#if defined(DTLS_X509) || defined(DTLS_ECC)
+ static uint8 *
+ dtls_add_ecdsa_signature_elem(uint8 *p, uint32_t *point_r, uint32_t *point_s)
+ {
+@@ -2204,7 +2293,6 @@ dtls_send_server_key_exchange_ecdh(dtls_context_t *ctx, dtls_peer_t *peer,
+   dtls_ecdsa_generate_key(config->keyx.ecc.own_eph_priv,
+               ephemeral_pub_x, ephemeral_pub_y,
+               DTLS_EC_KEY_SIZE);
+-
+   if(ecdsa) {
+       /* sign the ephemeral and its paramaters */
+            dtls_ecdsa_create_sig(key->priv_key, DTLS_EC_KEY_SIZE,
+@@ -2221,7 +2309,7 @@ dtls_send_server_key_exchange_ecdh(dtls_context_t *ctx, dtls_peer_t *peer,
+   return dtls_send_handshake_msg(ctx, peer, DTLS_HT_SERVER_KEY_EXCHANGE,
+ 				 buf, p - buf);
+ }
+-#endif /* DTLS_ECC */
++#endif /* defined(DTLS_X509) || defined(DTLS_ECC) */
+ 
+ #if defined(DTLS_PSK) && defined(DTLS_ECC)
+ static int dtls_send_server_key_exchange_ecdhe_psk(dtls_context_t *ctx, dtls_peer_t *peer,
+@@ -2327,7 +2415,7 @@ dtls_send_server_key_exchange_psk(dtls_context_t *ctx, dtls_peer_t *peer,
+ }
+ #endif /* DTLS_PSK */
+ 
+-#ifdef DTLS_ECC
++#if defined(DTLS_ECC) || defined(DTLS_X509)
+ static int
+ dtls_send_server_certificate_request(dtls_context_t *ctx, dtls_peer_t *peer)
+ {
+@@ -2401,7 +2489,7 @@ dtls_send_server_hello_msgs(dtls_context_t *ctx, dtls_peer_t *peer)
+   ecdh_anon = is_tls_ecdh_anon_with_aes_128_cbc_sha_256(peer->handshake_params->cipher);
+   ecdhe_psk = is_tls_ecdhe_psk_with_aes_128_cbc_sha_256(peer->handshake_params->cipher);
+ 
+-#ifdef DTLS_ECC
++#if defined(DTLS_ECC) || defined(DTLS_X509)
+   if(ecdh_anon) {
+       res = dtls_send_server_key_exchange_ecdh(ctx, peer, NULL);
+ 
+@@ -2413,13 +2501,24 @@ dtls_send_server_hello_msgs(dtls_context_t *ctx, dtls_peer_t *peer)
+   else if (ecdsa) {
+     const dtls_ecc_key_t *ecdsa_key;
+ 
+-    res = CALL(ctx, get_ecdsa_key, &peer->session, &ecdsa_key);
++#ifdef DTLS_X509
++    if (CALL(ctx, is_x509_active) == 0)
++      res = CALL(ctx, get_x509_key, &peer->session, &ecdsa_key);
++    else
++#endif /* DTLS_X509 */
++      res = CALL(ctx, get_ecdsa_key, &peer->session, &ecdsa_key);
++
+     if (res < 0) {
+-      dtls_crit("no ecdsa certificate to send in certificate\n");
++        dtls_debug("no ecdsa key to send\n");
+       return res;
+     }
+ 
+-    res = dtls_send_certificate_ecdsa(ctx, peer, ecdsa_key);
++#ifdef DTLS_X509
++    if (CALL(ctx, is_x509_active) == 0)
++      res = dtls_send_certificate_x509(ctx, peer);
++    else
++#endif /* DTLS_X509 */
++      res = dtls_send_certificate_ecdsa(ctx, peer, ecdsa_key);
+ 
+     if (res < 0) {
+       dtls_debug("dtls_server_hello: cannot prepare Certificate record\n");
+@@ -2434,9 +2533,8 @@ dtls_send_server_hello_msgs(dtls_context_t *ctx, dtls_peer_t *peer)
+     }
+ 
+     if (is_tls_ecdhe_ecdsa_with_aes_128_ccm_8(peer->handshake_params->cipher) &&
+-	is_ecdsa_client_auth_supported(ctx)) {
++	(is_ecdsa_client_auth_supported(ctx) || (is_x509_client_auth_supported(ctx)))) {
+       res = dtls_send_server_certificate_request(ctx, peer);
+-
+       if (res < 0) {
+         dtls_debug("dtls_server_hello(with ECDSA): cannot prepare certificate Request record\n");
+         return res;
+@@ -2554,7 +2652,7 @@ dtls_send_client_key_exchange(dtls_context_t *ctx, dtls_peer_t *peer)
+     break;
+   }
+ #endif /* DTLS_PSK */
+-#ifdef DTLS_ECC
++#if defined(DTLS_ECC) || defined(DTLS_X509)
+   case TLS_ECDHE_ECDSA_WITH_AES_128_CCM_8:
+   case TLS_ECDH_anon_WITH_AES_128_CBC_SHA_256: {
+     uint8 *ephemeral_pub_x;
+@@ -2644,7 +2742,7 @@ dtls_send_client_key_exchange(dtls_context_t *ctx, dtls_peer_t *peer)
+ 				 buf, p - buf);
+ }
+ 
+-#ifdef DTLS_ECC
++#if defined(DTLS_ECC) || defined(DTLS_X509)
+ static int
+ dtls_send_certificate_verify_ecdh(dtls_context_t *ctx, dtls_peer_t *peer,
+ 				   const dtls_ecc_key_t *key)
+@@ -2723,6 +2821,7 @@ dtls_send_client_hello(dtls_context_t *ctx, dtls_peer_t *peer,
+   int ecdsa = 0;
+   int ecdh_anon = 0;
+   int ecdhe_psk = 0;
++  int x509 = 0;
+   dtls_handshake_parameters_t *handshake = peer->handshake_params;
+   dtls_tick_t now;
+ 
+@@ -2733,6 +2832,7 @@ dtls_send_client_hello(dtls_context_t *ctx, dtls_peer_t *peer,
+         break;
+       case TLS_ECDHE_ECDSA_WITH_AES_128_CCM_8:
+         ecdsa = is_ecdsa_supported(ctx, 1);
++        x509 = is_x509_supported(ctx, 1);
+         break;
+       case TLS_ECDH_anon_WITH_AES_128_CBC_SHA_256:
+         ecdh_anon = is_ecdh_anon_supported(ctx);
+@@ -2745,11 +2845,12 @@ dtls_send_client_hello(dtls_context_t *ctx, dtls_peer_t *peer,
+         ecdsa = is_ecdsa_supported(ctx, 1);
+         ecdh_anon = is_ecdh_anon_supported(ctx);
+         ecdhe_psk = is_ecdhe_psk_supported(ctx);
++        x509 = is_x509_supported(ctx, 1);
+         break;
+    }
+ 
+-  cipher_size = 2 + (ecdsa ? 2 : 0) + (psk ? 2 : 0) + (ecdh_anon ? 2 : 0) + (ecdhe_psk ? 2 : 0);
+-  extension_size = (ecdsa) ? (2 + 6 + 6 + 8 + 6) : 0;
++  cipher_size = 2 + ((ecdsa || x509) ? 2 : 0) + (psk ? 2 : 0) + (ecdh_anon ? 2 : 0) + (ecdhe_psk ? 2 : 0);
++  extension_size = (ecdsa || x509) ? (2 + 6 + 6 + 8 + 6) : 0;
+ 
+   if (cipher_size == 0) {
+     dtls_crit("no cipher callbacks implemented\n");
+@@ -2799,7 +2900,7 @@ dtls_send_client_hello(dtls_context_t *ctx, dtls_peer_t *peer,
+     dtls_int_to_uint16(p, TLS_PSK_WITH_AES_128_CCM_8);
+     p += sizeof(uint16);
+   }
+-  if (ecdsa) {
++  if (ecdsa || x509) {
+     dtls_int_to_uint16(p, TLS_ECDHE_ECDSA_WITH_AES_128_CCM_8);
+     p += sizeof(uint16);
+   }
+@@ -2821,7 +2922,7 @@ dtls_send_client_hello(dtls_context_t *ctx, dtls_peer_t *peer,
+     p += sizeof(uint16);
+   }
+ 
+-  if (ecdsa) {
++  if (ecdsa || x509) {
+     /* client certificate type extension */
+     dtls_int_to_uint16(p, TLS_EXT_CLIENT_CERTIFICATE_TYPE);
+     p += sizeof(uint16);
+@@ -2834,7 +2935,13 @@ dtls_send_client_hello(dtls_context_t *ctx, dtls_peer_t *peer,
+     dtls_int_to_uint8(p, 1);
+     p += sizeof(uint8);
+ 
+-    dtls_int_to_uint8(p, TLS_CERT_TYPE_RAW_PUBLIC_KEY);
++#ifdef DTLS_X509
++    if (CALL(ctx, is_x509_active) == 0)
++      dtls_int_to_uint8(p, TLS_CERT_TYPE_X509);
++    else
++#endif /* DTLS_X509 */
++      dtls_int_to_uint8(p, TLS_CERT_TYPE_RAW_PUBLIC_KEY);
++
+     p += sizeof(uint8);
+ 
+     /* client certificate type extension */
+@@ -2849,7 +2956,13 @@ dtls_send_client_hello(dtls_context_t *ctx, dtls_peer_t *peer,
+     dtls_int_to_uint8(p, 1);
+     p += sizeof(uint8);
+ 
+-    dtls_int_to_uint8(p, TLS_CERT_TYPE_RAW_PUBLIC_KEY);
++#ifdef DTLS_X509
++    if (CALL(ctx, is_x509_active) == 0)
++      dtls_int_to_uint8(p, TLS_CERT_TYPE_X509);
++    else
++#endif /* DTLS_X509 */
++      dtls_int_to_uint8(p, TLS_CERT_TYPE_RAW_PUBLIC_KEY);
++
+     p += sizeof(uint8);
+ 
+     /* elliptic_curves */
+@@ -2985,8 +3098,9 @@ check_server_hello_verify_request(dtls_context_t *ctx,
+ }
+ 
+ #ifdef DTLS_ECC
++
+ static int
+-check_server_certificate(dtls_context_t *ctx, 
++check_peer_certificate(dtls_context_t *ctx,
+ 			 dtls_peer_t *peer,
+ 			 uint8 *data, size_t data_length)
+ {
+@@ -3036,7 +3150,41 @@ check_server_certificate(dtls_context_t *ctx,
+ 
+   return 0;
+ }
++#endif /* DTLS_ECC */
++
++#ifdef DTLS_X509
++static int
++check_peer_certificate_x509(dtls_context_t *ctx,
++			 dtls_peer_t *peer,
++			 uint8 *data, size_t data_length)
++{
++  int ret;
++  dtls_handshake_parameters_t *config = peer->handshake_params;
++  int cert_length;
++
++  dtls_info("\n check_peer_certificate_x509\n");
++  update_hs_hash(peer, data, data_length);
++
++  assert(is_tls_ecdhe_ecdsa_with_aes_128_ccm_8(config->cipher));
++
++  data += DTLS_HS_LENGTH;
++
++  cert_length = dtls_uint24_to_int(data);
++  data += sizeof(uint24);
++
++  ret = CALL(ctx, verify_x509_cert, &peer->session, data, cert_length,
++          config->keyx.ecc.other_pub_x, sizeof(config->keyx.ecc.other_pub_x),
++          config->keyx.ecc.other_pub_y, sizeof(config->keyx.ecc.other_pub_y));
++  if (ret < 0) {
++    dtls_warn("The certificate was not accepted\n");
++    return ret;
++  }
++
++  return 0;
++}
++#endif /* DTLS_X509 */
+ 
++#if defined(DTLS_X509) || defined(DTLS_ECC)
+ static int
+ check_server_key_exchange_ecdsa(dtls_context_t *ctx,
+ 				dtls_peer_t *peer,
+@@ -3385,13 +3533,17 @@ check_certificate_request(dtls_context_t *ctx,
+ }
+ 
+ static int
+-check_server_hellodone(dtls_context_t *ctx, 
++check_server_hellodone(dtls_context_t *ctx,
+ 		      dtls_peer_t *peer,
+ 		      uint8 *data, size_t data_length)
+ {
+-  int res;
++  int res = 0;
+ #ifdef DTLS_ECC
+   const dtls_ecc_key_t *ecdsa_key;
++#ifdef DTLS_X509
++  unsigned char *cert;
++  size_t cert_size;
++#endif /* DTLS_X509 */
+ #endif /* DTLS_ECC */
+ 
+   dtls_handshake_parameters_t *handshake = peer->handshake_params;
+@@ -3400,16 +3552,25 @@ check_server_hellodone(dtls_context_t *ctx,
+ 
+   update_hs_hash(peer, data, data_length);
+ 
+-#ifdef DTLS_ECC
++#if defined(DTLS_ECC) || defined(DTLS_X509)
+   if (is_tls_ecdhe_ecdsa_with_aes_128_ccm_8(handshake->cipher) && handshake->do_client_auth) {
+-
+-    res = CALL(ctx, get_ecdsa_key, &peer->session, &ecdsa_key);
++#ifdef DTLS_X509
++    if (CALL(ctx, is_x509_active) == 0)
++      res = CALL(ctx, get_x509_key, &peer->session, &ecdsa_key);
++    else
++#endif /* DTLS_X509 */
++      res = CALL(ctx, get_ecdsa_key, &peer->session, &ecdsa_key);
+     if (res < 0) {
+-      dtls_crit("no ecdsa certificate to send in certificate\n");
++      dtls_crit("no ecdsa key to use\n");
+       return res;
+     }
+ 
+-    res = dtls_send_certificate_ecdsa(ctx, peer, ecdsa_key);
++#ifdef DTLS_X509
++    if (CALL(ctx, is_x509_active) == 0)
++      res = dtls_send_certificate_x509(ctx, peer);
++    else
++#endif /* DTLS_X509 */
++      res = dtls_send_certificate_ecdsa(ctx, peer, ecdsa_key);
+ 
+     if (res < 0) {
+       dtls_debug("dtls_server_hello: cannot prepare Certificate record\n");
+@@ -3428,7 +3589,6 @@ check_server_hellodone(dtls_context_t *ctx,
+ 
+ #ifdef DTLS_ECC
+   if (is_tls_ecdhe_ecdsa_with_aes_128_ccm_8(handshake->cipher) && handshake->do_client_auth) {
+-
+     res = dtls_send_certificate_verify_ecdh(ctx, peer, ecdsa_key);
+ 
+     if (res < 0) {
+@@ -3655,16 +3815,21 @@ handle_handshake_msg(dtls_context_t *ctx, dtls_peer_t *peer, session_t *session,
+ 
+     break;
+ 
+-#ifdef DTLS_ECC
++#if defined(DTLS_ECC) || defined(DTLS_X509)
+   case DTLS_HT_CERTIFICATE:
+ 
+     if ((role == DTLS_CLIENT && state != DTLS_STATE_WAIT_SERVERCERTIFICATE) ||
+         (role == DTLS_SERVER && state != DTLS_STATE_WAIT_CLIENTCERTIFICATE)) {
+       return dtls_alert_fatal_create(DTLS_ALERT_UNEXPECTED_MESSAGE);
+     }
+-    err = check_server_certificate(ctx, peer, data, data_length);
++#ifdef DTLS_X509
++    if (CALL(ctx, is_x509_active) == 0)
++      err = check_peer_certificate_x509(ctx, peer, data, data_length);
++    else
++#endif /* DTLS_X509 */
++      err = check_peer_certificate(ctx, peer, data, data_length);
+     if (err < 0) {
+-      dtls_warn("error in check_server_certificate err: %i\n", err);
++      dtls_warn("error in check_peer_certificate err: %i\n", err);
+       return err;
+     }
+     if (role == DTLS_CLIENT) {
+@@ -3679,7 +3844,7 @@ handle_handshake_msg(dtls_context_t *ctx, dtls_peer_t *peer, session_t *session,
+ 
+   case DTLS_HT_SERVER_KEY_EXCHANGE:
+ 
+-#ifdef DTLS_ECC
++#if defined(DTLS_ECC) || defined(DTLS_X509)
+     if (is_tls_ecdhe_ecdsa_with_aes_128_ccm_8(peer->handshake_params->cipher)) {
+       if (state != DTLS_STATE_WAIT_SERVERKEYEXCHANGE) {
+         return dtls_alert_fatal_create(DTLS_ALERT_UNEXPECTED_MESSAGE);
+@@ -3811,13 +3976,13 @@ handle_handshake_msg(dtls_context_t *ctx, dtls_peer_t *peer, session_t *session,
+     update_hs_hash(peer, data, data_length);
+ 
+     if (is_tls_ecdhe_ecdsa_with_aes_128_ccm_8(peer->handshake_params->cipher) &&
+-	is_ecdsa_client_auth_supported(ctx))
++            (is_ecdsa_client_auth_supported(ctx) || (is_x509_client_auth_supported(ctx))))
+       peer->state = DTLS_STATE_WAIT_CERTIFICATEVERIFY; //ecdsa
+     else
+       peer->state = DTLS_STATE_WAIT_CHANGECIPHERSPEC; //psk || ecdh_anon
+     break;
+ 
+-#ifdef DTLS_ECC
++#if defined(DTLS_ECC) || defined(DTLS_X509)
+   case DTLS_HT_CERTIFICATE_VERIFY:
+ 
+     if (state != DTLS_STATE_WAIT_CERTIFICATEVERIFY) {
+@@ -3934,7 +4099,7 @@ handle_handshake_msg(dtls_context_t *ctx, dtls_peer_t *peer, session_t *session,
+       return err;
+     }
+     if (is_tls_ecdhe_ecdsa_with_aes_128_ccm_8(peer->handshake_params->cipher) &&
+-	is_ecdsa_client_auth_supported(ctx))
++            (is_ecdsa_client_auth_supported(ctx) || (is_x509_client_auth_supported(ctx))))
+       peer->state = DTLS_STATE_WAIT_CLIENTCERTIFICATE; //ecdhe
+     else
+       peer->state = DTLS_STATE_WAIT_CLIENTKEYEXCHANGE; //psk, ecdh_anon
+@@ -4261,7 +4426,7 @@ dtls_handle_message(dtls_context_t *ctx,
+           data = msg + DTLS_RH_LENGTH;
+           data_length = rlen - DTLS_RH_LENGTH;
+           state = DTLS_STATE_WAIT_CLIENTHELLO;
+-          role = DTLS_SERVER;       
++          role = DTLS_SERVER;
+         } else {
+ 	  int err =  dtls_alert_fatal_create(DTLS_ALERT_DECRYPT_ERROR);
+           dtls_info("decrypt_verify() failed\n");
+@@ -4506,7 +4671,7 @@ dtls_connect_peer(dtls_context_t *ctx, dtls_peer_t *peer) {
+   res = dtls_send_client_hello(ctx, peer, NULL, 0);
+   if (res < 0)
+     dtls_warn("cannot send ClientHello\n");
+-  else 
++  else
+     peer->state = DTLS_STATE_CLIENTHELLO;
+ 
+   return res;
+diff --git a/extlibs/tinydtls/dtls.h b/extlibs/tinydtls/dtls.h
+index 7d2bc19..c5a86df 100644
+--- a/extlibs/tinydtls/dtls.h
++++ b/extlibs/tinydtls/dtls.h
+@@ -56,6 +56,10 @@
+ #define DTLS_VERSION 0xfefd	/* DTLS v1.2 */
+ #endif
+ 
++#ifdef DTLS_X509
++#define DTLS_MAX_CERT_SIZE       1400
++#endif
++
+ typedef enum dtls_credentials_type_t {
+   DTLS_PSK_HINT, DTLS_PSK_IDENTITY, DTLS_PSK_KEY
+ } dtls_credentials_type_t;
+@@ -181,10 +185,11 @@ typedef struct {
+    *                session.
+    * @return @c 0 if result is set, or less than zero on error.
+    */
+-  int (*get_ecdsa_key)(struct dtls_context_t *ctx, 
++  int (*get_ecdsa_key)(struct dtls_context_t *ctx,
+ 		       const session_t *session,
+ 		       const dtls_ecc_key_t **result);
+ 
++
+   /**
+    * Called during handshake to check the peer's pubic key in this
+    * session. If the public key matches the session and should be
+@@ -211,12 +216,111 @@ typedef struct {
+    *   return dtls_alert_fatal_create(DTLS_ALERT_CERTIFICATE_UNKNOWN);
+    *   return dtls_alert_fatal_create(DTLS_ALERT_UNKNOWN_CA);
+    */
+-  int (*verify_ecdsa_key)(struct dtls_context_t *ctx, 
++  int (*verify_ecdsa_key)(struct dtls_context_t *ctx,
+ 			  const session_t *session,
+ 			  const unsigned char *other_pub_x,
+ 			  const unsigned char *other_pub_y,
+ 			  size_t key_size);
+ #endif /* DTLS_ECC */
++#ifdef DTLS_X509
++  /**
++   * Called during handshake to get the server's or client's ecdsa
++   * key used to authenticate this server or client in this
++   * session. If found, the key must be stored in @p result and
++   * the return value must be @c 0. If not found, @p result is
++   * undefined and the return value must be less than zero.
++   *
++   * If ECDSA should not be supported, set this pointer to NULL.
++   *
++   * Implement this if you want to provide your own certificate to
++   * the other peer. This is mandatory for a server providing X.509
++   * support and optional for a client. A client doing DTLS client
++   * authentication has to implementing this callback.
++   *
++   * @param ctx     The current dtls context.
++   * @param session The session where the key will be used.
++   * @param result  Must be set to the key object to used for the given
++   *                session.
++   * @return @c 0 if result is set, or less than zero on error.
++   */
++  int (*get_x509_key)(struct dtls_context_t *ctx,
++               const session_t *session,
++               const dtls_ecc_key_t **result);
++  /**
++   * Called during handshake to get the server's or client's
++   * certificate used to authenticate this server or client in this
++   * session. If found, the certificate must be stored in @p cert and
++   * the return value must be @c 0. If not found, @p cert is
++   * undefined and the return value must be less than zero.
++   *
++   * If X.509 should not be supported, set this pointer to NULL.
++   *
++   * Implement this if you want to provide your own certificate to
++   * the other peer. This is mandatory for a server providing X.509
++   * support and optional for a client. A client doing DTLS client
++   * authentication has to implementing this callback.
++   *
++   * @param ctx       The current dtls context.
++   * @param session   The session where the certificate will be used.
++   * @param cert      Must be set to the certificate object to used for
++   *                  the given session.
++   * @param cert_size Size of certificate in bytes.
++   * @return @c 0 if result is set, or less than zero on error.
++   */
++  int (*get_x509_cert)(struct dtls_context_t *ctx,
++			const session_t *session,
++			const unsigned char **cert,
++			size_t *cert_size);
++
++  /**
++   * Called during handshake to check the peer's certificate in this
++   * session. If the certificate matches the session and is valid the
++   * return value must be @c 0. If not valid, the return value must be
++   * less than zero.
++   *
++   * If X.509 should not be supported, set this pointer to NULL.
++   *
++   * Implement this if you want to verify the other peers certificate.
++   * This is mandatory for a DTLS client doing based X.509
++   * authentication. A server implementing this will request the
++   * client to do DTLS client authentication.
++   *
++   * @param ctx       The current dtls context.
++   * @param session   The session where the key will be used.
++   * @param cert      Peer's certificate to check.
++   * @param cert_size Size of certificate in bytes.
++   * @param x         Allocated memory to store peer's public key part x.
++   * @param x_size    Size of allocated memory to store peer's public key part x.
++   * @param y         Allocated memory to store peer's public key part y.
++   * @param y_size    Size of allocated memory to store peer's public key part y.
++   * @return @c 0 if public key matches, or less than zero on error.
++   * error codes:
++   *   return dtls_alert_fatal_create(DTLS_ALERT_BAD_CERTIFICATE);
++   *   return dtls_alert_fatal_create(DTLS_ALERT_UNSUPPORTED_CERTIFICATE);
++   *   return dtls_alert_fatal_create(DTLS_ALERT_CERTIFICATE_REVOKED);
++   *   return dtls_alert_fatal_create(DTLS_ALERT_CERTIFICATE_EXPIRED);
++   *   return dtls_alert_fatal_create(DTLS_ALERT_CERTIFICATE_UNKNOWN);
++   *   return dtls_alert_fatal_create(DTLS_ALERT_UNKNOWN_CA);
++   */
++  int (*verify_x509_cert)(struct dtls_context_t *ctx,
++			   const session_t *session,
++			   const unsigned char *cert,
++			   size_t cert_size,
++               unsigned char *x,
++			   size_t x_size,
++               unsigned char *y,
++			   size_t y_size);
++
++  /**
++   * Called during handshake to check if certificate format should be X.509
++   *
++   * If X.509 should not be supported, set this pointer to NULL.
++   *
++   * @param ctx       The current dtls context.
++   * @return @c 0 if certificate format should be X.509, or less than zero on error.
++   */
++  int (*is_x509_active)(struct dtls_context_t *ctx);
++#endif /* DTLS_X509 */
+ } dtls_handler_t;
+ 
+ /** Holds global information of the DTLS engine. */
+diff --git a/extlibs/tinydtls/dtls_config.h b/extlibs/tinydtls/dtls_config.h
+index 39df8c9..c6c4e39 100644
+--- a/extlibs/tinydtls/dtls_config.h
++++ b/extlibs/tinydtls/dtls_config.h
+@@ -66,9 +66,27 @@
+ #endif
+ #endif /* CONTIKI */
+ 
++/* Define if building universal (internal helper macro) */
++/* #undef AC_APPLE_UNIVERSAL_BUILD */
++
++/* Define to 1 if building with X.509 support */
++#define DTLS_X509 1
++
++/* Define to 1 if you have the <arpa/inet.h> header file. */
++#define HAVE_ARPA_INET_H 1
++
+ /* Define to 1 if you have the <assert.h> header file. */
+ #define HAVE_ASSERT_H 1
+ 
++/* Define to 1 if you have the <fcntl.h> header file. */
++#define HAVE_FCNTL_H 1
++
++/* Define to 1 if you have the `fls' function. */
++/* #undef HAVE_FLS */
++
++/* Define to 1 if you have the <inttypes.h> header file. */
++#define HAVE_INTTYPES_H 1
++
+ /* Define to 1 if your system has a GNU libc compatible `malloc' function, and
+    to 0 otherwise. */
+ #define HAVE_MALLOC 1
+@@ -79,6 +97,21 @@
+ /* Define to 1 if you have the `memset' function. */
+ #define HAVE_MEMSET 1
+ 
++/* Define to 1 if you have the <netdb.h> header file. */
++#define HAVE_NETDB_H 1
++
++/* Define to 1 if you have the <netinet/in.h> header file. */
++#define HAVE_NETINET_IN_H 1
++
++/* Define to 1 if you have the `select' function. */
++#define HAVE_SELECT 1
++
++/* Define to 1 if struct sockaddr_in6 has a member sin6_len. */
++/* #undef HAVE_SOCKADDR_IN6_SIN6_LEN */
++
++/* Define to 1 if you have the `socket' function. */
++#define HAVE_SOCKET 1
++
+ /* Define to 1 if you have the <stddef.h> header file. */
+ #define HAVE_STDDEF_H 1
+ 
+@@ -103,9 +136,27 @@
+ /* Define to 1 if you have the `strnlen' function. */
+ #define HAVE_STRNLEN 1
+ 
++/* Define to 1 if you have the <sys/param.h> header file. */
++#define HAVE_SYS_PARAM_H 1
++
++/* Define to 1 if you have the <sys/socket.h> header file. */
++#define HAVE_SYS_SOCKET_H 1
++
++/* Define to 1 if you have the <sys/stat.h> header file. */
++#define HAVE_SYS_STAT_H 1
++
++/* Define to 1 if you have the <sys/time.h> header file. */
++#define HAVE_SYS_TIME_H 1
++
++/* Define to 1 if you have the <sys/types.h> header file. */
++#define HAVE_SYS_TYPES_H 1
++
+ /* Define to 1 if you have the <time.h> header file. */
+ #define HAVE_TIME_H 1
+ 
++/* Define to 1 if you have the <unistd.h> header file. */
++#define HAVE_UNISTD_H 1
++
+ /* Define to 1 if you have the `vprintf' function. */
+ #define HAVE_VPRINTF 1
+ 
+diff --git a/extlibs/tinydtls/dtls_config.h.in b/extlibs/tinydtls/dtls_config.h.in
+index a29077c..adc8dc5 100644
+--- a/extlibs/tinydtls/dtls_config.h.in
++++ b/extlibs/tinydtls/dtls_config.h.in
+@@ -68,6 +68,9 @@
+ /* Define if building universal (internal helper macro) */
+ #undef AC_APPLE_UNIVERSAL_BUILD
+ 
++/* Define to 1 if building with X.509 support */
++#undef DTLS_X509
++
+ /* Define to 1 if you have the <arpa/inet.h> header file. */
+ #undef HAVE_ARPA_INET_H
+ 
+diff --git a/extlibs/tinydtls/global.h b/extlibs/tinydtls/global.h
+index 8b3c518..048bacd 100644
+--- a/extlibs/tinydtls/global.h
++++ b/extlibs/tinydtls/global.h
+@@ -55,7 +55,7 @@ typedef unsigned char uint48[6];
+     When Peers are sending bigger messages this causes problems. Californium
+     with ECDSA needs at least 220 */
+ #ifdef WITH_CONTIKI
+-#ifdef DTLS_ECC
++#if defined(DTLS_ECC) || defined(DTLS_X509)
+ #define DTLS_MAX_BUF 200
+ #else /* DTLS_ECC */
+ #define DTLS_MAX_BUF 100
+@@ -96,7 +96,10 @@ typedef enum {
+ #define TLS_EXT_SERVER_CERTIFICATE_TYPE	20 /* see RFC 7250 */
+ #define TLS_EXT_ENCRYPT_THEN_MAC	22 /* see RFC 7366 */
+ 
+-#define TLS_CERT_TYPE_RAW_PUBLIC_KEY	2 /* see RFC 7250 */
++/* see http://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#tls-extensiontype-values-3 */
++#define TLS_CERT_TYPE_X509              0 /* see RFC 6091 */
++#define TLS_CERT_TYPE_RAW_PUBLIC_KEY    2 /* see RFC 7250 */
++
+ 
+ #define TLS_EXT_ELLIPTIC_CURVES_SECP256R1	23 /* see RFC 4492 */
+ 
+diff --git a/extlibs/tinydtls/netq.h b/extlibs/tinydtls/netq.h
+index a771b23..fea7511 100644
+--- a/extlibs/tinydtls/netq.h
++++ b/extlibs/tinydtls/netq.h
+@@ -23,7 +23,7 @@
+  */
+ 
+ #ifndef NETQ_MAXCNT
+-#ifdef DTLS_ECC
++#if defined(DTLS_ECC) || defined(DTLS_X509)
+ #define NETQ_MAXCNT 5 /**< maximum number of elements in netq structure */
+ #elif defined(DTLS_PSK)
+ #define NETQ_MAXCNT 3 /**< maximum number of elements in netq structure */
+diff --git a/extlibs/tinydtls/tests/Makefile.in b/extlibs/tinydtls/tests/Makefile.in
+index 3a50695..a2d8ca4 100644
+--- a/extlibs/tinydtls/tests/Makefile.in
++++ b/extlibs/tinydtls/tests/Makefile.in
+@@ -41,9 +41,9 @@ SOURCES:= dtls-server.c ccm-test.c prf-test.c \
+ OBJECTS:= $(patsubst %.c, %.o, $(SOURCES))
+ PROGRAMS:= $(patsubst %.c, %, $(SOURCES))
+ HEADERS:=
+-CFLAGS:=-Wall @CFLAGS@ 
++CFLAGS:=-Wall @CFLAGS@
+ CPPFLAGS:=-I$(top_srcdir) @CPPFLAGS@
+-LDFLAGS:=-L$(top_builddir) 
++LDFLAGS:=-L$(top_builddir)
+ LDLIBS:=-ltinydtls @LIBS@
+ DISTDIR=$(top_builddir)/@PACKAGE_TARNAME@-@PACKAGE_VERSION@
+ FILES:=Makefile.in $(SOURCES) ccm-testdata.c #cbc_aes128-testdata.c
+diff --git a/extlibs/tinydtls/tests/dtls-client.c b/extlibs/tinydtls/tests/dtls-client.c
+index dfd34c8..2c4eff9 100644
+--- a/extlibs/tinydtls/tests/dtls-client.c
++++ b/extlibs/tinydtls/tests/dtls-client.c
+@@ -16,9 +16,34 @@
+ #include <netdb.h>
+ #include <signal.h>
+ 
+-#include "global.h" 
+-#include "debug.h" 
+-#include "dtls.h" 
++#include "global.h"
++#include "debug.h"
++#include "dtls.h"
++
++/**
++ * @struct byte_array
++ *
++ * General purpose byte array structure.
++ *
++ * Contains pointer to array of bytes and it's length.
++ */
++
++typedef struct
++{
++    uint8_t *data;    /**< Pointer to the byte array */
++    size_t len;      /**< Data size */
++} byte_array;
++
++
++/**@def BYTE_ARRAY_INITIALIZER
++ *
++ * Initializes of existing byte array pointer to \a NULL.
++ */
++#undef BYTE_ARRAY_INITIALIZER
++#define BYTE_ARRAY_INITIALIZER {NULL, 0}
++
++#define DTLS_PRIVATE_KEY_SIZE        (32)
++#define DTLS_PUBLIC_KEY_SIZE         (64)
+ 
+ #define DEFAULT_PORT 20220
+ 
+@@ -26,6 +51,7 @@
+ #define PSK_SERVER_IDENTITY  "Server_identity"
+ #define PSK_DEFAULT_KEY      "secretPSK"
+ #define PSK_OPTIONS          "i:s:k:"
++#define X509_OPTIONS         "x:r:u:"
+ 
+ #ifdef __GNUC__
+ #define UNUSED_PARAM __attribute__((unused))
+@@ -46,7 +72,105 @@ static dtls_str output_file = { 0, NULL }; /* output file name */
+ static dtls_context_t *dtls_context = NULL;
+ static dtls_context_t *orig_dtls_context = NULL;
+ 
++#ifdef DTLS_X509
++#define CLIENT_CRT_LEN 293
++static const unsigned char g_client_certificate[CLIENT_CRT_LEN] = {
++        0x00, 0x01, 0x22,
++        0x30, 0x82, 0x01, 0x1e, 0x30, 0x81, 0xc4, 0xa0,
++        0x03, 0x02, 0x01, 0x01, 0x02, 0x02, 0x02, 0x38,
++        0x30, 0x0c, 0x06, 0x08, 0x2a, 0x86, 0x48, 0xce,
++        0x3d, 0x04, 0x03, 0x02, 0x05, 0x00, 0x30, 0x17,
++        0x31, 0x15, 0x30, 0x13, 0x06, 0x03, 0x55, 0x04,
++        0x03, 0x0c, 0x0c, 0x4c, 0x6f, 0x63, 0x61, 0x6c,
++        0x20, 0x49, 0x53, 0x53, 0x55, 0x45, 0x52, 0x30,
++        0x1e, 0x17, 0x0d, 0x31, 0x33, 0x30, 0x31, 0x30,
++        0x31, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x5a,
++        0x17, 0x0d, 0x34, 0x39, 0x30, 0x31, 0x30, 0x31,
++        0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x5a, 0x30,
++        0x17, 0x31, 0x15, 0x30, 0x13, 0x06, 0x03, 0x55,
++        0x04, 0x03, 0x0c, 0x0c, 0x4c, 0x6f, 0x63, 0x61,
++        0x6c, 0x20, 0x43, 0x4c, 0x49, 0x45, 0x4e, 0x54,
++        0x30, 0x59, 0x30, 0x13, 0x06, 0x07, 0x2a, 0x86,
++        0x48, 0xce, 0x3d, 0x02, 0x01, 0x06, 0x08, 0x2a,
++        0x86, 0x48, 0xce, 0x3d, 0x03, 0x01, 0x07, 0x03,
++        0x42, 0x00, 0x04, 0xe3, 0xd1, 0x67, 0x1e, 0xdc,
++        0x46, 0xf4, 0x19, 0x50, 0x15, 0x2e, 0x3a, 0x2f,
++        0xd8, 0x68, 0x6b, 0x37, 0x32, 0x84, 0x9e, 0x83,
++        0x81, 0xbf, 0x25, 0x5d, 0xbb, 0x18, 0x07, 0x3c,
++        0xbd, 0xf3, 0xab, 0xd3, 0xbf, 0x53, 0x59, 0xc9,
++        0x1e, 0xce, 0x5b, 0x39, 0x6a, 0xe5, 0x60, 0xf3,
++        0x70, 0xdb, 0x66, 0xb6, 0x80, 0xcb, 0x65, 0x0b,
++        0x35, 0x2a, 0x62, 0x44, 0x89, 0x63, 0x64, 0x6f,
++        0x6f, 0xbd, 0xf0, 0x30, 0x0c, 0x06, 0x08, 0x2a,
++        0x86, 0x48, 0xce, 0x3d, 0x04, 0x03, 0x02, 0x05,
++        0x00, 0x03, 0x47, 0x00, 0x30, 0x44, 0x02, 0x20,
++        0x60, 0xdc, 0x45, 0x77, 0x7d, 0xcb, 0xc3, 0xb4,
++        0xba, 0x60, 0x5a, 0x2e, 0xe5, 0x4e, 0x19, 0x8b,
++        0x48, 0x8a, 0x87, 0xd4, 0x66, 0xb4, 0x1a, 0x86,
++        0x23, 0x67, 0xb8, 0xb6, 0x50, 0xfe, 0x4d, 0xde,
++        0x02, 0x20, 0x60, 0x68, 0x46, 0xff, 0x74, 0x11,
++        0xfb, 0x36, 0x13, 0xf4, 0xa7, 0x3d, 0xb7, 0x35,
++        0x79, 0x23, 0x29, 0x14, 0x6a, 0x28, 0x09, 0xff,
++        0x8c, 0x19, 0x26, 0xe3, 0x41, 0xc8, 0xe4, 0x13,
++        0xbc, 0x8e};
++//default client's key pair
++static const unsigned char x509_priv_key[] = {
++        0xf9, 0x42, 0xb4, 0x16, 0x89, 0x10, 0xf4, 0x07,
++        0x99, 0xb2, 0xe2, 0x9a, 0xed, 0xd4, 0x39, 0xb8,
++        0xca, 0xd4, 0x9d, 0x76, 0x11, 0x43, 0x3a, 0xac,
++        0x14, 0xba, 0x17, 0x9d, 0x3e, 0xbb, 0xbf, 0xbc};
++
++static const unsigned char x509_pub_key_x[] = {
++        0xe3, 0xd1, 0x67, 0x1e, 0xdc, 0x46, 0xf4, 0x19,
++        0x50, 0x15, 0x2e, 0x3a, 0x2f, 0xd8, 0x68, 0x6b,
++        0x37, 0x32, 0x84, 0x9e, 0x83, 0x81, 0xbf, 0x25,
++        0x5d, 0xbb, 0x18, 0x07, 0x3c, 0xbd, 0xf3, 0xab};
++
++static const unsigned char x509_pub_key_y[] = {
++        0xd3, 0xbf, 0x53, 0x59, 0xc9, 0x1e, 0xce, 0x5b,
++        0x39, 0x6a, 0xe5, 0x60, 0xf3, 0x70, 0xdb, 0x66,
++        0xb6, 0x80, 0xcb, 0x65, 0x0b, 0x35, 0x2a, 0x62,
++        0x44, 0x89, 0x63, 0x64, 0x6f, 0x6f, 0xbd, 0xf0};
++
++//default CA pub key
++static const unsigned char x509_ca_pub_x[] = {
++        0x57, 0x94, 0x7f, 0x98, 0x7a, 0x02, 0x67, 0x09,
++        0x25, 0xc1, 0xcb, 0x5a, 0xf5, 0x46, 0xfb, 0xad,
++        0xf7, 0x68, 0x94, 0x8c, 0xa7, 0xe3, 0xf0, 0x5b,
++        0xc3, 0x6b, 0x5c, 0x9b, 0xd3, 0x7d, 0x74, 0x12
++};
+ 
++static const unsigned char x509_ca_pub_y[] = {
++        0xce, 0x68, 0xbc, 0x55, 0xf5, 0xf8, 0x1b, 0x3d,
++        0xef, 0xed, 0x1f, 0x2b, 0xd2, 0x69, 0x5d, 0xcf,
++        0x79, 0x16, 0xa6, 0xbd, 0x97, 0x96, 0x27, 0x60,
++        0x5d, 0xd1, 0xb7, 0x93, 0xa2, 0x4a, 0x62, 0x4d
++};
++
++//default server's key pair
++static const unsigned char serv_pub_key_x[] = {
++        0x07, 0x88, 0x10, 0xdc, 0x62, 0xd7, 0xe6, 0x9b,
++        0x7c, 0xad, 0x6e, 0x78, 0xb0, 0x5f, 0x9a, 0x00,
++        0x11, 0x74, 0x2c, 0x8b, 0xaf, 0x09, 0x65, 0x7c,
++        0x86, 0x8e, 0x55, 0xcb, 0x39, 0x55, 0x72, 0xc6};
++
++static const unsigned char serv_pub_key_y[] = {
++        0x65, 0x71, 0xcd, 0x03, 0xdc, 0x2a, 0x4f, 0x46,
++        0x5b, 0x14, 0xc8, 0x27, 0x74, 0xab, 0xf4, 0x1f,
++        0xc1, 0x35, 0x0d, 0x42, 0xbc, 0xc2, 0x9f, 0xb5,
++        0xc1, 0x79, 0xb6, 0x8b, 0xca, 0xdb, 0xff, 0x82};
++
++
++static unsigned char x509_client_cert[DTLS_MAX_CERT_SIZE];
++static size_t x509_client_cert_len = 0;
++static unsigned char x509_client_priv[DTLS_PRIVATE_KEY_SIZE+1];
++static size_t x509_client_priv_is_set = 0;
++static unsigned char x509_ca_pub[DTLS_PUBLIC_KEY_SIZE+1];
++static size_t x509_ca_pub_is_set = 0;
++
++static int x509_info_from_file = 0;
++#endif /*DTLS_X509*/
++#ifdef DTLS_ECC
+ static const unsigned char ecdsa_priv_key[] = {
+ 			0x41, 0xC1, 0xCB, 0x6B, 0x51, 0x24, 0x7A, 0x14,
+ 			0x43, 0x21, 0x43, 0x5B, 0x7A, 0x80, 0xE7, 0x14,
+@@ -65,7 +189,8 @@ static const unsigned char ecdsa_pub_key_y[] = {
+ 			0xE9, 0x3F, 0x98, 0x72, 0x09, 0xDA, 0xED, 0x0B,
+ 			0x4F, 0xAB, 0xC3, 0x6F, 0xC7, 0x72, 0xF8, 0x29};
+ 
+-#ifdef DTLS_PSK
++#endif /*DTLS_ECC*/
++#if defined(DTLS_PSK) || defined(DTLS_X509)
+ ssize_t
+ read_from_file(char *arg, unsigned char *buf, size_t max_buf_len) {
+   FILE *f;
+@@ -87,11 +212,11 @@ read_from_file(char *arg, unsigned char *buf, size_t max_buf_len) {
+     result += bytes_read;
+     max_buf_len -= bytes_read;
+   }
+-
+   fclose(f);
+   return result;
+ }
+-
++#endif /*DTLS_PSK||DTLS_X509*/
++#ifdef DTLS_PSK
+ /* The PSK information for DTLS */
+ #define PSK_ID_MAXLEN 256
+ #define PSK_MAXLEN 256
+@@ -149,13 +274,14 @@ static int
+ get_ecdsa_key(struct dtls_context_t *ctx,
+ 	      const session_t *session,
+ 	      const dtls_ecc_key_t **result) {
++    (void)ctx;
++    (void)session;
+   static const dtls_ecc_key_t ecdsa_key = {
+     .curve = DTLS_ECDH_CURVE_SECP256R1,
+     .priv_key = ecdsa_priv_key,
+     .pub_key_x = ecdsa_pub_key_x,
+     .pub_key_y = ecdsa_pub_key_y
+   };
+-
+   *result = &ecdsa_key;
+   return 0;
+ }
+@@ -166,10 +292,115 @@ verify_ecdsa_key(struct dtls_context_t *ctx,
+ 		 const unsigned char *other_pub_x,
+ 		 const unsigned char *other_pub_y,
+ 		 size_t key_size) {
++  (void)ctx;
++  (void)session;
++  (void)other_pub_x;
++  (void)other_pub_y;
++  (void)key_size;
+   return 0;
+ }
++
+ #endif /* DTLS_ECC */
+ 
++#ifdef DTLS_X509
++static int
++get_x509_key(struct dtls_context_t *ctx,
++          const session_t *session,
++          const dtls_ecc_key_t **result) {
++    (void)ctx;
++    (void)session;
++  static dtls_ecc_key_t ecdsa_key = {
++    .curve = DTLS_ECDH_CURVE_SECP256R1,
++    .priv_key = x509_priv_key,
++    .pub_key_x = x509_pub_key_x,
++    .pub_key_y = x509_pub_key_y
++  };
++  if (x509_info_from_file)
++      ecdsa_key.priv_key = x509_client_priv;
++  *result = &ecdsa_key;
++  return 0;
++}
++
++static int
++get_x509_cert(struct dtls_context_t *ctx,
++        const session_t *session,
++        const unsigned char **cert,
++        size_t *cert_size)
++{
++    (void)ctx;
++    (void)session;
++    if (x509_info_from_file)
++    {
++        *cert = x509_client_cert;
++        *cert_size = x509_client_cert_len;
++    }
++    else
++    {
++        *cert = g_client_certificate;
++        *cert_size = CLIENT_CRT_LEN;
++    }
++
++    return 0;
++}
++
++int check_certificate(byte_array cert_der_code, byte_array ca_public_key)
++{
++    (void)cert_der_code;
++    (void)ca_public_key;
++    return 0;
++}
++
++static int verify_x509_cert(struct dtls_context_t *ctx, const session_t *session,
++                                  const unsigned char *cert, size_t cert_size,
++                                  unsigned char *x,
++                                  size_t x_size,
++                                  unsigned char *y,
++                                  size_t y_size)
++{
++    int ret;
++    const unsigned char *ca_pub_x;
++    const unsigned char *ca_pub_y;
++    byte_array cert_der_code = BYTE_ARRAY_INITIALIZER;
++    byte_array ca_public_key = BYTE_ARRAY_INITIALIZER;
++    unsigned char ca_pub_key[DTLS_PUBLIC_KEY_SIZE];
++    (void)ctx;
++    (void)session;
++
++    if (x509_info_from_file)
++    {
++        ca_pub_x = x509_ca_pub;
++        ca_pub_y = x509_ca_pub + DTLS_PUBLIC_KEY_SIZE/2;
++    }
++    else
++    {
++        ca_pub_x = x509_ca_pub_x;
++        ca_pub_y = x509_ca_pub_y;
++    }
++
++    cert_der_code.data = (uint8_t *)cert;
++    cert_der_code.len = cert_size;
++
++    ca_public_key.len = DTLS_PUBLIC_KEY_SIZE;
++    ca_public_key.data = ca_pub_key;
++    memcpy(ca_public_key.data, ca_pub_x, DTLS_PUBLIC_KEY_SIZE/2);
++    memcpy(ca_public_key.data + DTLS_PUBLIC_KEY_SIZE/2, ca_pub_y, DTLS_PUBLIC_KEY_SIZE/2);
++
++    memcpy(x, serv_pub_key_x, x_size);
++    memcpy(y, serv_pub_key_y, y_size);
++
++    ret = (int) check_certificate(cert_der_code, ca_public_key);
++
++    return -ret;
++}
++
++static int is_x509_active(struct dtls_context_t *ctx)
++{
++    (void)ctx;
++    return 0;
++}
++
++#endif /* DTLS_X509 */
++
+ static void
+ try_send(struct dtls_context_t *ctx, session_t *dst) {
+   int res;
+@@ -190,6 +421,8 @@ static int
+ read_from_peer(struct dtls_context_t *ctx, 
+ 	       session_t *session, uint8 *data, size_t len) {
+   size_t i;
++  (void)ctx;
++  (void)session;
+   for (i = 0; i < len; i++)
+     printf("%c", data[i]);
+   return 0;
+@@ -295,16 +528,24 @@ usage( const char *program, const char *version) {
+ 
+   fprintf(stderr, "%s v%s -- DTLS client implementation\n"
+ 	  "(c) 2011-2014 Olaf Bergmann <bergmann@tzi.org>\n\n"
++	  "usage: %s"
+ #ifdef DTLS_PSK
+-	  "usage: %s [-i file] [-s file] [-k file] [-o file] [-p port] [-v num] [-c num] addr [port]\n"
+-#else /*  DTLS_PSK */
+-	  "usage: %s [-o file] [-p port] [-v num] [-c num] addr [port]\n"
++          " [-i file] [-s file] [-k file]"
+ #endif /* DTLS_PSK */
++#ifdef DTLS_X509
++          " [-x file] [-r file] [-u file]"
++#endif /* DTLS_X509 */
++          " [-o file] [-p port] [-v num] [-c num] addr [port]\n"
+ #ifdef DTLS_PSK
+ 	  "\t-i file\t\tread PSK Client identity from file\n"
+ 	  "\t-s file\t\tread PSK Server identity from file\n"
+ 	  "\t-k file\t\tread pre-shared key from file\n"
+ #endif /* DTLS_PSK */
++#ifdef DTLS_X509
++          "\t-x file\tread Client certificate from file\n"
++          "\t-r file\tread Client private key from file\n"
++          "\t-u file\tread CA public key from file\n"
++#endif /* DTLS_X509 */
+ 	  "\t-o file\t\toutput received data to this file (use '-' for STDOUT)\n"
+ 	  "\t-p port\t\tlisten on specified port (default is %d)\n"
+ 	  "\t-v num\t\tverbosity level (default: 3)\n"
+@@ -325,8 +566,15 @@ static dtls_handler_t cb = {
+ #endif /* DTLS_PSK */
+ #ifdef DTLS_ECC
+   .get_ecdsa_key = get_ecdsa_key,
+-  .verify_ecdsa_key = verify_ecdsa_key
++  .verify_ecdsa_key = verify_ecdsa_key,
+ #endif /* DTLS_ECC */
++#ifdef DTLS_X509
++  .get_x509_key = get_x509_key,
++  .verify_x509_cert = verify_x509_cert,
++  .get_x509_cert = get_x509_cert,
++  .is_x509_active = is_x509_active,
++#endif /* DTLS_X509 */
++
+ };
+ 
+ #define DTLS_CLIENT_CMD_CLOSE "client:close"
+@@ -365,7 +613,7 @@ main(int argc, char **argv) {
+   memcpy(psk_key, PSK_DEFAULT_KEY, psk_key_length);
+ #endif /* DTLS_PSK */
+ 
+-  while ((opt = getopt(argc, argv, "p:o:v:c:" PSK_OPTIONS)) != -1) {
++  while ((opt = getopt(argc, argv, "p:o:v:c:" PSK_OPTIONS X509_OPTIONS)) != -1) {
+     switch (opt) {
+ #ifdef DTLS_PSK
+     case 'i' : {
+@@ -396,6 +644,47 @@ main(int argc, char **argv) {
+       break;
+     }
+ #endif /* DTLS_PSK */
++#ifdef DTLS_X509
++    case 'x' :
++    {
++      ssize_t result = read_from_file(optarg, x509_client_cert, DTLS_MAX_CERT_SIZE);
++      if (result < 0)
++      {
++          dtls_warn("Cannot read Client certificate. Using default\n");
++      }
++      else
++      {
++          x509_client_cert_len = result;
++      }
++      break;
++    }
++    case 'r' :
++    {
++      ssize_t result = read_from_file(optarg, x509_client_priv, DTLS_PRIVATE_KEY_SIZE+1);
++      if (result < 0)
++      {
++          dtls_warn("Cannot read Client private key. Using default\n");
++      }
++      else
++      {
++          x509_client_priv_is_set = result;
++      }
++      break;
++    }
++    case 'u' :
++    {
++      ssize_t result = read_from_file(optarg, x509_ca_pub, DTLS_PUBLIC_KEY_SIZE+1);
++      if (result < 0)
++      {
++          dtls_warn("Cannot read CA public key. Using default\n");
++      }
++      else
++      {
++          x509_ca_pub_is_set = result;
++      }
++      break;
++    }
++#endif /* DTLS_X509 */
+     case 'p' :
+       strncpy(port_str, optarg, NI_MAXSERV-1);
+       port_str[NI_MAXSERV - 1] = '\0';
+@@ -403,7 +692,7 @@ main(int argc, char **argv) {
+     case 'o' :
+       output_file.length = strlen(optarg);
+       output_file.s = (unsigned char *)malloc(output_file.length + 1);
+-      
++
+       if (!output_file.s) {
+ 	dtls_crit("cannot set output file: insufficient memory\n");
+ 	exit(-1);
+@@ -444,12 +733,29 @@ main(int argc, char **argv) {
+   }
+ 
+   dtls_set_log_level(log_level);
+-  
++
+   if (argc <= optind) {
+     usage(argv[0], dtls_package_version());
+     exit(1);
+   }
+-  
++
++#ifdef DTLS_X509
++  if (x509_client_cert_len && x509_client_priv_is_set && x509_ca_pub_is_set)
++  {
++      x509_info_from_file = 1;
++  }
++  else if(!(x509_client_cert_len || x509_client_priv_is_set || x509_ca_pub_is_set))
++  {
++      x509_info_from_file = 0;
++  }
++  else
++  {
++      fprintf(stderr,"please set -x, -r, -u options simultaneously");
++      usage(argv[0], dtls_package_version());
++      exit(1);
++  }
++#endif /* DTLS_X509 */
++
+   memset(&dst, 0, sizeof(session_t));
+   /* resolve destination address where server should be sent */
+   res = resolve_address(argv[optind++], &dst.addr.sa);
+diff --git a/extlibs/tinydtls/tests/dtls-server.c b/extlibs/tinydtls/tests/dtls-server.c
+index 5893084..a3ede4d 100644
+--- a/extlibs/tinydtls/tests/dtls-server.c
++++ b/extlibs/tinydtls/tests/dtls-server.c
+@@ -14,12 +14,138 @@
+ #include <netdb.h>
+ #include <signal.h>
+ 
+-#include "tinydtls.h" 
+-#include "dtls.h" 
+-#include "debug.h" 
++#include "tinydtls.h"
++#include "dtls.h"
++#include "debug.h"
++
++#ifdef DTLS_X509
++#define DTLS_PRIVATE_KEY_SIZE        (32)
++#define DTLS_PUBLIC_KEY_SIZE         (64)
++#endif
+ 
+ #define DEFAULT_PORT 20220
+ 
++/**
++ * @struct byte_array
++ *
++ * General purpose byte array structure.
++ *
++ * Contains pointer to array of bytes and it's length.
++ */
++
++typedef struct
++{
++    uint8_t *data;    /**< Pointer to the byte array */
++    size_t len;      /**< Data size */
++} byte_array;
++
++
++/**@def BYTE_ARRAY_INITIALIZER
++ *
++ * Initializes of existing byte array pointer to \a NULL.
++ */
++#undef BYTE_ARRAY_INITIALIZER
++#define BYTE_ARRAY_INITIALIZER {NULL, 0}
++
++#ifdef DTLS_X509
++#define X509_OPTIONS         "x:r:u:"
++#define SERVER_CRT_LEN 295
++static const unsigned char g_server_certificate[SERVER_CRT_LEN] = {
++        0x00, 0x01, 0x24,
++        0x30, 0x82, 0x01, 0x20, 0x30, 0x81, 0xc4, 0xa0,
++        0x03, 0x02, 0x01, 0x01, 0x02, 0x02, 0x02, 0x37,
++        0x30, 0x0c, 0x06, 0x08, 0x2a, 0x86, 0x48, 0xce,
++        0x3d, 0x04, 0x03, 0x02, 0x05, 0x00, 0x30, 0x17,
++        0x31, 0x15, 0x30, 0x13, 0x06, 0x03, 0x55, 0x04,
++        0x03, 0x0c, 0x0c, 0x4c, 0x6f, 0x63, 0x61, 0x6c,
++        0x20, 0x49, 0x53, 0x53, 0x55, 0x45, 0x52, 0x30,
++        0x1e, 0x17, 0x0d, 0x31, 0x33, 0x30, 0x31, 0x30,
++        0x31, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x5a,
++        0x17, 0x0d, 0x34, 0x39, 0x30, 0x31, 0x30, 0x31,
++        0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x5a, 0x30,
++        0x17, 0x31, 0x15, 0x30, 0x13, 0x06, 0x03, 0x55,
++        0x04, 0x03, 0x0c, 0x0c, 0x4c, 0x6f, 0x63, 0x61,
++        0x6c, 0x20, 0x53, 0x45, 0x52, 0x56, 0x45, 0x52,
++        0x30, 0x59, 0x30, 0x13, 0x06, 0x07, 0x2a, 0x86,
++        0x48, 0xce, 0x3d, 0x02, 0x01, 0x06, 0x08, 0x2a,
++        0x86, 0x48, 0xce, 0x3d, 0x03, 0x01, 0x07, 0x03,
++        0x42, 0x00, 0x04, 0x07, 0x88, 0x10, 0xdc, 0x62,
++        0xd7, 0xe6, 0x9b, 0x7c, 0xad, 0x6e, 0x78, 0xb0,
++        0x5f, 0x9a, 0x00, 0x11, 0x74, 0x2c, 0x8b, 0xaf,
++        0x09, 0x65, 0x7c, 0x86, 0x8e, 0x55, 0xcb, 0x39,
++        0x55, 0x72, 0xc6, 0x65, 0x71, 0xcd, 0x03, 0xdc,
++        0x2a, 0x4f, 0x46, 0x5b, 0x14, 0xc8, 0x27, 0x74,
++        0xab, 0xf4, 0x1f, 0xc1, 0x35, 0x0d, 0x42, 0xbc,
++        0xc2, 0x9f, 0xb5, 0xc1, 0x79, 0xb6, 0x8b, 0xca,
++        0xdb, 0xff, 0x82, 0x30, 0x0c, 0x06, 0x08, 0x2a,
++        0x86, 0x48, 0xce, 0x3d, 0x04, 0x03, 0x02, 0x05,
++        0x00, 0x03, 0x49, 0x00, 0x30, 0x46, 0x02, 0x21,
++        0x00, 0xb1, 0x81, 0x81, 0x92, 0x0e, 0x76, 0x7c,
++        0xeb, 0xf5, 0x37, 0xde, 0x27, 0xc4, 0x01, 0xc8,
++        0x96, 0xc3, 0xe5, 0x9f, 0x47, 0x7e, 0x25, 0x92,
++        0xa4, 0xba, 0x22, 0x25, 0xa3, 0x81, 0x19, 0xcf,
++        0x0d, 0x02, 0x21, 0x00, 0xca, 0x92, 0xbe, 0x79,
++        0xc7, 0x82, 0x84, 0x64, 0xc4, 0xc4, 0xf4, 0x3d,
++        0x69, 0x79, 0x68, 0xc0, 0xf1, 0xba, 0xaf, 0x6c,
++        0xbb, 0xdd, 0x54, 0x7d, 0x07, 0xe7, 0x53, 0x3b,
++        0xc3, 0x1b, 0x87, 0x04};
++
++//default server's key pair
++static const unsigned char x509_priv_key[] = {
++        0xaa, 0xa3, 0x46, 0xf1, 0x3c, 0x56, 0x5d, 0x08,
++        0x5e, 0x59, 0xba, 0x7f, 0xd2, 0x21, 0x62, 0xc6,
++        0xcc, 0x5d, 0xfa, 0x3f, 0xb5, 0x25, 0xa9, 0x89,
++        0x4f, 0x32, 0xe8, 0x2a, 0xe0, 0xee, 0x9b, 0x4c};
++
++static const unsigned char x509_pub_key_x[] = {
++        0x07, 0x88, 0x10, 0xdc, 0x62, 0xd7, 0xe6, 0x9b,
++        0x7c, 0xad, 0x6e, 0x78, 0xb0, 0x5f, 0x9a, 0x00,
++        0x11, 0x74, 0x2c, 0x8b, 0xaf, 0x09, 0x65, 0x7c,
++        0x86, 0x8e, 0x55, 0xcb, 0x39, 0x55, 0x72, 0xc6};
++
++static const unsigned char x509_pub_key_y[] = {
++        0x65, 0x71, 0xcd, 0x03, 0xdc, 0x2a, 0x4f, 0x46,
++        0x5b, 0x14, 0xc8, 0x27, 0x74, 0xab, 0xf4, 0x1f,
++        0xc1, 0x35, 0x0d, 0x42, 0xbc, 0xc2, 0x9f, 0xb5,
++        0xc1, 0x79, 0xb6, 0x8b, 0xca, 0xdb, 0xff, 0x82};
++
++//default CA pub key
++static const unsigned char x509_ca_pub_x[] = {
++        0x57, 0x94, 0x7f, 0x98, 0x7a, 0x02, 0x67, 0x09,
++        0x25, 0xc1, 0xcb, 0x5a, 0xf5, 0x46, 0xfb, 0xad,
++        0xf7, 0x68, 0x94, 0x8c, 0xa7, 0xe3, 0xf0, 0x5b,
++        0xc3, 0x6b, 0x5c, 0x9b, 0xd3, 0x7d, 0x74, 0x12
++};
++
++static const unsigned char x509_ca_pub_y[] = {
++        0xce, 0x68, 0xbc, 0x55, 0xf5, 0xf8, 0x1b, 0x3d,
++        0xef, 0xed, 0x1f, 0x2b, 0xd2, 0x69, 0x5d, 0xcf,
++        0x79, 0x16, 0xa6, 0xbd, 0x97, 0x96, 0x27, 0x60,
++        0x5d, 0xd1, 0xb7, 0x93, 0xa2, 0x4a, 0x62, 0x4d
++};
++
++static const unsigned char client_pub_key_x[] = {
++        0xe3, 0xd1, 0x67, 0x1e, 0xdc, 0x46, 0xf4, 0x19,
++        0x50, 0x15, 0x2e, 0x3a, 0x2f, 0xd8, 0x68, 0x6b,
++        0x37, 0x32, 0x84, 0x9e, 0x83, 0x81, 0xbf, 0x25,
++        0x5d, 0xbb, 0x18, 0x07, 0x3c, 0xbd, 0xf3, 0xab};
++
++static const unsigned char client_pub_key_y[] = {
++        0xd3, 0xbf, 0x53, 0x59, 0xc9, 0x1e, 0xce, 0x5b,
++        0x39, 0x6a, 0xe5, 0x60, 0xf3, 0x70, 0xdb, 0x66,
++        0xb6, 0x80, 0xcb, 0x65, 0x0b, 0x35, 0x2a, 0x62,
++        0x44, 0x89, 0x63, 0x64, 0x6f, 0x6f, 0xbd, 0xf0};
++
++static unsigned char x509_server_cert[DTLS_MAX_CERT_SIZE];
++static size_t x509_server_cert_len = 0;
++static unsigned char x509_server_priv[DTLS_PRIVATE_KEY_SIZE+1];
++static size_t x509_server_priv_is_set = 0;
++static unsigned char x509_ca_pub[DTLS_PUBLIC_KEY_SIZE+1];
++static size_t x509_ca_pub_is_set = 0;
++
++static int x509_info_from_file = 0;
++#endif /*DTLS_X509*/
++#ifdef DTLS_ECC
+ static const unsigned char ecdsa_priv_key[] = {
+ 			0xD9, 0xE2, 0x70, 0x7A, 0x72, 0xDA, 0x6A, 0x05,
+ 			0x04, 0x99, 0x5C, 0x86, 0xED, 0xDB, 0xE3, 0xEF,
+@@ -37,7 +163,7 @@ static const unsigned char ecdsa_pub_key_y[] = {
+ 			0x1D, 0xDC, 0xF4, 0xF4, 0x2E, 0x2F, 0x26, 0x31,
+ 			0xD0, 0x43, 0xB1, 0xFB, 0x03, 0xE2, 0x2F, 0x4D,
+ 			0x17, 0xDE, 0x43, 0xF9, 0xF9, 0xAD, 0xEE, 0x70};
+-
++#endif /*DTLS_ECC*/
+ #if 0
+ /* SIGINT handler: set quit to 1 for graceful termination */
+ void
+@@ -46,6 +172,34 @@ handle_sigint(int signum) {
+ }
+ #endif
+ 
++#ifdef DTLS_X509
++ssize_t
++read_from_file(char *arg, unsigned char *buf, size_t max_buf_len) {
++  FILE *f;
++  ssize_t result = 0;
++
++  f = fopen(arg, "r");
++  if (f == NULL)
++    return -1;
++
++  while (!feof(f)) {
++    size_t bytes_read;
++    bytes_read = fread(buf, 1, max_buf_len, f);
++    if (ferror(f)) {
++      result = -1;
++      break;
++    }
++
++    buf += bytes_read;
++    result += bytes_read;
++    max_buf_len -= bytes_read;
++  }
++
++  fclose(f);
++  return result;
++}
++#endif /*DTLS_X509*/
++
+ #ifdef DTLS_PSK
+ 
+ #define PSK_SERVER_HINT  "Server_identity"
+@@ -59,6 +213,8 @@ get_psk_info(struct dtls_context_t *ctx, const session_t *session,
+ 	     const unsigned char *id, size_t id_len,
+ 	     unsigned char *result, size_t result_length) {
+ 
++  (void)ctx;
++  (void)session;
+   struct keymap_t {
+     unsigned char *id;
+     size_t id_length;
+@@ -86,7 +242,7 @@ get_psk_info(struct dtls_context_t *ctx, const session_t *session,
+   case DTLS_PSK_KEY:
+     if (id) {
+       int i;
+-      for (i = 0; i < sizeof(psk)/sizeof(struct keymap_t); i++) {
++      for (i = 0; i < (int)(sizeof(psk)/sizeof(struct keymap_t)); i++) {
+         if (id_len == psk[i].id_length && memcmp(id, psk[i].id, id_len) == 0) {
+ 	  if (result_length < psk[i].key_length) {
+ 	    dtls_warn("buffer too small for PSK");
+@@ -114,6 +270,8 @@ static int
+ get_ecdsa_key(struct dtls_context_t *ctx,
+ 	      const session_t *session,
+ 	      const dtls_ecc_key_t **result) {
++    (void)ctx;
++    (void)session;
+   static const dtls_ecc_key_t ecdsa_key = {
+     .curve = DTLS_ECDH_CURVE_SECP256R1,
+     .priv_key = ecdsa_priv_key,
+@@ -131,15 +289,120 @@ verify_ecdsa_key(struct dtls_context_t *ctx,
+ 		 const unsigned char *other_pub_x,
+ 		 const unsigned char *other_pub_y,
+ 		 size_t key_size) {
++  (void)ctx;
++  (void)session;
++  (void)other_pub_x;
++  (void)other_pub_y;
++  (void)key_size;
+   return 0;
+ }
+ #endif /* DTLS_ECC */
+ 
++#ifdef DTLS_X509
++static int
++get_x509_key(struct dtls_context_t *ctx,
++          const session_t *session,
++          const dtls_ecc_key_t **result) {
++    (void)ctx;
++    (void)session;
++  static dtls_ecc_key_t ecdsa_key = {
++    .curve = DTLS_ECDH_CURVE_SECP256R1,
++    .priv_key = x509_priv_key,
++    .pub_key_x = x509_pub_key_x,
++    .pub_key_y = x509_pub_key_y
++  };
++  if (x509_info_from_file)
++      ecdsa_key.priv_key = x509_server_priv;
++
++  *result = &ecdsa_key;
++  return 0;
++}
++
++static int
++get_x509_cert(struct dtls_context_t *ctx,
++		const session_t *session,
++		const unsigned char **cert,
++		size_t *cert_size)
++{
++    (void)ctx;
++    (void)session;
++    if (x509_info_from_file)
++    {
++        *cert = x509_server_cert;
++        *cert_size = x509_server_cert_len;
++    }
++    else
++    {
++        *cert = g_server_certificate;
++        *cert_size = SERVER_CRT_LEN;
++    }
++
++    return 0;
++}
++
++static int check_certificate(byte_array cert_der_code, byte_array ca_public_key)
++{
++    (void)cert_der_code;
++    (void)ca_public_key;
++    return 0;
++}
++
++static int verify_x509_cert(struct dtls_context_t *ctx, const session_t *session,
++                                  const unsigned char *cert, size_t cert_size,
++                                  unsigned char *x,
++                                  size_t x_size,
++                                  unsigned char *y,
++                                  size_t y_size)
++{
++    int ret;
++    const unsigned char *ca_pub_x;
++    const unsigned char *ca_pub_y;
++    byte_array cert_der_code = BYTE_ARRAY_INITIALIZER;
++    byte_array ca_public_key = BYTE_ARRAY_INITIALIZER;
++    unsigned char ca_pub_key[DTLS_PUBLIC_KEY_SIZE];
++    (void)ctx;
++    (void)session;
++
++    if (x509_info_from_file)
++    {
++        ca_pub_x = x509_ca_pub;
++        ca_pub_y = x509_ca_pub + DTLS_PUBLIC_KEY_SIZE/2;
++    }
++    else
++    {
++        ca_pub_x = x509_ca_pub_x;
++        ca_pub_y = x509_ca_pub_y;
++    }
++
++    cert_der_code.data = (uint8_t *)cert;
++    cert_der_code.len = cert_size;
++
++    ca_public_key.len = DTLS_PUBLIC_KEY_SIZE;
++    ca_public_key.data = ca_pub_key;
++    memcpy(ca_public_key.data, ca_pub_x, DTLS_PUBLIC_KEY_SIZE/2);
++    memcpy(ca_public_key.data + DTLS_PUBLIC_KEY_SIZE/2, ca_pub_y, DTLS_PUBLIC_KEY_SIZE/2);
++
++    memcpy(x, client_pub_key_x, x_size);
++    memcpy(y, client_pub_key_y, y_size);
++
++    ret = (int) check_certificate(cert_der_code, ca_public_key);
++
++  return -ret;
++}
++
++static int is_x509_active(struct dtls_context_t *ctx)
++{
++    (void)ctx;
++    return 0;
++}
++#endif /* DTLS_X509 */
++
++
+ #define DTLS_SERVER_CMD_CLOSE "server:close"
+ #define DTLS_SERVER_CMD_RENEGOTIATE "server:renegotiate"
+ 
+ static int
+-read_from_peer(struct dtls_context_t *ctx, 
++read_from_peer(struct dtls_context_t *ctx,
+ 	       session_t *session, uint8 *data, size_t len) {
+   size_t i;
+   for (i = 0; i < len; i++)
+@@ -190,7 +453,7 @@ dtls_handle_read(struct dtls_context_t *ctx) {
+   } else {
+     dtls_debug("got %d bytes from port %d\n", len, 
+ 	     ntohs(session.addr.sin6.sin6_port));
+-    if (sizeof(buf) < len) {
++    if ((int)(sizeof(buf)) < len) {
+       dtls_warn("packet was truncated (%d bytes lost)\n", len - sizeof(buf));
+     }
+   }
+@@ -250,13 +513,21 @@ usage(const char *program, const char *version) {
+   fprintf(stderr, "%s v%s -- DTLS server implementation\n"
+ 	  "(c) 2011-2014 Olaf Bergmann <bergmann@tzi.org>\n\n"
+ 	  "usage: %s [-A address] [-p port] [-v num] [-a enable|disable]\n"
++#ifdef DTLS_X509
++      " [-x file] [-r file] [-u file]"
++#endif /* DTLS_X509 */
+ 	  "\t-A address\t\tlisten on specified address (default is ::)\n"
+ 	  "\t-p port\t\tlisten on specified port (default is %d)\n"
+ 	  "\t-v num\t\tverbosity level (default: 3)\n"
+ 	  "\t-a enable|disable\t(default: disable)\n"
+   	  "\t\t\t\tenable:enable TLS_ECDH_anon_with_AES_128_CBC_SHA_256\n"
+-	  "\t\t\t\tdisable:disable TLS_ECDH_anon_with_AES_128_CBC_SHA_256\n",
+-	   program, version, program, DEFAULT_PORT);
++	  "\t\t\t\tdisable:disable TLS_ECDH_anon_with_AES_128_CBC_SHA_256\n"
++#ifdef DTLS_X509
++      "\t-x file\tread Server certificate from file\n"
++      "\t-r file\tread Server private key from file\n"
++      "\t-u file\tread CA public key from file\n"
++#endif /* DTLS_X509 */
++      ,program, version, program, DEFAULT_PORT);
+ }
+ 
+ static dtls_handler_t cb = {
+@@ -268,11 +539,18 @@ static dtls_handler_t cb = {
+ #endif /* DTLS_PSK */
+ #ifdef DTLS_ECC
+   .get_ecdsa_key = get_ecdsa_key,
+-  .verify_ecdsa_key = verify_ecdsa_key
++  .verify_ecdsa_key = verify_ecdsa_key,
+ #endif /* DTLS_ECC */
++#ifdef DTLS_X509
++  .get_x509_key = get_x509_key,
++  .verify_x509_cert = verify_x509_cert,
++  .get_x509_cert = get_x509_cert,
++  .is_x509_active = is_x509_active,
++#endif
++
+ };
+ 
+-int 
++int
+ main(int argc, char **argv) {
+   dtls_context_t *the_context = NULL;
+   log_t log_level = DTLS_LOG_WARN;
+@@ -312,6 +590,47 @@ main(int argc, char **argv) {
+       if( strcmp(optarg, "enable") == 0)
+           ecdh_anon_enalbe = DTLS_CIPHER_ENABLE;
+       break;
++#ifdef DTLS_X509
++    case 'x' :
++    {
++      ssize_t result = read_from_file(optarg, x509_server_cert, DTLS_MAX_CERT_SIZE);
++      if (result < 0)
++      {
++          dtls_warn("Cannot read Server certificate. Using default\n");
++      }
++      else
++      {
++          x509_server_cert_len = result;
++      }
++      break;
++    }
++    case 'r' :
++    {
++      ssize_t result = read_from_file(optarg, x509_server_priv, DTLS_PRIVATE_KEY_SIZE+1);
++      if (result < 0)
++      {
++          dtls_warn("Cannot read Server private key. Using default\n");
++      }
++      else
++      {
++          x509_server_priv_is_set = result;
++      }
++      break;
++    }
++    case 'u' :
++    {
++      ssize_t result = read_from_file(optarg, x509_ca_pub, DTLS_PUBLIC_KEY_SIZE+1);
++      if (result < 0)
++      {
++          dtls_warn("Cannot read CA public key. Using default\n");
++      }
++      else
++      {
++          x509_ca_pub_is_set = result;
++      }
++      break;
++    }
++#endif /* DTLS_X509 */
+     default:
+       usage(argv[0], dtls_package_version());
+       exit(1);
+@@ -320,6 +639,23 @@ main(int argc, char **argv) {
+ 
+   dtls_set_log_level(log_level);
+ 
++#ifdef DTLS_X509
++  if (x509_server_cert_len && x509_server_priv_is_set && x509_ca_pub_is_set)
++  {
++      x509_info_from_file = 1;
++  }
++  else if(!(x509_server_cert_len || x509_server_priv_is_set || x509_ca_pub_is_set))
++  {
++      x509_info_from_file = 0;
++  }
++  else
++  {
++      fprintf(stderr,"please set -x, -r, -u options simultaneously");
++      usage(argv[0], dtls_package_version());
++      exit(1);
++  }
++#endif /* DTLS_X509 */
++
+   /* init socket and set it to non-blocking */
+   fd = socket(listen_addr.sin6_family, SOCK_DGRAM, 0);
+ 
+diff --git a/extlibs/tinydtls/tinydtls.h b/extlibs/tinydtls/tinydtls.h
+index b1b8cdf..dd27c55 100644
+--- a/extlibs/tinydtls/tinydtls.h
++++ b/extlibs/tinydtls/tinydtls.h
+@@ -42,4 +42,7 @@
+ /** Defined to 1 if tinydtls is built for Contiki OS */
+ /* #undef WITH_CONTIKI */
+ 
++/** Define to 1 if building with X.509 support */
++#define DTLS_X509 1
++
+ #endif /* _DTLS_TINYDTLS_H_ */
+diff --git a/extlibs/tinydtls/tinydtls.h.in b/extlibs/tinydtls/tinydtls.h.in
+index a2e6685..10a8d9a 100644
+--- a/extlibs/tinydtls/tinydtls.h.in
++++ b/extlibs/tinydtls/tinydtls.h.in
+@@ -41,4 +41,7 @@
+ /** Defined to 1 if tinydtls is built for Contiki OS */
+ #undef WITH_CONTIKI
+ 
++/** Define to 1 if building with X.509 support */
++#undef DTLS_X509
++
+ #endif /* _DTLS_TINYDTLS_H_ */
+-- 
+1.9.1
+

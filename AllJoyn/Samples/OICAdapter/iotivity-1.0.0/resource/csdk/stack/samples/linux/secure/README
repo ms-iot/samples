@@ -1,0 +1,14 @@
+Testing AMS service:
+1. Copy subjectID ("NDQ0NDMzMzMyMjIyMTExMQ==") of ACE with resource "/a/led" from AMS service 
+   database file, "oic_amss_db.json" into client Doxm resource deviceID located in file 
+   "oic_svr_client.json".
+2. Start ocserverbasicops
+3. start ocamsservice
+4. Start occlientbasicops
+
+
+Expected Result:
+1. New ACE with subjectID="NDQ0NDMzMzMyMjIyMTExMQ==" and rsrc="/a/led/" will be appended to the
+   server ACL resource in file "oic_svr_db_server.json".
+2. GET request made by occlientbasicops will be received successfully
+3. PUT reuest will received with result "OC_STACK_UNAUTHORIZED_REQ"

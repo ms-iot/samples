@@ -1,0 +1,95 @@
+#******************************************************************
+#
+# Copyright 2014 Intel Mobile Communications GmbH All Rights Reserved.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+Import('env')
+import os
+import os.path
+unittests_env = env.Clone()
+
+src_dir = unittests_env.get('SRC_DIR')
+######################################################################
+# Build flags
+######################################################################
+unittests_env.PrependUnique(CPPPATH = [
+		'../include',
+		'../oc_logger/include',
+		'../csdk/stack/include',
+		'../csdk/security/include',
+		'../csdk/stack/include/internal',
+		'../csdk/connectivity/api',
+		'../csdk/connectivity/external/inc',
+		'../csdk/ocsocket/include',
+		'../csdk/ocrandom/include',
+		'../csdk/logger/include',
+		'#extlibs/gtest/gtest-1.7.0/include',
+		'#extlibs/hippomocks-master/HippoMocks',
+		'#extlibs/hippomocks-master/HippoMocksTest'
+		])
+
+unittests_env.AppendUnique(CXXFLAGS = ['-std=c++0x', '-Wall', '-pthread'])
+unittests_env.AppendUnique(LIBS = ['-lpthread'])
+unittests_env.AppendUnique(LIBPATH = [env.get('BUILD_DIR')])
+unittests_env.AppendUnique(LIBPATH = [src_dir + '/extlibs/gtest/gtest-1.7.0/lib/.libs'])
+unittests_env.PrependUnique(LIBS = [
+		'oc',
+		'octbstack',
+		'oc_logger',
+		'connectivity_abstraction',
+		'coap',
+		'gtest',
+		'gtest_main'
+		])
+
+if env.get('SECURED') == '1':
+    unittests_env.AppendUnique(LIBS = ['tinydtls'])
+
+if env.get('LOGGING'):
+	unittests_env.AppendUnique(CPPDEFINES = ['TB_LOG'])
+
+######################################################################
+# Source files and Targets
+######################################################################
+unittests = unittests_env.Program('unittests', ['ConstructResourceTest.cpp',
+                                                'OCPlatformTest.cpp',
+                                                'OCRepresentationTest.cpp',
+                                                'OCRepresentationEncodingTest.cpp',
+                                                'OCResourceTest.cpp',
+                                                'OCExceptionTest.cpp',
+                                                'OCResourceResponseTest.cpp',
+                                                'OCHeaderOptionTest.cpp'])
+
+Alias("unittests", [unittests])
+
+env.AppendTarget('unittests')
+if env.get('TEST') == '1':
+	target_os = env.get('TARGET_OS')
+	if target_os == 'linux':
+                from tools.scons.RunTest import *
+                run_test(unittests_env,
+                         'resource_unittests_unittests.memcheck',
+                         'resource/unittests/unittests')
+
+src_dir = unittests_env.get('SRC_DIR')
+svr_db_src_dir = os.path.join(src_dir, 'resource/examples/')
+svr_db_build_dir = os.path.join(env.get('BUILD_DIR'), 'resource/unittests/')
+unittests_env.Alias("install",
+                    unittests_env.Install(svr_db_build_dir,
+                                          os.path.join(svr_db_src_dir,
+                                                       'oic_svr_db_client.json')))

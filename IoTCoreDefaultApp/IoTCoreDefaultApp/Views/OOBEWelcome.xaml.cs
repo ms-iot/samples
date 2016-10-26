@@ -6,7 +6,6 @@ using System.Globalization;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -30,20 +29,23 @@ namespace IoTCoreDefaultApp
 
             this.DataContext = LanguageManager.GetInstance();
 
-            this.Loaded += (sender, e) =>
+            this.Loaded += async (sender, e) =>
             {
-                SetupLanguages();
-                UpdateBoardInfo();
-                UpdateNetworkInfo();
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                {
+                    SetupLanguages();
+                    UpdateBoardInfo();
+                    UpdateNetworkInfo();
 
-                timer = new DispatcherTimer();
-                timer.Tick += timer_Tick;
-                timer.Interval = TimeSpan.FromSeconds(60);
-                timer.Start();
+                    timer = new DispatcherTimer();
+                    timer.Tick += timer_Tick;
+                    timer.Interval = TimeSpan.FromSeconds(60);
+                    timer.Start();
 
-                countdown = new DispatcherTimer();
-                countdown.Tick += countdown_Tick;
-                countdown.Interval = TimeSpan.FromMilliseconds(100);
+                    countdown = new DispatcherTimer();
+                    countdown.Tick += countdown_Tick;
+                    countdown.Interval = TimeSpan.FromMilliseconds(100);
+                });
             };
 
             Unloaded += MainPage_Unloaded;
@@ -101,7 +103,8 @@ namespace IoTCoreDefaultApp
 
         private async void NextButton_Clicked(object sender, RoutedEventArgs e)
         {
-            var wifiAvailable = NetworkPresenter.WifiIsAvailable();
+            var networkPresenter = new NetworkPresenter();
+            var wifiAvailable = networkPresenter.WifiIsAvailable();
             SetPreferences();
             Type nextScreen;
 

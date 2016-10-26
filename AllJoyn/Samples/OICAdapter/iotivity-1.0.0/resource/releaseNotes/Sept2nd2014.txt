@@ -1,0 +1,116 @@
+Release notes
+****************************************************************************
+Release date: Sept 2nd, 2014.
+OS: Ubuntu 12.0.4 and above
+Requires boost version 1.55 to build.
+Code buildable in gcc 4.6.3 and above.
+NOTE: Boost is not distributed but should be installed in the Ubuntu machine.
+*****************************************************************************
+
+What’s new?
+
+--------------------------------------------
+Class OCPlatform (Header file: OCPlatform.h)
+--------------------------------------------
+
+*****************
+startPresence API
+*****************
+
+This API allows the server to notify its presence via multicast.
+
+NOTE: This applies to server side functionality only.
+
+*******************
+stopPresence API
+*******************
+
+This API allows the server to stop presence notification.
+
+NOTE: This applies to server side functionality.
+
+
+******************
+subscribePresence API
+******************
+
+This API allows a client to subscribe to a device's presence notifications. Notifications include new addition of resource on the device, deletion of a resource on the device, change in properties of a resource.
+
+NOTE: This applies to client side functionality only.
+NOTE: In this release, when client uses subscribePresence API, it gets notified only for new addition of resource on the device (server).
+
+*******************
+unsubscribePresence API
+*******************
+
+This API allows a client to unsubscribe from a device's presence events.
+
+NOTE: This applies to client side functionality only.
+
+--------------------------------------------
+ Header file: OCStack.h (in base)
+--------------------------------------------
+
+*****************
+OCStartPresence API
+*****************
+
+This API will start sending out presence notifications to clients via multicast.
+
+NOTE: This applies to server side functionality only.
+
+*******************
+OCStopPresence API
+*******************
+
+This API will stop sending out presence notifications to clients via multicast.
+
+NOTE: This applies to server side functionality.
+
+------------
+Other Notes:
+------------
+
+Security model is still open.
+APIs have OCStackResult as return type. This is will indicate success or failure for the API operation.
+
+Implementation for presence code is in both C (base) and C++ (SDK). In C (base) stack, presence code is defined with 'WITH_PRESENCE' preprocessor macro.
+
+Maximum length of URI supported is 64 bytes (sent from the client)
+Maximum length of query supported is 64 bytes (sent from the client)
+Maximum length of request and response from server for Ardunio is is 256 bytes
+Maximum length of request and response from server for non-Ardunio is is 1024 bytes
+
+-------------
+How to build:
+-------------
+
+REFER https://oic-review.01.org/gerrit for more details on getting oic-resource repo.
+If the code is not cloned:
+Clone the oic-resource repo using this command: git clone oic:oic-resource
+Clone the oic-utilities repo using this command: git clone oic:oic-utilities
+
+NOTE: If the repo is already cloned, use 'git pull' inside oic-resource folder to get the latest code.
+
+In repo oic-core, root folder ccf-opensource consists of ‘OIC’ folder.  Inside OIC folder there is a Makefile.
+
+Before building, make sure to have contents from oic-utilities repo at the folder level where oic-resource is.
+
+Inside oic-resource directory, use ‘make’ to build the entire OIC code. This would build the C++ SDK, core(i.e base) and samples.
+
+Use ‘make BUILD=debug’ to build the entire OIC code in debug mode. This would build the C++ SDK, core(i.e base) and samples. All the executables for debug build
+are in 'debug/samples'.
+
+--------
+Samples:
+--------
+
+After building the code in oic-resource, executables are in directory named 'release/samples'.
+A sample for hosting a resource on a server and a sample for client for discovering resources are provided in the following paths:
+
+Server sample location: oic-resource/examples/simpleserver.cpp
+Client sample location: oic-resource/examples/simpleclient.cpp
+Server and client mode (mode type both) location: oic-resource/examples/simpleclientserver.cpp
+
+Sample with basic presence feature for server side: oic-resource/examples/presenceserver.cpp
+Sample with basic presence feature for client side: oic-resource/examples/presenceclient.cpp

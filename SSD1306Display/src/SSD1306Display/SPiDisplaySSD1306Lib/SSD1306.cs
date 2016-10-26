@@ -116,9 +116,8 @@ namespace SPiDisplaySSD1306Lib
                                                                                  * to set the clock polarity and phase to: CPOL = 1, CPHA = 1
                                                                                  */
 
-                string spiAqs = SpiDevice.GetDeviceSelector(SSD1306DeviceConfiguration.SPI_CONTROLLER_NAME);       /* Find the selector string for the SPI bus controller          */
-                var devicesInfo = await DeviceInformation.FindAllAsync(spiAqs);         /* Find the SPI bus controller device with our selector string  */
-                SpiDisplay = await SpiDevice.FromIdAsync(devicesInfo[0].Id, settings);  /* Create an SpiDevice with our bus controller and SPI settings */
+                var controller = await SpiController.GetDefaultAsync();
+                SpiDisplay = controller.GetDevice(settings);  /* Create an SpiDevice with our bus controller and SPI settings */
             }
             /* If initialization fails, display the exception and stop running */
             catch (Exception ex)

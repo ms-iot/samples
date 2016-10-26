@@ -1,0 +1,58 @@
+##
+# NotificationManager build script
+##
+
+Import('env')
+
+lib_env = env.Clone()
+SConscript(env.get('SRC_DIR') + '/service/third_party_libs.scons', 'lib_env')
+resourcehosting_env = lib_env.Clone()
+
+######################################################################
+# Build flags
+######################################################################
+resourcehosting_env.AppendUnique(CPPPATH = ['../../include'])
+resourcehosting_env.AppendUnique(CPPPATH = ['../../../../extlibs/cjson'])
+resourcehosting_env.AppendUnique(CPPPATH = ['../../../../resource/csdk/connectivity/api'])
+resourcehosting_env.AppendUnique(CXXFLAGS = ['-O2', '-g', '-Wall', '-fmessage-length=0', '-std=c++0x'])
+resourcehosting_sample_env = resourcehosting_env.Clone()
+resourcehosting_env.AppendUnique(LIBS = [
+    'resource_hosting',
+    'rcs_client',
+    'rcs_server',
+    'rcs_common',
+    'oc',
+    'octbstack',
+    'oc_logger',
+    'connectivity_abstraction',
+    'coap',
+    'pthread'
+    ])
+resourcehosting_sample_env.AppendUnique(LIBS = [
+    'oc',
+    'octbstack',
+    'oc_logger',
+    'connectivity_abstraction',
+    'coap',
+    'pthread'
+    ])
+
+if env.get('SECURED') == '1':
+    resourcehosting_env.AppendUnique(LIBS = ['tinydtls'])
+    resourcehosting_sample_env.AppendUnique(LIBS = ['tinydtls'])
+if 'rt' in resourcehosting_env.get('LIBS'):
+    resourcehosting_env.Append(LIBS = ['rt'])
+if 'rt' in resourcehosting_sample_env.get('LIBS'):
+    resourcehosting_sample_env.Append(LIBS = ['rt'])
+
+####################################################################
+# Source files and Targets
+######################################################################
+sampleprovider = resourcehosting_sample_env.Program('sampleprovider', 'sampleProvider/SampleProvider.cpp')
+sampleconsumer = resourcehosting_sample_env.Program('sampleconsumer', 'sampleConsumer/SampleConsumer.cpp')
+
+sampleresourcehosting = resourcehosting_env.Program('sampleresourcehosting', 'sampleResourceHosting/main.cpp')
+
+#resourcehosting_sample_env.InstallTarget(sampleprovider, 'sampleprovider')
+#resourcehosting_sample_env.InstallTarget(sampleconsumer, 'sampleconsumer')
+#resourcehosting_env.InstallTarget(sampleresourcehosting, 'sampleresourcehosting')

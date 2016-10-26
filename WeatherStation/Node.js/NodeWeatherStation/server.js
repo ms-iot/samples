@@ -9,16 +9,12 @@ var uwp = require("uwp");
 uwp.projectNamespace("Windows");
 
 var i2cDevice;
-
-
-//Find the device: same code in other project, except in JS instead of C#
-var aqs = Windows.Devices.I2c.I2cDevice.getDeviceSelector("I2C1");
-
-Windows.Devices.Enumeration.DeviceInformation.findAllAsync(aqs, null).done(function (dis) {
-    Windows.Devices.I2c.I2cDevice.fromIdAsync(dis[0].id, new Windows.Devices.I2c.I2cConnectionSettings(0x40)).done(function (device) {
-        i2cDevice = device;
-    });
+var i2cController;
+var settings = new Windows.Devices.I2c.I2cConnectionSettings(0x40);
+Windows.Devices.I2c.I2cController.getDefaultAsync().done(function (controller) {
+    i2cController = controller;
 });
+i2cDevice = i2cController.getDevice(settings);
 
 
 http.createServer(function (req, res) {

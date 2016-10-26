@@ -1,0 +1,413 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="DebugDLL|Win32">
+      <Configuration>DebugDLL</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseDLL|Win32">
+      <Configuration>ReleaseDLL</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{497F9828-DEC2-4C80-B9E0-AD066CCB587C}</ProjectGuid>
+    <RootNamespace>OpenZWave</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectName)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">$(ProjectName)d</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">$(ProjectName)</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">.dll</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">.dll</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\tinyxml;..\..\..\hidapi\hidapi;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Lib>
+      <OutputFile>$(OutDir)\$(ProjectName).lib</OutputFile>
+      <AdditionalDependencies>setupapi.lib</AdditionalDependencies>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Lib>
+    <PreBuildEvent>
+      <Command>del ..\winversion.cpp
+CALL $(ProjectDir)\..\GIT-VS-VERSION-GEN.bat "$(ProjectDir)\" "..\winversion.cpp"
+exit 0</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Export GIT Revision</Message>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;OPENZWAVE_MAKEDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
+      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\tinyxml;..\..\..\hidapi\hidapi;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Lib>
+      <OutputFile>$(OutDir)\$(ProjectName).dll</OutputFile>
+      <AdditionalDependencies>setupapi.lib</AdditionalDependencies>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Lib>
+    <Link>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalDependencies>Setupapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PreBuildEvent>
+      <Command>del ..\winversion.cpp
+CALL $(ProjectDir)\..\GIT-VS-VERSION-GEN.bat "$(ProjectDir)\" "..\winversion.cpp"
+exit 0</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Export GIT Revision</Message>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <PreprocessorDefinitions>WIN32;_LIB;OPENZWAVE_MAKEDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
+      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\tinyxml;..\..\..\hidapi\hidapi;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Lib>
+      <OutputFile>$(OutDir)\$(ProjectName).lib</OutputFile>
+      <AdditionalDependencies>setupapi.lib</AdditionalDependencies>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Lib>
+    <Link>
+      <AdditionalDependencies>Setupapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PreBuildEvent />
+    <PreBuildEvent>
+      <Message>Export GIT Revision</Message>
+      <Command>del ..\winversion.cpp
+CALL $(ProjectDir)\..\GIT-VS-VERSION-GEN.bat "$(ProjectDir)\" "..\winversion.cpp"
+exit 0</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\tinyxml;..\..\..\hidapi\hidapi;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Lib>
+      <OutputFile>$(OutDir)\$(ProjectName).lib</OutputFile>
+      <AdditionalDependencies>setupapi.lib</AdditionalDependencies>
+    </Lib>
+    <PreBuildEvent>
+      <Command>del ..\winversion.cpp
+CALL $(ProjectDir)\..\GIT-VS-VERSION-GEN.bat "$(ProjectDir)\" "..\winversion.cpp"
+exit 0</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Export GIT Revision</Message>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\hidapi\hidapi\hidapi.h" />
+    <ClInclude Include="..\..\..\src\aes\aes.h" />
+    <ClInclude Include="..\..\..\src\aes\aesopt.h" />
+    <ClInclude Include="..\..\..\src\aes\aestab.h" />
+    <ClInclude Include="..\..\..\src\aes\brg_endian.h" />
+    <ClInclude Include="..\..\..\src\aes\brg_types.h" />
+    <ClInclude Include="..\..\..\src\Bitfield.h" />
+    <ClInclude Include="..\..\..\src\command_classes\DoorLock.h" />
+    <ClInclude Include="..\..\..\src\command_classes\DoorLockLogging.h" />
+    <ClInclude Include="..\..\..\src\command_classes\NoOperation.h" />
+    <ClInclude Include="..\..\..\src\command_classes\SceneActivation.h" />
+    <ClInclude Include="..\..\..\src\command_classes\Security.h" />
+    <ClInclude Include="..\..\..\src\command_classes\CentralScene.h" />
+    <ClInclude Include="..\..\..\src\command_classes\TimeParameters.h" />
+    <ClInclude Include="..\..\..\src\command_classes\SensorAlarm.h" />
+    <ClInclude Include="..\..\..\src\command_classes\UserCode.h" />
+    <ClInclude Include="..\..\..\src\Defs.h" />
+    <ClInclude Include="..\..\..\src\Driver.h" />
+    <ClInclude Include="..\..\..\src\Group.h" />
+    <ClInclude Include="..\..\..\src\Manager.h" />
+    <ClInclude Include="..\..\..\src\Msg.h" />
+    <ClInclude Include="..\..\..\src\Node.h" />
+    <ClInclude Include="..\..\..\src\Notification.h" />
+    <ClInclude Include="..\..\..\src\Options.h" />
+    <ClInclude Include="..\..\..\src\ZWSecurity.h" />
+    <ClInclude Include="..\..\..\src\platform\Controller.h" />
+    <ClInclude Include="..\..\..\src\platform\Event.h" />
+    <ClInclude Include="..\..\..\src\platform\HidController.h" />
+    <ClInclude Include="..\..\..\src\platform\Log.h" />
+    <ClInclude Include="..\..\..\src\platform\Mutex.h" />
+    <ClInclude Include="..\..\..\src\platform\Ref.h" />
+    <ClInclude Include="..\..\..\src\platform\Stream.h" />
+    <ClInclude Include="..\..\..\src\platform\SerialController.h" />
+    <ClInclude Include="..\..\..\src\platform\Thread.h" />
+    <ClInclude Include="..\..\..\src\platform\TimeStamp.h" />
+    <ClInclude Include="..\..\..\src\platform\Wait.h" />
+    <ClInclude Include="..\..\..\src\platform\windows\EventImpl.h" />
+    <ClInclude Include="..\..\..\src\platform\windows\LogImpl.h" />
+    <ClInclude Include="..\..\..\src\platform\windows\MutexImpl.h" />
+    <ClInclude Include="..\..\..\src\platform\windows\SerialControllerImpl.h" />
+    <ClInclude Include="..\..\..\src\platform\windows\ThreadImpl.h" />
+    <ClInclude Include="..\..\..\src\platform\windows\TimeStampImpl.h" />
+    <ClInclude Include="..\..\..\src\platform\windows\WaitImpl.h" />
+    <ClInclude Include="..\..\..\src\Scene.h" />
+    <ClInclude Include="..\..\..\src\Utils.h" />
+    <ClInclude Include="..\..\..\src\value_classes\ValueButton.h" />
+    <ClInclude Include="..\..\..\src\value_classes\ValueRaw.h" />
+    <ClInclude Include="..\..\..\src\value_classes\ValueSchedule.h" />
+    <ClInclude Include="..\..\..\tinyxml\tinystr.h" />
+    <ClInclude Include="..\..\..\tinyxml\tinyxml.h" />
+    <ClInclude Include="..\..\..\src\value_classes\Value.h" />
+    <ClInclude Include="..\..\..\src\value_classes\ValueBool.h" />
+    <ClInclude Include="..\..\..\src\value_classes\ValueByte.h" />
+    <ClInclude Include="..\..\..\src\value_classes\ValueDecimal.h" />
+    <ClInclude Include="..\..\..\src\value_classes\ValueID.h" />
+    <ClInclude Include="..\..\..\src\value_classes\ValueInt.h" />
+    <ClInclude Include="..\..\..\src\value_classes\ValueList.h" />
+    <ClInclude Include="..\..\..\src\value_classes\ValueShort.h" />
+    <ClInclude Include="..\..\..\src\value_classes\ValueStore.h" />
+    <ClInclude Include="..\..\..\src\value_classes\ValueString.h" />
+    <ClInclude Include="..\..\..\src\command_classes\Alarm.h" />
+    <ClInclude Include="..\..\..\src\command_classes\ApplicationStatus.h" />
+    <ClInclude Include="..\..\..\src\command_classes\Association.h" />
+    <ClInclude Include="..\..\..\src\command_classes\AssociationCommandConfiguration.h" />
+    <ClInclude Include="..\..\..\src\command_classes\Basic.h" />
+    <ClInclude Include="..\..\..\src\command_classes\BasicWindowCovering.h" />
+    <ClInclude Include="..\..\..\src\command_classes\Battery.h" />
+    <ClInclude Include="..\..\..\src\command_classes\ClimateControlSchedule.h" />
+    <ClInclude Include="..\..\..\src\command_classes\Clock.h" />
+    <ClInclude Include="..\..\..\src\command_classes\CommandClass.h" />
+    <ClInclude Include="..\..\..\src\command_classes\CommandClasses.h" />
+    <ClInclude Include="..\..\..\src\command_classes\Configuration.h" />
+    <ClInclude Include="..\..\..\src\command_classes\ControllerReplication.h" />
+    <ClInclude Include="..\..\..\src\command_classes\CRC16Encap.h" />
+    <ClInclude Include="..\..\..\src\command_classes\EnergyProduction.h" />
+    <ClInclude Include="..\..\..\src\command_classes\Hail.h" />
+    <ClInclude Include="..\..\..\src\command_classes\Indicator.h" />
+    <ClInclude Include="..\..\..\src\command_classes\Language.h" />
+    <ClInclude Include="..\..\..\src\command_classes\Lock.h" />
+    <ClInclude Include="..\..\..\src\command_classes\ManufacturerSpecific.h" />
+    <ClInclude Include="..\..\..\src\command_classes\Meter.h" />
+    <ClInclude Include="..\..\..\src\command_classes\MeterPulse.h" />
+    <ClInclude Include="..\..\..\src\command_classes\MultiCmd.h" />
+    <ClInclude Include="..\..\..\src\command_classes\MultiInstance.h" />
+    <ClInclude Include="..\..\..\src\command_classes\MultiInstanceAssociation.h" />
+    <ClInclude Include="..\..\..\src\command_classes\NodeNaming.h" />
+    <ClInclude Include="..\..\..\src\command_classes\Powerlevel.h" />
+    <ClInclude Include="..\..\..\src\command_classes\Proprietary.h" />
+    <ClInclude Include="..\..\..\src\command_classes\Protection.h" />
+    <ClInclude Include="..\..\..\src\command_classes\SensorBinary.h" />
+    <ClInclude Include="..\..\..\src\command_classes\SensorMultilevel.h" />
+    <ClInclude Include="..\..\..\src\command_classes\SwitchAll.h" />
+    <ClInclude Include="..\..\..\src\command_classes\SwitchBinary.h" />
+    <ClInclude Include="..\..\..\src\command_classes\SwitchMultilevel.h" />
+    <ClInclude Include="..\..\..\src\command_classes\SwitchToggleBinary.h" />
+    <ClInclude Include="..\..\..\src\command_classes\SwitchToggleMultilevel.h" />
+    <ClInclude Include="..\..\..\src\command_classes\ThermostatFanMode.h" />
+    <ClInclude Include="..\..\..\src\command_classes\ThermostatFanState.h" />
+    <ClInclude Include="..\..\..\src\command_classes\ThermostatMode.h" />
+    <ClInclude Include="..\..\..\src\command_classes\ThermostatOperatingState.h" />
+    <ClInclude Include="..\..\..\src\command_classes\ThermostatSetpoint.h" />
+    <ClInclude Include="..\..\..\src\command_classes\Version.h" />
+    <ClInclude Include="..\..\..\src\command_classes\WakeUp.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\hidapi\windows\hid.cpp" />
+    <ClCompile Include="..\..\..\src\aes\aescrypt.c" />
+    <ClCompile Include="..\..\..\src\aes\aeskey.c" />
+    <ClCompile Include="..\..\..\src\aes\aestab.c" />
+    <ClCompile Include="..\..\..\src\aes\aes_modes.c" />
+    <ClCompile Include="..\..\..\src\command_classes\DoorLock.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\DoorLockLogging.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\NoOperation.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\SceneActivation.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\Security.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\CentralScene.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\TimeParameters.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\SensorAlarm.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\UserCode.cpp" />
+    <ClCompile Include="..\..\..\src\Driver.cpp" />
+    <ClCompile Include="..\..\..\src\Group.cpp" />
+    <ClCompile Include="..\..\..\src\Manager.cpp" />
+    <ClCompile Include="..\..\..\src\Msg.cpp" />
+    <ClCompile Include="..\..\..\src\Node.cpp" />
+    <ClCompile Include="..\..\..\src\Notification.cpp" />
+    <ClCompile Include="..\..\..\src\Options.cpp" />
+    <ClCompile Include="..\..\..\src\ZWSecurity.cpp" />
+    <ClCompile Include="..\..\..\src\platform\Controller.cpp" />
+    <ClCompile Include="..\..\..\src\platform\Event.cpp" />
+    <ClCompile Include="..\..\..\src\platform\FileOps.cpp" />
+    <ClCompile Include="..\..\..\src\platform\HidController.cpp" />
+    <ClCompile Include="..\..\..\src\platform\Log.cpp" />
+    <ClCompile Include="..\..\..\src\platform\Mutex.cpp" />
+    <ClCompile Include="..\..\..\src\platform\Stream.cpp" />
+    <ClCompile Include="..\..\..\src\platform\SerialController.cpp" />
+    <ClCompile Include="..\..\..\src\platform\Thread.cpp" />
+    <ClCompile Include="..\..\..\src\platform\TimeStamp.cpp" />
+    <ClCompile Include="..\..\..\src\platform\Wait.cpp" />
+    <ClCompile Include="..\..\..\src\platform\windows\EventImpl.cpp" />
+    <ClCompile Include="..\..\..\src\platform\windows\FileOpsImpl.cpp" />
+    <ClCompile Include="..\..\..\src\platform\windows\LogImpl.cpp" />
+    <ClCompile Include="..\..\..\src\platform\windows\MutexImpl.cpp" />
+    <ClCompile Include="..\..\..\src\platform\windows\SerialControllerImpl.cpp" />
+    <ClCompile Include="..\..\..\src\platform\windows\ThreadImpl.cpp" />
+    <ClCompile Include="..\..\..\src\platform\windows\TimeStampImpl.cpp" />
+    <ClCompile Include="..\..\..\src\platform\windows\WaitImpl.cpp" />
+    <ClCompile Include="..\..\..\src\Scene.cpp" />
+    <ClCompile Include="..\..\..\src\Utils.cpp" />
+    <ClCompile Include="..\..\..\src\value_classes\ValueButton.cpp" />
+    <ClCompile Include="..\..\..\src\value_classes\ValueRaw.cpp" />
+    <ClCompile Include="..\..\..\src\value_classes\ValueSchedule.cpp" />
+    <ClCompile Include="..\..\..\tinyxml\tinystr.cpp" />
+    <ClCompile Include="..\..\..\tinyxml\tinyxml.cpp" />
+    <ClCompile Include="..\..\..\tinyxml\tinyxmlerror.cpp" />
+    <ClCompile Include="..\..\..\tinyxml\tinyxmlparser.cpp" />
+    <ClCompile Include="..\..\..\src\value_classes\Value.cpp" />
+    <ClCompile Include="..\..\..\src\value_classes\ValueBool.cpp" />
+    <ClCompile Include="..\..\..\src\value_classes\ValueByte.cpp" />
+    <ClCompile Include="..\..\..\src\value_classes\ValueDecimal.cpp" />
+    <ClCompile Include="..\..\..\src\value_classes\ValueInt.cpp" />
+    <ClCompile Include="..\..\..\src\value_classes\ValueList.cpp" />
+    <ClCompile Include="..\..\..\src\value_classes\ValueShort.cpp" />
+    <ClCompile Include="..\..\..\src\value_classes\ValueStore.cpp" />
+    <ClCompile Include="..\..\..\src\value_classes\ValueString.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\Alarm.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\ApplicationStatus.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\Association.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\AssociationCommandConfiguration.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\Basic.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\BasicWindowCovering.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\Battery.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\ClimateControlSchedule.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\Clock.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\CommandClass.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\CommandClasses.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\Configuration.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\ControllerReplication.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\CRC16Encap.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\EnergyProduction.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\Hail.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\Indicator.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\Language.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\Lock.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\ManufacturerSpecific.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\Meter.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\MeterPulse.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\MultiCmd.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\MultiInstance.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\MultiInstanceAssociation.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\NodeNaming.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\Powerlevel.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\Proprietary.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\Protection.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\SensorBinary.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\SensorMultilevel.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\SwitchAll.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\SwitchBinary.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\SwitchMultilevel.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\SwitchToggleBinary.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\SwitchToggleMultilevel.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\ThermostatFanMode.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\ThermostatFanState.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\ThermostatMode.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\ThermostatOperatingState.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\ThermostatSetpoint.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\Version.cpp" />
+    <ClCompile Include="..\..\..\src\command_classes\WakeUp.cpp" />
+    <ClCompile Include="..\winversion.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

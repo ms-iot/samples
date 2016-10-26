@@ -1,0 +1,95 @@
+;/*++
+;
+;Copyright (c) Microsoft Corporation All rights Reserved
+;
+;Module Name:
+;
+;    HidInjectorSample.inf
+;
+;Abstract:
+;    INF file for installing HID Injector minidriver
+;
+;--*/
+[Version]
+Signature="$WINDOWS NT$"
+Class=Sample
+ClassGuid={78A1C341-4539-11d3-B88D-00C04FAD5171}
+Provider=%ProviderString%
+DriverVer=10/01/2002,6.0.5058.0
+CatalogFile=wudf.cat
+
+; ================= Class section =====================
+
+[ClassInstall32]
+Addreg=HidInjectorClassReg
+
+[HidInjectorClassReg]
+HKR,,,0,%ClassName%
+HKR,,Icon,,-5
+HKR,,DeviceCharacteristics,0x10001,0x100 
+HKR,,Security,,"D:P(A;;GA;;;SY)(A;;GA;;;BA)(A;;GA;;;WD)"
+
+; ================= Device section =====================
+
+[Manufacturer]
+%ManufacturerString%=Microsoft,NT$ARCH$.6.1
+
+; Works on Win7 and later because we use inbox HID-KMDF mapper
+[Microsoft.NT$ARCH$.6.1]
+%DeviceDesc%=HidInjectorSample, root\HidInjectorSample
+
+[HidInjectorSample.NT]
+CopyFiles=KMDriverCopy
+
+[HidInjectorSample.NT.hw]
+AddReg=HidInjectorSample_AddReg
+
+[HidInjectorSample.NT.Services]
+AddService=HidInjectorSample,0x2,HidInjectorSample_Service_Inst ;flag 0x2 sets this as the service for the device
+
+[HidInjectorSample_AddReg]
+HKR,,"LowerFilters",0x00010000,"vhf"
+
+[HidInjectorSample_Service_Inst]
+DisplayName    = %ServiceDesc%
+ServiceType    = 1
+StartType      = 3
+ErrorControl   = 1
+ServiceBinary  = %12%\HidInjectorSample.sys
+
+[HidInjectorSample.NT.Wdf]
+KmdfService=HidInjectorSample, HidInjectorSample_wdfsect
+
+[HidInjectorSample_wdfsect]
+KmdfLibraryVersion=$KMDFVERSION$
+
+; ================= create device node ==============
+[DeviceInstall32]
+AddDevice = ROOT\HidInjectorSample\0,,HidInjectorSample_RootDevice_Inst
+
+[HidInjectorSample_RootDevice_Inst]
+HardwareIds = ROOT\HidInjectorSample
+
+; ================= copy files =====================
+
+[KMDriverCopy]
+HidInjectorSample.sys
+
+[SourceDisksNames]
+1=%DiskDesc%,,,
+
+[SourceDisksFiles]
+HidInjectorSample.sys=1
+
+[DestinationDirs]
+KMDriverCopy=12
+
+;---------------------------------------------------------------;
+
+[Strings]
+ProviderString     = "MS"
+ManufacturerString = "Microsoft"
+ClassName          = "HID Injector Class"
+DeviceDesc         = "HID Injection Sample"
+ServiceDesc        = "HID Injector Service"
+DiskDesc           = "HID Injector Installation Disk"

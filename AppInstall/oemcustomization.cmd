@@ -1,1 +1,0 @@
-c:\windows\appinstall\appinstall.bat

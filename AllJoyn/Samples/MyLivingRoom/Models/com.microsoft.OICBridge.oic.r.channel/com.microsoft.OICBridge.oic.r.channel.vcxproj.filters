@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resources">
+      <UniqueIdentifier>0d2bd626-165c-436c-a516-a4e0583eec1c</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="AllJoynBusObjectManager.cpp" />
+    <ClCompile Include="AllJoynHelpers.cpp" />
+    <ClCompile Include="channelConsumer.cpp" />
+    <ClCompile Include="channelProducer.cpp" />
+    <ClCompile Include="channelServiceEventAdapter.cpp" />
+    <ClCompile Include="channelServiceEventArgs.cpp" />
+    <ClCompile Include="channelSignals.cpp" />
+    <ClCompile Include="channelWatcher.cpp" />
+    <ClCompile Include="TypeConversionHelpers.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="AllJoynBusObjectManager.h" />
+    <ClInclude Include="AllJoynHelpers.h" />
+    <ClInclude Include="channelConsumer.h" />
+    <ClInclude Include="channelEventArgs.h" />
+    <ClInclude Include="channelMethodResults.h" />
+    <ClInclude Include="channelProducer.h" />
+    <ClInclude Include="channelServiceEventAdapter.h" />
+    <ClInclude Include="channelServiceEventArgs.h" />
+    <ClInclude Include="channelSignals.h" />
+    <ClInclude Include="channelStructures.h" />
+    <ClInclude Include="channelWatcher.h" />
+    <ClInclude Include="IchannelService.h" />
+    <ClInclude Include="TypeConversionHelpers.h" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,39 @@
+##
+# linux sample app  build script
+##
+
+Import('env')
+
+# Add third party libraries
+lib_env = env.Clone()
+SConscript(env.get('SRC_DIR') + '/service/third_party_libs.scons', 'lib_env')
+linux_sample_env = lib_env.Clone()
+
+######################################################################
+# Build flags
+######################################################################
+linux_sample_env.AppendUnique(CPPPATH = ['include'])
+linux_sample_env.AppendUnique(CXXFLAGS = ['-std=c++0x', '-Wall', '-pthread'])
+linux_sample_env.AppendUnique(CPPDEFINES = ['LINUX'])
+linux_sample_env.AppendUnique(LIBPATH = [env.get('BUILD_DIR')])
+linux_sample_env.AppendUnique(LIBS = ['oc'])
+linux_sample_env.AppendUnique(LIBS = ['octbstack'])
+linux_sample_env.AppendUnique(LIBS = ['libconnectivity_abstraction'])
+linux_sample_env.AppendUnique(LIBS = ['libcoap'])
+linux_sample_env.AppendUnique(LIBS = ['liboc_logger'])
+linux_sample_env.AppendUnique(LIBS = ['pthread'])
+
+if env.get('SECURED') == '1':
+    linux_sample_env.AppendUnique(LIBS = ['tinydtls'])
+
+# On some platforms link order can miss functions so librt needs to be
+# re-scanned at the end if present. gcc 4.6 is one with this issue.
+if 'rt' in linux_sample_env.get('LIBS'):
+    linux_sample_env.Append(LIBS = ['rt'])
+
+######################################################################
+#build sampleapp
+######################################################################
+heightsensorapp = linux_sample_env.Program('HeightSensorApp', 'src/HeightSensorApp.cpp')
+Alias("heightsensorapp_sample", heightsensorapp)
+env.AppendTarget('heightsensorapp')

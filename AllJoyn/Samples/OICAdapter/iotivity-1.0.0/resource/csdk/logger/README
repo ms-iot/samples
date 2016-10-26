@@ -1,0 +1,42 @@
+Build notes
+
+//-------------------------------------------------
+// NOTICE - Transition to SCONS
+//-------------------------------------------------
+
+The IoTivity build system is transitioning to SCONS. Although the
+makefiles are still available (until v1.0) and some developers are
+still using them, they are currently no longer supported. To learn more
+about building using SCONS see Readme.scons.txt in the repository root
+directory. The build steps used in continuous integration can be found
+in auto_build.sh which is also in the the repository root directory.
+
+//-------------------------------------------------
+// Linux
+//-------------------------------------------------
+To enable logging, ensure that
+	-D TB_LOG
+is set in the compiler flags
+
+//-------------------------------------------------
+// Android
+//-------------------------------------------------
+To enable logging for Android, TB_LOG should be defined in the ./jni/Android.mk file as
+
+LOCAL_CFLAGS := -DTB_LOG
+
+//-------------------------------------------------
+// Arduino
+//-------------------------------------------------
+To enable the logger for Arduino, TB_LOG should be defined in
+Properties|C/C++ Build|Settings|Tool Settings|AVR Compiler|Symbols
+and
+Properties|C/C++ Build|Settings|Tool Settings|AVR C++ Compiler|Symbols
+
+Note: when building for Arduino, force the compiler to use avr-g++ to build logger.c.  Or rename logger.c to logger.cpp.
+
+Note: when building for Arduino, several warnings are generated when trying to place strings in
+PROGMEM
+"warning: only initialized variables can be placed into program memory area"
+This appears to be a known gcc bug - https://gcc.gnu.org/bugzilla/show_bug.cgi?id=34734
+

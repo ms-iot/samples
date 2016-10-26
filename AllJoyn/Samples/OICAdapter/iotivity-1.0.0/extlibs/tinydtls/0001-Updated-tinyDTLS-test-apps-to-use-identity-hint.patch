@@ -1,0 +1,188 @@
+From 6b26519bea04167b9cf68069bf641af4651c87e0 Mon Sep 17 00:00:00 2001
+From: Sachin Agrawal <sachin.agrawal@intel.com>
+Date: Thu, 26 Feb 2015 09:28:06 -0800
+Subject: [PATCH 1/1] Updated tinyDTLS test apps to use identity hint
+
+dtls-server test is updated to pass 'psk hint' to tinyDTLS library so that
+it can send ServerKeyExchange packet. Similarly, dtls-client test
+is updated to retrieve PSK specific for the server whose identity was
+received via 'psk hint' packet.
+
+Change-Id: Ifba720f1505ed6afbf56dfc179d98790176ce0b0
+Signed-off-by: Sachin Agrawal <sachin.agrawal@intel.com>
+---
+ extlibs/tinydtls/tests/dtls-client.c |   45 ++++++++++++++++++++++------------
+ extlibs/tinydtls/tests/dtls-server.c |   43 +++++++++++++++++++++-----------
+ 2 files changed, 59 insertions(+), 29 deletions(-)
+
+diff --git a/extlibs/tinydtls/tests/dtls-client.c b/extlibs/tinydtls/tests/dtls-client.c
+index 96ed0fa..65b0275 100644
+--- a/extlibs/tinydtls/tests/dtls-client.c
++++ b/extlibs/tinydtls/tests/dtls-client.c
+@@ -22,9 +22,10 @@
+ 
+ #define DEFAULT_PORT 20220
+ 
+-#define PSK_DEFAULT_IDENTITY "Client_identity"
++#define PSK_CLIENT_IDENTITY  "Client_identity"
++#define PSK_SERVER_IDENTITY  "Server_identity"
+ #define PSK_DEFAULT_KEY      "secretPSK"
+-#define PSK_OPTIONS          "i:k:"
++#define PSK_OPTIONS          "i:s:k:"
+ 
+ #ifdef __GNUC__
+ #define UNUSED_PARAM __attribute__((unused))
+@@ -93,8 +94,10 @@ read_from_file(char *arg, unsigned char *buf, size_t max_buf_len) {
+ /* The PSK information for DTLS */
+ #define PSK_ID_MAXLEN 256
+ #define PSK_MAXLEN 256
+-static unsigned char psk_id[PSK_ID_MAXLEN];
+-static size_t psk_id_length = 0;
++static unsigned char psk_client_id[PSK_ID_MAXLEN];
++static size_t psk_client_id_length = 0;
++static unsigned char psk_server_id[PSK_ID_MAXLEN];
++static size_t psk_server_id_length = 0;
+ static unsigned char psk_key[PSK_MAXLEN];
+ static size_t psk_key_length = 0;
+ 
+@@ -114,15 +117,15 @@ get_psk_info(struct dtls_context_t *ctx UNUSED_PARAM,
+       dtls_debug("got psk_identity_hint: '%.*s'\n", id_len, id);
+     }
+ 
+-    if (result_length < psk_id_length) {
++    if (result_length < psk_client_id_length) {
+       dtls_warn("cannot set psk_identity -- buffer too small\n");
+       return dtls_alert_fatal_create(DTLS_ALERT_INTERNAL_ERROR);
+     }
+ 
+-    memcpy(result, psk_id, psk_id_length);
+-    return psk_id_length;
++    memcpy(result, psk_client_id, psk_client_id_length);
++    return psk_client_id_length;
+   case DTLS_PSK_KEY:
+-    if (id_len != psk_id_length || memcmp(psk_id, id, id_len) != 0) {
++    if (id_len != psk_server_id_length || memcmp(psk_server_id, id, id_len) != 0) {
+       dtls_warn("PSK for unknown id requested, exiting\n");
+       return dtls_alert_fatal_create(DTLS_ALERT_ILLEGAL_PARAMETER);
+     } else if (result_length < psk_key_length) {
+@@ -291,12 +294,13 @@ usage( const char *program, const char *version) {
+   fprintf(stderr, "%s v%s -- DTLS client implementation\n"
+ 	  "(c) 2011-2014 Olaf Bergmann <bergmann@tzi.org>\n\n"
+ #ifdef DTLS_PSK
+-	  "usage: %s [-i file] [-k file] [-o file] [-p port] [-v num] addr [port]\n"
++	  "usage: %s [-i file] [-s file] [-k file] [-o file] [-p port] [-v num] addr [port]\n"
+ #else /*  DTLS_PSK */
+ 	  "usage: %s [-o file] [-p port] [-v num] addr [port]\n"
+ #endif /* DTLS_PSK */
+ #ifdef DTLS_PSK
+-	  "\t-i file\t\tread PSK identity from file\n"
++	  "\t-i file\t\tread PSK Client identity from file\n"
++	  "\t-s file\t\tread PSK Server identity from file\n"
+ 	  "\t-k file\t\tread pre-shared key from file\n"
+ #endif /* DTLS_PSK */
+ 	  "\t-o file\t\toutput received data to this file (use '-' for STDOUT)\n"
+@@ -337,9 +341,11 @@ main(int argc, char **argv) {
+   snprintf(port_str, sizeof(port_str), "%d", port);
+ 
+ #ifdef DTLS_PSK
+-  psk_id_length = strlen(PSK_DEFAULT_IDENTITY);
++  psk_client_id_length = strlen(PSK_CLIENT_IDENTITY);
++  psk_server_id_length = strlen(PSK_SERVER_IDENTITY);
+   psk_key_length = strlen(PSK_DEFAULT_KEY);
+-  memcpy(psk_id, PSK_DEFAULT_IDENTITY, psk_id_length);
++  memcpy(psk_client_id, PSK_CLIENT_IDENTITY, psk_client_id_length);
++  memcpy(psk_server_id, PSK_SERVER_IDENTITY, psk_server_id_length);
+   memcpy(psk_key, PSK_DEFAULT_KEY, psk_key_length);
+ #endif /* DTLS_PSK */
+ 
+@@ -347,11 +353,20 @@ main(int argc, char **argv) {
+     switch (opt) {
+ #ifdef DTLS_PSK
+     case 'i' : {
+-      ssize_t result = read_from_file(optarg, psk_id, PSK_ID_MAXLEN);
++      ssize_t result = read_from_file(optarg, psk_client_id, PSK_ID_MAXLEN);
+       if (result < 0) {
+-	dtls_warn("cannot read PSK identity\n");
++	dtls_warn("cannot read Client PSK identity\n");
+       } else {
+-	psk_id_length = result;
++	psk_client_id_length = result;
++      }
++      break;
++    }
++    case 's' : {
++      ssize_t result = read_from_file(optarg, psk_server_id, PSK_ID_MAXLEN);
++      if (result < 0) {
++	dtls_warn("cannot read Server PSK identity\n");
++      } else {
++	psk_server_id_length = result;
+       }
+       break;
+     }
+diff --git a/extlibs/tinydtls/tests/dtls-server.c b/extlibs/tinydtls/tests/dtls-server.c
+index 3f030b1..ae1283e 100644
+--- a/extlibs/tinydtls/tests/dtls-server.c
++++ b/extlibs/tinydtls/tests/dtls-server.c
+@@ -47,6 +47,9 @@ handle_sigint(int signum) {
+ #endif
+ 
+ #ifdef DTLS_PSK
++
++#define PSK_SERVER_HINT  "Server_identity"
++
+ /* This function is the "key store" for tinyDTLS. It is called to
+  * retrieve a key for the given identity within this particular
+  * session. */
+@@ -70,23 +73,35 @@ get_psk_info(struct dtls_context_t *ctx, const session_t *session,
+       (unsigned char *)"", 1 }
+   };
+ 
+-  if (type != DTLS_PSK_KEY) {
+-    return 0;
+-  }
++  switch (type) {
++  case DTLS_PSK_HINT:
++    if (result_length < strlen(PSK_SERVER_HINT)) {
++      dtls_warn("cannot set psk_hint -- buffer too small\n");
++      return dtls_alert_fatal_create(DTLS_ALERT_INTERNAL_ERROR);
++    }
+ 
+-  if (id) {
+-    int i;
+-    for (i = 0; i < sizeof(psk)/sizeof(struct keymap_t); i++) {
+-      if (id_len == psk[i].id_length && memcmp(id, psk[i].id, id_len) == 0) {
+-	if (result_length < psk[i].key_length) {
+-	  dtls_warn("buffer too small for PSK");
+-	  return dtls_alert_fatal_create(DTLS_ALERT_INTERNAL_ERROR);
+-	}
+-
+-	memcpy(result, psk[i].key, psk[i].key_length);
+-	return psk[i].key_length;
++    memcpy(result, PSK_SERVER_HINT, strlen(PSK_SERVER_HINT));
++    return strlen(PSK_SERVER_HINT);
++
++  case DTLS_PSK_KEY:
++    if (id) {
++      int i;
++      for (i = 0; i < sizeof(psk)/sizeof(struct keymap_t); i++) {
++        if (id_len == psk[i].id_length && memcmp(id, psk[i].id, id_len) == 0) {
++	  if (result_length < psk[i].key_length) {
++	    dtls_warn("buffer too small for PSK");
++	    return dtls_alert_fatal_create(DTLS_ALERT_INTERNAL_ERROR);
++	  }
++
++	  memcpy(result, psk[i].key, psk[i].key_length);
++	  return psk[i].key_length;
++        }
+       }
+     }
++    break;
++
++  default:
++    dtls_warn("unsupported request type: %d\n", type);
+   }
+ 
+   return dtls_alert_fatal_create(DTLS_ALERT_DECRYPT_ERROR);
+-- 
+1.7.9.5
+

@@ -1,0 +1,60 @@
+#******************************************************************
+#
+# Copyright 2015 Intel Mobile Communications GmbH All Rights Reserved.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+######################################################################
+# raxmpp library build script
+#
+######################################################################
+import os
+import commands
+
+Import('env')
+
+src_dir = env.get('SRC_DIR')
+target_os = env.get('TARGET_OS')
+target_arch = env.get('TARGET_ARCH')
+with_ra = env.get('WITH_RA')
+if with_ra:
+	# check 'raxmppl' library, if it doesn't exits, ask user to download it
+	if not os.path.exists('raxmpp'):
+		print '''
+	*********************************** Error: ***********************************************
+	* Please download ra_xmpp as following :
+	*     $ git clone https://gerrit.iotivity.org/gerrit/iotivity-xmpp extlibs/raxmpp/raxmpp
+	******************************************************************************************
+	'''
+		Exit(1)
+
+	print 'building with ra_xmpp'
+	if env.get('RELEASE'):
+		print src_dir
+		build_dir = os.path.join(src_dir, 'extlibs/raxmpp/raxmpp/out', target_os, target_arch, 'release/')
+	else:
+		build_dir = os.path.join(src_dir, 'extlibs/raxmpp/raxmpp/out/', target_os, target_arch, 'debug/')
+	os.chdir('raxmpp')
+	sconsflags = ' RELEASE=true' if  env['RELEASE'] else ' RELEASE=false'
+	foo=commands.getoutput('scons external' + sconsflags )
+	print foo
+	foo=commands.getoutput('scons' + sconsflags )
+	print foo
+
+	env.AppendUnique(CPPPATH = src_dir+'/extlibs/raxmpp/raxmpp/ra_xmpp/',
+				LIBPATH=build_dir,
+				RPATH = build_dir)

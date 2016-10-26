@@ -70,9 +70,8 @@ namespace PotentiometerSensor
                 settings.ClockFrequency = 500000;   /* 0.5MHz clock rate                                        */
                 settings.Mode = SpiMode.Mode0;      /* The ADC expects idle-low clock polarity so we use Mode0  */
 
-                string spiAqs = SpiDevice.GetDeviceSelector(SPI_CONTROLLER_NAME);
-                var deviceInfo = await DeviceInformation.FindAllAsync(spiAqs);
-                SpiADC = await SpiDevice.FromIdAsync(deviceInfo[0].Id, settings);
+                var controller = await SpiController.GetDefaultAsync();
+                SpiADC = controller.GetDevice(settings);
             }
 
             /* If initialization fails, display the exception and stop running */
@@ -151,7 +150,8 @@ namespace PotentiometerSensor
                     writeBuffer[0] = MCP3208_CONFIG;
                     break;
                 case AdcDevice.MCP3008:
-                    writeBuffer[0] = MCP3008_CONFIG;
+                    writeBuffer[0] = MCP3008_CONFIG[0];
+                    writeBuffer[1] = MCP3008_CONFIG[1];
                     break;
             }
 
@@ -217,7 +217,7 @@ namespace PotentiometerSensor
 
         private const byte MCP3002_CONFIG = 0x68; /* 01101000 channel configuration data for the MCP3002 */
         private const byte MCP3208_CONFIG = 0x06; /* 00000110 channel configuration data for the MCP3208 */
-        private const byte MCP3008_CONFIG = 0x08; /* 00001000 channel configuration data for the MCP3008 */
+        private readonly byte[] MCP3008_CONFIG = { 0x01, 0x80 }; /* 00000001 10000000 channel configuration data for the MCP3008 */
 
         private Timer periodicTimer;
         private int adcValue;

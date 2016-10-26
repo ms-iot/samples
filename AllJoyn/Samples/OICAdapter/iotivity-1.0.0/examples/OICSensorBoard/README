@@ -1,0 +1,14 @@
+//******************************************************************
+//
+// This example includes
+// - Server application for Edison which demonstrates Iotivity server
+//   capabilities through the integration of an add-on breadboard that
+//   hosts temperature, ambient light and LED resources.
+// - Client application to test server functionality, discovering and
+//   communicating with these resources.
+//
+// See complete documentation at
+//        https://wiki.iotivity.org/_media/oicsensorboardreadme.pdf
+//
+//-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+

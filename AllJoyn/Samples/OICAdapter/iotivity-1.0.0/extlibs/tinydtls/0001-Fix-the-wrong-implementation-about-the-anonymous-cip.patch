@@ -1,0 +1,690 @@
+From 1ee27820ccad59423711c83fb01ff58939511f3b Mon Sep 17 00:00:00 2001
+From: Sachin Agrawal <sachin.agrawal@intel.com>
+Date: Mon, 29 Jun 2015 22:26:21 -0700
+Subject: [PATCH 1/1] Fix the wrong implementation about the anonymous cipher
+ suite of tinydtls. (NOTE : This patch has been modified
+ based on RFC 5246)
+
+1. IV for CBC block operation
+   - Apply the random IV for CBC block operations according to section 6.2.3.2 of RFC 5246.
+
+2. MAC calculation
+   - Apply HMAC for DTLS MAC calculation according to section 6.2.3.1 of RFC 5246.
+
+3. CBC padding
+   - Apply PKCS#5 padding for CBC block cipher accroding to section 6.2.3.2 of RFC 5246.
+
+4. Change the cipher suite name TLS_ECDH_anon_WITH_AES_128_CBC_SHA
+   to TLS_ECDH_anon_WITH_AES_128_CBC_SHA_256.
+
+5. Fix the minor bug in dtls sample.
+
+Change-Id: I8783caa6ac04fe2d46e242efe56e3205646b1038
+Signed-off-by: leechul <chuls.lee@samsung.com>
+Signed-off-by: Sachin Agrawal <sachin.agrawal@intel.com>
+---
+ extlibs/tinydtls/crypto.c                          |  100 +++++++++++++-----
+ extlibs/tinydtls/crypto.h                          |    1 +
+ extlibs/tinydtls/dtls.c                            |  111 +++++++++++++++-----
+ extlibs/tinydtls/dtls.h                            |    6 +-
+ extlibs/tinydtls/global.h                          |    2 +-
+ extlibs/tinydtls/tests/dtls-client.c               |    8 +-
+ extlibs/tinydtls/tests/dtls-server.c               |    8 +-
+ resource/csdk/connectivity/api/cainterface.h       |    4 +-
+ resource/csdk/connectivity/inc/caadapternetdtls.h  |    2 +-
+ .../src/adapter_util/caadapternetdtls.c            |    2 +-
+ .../provisioning/src/provisioningmanager.c         |    2 +-
+ 11 files changed, 180 insertions(+), 66 deletions(-)
+
+diff --git a/extlibs/tinydtls/crypto.c b/extlibs/tinydtls/crypto.c
+index 5082535..3fbb993 100644
+--- a/extlibs/tinydtls/crypto.c
++++ b/extlibs/tinydtls/crypto.c
+@@ -58,6 +58,7 @@
+ #include "sha2/sha2.h"
+ #include "prng.h"
+ #include "netq.h"
++#include "hmac.h"
+ 
+ #ifndef WITH_CONTIKI
+ #include <pthread.h>
+@@ -329,6 +330,7 @@ dtls_ccm_decrypt(aes128_t *ccm_ctx, const unsigned char *src,
+ 
+ static size_t
+ dtls_cbc_encrypt(aes128_t *aes_ctx,
++                 unsigned char *key, size_t keylen,
+                  const unsigned char *iv,
+                  const unsigned char *src, size_t srclen,
+                  unsigned char *buf) {
+@@ -336,18 +338,35 @@ dtls_cbc_encrypt(aes128_t *aes_ctx,
+     unsigned char cbc[DTLS_BLK_LENGTH];
+     unsigned char tmp[DTLS_BLK_LENGTH];
+     unsigned char *pos;
+-    dtls_hash_ctx shactx;
++    const unsigned char *dtls_hdr = NULL;
+     int i, j;
+     int blocks;
++    dtls_hmac_context_t* hmac_ctx = NULL;
++    int paddinglen = 0;
+ 
+     pos = buf;
+ 
+-    dtls_hash_init(&shactx);
+-    dtls_hash_update(&shactx, src, srclen);
+-    dtls_hash_finalize(pos + srclen, &shactx);
++    dtls_hdr = src - DTLS_CBC_IV_LENGTH - sizeof(dtls_record_header_t);
++
++    //Calculate MAC : Append the MAC code to end of content
++    hmac_ctx = dtls_hmac_new(key, keylen);
++    dtls_mac(hmac_ctx,
++             dtls_hdr,
++             src, srclen,
++             buf + srclen);
++    dtls_hmac_free(hmac_ctx);
++    
++    dtls_debug_dump("[MAC]",
++                    buf + srclen,
++                    DTLS_HMAC_DIGEST_SIZE);
++
++    paddinglen = DTLS_BLK_LENGTH - ((srclen + DTLS_HMAC_DIGEST_SIZE) % DTLS_BLK_LENGTH);
++    
++    //TLS padding
++    memset(buf + (srclen + DTLS_HMAC_DIGEST_SIZE), paddinglen - 1, paddinglen);
+ 
+     memcpy(cbc, iv, DTLS_BLK_LENGTH);
+-    blocks = (srclen + SHA256_DIGEST_LENGTH) / DTLS_BLK_LENGTH;
++    blocks = (srclen + DTLS_HMAC_DIGEST_SIZE + paddinglen) / DTLS_BLK_LENGTH;
+ 
+     for (i = 0; i < blocks; i++) {
+         for (j = 0; j < DTLS_BLK_LENGTH; j++) {
+@@ -360,14 +379,17 @@ dtls_cbc_encrypt(aes128_t *aes_ctx,
+         pos += DTLS_BLK_LENGTH;
+     }
+ 
+-    dtls_debug_dump("Encrypted Data:", buf, srclen + SHA256_DIGEST_LENGTH);
+-
+-    return srclen + SHA256_DIGEST_LENGTH;
++    dtls_debug_dump("[Encrypted Data]",
++                    buf,
++                    srclen + DTLS_HMAC_DIGEST_SIZE + paddinglen);
++    
++    return srclen + DTLS_HMAC_DIGEST_SIZE + paddinglen;
+ }
+ 
+ 
+ static size_t
+ dtls_cbc_decrypt(aes128_t *aes_ctx,
++                 unsigned char *key, size_t keylen,
+                  const unsigned char *iv,
+                  const unsigned char *src, size_t srclen,
+                  unsigned char *buf) {
+@@ -375,14 +397,17 @@ dtls_cbc_decrypt(aes128_t *aes_ctx,
+     unsigned char cbc[DTLS_BLK_LENGTH];
+     unsigned char tmp[DTLS_BLK_LENGTH];
+     unsigned char tmp2[DTLS_BLK_LENGTH];
+-    unsigned char msg_hash[SHA256_DIGEST_LENGTH];
++    unsigned char mac_buf[DTLS_HMAC_DIGEST_SIZE] = {0,};
++    const unsigned char *dtls_hdr = NULL;
+     unsigned char *pos;
+-    dtls_hash_ctx shactx;
+     int i, j;
+     int blocks;
++    int depaddinglen = 0;
++    dtls_hmac_context_t* hmac_ctx = NULL;
+ 
+     pos = buf;
+-    memcpy(pos, src, srclen);
++
++    dtls_hdr = src - DTLS_CBC_IV_LENGTH - sizeof(dtls_record_header_t);
+ 
+     memcpy(cbc, iv, DTLS_BLK_LENGTH);
+     blocks = srclen / DTLS_BLK_LENGTH;
+@@ -401,19 +426,46 @@ dtls_cbc_decrypt(aes128_t *aes_ctx,
+         pos += DTLS_BLK_LENGTH;
+     }
+ 
+-    dtls_hash_init(&shactx);
+-    dtls_hash_update(&shactx, buf, srclen - SHA256_DIGEST_LENGTH);
+-    dtls_hash_finalize(msg_hash, &shactx);
+-
+-    dtls_debug_dump("decrypted data:", buf, srclen);
++    //de-padding
++    depaddinglen = buf[srclen -1];
+ 
+-    if(memcmp(msg_hash, buf + (srclen - SHA256_DIGEST_LENGTH), SHA256_DIGEST_LENGTH) != 0)
++    //Calculate MAC
++    hmac_ctx = dtls_hmac_new(key, keylen);
++    if(!hmac_ctx) {
++        return -1;
++    }
++    dtls_mac(hmac_ctx, dtls_hdr, buf,
++             srclen - DTLS_HMAC_DIGEST_SIZE - depaddinglen - 1,
++             mac_buf);
++    dtls_hmac_free(hmac_ctx);
++
++    dtls_debug_dump("[MAC]",
++                    mac_buf,
++                    DTLS_HMAC_DIGEST_SIZE);
++    dtls_debug_dump("[Decrypted data]",
++                    buf,
++                    srclen - DTLS_HMAC_DIGEST_SIZE - depaddinglen - 1);
++
++    //verify the MAC
++    if(memcmp(mac_buf,
++              buf + (srclen - DTLS_HMAC_DIGEST_SIZE - depaddinglen - 1),
++              DTLS_HMAC_DIGEST_SIZE) != 0)
+     {
+-        dtls_warn("message is broken\n");
++        dtls_crit("Failed to verification of MAC\n");
+         return -1;
+     }
+ 
+-    return srclen - SHA256_DIGEST_LENGTH;
++    //verify the padding bytes
++    for (i =0; i < depaddinglen; i++)
++    {
++        if (buf[srclen - depaddinglen - 1 + i] != depaddinglen)
++        {
++            dtls_crit("Failed to verify padding bytes\n");
++            return -1;
++        }
++    }
++
++    return srclen - DTLS_HMAC_DIGEST_SIZE - depaddinglen - 1;
+ }
+ 
+ #ifdef DTLS_PSK
+@@ -523,8 +575,6 @@ void
+ dtls_ecdsa_create_sig_hash(const unsigned char *priv_key, size_t key_size,
+ 			   const unsigned char *sign_hash, size_t sign_hash_size,
+ 			   uint32_t point_r[9], uint32_t point_s[9]) {
+-  int ret;
+-
+   uint8_t privateKey[32];
+   uint8_t hashValue[32];
+   uint8_t sign[64];
+@@ -615,7 +665,7 @@ dtls_encrypt(const unsigned char *src, size_t length,
+         memmove(buf, src, length);
+       ret = dtls_ccm_encrypt(&ctx->data, src, length, buf, nounce, aad, la);
+   }
+-  if(cipher == TLS_ECDH_anon_WITH_AES_128_CBC_SHA) {
++  if(cipher == TLS_ECDH_anon_WITH_AES_128_CBC_SHA_256) {
+       ret = rijndael_set_key(&ctx->data.ctx, key, 8 * keylen);
+       if (ret < 0) {
+         /* cleanup everything in case the key has the wrong size */
+@@ -625,7 +675,7 @@ dtls_encrypt(const unsigned char *src, size_t length,
+ 
+       if (src != buf)
+         memmove(buf, src, length);
+-      ret = dtls_cbc_encrypt(&ctx->data, nounce, src, length, buf);
++      ret = dtls_cbc_encrypt(&ctx->data, key, keylen, nounce, src, length, buf);
+   }
+ 
+ error:
+@@ -658,7 +708,7 @@ dtls_decrypt(const unsigned char *src, size_t length,
+       ret = dtls_ccm_decrypt(&ctx->data, src, length, buf, nounce, aad, la);
+   }
+ 
+-  if(cipher == TLS_ECDH_anon_WITH_AES_128_CBC_SHA) {
++  if(cipher == TLS_ECDH_anon_WITH_AES_128_CBC_SHA_256) {
+       ret = rijndael_set_key(&ctx->data.ctx, key, 8 * keylen);
+       if (ret < 0) {
+         /* cleanup everything in case the key has the wrong size */
+@@ -668,7 +718,7 @@ dtls_decrypt(const unsigned char *src, size_t length,
+ 
+       if (src != buf)
+         memmove(buf, src, length);
+-      ret = dtls_cbc_decrypt(&ctx->data, nounce, src, length, buf);
++      ret = dtls_cbc_decrypt(&ctx->data, key, keylen, nounce, src, length, buf);
+     }
+ 
+ error:
+diff --git a/extlibs/tinydtls/crypto.h b/extlibs/tinydtls/crypto.h
+index dd13ffa..a81d306 100644
+--- a/extlibs/tinydtls/crypto.h
++++ b/extlibs/tinydtls/crypto.h
+@@ -46,6 +46,7 @@
+ #define DTLS_BLK_LENGTH        16 /* AES-128 */
+ #define DTLS_MAC_LENGTH        DTLS_HMAC_DIGEST_SIZE
+ #define DTLS_IV_LENGTH         4  /* length of nonce_explicit */
++#define DTLS_CBC_IV_LENGTH     16
+ 
+ /** 
+  * Maximum size of the generated keyblock. Note that MAX_KEYBLOCK_LENGTH must 
+diff --git a/extlibs/tinydtls/dtls.c b/extlibs/tinydtls/dtls.c
+index 41e68a5..b5b8fd1 100644
+--- a/extlibs/tinydtls/dtls.c
++++ b/extlibs/tinydtls/dtls.c
+@@ -496,11 +496,11 @@ static inline int is_tls_psk_with_aes_128_ccm_8(dtls_cipher_t cipher)
+ #endif /* DTLS_PSK */
+ }
+ 
+-/** returns true if the cipher matches TLS_ECDH_anon_WITH_AES_128_CBC_SHA */
+-static inline int is_tls_ecdh_anon_with_aes_128_cbc_sha(dtls_cipher_t cipher)
++/** returns true if the cipher matches TLS_ECDH_anon_WITH_AES_128_CBC_SHA_256 */
++static inline int is_tls_ecdh_anon_with_aes_128_cbc_sha_256(dtls_cipher_t cipher)
+ {
+ #ifdef DTLS_ECC
+-    return cipher == TLS_ECDH_anon_WITH_AES_128_CBC_SHA;
++    return cipher == TLS_ECDH_anon_WITH_AES_128_CBC_SHA_256;
+ #else
+     return 0;
+ #endif
+@@ -570,7 +570,7 @@ known_cipher(dtls_context_t *ctx, dtls_cipher_t code, int is_client) {
+ 
+   return (psk && is_tls_psk_with_aes_128_ccm_8(code)) ||
+ 	 (ecdsa && is_tls_ecdhe_ecdsa_with_aes_128_ccm_8(code)) ||
+-	 (ecdh_anon && is_tls_ecdh_anon_with_aes_128_cbc_sha(code));
++	 (ecdh_anon && is_tls_ecdh_anon_with_aes_128_cbc_sha_256(code));
+ }
+ 
+ /**
+@@ -719,7 +719,7 @@ calculate_key_block(dtls_context_t *ctx,
+ #endif /* DTLS_PSK */
+ #ifdef DTLS_ECC
+   case TLS_ECDHE_ECDSA_WITH_AES_128_CCM_8:
+-  case TLS_ECDH_anon_WITH_AES_128_CBC_SHA: {
++  case TLS_ECDH_anon_WITH_AES_128_CBC_SHA_256: {
+     pre_master_len = dtls_ecdh_pre_master_secret(handshake->keyx.ecc.own_eph_priv,
+ 						 handshake->keyx.ecc.other_eph_pub_x,
+ 						 handshake->keyx.ecc.other_eph_pub_y,
+@@ -1084,7 +1084,7 @@ check_client_keyexchange(dtls_context_t *ctx,
+ 
+ #ifdef DTLS_ECC
+   if (is_tls_ecdhe_ecdsa_with_aes_128_ccm_8(handshake->cipher) ||
+-       is_tls_ecdh_anon_with_aes_128_cbc_sha(handshake->cipher) ) {
++       is_tls_ecdh_anon_with_aes_128_cbc_sha_256(handshake->cipher) ) {
+ 
+     if (length < DTLS_HS_LENGTH + DTLS_CKXEC_LENGTH) {
+       dtls_debug("The client key exchange is too short\n");
+@@ -1286,6 +1286,51 @@ dtls_prepare_record(dtls_peer_t *peer, dtls_security_parameters_t *security,
+       p += data_len_array[i];
+       res += data_len_array[i];
+     }
++  } else if (is_tls_ecdh_anon_with_aes_128_cbc_sha_256(security->cipher)) {
++
++    unsigned char nonce[DTLS_CBC_IV_LENGTH];
++
++    /** Add IV into body of packet in case of AES CBC mode according to RFC 5246, Section 6.2.3.2
++     *
++     *    opaque IV[SecurityParameters.record_iv_length];
++     *    block-ciphered struct {
++     *        opaque content[TLSCompressed.length];
++     *        opaque MAC[SecurityParameters.mac_length];
++     *        uint8 padding[GenericBlockCipher.padding_length];
++     *        uint8 padding_length;
++     * };
++     *
++     */
++
++    res = 0;
++    dtls_prng(nonce, DTLS_CBC_IV_LENGTH);
++    memcpy(p , nonce, DTLS_CBC_IV_LENGTH);
++    p += DTLS_CBC_IV_LENGTH;
++    res += DTLS_CBC_IV_LENGTH;
++
++    for (i = 0; i < data_array_len; i++) {
++        /* check the minimum that we need for packets that are not encrypted */
++        if (*rlen < res + DTLS_RH_LENGTH + data_len_array[i]) {
++            dtls_debug("dtls_prepare_record: send buffer too small\n");
++            return dtls_alert_fatal_create(DTLS_ALERT_INTERNAL_ERROR);
++        }
++
++        memcpy(p, data_array[i], data_len_array[i]);
++        p += data_len_array[i];
++        res += data_len_array[i];
++     }
++
++     res = dtls_encrypt(start + DTLS_CBC_IV_LENGTH, res - DTLS_CBC_IV_LENGTH,
++               start + DTLS_CBC_IV_LENGTH, nonce,
++               dtls_kb_local_write_key(security, peer->role),
++               dtls_kb_key_size(security, peer->role),
++               NULL, 0,
++               security->cipher);
++     if (res < 0)
++       return res;
++
++     res += DTLS_CBC_IV_LENGTH;
++
+   } else { /* TLS_PSK_WITH_AES_128_CCM_8 or TLS_ECDHE_ECDSA_WITH_AES_128_CCM_8 */   
+     /** 
+      * length of additional_data for the AEAD cipher which consists of
+@@ -1299,8 +1344,6 @@ dtls_prepare_record(dtls_peer_t *peer, dtls_security_parameters_t *security,
+       dtls_debug("dtls_prepare_record(): encrypt using TLS_PSK_WITH_AES_128_CCM_8\n");
+     } else if (is_tls_ecdhe_ecdsa_with_aes_128_ccm_8(security->cipher)) {
+       dtls_debug("dtls_prepare_record(): encrypt using TLS_ECDHE_ECDSA_WITH_AES_128_CCM_8\n");
+-    } else if (is_tls_ecdh_anon_with_aes_128_cbc_sha(security->cipher)) {
+-        dtls_debug("dtls_prepare_record() : encrypt using TLS_ECDH_anon_WITH_AES_128_CBC_SHA\n");
+     } else {
+       dtls_debug("dtls_prepare_record(): encrypt using unknown cipher\n");
+     }
+@@ -1363,7 +1406,7 @@ dtls_prepare_record(dtls_peer_t *peer, dtls_security_parameters_t *security,
+ 
+     memset(nonce, 0, DTLS_CCM_BLOCKSIZE);
+     memcpy(nonce, dtls_kb_local_iv(security, peer->role),
+-	   dtls_kb_iv_size(security, peer->role));
++        dtls_kb_iv_size(security, peer->role));
+     memcpy(nonce + dtls_kb_iv_size(security, peer->role), start, 8); /* epoch + seq_num */
+ 
+     dtls_debug_dump("nonce:", nonce, DTLS_CCM_BLOCKSIZE);
+@@ -1378,7 +1421,8 @@ dtls_prepare_record(dtls_peer_t *peer, dtls_security_parameters_t *security,
+     memcpy(A_DATA, &DTLS_RECORD_HEADER(sendbuf)->epoch, 8); /* epoch and seq_num */
+     memcpy(A_DATA + 8,  &DTLS_RECORD_HEADER(sendbuf)->content_type, 3); /* type and version */
+     dtls_int_to_uint16(A_DATA + 11, res - 8); /* length */
+-    
++
++
+     res = dtls_encrypt(start + 8, res - 8, start + 8, nonce,
+                dtls_kb_local_write_key(security, peer->role),
+                dtls_kb_key_size(security, peer->role),
+@@ -1388,7 +1432,7 @@ dtls_prepare_record(dtls_peer_t *peer, dtls_security_parameters_t *security,
+     if (res < 0)
+       return res;
+ 
+-    res += 8;			/* increment res by size of nonce_explicit */
++    res += 8; /* increment res by size of nonce_explicit */
+     dtls_debug_dump("message:", start, res);
+   }
+ 
+@@ -2172,7 +2216,7 @@ dtls_send_server_hello_msgs(dtls_context_t *ctx, dtls_peer_t *peer)
+   }
+ 
+   ecdsa = is_tls_ecdhe_ecdsa_with_aes_128_ccm_8(peer->handshake_params->cipher);
+-  ecdh_anon = is_tls_ecdh_anon_with_aes_128_cbc_sha(peer->handshake_params->cipher);
++  ecdh_anon = is_tls_ecdh_anon_with_aes_128_cbc_sha_256(peer->handshake_params->cipher);
+ 
+ #ifdef DTLS_ECC
+   if(ecdh_anon) {
+@@ -2301,7 +2345,7 @@ dtls_send_client_key_exchange(dtls_context_t *ctx, dtls_peer_t *peer)
+ #endif /* DTLS_PSK */
+ #ifdef DTLS_ECC
+   case TLS_ECDHE_ECDSA_WITH_AES_128_CCM_8:
+-  case TLS_ECDH_anon_WITH_AES_128_CBC_SHA: {
++  case TLS_ECDH_anon_WITH_AES_128_CBC_SHA_256: {
+     uint8 *ephemeral_pub_x;
+     uint8 *ephemeral_pub_y;
+ 
+@@ -2424,7 +2468,7 @@ dtls_send_client_hello(dtls_context_t *ctx, dtls_peer_t *peer,
+       case TLS_ECDHE_ECDSA_WITH_AES_128_CCM_8:
+         ecdsa = is_ecdsa_supported(ctx, 1);
+         break;
+-      case TLS_ECDH_anon_WITH_AES_128_CBC_SHA:
++      case TLS_ECDH_anon_WITH_AES_128_CBC_SHA_256:
+         ecdh_anon = is_ecdh_anon_supported(ctx);
+         break;
+       default:
+@@ -2478,7 +2522,7 @@ dtls_send_client_hello(dtls_context_t *ctx, dtls_peer_t *peer,
+   p += sizeof(uint16);
+ 
+   if (ecdh_anon) {
+-    dtls_int_to_uint16(p, TLS_ECDH_anon_WITH_AES_128_CBC_SHA);
++    dtls_int_to_uint16(p, TLS_ECDH_anon_WITH_AES_128_CBC_SHA_256);
+     p += sizeof(uint16);
+   }
+   if (psk) {
+@@ -2809,7 +2853,7 @@ check_server_key_exchange_ecdh(dtls_context_t *ctx,
+ 
+   update_hs_hash(peer, data, data_length);
+ 
+-  assert(is_tls_ecdh_anon_with_aes_128_cbc_sha(config->cipher));
++  assert(is_tls_ecdh_anon_with_aes_128_cbc_sha_256(config->cipher));
+ 
+   data += DTLS_HS_LENGTH;
+ 
+@@ -3069,6 +3113,23 @@ decrypt_verify(dtls_peer_t *peer, uint8 *packet, size_t length,
+   if (security->cipher == TLS_NULL_WITH_NULL_NULL) {
+     /* no cipher suite selected */
+     return clen;
++  } else if (is_tls_ecdh_anon_with_aes_128_cbc_sha_256(security->cipher)) {
++
++    unsigned char nonce[DTLS_CBC_IV_LENGTH];
++
++    if (clen < (DTLS_CBC_IV_LENGTH + DTLS_HMAC_DIGEST_SIZE))		/* need at least IV and MAC */
++      return -1;
++
++    memcpy(nonce, *cleartext , DTLS_CBC_IV_LENGTH);
++    clen -= DTLS_CBC_IV_LENGTH;
++    *cleartext += DTLS_CBC_IV_LENGTH ;
++
++    clen = dtls_decrypt(*cleartext, clen, *cleartext, nonce,
++		       dtls_kb_remote_write_key(security, peer->role),
++		       dtls_kb_key_size(security, peer->role),
++		       NULL, 0,
++		       security->cipher);
++
+   } else { /* TLS_PSK_WITH_AES_128_CCM_8 or TLS_ECDHE_ECDSA_WITH_AES_128_CCM_8 */
+     /** 
+      * length of additional_data for the AEAD cipher which consists of
+@@ -3083,7 +3144,7 @@ decrypt_verify(dtls_peer_t *peer, uint8 *packet, size_t length,
+ 
+     memset(nonce, 0, DTLS_CCM_BLOCKSIZE);
+     memcpy(nonce, dtls_kb_remote_iv(security, peer->role),
+-	   dtls_kb_iv_size(security, peer->role));
++        dtls_kb_iv_size(security, peer->role));
+ 
+     /* read epoch and seq_num from message */
+     memcpy(nonce + dtls_kb_iv_size(security, peer->role), *cleartext, 8);
+@@ -3108,17 +3169,19 @@ decrypt_verify(dtls_peer_t *peer, uint8 *packet, size_t length,
+ 		       dtls_kb_remote_write_key(security, peer->role),
+ 		       dtls_kb_key_size(security, peer->role),
+ 		       A_DATA, A_DATA_LEN,
+-               security->cipher);
+-    if (clen < 0)
+-      dtls_warn("decryption failed\n");
+-    else {
++  	               security->cipher);
++  }
++
++  if (clen < 0)
++    dtls_warn("decryption failed\n");
++  else {
+ #ifndef NDEBUG
+       dtls_debug("decrypt_verify(): found %i bytes cleartext\n", clen);
+ #endif
+       dtls_security_params_free_other(peer);
+       dtls_debug_dump("cleartext", *cleartext, clen);
+-    }
+   }
++
+   return clen;
+ }
+ 
+@@ -3219,7 +3282,7 @@ handle_handshake_msg(dtls_context_t *ctx, dtls_peer_t *peer, session_t *session,
+     }
+     if (is_tls_ecdhe_ecdsa_with_aes_128_ccm_8(peer->handshake_params->cipher))
+       peer->state = DTLS_STATE_WAIT_SERVERCERTIFICATE; //ecdsa
+-    else if (is_tls_ecdh_anon_with_aes_128_cbc_sha(peer->handshake_params->cipher))
++    else if (is_tls_ecdh_anon_with_aes_128_cbc_sha_256(peer->handshake_params->cipher))
+         peer->state = DTLS_STATE_WAIT_SERVERKEYEXCHANGE; //ecdh
+     else
+       peer->state = DTLS_STATE_WAIT_SERVERHELLODONE; //psk
+@@ -3259,7 +3322,7 @@ handle_handshake_msg(dtls_context_t *ctx, dtls_peer_t *peer, session_t *session,
+       err = check_server_key_exchange_ecdsa(ctx, peer, data, data_length);
+     }
+ 
+-    if (is_tls_ecdh_anon_with_aes_128_cbc_sha(peer->handshake_params->cipher)) {
++    if (is_tls_ecdh_anon_with_aes_128_cbc_sha_256(peer->handshake_params->cipher)) {
+       if (state != DTLS_STATE_WAIT_SERVERKEYEXCHANGE) {
+         return dtls_alert_fatal_create(DTLS_ALERT_UNEXPECTED_MESSAGE);
+       }
+diff --git a/extlibs/tinydtls/dtls.h b/extlibs/tinydtls/dtls.h
+index a2ab86e..7d2bc19 100644
+--- a/extlibs/tinydtls/dtls.h
++++ b/extlibs/tinydtls/dtls.h
+@@ -238,7 +238,7 @@ typedef struct dtls_context_t {
+ 
+   dtls_handler_t *h;		/**< callback handlers */
+ 
+-  dtls_cipher_enable_t is_anon_ecdh_eabled;    /**< enable/disable the TLS_ECDH_anon_WITH_AES_128_CBC_SHA */
++  dtls_cipher_enable_t is_anon_ecdh_eabled;    /**< enable/disable the TLS_ECDH_anon_WITH_AES_128_CBC_SHA_256 */
+ 
+   dtls_cipher_t selected_cipher; /**< selected ciper suite for handshake */
+ 
+@@ -268,7 +268,7 @@ static inline void dtls_set_handler(dtls_context_t *ctx, dtls_handler_t *h) {
+ }
+ 
+  /**
+-  * @brief Enabling the TLS_ECDH_anon_WITH_AES_128_CBC_SHA
++  * @brief Enabling the TLS_ECDH_anon_WITH_AES_128_CBC_SHA_256
+   *
+   * @param ctx              The DTLS context to use.
+   * @param is_enable    DTLS_CIPHER_ENABLE(1) or DTLS_CIPHER_DISABLE(0)
+@@ -279,7 +279,7 @@ void dtls_enables_anon_ecdh(dtls_context_t* ctx, dtls_cipher_enable_t is_enable)
+  * @brief Select the cipher suite for handshake
+  *
+  * @param ctx              The DTLS context to use.
+- * @param cipher         TLS_ECDH_anon_WITH_AES_128_CBC_SHA (0xC018)
++ * @param cipher         TLS_ECDH_anon_WITH_AES_128_CBC_SHA_256 (0xC018)
+  *                                  TLS_PSK_WITH_AES_128_CCM_8 (0xX0A8)
+  *                                  TLS_ECDHE_ECDSA_WITH_AES_128_CCM_8 (0xC0AE)
+  */
+diff --git a/extlibs/tinydtls/global.h b/extlibs/tinydtls/global.h
+index 441710f..169c726 100644
+--- a/extlibs/tinydtls/global.h
++++ b/extlibs/tinydtls/global.h
+@@ -73,7 +73,7 @@ typedef unsigned char uint48[6];
+ /** Known cipher suites.*/
+ typedef enum { 
+   TLS_NULL_WITH_NULL_NULL = 0x0000,   /**< NULL cipher  */
+-  TLS_ECDH_anon_WITH_AES_128_CBC_SHA = 0xC018, /**< see RFC 4492 */
++  TLS_ECDH_anon_WITH_AES_128_CBC_SHA_256 = 0xC018, /**< see RFC 4492 */
+   TLS_PSK_WITH_AES_128_CCM_8 = 0xC0A8, /**< see RFC 6655 */
+   TLS_ECDHE_ECDSA_WITH_AES_128_CCM_8 = 0xC0AE /**< see RFC 7251 */
+ } dtls_cipher_t;
+diff --git a/extlibs/tinydtls/tests/dtls-client.c b/extlibs/tinydtls/tests/dtls-client.c
+index 35521e9..dfc822a 100644
+--- a/extlibs/tinydtls/tests/dtls-client.c
++++ b/extlibs/tinydtls/tests/dtls-client.c
+@@ -309,7 +309,7 @@ usage( const char *program, const char *version) {
+ 	  "\t-p port\t\tlisten on specified port (default is %d)\n"
+ 	  "\t-v num\t\tverbosity level (default: 3)\n"
+           "\t-c num\t\tcipher suite (default: 1)\n"
+-          "\t\t\t1: TLS_ECDH_anon_WITH_AES_128_CBC_SHA \n"
++          "\t\t\t1: TLS_ECDH_anon_WITH_AES_128_CBC_SHA_256 \n"
+           "\t\t\t2: TLS_PSK_WITH_AES_128_CCM_8\n"
+           "\t\t\t3: TLS_ECDHE_ECDSA_WITH_AES_128_CCM_8\n",
+ 	   program, version, program, DEFAULT_PORT);
+@@ -347,7 +347,7 @@ main(int argc, char **argv) {
+   log_t log_level = DTLS_LOG_WARN;
+   int fd, result;
+   int on = 1;
+-  dtls_cipher_t selected_cipher = TLS_ECDH_anon_WITH_AES_128_CBC_SHA;
++  dtls_cipher_t selected_cipher = TLS_NULL_WITH_NULL_NULL;
+   dtls_cipher_enable_t ecdh_anon_enalbe = DTLS_CIPHER_ENABLE;
+   int opt, res;
+   session_t dst;
+@@ -417,7 +417,7 @@ main(int argc, char **argv) {
+     case 'c':
+       if( strcmp(optarg, "1") == 0)
+       {
+-          selected_cipher = TLS_ECDH_anon_WITH_AES_128_CBC_SHA;
++          selected_cipher = TLS_ECDH_anon_WITH_AES_128_CBC_SHA_256;
+           ecdh_anon_enalbe = DTLS_CIPHER_ENABLE;
+       }
+       else if( strcmp(optarg, "2") == 0)
+@@ -500,7 +500,7 @@ main(int argc, char **argv) {
+   /* select cipher suite */
+   dtls_select_cipher(dtls_context, selected_cipher);
+ 
+-  /* enable/disable tls_ecdh_anon_with_aes_128_cbc_sha */
++  /* enable/disable tls_ecdh_anon_with_aes_128_cbc_sha_256 */
+   dtls_enables_anon_ecdh(dtls_context, ecdh_anon_enalbe);
+ 
+   dtls_set_handler(dtls_context, &cb);
+diff --git a/extlibs/tinydtls/tests/dtls-server.c b/extlibs/tinydtls/tests/dtls-server.c
+index d3da1a7..5893084 100644
+--- a/extlibs/tinydtls/tests/dtls-server.c
++++ b/extlibs/tinydtls/tests/dtls-server.c
+@@ -254,8 +254,8 @@ usage(const char *program, const char *version) {
+ 	  "\t-p port\t\tlisten on specified port (default is %d)\n"
+ 	  "\t-v num\t\tverbosity level (default: 3)\n"
+ 	  "\t-a enable|disable\t(default: disable)\n"
+-  	  "\t\t\t\tenable:enable TLS_ECDH_anon_with_AES_128_CBC_SHA\n"
+-	  "\t\t\t\tdisable:disable TLS_ECDH_anon_with_AES_128_CBC_SHA\n",
++  	  "\t\t\t\tenable:enable TLS_ECDH_anon_with_AES_128_CBC_SHA_256\n"
++	  "\t\t\t\tdisable:disable TLS_ECDH_anon_with_AES_128_CBC_SHA_256\n",
+ 	   program, version, program, DEFAULT_PORT);
+ }
+ 
+@@ -280,7 +280,7 @@ main(int argc, char **argv) {
+   struct timeval timeout;
+   int fd, opt, result;
+   int on = 1;
+-  int ecdh_anon_enalbe = DTLS_CIPHER_DISABLE;
++  dtls_cipher_enable_t ecdh_anon_enalbe = DTLS_CIPHER_DISABLE;
+   struct sockaddr_in6 listen_addr;
+ 
+   memset(&listen_addr, 0, sizeof(struct sockaddr_in6));
+@@ -356,7 +356,7 @@ main(int argc, char **argv) {
+ 
+   the_context = dtls_new_context(&fd);
+ 
+-  /* enable/disable tls_ecdh_anon_with_aes_128_cbc_sha */
++  /* enable/disable tls_ecdh_anon_with_aes_128_cbc_sha_256 */
+   dtls_enables_anon_ecdh(the_context, ecdh_anon_enalbe);
+ 
+   dtls_set_handler(the_context, &cb);
+diff --git a/resource/csdk/connectivity/api/cainterface.h b/resource/csdk/connectivity/api/cainterface.h
+index 760df09..2f10fd5 100644
+--- a/resource/csdk/connectivity/api/cainterface.h
++++ b/resource/csdk/connectivity/api/cainterface.h
+@@ -290,7 +290,7 @@ CAResult_t CAHandleRequestResponse();
+  * Select the cipher suite for dtls handshake
+  *
+  * @param[IN] cipher  cipher suite (Note : Make sure endianness)
+- *                               0xC018 : TLS_ECDH_anon_WITH_AES_128_CBC_SHA
++ *                               0xC018 : TLS_ECDH_anon_WITH_AES_128_CBC_SHA_256
+  *                               0xC0A8 : TLS_PSK_WITH_AES_128_CCM_8
+  *                               0xC0AE : TLS_ECDHE_ECDSA_WITH_AES_128_CCM_8
+  *
+@@ -301,7 +301,7 @@ CAResult_t CAHandleRequestResponse();
+ CAResult_t CASelectCipherSuite(const uint16_t cipher);
+ 
+ /**
+- * Enable TLS_ECDH_anon_WITH_AES_128_CBC_SHA cipher suite in dtls
++ * Enable TLS_ECDH_anon_WITH_AES_128_CBC_SHA_256 cipher suite in dtls
+  *
+  * @param[IN] enable  TRUE/FALSE enables/disables anonymous cipher suite
+  *
+diff --git a/resource/csdk/connectivity/inc/caadapternetdtls.h b/resource/csdk/connectivity/inc/caadapternetdtls.h
+index f9f99d8..274321e 100644
+--- a/resource/csdk/connectivity/inc/caadapternetdtls.h
++++ b/resource/csdk/connectivity/inc/caadapternetdtls.h
+@@ -160,7 +160,7 @@ void CADTLSSetCredentialsCallback(CAGetDTLSCredentialsHandler credCallback);
+  * Select the cipher suite for dtls handshake
+  *
+  * @param[in] cipher    cipher suite
+- *                             0xC018 : TLS_ECDH_anon_WITH_AES_128_CBC_SHA
++ *                             0xC018 : TLS_ECDH_anon_WITH_AES_128_CBC_SHA_256
+  *                             0xC0A8 : TLS_PSK_WITH_AES_128_CCM_8
+  *                             0xC0AE : TLS_ECDHE_ECDSA_WITH_AES_128_CCM_8
+  *
+diff --git a/resource/csdk/connectivity/src/adapter_util/caadapternetdtls.c b/resource/csdk/connectivity/src/adapter_util/caadapternetdtls.c
+index 8f01c06..6fd83e8 100644
+--- a/resource/csdk/connectivity/src/adapter_util/caadapternetdtls.c
++++ b/resource/csdk/connectivity/src/adapter_util/caadapternetdtls.c
+@@ -598,7 +598,7 @@ CAResult_t CADtlsEnableAnonECDHCipherSuite(const bool enable)
+     dtls_enables_anon_ecdh(g_caDtlsContext->dtlsContext,
+         enable == true ? DTLS_CIPHER_ENABLE : DTLS_CIPHER_DISABLE);
+     ca_mutex_unlock(g_dtlsContextMutex);
+-    OIC_LOG_V(DEBUG, NET_DTLS_TAG, "TLS_ECDH_anon_WITH_AES_128_CBC_SHA  is %s",
++    OIC_LOG_V(DEBUG, NET_DTLS_TAG, "TLS_ECDH_anon_WITH_AES_128_CBC_SHA_256  is %s",
+         enable ? "enabled" : "disabled");
+ 
+     OIC_LOG(DEBUG, NET_DTLS_TAG, "OUT CADtlsEnablesAnonEcdh");
+diff --git a/resource/csdk/security/provisioning/src/provisioningmanager.c b/resource/csdk/security/provisioning/src/provisioningmanager.c
+index defe4e6..301614d 100644
+--- a/resource/csdk/security/provisioning/src/provisioningmanager.c
++++ b/resource/csdk/security/provisioning/src/provisioningmanager.c
+@@ -1031,7 +1031,7 @@ static SPResult updateOperationMode(unsigned short timeout, SPTargetDeviceInfo_t
+  */
+ static SPResult initiateDtlsHandshake(const SPTargetDeviceInfo_t *deviceInfo)
+ {
+-    CAResult_t caresult = CASelectCipherSuite(TLS_ECDH_anon_WITH_AES_128_CBC_SHA);
++    CAResult_t caresult = CASelectCipherSuite(TLS_ECDH_anon_WITH_AES_128_CBC_SHA_256);
+ 
+     if (CA_STATUS_OK != caresult)
+     {
+-- 
+1.7.9.5
+

@@ -18,10 +18,9 @@ Public NotInheritable Class StartupTask
     Dim timer As ThreadPoolTimer
     Public Async Sub Run(taskInstance As IBackgroundTaskInstance) Implements IBackgroundTask.Run
         deferral = taskInstance.GetDeferral()
-        Dim aqs = I2cDevice.GetDeviceSelector("I2C1")
-        Dim dis As IReadOnlyList(Of DeviceInformation) = Await DeviceInformation.FindAllAsync(aqs)
-
-        sensor = Await I2cDevice.FromIdAsync(dis(0).Id, New I2cConnectionSettings(&H40))
+        Dim controller As I2cController
+        controller = Await I2cController.GetDefaultAsync()
+        sensor = controller.GetDevice(New I2cConnectionSettings(&H40))
         timer = ThreadPoolTimer.CreatePeriodicTimer(AddressOf Timer_Tick, TimeSpan.FromSeconds(2))
 
     End Sub

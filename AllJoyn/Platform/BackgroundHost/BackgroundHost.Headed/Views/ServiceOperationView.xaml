@@ -1,0 +1,67 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"    
+    x:Name="rootElement"
+    x:Class="BackgroundHost.Headed.Views.ServiceOperationView"
+    d:DesignWidth="480" d:DesignHeight="854"
+    >
+  <!-- Due to an apparent compilation issue, the BooleanToOpacityConverter cannot be added 
+       here for C# based WinRT Headed Adapters.  When added here, the Headed Adapter launches 
+       with an exception.  To workaround this, the resource is added to the user control 
+       programmatically.  See constructor for ServiceOperationView 
+    <UserControl.Resources>
+      <vw:BooleanToDoubleConverter x:Key="BooleanToOpacityConverter" />
+    </UserControl.Resources>
+  -->
+  <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+      
+      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4,24,4,24">
+            <TextBlock
+                AutomationProperties.AutomationId="ApplicationDisplayTitle"
+                AutomationProperties.Name="Application Title"
+                Style="{StaticResource TitleTextBlockStyle}"
+                Margin="24,0,24,0"
+                TextAlignment="Center" Text="{x:Bind ApplicationDisplayTitle}"
+                />
+
+
+          <!-- Note: To "hide" the progress bar, the opacity is changed when the app isn't running -->
+          <ProgressBar
+                Opacity="{x:Bind ViewModel.IsInProgress, Mode=OneWay, Converter={StaticResource BooleanToOpacityConverter}}"
+                Margin="0,17,0,0"
+                IsIndeterminate="True"
+                />
+
+            <TextBlock
+                AutomationProperties.AutomationId="TaskStatus"
+                AutomationProperties.Name="Task Status"
+                Style="{StaticResource SubtitleTextBlockStyle}"
+                HorizontalAlignment="Center" Margin="0,12,0,0"
+                Foreground="{ThemeResource SystemControlForegroundAccentBrush}"
+                Text="{x:Bind ViewModel.StatusText, Mode=OneWay}"
+                />
+
+            <StackPanel Margin="0,28,0,0" HorizontalAlignment="Center" Orientation="Horizontal">
+                <AppBarButton
+                    x:Uid="StartButton"
+                    Command="{x:Bind ViewModel.StartCommand}"
+                    Icon="Play" Label="-Start-"
+                    />
+                <AppBarButton
+                    x:Uid="StopButton"
+                    Margin="32,0,0,0"
+                    Command="{x:Bind ViewModel.StopCommand}"
+                    Icon="Stop" Label="-Stop-"
+                    />
+                <AppBarButton
+                    x:Uid="RestartButton"
+                    Margin="32,0,0,0"
+                    Command="{x:Bind ViewModel.RestartCommand}"
+                    Icon="Refresh" Label="-Restart-"
+                    />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

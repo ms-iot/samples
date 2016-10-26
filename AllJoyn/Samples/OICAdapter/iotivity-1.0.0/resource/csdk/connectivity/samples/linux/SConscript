@@ -1,0 +1,61 @@
+##
+# Building sample application
+##
+
+Import('env')
+
+sample_env = env.Clone()
+
+ca_os = sample_env.get('TARGET_OS')
+ca_transport = sample_env.get('TARGET_TRANSPORT')
+secured = sample_env.get('SECURED')
+with_ra = sample_env.get('WITH_RA')
+root_dir = './../../'
+
+#####################################################################
+# Source files and Target(s)
+######################################################################
+
+print"Reading ca script %s"%ca_transport
+
+sample_env.PrependUnique(CPPPATH = [root_dir + '/api/'])
+sample_env.AppendUnique(CPPPATH = [root_dir + '/inc/'])
+sample_env.AppendUnique(CPPPATH = [root_dir + '/lib/libcoap-4.1.1/'])
+sample_env.AppendUnique(CPPPATH = [root_dir + 'common/inc/'])
+
+print "Reading sample application build script"
+
+build_dir = sample_env.get('BUILD_DIR')
+sample_dir = './samples/linux/'
+
+secured = sample_env.get('SECURED')
+
+print "Sample secured flag is %s" % secured
+
+sample_src = ['./sample_main.c',]
+print " sample src %s" % sample_src
+#env.StaticLibrary('casample', sample_src)
+
+sample_env.PrependUnique(LIBPATH = [sample_env.get('BUILD_DIR'), '.'])
+sample_env.PrependUnique(RPATH = [sample_env.get('BUILD_DIR'), '.',])
+sample_env.PrependUnique(LIBS = ['connectivity_abstraction'])
+if with_ra:
+	sample_env.AppendUnique(LIBS = ['ra_xmpp'])
+sample_env.AppendUnique(LIBS = ['coap', 'pthread'])
+
+if ca_os not in ['darwin']:
+	sample_env.PrependUnique(LIBS = ['rt'])
+
+if secured == '1':
+	current_dir=env.get('SRC_DIR')
+	sample_env.AppendUnique(CPPPATH = [root_dir + 'external/inc/'])
+	sample_env.AppendUnique(LIBS = ['tinydtls'])
+	casample =sample_env.Program('casample', [sample_src])
+else:
+	casample =sample_env.Program('casample', [sample_src])
+env.InstallTarget(casample, 'casample')
+env.UserInstallTargetBin(casample, 'casample')
+
+
+
+

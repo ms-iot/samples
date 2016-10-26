@@ -1,18 +1,17 @@
-Windows 10 IoT Browser Sample
-==============
-This sample is a simple WebView control wrapped in a UAP application.
+Windows 10 IoT Core sample code
+===============
 
-It allows for internet browsing from your Pi2. 
+[Documentation for this sample](https://developer.microsoft.com/en-us/windows/iot/samples/iotbrowser) 
 
-###Requirements:
-<ol>
-<li>USB keyboard</li>
-<li>USB Mouse</li>
-<li>Pi2</li>
-<li>Windows 10 Core installed and running on the Pi2</li>
-</ol>
+## How to download:
 
-###Usage
-Build your own, you can open the IoTBrowser solution in Visual Studio 2015 Community Edition and build the code then deploy and debug on your device.
+Unfortunately, GitHub does not support downloading individual code. 
 
-Or there is a released package at: https://github.com/DavidShoe/samples/releases/tag/v1.0.3-alpha
+Navigate to [ms-iot/samples](https://github.com/ms-iot/samples) and select **Clone or download** to download the whole repository.
+
+
+## Additional resources
+* [Windows 10 IoT Core home page](https://developer.microsoft.com/en-us/windows/iot/)
+* [Documentation for all samples](https://developer.microsoft.com/en-us/windows/iot/samples)
+
+This project has adopted the Microsoft Open Source Code of Conduct. For more information see the Code of Conduct FAQ or contact opencode@microsoft.com with any additional questions or comments.

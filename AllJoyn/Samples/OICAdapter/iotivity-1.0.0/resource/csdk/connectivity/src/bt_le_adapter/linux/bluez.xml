@@ -1,0 +1,170 @@
+<!--
+    Copyright 2015 Intel Corporation All Rights Reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+    ******************************************************************
+
+    The introspection XML found in this file is used to generate GDBus
+    skeleton code that will be used by the IoTivity BlueZ-based GATT
+    Service (OIC Transport Profile) implementation.
+
+    See the GATT and LE Advertisement API documentation in the BlueZ
+    gatt-api.txt and advertisement-api.txt documents, respectively for
+    further details.
+-->
+
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
+"http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node name="/org/iotivity/gatt/service">
+
+  <!--
+      ***********************************************
+      BlueZ GATT Service interface introspection XML.
+      ***********************************************
+  -->
+  <interface name="org.bluez.GattService1">
+    <annotation name="org.freedesktop.DBus.Properties.PropertiesChanged" value="const"/>
+
+    <property name="UUID" type="s" access="read"/>
+    <property name="Primary" type="b" access="read"/>
+    <property name="Characteristics" type="ao" access="read"/>
+
+    <!--
+    ===========================================================
+    The "Device" property is only exposed on the client side by
+    BlueZ itself.  It isn't set by the IoTivity server side.
+    Don't bother generating skeleton code for it.
+    ===========================================================
+    <property name="Device" type="o" access="read">
+      <annotation name="org.freedesktop.DBus.Properties.PropertiesChanged" value="true"/>
+    </property>
+
+    ===========================================================
+    The "Includes" property is not supported as of BlueZ 5.30.
+    It also isn't used by the IoTivity server side
+    implementation.  Don't bother generating skeleton code for
+    it.
+    ===========================================================
+    <property name="Includes" type="ao" access="read"/>
+    -->
+
+  </interface>
+
+  <!--
+      ******************************************************
+      BlueZ GATT Characteristic interface introspection XML.
+      ******************************************************
+  -->
+  <interface name="org.bluez.GattCharacteristic1">
+    <!--
+    ============================================================
+    None of the OIC GATT characteristics support the "ReadValue"
+    method.  Don't bother generating skeleton code for it.
+    ============================================================
+    <method name="ReadValue">
+      <arg name="value" type="ay" direction="out"/>
+      <annotation name="org.gtk.GDBus.C.ForceGVariant" value="true"/>
+    </method>
+    -->
+
+    <method name="WriteValue">
+      <arg name="value" type="ay" direction="in">
+        <annotation name="org.gtk.GDBus.C.ForceGVariant" value="true"/>
+      </arg>
+    </method>
+
+    <method name="StartNotify"/>
+
+    <method name="StopNotify"/>
+
+    <annotation name="org.freedesktop.DBus.Properties.PropertiesChanged" value="const"/>
+
+    <property name="UUID" type="s" access="read"/>
+    <property name="Service" type="o" access="read"/>
+
+    <property name="Value" type="ay" access="read">
+      <annotation name="org.freedesktop.DBus.Properties.PropertiesChanged" value="true"/>
+      <annotation name="org.gtk.GDBus.C.ForceGVariant" value="true"/>
+    </property>
+
+    <property name="Notifying" type="b" access="read">
+      <annotation name="org.freedesktop.DBus.Properties.PropertiesChanged" value="true"/>
+    </property>
+    <property name="Flags" type="as" access="read"/>
+    <property name="Descriptors" type="ao" access="read"/>
+  </interface>
+
+  <!--
+      **************************************************
+      BlueZ GATT Descriptor interface introspection XML.
+      **************************************************
+  -->
+  <interface name="org.bluez.GattDescriptor1">
+    <method name="ReadValue">
+      <arg name="value" type="ay" direction="out">
+        <annotation name="org.gtk.GDBus.C.ForceGVariant" value="true"/>
+      </arg>
+    </method>
+
+    <!--
+    ============================================================
+    None of the OIC GATT descriptors directly supported by
+    IoTivity support the "WriteValue" method.  The OIC Client
+    Characteristic Configuration Descriptor supports writes, but
+    that descriptor is handled by BlueZ, not IoTivity, when the
+    "notify" property is set on a given GATT characteristic.
+    Don't bother generating skeleton code for it.
+    ============================================================
+
+    <method name="WriteValue">
+      <arg name="value" type="ay" direction="in">
+            <annotation name="org.gtk.GDBus.C.ForceGVariant" value="true"/>
+          </arg>
+    </method>
+    -->
+
+    <annotation name="org.freedesktop.DBus.Properties.PropertiesChanged" value="const"/>
+
+    <property name="UUID" type="s" access="read"/>
+    <property name="Characteristic" type="o" access="read"/>
+
+    <property name="Value" type="ay" access="read">
+      <annotation name="org.freedesktop.DBus.Properties.PropertiesChanged" value="true"/>
+      <annotation name="org.gtk.GDBus.C.ForceGVariant" value="true"/>
+    </property>
+
+    <property name="Flags" type="as" access="read"/>
+  </interface>
+
+  <!--
+      ***************************************************
+      BlueZ LE Advertisement interface introspection XML.
+      ***************************************************
+  -->
+  <interface name="org.bluez.LEAdvertisement1">
+    <method name="Release">
+      <annotation name="org.freedesktop.DBus.Method.NoReply" value="true"/>
+    </method>
+
+    <annotation name="org.freedesktop.DBus.Properties.PropertiesChanged" value="const"/>
+
+    <property name="Type" type="s" access="read"/>
+    <property name="ServiceUUIDs" type="as" access="read"/>
+    <property name="ManufacturerData" type="a{sv}" access="read"/>
+    <property name="SolicitUUIDs" type="as" access="read"/>
+    <property name="ServiceData" type="a{sv}" access="read"/>
+    <property name="IncludeTxPower" type="b" access="read"/>
+  </interface>
+
+</node>

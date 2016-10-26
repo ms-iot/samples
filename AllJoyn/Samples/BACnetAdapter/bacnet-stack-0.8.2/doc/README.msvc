@@ -1,0 +1,146 @@
+BACnet Stack - SourceForge.net
+Build for Visual C++ 6.0
+
+When building the BACnet stack using Visual C++ compiler, 
+there are some settings that are important.
+
+Q. Are there some global configuration options for this BACnet stack?
+
+A. The BACnet stack uses some preprocessor defines to configure
+a number of subtle personalities.
+PRINT_ENABLED=1 - enables printing to stdio
+BIG_ENDIAN=0 - chooses the BACnet encoding and decoding order
+BACDL_BIP=1 - chooses BACnet/IP for the datalink layer
+BACDL_ETHERNET=0 - chooses BACnet Ethernet for the datalink layer
+BACDL_ARCNET=0 - chooses BACnet ARCNET for the datalink layer
+BACDL_MSTP=0 - chooses BACnet MS/TP for the datalink layer
+USE_INADDR=1 - uses INADDR_BROADCAST for broadcast rather than CLASSx
+TSM_ENABLED=1 - enables the Transaction State Machine for clients
+BIP_DEBUG=1 - enables print statements for debugging
+In Visual C++, add a Preprocessor Definition by: 
+1. Select "Project" menu
+2. Select "Settings..."
+3. Select the "C/C++" tab (3rd Tab)
+4. Select the Category: General
+5. You can see the "Preprocessor Definitions:" box
+6. Type OPTION_NAME=1 or OPTION_NAME=0 in that edit box 
+   using a comma to separate multiple options.
+7. Press OK
+8. Compile the entire project again...
+
+Q. MSVC refuses to open bacnet.dsw and bacnet.dsp.
+
+A. bacnet.dsw and bacnet.dsp are text files that were retrieved
+from CVS on a unix client and are now in unix text file format since
+they end with a "\r\n" rather than "\n".  Use the unix2dos commandline
+tool to convert them back to dos:
+unix2dos bacnet.dsw
+unix2dos bacnet.dsp
+
+Q. error LNK2001: unresolved external symbol _WinMain@16
+
+A. The demo ports/win32/main.c was designed as a Win32 Console 
+Application.  If you want to change it to a Windows GUI application, 
+you will have to add all the Windows GUI code, including WinMain().
+I recommend that you use a framework, such as WxWidgets/WxWindows,
+but this has not been done yet.
+
+Q. error C1083: Cannot open include file: 'stdint.h': No such file
+
+A. The BACnet stack uses some header files, and Visual C++ needs to know
+where they are:
+1. Select "Project" menu
+2. Select "Settings..."
+3. Select the "C/C++" tab (3rd Tab)
+4. Select the Category: Preprocessor
+5. You can see the "Additional include directories:" box
+6. Type the path to stdint.h in that edit box (using a comma if necessary)
+7. Type the path to bacdcode.h in that edit box (using a comma if necessary)
+In my system, the paths look like:
+c:\code\bacnet-stack\,c:\code\bacnet-stack\ports\win32\,
+c:\code\bacnet-stack\demo\handler\,c:\code\bacnet-stack\demo\object\
+8. Press OK
+9. Compile the project again...
+
+Q. error C2065: 'MAX_MPDU' : undeclared identifier
+
+A. The BACnet stack uses a preprocessor define to configure
+its datalink layer. In Visual C++, add a Preprocessor Definition by: 
+1. Select "Project" menu
+2. Select "Settings..."
+3. Select the "C/C++" tab (3rd Tab)
+4. Select the Category: General
+5. You can see the "Preprocessor Definitions:" box
+6. Type BACDL_BIP=1 in that edit box (using a comma if necessary)
+7. Press OK
+8. Compile the entire project again...
+
+Q. error LNK2001: unresolved external symbol _bacapp_print
+
+A. The BACnet stack uses a preprocessor define to configure
+printing to stdio. In Visual C++, add a Preprocessor Definition by: 
+1. Select "Project" menu
+2. Select "Settings..."
+3. Select the "C/C++" tab (3rd Tab)
+4. Select the Category: General
+5. You can see the "Preprocessor Definitions:" box
+6. Type PRINT_ENABLED=1 in that edit box (using a comma if necessary)
+7. Press OK
+8. Compile the entire project again...
+
+Q. error LNK2001: unresolved external symbol __imp__closesocket@4
+
+A. Visual C++ needs to have the Winsock library to be happy:
+1. Select "Project" menu
+2. Select "Settings..."
+3. Select the "Link" tab (4th Tab)
+4. You can see "Object/library modules:" edit box
+5. Type Wsock32.LIB in that edit box
+6. Press OK
+7. Compile the entire project again...
+
+Q. error C2061: in file tsm.c
+A. The BACnet stack uses a preprocessor define to configure
+client functionality in the Transaction State Machine (TSM). 
+In Visual C++, add a Preprocessor Definition by: 
+1. Select "Project" menu
+2. Select "Settings..."
+3. Select the "C/C++" tab (3rd Tab)
+4. Select the Category: General
+5. You can see the "Preprocessor Definitions:" box
+6. Type MAX_TSM_TRANSACTIONS=0 in that edit box (using a comma if necessary)
+7. Press OK
+8. Compile the entire project again...
+
+Q. error LNK2001: unresolved external symbol __beginthread
+A. Visual C++ needs to have the multithreaded library when compiled
+with MS/TP datalink enabled (BACDL_MSTP instead of BACDL_BIP):
+1. Select "Project" menu
+2. Select "Settings..."
+3. Select the "C/C++" tab (3rd Tab)
+4. Select the Category: Code Generation
+5. Select the Multithreaded from the "Use runtime library" box options
+
+Q. warning C4013: '_beginthreadex' undefined; assuming extern returning int
+A. Visual C++ needs to have the multithreaded library when compiled
+with MS/TP datalink enabled (BACDL_MSTP instead of BACDL_BIP):
+1. Select "Project" menu
+2. Select "Settings..."
+3. Select the "C/C++" tab (3rd Tab)
+4. Select the Category: Code Generation
+5. Select the Multithreaded from the "Use runtime library" box options
+
+Q. error LNK2019: Verweis auf nicht aufgelöstes externes Symbol 
+   "_GetAdaptersInfo@8" in Funktion "_getIpMaskForIpAddress". 
+A. There is the Iphlpapi.lib library missing from the VC++ project 
+   (for the GetAdaptersInfo error) that you need to add: 
+   http://msdn2.microsoft.com/en-us/library/aa916102.aspx
+   Note that Iphlpapi.lib/.h is not included with Visual C++ 6.0;
+   you would need to download the platform SDK to get it.
+1. Select "Project" menu
+2. Select "Settings..."
+3. Select the "Link" tab (4th Tab)
+4. You can see "Object/library modules:" edit box
+5. Type Iphlpapi.lib in that edit box
+6. Press OK
+7. Compile the entire project again...

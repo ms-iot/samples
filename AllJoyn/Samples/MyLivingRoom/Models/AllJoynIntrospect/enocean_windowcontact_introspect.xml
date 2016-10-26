@@ -1,0 +1,24 @@
+<!DOCTYPE node PUBLIC "-//allseen//DTD ALLJOYN Object Introspection 1.0//EN"
+"http://www.allseen.org/alljoyn/introspect-1.0.dtd">
+<node>
+  <interface name="com.enocean.Bridge.WindowContact.interface_1">
+    <property name="Contact" type="s" access="read">
+      <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="true"/>
+    </property>
+  </interface>
+  <interface name="org.freedesktop.DBus.Introspectable">
+    <method name="Introspect">
+      <arg name="data" type="s" direction="out"/>
+    </method>
+  </interface>
+  <interface name="org.allseen.Introspectable">
+    <method name="GetDescriptionLanguages">
+      <arg name="languageTags" type="as" direction="out"/>
+    </method>
+    <method name="IntrospectWithDescription">
+      <arg name="languageTag" type="s" direction="in"/>
+      <arg name="data" type="s" direction="out"/>
+    </method>
+    <annotation name="org.alljoyn.Bus.Secure" value="off"/>
+  </interface>
+</node>

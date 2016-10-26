@@ -1,0 +1,22 @@
+ArduinoLoggerTest.cpp contains several logger tests and can be used in an
+Arduino sketch.
+
+On Arduino, the logger outputs to the serial port using Serial.print.
+
+Run a serial terminal program such as CuteCom at 115200,8,N,1 to view the
+log outputs.
+
+arduinologgertestoutput.txt contains the output captured after running ArduinoLoggerTest.cpp
+
+Note: to enable the logger for Arduino, TB_LOG should be defined in
+Properties|C/C++ Build|Settings|Tool Settings|AVR Compiler|Symbols
+and
+Properties|C/C++ Build|Settings|Tool Settings|AVR C++ Compiler|Symbols
+
+Note: when building for Arduino, force the compiler to use avr-g++ to build logger.c.  Or rename logger.c to logger.cpp.
+
+Note: when building for Arduino, several warnings are generated when trying to place strings in
+PROGMEM
+"warning: only initialized variables can be placed into program memory area"
+This appears to be a known gcc bug - https://gcc.gnu.org/bugzilla/show_bug.cgi?id=34734
+

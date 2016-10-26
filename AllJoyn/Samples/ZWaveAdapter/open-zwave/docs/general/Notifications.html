@@ -1,0 +1,290 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Notification Messages and Sequence</title>
+<link href="../images+css/OpenZWave.css" rel="stylesheet" type="text/css" />
+</head>
+<body bgcolor="#FFFFFF">
+<div class=Section1>
+<div id="Main">
+  <table width="700" height="100" border=0 cellpadding=0 cellspacing=0>
+    <tr>
+      <td class=Heading1 width=250 valign=top><a href="../default.htm"><img src="../images+css/image003.gif" alt=Logo width=134 height=55 border="0"></a> </td>
+      <td class=Heading1 width=445 valign=top>Notification Messages<br>
+        and Sequence </td>
+    </tr>
+  </table>
+  <table width="700" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td><p class=Heading2>Purpose</p>
+        <p class="BodyText">Several questions from developers using the OpenZWave library
+          have suggested confusion about the meaning of notifications sent by the
+          library.&nbsp;This document is intended to
+          clarify and document the notifications sent by the library and to indicate what
+          information is &ldquo;known&rdquo; at the time the notifications are sent.&nbsp;This will, hopefully, assist developers in
+          designing the actions to take upon receipt of each notification.<br>
+          <br>
+        </p></td>
+    </tr>
+  </table>
+  <table width="700" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td><p class="Heading2">Important Note </p>
+          <p class="BodyText">You should be aware that notifications are <u><strong>blocking</strong></u>. That is, when a notification is sent to an application, the OpenZWave library will wait until the callback function returns. So, for example, if you put a modal dialog box (for Windows users) in the notification handler in your application, OpenZWave will essentially stop communicating with the Z-Wave controller until the dialog box is dismissed and the notification handler returns. </p>
+          <p class="BodyText">This  &quot;feature&quot; may be changed in the future, but for now developers must be aware of this issue. <br />
+            <br />
+            <br />
+          </p>
+        </td>
+    </tr>
+  </table>
+  <table width="700" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td><p class=Heading2>Format</p>
+        <p class="BodyText">The table
+          presented below lists notifications in the order they might typically be
+          received, and grouped into a few logically related categories.&nbsp; Of course, given the variety of ZWave controllers, devices and network configurations the
+          actual sequence will vary (somewhat).&nbsp; The descriptions below the notification name (in square brackets)
+          identify whether the notification is <b>always</b> sent (unless there&rsquo;s a significant error in the network or software) or <b>potentially </b>sent during the execution
+          sequence.<br>
+          <br>
+          <br>
+        </p></td>
+    </tr>
+  </table>
+  <table width="700" border="0" cellpadding="5px" cellspacing="0" bgcolor="#E6E6E6" >
+    <tr>
+      <td><p class=Heading2>Driver Initialization Notification </p>
+        <p class="BodyText">The notification below is sent when OpenZWave has successfully connected to a physical ZWave controller.<br>
+          <br>
+        </p></td>
+    </tr>
+  </table>
+  <table width="700" border=0 cellpadding=0 cellspacing=0>
+    <tr>
+      <td width=151 valign=top class="TableText"><b>DriverReady</b><br>
+        [always sent]</td>
+      <td width=432 valign=top class="TableText"> Sent when the driver (representing a connection between OpenZWave and a Z-Wave controller attached to the specified serial (or HID) port) has been initialized. <br>
+        <br>
+        At the time this notification is sent, only certain information about the controller itself is known:
+        <ul class="TableBullet">
+          <li>Controller Z-Wave version </li>
+          <li>Network HomeID </li>
+          <li>Controller capabilities </li>
+          <li>Controller Application Version &amp; Manufacturer/Product ID </li>
+          <li>Nodes included in the network<br>
+            <br>
+          </li>
+        </ul></td>
+    </tr>
+  </table>
+  <table width="700" border="0" cellpadding="5px" cellspacing="0" bgcolor="#E6E6E6" >
+    <tr>
+      <td><p class=Heading2>Node Initialization Notifications </p>
+        <p class="BodyText">As OpenZWave starts, it identifies and reads information
+          about each node in the network.  The
+          following notifications may be sent during the initialization process.<br>
+          <br>
+        </p></td>
+    </tr>
+  </table>
+  <table width="700" border=0 cellpadding=0 cellspacing=0>
+    <tr>
+      <td width=151 valign=top class="TableText"><b>NodeNew</b><br>
+        [potentially
+        sent]</td>
+      <td width=432 valign=top class="TableText"> Sent when
+        a new node has been identified as part of the Z-Wave network.  It is not sent if the node was identified
+        in a prior execution of the OpenZWave library and
+        stored in the zwcfg*.xml file. <br>
+        <br>
+        At the
+        time this notification is sent, very little is known about the node
+        itself...only that it is new to OpenZWave. This message is sent once for each new node
+        identified.</td>
+    </tr>
+    <tr>
+      <td valign=top class="TableText">&nbsp;</td>
+      <td valign=top class="TableText">&nbsp;</td>
+    </tr>
+    <tr>
+      <td width=151 valign=top class="TableText"><b>NodeAdded</b><br>
+        [always sent (for each node associated with the controller)]</td>
+      <td width=432 valign=top class="TableText">Sent
+        when a node has been added to OpenZWave’s list of
+        nodes.  It can be triggered either as
+        the zwcfg*.xml file is being read, when a new node
+        is found on startup (see NodeNew notification
+        above), or if a new node is included in the network while OpenZWave is running.<br>
+        <br>
+        As with NodeNew, very little is known about the node at the time
+        the notification is sent…just the fact that a new node has been identified
+        and its assigned NodeID. </td>
+    </tr>
+    <tr>
+      <td valign=top class="TableText">&nbsp;</td>
+      <td valign=top class="TableText">
+    </tr>
+    <tr>
+      <td width=151 valign=top class="TableText"><b>NodeProtocolInfo</b><br>
+        [potentially sent]</td>
+      <td width=432 valign=top class="TableText">Sent
+        after a node’s protocol information has been successfully read from the
+        controller.<br>
+        <br>
+        At the time
+        this notification is sent, only certain information about the node is known:<br>
+        <ul>
+          <li>Whether it is a “listening” or “sleeping” device</li>
+          <li>Whether the node is capable of routing messages</li>
+          <li>Maximum baud rate for communication</li>
+          <li>Version number</li>
+          <li>Security byte</li>
+        </ul>
+    </tr>
+    <tr>
+      <td width=151 valign=top class="TableText"><b>NodeNaming</b><br>
+        [potentially sent]</td>
+      <td width=432 valign=top class="TableText">Sent
+        when a node’s name has been set or changed (although it may be “set” to “” or
+        NULL).</td>
+    </tr>
+    <tr>
+      <td width=151 valign=top class="TableText"><b>ValueAdded</b><br>
+        [potentially sent]</td>
+      <td width=432 valign=top class="TableText">Sent
+        when a new value has been associated with the node.<br>
+        <br>
+        At the time
+        this notification is sent, the new value may or may not have “live” data
+        associated with it. It may be
+        populated, but it may alternatively just be a placeholder for a value that
+        has not been read at the time the notification is sent. 
+    </tr>
+    <tr>
+      <td width=151 valign=top class="TableText"><b>NodeQueriesComplete</b><br>
+        [always
+        sent (for each node associated with the controller that has been successfully
+        queried)]</td>
+      <td width=432 valign=top class="TableText">Sent
+        when a node’s values and attributes have been fully queried.
+        At the
+        time this notification is sent, the node’s information has been fully read at
+        least once.  So this notification might
+        trigger “full” display of the node’s information, values, etc.
+        If this
+        notification is not sent, it indicates that there has been a problem
+        initializing the device.  The most
+        common issue is that the node is a “sleeping” device.  The NodeQueriesComplete notification will be sent when the node wakes up and the query process
+        completes.
+        </p>
+    </tr>
+  </table>
+  <table width="700" border="0" cellpadding="5px" cellspacing="0" bgcolor="#E6E6E6" >
+    <tr>
+      <td><p class=Heading2>Initialization Complete Notifications </p>
+        <p class="BodyText">As
+          indicated above, when OpenZWave starts it reads
+          certain information from a file, from the controller and from the
+          network.  The following notifications
+          identify when this initialization/querying process is complete.<br>
+          <br>
+        </p></td>
+    </tr>
+  </table>
+  <table width="700" border=0 cellpadding=0 cellspacing=0>
+    <tr>
+      <td width=151 valign=top class="TableText"><b>AwakeNodesQueried</b><br>
+        [always sent]</td>
+      <td width=432 valign=top class="TableText">Sent
+        when all “listening”—always-on—devices have been queried successfully.  It also indicates, by implication, that
+        there are some “sleeping” nodes that will not complete their queries until
+        they wake up.
+        This
+        notification should be sent relatively quickly after start-up. (Of course, it depends on the number of
+        devices on the ZWave network and whether there are
+        any messages that “time out” without a proper response.)</td>
+    </tr>
+    <tr>
+      <td width=151 valign=top class="TableText"><b>AllNodesQueried</b><br>
+        [potentially
+        sent]</td>
+      <td width=432 valign=top class="TableText">Sent
+        when all nodes have been successfully queried.
+        </p>
+        This notification
+        should be sent relatively quickly if there are no “sleeping” nodes. But it might be sent quite a while after
+        start-up if there are sleeping nodes and at least one of these nodes has a
+        long “wake-up” interval. 
+    </tr>
+  </table>
+  <table width="700" border="0" cellpadding="5px" cellspacing="0" bgcolor="#E6E6E6" >
+    <tr>
+      <td><p class=Heading2>Other Notifications</p>
+        <p class="BodyText">In addition
+          to the notifications described above, which are primarily “initialization”
+          notifications that are sent during program start-up, the following
+          notifications may be sent as a result of user actions, external program
+          control, etc.<br>
+          <br>
+        </p></td>
+    </tr>
+  </table>
+  <table width="700" border=0 cellpadding=0 cellspacing=0>
+    <tr>
+      <td width=151 valign=top class="TableText"><b>ValueChanged</b></td>
+      <td width=432 valign=top class="TableText">Sent
+        when a value associated with a node has changed.
+        Receipt of
+        this notification indicates that it may be a good time to read the new value
+        and display or otherwise process it accordingly.</td>
+    </tr>
+    <tr>
+      <td width=151 valign=top class="TableText"><b>ValueRemoved</b></td>
+      <td width=432 valign=top class="TableText">Sent
+        when a value associated with a node has been removed.</td>
+    </tr>
+    <tr>
+      <td width=151 valign=top class="TableText"><b>Group</b></td>
+      <td width=432 valign=top class="TableText">Sent
+        when a node’s group association has changed.</td>
+    </tr>
+    <tr>
+      <td width=151 valign=top class="TableText"><b>NodeRemoved</b></td>
+      <td width=432 valign=top class="TableText">Sent
+        when a node has been removed from the ZWave network.</td>
+    </tr>
+    <tr>
+      <td width=151 valign=top class="TableText"><b>NodeEvent</b></td>
+      <td width=432 valign=top class="TableText">Sent
+        when a node sends a Basic_Set command to the
+        controller.&nbsp;&nbsp;This
+        notification can be generated by certain sensors, for example, motion
+        detectors, to indicate that an event has been sensed.</td>
+    </tr>
+    <tr>
+      <td width=151 valign=top class="TableText"><b>PollingEnabled</b></td>
+      <td width=432 valign=top class="TableText">Sent
+        when node/value polling has been enabled.</td>
+    </tr>
+    <tr>
+      <td width=151 valign=top class="TableText"><b>PollingDisabled</b></td>
+      <td width=432 valign=top class="TableText">Sent
+        when node/value polling has been disabled.</td>
+    </tr>
+    <tr>
+      <td width=151 valign=top class="TableText"><b>DriverReset</b></td>
+      <td width=432 valign=top class="TableText">Sent to
+        indicate when a controller has been reset.  This notification is intended to replace the potentially hundreds of
+        notifications representing each value and node removed from the network.</td>
+    </tr>
+  </table>
+  </div><!--Main -->
+  <div id="Footer" class="FooterText"><br />
+<br />
+
+   DRAFT&nbsp;&nbsp;&nbsp;Last updated 2011/02/17
+  </div><!--footer -->
+</div>
+</body>
+</html>

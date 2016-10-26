@@ -1,0 +1,183 @@
+<prism:PrismApplication
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="using:System"
+    xmlns:prism="using:Prism.Windows"
+    xmlns:ui="using:MyLivingRoom.Controls"
+    xmlns:vm="using:MyLivingRoom.ViewModels"
+    xmlns:vw="using:MyLivingRoom.Views"
+
+    x:Class="MyLivingRoom.App"
+    RequestedTheme="Dark"
+    >
+
+    <Application.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles\Custom.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <x:Boolean x:Key="BooleanFalse">False</x:Boolean>
+            <x:Boolean x:Key="BooleanTrue">True</x:Boolean>
+
+            <vw:FanSpeedConverter x:Key="FanSpeedConverter" />
+            <vw:StringFormatConverter x:Key="StringFormatConverter" />
+            <vw:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" FalseValue="Collapsed" TrueValue="Visible" />
+            <vw:BooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" FalseValue="Visible" TrueValue="Collapsed" />
+
+            <ui:FontIconDefinition x:Key="RadioIconDefinition" FontFamily="Segoe UI Symbol" Glyph="&#xE189;" />
+            <ui:BitmapIconDefinition x:Key="cflLightbulbIconDefinition" UriSource="ms-appx:Assets/cflLightbulb.png" />
+            <ui:BitmapIconDefinition x:Key="rockerSwitchIconDefinition" UriSource="ms-appx:Assets/rockerSwitch.png" />
+            <ui:BitmapIconDefinition x:Key="televisionIconDefinition" UriSource="ms-appx:Assets/Control_Television_Icon.png" />
+            <ui:BitmapIconDefinition x:Key="airConditionerIconDefinition" UriSource="ms-appx:Assets/ac-icon.png" />
+            <ui:FontIconDefinition x:Key="pumaRulesIconDefinition" FontFamily="Segoe UI Symbol" Glyph="&#xE80F;" />
+            <ui:BitmapIconDefinition x:Key="pumaLyricIconDefinition" UriSource="ms-appx:Assets/build-icon-honeywell.png" />
+            <ui:BitmapIconDefinition x:Key="pumaLockIconDefinition" UriSource="ms-appx:Assets/simpleLock.png" />
+            <ui:BitmapIconDefinition x:Key="zwaveSwitchIconDefinition" UriSource="ms-appx:Assets/power.png" />
+            <ui:BitmapIconDefinition x:Key="enterRoomActionIconDefinition" UriSource="ms-appx:Assets/build-home-01.png" />
+            <ui:BitmapIconDefinition x:Key="leaveRoomActionIconDefinition" UriSource="ms-appx:Assets/build-away-01.png" />
+
+            <CollectionViewSource x:Key="TopicGroupDefinitions" IsSourceGrouped="True" ItemsPath="TopicDefinitions">
+                <CollectionViewSource.Source>
+                    <vm:TopicGroupDefinitionCollection>
+
+                        <vm:TopicGroupDefinition Id="MyDevices" Title="My Devices">
+                            <vm:PageNavigationTopicDefinition
+                                Id="PanasonicSpeaker" DisplayName="Panasonic Speaker"
+                                TopicViewModelType="vm:MediaPlayerViewModel"
+                                DetailPageType="vw:MediaPlayerView"
+                                IconDefinition="{StaticResource RadioIconDefinition}"
+                                />
+
+                            <vm:PageNavigationTopicDefinition
+                                Id="HueLightbulb" DisplayName="Philips Hue Lightbulb"
+                                TopicViewModelType="vm:HueLightViewModel"
+                                DetailPageType="vw:HueLightView"
+                                IconDefinition="{StaticResource cflLightbulbIconDefinition}"
+                                />
+
+                            <vm:PageNavigationTopicDefinition
+                                Id="LIFXLightbulb" DisplayName="LIFX Light"
+                                TopicViewModelType="vm:LightPanelViewModel"
+                                DetailPageType="vw:LightPanelView"
+                                IconDefinition="{StaticResource cflLightbulbIconDefinition}"
+                                />
+
+                            <vm:PageNavigationTopicDefinition
+                                Id="ZWaveSwitch" DisplayName="Aeotech Smart Switch"
+                                TopicViewModelType="vm:ZWaveSwitchViewModel"
+                                DetailPageType="vw:ZWaveSwitchView"
+                                IconDefinition="{StaticResource zwaveSwitchIconDefinition}"
+                                />
+
+                            <vm:PageNavigationTopicDefinition
+                                Id="RockerButton" DisplayName="EnOcean Rocker Button"
+                                TopicViewModelType="vm:EnOceanRockerButtonViewModel"
+                                DetailPageType="vw:EnOceanRockerButtonView"
+                                IconDefinition="{StaticResource rockerSwitchIconDefinition}"
+                                />
+
+                            <vm:PageNavigationTopicDefinition
+                                Id="AirConditioner" DisplayName="LG Air Conditioner"
+                                TopicViewModelType="vm:AirConditionerViewModel"
+                                DetailPageType="vw:LGAirConditionerView"
+                                IconDefinition="{StaticResource airConditionerIconDefinition}"
+                                />
+
+                            <vm:PageNavigationTopicDefinition
+                                Id="PumaGateway" DisplayName="Intel Puma Gateway"
+                                TopicViewModelType="vm:PumaRulesViewModel"
+                                DetailPageType="vw:PumaRulesView"
+                                IconDefinition="{StaticResource pumaRulesIconDefinition}"
+                                />
+
+                            <vm:PageNavigationTopicDefinition
+                                Id="PumaLyric" DisplayName="Honeywell Lyric Thermostat"
+                                TopicViewModelType="vm:PumaLyricViewModel"
+                                DetailPageType="vw:PumaLyricView"
+                                IconDefinition="{StaticResource pumaLyricIconDefinition}"
+                                />
+
+                            <vm:PageNavigationTopicDefinition
+                                Id="PumaLock" DisplayName="August Lock"
+                                TopicViewModelType="vm:PumaLockViewModel"
+                                DetailPageType="vw:SimpleLockView"
+                                IconDefinition="{StaticResource pumaLockIconDefinition}"
+                                />
+
+                            <vm:PageNavigationTopicDefinition
+                                Id="TV" DisplayName="Samsung TV"
+                                TopicViewModelType="vm:TelevisionViewModel"
+                                DetailPageType="vw:TelevisionPanelView"
+                                IconDefinition="{StaticResource televisionIconDefinition}"
+                                />
+
+                        </vm:TopicGroupDefinition>
+
+                        <vm:TopicGroupDefinition Id="SavedActions" Title="Saved Actions">
+                            <vm:ActionInvocationTopicDefinition
+                                Id="EnterRoomAction" DisplayName="Enter Room"
+                                IconDefinition="{StaticResource enterRoomActionIconDefinition}"
+                                >
+                                <vm:InvocationAction DeviceId="PanasonicSpeaker" PropertyName="PlayCommand" />
+                                <vm:InvocationAction DeviceId="PumaGateway" PropertyName="IsHome" PropertyValue="{StaticResource BooleanTrue}" />
+                                <vm:InvocationAction DeviceId="HueLightbulb" PropertyName="IsOn" PropertyValue="{StaticResource BooleanTrue}" />
+                                <vm:InvocationAction DeviceId="LIFXLightbulb" PropertyName="IsOn" PropertyValue="{StaticResource BooleanTrue}" />
+                                <vm:InvocationAction DeviceId="ZWaveSwitch" PropertyName="IsOn" PropertyValue="{StaticResource BooleanTrue}" />
+                                <vm:InvocationAction DeviceId="AirConditioner" PropertyName="Power" PropertyValue="{StaticResource BooleanTrue}" />
+                                <vm:InvocationAction DeviceId="TV" PropertyName="IsOn" PropertyValue="{StaticResource BooleanTrue}" />
+                            </vm:ActionInvocationTopicDefinition>
+
+                            <vm:ActionInvocationTopicDefinition
+                                Id="LeaveRoomAction" DisplayName="Leave Room"
+                                IconDefinition="{StaticResource leaveRoomActionIconDefinition}"
+                                >
+                                <vm:InvocationAction DeviceId="PanasonicSpeaker" PropertyName="PauseCommand" />
+                                <vm:InvocationAction DeviceId="PumaGateway" PropertyName="IsHome" PropertyValue="{StaticResource BooleanFalse}" />
+                                <vm:InvocationAction DeviceId="HueLightbulb" PropertyName="IsOn" PropertyValue="{StaticResource BooleanFalse}" />
+                                <vm:InvocationAction DeviceId="LIFXLightbulb" PropertyName="IsOn" PropertyValue="{StaticResource BooleanFalse}" />
+                                <vm:InvocationAction DeviceId="ZWaveSwitch" PropertyName="IsOn" PropertyValue="{StaticResource BooleanFalse}" />
+                                <vm:InvocationAction DeviceId="AirConditioner" PropertyName="Power" PropertyValue="{StaticResource BooleanFalse}" />
+                                <vm:InvocationAction DeviceId="TV" PropertyName="IsOn" PropertyValue="{StaticResource BooleanFalse}" />
+                            </vm:ActionInvocationTopicDefinition>
+
+                            <!--<vm:PageNavigationTopicDefinition
+                                Id="TurnOffHue" DisplayName="Turn off hue"
+                                DetailPageType="vw:PlaceholderView"
+                                />
+                            <vm:PageNavigationTopicDefinition
+                                Id="SetVolumeTo50" DisplayName="Set volume to 50"
+                                DetailPageType="vw:PlaceholderView"
+                                />
+                            <vm:PageNavigationTopicDefinition
+                                Id="BlueLight" DisplayName="Blue light"
+                                DetailPageType="vw:PlaceholderView"
+                                />
+                            <vm:PageNavigationTopicDefinition
+                                Id="RedLight" DisplayName="Red light"
+                                DetailPageType="vw:PlaceholderView"
+                                />-->
+                        </vm:TopicGroupDefinition>
+
+                        <!--<vm:TopicGroupDefinition Id="ActiveRules" Title="Active Rules">
+                            <vm:PageNavigationTopicDefinition
+                                Id="LightSwitch" DisplayName="Light switch"
+                                DetailPageType="vw:PlaceholderView"
+                                />
+                            <vm:PageNavigationTopicDefinition
+                                Id="AddNewRule" DisplayName="Add New Rule"
+                                DetailPageType="vw:PlaceholderView"
+                                />
+                        </vm:TopicGroupDefinition>-->
+
+                    </vm:TopicGroupDefinitionCollection>
+                </CollectionViewSource.Source>
+            </CollectionViewSource>
+
+
+        </ResourceDictionary>
+
+    </Application.Resources>
+
+</prism:PrismApplication>

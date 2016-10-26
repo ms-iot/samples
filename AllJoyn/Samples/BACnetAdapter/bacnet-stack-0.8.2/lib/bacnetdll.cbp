@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="BACnet DLL" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin\Debug\bacnet" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Debug\" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin\Release\bacnet" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Release\" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-DBUILD_DLL" />
+			<Add option="-DBACDL_BIP" />
+			<Add option="-DMAX_APDU=1476" />
+			<Add option="-DBACAPP_ALL" />
+			<Add directory="..\include" />
+			<Add directory="..\ports\win32" />
+			<Add directory="..\demo\handler" />
+			<Add directory="..\demo\object" />
+		</Compiler>
+		<Linker>
+			<Add library="user32" />
+			<Add library="ws2_32" />
+			<Add library="iphlpapi" />
+		</Linker>
+		<Unit filename="..\include\abort.h" />
+		<Unit filename="..\include\address.h" />
+		<Unit filename="..\include\ai.h" />
+		<Unit filename="..\include\ao.h" />
+		<Unit filename="..\include\apdu.h" />
+		<Unit filename="..\include\arcnet.h" />
+		<Unit filename="..\include\arf.h" />
+		<Unit filename="..\include\av.h" />
+		<Unit filename="..\include\awf.h" />
+		<Unit filename="..\include\bacaddr.h" />
+		<Unit filename="..\include\bacapp.h" />
+		<Unit filename="..\include\bacdcode.h" />
+		<Unit filename="..\include\bacdef.h" />
+		<Unit filename="..\include\bacenum.h" />
+		<Unit filename="..\include\bacerror.h" />
+		<Unit filename="..\include\bacfile.h" />
+		<Unit filename="..\include\bacint.h" />
+		<Unit filename="..\include\bacnet.h" />
+		<Unit filename="..\include\bacprop.h" />
+		<Unit filename="..\include\bacreal.h" />
+		<Unit filename="..\include\bacstr.h" />
+		<Unit filename="..\include\bactext.h" />
+		<Unit filename="..\include\bi.h" />
+		<Unit filename="..\include\bigend.h" />
+		<Unit filename="..\include\bip.h" />
+		<Unit filename="..\include\bits.h" />
+		<Unit filename="..\include\bo.h" />
+		<Unit filename="..\include\bv.h" />
+		<Unit filename="..\include\bvlc.h" />
+		<Unit filename="..\include\bytes.h" />
+		<Unit filename="..\include\client.h" />
+		<Unit filename="..\include\config.h" />
+		<Unit filename="..\include\cov.h" />
+		<Unit filename="..\include\crc.h" />
+		<Unit filename="..\include\datalink.h" />
+		<Unit filename="..\include\datetime.h" />
+		<Unit filename="..\include\dcc.h" />
+		<Unit filename="..\include\device.h" />
+		<Unit filename="..\include\dlmstp.h" />
+		<Unit filename="..\include\ethernet.h" />
+		<Unit filename="..\include\filename.h" />
+		<Unit filename="..\include\handlers.h" />
+		<Unit filename="..\include\iam.h" />
+		<Unit filename="..\include\ihave.h" />
+		<Unit filename="..\include\indtext.h" />
+		<Unit filename="..\include\key.h" />
+		<Unit filename="..\include\keylist.h" />
+		<Unit filename="..\include\lc.h" />
+		<Unit filename="..\include\lo.h" />
+		<Unit filename="..\include\lsp.h" />
+		<Unit filename="..\include\mso.h" />
+		<Unit filename="..\include\mstp.h" />
+		<Unit filename="..\include\mstptext.h" />
+		<Unit filename="..\include\npdu.h" />
+		<Unit filename="..\include\rd.h" />
+		<Unit filename="..\include\reject.h" />
+		<Unit filename="..\include\ringbuf.h" />
+		<Unit filename="..\include\rp.h" />
+		<Unit filename="..\include\rpm.h" />
+		<Unit filename="..\include\sbuf.h" />
+		<Unit filename="..\include\timesync.h" />
+		<Unit filename="..\include\tsm.h" />
+		<Unit filename="..\include\txbuf.h" />
+		<Unit filename="..\include\dlenv.h" />
+		<Unit filename="..\include\version.h" />
+		<Unit filename="..\include\whohas.h" />
+		<Unit filename="..\include\whois.h" />
+		<Unit filename="..\include\wp.h" />
+		<Unit filename="main.cpp" />
+		<Unit filename="main.h" />
+		<Unit filename="..\ports\win32\bip-init.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\ports\win32\dlmstp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\ports\win32\net.h" />
+		<Unit filename="..\ports\win32\rs485.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\ports\win32\rs485.h" />
+		<Unit filename="..\src\abort.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\address.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\apdu.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\arf.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\awf.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\bacaddr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\bacapp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\bacdcode.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\bacerror.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\bacint.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\bacprop.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\bacreal.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\bacstr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\bactext.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\bigend.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\bip.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\bvlc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\cov.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\crc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\datetime.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\dcc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\filename.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\iam.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\ihave.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\indtext.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\key.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\keylist.c">
+			<Option compilerVar="CC" />
+		</Unit>
+        <Unit filename="..\src\memcopy.c">
+            <Option compilerVar="CC" />
+        </Unit>
+        <Unit filename="..\src\mstp.c">
+            <Option compilerVar="CC" />
+        </Unit>
+		<Unit filename="..\src\mstptext.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\npdu.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\rd.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\reject.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\ringbuf.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\rp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\rpm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\sbuf.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\timesync.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\tsm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\version.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\whohas.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\whois.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\wp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

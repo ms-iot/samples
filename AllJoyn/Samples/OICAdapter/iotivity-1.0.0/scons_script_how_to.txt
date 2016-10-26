@@ -1,0 +1,269 @@
+== How to write IoTivity build script ==
+
+IoTivity projects are built with Scons. Scons is a cross-platform build tool,
+it's quite similar to 'make'. 'SConstruct' is the entrance of scons build, it's
+equivalent to 'Makefile' to 'make'.
+
+This document only a brief reference. Detail about how to write scons script,
+please refer to:
+	http://www.scons.org/doc/production/HTML/scons-user.html#
+
+== Background: How to control source code compiling ==
+
+Environment is a base conception of Scons. An environment is a collection of
+values that can affect how a program is built.
+
+e.g. There is a C file named hello.c, enter the following into a file named
+SConstruct:
+	env = Environment()
+	env.Program('H', 'hello.c')
+
+When run Scons in console, following will be executed:
+cc -o hello.o -c hello.c
+cc -o H hello.o
+
+If you would like keep debug information in the binary, '-g' flag should be added
+when build the source code. To do this, append a C compiler flags as following:
+	env = Environment()
+	env.AppendUnique(CFLAGS = ['-g'])
+	env.Program('H', 'hello.c')
+
+When run Scons, following will be executed:
+cc -o hello.o -c -g hello.c
+cc -o H hello.o
+
+In above example, 'CFLAGS' is changed. Following list the frequently used keys:
+
+CFLAGS: General options that are passed to the C compiler
+CCFLAGS: General options that are passed to the C & C++ compiler
+CXXFLAGS: General options that are passed to the C++ compiler
+CPPPATH: The directories that the preprocessor will search for include headers.
+CPPDEFINES: Platform independent specification of C preprocessor definitions.
+
+Note: CPPPATH and CPPDEFINES is common for all compiler. But others are
+compiler specific, when change the key value, it may requried to specify the
+target platform(actually the compiler).
+
+e.g.
+	env.AppendUnique(CPPPATH = ['.', 'include'])
+	env.AppendUnique(CPPDEFINES = ['NDEBUG', 'VER_TEST'])
+Above two lines are fine for all target platform. but below line:
+	env.AppenUnique(CXXFLAGS = ['-g'])
+is only fine for gcc compiler, as '-g' is a gcc flag, other compiler may don't
+understand it. so it may should be:
+	if target_os not in ['windows', 'winrt']:
+		env.AppenUnique(CXXFLAGS = ['-g'])
+
+Still take the hello.c as example. Assume hello.h is in ./include/ directory,
+#include "hello.h"
+int main(int argc, char** argv)
+{
+#ifdef LANG_FR
+    printf("Bonjour\n");
+#else
+	printf("Hello\n");
+#endif
+}
+
+The Scons configure file should as following:
+	env = Environment()
+	env.AppendUnique(CFLAGS = ['-g'])
+	env.AppendUnique(CPPPATH = ['include'])
+	env.AppendUnique(CPPDEFINES = ['LANG_FR'])
+	env.Program('H', 'hello.c')
+
+When run Scons, following will be executed:
+cc -o hello.o -c -g -Iinclude -DLANG_FR hello.c
+cc -o H hello.o
+
+=== Get extra information ===
+
+In above example, 'target_os' is used. How to get it?
+
+User can build IoTivity project on Linux / Windows / MAC OSX for various
+targets(Linux, Tizen, Android, Arduino, Windows, MAC OSX, IOS ...). Most
+platform specific configures have been done in the common scripts which are in
+build_common. The common scripts prepare an environment named 'env' with
+target platform specific configuration.
+
+When write IoTivity project build script, you can get this environment as
+following:
+	Import('env')
+
+You can use 'env' directly after import it(it isn't recommended). You can also
+clone a new environment and update its keys(recommended).
+
+	new_env1 = Clone('env')
+	new_env2 = Clone('env')
+	new_env1.AppendUnqiue(xxx = [...])
+	new_env2.AppendUnqiue(xxx = [...])
+
+The 'env' environment contains platform specific configuration, besides, there is
+some common information. You can get the information with following line:
+	env.get('XXX')
+or
+	env['XXX']
+
+XXX is the information name, below are the extra information added by IoTivity
+common scrirpts:
+BUILD_DIR: the path of the build directory, all output are in this directory
+SRC_DIR: the path of the top directory of the source code
+RELEASE: build type, boolean. True - release build, False - debug build
+TARGET_OS: the name of the target OS. The possible value depends on the host
+	platform. Bellow is the list of host and possible target OS. (darwin means
+	MAC OSX)
+		linux: linux / android / arduino / tizen (means on Linux, you can build the
+			project for Linux/Android/Arduino/Tizen)
+		windows: windows / winrt / android / arduino
+		darwin: darwin / ios / android / arduino
+
+TARGET_ARCH: the target CPU arch. Its possible value depends on the target OS.
+	Bellow list the target OS and allowed CPU architecture.
+		linux: x86 / x86_64 / arm / arm64 (means if the target OS is Linux, the CPU
+			arch can be x86/x86_64/arm/arm64)
+		android: x86 / x86_64 / armeabi / armeabi-v7a / armeabi-v7a-hard / arm64-v8a
+		windows: x86 / amd64 / arm
+		winrt: arm
+		darwin: i386 / x86_64
+		ios: i386 / x86_64 / armv7 / armv7s / arm64,
+		arduino: avr / arm
+
+=== Extra functions ===
+
+For convenience, in the common scripts, some extra functions are added.
+
+PrintTargets(): print all target names in the help information.
+AppendTarget(name, target = None): add a target name into targets list, when use
+	PrintTargets, the target name will be print
+# @param name - the name of the target(s)(user defined name)
+# @param target - Final binary, file(s) etc genereted after build.
+
+InstallTarget(files, name): it takes the same action as AppendTarget, besides,
+	it installs the 'files' to BUILD_DIR.
+
+Following functions are only for Arduino:
+ImportLib(lib): Arduino IDE includes many libraries. By default, no library is
+compiled. If your project use some libraries, you can import the library by
+this function. 'lib' is the name of the library to import. The 'include' path
+will be auto added to the environment and the library will be built and linked
+into the final binary.
+
+CreateBin(bin, src): For Arduino, after build the program, it's required to
+be converted into specific format (e.g .hex). This function will genearate the
+required .hex (and .eep if target arch is avr) file from 'bin'.
+
+UploadHelp(): For different board, the upload command line is different, this
+function print the recommended upload command line. You can see the recommended
+upload command line in the help information(the output of command "scons
+[options] -h")
+Functions for external library management:
+PrepareLib(libname, lib = None, path = None, script = None): Check whether a
+library exists, if not, notify user to install it or try to download the source
+code and build it
+# @param libname - the name of the library try to prepare
+# @param lib - the lib(.so, .a etc) to check (a library may include more then
+#      one lib, e.g. boost, includes boost_thread, boost_system ...
+# @param path - the path of the library building script, if it's not set,
+#			by default, it's <src_dir>/extlibs/<libname>/
+# @param script - the building script, by default, it's 'SConscript'
+
+Download(target, url): Download source code from URL 'url' and save as 'target'.
+# @param target - the name of the source code package to be saved as
+# @param url - the URL from which to download the source code
+
+Configure(cwd, cmd): Run configure command(such as: boostrap, configure etc.
+usually it's done before build a library)
+# @param cwd - the work directory, full path or relative path to the directory
+		where the library build script in
+# @param cmd - the command to run, can be a script or system command
+
+Install_head_file(file): Install header file(s) to <src_dir>/deps/<target_os>/include
+# @param file - the head file(s) to install
+
+Install_lib(lib): Install library binaries to <src_dir>/deps/<target_os>/lib/<arch>
+# @param lib - the library binary(.so, .a etc) to install
+
+==== Scripts Hierarchy ====
+
+Scons provides a function 'SConscript(scripts, [exports, variant_dir, duplicate])'
+It tells scons to execute one or more subsidiary configuration files(A script,
+usually named SConscript). Take below project hierarchy as example to show how
+to organize the scripts.
+
+		prj
+		|-------prj_1
+		|		|--------sub_prj_11
+		|		|--------sub_prj_..
+		|		|--------sub_prj_1n
+		|-------prj_2
+		|
+		| ... ...
+		|
+		|-------prj_n
+
+As above project hierarchy, in 'SConstruct' file in the 'prj' directory, there
+should include some lines like these:
+
+#Please change this part according to the organization of your projects.
+#Note: To make the output is in build_dir, the path of the scripts should
+#be relevant to build_dir
+SConscript(build_dir + 'prj_1/SConscript')
+SConscript(build_dir + 'prj_2/SConscript')
+... ...
+SConscript(build_dir + 'prj_n/SConscript')
+
+
+It's the same, in the 'prj_1/SConscript', there should include lines like
+these:
+SConscript('sub_prj_11/SConscript')
+... ...
+SConscript('sub_prj_1n/SConscript')
+
+The path is relevant to 'prj_1/SConscript'. You can also use the full path
+(build_dir + 'prj_1/sub_prj_1x/SConscript'), but it's not recommended.
+
+Above just to show a recommended way to manage subsidiary scripts. You don't
+need restrictly follow it.
+
+==== The content of a typical script ====
+
+After run the scripts in build_common (usally it's done at the beginning of
+SConstruct), an global environment 'env' is exported, 'env' has include the
+default configuration of the target OS and arch. 'env' is used in all projects,
+should avoid to change its keys. To avoid change 'env', usually clone 'env' and
+update it accroding to the requirement of current sub project. Then specify the
+target(usually binary) to build.
+
+Below is an example:
+	# import the global enviroment 'env'
+	Import('env')
+
+	# Clone a new enviroment from 'env'
+	new_env = env.Clone()
+
+	# Update the new enviroment, usally include add header file paths,
+	# library path, libs to link and other compiler flags. This part is
+	# optional.
+	new_env.AppeneUnique(xxx = [ .... ])
+
+	# Specify the target(application, library, object or others) to build
+	ts = new_env.Program('progam_name', [source_list])
+
+	# Install the target (optional)
+	# If it's an important library or daemon to be published
+	new_env.InstallTarget(ts, 'target_name')
+or
+	# If it's examples or test program or others will not be published
+	new_env.AppendTarget('target_name', ts)
+
+==== Tips ====
+1. library order: if A lib use B lib, both A and B are linked to target T, when
+	specify libraries, A should in front of B, otherwise there may be link
+	error. e.g.
+		xx_env.AppendUnique(LIBS = ['A', 'B'])
+
+2. On android:
+	(1)'pthread' is in libc. So don't use '-lpthread' for android
+	(2)By default 'rtti' and 'exception' is disabled, to enable it, you need
+	add flags '-frtti' and '-fexceptions'
+	(3)If STL is used, need link 'gnustl_shared' library

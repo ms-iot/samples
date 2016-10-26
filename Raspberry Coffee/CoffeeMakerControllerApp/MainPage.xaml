@@ -1,0 +1,18 @@
+﻿<Page
+    x:Class="CortonaCoffee.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CortonaCoffee"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,27,0,0" TextWrapping="Wrap" Text="Coffee by Cortona" VerticalAlignment="Top" Height="41" Width="198"/>
+        <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="10,79,0,0" TextWrapping="Wrap" Text="Power:" VerticalAlignment="Top"/>
+        <Button x:Name="BtnOn" IsEnabled="True" Content="On" HorizontalAlignment="Left" Margin="66,73,0,0" VerticalAlignment="Top" Click="BtnOn_Click"/>
+        <Button x:Name="BtnOff" IsEnabled="False" Content="Off" HorizontalAlignment="Left" Margin="111,73,0,0" VerticalAlignment="Top" Click="BtnOff_Click"/>
+        <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="10,110,0,0" TextWrapping="Wrap" Text="Time remaining:" VerticalAlignment="Top"/>
+        <TextBlock x:Name="TextCountdown" HorizontalAlignment="Left" Margin="121,110,0,0" TextWrapping="Wrap" Text="--:--" VerticalAlignment="Top"/>
+    </Grid>
+</Page>

@@ -1,0 +1,78 @@
+﻿// To use this file, rename it to config.json and remove the comments.
+
+{
+  "codeword": "GERTY", // The word to start voice recognition with.
+  "actions": [ // A list of objects, each object representing one command to be recognized.
+    {
+      "actionID": "switch on", // An unique string representing this action.
+      "spokenCommands": [ // A list of strings: any of these phrases will trigger the action when preceded by the codeword.
+        "turn switch on"
+      ],
+      "interactions": [ // A list of objects detailing what should be done in order.
+        {
+          "deviceID": "*", // The deviceID from the AllJoyn Announcement About Data: https://allseenalliance.org/developers/learn/core/about-announcement/interface
+          // If * is entered, this will match ALL the services that implement this interface
+          "path": "/SwitchBinary/Switch", // Learn more about AllJoyn here: https://allseenalliance.org/developers/learn/core/standard-core
+          // If * is entered, this will match ALL the bus objects that implement this interface
+          "interface": "com.microsoft.ZWaveBridge.SwitchBinary.Switch",
+          "propertyName": "Value", // Interactions can modify property values
+          "propertyValue": true
+        }
+      ]
+    },
+    {
+      "actionID": "switch off",
+      "spokenCommands": [
+        "turn switch off"
+      ],
+      "interactions": [
+        {
+          "deviceID": "*",
+          "path": "/SwitchBinary/Switch",
+          "interface": "com.microsoft.ZWaveBridge.SwitchBinary.Switch",
+          "propertyName": "Value",
+          "propertyValue": false
+        }
+      ]
+    }
+  ]
+}
+/*
+  You can add multiple objects to the interactions array of an action,
+  each of which will be executed sequentially.
+
+  An interaction can also invoke a method if it contains the methodName
+  key instead of propertyName and methodArguments instead of propertyValue.
+  For example,
+    {
+      "deviceID": "*",
+      "path": "/Basic",
+      "interface": "org.freedesktop.DBus.Peer",
+      "methodName": "Ping",
+      "methodArguments": [ // A list with the arguments to be sent over
+      ]
+    }
+
+  JSON types are mapped to AllJoyn types using the information
+  from the About Announcement using the following conversions
+     * Booleans and strings are sent as-is
+           true
+           "AllJoyn"
+     * Numbers are cast to the correct type
+           194
+           444.9
+     * Object paths and signatures are read as strings
+           "/Basic"
+           "qiqssaysa{ss}a{v}a{ss}"
+     * AllJoyn arrays and structs are read as JSON arrays
+           [true, false, true]
+           [737, "struct", true]
+     * AllJoyn dictionaries are read as JSON arrays of arrays,
+       where the first element of each entry is the key and the second the value.
+           [["name", "Timothy"], ["food", "omelettes"]]
+           [[0, "zero"], [1, "one"], [2, "two"]]
+     * Variants are read as objects whose only key-value pair is the signature and the value.
+           { 's': "Hello World" }
+           { '(dddd)': [0, 1, 1, 2] }
+           { 'ai': [1, 2, 3, 4, 5, 6, 7, 8, 9] }
+*/

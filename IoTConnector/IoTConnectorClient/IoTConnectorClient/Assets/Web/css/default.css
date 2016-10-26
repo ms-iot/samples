@@ -1,0 +1,105 @@
+@font-face {
+    font-family: WebManagementSymbols;
+    src: url(../fonts/IOTMDL2.1.8.ttf);
+}
+
+.row {
+	margin: 0px;
+}
+#title-row {
+	background-color: rgb(36, 117, 181);
+	color: white;
+	height: 150px;
+}
+#title-col {
+	
+	margin-top:40px;
+    position: fixed;
+    left: 150px;
+}
+
+#title {
+	font-size: 30px;
+}
+#subtitle {
+	font-size: 12px;
+}
+.client-row {
+	margin-top: 40px;
+}
+.info-row{
+	margin-top: 20px;
+}
+.info-symbol {
+    font-size: 15px;
+}
+.messaging-col {
+	margin-top: 20px;
+}
+#stop-wrapper{
+    background-color: rgb(36, 117, 181);
+    min-width: 120px;
+    max-width:140px;
+    
+}
+#stop {
+    color: white;
+}
+#start-list {
+    display:none;
+}
+#log {
+	height: 250px;
+	overflow-y: scroll;
+	background-color: #EFEFEF;
+}
+#button-row {
+	margin-top: 10px;
+}
+.button-col {
+	float:right;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+.msg-btn-wrapper {
+	background-color: lightgray;
+	height: 30px;
+	text-align: center;
+	padding-top: 5px;
+}
+a.msg-btn {
+	text-decoration: none;
+	color: black;
+}
+.form-button {
+    display:block;
+    width: 100%;
+}
+input[type=radio] + label {
+    display:inline-block;
+    margin:-2px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+input[type=submit] {
+	background-color: rgb(36, 117, 181);
+	color: white;
+    min-width:120px;
+    width:140px;
+}
+.symbol {
+    font-family: WebManagementSymbols;
+}
+#logo {
+    position: fixed;
+    width: 150px;
+    height:150px;
+}
+.title-elements {
+    display: inline-block;
+}
+#title-img {
+    width:inherit;
+    height:inherit;
+}

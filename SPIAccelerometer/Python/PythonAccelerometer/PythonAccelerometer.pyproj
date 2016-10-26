@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
+  <PropertyGroup>
+    <Name>PythonAccelerometer</Name>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == 'Any CPU' ">x86</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+    <WindowsTargetPlatformVersion>10.0.10586.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.10586.0</WindowsTargetPlatformMinVersion>
+    <ApplicationType>Windows Store</ApplicationType>
+    <AppContainerApplication>true</AppContainerApplication>
+    <AppxPackage>true</AppxPackage>
+    <AppxPackageSigningEnabled>true</AppxPackageSigningEnabled>
+    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
+    <ProjectGuid>637ddd38-73a6-4d02-a0be-9ce04794382b</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <WorkingDirectory>.</WorkingDirectory>
+    <StartupFile>StartupTask.py</StartupFile>
+    <ContainsStartupTask>true</ContainsStartupTask>
+    <SearchPath />
+    <PackageCertificateKeyFile>PythonAccelerometer_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <ProjectTypeGuids>{2b557614-1a2b-4903-b9df-ed20d7b63f3a};{888888A0-9F3D-457C-B088-3A5042F75D52}</ProjectTypeGuids>
+    <InterpreterId>{86767848-40b4-4007-8bcc-a3835edf0e69}</InterpreterId>
+    <InterpreterVersion>3.5</InterpreterVersion>
+    <RemoteDebugEnabled>true</RemoteDebugEnabled>
+    <RootNamespace>PythonAccelerometer</RootNamespace>
+    <UserSettingsChanged>
+    </UserSettingsChanged>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.WindowsSDK.props" />
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <OutputPath>bin\Debug\$(Platform)\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <OutputPath>bin\Release\$(Platform)\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="StartupTask.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+    <None Include="PythonAccelerometer_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="windevices\ARM\Microsoft.IoT.Lightning.Providers.dll" Condition=" '$(Platform)' == 'ARM' ">
+      <Name>Microsoft.IoT.Lightning.Providers.dll</Name>
+      <PythonExtension>windevices\ARM\Microsoft.IoT.Lightning.Providers.dll</PythonExtension>
+    </Reference>
+    <Reference Include="windevices\Win32\Microsoft.IoT.Lightning.Providers.dll" Condition=" '$(Platform)' == 'x86' ">
+      <Name>Microsoft.IoT.Lightning.Providers.dll</Name>
+      <PythonExtension>windevices\Win32\Microsoft.IoT.Lightning.Providers.dll</PythonExtension>
+    </Reference>
+    <Reference Include="windevices\x64\Microsoft.IoT.Lightning.Providers.dll" Condition=" '$(Platform)' == 'x64' ">
+      <Name>Microsoft.IoT.Lightning.Providers.dll</Name>
+      <PythonExtension>windevices\x64\Microsoft.IoT.Lightning.Providers.dll</PythonExtension>
+    </Reference>
+    <Reference Include="windevices\ARM\_winspi_d.pyd" Condition=" '$(RedistConfiguration)|$(Platform)' == 'Debug|ARM' ">
+      <Name>_winspi_d.pyd</Name>
+      <PythonExtension>windevices\ARM\_winspi_d.pyd</PythonExtension>
+    </Reference>
+    <Reference Include="windevices\ARM\_winspi.pyd" Condition=" '$(RedistConfiguration)|$(Platform)' == 'Retail|ARM' ">
+      <Name>_winspi.pyd</Name>
+      <PythonExtension>windevices\ARM\_winspi.pyd</PythonExtension>
+    </Reference>
+    <Reference Include="windevices\Win32\_winspi_d.pyd" Condition=" '$(RedistConfiguration)|$(Platform)' == 'Debug|x86' ">
+      <Name>_winspi_d.pyd</Name>
+      <PythonExtension>windevices\Win32\_winspi_d.pyd</PythonExtension>
+    </Reference>
+    <Reference Include="windevices\Win32\_winspi.pyd" Condition=" '$(RedistConfiguration)|$(Platform)' == 'Retail|x86' ">
+      <Name>_winspi.pyd</Name>
+      <PythonExtension>windevices\Win32\_winspi.pyd</PythonExtension>
+    </Reference>
+    <Reference Include="windevices\x64\_winspi_d.pyd" Condition=" '$(RedistConfiguration)|$(Platform)' == 'Debug|x64' ">
+      <Name>_winspi_d.pyd</Name>
+      <PythonExtension>windevices\x64\_winspi_d.pyd</PythonExtension>
+    </Reference>
+    <Reference Include="windevices\x64\_winspi.pyd" Condition=" '$(RedistConfiguration)|$(Platform)' == 'Retail|x64' ">
+      <Name>_winspi.pyd</Name>
+      <PythonExtension>windevices\x64\_winspi.pyd</PythonExtension>
+    </Reference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
+    <PtvsVersion Condition="'$(PtvsVersion)' == ''">2.2</PtvsVersion>
+    <PtvsTargetsFile>$(LocalAppData)\Microsoft\VisualStudio\$(VisualStudioVersion)Exp\Extensions\Microsoft\Python Tools for Visual Studio - UWP\$(PtvsVersion)\Microsoft.PythonTools.Uwp.targets</PtvsTargetsFile>
+    <PtvsTargetsFile Condition="'$(PtvsTargetsFile)' == '' or !Exists('$(PtvsTargetsFile)')">$(MSBuildProgramFiles32)\Microsoft Visual Studio $(VisualStudioVersion)\Common7\IDE\Extensions\Microsoft\Python Tools for Visual Studio - UWP\$(PtvsVersion)\Microsoft.PythonTools.Uwp.targets</PtvsTargetsFile>
+  </PropertyGroup>
+  <Import Project="$(PtvsTargetsFile)" />
+</Project>

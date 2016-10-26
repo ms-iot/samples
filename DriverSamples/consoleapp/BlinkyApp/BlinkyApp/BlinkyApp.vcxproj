@@ -22,6 +22,7 @@
     <ProjectGuid>{9336C553-1840-46E0-9F8F-92AD1FD70539}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>BlinkyApp</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.10586.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -150,6 +151,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BlinkyApp.cpp" />
+    <ClCompile Include="utils.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BlinkyApp.h" />
+    <ClInclude Include="mbm.h" />
+    <ClInclude Include="rpi2.h" />
+    <ClInclude Include="sbc.h" />
+    <ClInclude Include="utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -285,32 +285,15 @@ namespace I2CCompass.Sensors
                 throw new InvalidOperationException("The I2C controller is already initialized.");
             }
 
-            // Get a selector string that will return all I2C controllers on the system
-            var advancedQuerySyntaxString = I2cDevice.GetDeviceSelector();
-
-            // Find the I2C bus controller devices with our selector string
-            var controllerDeviceIds = await DeviceInformation.FindAllAsync(advancedQuerySyntaxString);
-
-            // Ensure we have an I2C controler
-            if (controllerDeviceIds == null || controllerDeviceIds.Count == 0)
-            {
-                throw new I2CControllerFoundException();
-            }
-            var i2cControllerDeviceId = controllerDeviceIds[0].Id;
-
-
+       
             // Setup the settings to address 0x1E with a 400KHz bus speed
             var i2cSettings = new I2cConnectionSettings(ADDRESS);
             i2cSettings.BusSpeed = I2cBusSpeed.FastMode;
 
             // Create an I2cDevice with our selected bus controller ID and I2C settings
-            _i2cController = await I2cDevice.FromIdAsync(i2cControllerDeviceId, i2cSettings);
+            var controller = await I2cController.GetDefaultAsync();
+            _i2cController = controller.GetDevice(i2cSettings);
 
-            // For some bizare reason, the debugger goes into this if despite _i2cController having a value
-            //if (_i2cController == null)
-            //{
-            //    throw new I2CControllerAddressException(i2cSettings.SlaveAddress, i2cControllerDeviceId);
-            //}
 
             IsInitialized = true;
         }

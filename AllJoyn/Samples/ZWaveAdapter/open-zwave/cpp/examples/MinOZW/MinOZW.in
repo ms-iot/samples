@@ -1,0 +1,11 @@
+#!/bin/sh
+LD_PATH=@LDPATH@
+if test $# -gt 0; then
+	if test $1 == "gdb"; then
+		LD_LIBRARY_PATH="$LD_PATH:$LD_LIBRARY_PATH" gdb .lib/MinOZW
+	else
+		LD_LIBRARY_PATH="$LD_PATH:$LD_LIBRARY_PATH" .lib/MinOZW $@
+	fi
+else 
+	LD_LIBRARY_PATH="$LD_PATH:$LD_LIBRARY_PATH" .lib/MinOZW
+fi

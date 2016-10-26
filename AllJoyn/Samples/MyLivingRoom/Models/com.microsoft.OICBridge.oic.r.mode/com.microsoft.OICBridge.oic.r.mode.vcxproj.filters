@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resources">
+      <UniqueIdentifier>766cf9bf-56fc-4d57-924b-7d10d86c2375</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="AllJoynBusObjectManager.cpp" />
+    <ClCompile Include="AllJoynHelpers.cpp" />
+    <ClCompile Include="modeConsumer.cpp" />
+    <ClCompile Include="modeProducer.cpp" />
+    <ClCompile Include="modeServiceEventAdapter.cpp" />
+    <ClCompile Include="modeServiceEventArgs.cpp" />
+    <ClCompile Include="modeSignals.cpp" />
+    <ClCompile Include="modeWatcher.cpp" />
+    <ClCompile Include="TypeConversionHelpers.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="AllJoynBusObjectManager.h" />
+    <ClInclude Include="AllJoynHelpers.h" />
+    <ClInclude Include="ImodeService.h" />
+    <ClInclude Include="modeConsumer.h" />
+    <ClInclude Include="modeEventArgs.h" />
+    <ClInclude Include="modeMethodResults.h" />
+    <ClInclude Include="modeProducer.h" />
+    <ClInclude Include="modeServiceEventAdapter.h" />
+    <ClInclude Include="modeServiceEventArgs.h" />
+    <ClInclude Include="modeSignals.h" />
+    <ClInclude Include="modeStructures.h" />
+    <ClInclude Include="modeWatcher.h" />
+    <ClInclude Include="TypeConversionHelpers.h" />
+  </ItemGroup>
+</Project>
