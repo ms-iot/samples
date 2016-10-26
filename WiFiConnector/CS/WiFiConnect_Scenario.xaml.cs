@@ -99,7 +99,8 @@ namespace WiFiConnect
             ConnectionBar.Visibility = Visibility.Visible;
 
             // Only show the password box if needed
-            if (selectedNetwork.AvailableNetwork.SecuritySettings.NetworkAuthenticationType == NetworkAuthenticationType.Open80211)
+            if (selectedNetwork.AvailableNetwork.SecuritySettings.NetworkAuthenticationType == NetworkAuthenticationType.Open80211 &&
+                    selectedNetwork.AvailableNetwork.SecuritySettings.NetworkEncryptionType == NetworkEncryptionType.None)
             {
                 NetworkKeyInfo.Visibility = Visibility.Collapsed;
             }
@@ -124,7 +125,8 @@ namespace WiFiConnect
             }
 
             WiFiConnectionResult result;
-            if (selectedNetwork.AvailableNetwork.SecuritySettings.NetworkAuthenticationType == Windows.Networking.Connectivity.NetworkAuthenticationType.Open80211)
+            if (selectedNetwork.AvailableNetwork.SecuritySettings.NetworkAuthenticationType == Windows.Networking.Connectivity.NetworkAuthenticationType.Open80211 &&
+                    selectedNetwork.AvailableNetwork.SecuritySettings.NetworkEncryptionType == NetworkEncryptionType.None)
             {
                 result = await firstAdapter.ConnectAsync(selectedNetwork.AvailableNetwork, reconnectionKind);
             }
