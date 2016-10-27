@@ -1,4 +1,4 @@
-http://ms-iot.github.io/content/win10/UnavailableApis.htm---
+---
 layout: docs
 title: NoPopUps
 description: A pattern for implementing PopUp message boxes as a grid element in IoT-Core UWP apps where PopUps aren't supported
