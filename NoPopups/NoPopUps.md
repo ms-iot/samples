@@ -3,7 +3,7 @@ layout: docs
 title: NoPopUps
 description: A pattern for implementing PopUp message boxes as a grid element in IoT-Core UWP apps where PopUps aren't supported
 keyword: PopUp, UWP, MessageBox, Accept, Cancel, IoT-Core
-permalink: /en-US/Docs/AllJoyn.htm
+permalink: /en-US/Docs/NoPopUps.htm
 samplelink: https://github.com/ms-iot/samples/NoPopUps/
 lang: en-US
 ---
