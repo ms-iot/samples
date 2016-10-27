@@ -124,12 +124,18 @@ namespace NoPopups
 
 #if (IOTCORE)
             /* */
+            PopUpBoxRow.Height = new GridLength(100);
+            SpacerRow.Height = new GridLength(0);
+            ResultRow.Height = new GridLength(0);
             PopupBox.Visibility = Visibility.Visible;
             PopupMsg.Text = Message;
             signal = new SemaphoreSlim(0, 1);
             await signal.WaitAsync();
             res = YesNo;
             PopupBox.Visibility = Visibility.Collapsed;
+            PopUpBoxRow.Height = new GridLength(0);
+            SpacerRow.Height = new GridLength(50);
+            ResultRow.Height = new GridLength(50);
 #else
             try
             {
