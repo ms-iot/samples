@@ -1,3 +1,12 @@
+---
+layout: sample
+title: <title>
+description: <1 to 2 sentence description about this page - used for SEO>
+keyword: <list any keywords not in the title that you want to be used for search>
+permalink: <URL needs to match filename, and should be descriptive.  Should also include locale and parent folders.  For example, AllJoyn.md - /en-US/Docs/AllJoyn.htm, Downloads - /en-US/Downloads.htm>
+samplelink: https://github.com/ms-iot/samples/NoPopUps/
+lang: en-US
+---
 Windows 10 IoT Core sample code
 ===============
 
