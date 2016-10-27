@@ -20,7 +20,15 @@ This project demonstrates how to have a [Yes] [Cancel] Popup panel with a messag
 
 ## Load the project in Visual Studio
 
-You can find the source code for this sample by downloading a zip of all of our samples [here](https://github.com/ms-iot/samples/archive/develop.zip) and navigating to the `samples\NoPopUps`.  The sample code is available in either C#. Make a copy of the folder on your disk and open the project from Visual Studio.
+You can find the source code for this sample by downloading a zip of all of our samples [here](https://github.com/ms-iot/samples/archive/develop.zip) , or by cloning te repository, and navigating to the `samples\NoPopUps`.  The sample code is available in C# as a Universal Windows Platform App. Make a copy of the folder on your disk and open the project from Visual Studio.
+
+## Configure, Build and Deploy the App.
+* Choose you CPU (eg ARM for Raspberry Pi2 or 3, x86 for the desktop).
+* Set the build type, Debug or Release
+* * For the desktop clear the IOTCORE definition as follows:
+* * For IoT-Core (eg RPI2/3) set the IOTCORE definition as follows:
+* Go to the project property pages _(Menu: Project-->NoPopUps Properties)_ and select the **Build** page. In the _Conditional Symbols_ box add or remove the IOTCORE definition. Definitions must be separated by a semicolon. Note that when you set these definitions, they only apply for the current CPU and build type.
+You can find the source code for this sample by downloading a zip of all of our samples [here](https://github.com/ms-iot/samples/archive/develop.zip) , or by cloning te repository, and navigating to the `samples\NoPopUps`.  The sample code is available in C# as a Universal Windows Platform App. Make a copy of the folder on your disk and open the project from Visual Studio.
 
 ## How to download:
 
