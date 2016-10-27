@@ -18,6 +18,10 @@ The above link says that   **Windows.UI.Popups.MessageDialog** class is not supp
 
 This project demonstrates how to have a [Yes] [Cancel] Popup panel with a message with the app awaiting the user response and responding accordingly. The project code implements the confirmation message box both using the PopUp class and using the PopUp panel. A project compilation symbol (IOTCORE) determines which mechanism is used. That way the UWP app can run both on the desktop (with expected user interaction - **IOTCORE** _not defined_) and on an IoT-Core device with the PopUp panel (**IOTCORE** _defined_).
 
+## Load the project in Visual Studio
+
+You can find the source code for this sample by downloading a zip of all of our samples [here](https://github.com/ms-iot/samples/archive/develop.zip) and navigating to the `samples\NoPopUps`.  The sample code is available in either C#. Make a copy of the folder on your disk and open the project from Visual Studio.
+
 ## How to download:
 
 Unfortunately, GitHub does not support downloading individual code. 
