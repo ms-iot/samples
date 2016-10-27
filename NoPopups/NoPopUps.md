@@ -1,9 +1,9 @@
----
+ ---
 layout: sample
 title: <title>
 description: <1 to 2 sentence description about this page - used for SEO>
 keyword: <list any keywords not in the title that you want to be used for search>
-permalink: <URL needs to match filename, and should be descriptive.  Should also include locale and parent folders.  For example, AllJoyn.md - /en-US/Docs/AllJoyn.htm, Downloads - /en-US/Downloads.htm>
+permalink: <URL needs to match filename, and should be descriptive. Â Should also include locale and parent folders. Â For example, AllJoyn.md - /en-US/Docs/AllJoyn.htm, Downloads - /en-US/Downloads.htm>
 samplelink: https://github.com/ms-iot/samples/
 lang: en-US
 ---
@@ -51,6 +51,6 @@ Also, you can have `inline code snippets`
 ?
 | Here | Is | A  | Table |
 |------|----|----|-------|
-| Here      | Are  | Some  | Table  |
-| Contents  | 1    | 2     | 3      |
-| 4         | 5    | 6     | 7      |   
+| Here Â  Â   | Are  | Some  | Table  |
+| Contents  | 1 Â   | 2 Â  Â  | 3 Â  Â   |
+| 4 Â  Â  Â  Â  | 5 Â   | 6 Â  Â  | 7 Â  Â   | Â  
