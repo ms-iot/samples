@@ -12,7 +12,7 @@ lang: en-US
 
 With a UWP UI app you might what a user response in an app to a prompt to delete something, exit the app, shutdown the OS etc. The problem is, that IoT-Core does not support the Popup class. In that context, with app prompts, using a PopUp message box, the app just skips through and does nothing, or may generate an unhandled error. 
 * [Windows 10 PopUp Class](https://msdn.microsoft.com/en-us/library/windows/apps/windows.ui.xaml.controls.primitives.popup.aspx)
-* [IoT-Core Unsupported Classes](http://ms-iot.github.io/content/win10/UnavailableApis.htm)
+* [IoT-Core Unsupported Classes](https://developer.microsoft.com/en-us/windows/iot/docs/unavailableapis)
 
 This UI feature is probably excluded with IOT-Core apps may typically run with out much user interaction, or none with the a headless device.
 
