@@ -7,10 +7,10 @@ permalink:  AllJoyn.md - /en-US/Docs/AllJoyn.htm, Downloads - /en-US/Downloads.h
 samplelink: https://github.com/ms-iot/samples/NoPopUps/
 lang: en-US
 ---
-Windows 10 IoT Core sample code
-===============
+Windows 10 IoT PopUps
+=====================
 
-[Documentation for this sample](https://developer.microsoft.com/en-us/windows/iot/samples/digitalsign) 
+[Documentation for this sample](https://developer.microsoft.com/en-us/windows/iot/samples/popups) 
 
 ## How to download:
 
