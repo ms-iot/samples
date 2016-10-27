@@ -27,20 +27,20 @@ You can find the source code for this sample by downloading a zip of all of our 
 * Set the build type to Debug or Release 
 * For the desktop _clear_ the IOTCORE definition as follows:
 * For IoT-Core (eg RPI2/3) _set_ the IOTCORE definition as follows:
-* Go to the project property pages _(Menu: Project-->NoPopUps Properties)_ and select the **Build** page. In the _Conditional Symbols_ box add or remove the IOTCORE definition. Definitions must be separated by a semicolon. Note that when you set these definitions, they only apply for the current CPU and build type.
+* Go to the project property pages _(Menu: Project-->NoPopUps Properties)_ and select the **Build** page. In the _Conditional Compilation Symbols_ box add or remove the IOTCORE definition. Definitions must be separated by a semicolon. Note that when you set these definitions, they only apply for the current CPU and build type.
 You can find the source code for this sample by downloading a zip of all of our samples [here](https://github.com/ms-iot/samples/archive/develop.zip) , or by cloning te repository, and navigating to the `samples\NoPopUps`.  The sample code is available in C# as a Universal Windows Platform App. Make a copy of the folder on your disk and open the project from Visual Studio.
 * Whilst in the property pages, on the Application page,  examine the target build numbers, set to 10586 (first update) to 14393 (the Anniversary Edition).
 * Build and deploythe app
 
-## How to download:
+## Testing
+Run each of the 3 dummy actions and respond by accepting [Yes] or rejecting [Cancel] the confirmations. Note that on the desktop PopUp Message Boxes are used, whereas with IoT-Core, the PopUp Panel is used. 
 
-Unfortunately, GitHub does not support downloading individual code. 
+# Further
+Examine the code to view the asynchronous code used including a Semaphore with the PopUp Panel. If hardware buttons were to be used instead for confirmation, GPIO events could be used in place of the UI Button Click event, using this code pattern.
 
-Navigate to [ms-iot/samples](https://github.com/ms-iot/samples) and select **Clone or download** to download the whole repository.
 
 
 ## Additional resources
 * [Windows 10 IoT Core home page](https://developer.microsoft.com/en-us/windows/iot/)
 * [Documentation for all samples](https://developer.microsoft.com/en-us/windows/iot/samples)
 
-This project has adopted the Microsoft Open Source Code of Conduct. For more information see the Code of Conduct FAQ or contact opencode@microsoft.com with any additional questions or comments.
