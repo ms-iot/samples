@@ -1,5 +1,9 @@
 Windows 10 IoT Core sample code
 ===============
+With a UWP UI app you might what a user response in an app to a prompt to delete something, exit the app, shutdown the OS etc. The problem is, that IoT-Core does not support the Popup class. In that context, with app prompts, using a PopUp message box, the app just skips through and does nothing, or may generate an unhandled error. 
+
+This project demonstrates how to have a [Yes] [Cancel] Popup panel with a message with the app awaiting the user response and responding accordingly.
+
 
 [Documentation for this sample](https://developer.microsoft.com/en-us/windows/iot/samples/digitalsign) 
 
