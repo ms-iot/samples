@@ -16,7 +16,7 @@ All of these rules must be met:
   * It must contain some explanation of what the sample is and how it works.
   * The same title must be used everywhere.
 2. You must link back to your sample on ms-iot/samples in the header of your file. 
-  * See [ms-iot sample template](https://github.com/ms-iot/content-private/blob/develop/Resources/contribute/template/sample-template.md).
+  * See [ms-iot sample template](https://github.com/ms-iot/content/blob/develop/Resources/contribute/template/sample-template.md).
 3. You must include a Readme with your sample.
   * Use this [template](Resources/README.md).
 
