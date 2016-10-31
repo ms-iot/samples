@@ -5,7 +5,7 @@ With a UWP UI app you might what a user response in an app to a prompt to delete
 This project demonstrates how to have a [Yes] [Cancel] Popup panel with a message with the app awaiting the user response and responding accordingly.
 
 
-[Documentation for this sample](https://developer.microsoft.com/en-us/windows/iot/samples/NoPopUps) 
+[Documentation for this sample](https://github.com/djaus2/samples/blob/develop/NoPopups/NoPopUps.md) 
 
 ## How to download:
 
