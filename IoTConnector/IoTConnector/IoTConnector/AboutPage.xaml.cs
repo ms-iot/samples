@@ -67,7 +67,7 @@ namespace IoTConnector
         /// <param name="args"></param>
         private void Legal_Click(Windows.UI.Xaml.Documents.Hyperlink sender, Windows.UI.Xaml.Documents.HyperlinkClickEventArgs args)
         {
-            DisplayBrowser(("http://go.microsoft.com/fwlink/p/?LinkID=530144"));
+            DisplayBrowser(("https://go.microsoft.com/fwlink/p/?LinkID=530144"));
         }
 
         private void Sample_Click(Windows.UI.Xaml.Documents.Hyperlink sender, Windows.UI.Xaml.Documents.HyperlinkClickEventArgs args)
@@ -77,7 +77,7 @@ namespace IoTConnector
 
         private void Dashboard_Click(Windows.UI.Xaml.Documents.Hyperlink sender, Windows.UI.Xaml.Documents.HyperlinkClickEventArgs args)
         {
-            DisplayBrowser("http://go.microsoft.com/fwlink/?LinkID=708576");
+            DisplayBrowser("https://go.microsoft.com/fwlink/?LinkID=708576");
         }
     }
 }
