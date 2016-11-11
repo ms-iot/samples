@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft. All rights reserved.
+﻿// Copyright (c) Microsoft. All rights reserved.
 
 
 using System;
@@ -33,21 +33,30 @@ namespace IoTCoreDefaultApp
         {
             Debug.WriteLine("USB Devices Enumeration Completed");
 
-            UpdateDevices();
+            await dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+            {
+                UpdateDevices();
+            });
         }
 
         private async void DevicesUpdated(DeviceWatcher sender, DeviceInformationUpdate args)
         {
             Debug.WriteLine("Updated USB device: " + args.Id);
 
-            UpdateDevices();
+            await dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+            {
+                UpdateDevices();
+            });
         }
 
         private async void DevicesRemoved(DeviceWatcher sender, DeviceInformationUpdate args)
         {
             Debug.WriteLine("Removed USB device: " + args.Id);
 
-            UpdateDevices();
+            await dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+            {
+                UpdateDevices();
+            });
         }
 
         private async void UpdateDevices()
@@ -55,11 +64,8 @@ namespace IoTCoreDefaultApp
             // Get a list of all enumerated usb devices              
             var deviceInformationCollection = await DeviceInformation.FindAllAsync(usbDevicesSelector);
 
-            await dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
-            {
-                // Always start with a clean list                 
-                devices.Clear();  
-            });
+            // Always start with a clean list                 
+            devices.Clear();  
 
             if (deviceInformationCollection == null || deviceInformationCollection.Count == 0)  
             {
@@ -71,10 +77,7 @@ namespace IoTCoreDefaultApp
             {
                 if (device.IsEnabled)
                 {
-                    await dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
-                    {
-                        devices.Add(device.Name);
-                    });
+                    devices.Add(device.Name);
                 }
             }
         }

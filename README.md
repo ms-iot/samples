@@ -12,11 +12,11 @@ We greatly appreciate contributions from the community!
 ### Rules
 All of these rules must be met:
 
-1. You must have a page on the [IoT Core samples page](https://developer.microsoft-int.com/en-us/windows/iot/samples) corresponding to your code.
+1. You must have a page on the [IoT Core samples page](https://developer.microsoft.com/en-us/windows/iot/samples) corresponding to your code.
   * It must contain some explanation of what the sample is and how it works.
   * The same title must be used everywhere.
 2. You must link back to your sample on ms-iot/samples in the header of your file. 
-  * See [ms-iot sample template](https://github.com/ms-iot/content-private/blob/develop/Resources/contribute/template/sample-template.md).
+  * See [ms-iot sample template](https://github.com/ms-iot/content/blob/develop/Resources/contribute/template/sample-template.md).
 3. You must include a Readme with your sample.
   * Use this [template](Resources/README.md).
 
