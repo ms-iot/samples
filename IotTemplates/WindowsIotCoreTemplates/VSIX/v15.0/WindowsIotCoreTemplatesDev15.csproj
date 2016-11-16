@@ -1,10 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="GenerateTemplate; Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.VSSDK.BuildTools.15.0.25825-RC\build\Microsoft.VSSDK.BuildTools.props" Condition="Exists('..\packages\Microsoft.VSSDK.BuildTools.15.0.25825-RC\build\Microsoft.VSSDK.BuildTools.props')" />
   <PropertyGroup>
     <VsixTargetVisualStudioVersion>v15.0</VsixTargetVisualStudioVersion>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup>
-    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
+    <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <MSBuildCommunityTasksPath>$(SolutionDir)\..\..\.build</MSBuildCommunityTasksPath>
   </PropertyGroup>
@@ -28,6 +31,7 @@
     <IncludeDebugSymbolsInLocalVSIXDeployment>false</IncludeDebugSymbolsInLocalVSIXDeployment>
     <CopyBuildOutputToOutputDirectory>false</CopyBuildOutputToOutputDirectory>
     <CopyOutputSymbolsToOutputDirectory>false</CopyOutputSymbolsToOutputDirectory>
+    <BypassVsixValidation>true</BypassVsixValidation>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -147,15 +151,23 @@
       <ToZipConsole Include="$(OutputPath)\$(VsixTargetVisualStudioVersion)\Staged\BlankConsoleApplicationCpp\*.*" />
       <ToZipWiring Include="$(OutputPath)\$(VsixTargetVisualStudioVersion)\Staged\WiringAppCpp\**\*.*" />
     </ItemGroup>
-    <Zip Files="@(ToZipBSCpp)" WorkingDirectory="$(OutputPath)\$(VsixTargetVisualStudioVersion)\Staged\BackgroundServiceCpp" ZipFileName="ProjectTemplates\VC\Windows\Windows IoT Core\BackgroundSericeCpp.zip" />
-    <Zip Files="@(ToZipBSCppDev15)" WorkingDirectory="$(OutputPath)\$(VsixTargetVisualStudioVersion)\Staged\BackgroundServiceCppDev15" ZipFileName="ProjectTemplates\VC\Windows\Windows IoT Core\BackgroundSericeCppDev15.zip" />
-    <Zip Files="@(ToZipBSCs)" WorkingDirectory="$(OutputPath)\$(VsixTargetVisualStudioVersion)\Staged\BackgroundServiceCsharp" ZipFileName="ProjectTemplates\CSharp\Windows\Windows IoT Core\BackgroundServiceCsharp.zip" />
-    <Zip Files="@(ToZipBSJs)" WorkingDirectory="$(OutputPath)\$(VsixTargetVisualStudioVersion)\Staged\BackgroundServiceJs" ZipFileName="ProjectTemplates\JavaScript\Windows\Windows IoT Core\BackgroundServiceJs.zip" />
-    <Zip Files="@(ToZipBSVb)" WorkingDirectory="$(OutputPath)\$(VsixTargetVisualStudioVersion)\Staged\BackgroundServiceVb" ZipFileName="ProjectTemplates\VisualBasic\Windows\Windows IoT Core\BackgroundServiceVb.zip" />
-    <Zip Files="@(ToZipConsole)" WorkingDirectory="$(OutputPath)\$(VsixTargetVisualStudioVersion)\Staged\BlankConsoleApplicationCpp" ZipFileName="ProjectTemplates\VC\Windows\Windows IoT Core\BlankConsoleApplicationCpp.zip" />
-    <Zip Files="@(ToZipWiring)" WorkingDirectory="$(OutputPath)\$(VsixTargetVisualStudioVersion)\Staged\WiringAppCpp" ZipFileName="ProjectTemplates\VC\Windows\Windows IoT Core\WiringApplication.zip" />
+    <Zip Files="@(ToZipBSCpp)" WorkingDirectory="$(OutputPath)\$(VsixTargetVisualStudioVersion)\Staged\BackgroundServiceCpp" ZipFileName="ProjectTemplates\VC\Windows Root\Windows IoT Core\BackgroundSericeCpp.zip" />
+    <Zip Files="@(ToZipBSCppDev15)" WorkingDirectory="$(OutputPath)\$(VsixTargetVisualStudioVersion)\Staged\BackgroundServiceCppDev15" ZipFileName="ProjectTemplates\VC\Windows Root\Windows IoT Core\BackgroundSericeCppDev15.zip" />
+    <Zip Files="@(ToZipBSCs)" WorkingDirectory="$(OutputPath)\$(VsixTargetVisualStudioVersion)\Staged\BackgroundServiceCsharp" ZipFileName="ProjectTemplates\CSharp\Windows IoT Core\BackgroundServiceCsharp.zip" />
+    <Zip Files="@(ToZipBSJs)" WorkingDirectory="$(OutputPath)\$(VsixTargetVisualStudioVersion)\Staged\BackgroundServiceJs" ZipFileName="ProjectTemplates\JavaScript\Windows IoT Core\BackgroundServiceJs.zip" />
+    <Zip Files="@(ToZipBSVb)" WorkingDirectory="$(OutputPath)\$(VsixTargetVisualStudioVersion)\Staged\BackgroundServiceVb" ZipFileName="ProjectTemplates\VisualBasic\Windows IoT Core\BackgroundServiceVb.zip" />
+    <Zip Files="@(ToZipConsole)" WorkingDirectory="$(OutputPath)\$(VsixTargetVisualStudioVersion)\Staged\BlankConsoleApplicationCpp" ZipFileName="ProjectTemplates\VC\Windows Root\Windows IoT Core\BlankConsoleApplicationCpp.zip" />
+    <Zip Files="@(ToZipWiring)" WorkingDirectory="$(OutputPath)\$(VsixTargetVisualStudioVersion)\Staged\WiringAppCpp" ZipFileName="ProjectTemplates\VC\Windows Root\Windows IoT Core\WiringApplication.zip" />
   </Target>
   <Target Name="CleanTemplate">
     <RemoveDir Directories="$(OutputPath)\$(VsixTargetVisualStudioVersion)\Staged" />
   </Target>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.VSSDK.BuildTools.15.0.25825-RC\build\Microsoft.VSSDK.BuildTools.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.VSSDK.BuildTools.15.0.25825-RC\build\Microsoft.VSSDK.BuildTools.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.VSSDK.BuildTools.15.0.25825-RC\build\Microsoft.VSSDK.BuildTools.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.VSSDK.BuildTools.15.0.25825-RC\build\Microsoft.VSSDK.BuildTools.targets'))" />
+  </Target>
+  <Import Project="..\packages\Microsoft.VSSDK.BuildTools.15.0.25825-RC\build\Microsoft.VSSDK.BuildTools.targets" Condition="Exists('..\packages\Microsoft.VSSDK.BuildTools.15.0.25825-RC\build\Microsoft.VSSDK.BuildTools.targets')" />
 </Project>
