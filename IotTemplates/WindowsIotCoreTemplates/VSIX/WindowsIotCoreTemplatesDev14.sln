@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.25824.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsIotCoreTemplatesDev14", "v14.0\WindowsIotCoreTemplatesDev14.csproj", "{B220EE7C-4144-4519-A6D8-23FB9DCE83EA}"
 EndProject
