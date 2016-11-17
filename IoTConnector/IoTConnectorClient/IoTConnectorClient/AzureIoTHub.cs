@@ -27,7 +27,7 @@ class AzureIoTHub
             initializeWithProvisionedDevice();
             return true;
         }
-        catch (System.Exception e)
+        catch (Exception)
         {
             return false;
         }
@@ -45,7 +45,7 @@ class AzureIoTHub
             devConnectString = connectionstring;
             return true;
         }
-        catch (System.Exception e)
+        catch (Exception)
         {
             return false;
         }

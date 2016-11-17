@@ -6,6 +6,7 @@ using Windows.Foundation;
 using ChakraHost.Hosting;
 using System.Diagnostics;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace ChakraHost
 {
@@ -22,20 +23,21 @@ namespace ChakraHost
     {
         private JavaScriptSourceContext currentSourceContext = JavaScriptSourceContext.FromIntPtr(IntPtr.Zero);
         private JavaScriptRuntime runtime;
-        private Queue taskQueue = new Queue();
-        private IAsyncAction workItem;
-        public bool running { get; private set; }
+
         public string result { get; private set; }
 
-        private readonly ManualResetEventSlim waitEvent = new ManualResetEventSlim(false);
+        private AutoResetEvent newScriptEvent = new AutoResetEvent(false);
+
+        bool initialised = false;
+        string script;
 
         public ChakraHostAsync()
         {
+
         }
 
-        public string init()
+        public string Init()
         {
-            running = false;
             result = "";
             JavaScriptContext context;
 
@@ -51,7 +53,6 @@ namespace ChakraHost
             // ES6 Promise callback
             JavaScriptPromiseContinuationCallback promiseContinuationCallback = delegate (JavaScriptValue task, IntPtr callbackState)
             {
-                taskQueue.Enqueue(task);
             };
 
             if (Native.JsSetPromiseContinuationCallback(promiseContinuationCallback, IntPtr.Zero) != JavaScriptErrorCode.NoError)
@@ -63,10 +64,12 @@ namespace ChakraHost
             if (Native.JsProjectWinRTNamespace("IoTBlocklyHelper") != JavaScriptErrorCode.NoError)
                 return "failed to project windows namespace.";
 
+            runtime.MemoryLimit = (UIntPtr)5000000; // limit JS memory
+
             return "NoError";
         }
 
-        public string dispose()
+        public string Dispose()
         {
             try
             {
@@ -76,7 +79,6 @@ namespace ChakraHost
                     Debug.WriteLine(res);
                     return GetErrorMessage();
                 }
-                running = false;
                 result = "";
                 if (Native.JsDisposeRuntime(runtime) != JavaScriptErrorCode.NoError)
                 {
@@ -90,109 +92,66 @@ namespace ChakraHost
             return "";
         }
 
-        public void runScript(string script)
+        public void ScriptProcessor()
         {
-            IntPtr returnValue;
-            string resultMsg = "";
+            JavaScriptValue result;
 
-            try
-            {
-                if (init() != "NoError")
-                {
-                    resultMsg = GetErrorMessage();
-                }
-                else
-                {
-                    JavaScriptValue result;
-                    running = true;
-
-                    var res = Native.JsRunScript(script, currentSourceContext++, "", out result);
-                    if (res == JavaScriptErrorCode.ScriptTerminated)
-                    {
-                        resultMsg = "script terminated";
-                    }
-                    else if (res != JavaScriptErrorCode.NoError)
-                    {
-                        resultMsg = GetErrorMessage();
-                    }
-                    else
-                    {
-                        // Execute promise tasks stored in taskQueue 
-                        while (taskQueue.Count != 0)
-                        {
-                            JavaScriptValue task = (JavaScriptValue)taskQueue.Dequeue();
-                            JavaScriptValue promiseResult;
-                            JavaScriptValue global;
-                            Native.JsGetGlobalObject(out global);
-                            JavaScriptValue[] args = new JavaScriptValue[1] { global };
-                            Native.JsCallFunction(task, args, 1, out promiseResult);
-                        }
-
-                        // Convert the return value.
-                        JavaScriptValue stringResult;
-                        UIntPtr stringLength;
-                        if (Native.JsConvertValueToString(result, out stringResult) != JavaScriptErrorCode.NoError)
-                        {
-                            resultMsg = "failed to convert value to string.";
-                        }
-                        else if (Native.JsStringToPointer(stringResult, out returnValue, out stringLength) != JavaScriptErrorCode.NoError)
-                        {
-                            resultMsg = "failed to convert return value.";
-                        }
-                        else
-                        {
-                            resultMsg = Marshal.PtrToStringUni(returnValue);
-                        }
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                resultMsg = "chakrahost: fatal error: internal error: " + e.Message;
-            }
-            running = false;
-            result = resultMsg;
-            Debug.WriteLine(resultMsg);
-        }
-
-        public void runScriptAsync(string script, bool terminatePreviousScript = true)
-        {
-            if (terminatePreviousScript)
-            {
-                if (running)
-                {
-                    haltScript();
-                }
-            }
-
-            workItem = ThreadPool.RunAsync(
-                (workItem) =>
-                {
-                    runScript(script);
-                });
-        }
-
-        public string haltScript()
-        {
-            while (running)
+            while (true)
             {
                 try
                 {
-                    var res = Native.JsDisableRuntimeExecution(runtime);
-                    if (res != JavaScriptErrorCode.NoError)
-                    {
-                        Debug.WriteLine(res);
-                        return GetErrorMessage();
-                    }
-                    result = "";
+                    newScriptEvent.WaitOne();
+
+                    Init();
+
+                    var res = Native.JsRunScript(script, currentSourceContext++, "", out result);
+
                 }
                 catch (Exception e)
                 {
-                    string msg = "chakrahost: fatal error: internal error: " + e.Message;
-                    Debug.WriteLine(msg);
-                    return msg;
+                    Debug.WriteLine("chakrahost: fatal error: internal error: " + e.Message);
                 }
-                Pause(50);
+                finally
+                {
+                    if (runtime.IsValid)
+                    {
+                        Native.JsDisposeRuntime(runtime);
+                        Pause(250); // I think this makes more stable
+                    }
+                }
+            }
+        }
+
+        public void RunScriptAsync(string script, bool terminatePreviousScript = true)
+        {
+            if (!initialised)
+            {
+                initialised = true;
+                Task.Run(new Action(ScriptProcessor));
+            }
+
+            this.script = script;
+
+            HaltScript();
+
+            newScriptEvent.Set();
+        }
+
+        public string HaltScript()
+        {
+            try
+            {
+                if (runtime.IsValid && !runtime.Disabled)
+                {
+                    var r = Native.JsDisableRuntimeExecution(runtime);
+                }
+
+            }
+            catch (Exception e)
+            {
+                string msg = "chakrahost: fatal error: internal error: " + e.Message;
+                Debug.WriteLine(msg);
+                return msg;
             }
             return "";
         }
@@ -222,10 +181,9 @@ namespace ChakraHost
             return Marshal.PtrToStringUni(message);
         }
 
-        private void Pause(double milliseconds)
+        private void Pause(int milliseconds)
         {
-            waitEvent.Wait(TimeSpan.FromMilliseconds(milliseconds));
+            Task.Delay(milliseconds).Wait();
         }
-
     }
 }

@@ -2,6 +2,7 @@
 
 using System;
 using Windows.Storage;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -128,7 +129,14 @@ namespace IoTCoreDefaultApp
             this.InitializeComponent();
             moveTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(10) };
             moveTimer.Tick += MoveTimer_Tick;
-            this.Loaded += ScreenSaver_Loaded;
+
+            this.Loaded += async (sender, e) =>
+            {
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                {
+                    ScreenSaver_Loaded(sender, e);
+                });
+            };
             this.Unloaded += ScreenSaver_Unloaded;
             image.Source = new BitmapImage(DeviceInfoPresenter.GetBoardImageUri());
         }

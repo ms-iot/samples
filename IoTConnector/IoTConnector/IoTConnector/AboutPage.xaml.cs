@@ -38,9 +38,7 @@ namespace IoTConnector
         }
         private void DisplayBrowser(string uri)
         {
-            this.Info.Visibility = Visibility.Collapsed;
-            this.policyGrid.Visibility = Visibility.Visible;
-            this.policyView.Navigate(new Uri(uri));
+            Windows.System.Launcher.LaunchUriAsync(new Uri(uri));
         }
         /// <summary>
         /// navigate to internal web viewer, display policy page
