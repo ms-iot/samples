@@ -3,7 +3,7 @@
 * To download these samples, click the **Clone or Download** button above
 
 ## How to contribute
-We greatly appreciate contributions from the community!
+We greatly appreciate bug-fixes from the community!
 
 1. [Get set up](Resources/contribute/get-setup.md)
 2. [Making changes](Resources/contribute/making-changes.md) 
