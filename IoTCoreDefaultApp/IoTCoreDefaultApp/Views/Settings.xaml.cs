@@ -1010,5 +1010,13 @@ namespace IoTCoreDefaultApp
                 passwordBox.Focus(FocusState.Programmatic);
             }
         }
+
+        private async void LaunchCortanaButton_Click(object sender, RoutedEventArgs e)
+        {
+            var uri = new Uri(@"ms-cortana://CapabilitiesPrompt/?RequestedCapabilities=InputPersonalization,Microphone&QuerySource=Microphone");
+
+            // Launch Cortana
+            await Windows.System.Launcher.LaunchUriAsync(uri);
+        }
     }
 }
