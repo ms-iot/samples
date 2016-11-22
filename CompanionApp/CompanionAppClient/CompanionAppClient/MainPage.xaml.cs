@@ -9,6 +9,11 @@ namespace CompanionAppClient
 {
     public partial class MainPage : ContentPage
     {
+#if AUTOMATE_FOR_TESTING
+        private string _TestAutomation_AccessPointPartial = "";
+        private string _TestAutomation_NetworkPartial = "";
+        private string _TestAutomation_NetworkPassword = "";
+#endif
         public static IAccessPointHelper AccessPointHelper { get; set; }
         private ObservableCollection<AccessPoint> _AvailableAccessPoints = new ObservableCollection<AccessPoint>();
         private ObservableCollection<Network> _AvailableNetworks = new ObservableCollection<Network>();
@@ -83,9 +88,9 @@ namespace CompanionAppClient
 #if AUTOMATE_FOR_TESTING
                 foreach (var n in _AvailableNetworks)
                 {
-                    if (n.Ssid.Contains("rachit"))
+                    if (n.Ssid.Contains(_TestAutomation_NetworkPartial))
                     {
-                        AccessPointHelper.ConnectToClientNetwork(n.Ssid.ToString(), "Microsoft");
+                        AccessPointHelper.ConnectToClientNetwork(n.Ssid.ToString(), _TestAutomation_NetworkPassword);
                         break;
                     }
                 }
@@ -126,7 +131,7 @@ namespace CompanionAppClient
 #if AUTOMATE_FOR_TESTING
                 foreach (var ap in _AvailableAccessPoints)
                 {
-                    if (ap.Ssid.Contains("bfjelds"))
+                    if (ap.Ssid.Contains(_TestAutomation_AccessPointPartial))
                     {
                         _availableAccessPointListView.SelectedItem = ap;
                         AccessPointHelper.ConnectToAccessPoint(ap);
