@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CompanionAppClient", "CompanionAppClient\CompanionAppClient\CompanionAppClient.shproj", "{84E206A4-D5F7-499E-BA79-1E4EA362C162}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CompanionAppClient", "CompanionAppClient\CompanionAppClient.shproj", "{84E206A4-D5F7-499E-BA79-1E4EA362C162}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompanionAppClient.Droid", "CompanionAppClient\CompanionAppClient.Droid\CompanionAppClient.Droid.csproj", "{55A23E01-BF26-4F03-9E97-71BCC11099C4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompanionAppClient.Droid", "CompanionAppClient.Droid\CompanionAppClient.Droid.csproj", "{55A23E01-BF26-4F03-9E97-71BCC11099C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompanionAppClient.UWP", "CompanionAppClient\CompanionAppClient.UWP\CompanionAppClient.UWP.csproj", "{E7B0D02C-5053-4B2E-9B94-3420D52A5745}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompanionAppClient.UWP", "CompanionAppClient.UWP\CompanionAppClient.UWP.csproj", "{E7B0D02C-5053-4B2E-9B94-3420D52A5745}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		CompanionAppClient\CompanionAppClient\CompanionAppClient.projitems*{55a23e01-bf26-4f03-9e97-71bcc11099c4}*SharedItemsImports = 4
-		CompanionAppClient\CompanionAppClient\CompanionAppClient.projitems*{84e206a4-d5f7-499e-ba79-1e4ea362c162}*SharedItemsImports = 13
-		CompanionAppClient\CompanionAppClient\CompanionAppClient.projitems*{e7b0d02c-5053-4b2e-9b94-3420d52a5745}*SharedItemsImports = 4
+		CompanionAppClient\CompanionAppClient.projitems*{55a23e01-bf26-4f03-9e97-71bcc11099c4}*SharedItemsImports = 4
+		CompanionAppClient\CompanionAppClient.projitems*{84e206a4-d5f7-499e-ba79-1e4ea362c162}*SharedItemsImports = 13
+		CompanionAppClient\CompanionAppClient.projitems*{e7b0d02c-5053-4b2e-9b94-3420d52a5745}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU
