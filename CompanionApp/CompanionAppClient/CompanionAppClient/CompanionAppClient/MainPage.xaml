@@ -100,8 +100,7 @@
     <StackLayout Orientation="Horizontal" Grid.Row="7">
       <ListView x:Name="_availableAccessPointListView"
                 Header="Access Points"
-                ItemSelected="SelectAccessPoint" 
-                ItemsSource="{Binding AvailableAccessPoints}">
+                ItemSelected="SelectAccessPoint">
         <ListView.ItemTemplate>
           <DataTemplate>
             <TextCell Text="{Binding Ssid}" Detail="{Binding Detail}" />
@@ -110,8 +109,7 @@
       </ListView>
       <ListView x:Name="_availableNetworkListView"
                 Header="Client Networks"
-                ItemSelected="SelectClientNetwork"
-                ItemsSource="{Binding AvailableNetworks}">
+                ItemSelected="SelectClientNetwork">
         <ListView.ItemTemplate>
           <DataTemplate>
             <TextCell Text="{Binding Ssid}" Detail="{Binding Detail}" />

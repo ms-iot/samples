@@ -44,8 +44,6 @@ namespace CompanionAppClient.Droid
             }
             public override void OnReceive(Context context, Intent intent)
             {
-                _AvailableAccessPoints.Clear();
-
                 var wifiManager = Android.App.Application.Context.GetSystemService(Context.WifiService) as WifiManager;
                 var scanWifiNetworks = wifiManager.ScanResults;
                 foreach (ScanResult wifiNetwork in scanWifiNetworks)
@@ -67,6 +65,8 @@ namespace CompanionAppClient.Droid
 
         public void FindAccessPoints(ObservableCollection<AccessPoint> availableAccessPoints)
         {
+            availableAccessPoints.Clear();
+
             var wifiManager = Android.App.Application.Context.GetSystemService(Context.WifiService) as WifiManager;
             if (wifiManager.IsWifiEnabled)
             {
