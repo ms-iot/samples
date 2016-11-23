@@ -22,6 +22,7 @@ Navigate to [ms-iot/samples](https://github.com/ms-iot/samples) and select **Clo
 This sample is intended to show how to remotely configure an IotCore device when it is not attached to a network.  
 
 There are two parts to this:
+
 1. Client - running on an Android or Windows Phone 10 phone, this app will find your IotCore device, connect to it, and allow you to specify the required information to join a WiFi network. 
 1. Server - running on your IotCore device, this app (foreground or background) help the Client connect your IotCore device to a desired WiFi network. 
 
