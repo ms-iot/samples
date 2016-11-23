@@ -27,8 +27,8 @@ namespace CompanionAppClient
         private bool ClientNetworkConnected { get; set; }
 
         public MainPage()
-		{
-			InitializeComponent();
+        {
+            InitializeComponent();
 
             _connectButton.IsEnabled = false;
 
