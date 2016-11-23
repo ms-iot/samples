@@ -12,6 +12,7 @@ using Android.Net.Wifi;
 using System.Collections.Generic;
 using Xamarin.Forms;
 using Android.Net;
+using System.Security.Cryptography;
 
 namespace CompanionAppClient.Droid
 {
@@ -91,8 +92,7 @@ namespace CompanionAppClient.Droid
 
                 var networkRequest = new CompanionAppCommunication() { Verb = "GetAvailableNetworks" };
                 // Send request for available networks
-                string requestData = Jsonify(networkRequest);
-                WriteToSocket(requestData);
+                WriteToSocket(networkRequest);
 
                 // Read response with available networks                
                 var networkResponse = await GetNextRequest(_NetworkStream);
@@ -167,7 +167,7 @@ namespace CompanionAppClient.Droid
                     var connectivityManager = (ConnectivityManager)androidContext.GetSystemService(Context.ConnectivityService);
                     var wifiInfo = connectivityManager.GetNetworkInfo(ConnectivityType.Wifi);
 
-                    Debug.WriteLine("Connected successfully to: {0}", wc.Ssid);
+                    Debug.WriteLine(string.Format("Connected successfully to: {0}", wc.Ssid));
 
                     new ManualResetEvent(false).WaitOne(5 * 1000);
 
@@ -219,8 +219,7 @@ namespace CompanionAppClient.Droid
             {
                 var connectRequest = new CompanionAppCommunication() { Verb = "ConnectToNetwork", Data = string.Format("{0}={1}", networkSsid, password) };
                 // Send request to connect to network
-                string requestData = Jsonify(connectRequest);
-                WriteToSocket(requestData);
+                WriteToSocket(connectRequest);
 
                 // Read response with available networks
                 var networkResponse = await GetNextRequest(_NetworkStream);
@@ -241,10 +240,9 @@ namespace CompanionAppClient.Droid
 
             WaitCallback worker = async (context) =>
             {
-                var connectRequest = new CompanionAppCommunication() { Verb = "DisconnectFromNetwork", Data = networkSsid };
-                // Send request to connect to network
-                string requestData = Jsonify(connectRequest);
-                WriteToSocket(requestData);
+                var disconnectRequest = new CompanionAppCommunication() { Verb = "DisconnectFromNetwork", Data = networkSsid };
+                // Send request to disconnect to network
+                WriteToSocket(disconnectRequest);
 
                 // Read response with available networks
                 var networkResponse = await GetNextRequest(_NetworkStream);
@@ -297,6 +295,13 @@ namespace CompanionAppClient.Droid
             ASCIIEncoding asen = new ASCIIEncoding();
             var data = asen.GetString(memStream.ToArray());
 
+            //
+            // In this sample, protected information is sent over the channel
+            // as plain text.  This data needs to be protcted with encryption
+            // based on a trust relationship between the Companion App client
+            // and server.
+            //
+
             if (data.Length != 0)
             {
                 Debug.WriteLine(string.Format("incoming request {0}", data));
@@ -308,12 +313,20 @@ namespace CompanionAppClient.Droid
             return null;
         }
 
-        private void WriteToSocket(string data)
+        private void WriteToSocket(CompanionAppCommunication communication)
         {
+            //
+            // In this sample, protected information is sent over the channel
+            // as plain text.  This data needs to be protcted with encryption
+            // based on a trust relationship between the Companion App client
+            // and server.
+            //
+
+            var data = Jsonify(communication);
             ASCIIEncoding asen = new ASCIIEncoding();
             byte[] ba = asen.GetBytes(data);
             _NetworkStream.Write(ba, 0, ba.Length);
-            Debug.WriteLine("Sent: {0}", data);
+            Debug.WriteLine(string.Format("Sent: {0}", data));
         }
 
         private string Jsonify(object data)

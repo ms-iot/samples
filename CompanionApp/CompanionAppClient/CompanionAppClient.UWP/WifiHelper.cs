@@ -12,6 +12,8 @@ using Windows.Networking;
 using Windows.Networking.Connectivity;
 using Windows.Networking.Sockets;
 using Windows.Security.Credentials;
+using Windows.Security.Cryptography;
+using Windows.Security.Cryptography.Core;
 using Windows.Storage.Streams;
 using Windows.System.Threading;
 
@@ -83,10 +85,7 @@ namespace CompanionAppClient.UWP
 
                 var networkRequest = new CompanionAppCommunication() { Verb = "GetAvailableNetworks" };
                 // Send request for available networks
-                string requestData = Jsonify(typeof(CompanionAppCommunication), networkRequest);
-                _DataWriter.WriteString(requestData);
-                await _DataWriter.StoreAsync();
-                Debug.WriteLine("Sent: {0}", requestData);
+                await SendRequest(networkRequest, _DataWriter);
 
                 // Read response with available networks                
                 var networkResponse = await GetNextRequest(_DataReader);
@@ -155,7 +154,7 @@ namespace CompanionAppClient.UWP
                 WiFiConnectionResult result = null;
                 if (wifiNetwork.SecuritySettings.NetworkAuthenticationType == NetworkAuthenticationType.Open80211)
                 {
-                    Debug.WriteLine("Opening connection to: {0}", wifiNetwork.Ssid);
+                    Debug.WriteLine(string.Format("Opening connection to: {0}", wifiNetwork.Ssid));
                     result = await wiFiAdapter.ConnectAsync(wifiNetwork, WiFiReconnectionKind.Manual);
                 }
                 else
@@ -163,13 +162,13 @@ namespace CompanionAppClient.UWP
                     PasswordCredential credential = new PasswordCredential();
                     credential.Password = "p@ssw0rd";
 
-                    Debug.WriteLine("Opening connection to using credentials: {0} [{1}]", wifiNetwork.Ssid, credential.Password);
+                    Debug.WriteLine(string.Format("Opening connection to using credentials: {0} [{1}]", wifiNetwork.Ssid, credential.Password));
                     result = await wiFiAdapter.ConnectAsync(wifiNetwork, WiFiReconnectionKind.Manual, credential);
                 }
 
                 if (result.ConnectionStatus == WiFiConnectionStatus.Success)
                 {
-                    Debug.WriteLine("Connected successfully to: {0}.{1}", wiFiAdapter.NetworkAdapter.NetworkAdapterId, wifiNetwork.Ssid);
+                    Debug.WriteLine(string.Format("Connected successfully to: {0}.{1}", wiFiAdapter.NetworkAdapter.NetworkAdapterId, wifiNetwork.Ssid));
                     _connectedWifiAdapter = wiFiAdapter;
 
                     string streamSocketPort = "50074";
@@ -199,10 +198,7 @@ namespace CompanionAppClient.UWP
             {
                 var connectRequest = new CompanionAppCommunication() { Verb = "ConnectToNetwork", Data = string.Format("{0}={1}", networkSsid, password) };
                 // Send request to connect to network
-                string requestData = Jsonify(typeof(CompanionAppCommunication), connectRequest);
-                _DataWriter.WriteString(requestData);
-                await _DataWriter.StoreAsync();
-                Debug.WriteLine("Sent: {0}", requestData);
+                await SendRequest(connectRequest, _DataWriter);
 
                 // Read response with available networks
                 var networkResponse = await GetNextRequest(_DataReader);
@@ -223,12 +219,9 @@ namespace CompanionAppClient.UWP
 
             WorkItemHandler worker = async (context) =>
             {
-                var connectRequest = new CompanionAppCommunication() { Verb = "DisconnectFromNetwork", Data = networkSsid };
+                var disconnectRequest = new CompanionAppCommunication() { Verb = "DisconnectFromNetwork", Data = networkSsid };
                 // Send request to connect to network
-                string requestData = Jsonify(typeof(CompanionAppCommunication), connectRequest);
-                _DataWriter.WriteString(requestData);
-                await _DataWriter.StoreAsync();
-                Debug.WriteLine("Sent: {0}", requestData);
+                await SendRequest(disconnectRequest, _DataWriter);
 
                 // Read response with available networks
                 var networkResponse = await GetNextRequest(_DataReader);
@@ -279,6 +272,21 @@ namespace CompanionAppClient.UWP
             _DataReader.InputStreamOptions = InputStreamOptions.Partial;
         }
 
+        private async Task SendRequest(CompanionAppCommunication communication, DataWriter writer)
+        {
+            //
+            // In this sample, protected information is sent over the channel
+            // as plain text.  This data needs to be protcted with encryption
+            // based on a trust relationship between the Companion App client
+            // and server.
+            //
+
+            string requestData = Jsonify(typeof(CompanionAppCommunication), communication);
+            writer.WriteString(requestData);
+            await writer.StoreAsync();
+            Debug.WriteLine(string.Format("Sent: {0}", requestData));
+        }
+
         private async Task<CompanionAppCommunication> GetNextRequest(DataReader reader)
         {
             await reader.LoadAsync(1024);
@@ -289,10 +297,17 @@ namespace CompanionAppClient.UWP
                 data += reader.ReadString(reader.UnconsumedBufferLength);
             }
 
+            //
+            // In this sample, protected information is sent over the channel
+            // as plain text.  This data needs to be protcted with encryption
+            // based on a trust relationship between the Companion App client
+            // and server.
+            //
+
             if (data.Length != 0)
             {
                 Debug.WriteLine(string.Format("incoming request {0}", data));
-
+    
                 using (var stream = new MemoryStream(Encoding.Unicode.GetBytes(data)))
                 {
                     var serializer = new DataContractJsonSerializer(typeof(CompanionAppCommunication));

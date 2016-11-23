@@ -1,20 +1,16 @@
 ﻿using System;
-using Windows.ApplicationModel.Background;
-using Windows.System.Threading;
-using Windows.Networking.Sockets;
-using System.Diagnostics;
-using Windows.Storage.Streams;
-using System.Runtime.Serialization.Json;
-using System.IO;
-using System.Text;
 using System.Collections.Generic;
-using Windows.Devices.WiFi;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
-using System.Reflection;
-using Windows.Security.Credentials;
+using System.Runtime.Serialization.Json;
+using System.Text;
 using System.Threading.Tasks;
-using Windows.Networking;
-using System.Threading;
+using Windows.Devices.WiFi;
+using Windows.Networking.Sockets;
+using Windows.Security.Credentials;
+using Windows.Storage.Streams;
+using Windows.System.Threading;
 
 // The Background Application template is documented at http://go.microsoft.com/fwlink/?LinkID=533884&clcid=0x409
 
@@ -43,40 +39,6 @@ namespace CompanionAppServerShared
         public void ServerAsync()
         {
             HandleDebugInfo(string.Format("Server starting"));
-            //WorkItemHandler advertisementWorker = async (context) =>
-            //{
-            //    var advertisementPort = "50080";
-            //    using (var Client = new DatagramSocket())
-            //    using (var stream = await Client.GetOutputStreamAsync(new HostName("255.255.255.255"), advertisementPort))
-            //    {
-            //        using (var writer = new DataWriter(stream))
-            //        {
-            //            var msg = "hello";
-            //            var data = Encoding.UTF8.GetBytes(msg);
-            //            while (true)
-            //            {
-            //                writer.WriteBytes(data);
-            //                await writer.StoreAsync();
-            //                HandleDebugInfo(string.Format("Sent UDP packet: 255.255.255.255:{0} = {1}", advertisementPort, msg));
-
-            //                new ManualResetEvent(false).WaitOne(1000);
-            //            }
-            //        }
-            //    }
-            //};
-            //ThreadPool.RunAsync(advertisementWorker);
-
-            //WorkItemHandler worker = async (context) =>
-            //{
-            //    var Server = new DatagramSocket();
-            //    Server.MessageReceived += Server_MessageReceived;
-            //    string connectionString = "50074";
-            //    await Server.BindServiceNameAsync(connectionString);
-            //    HandleDebugInfo(string.Format("Listening for UDP on {0}", connectionString));
-            //};
-
-            //ThreadPool.RunAsync(worker);
-
             WorkItemHandler streamSocketWorker = async (context) =>
             {
                 var Listener = new StreamSocketListener();
@@ -189,6 +151,13 @@ namespace CompanionAppServerShared
                 data += reader.ReadString(reader.UnconsumedBufferLength);
             }
 
+            //
+            // In this sample, protected information is sent over the channel
+            // as plain text.  This data needs to be protcted with encryption
+            // based on a trust relationship between the Companion App client
+            // and server.
+            //
+
             if (data.Length != 0)
             {
                 HandleDebugInfo(string.Format("incoming request {0}", data));
@@ -205,81 +174,21 @@ namespace CompanionAppServerShared
 
         private async Task SendResponse(CompanionAppCommunication response, DataWriter writer)
         {
+            //
+            // In this sample, protected information is sent over the channel
+            // as plain text.  This data needs to be protcted with encryption
+            // based on a trust relationship between the Companion App client
+            // and server.
+            //
+
             using (var stream = new MemoryStream())
             {
-                // Send request for available networks
-                string networkResponseString = Jsonify(typeof(CompanionAppCommunication), response);
-                writer.WriteString(networkResponseString);
+                // Send request
+                string requestData = Jsonify(typeof(CompanionAppCommunication), response);
+                writer.WriteString(requestData);
                 await writer.StoreAsync();
-                HandleDebugInfo(string.Format("Sent: {0}", networkResponseString));
+                HandleDebugInfo(string.Format("Sent: {0} [{1}]", requestData, requestData));
             }
-
-        }
-
-        private async Task CreateStreamSocketServer(string connectionPortString)
-        {
-            try
-            {
-                var wifiInfo = await FindWifi(null);
-
-                // Listen for connection over connection string that was sent
-                var listener = new StreamSocketListener();
-                listener.ConnectionReceived += Listener_ConnectionReceived;
-                listener.BindServiceNameAsync(connectionPortString, SocketProtectionLevel.PlainSocket, wifiInfo.Adapter.NetworkAdapter);
-                HandleDebugInfo(string.Format("Started listening for StreamSocket connections: {0}", connectionPortString));
-
-            }
-            catch (Exception e)
-            {
-
-            }
-        }
-
-        private async Task CreateStreamSocketClient(HostName hostName, string connectionPortString)
-        {
-            try
-            {
-                var wifiInfo = await FindWifi(null);
-
-                // Conect to port string that was sent
-                var Client = new StreamSocket();
-                HandleDebugInfo(string.Format("Opening socket: {0}:{1}", hostName, connectionPortString));
-                await Client.ConnectAsync(hostName, connectionPortString, SocketProtectionLevel.PlainSocket, wifiInfo.Adapter.NetworkAdapter);
-                HandleDebugInfo(string.Format("Socket connected: {0}:{1}", hostName, connectionPortString));
-
-                await HandleSocket(Client.InputStream, Client.OutputStream);
-            }
-            catch (Exception e)
-            {
-
-            }
-        }
-
-        private async void Server_MessageReceived(DatagramSocket sender, DatagramSocketMessageReceivedEventArgs args)
-        {
-            // Introduction from CompainionAppClient
-            HandleDebugInfo(string.Format("Message received from {0}:{1}", args.RemoteAddress.DisplayName, args.RemotePort));
-            var connectionPortString = args.GetDataReader().ReadString(args.GetDataReader().UnconsumedBufferLength);
-            HandleDebugInfo(string.Format("Message ==> {0}", connectionPortString));
-
-            // Response to CompanionAppClient
-            using (var Client = new DatagramSocket())
-            using (var stream = await Client.GetOutputStreamAsync(new HostName("255.255.255.255"), connectionPortString))
-            {
-                using (var writer = new DataWriter(stream))
-                {
-                    string streamSocketPort = "50076";
-                    await CreateStreamSocketServer(streamSocketPort);
-                    //await CreateStreamSocketClient(args.RemoteAddress, streamSocketPort);
-
-                    var data = Encoding.UTF8.GetBytes(streamSocketPort);
-                    writer.WriteBytes(data);
-                    await writer.StoreAsync();
-                    HandleDebugInfo(string.Format("Sent UDP packet: 255.255.255.255:{0} = {1}", connectionPortString, streamSocketPort));
-
-                }
-            }
-
 
         }
 
