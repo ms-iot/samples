@@ -35,13 +35,14 @@ The general communication flow between Client and Server
 
 1. Download this sample.
 1. Connect to your IotCore device using the [Device Portal](https://developer.microsoft.com/en-us/windows/iot/docs/deviceportal), open the Onboarding page, and set the SoftAP settings SSID to be something recognizable.
-1. Connect to your IotCore device using [SSH](https://developer.microsoft.com/en-us/windows/iot/docs/ssh) or [PowerShell](https://developer.microsoft.com/en-us/windows/iot/docs/powershell) and run the following commands to enable SoftAP:
-```
+1. Connect to your IotCore device using [SSH](https://developer.microsoft.com/en-us/windows/iot/docs/ssh) or [PowerShell](https://developer.microsoft.com/en-us/windows/iot/docs/powershell) and run the following commands to enable SoftAP
+
+    ```
     reg add hklm\system\currentcontrolset\services\mpssvc\parameters /v IoTInboundLoopbackPolicy /t REG_DWORD /d 1
     checknetisolation loopbackexempt -a -n=IoTOnboardingTask-uwp_1w720vyc4ccym
     checknetisolation loopbackexempt -a -n=CompanionAppServer-UI_1w720vyc4ccym
     checknetisolation loopbackexempt -a -n=CompanionAppServer_1w720vyc4ccym
-```
+    ```
 1. Restart your device.
 1. Open **CompanionApp\CompanionAppServer.sln**, select the appropriate startup project, platform and use F5 to build, deploy, and launch.
     + `CompanionAppServer` is a Background Application
