@@ -1,28 +1,23 @@
-﻿using System;
+﻿// Copyright (c) Microsoft. All rights reserved.
+
+using Android.App;
+using Android.Content;
+using Android.Net;
+using Android.Net.Wifi;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
-using System.Threading.Tasks;
+using System.Linq;
 using System.Net.Sockets;
+using System.Text;
 using System.Threading;
-using Android.Content;
-using Android.App;
-using Android.Net.Wifi;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xamarin.Forms;
-using Android.Net;
-using System.Security.Cryptography;
 
 namespace CompanionAppClient.Droid
 {
-    public class CompanionAppCommunication
-    {
-        public CompanionAppCommunication() { }
-        public string Verb { get; set; }
-        public string Data { get; set; }
-    }
-
     public class WifiHelper : IAccessPointHelper
     {
         public event Action<string> AccessPointsEnumeratedEvent;
@@ -30,12 +25,12 @@ namespace CompanionAppClient.Droid
         public event Action<string> ClientNetworkConnectedEvent;
         public event Action<string> ClientNetworksEnumeratedEvent;
 
+        private WifiReceiver _WifiReceiver = null;
         private TcpClient _ConnectedSocket = null;
         private NetworkStream _NetworkStream = null;
 
         class WifiReceiver : BroadcastReceiver
         {
-            HashSet<string> _FoundAccessPoints = new HashSet<string>();
             ObservableCollection<AccessPoint> _AvailableAccessPoints;
             WifiHelper _Helper;
             public WifiReceiver(WifiHelper helper, ObservableCollection<AccessPoint> availableAccessPoints)
@@ -45,17 +40,18 @@ namespace CompanionAppClient.Droid
             }
             public override void OnReceive(Context context, Intent intent)
             {
+                Android.App.Application.Context.UnregisterReceiver(_Helper._WifiReceiver);
+
                 var wifiManager = Android.App.Application.Context.GetSystemService(Context.WifiService) as WifiManager;
                 var scanWifiNetworks = wifiManager.ScanResults;
-                foreach (ScanResult wifiNetwork in scanWifiNetworks)
-                {
-                    string ssid = wifiNetwork.Ssid;
-                    if (!_FoundAccessPoints.Contains(ssid))
-                    {
-                        _AvailableAccessPoints.Add(new CompanionAppClient.AccessPoint() { Ssid = ssid, Details = "none" });
-                        _FoundAccessPoints.Add(ssid);
-                    }
-                }
+
+                // Add distinct AP Ssids in sorted order
+                scanWifiNetworks.Select(x => x.Ssid).
+                                 Distinct().
+                                 OrderBy(ssid => ssid).ToList().
+                                 ForEach(ssid => {
+                    _AvailableAccessPoints.Add(new AccessPoint() { Ssid = ssid });
+                });
 
                 if (_Helper.AccessPointsEnumeratedEvent != null)
                 {
@@ -71,7 +67,11 @@ namespace CompanionAppClient.Droid
             var wifiManager = Android.App.Application.Context.GetSystemService(Context.WifiService) as WifiManager;
             if (wifiManager.IsWifiEnabled)
             {
-                Android.App.Application.Context.RegisterReceiver(new WifiReceiver(this, availableAccessPoints), new IntentFilter(WifiManager.ScanResultsAvailableAction));
+                if (_WifiReceiver == null)
+                {
+                    _WifiReceiver = new WifiReceiver(this, availableAccessPoints);
+                }
+                Android.App.Application.Context.RegisterReceiver(_WifiReceiver, new IntentFilter(WifiManager.ScanResultsAvailableAction));
                 wifiManager.StartScan();
             }
             else if (AccessPointsEnumeratedEvent != null)
@@ -80,15 +80,18 @@ namespace CompanionAppClient.Droid
             }
         }
 
-        public void GetClientNetworks(ObservableCollection<Network> availableNetworks)
+        public void RequestClientNetworks(ObservableCollection<Network> availableNetworks)
         {
             if (_ConnectedSocket == null) { return; }
 
             WaitCallback worker = async (context) =>
             {
+                var waitForClear = new AutoResetEvent(false);
                 Device.BeginInvokeOnMainThread(() => {
                     availableNetworks.Clear();
+                    waitForClear.Set();
                 });
+                waitForClear.WaitOne();
 
                 var networkRequest = new CompanionAppCommunication() { Verb = "GetAvailableNetworks" };
                 // Send request for available networks
@@ -98,14 +101,15 @@ namespace CompanionAppClient.Droid
                 var networkResponse = await GetNextRequest(_NetworkStream);
                 if (networkResponse != null && networkResponse.Verb == "AvailableNetworks")
                 {
-                    var availableNetworkArray = JsonToStringArray(networkResponse.Data);
-                    foreach (var availableNetwork in availableNetworkArray)
-                    {
+                    var availableNetworkArray = JsonToStringList(networkResponse.Data);
+                    availableNetworkArray.ForEach(availableNetwork => {
                         var network = new Network() { Ssid = availableNetwork };
                         Device.BeginInvokeOnMainThread(() => {
                             availableNetworks.Add(network);
+                            waitForClear.Set();
                         });
-                    }
+                        waitForClear.WaitOne();
+                    });
                 }
 
                 if (ClientNetworksEnumeratedEvent != null)
@@ -127,9 +131,9 @@ namespace CompanionAppClient.Droid
                 Debug.WriteLine(string.Format("Socket connected: {0}:{1}", hostName, connectionPortString));
                 HandleSocket(Client);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-
+                // Failure to connect is handled in ConnectToAccessPoint
             }
         }
 
@@ -140,7 +144,7 @@ namespace CompanionAppClient.Droid
             {
                 var androidContext = Android.App.Application.Context;
                 var wifiManager = androidContext.GetSystemService(Context.WifiService) as WifiManager;
-                
+
                 var wc = new WifiConfiguration();
                 wc.Ssid = string.Format("\"{0}\"", accessPoint.Ssid);
                 wc.PreSharedKey = string.Format("\"{0}\"", "p@ssw0rd");
@@ -178,23 +182,14 @@ namespace CompanionAppClient.Droid
                     }
                     else
                     {
-                        foreach (var n in connectivityManager.GetAllNetworks())
-                        {
-                            if (connectivityManager.GetNetworkInfo(n).TypeName.Equals("WIFI"))
-                            {
-                                wifiNetwork = n;
-                                break;
-                            }
-                        }
+                        var allWifiNetworks = connectivityManager.GetAllNetworks();
+                        wifiNetwork = allWifiNetworks.Where(n => connectivityManager.GetNetworkInfo(n).TypeName.Equals("WIFI")).First();
                     }
 
                     if (wifiNetwork != null)
                     {
                         var boundToNetwork = connectivityManager.BindProcessToNetwork(wifiNetwork);
-
-                        string streamSocketPort = "50074";
-                        string defaultSoftApIp = "192.168.137.1";
-                        await CreateStreamSocketClient(defaultSoftApIp, streamSocketPort);
+                        await CreateStreamSocketClient(SharedConstants.SOFT_AP_IP, SharedConstants.CONNECTION_PORT);
                     }
                 }
 
@@ -334,18 +329,14 @@ namespace CompanionAppClient.Droid
             return Newtonsoft.Json.JsonConvert.SerializeObject(data);
         }
 
-        private string[] JsonToStringArray(string data)
+        private List<string> JsonToStringList(string data)
         {
-            List<string> strings = new List<string>();
             if (!string.IsNullOrEmpty(data))
             {
                 var jsonData = Newtonsoft.Json.Linq.JArray.Parse(data);
-                foreach (var str in jsonData.Children())
-                {
-                    strings.Add((string)str);
-                }
+                return jsonData.Children().Select(x => (string)x).OrderBy(x => x).ToList();
             }
-            return strings.ToArray();
+            return new List<string>(0);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace CompanionAppClient.UWP
+﻿// Copyright (c) Microsoft. All rights reserved.
+
+namespace CompanionAppClient.UWP
 {
     public sealed partial class MainPage
     {

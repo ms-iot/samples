@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Copyright (c) Microsoft. All rights reserved.
+
+using System;
 using System.Collections.ObjectModel;
 
 namespace CompanionAppClient
@@ -12,7 +14,7 @@ namespace CompanionAppClient
 
         void FindAccessPoints(ObservableCollection<AccessPoint> availableAccessPoints);
         void ConnectToAccessPoint(AccessPoint accessPoint);
-        void GetClientNetworks(ObservableCollection<Network> availableNetworks);
+        void RequestClientNetworks(ObservableCollection<Network> availableNetworks);
         void ConnectToClientNetwork(string networkSsid, string password);
         void DisconnectFromClientNetwork(string networkSsid);
         void Disconnect();

@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿// Copyright (c) Microsoft. All rights reserved.
 
 using Xamarin.Forms;
 
 namespace CompanionAppClient
 {
-	public partial class App : Application
+    public partial class App : Application
 	{
 		public App ()
 		{

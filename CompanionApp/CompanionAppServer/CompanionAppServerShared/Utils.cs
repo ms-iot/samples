@@ -76,19 +76,12 @@ namespace CompanionAppServerShared
 
         private async Task<WifiSet> FindWifi(string ssid)
         {
-            var wiFiAdapterList = await WiFiAdapter.FindAllAdaptersAsync();
-            foreach (var adapter in wiFiAdapterList)
-            {
-                var availableNetworks = adapter.NetworkReport.AvailableNetworks;
-                foreach (var availableNetwork in availableNetworks)
-                {
-                    if (ssid == null || availableNetwork.Ssid.Equals(ssid))
-                    {
-                        return new WifiSet() { Adapter = adapter, Network = availableNetwork };
-                    }
-                }
-            }
-            return null;
+            var wifiAdapterList = await WiFiAdapter.FindAllAdaptersAsync();
+            var wifiList = from adapter in wifiAdapterList
+                           from network in adapter.NetworkReport.AvailableNetworks
+                           where network.Equals(ssid)
+                           select new WifiSet() { Adapter = adapter, Network = network };
+            return wifiList.First();
         }
 
         private async void ConnectToNetworkHandler(string networkInfo, DataWriter writer)
@@ -124,18 +117,12 @@ namespace CompanionAppServerShared
 
         private async void GetAvailableNetworkListHandler(DataWriter writer)
         {
-            List<string> networks = new List<string>();
+            var wifiAdapterList = await WiFiAdapter.FindAllAdaptersAsync();
+            var wifiList = from adapter in wifiAdapterList
+                           from network in adapter.NetworkReport.AvailableNetworks
+                           select network.Ssid;
+            var networks = wifiList.OrderBy(x => x).Distinct();
 
-            var m_wiFiAdapterList = await WiFiAdapter.FindAllAdaptersAsync();
-            var m_wiFiAdapter = m_wiFiAdapterList.FirstOrDefault();
-            foreach (var adapter in m_wiFiAdapterList)
-            {
-                var availableNetworks = adapter.NetworkReport.AvailableNetworks;
-                foreach (var availablenetwork in availableNetworks)
-                {
-                    networks.Add(availablenetwork.Ssid);
-                }
-            }
             var networkResponse = new CompanionAppCommunication() { Verb = "AvailableNetworks" };
             networkResponse.Data = Jsonify(typeof(string[]), networks.ToArray());
             await SendResponse(networkResponse, writer);
@@ -194,28 +181,35 @@ namespace CompanionAppServerShared
 
         private async Task HandleSocket(IInputStream istream, IOutputStream ostream)
         {
-            using (var reader = new DataReader(istream))
-            using (var writer = new DataWriter(ostream))
+            try
             {
-                reader.InputStreamOptions = InputStreamOptions.Partial;
-                while (true)
+                using (var reader = new DataReader(istream))
+                using (var writer = new DataWriter(ostream))
                 {
-                    var networkRequest = await GetNextRequest(reader);
-                    if (networkRequest == null) break;
+                    reader.InputStreamOptions = InputStreamOptions.Partial;
+                    while (true)
+                    {
+                        var networkRequest = await GetNextRequest(reader);
+                        if (networkRequest == null) break;
 
-                    if (networkRequest.Verb.Equals("GetAvailableNetworks"))
-                    {
-                        GetAvailableNetworkListHandler(writer);
-                    }
-                    else if (networkRequest.Verb.Equals("ConnectToNetwork"))
-                    {
-                        ConnectToNetworkHandler(networkRequest.Data, writer);
-                    }
-                    else if (networkRequest.Verb.Equals("DisconnectFromNetwork"))
-                    {
-                        DisconnectFromNetworkHandler(networkRequest.Data, writer);
+                        if (networkRequest.Verb.Equals("GetAvailableNetworks"))
+                        {
+                            GetAvailableNetworkListHandler(writer);
+                        }
+                        else if (networkRequest.Verb.Equals("ConnectToNetwork"))
+                        {
+                            ConnectToNetworkHandler(networkRequest.Data, writer);
+                        }
+                        else if (networkRequest.Verb.Equals("DisconnectFromNetwork"))
+                        {
+                            DisconnectFromNetworkHandler(networkRequest.Data, writer);
+                        }
                     }
                 }
+            }
+            catch (Exception e)
+            {
+                // Connection lost.
             }
         }
 

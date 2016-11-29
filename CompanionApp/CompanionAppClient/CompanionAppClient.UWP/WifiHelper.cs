@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Copyright (c) Microsoft. All rights reserved.
+
+using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
@@ -12,20 +14,11 @@ using Windows.Networking;
 using Windows.Networking.Connectivity;
 using Windows.Networking.Sockets;
 using Windows.Security.Credentials;
-using Windows.Security.Cryptography;
-using Windows.Security.Cryptography.Core;
 using Windows.Storage.Streams;
 using Windows.System.Threading;
 
 namespace CompanionAppClient.UWP
 {
-    public class CompanionAppCommunication
-    {
-        public CompanionAppCommunication() { }
-        public string Verb { get; set; }
-        public string Data { get; set; }
-    }
-
     public class WifiHelper : IAccessPointHelper
     {
         public event Action<string> AccessPointsEnumeratedEvent;
@@ -46,24 +39,18 @@ namespace CompanionAppClient.UWP
                     availableAccessPoints.Clear();
                 });
 
-                var m_wiFiAdapterList = await WiFiAdapter.FindAllAdaptersAsync();
-                var m_wiFiAdapter = m_wiFiAdapterList.FirstOrDefault();
-                foreach (var adapter in m_wiFiAdapterList)
-                {
-                    var availableNetworks = adapter.NetworkReport.AvailableNetworks;
-                    foreach (var availablenetwork in availableNetworks)
-                    {
-                        var ap = new AccessPoint()
-                        {
-                            Ssid = availablenetwork.Ssid,
-                            Details = adapter.NetworkAdapter.NetworkAdapterId.ToString(),
-                        };
-
-                        await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
-                            availableAccessPoints.Add(ap);
-                        });
-                    }
-                }
+                // Add distinct AP Ssids in sorted order
+                var wifiAdapterList = await WiFiAdapter.FindAllAdaptersAsync();
+                wifiAdapterList.SelectMany(adapter => adapter.NetworkReport.AvailableNetworks).
+                                Select(network => network.Ssid).
+                                Distinct().
+                                OrderBy(ssid => ssid).ToList().
+                                ForEach(async ssid => {
+                    var ap = new AccessPoint() { Ssid = ssid };
+                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
+                        availableAccessPoints.Add(ap);
+                    });
+                });
 
                 if (AccessPointsEnumeratedEvent != null)
                 {
@@ -73,7 +60,7 @@ namespace CompanionAppClient.UWP
             ThreadPool.RunAsync(worker);
         }
 
-        public void GetClientNetworks(ObservableCollection<Network> availableNetworks)
+        public void RequestClientNetworks(ObservableCollection<Network> availableNetworks)
         {
             if (_ConnectedSocket == null) { return; }
 
@@ -92,13 +79,13 @@ namespace CompanionAppClient.UWP
                 if (networkResponse != null && networkResponse.Verb == "AvailableNetworks")
                 {
                     var availableNetworkArray = Dejsonify(typeof(string[]), networkResponse.Data) as string[];
-                    foreach (var availableNetwork in availableNetworkArray)
-                    {
+                    availableNetworkArray.OrderBy(x => x).Distinct().ToList().ForEach(async availableNetwork => {
                         var network = new Network() { Ssid = availableNetwork };
-                        await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
+                        await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                        {
                             availableNetworks.Add(network);
                         });
-                    }
+                    });
                 }
 
                 if (ClientNetworksEnumeratedEvent != null)
@@ -122,7 +109,8 @@ namespace CompanionAppClient.UWP
             }
             catch (Exception e)
             {
-
+                // Handle failure here as desired.  In this sample, 
+                // the failure will be handled by ConnectToAccessPoint
             }
         }
 
@@ -131,55 +119,44 @@ namespace CompanionAppClient.UWP
         {
             WorkItemHandler worker = async (context) =>
             {
-                var wiFiAdapterList = await WiFiAdapter.FindAllAdaptersAsync();
-                WiFiAvailableNetwork wifiNetwork = null;
-                WiFiAdapter wiFiAdapter = null;
+                var wifiAdapterList = await WiFiAdapter.FindAllAdaptersAsync();
 
-                foreach (var adapter in wiFiAdapterList)
-                {
-                    var availableNetworks = adapter.NetworkReport.AvailableNetworks;
-                    foreach (var availablenetwork in availableNetworks)
-                    {
-                        Debug.WriteLine(string.Format("{0}.{1}", adapter.NetworkAdapter.NetworkAdapterId, availablenetwork.Ssid));
-                        if (availablenetwork.Ssid == accessPoint.Ssid)
-                        {
-                            wifiNetwork = availablenetwork;
-                            wiFiAdapter = adapter;
-                            break;
-
-                        }
-                    }
-                }
+                var wifiList = from adapter in wifiAdapterList from network in adapter.NetworkReport.AvailableNetworks select Tuple.Create(adapter, network);
+                var apInfo = wifiList.Where(wifiInfo => wifiInfo.Item2.Ssid.Equals(accessPoint.Ssid)).First();
 
                 WiFiConnectionResult result = null;
-                if (wifiNetwork.SecuritySettings.NetworkAuthenticationType == NetworkAuthenticationType.Open80211)
+                if (apInfo != null)
                 {
-                    Debug.WriteLine(string.Format("Opening connection to: {0}", wifiNetwork.Ssid));
-                    result = await wiFiAdapter.ConnectAsync(wifiNetwork, WiFiReconnectionKind.Manual);
-                }
-                else
-                {
-                    PasswordCredential credential = new PasswordCredential();
-                    credential.Password = "p@ssw0rd";
+                    var wifiNetwork = apInfo.Item2;
+                    var wiFiAdapter = apInfo.Item1;
 
-                    Debug.WriteLine(string.Format("Opening connection to using credentials: {0} [{1}]", wifiNetwork.Ssid, credential.Password));
-                    result = await wiFiAdapter.ConnectAsync(wifiNetwork, WiFiReconnectionKind.Manual, credential);
-                }
+                    if (wifiNetwork.SecuritySettings.NetworkAuthenticationType == NetworkAuthenticationType.Open80211)
+                    {
+                        Debug.WriteLine(string.Format("Opening connection to: {0}", wifiNetwork.Ssid));
+                        result = await wiFiAdapter.ConnectAsync(wifiNetwork, WiFiReconnectionKind.Manual);
+                    }
+                    else
+                    {
+                        PasswordCredential credential = new PasswordCredential();
+                        credential.Password = "p@ssw0rd";
 
-                if (result.ConnectionStatus == WiFiConnectionStatus.Success)
-                {
-                    Debug.WriteLine(string.Format("Connected successfully to: {0}.{1}", wiFiAdapter.NetworkAdapter.NetworkAdapterId, wifiNetwork.Ssid));
-                    _connectedWifiAdapter = wiFiAdapter;
+                        Debug.WriteLine(string.Format("Opening connection to using credentials: {0} [{1}]", wifiNetwork.Ssid, credential.Password));
+                        result = await wiFiAdapter.ConnectAsync(wifiNetwork, WiFiReconnectionKind.Manual, credential);
+                    }
 
-                    string streamSocketPort = "50074";
-                    string defaultSoftApIp = "192.168.137.1";
-                    await CreateStreamSocketClient(new HostName(defaultSoftApIp), streamSocketPort);
+                    if (result.ConnectionStatus == WiFiConnectionStatus.Success)
+                    {
+                        Debug.WriteLine(string.Format("Connected successfully to: {0}.{1}", wiFiAdapter.NetworkAdapter.NetworkAdapterId, wifiNetwork.Ssid));
+                        _connectedWifiAdapter = wiFiAdapter;
+
+                        await CreateStreamSocketClient(new HostName(SharedConstants.SOFT_AP_IP), SharedConstants.CONNECTION_PORT);
+                    }
                 }
 
                 string connectionEventString = "Connected";
                 if (_ConnectedSocket == null)
                 {
-                    Debug.WriteLine(string.Format("Connection failed: {0}", result.ConnectionStatus.ToString()));
+                    Debug.WriteLine(string.Format("Connection failed: {0}", result != null ? result.ConnectionStatus.ToString() : "access point not found"));
                     connectionEventString = "FailedConnected";
                 }
                 if (AccessPointConnectedEvent != null)

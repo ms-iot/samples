@@ -1,5 +1,6 @@
-﻿//#define AUTOMATE_FOR_TESTING
+﻿// Copyright (c) Microsoft. All rights reserved.
 
+//#define AUTOMATE_FOR_TESTING
 using System.Collections.ObjectModel;
 using Windows.UI.Xaml.Data;
 using Xamarin.Forms;
@@ -48,7 +49,7 @@ namespace CompanionAppClient
             _clientNetworkPassword.IsEnabled = false;
             _connectClientNetwork.IsEnabled = false;
             _connectButton.IsEnabled = false;
-            _getClientNetworks.IsEnabled = false;
+            _requestClientNetworks.IsEnabled = false;
 
             _ScanApsGrouping.OutlineColor = Color.Yellow;
             _ConnectApGrouping.OutlineColor = Color.Default;
@@ -76,7 +77,7 @@ namespace CompanionAppClient
             Device.BeginInvokeOnMainThread(() => {
                 ClientNetworksEnumerated = true;
 
-                _getClientNetworks.IsEnabled = ClientNetworksEnumerated;
+                _requestClientNetworks.IsEnabled = ClientNetworksEnumerated;
 
                 _ScanApsGrouping.OutlineColor = Color.Default;
                 _ConnectApGrouping.OutlineColor = Color.Default;
@@ -146,7 +147,7 @@ namespace CompanionAppClient
         {
             Device.BeginInvokeOnMainThread(() => {
                 AccessPointConnected = true;
-                _getClientNetworks.IsEnabled = AccessPointConnected;
+                _requestClientNetworks.IsEnabled = AccessPointConnected;
 
                 _ScanApsGrouping.OutlineColor = Color.Default;
                 _ConnectApGrouping.OutlineColor = Color.Default;
@@ -157,7 +158,7 @@ namespace CompanionAppClient
                 UpdateStatus(null, status);
 
 #if AUTOMATE_FOR_TESTING
-                AccessPointHelper.GetClientNetworks(_AvailableNetworks);
+                AccessPointHelper.RequestClientNetworks(_AvailableNetworks);
 #endif
             });
         }
@@ -198,10 +199,10 @@ namespace CompanionAppClient
             AccessPointHelper.ConnectToAccessPoint(accessPoint);
         }
 
-        public void GetClientNetworks(object sender, System.EventArgs e)
+        public void RequestClientNetworks(object sender, System.EventArgs e)
         {
             UpdateStatus("Getting available client networks", "");
-            AccessPointHelper.GetClientNetworks(_AvailableNetworks);
+            AccessPointHelper.RequestClientNetworks(_AvailableNetworks);
         }
 
         public void FindAccessPoints(object sender, System.EventArgs e)
