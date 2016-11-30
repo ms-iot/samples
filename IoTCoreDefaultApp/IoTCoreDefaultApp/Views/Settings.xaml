@@ -246,6 +246,11 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>                    
                     <RowDefinition Height="408"/>
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
@@ -258,6 +263,8 @@
                 <ComboBox Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" x:Name="LanguageComboBox" FontSize="16" Margin="0,10,0,0" Width="446" SelectionChanged="LanguageComboBox_SelectionChanged" />
                 <TextBlock Grid.Column="1" Grid.Row="6" Text="{Binding [KeyboardTitleText]}" Style="{StaticResource SubtitleTextBlockStyle}" FontWeight="Normal" />
                 <ComboBox Grid.Column="1" Grid.Row="7" HorizontalAlignment="Left" x:Name="InputLanguageComboBox" FontSize="16" Margin="0,10,0,0" Width="446" SelectionChanged="InputLanguageComboBox_SelectionChanged"/>
+                <TextBlock Grid.Column="1" Grid.Row="9" Text="{Binding [CortanaTitleText]}" Style="{StaticResource SubtitleTextBlockStyle}" FontWeight="Normal"/>
+                <Button Grid.Column="1" Grid.Row="10" x:Name="LaunchCortanaButton" Content="{Binding [CortanaSettingsText]}"  Margin="0,10,0,0" HorizontalAlignment="Left" Click="LaunchCortanaButton_Click" />
             </Grid>
         </ScrollViewer>
 

@@ -769,4 +769,10 @@ Alternatively, click the button below to enter the administrator's username/pass
   <data name="VirtualNetworkAdapter" xml:space="preserve">
     <value>Virtual Network Adapter</value>
   </data>
+  <data name="CortanaSettingsText" xml:space="preserve">
+    <value>Cortana &amp; Search settings</value>
+  </data>
+  <data name="CortanaTitleText" xml:space="preserve">
+    <value>Cortana</value>
+  </data>
 </root>

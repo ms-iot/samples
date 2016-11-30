@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Package Dependencies">
+      <UniqueIdentifier>$guid2$</UniqueIdentifier>
+      <Extensions>pfx;appxmanifest;config</Extensions>
+    </Filter>
+    <Filter Include="Package Dependencies\Assets">
+      <UniqueIdentifier>$guid3$</UniqueIdentifier>
+      <Extensions>png</Extensions>
+    </Filter>
+    <Filter Include="Package Dependencies\Include">
+      <UniqueIdentifier>$guid4$</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="StartupTask.cpp">
+      <Filter>Package Dependencies</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h">
+      <Filter>Package Dependencies\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="PinNumbers.h">
+      <Filter>Package Dependencies\Include</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
