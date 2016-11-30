@@ -25,6 +25,7 @@ namespace CompanionAppClient.Droid
         public event Action<string> ClientNetworkConnectedEvent;
         public event Action<string> ClientNetworksEnumeratedEvent;
 
+        private SemaphoreSlim _SocketLock = new SemaphoreSlim(1, 1);
         private WifiReceiver _WifiReceiver = null;
         private TcpClient _ConnectedSocket = null;
         private NetworkStream _NetworkStream = null;
@@ -60,7 +61,7 @@ namespace CompanionAppClient.Droid
             }
         }
 
-        public void FindAccessPoints(ObservableCollection<AccessPoint> availableAccessPoints)
+        public async Task FindAccessPoints(ObservableCollection<AccessPoint> availableAccessPoints)
         {
             availableAccessPoints.Clear();
 
@@ -80,44 +81,40 @@ namespace CompanionAppClient.Droid
             }
         }
 
-        public void RequestClientNetworks(ObservableCollection<Network> availableNetworks)
+        public async Task RequestClientNetworks(ObservableCollection<Network> availableNetworks)
         {
             if (_ConnectedSocket == null) { return; }
 
-            WaitCallback worker = async (context) =>
+            var waitForClear = new AutoResetEvent(false);
+            Device.BeginInvokeOnMainThread(() => {
+                availableNetworks.Clear();
+                waitForClear.Set();
+            });
+            waitForClear.WaitOne();
+
+            var networkRequest = new CompanionAppCommunication() { Verb = "GetAvailableNetworks" };
+            // Send request for available networks
+            WriteToSocket(networkRequest);
+
+            // Read response with available networks                
+            var networkResponse = await GetNextRequest(_NetworkStream);
+            if (networkResponse != null && networkResponse.Verb == "AvailableNetworks")
             {
-                var waitForClear = new AutoResetEvent(false);
-                Device.BeginInvokeOnMainThread(() => {
-                    availableNetworks.Clear();
-                    waitForClear.Set();
-                });
-                waitForClear.WaitOne();
-
-                var networkRequest = new CompanionAppCommunication() { Verb = "GetAvailableNetworks" };
-                // Send request for available networks
-                WriteToSocket(networkRequest);
-
-                // Read response with available networks                
-                var networkResponse = await GetNextRequest(_NetworkStream);
-                if (networkResponse != null && networkResponse.Verb == "AvailableNetworks")
-                {
-                    var availableNetworkArray = JsonToStringList(networkResponse.Data);
-                    availableNetworkArray.ForEach(availableNetwork => {
-                        var network = new Network() { Ssid = availableNetwork };
-                        Device.BeginInvokeOnMainThread(() => {
-                            availableNetworks.Add(network);
-                            waitForClear.Set();
-                        });
-                        waitForClear.WaitOne();
+                var availableNetworkArray = JsonToStringList(networkResponse.Data);
+                availableNetworkArray.ForEach(availableNetwork => {
+                    var network = new Network() { Ssid = availableNetwork };
+                    Device.BeginInvokeOnMainThread(() => {
+                        availableNetworks.Add(network);
+                        waitForClear.Set();
                     });
-                }
+                    waitForClear.WaitOne();
+                });
+            }
 
-                if (ClientNetworksEnumeratedEvent != null)
-                {
-                    ClientNetworksEnumeratedEvent("Enumerated");
-                }
-            };
-            ThreadPool.QueueUserWorkItem(worker);
+            if (ClientNetworksEnumeratedEvent != null)
+            {
+                ClientNetworksEnumeratedEvent("Enumerated");
+            }
         }
 
         private async Task CreateStreamSocketClient(string hostName, string connectionPortString)
@@ -138,121 +135,109 @@ namespace CompanionAppClient.Droid
         }
 
 
-        public void ConnectToAccessPoint(AccessPoint accessPoint)
+        public async Task ConnectToAccessPoint(AccessPoint accessPoint)
         {
-            WaitCallback worker = async (context) =>
+            var androidContext = Android.App.Application.Context;
+            var wifiManager = androidContext.GetSystemService(Context.WifiService) as WifiManager;
+
+            var wc = new WifiConfiguration();
+            wc.Ssid = string.Format("\"{0}\"", accessPoint.Ssid);
+            wc.PreSharedKey = string.Format("\"{0}\"", "p@ssw0rd");
+            wc.StatusField = WifiStatus.Enabled;
+            //
+            // what to set here????  http://stackoverflow.com/questions/8818290/how-do-i-connect-to-a-specific-wi-fi-network-in-android-programmatically
+            //
+            wc.AllowedGroupCiphers.Set((int)GroupCipherType.Tkip);
+            wc.AllowedGroupCiphers.Set((int)GroupCipherType.Ccmp);
+            wc.AllowedKeyManagement.Set((int)KeyManagementType.WpaPsk);
+            wc.AllowedPairwiseCiphers.Set((int)PairwiseCipherType.Tkip);
+            wc.AllowedPairwiseCiphers.Set((int)PairwiseCipherType.Ccmp);
+            wc.AllowedProtocols.Set((int)Android.Net.Wifi.ProtocolType.Rsn);
+
+            // connect to and enable the connection
+            string connectionEventString = "Connected";
+            int netId = wifiManager.AddNetwork(wc);
+            if (netId != -1)
             {
-                var androidContext = Android.App.Application.Context;
-                var wifiManager = androidContext.GetSystemService(Context.WifiService) as WifiManager;
+                var disconnected = wifiManager.Disconnect();
+                var enabled = wifiManager.EnableNetwork(netId, true);
+                var reconnected = wifiManager.Reconnect();
 
-                var wc = new WifiConfiguration();
-                wc.Ssid = string.Format("\"{0}\"", accessPoint.Ssid);
-                wc.PreSharedKey = string.Format("\"{0}\"", "p@ssw0rd");
-                wc.StatusField = WifiStatus.Enabled;
-                //
-                // what to set here????  http://stackoverflow.com/questions/8818290/how-do-i-connect-to-a-specific-wi-fi-network-in-android-programmatically
-                //
-                wc.AllowedGroupCiphers.Set((int)GroupCipherType.Tkip);
-                wc.AllowedGroupCiphers.Set((int)GroupCipherType.Ccmp);
-                wc.AllowedKeyManagement.Set((int)KeyManagementType.WpaPsk);
-                wc.AllowedPairwiseCiphers.Set((int)PairwiseCipherType.Tkip);
-                wc.AllowedPairwiseCiphers.Set((int)PairwiseCipherType.Ccmp);
-                wc.AllowedProtocols.Set((int)Android.Net.Wifi.ProtocolType.Rsn);
+                var connectivityManager = (ConnectivityManager)androidContext.GetSystemService(Context.ConnectivityService);
+                var wifiInfo = connectivityManager.GetNetworkInfo(ConnectivityType.Wifi);
 
-                // connect to and enable the connection
-                string connectionEventString = "Connected";
-                int netId = wifiManager.AddNetwork(wc);
-                if (netId != -1)
+                Debug.WriteLine(string.Format("Connected successfully to: {0}", wc.Ssid));
+
+                new ManualResetEvent(false).WaitOne(5 * 1000);
+
+                Android.Net.Network wifiNetwork = null;
+                if (connectivityManager.ActiveNetworkInfo.TypeName.Equals("WIFI"))
                 {
-                    var disconnected = wifiManager.Disconnect();
-                    var enabled = wifiManager.EnableNetwork(netId, true);
-                    var reconnected = wifiManager.Reconnect();
-
-                    var connectivityManager = (ConnectivityManager)androidContext.GetSystemService(Context.ConnectivityService);
-                    var wifiInfo = connectivityManager.GetNetworkInfo(ConnectivityType.Wifi);
-
-                    Debug.WriteLine(string.Format("Connected successfully to: {0}", wc.Ssid));
-
-                    new ManualResetEvent(false).WaitOne(5 * 1000);
-
-                    Android.Net.Network wifiNetwork = null;
-                    if (connectivityManager.ActiveNetworkInfo.TypeName.Equals("WIFI"))
-                    {
-                        wifiNetwork = connectivityManager.ActiveNetwork;
-                    }
-                    else
-                    {
-                        var allWifiNetworks = connectivityManager.GetAllNetworks();
-                        wifiNetwork = allWifiNetworks.Where(n => connectivityManager.GetNetworkInfo(n).TypeName.Equals("WIFI")).First();
-                    }
-
-                    if (wifiNetwork != null)
-                    {
-                        var boundToNetwork = connectivityManager.BindProcessToNetwork(wifiNetwork);
-                        await CreateStreamSocketClient(SharedConstants.SOFT_AP_IP, SharedConstants.CONNECTION_PORT);
-                    }
+                    wifiNetwork = connectivityManager.ActiveNetwork;
+                }
+                else
+                {
+                    var allWifiNetworks = connectivityManager.GetAllNetworks();
+                    wifiNetwork = allWifiNetworks.Where(n => connectivityManager.GetNetworkInfo(n).TypeName.Equals("WIFI")).First();
                 }
 
-                if (_ConnectedSocket == null)
+                if (wifiNetwork != null)
                 {
-                    connectionEventString = "FailedConnected";
+                    var boundToNetwork = connectivityManager.BindProcessToNetwork(wifiNetwork);
+                    await CreateStreamSocketClient(SharedConstants.SOFT_AP_IP, SharedConstants.CONNECTION_PORT);
                 }
+            }
 
-                if (AccessPointConnectedEvent != null)
-                {
-                    AccessPointConnectedEvent(connectionEventString);
-                }
-            };
-            ThreadPool.QueueUserWorkItem(worker);
+            if (_ConnectedSocket == null)
+            {
+                connectionEventString = "FailedConnected";
+            }
+
+            if (AccessPointConnectedEvent != null)
+            {
+                AccessPointConnectedEvent(connectionEventString);
+            }
         }
 
-        public void ConnectToClientNetwork(string networkSsid, string password)
+        public async Task ConnectToClientNetwork(string networkSsid, string password)
         {
             if (_ConnectedSocket == null) { return; }
 
-            WaitCallback worker = async (context) =>
-            {
-                var connectRequest = new CompanionAppCommunication() { Verb = "ConnectToNetwork", Data = string.Format("{0}={1}", networkSsid, password) };
-                // Send request to connect to network
-                WriteToSocket(connectRequest);
+            var connectRequest = new CompanionAppCommunication() { Verb = "ConnectToNetwork", Data = string.Format("{0}={1}", networkSsid, password) };
+            // Send request to connect to network
+            WriteToSocket(connectRequest);
 
-                // Read response with available networks
-                var networkResponse = await GetNextRequest(_NetworkStream);
-                if (networkResponse != null && networkResponse.Verb == "ConnectResult")
+            // Read response with available networks
+            var networkResponse = await GetNextRequest(_NetworkStream);
+            if (networkResponse != null && networkResponse.Verb == "ConnectResult")
+            {
+                if (ClientNetworkConnectedEvent != null)
                 {
-                    if (ClientNetworkConnectedEvent != null)
-                    {
-                        ClientNetworkConnectedEvent(networkResponse.Data);
-                    }
+                    ClientNetworkConnectedEvent(networkResponse.Data);
                 }
-            };
-            ThreadPool.QueueUserWorkItem(worker);
+            }
         }
 
-        public void DisconnectFromClientNetwork(string networkSsid)
+        public async Task DisconnectFromClientNetwork(string networkSsid)
         {
             if (_ConnectedSocket == null) { return; }
 
-            WaitCallback worker = async (context) =>
-            {
-                var disconnectRequest = new CompanionAppCommunication() { Verb = "DisconnectFromNetwork", Data = networkSsid };
-                // Send request to disconnect to network
-                WriteToSocket(disconnectRequest);
+            var disconnectRequest = new CompanionAppCommunication() { Verb = "DisconnectFromNetwork", Data = networkSsid };
+            // Send request to disconnect to network
+            WriteToSocket(disconnectRequest);
 
-                // Read response with available networks
-                var networkResponse = await GetNextRequest(_NetworkStream);
-                if (networkResponse != null && networkResponse.Verb == "DisconnectResult")
+            // Read response with available networks
+            var networkResponse = await GetNextRequest(_NetworkStream);
+            if (networkResponse != null && networkResponse.Verb == "DisconnectResult")
+            {
+                if (ClientNetworkConnectedEvent != null)
                 {
-                    if (ClientNetworkConnectedEvent != null)
-                    {
-                        ClientNetworkConnectedEvent(networkResponse.Data);
-                    }
+                    ClientNetworkConnectedEvent(networkResponse.Data);
                 }
-            };
-            ThreadPool.QueueUserWorkItem(worker);
+            }
         }
 
-        public void Disconnect()
+        public async Task Disconnect()
         {
             if (_NetworkStream != null)
             {
@@ -271,41 +256,62 @@ namespace CompanionAppClient.Droid
 
         private void HandleSocket(TcpClient socket)
         {
-            _ConnectedSocket = socket;
-            _NetworkStream = _ConnectedSocket.GetStream();
+            _SocketLock.Wait();
+
+            try
+            {
+                _ConnectedSocket = socket;
+                _NetworkStream = _ConnectedSocket.GetStream();
+            }
+            finally
+            {
+                _SocketLock.Release();
+            }
         }
 
         private async Task<CompanionAppCommunication> GetNextRequest(NetworkStream stream)
         {
-            byte[] resp = new byte[2048];
-            var memStream = new MemoryStream();
-            var bytes = 0;
+            CompanionAppCommunication msg = null;
 
-            do
+            await _SocketLock.WaitAsync();
+            try
             {
-                bytes = stream.Read(resp, 0, resp.Length);
-                memStream.Write(resp, 0, bytes);
-            } while (stream.DataAvailable);
+                byte[] resp = new byte[2048];
+                var memStream = new MemoryStream();
+                var bytes = 0;
 
-            ASCIIEncoding asen = new ASCIIEncoding();
-            var data = asen.GetString(memStream.ToArray());
+                do
+                {
+                    bytes = stream.Read(resp, 0, resp.Length);
+                    memStream.Write(resp, 0, bytes);
+                } while (stream.DataAvailable);
 
-            //
-            // In this sample, protected information is sent over the channel
-            // as plain text.  This data needs to be protcted with encryption
-            // based on a trust relationship between the Companion App client
-            // and server.
-            //
+                ASCIIEncoding asen = new ASCIIEncoding();
+                var data = asen.GetString(memStream.ToArray());
 
-            if (data.Length != 0)
-            {
-                Debug.WriteLine(string.Format("incoming request {0}", data));
+                //
+                // In this sample, protected information is sent over the channel
+                // as plain text.  This data needs to be protcted with encryption
+                // based on a trust relationship between the Companion App client
+                // and server.
+                //
 
-                var jsonData = Newtonsoft.Json.Linq.JObject.Parse(data);
-                return new CompanionAppCommunication() { Verb = (string)jsonData["Verb"], Data = (string)jsonData["Data"] };
+                if (data.Length != 0)
+                {
+                    Debug.WriteLine(string.Format("incoming request {0}", data));
+
+                    var jsonData = Newtonsoft.Json.Linq.JObject.Parse(data);
+                    msg = new CompanionAppCommunication() {
+                        Verb = (string)jsonData["Verb"],
+                        Data = (string)jsonData["Data"]
+                    };
+                }
             }
-
-            return null;
+            finally
+            {
+                _SocketLock.Release();
+            }
+            return msg;
         }
 
         private void WriteToSocket(CompanionAppCommunication communication)
@@ -317,11 +323,20 @@ namespace CompanionAppClient.Droid
             // and server.
             //
 
-            var data = Jsonify(communication);
-            ASCIIEncoding asen = new ASCIIEncoding();
-            byte[] ba = asen.GetBytes(data);
-            _NetworkStream.Write(ba, 0, ba.Length);
-            Debug.WriteLine(string.Format("Sent: {0}", data));
+            _SocketLock.Wait();
+
+            try
+            {
+                var data = Jsonify(communication);
+                ASCIIEncoding asen = new ASCIIEncoding();
+                byte[] ba = asen.GetBytes(data);
+                _NetworkStream.Write(ba, 0, ba.Length);
+                Debug.WriteLine(string.Format("Sent: {0}", data));
+            }
+            finally
+            {
+                _SocketLock.Release();
+            }
         }
 
         private string Jsonify(object data)

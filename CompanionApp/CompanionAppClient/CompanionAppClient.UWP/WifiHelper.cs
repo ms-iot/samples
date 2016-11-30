@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Json;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.Devices.WiFi;
@@ -26,74 +27,67 @@ namespace CompanionAppClient.UWP
         public event Action<string> ClientNetworkConnectedEvent;
         public event Action<string> ClientNetworksEnumeratedEvent;
 
+        private SemaphoreSlim _SocketLock = new SemaphoreSlim(1, 1);
         private StreamSocket _ConnectedSocket = null;
         private DataWriter _DataWriter = null;
         private DataReader _DataReader = null;
         private WiFiAdapter _connectedWifiAdapter = null;
 
-        public void FindAccessPoints(ObservableCollection<AccessPoint> availableAccessPoints)
+        public async Task FindAccessPoints(ObservableCollection<AccessPoint> availableAccessPoints)
         {
-            WorkItemHandler worker = async (context) =>
-            {
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
+                availableAccessPoints.Clear();
+            });
+
+            // Add distinct AP Ssids in sorted order
+            var wifiAdapterList = await WiFiAdapter.FindAllAdaptersAsync();
+            wifiAdapterList.SelectMany(adapter => adapter.NetworkReport.AvailableNetworks).
+                            Select(network => network.Ssid).
+                            Distinct().
+                            OrderBy(ssid => ssid).ToList().
+                            ForEach(async ssid => {
+                var ap = new AccessPoint() { Ssid = ssid };
                 await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
-                    availableAccessPoints.Clear();
+                    availableAccessPoints.Add(ap);
                 });
+            });
 
-                // Add distinct AP Ssids in sorted order
-                var wifiAdapterList = await WiFiAdapter.FindAllAdaptersAsync();
-                wifiAdapterList.SelectMany(adapter => adapter.NetworkReport.AvailableNetworks).
-                                Select(network => network.Ssid).
-                                Distinct().
-                                OrderBy(ssid => ssid).ToList().
-                                ForEach(async ssid => {
-                    var ap = new AccessPoint() { Ssid = ssid };
-                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
-                        availableAccessPoints.Add(ap);
-                    });
-                });
-
-                if (AccessPointsEnumeratedEvent != null)
-                {
-                    AccessPointsEnumeratedEvent("Enumerated");
-                }
-            };
-            ThreadPool.RunAsync(worker);
+            if (AccessPointsEnumeratedEvent != null)
+            {
+                AccessPointsEnumeratedEvent("Enumerated");
+            }
         }
 
-        public void RequestClientNetworks(ObservableCollection<Network> availableNetworks)
+        public async Task RequestClientNetworks(ObservableCollection<Network> availableNetworks)
         {
             if (_ConnectedSocket == null) { return; }
 
-            WorkItemHandler worker = async (context) =>
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
+                availableNetworks.Clear();
+            });
+
+            var networkRequest = new CompanionAppCommunication() { Verb = "GetAvailableNetworks" };
+            // Send request for available networks
+            await SendRequest(networkRequest, _DataWriter);
+
+            // Read response with available networks                
+            var networkResponse = await GetNextRequest(_DataReader);
+            if (networkResponse != null && networkResponse.Verb == "AvailableNetworks")
             {
-                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
-                    availableNetworks.Clear();
-                });
-
-                var networkRequest = new CompanionAppCommunication() { Verb = "GetAvailableNetworks" };
-                // Send request for available networks
-                await SendRequest(networkRequest, _DataWriter);
-
-                // Read response with available networks                
-                var networkResponse = await GetNextRequest(_DataReader);
-                if (networkResponse != null && networkResponse.Verb == "AvailableNetworks")
-                {
-                    var availableNetworkArray = Dejsonify(typeof(string[]), networkResponse.Data) as string[];
-                    availableNetworkArray.OrderBy(x => x).Distinct().ToList().ForEach(async availableNetwork => {
-                        var network = new Network() { Ssid = availableNetwork };
-                        await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-                        {
-                            availableNetworks.Add(network);
-                        });
+                var availableNetworkArray = Dejsonify(typeof(string[]), networkResponse.Data) as string[];
+                availableNetworkArray.OrderBy(x => x).Distinct().ToList().ForEach(async availableNetwork => {
+                    var network = new Network() { Ssid = availableNetwork };
+                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                    {
+                        availableNetworks.Add(network);
                     });
-                }
+                });
+            }
 
-                if (ClientNetworksEnumeratedEvent != null)
-                {
-                    ClientNetworksEnumeratedEvent("Enumerated");
-                }
-            };
-            ThreadPool.RunAsync(worker);
+            if (ClientNetworksEnumeratedEvent != null)
+            {
+                ClientNetworksEnumeratedEvent("Enumerated");
+            }
         }
 
         private async Task CreateStreamSocketClient(HostName hostName, string connectionPortString)
@@ -115,105 +109,93 @@ namespace CompanionAppClient.UWP
         }
 
 
-        public void ConnectToAccessPoint(AccessPoint accessPoint)
+        public async Task ConnectToAccessPoint(AccessPoint accessPoint)
         {
-            WorkItemHandler worker = async (context) =>
+            var wifiAdapterList = await WiFiAdapter.FindAllAdaptersAsync();
+
+            var wifiList = from adapter in wifiAdapterList from network in adapter.NetworkReport.AvailableNetworks select Tuple.Create(adapter, network);
+            var apInfo = wifiList.Where(wifiInfo => wifiInfo.Item2.Ssid.Equals(accessPoint.Ssid)).First();
+
+            WiFiConnectionResult result = null;
+            if (apInfo != null)
             {
-                var wifiAdapterList = await WiFiAdapter.FindAllAdaptersAsync();
+                var wifiNetwork = apInfo.Item2;
+                var wiFiAdapter = apInfo.Item1;
 
-                var wifiList = from adapter in wifiAdapterList from network in adapter.NetworkReport.AvailableNetworks select Tuple.Create(adapter, network);
-                var apInfo = wifiList.Where(wifiInfo => wifiInfo.Item2.Ssid.Equals(accessPoint.Ssid)).First();
-
-                WiFiConnectionResult result = null;
-                if (apInfo != null)
+                if (wifiNetwork.SecuritySettings.NetworkAuthenticationType == NetworkAuthenticationType.Open80211)
                 {
-                    var wifiNetwork = apInfo.Item2;
-                    var wiFiAdapter = apInfo.Item1;
+                    Debug.WriteLine(string.Format("Opening connection to: {0}", wifiNetwork.Ssid));
+                    result = await wiFiAdapter.ConnectAsync(wifiNetwork, WiFiReconnectionKind.Manual);
+                }
+                else
+                {
+                    PasswordCredential credential = new PasswordCredential();
+                    credential.Password = "p@ssw0rd";
 
-                    if (wifiNetwork.SecuritySettings.NetworkAuthenticationType == NetworkAuthenticationType.Open80211)
-                    {
-                        Debug.WriteLine(string.Format("Opening connection to: {0}", wifiNetwork.Ssid));
-                        result = await wiFiAdapter.ConnectAsync(wifiNetwork, WiFiReconnectionKind.Manual);
-                    }
-                    else
-                    {
-                        PasswordCredential credential = new PasswordCredential();
-                        credential.Password = "p@ssw0rd";
-
-                        Debug.WriteLine(string.Format("Opening connection to using credentials: {0} [{1}]", wifiNetwork.Ssid, credential.Password));
-                        result = await wiFiAdapter.ConnectAsync(wifiNetwork, WiFiReconnectionKind.Manual, credential);
-                    }
-
-                    if (result.ConnectionStatus == WiFiConnectionStatus.Success)
-                    {
-                        Debug.WriteLine(string.Format("Connected successfully to: {0}.{1}", wiFiAdapter.NetworkAdapter.NetworkAdapterId, wifiNetwork.Ssid));
-                        _connectedWifiAdapter = wiFiAdapter;
-
-                        await CreateStreamSocketClient(new HostName(SharedConstants.SOFT_AP_IP), SharedConstants.CONNECTION_PORT);
-                    }
+                    Debug.WriteLine(string.Format("Opening connection to using credentials: {0} [{1}]", wifiNetwork.Ssid, credential.Password));
+                    result = await wiFiAdapter.ConnectAsync(wifiNetwork, WiFiReconnectionKind.Manual, credential);
                 }
 
-                string connectionEventString = "Connected";
-                if (_ConnectedSocket == null)
+                if (result.ConnectionStatus == WiFiConnectionStatus.Success)
                 {
-                    Debug.WriteLine(string.Format("Connection failed: {0}", result != null ? result.ConnectionStatus.ToString() : "access point not found"));
-                    connectionEventString = "FailedConnected";
+                    Debug.WriteLine(string.Format("Connected successfully to: {0}.{1}", wiFiAdapter.NetworkAdapter.NetworkAdapterId, wifiNetwork.Ssid));
+                    _connectedWifiAdapter = wiFiAdapter;
+
+                    await CreateStreamSocketClient(new HostName(SharedConstants.SOFT_AP_IP), SharedConstants.CONNECTION_PORT);
                 }
-                if (AccessPointConnectedEvent != null)
-                {
-                    AccessPointConnectedEvent(connectionEventString);
-                }
-            };
-            ThreadPool.RunAsync(worker);
+            }
+
+            string connectionEventString = "Connected";
+            if (_ConnectedSocket == null)
+            {
+                Debug.WriteLine(string.Format("Connection failed: {0}", result != null ? result.ConnectionStatus.ToString() : "access point not found"));
+                connectionEventString = "FailedConnected";
+            }
+            if (AccessPointConnectedEvent != null)
+            {
+                AccessPointConnectedEvent(connectionEventString);
+            }
         }
 
-        public void ConnectToClientNetwork(string networkSsid, string password)
+        public async Task ConnectToClientNetwork(string networkSsid, string password)
         {
             if (_ConnectedSocket == null) { return; }
 
-            WorkItemHandler worker = async (context) =>
-            {
-                var connectRequest = new CompanionAppCommunication() { Verb = "ConnectToNetwork", Data = string.Format("{0}={1}", networkSsid, password) };
-                // Send request to connect to network
-                await SendRequest(connectRequest, _DataWriter);
+            var connectRequest = new CompanionAppCommunication() { Verb = "ConnectToNetwork", Data = string.Format("{0}={1}", networkSsid, password) };
+            // Send request to connect to network
+            await SendRequest(connectRequest, _DataWriter);
 
-                // Read response with available networks
-                var networkResponse = await GetNextRequest(_DataReader);
-                if (networkResponse != null && networkResponse.Verb == "ConnectResult")
+            // Read response with available networks
+            var networkResponse = await GetNextRequest(_DataReader);
+            if (networkResponse != null && networkResponse.Verb == "ConnectResult")
+            {
+                if (ClientNetworkConnectedEvent != null)
                 {
-                    if (ClientNetworkConnectedEvent != null)
-                    {
-                        ClientNetworkConnectedEvent(networkResponse.Data);
-                    }
+                    ClientNetworkConnectedEvent(networkResponse.Data);
                 }
-            };
-            ThreadPool.RunAsync(worker);
+            }
         }
 
-        public void DisconnectFromClientNetwork(string networkSsid)
+        public async Task DisconnectFromClientNetwork(string networkSsid)
         {
             if (_ConnectedSocket == null) { return; }
 
-            WorkItemHandler worker = async (context) =>
-            {
-                var disconnectRequest = new CompanionAppCommunication() { Verb = "DisconnectFromNetwork", Data = networkSsid };
-                // Send request to connect to network
-                await SendRequest(disconnectRequest, _DataWriter);
+            var disconnectRequest = new CompanionAppCommunication() { Verb = "DisconnectFromNetwork", Data = networkSsid };
+            // Send request to connect to network
+            await SendRequest(disconnectRequest, _DataWriter);
 
-                // Read response with available networks
-                var networkResponse = await GetNextRequest(_DataReader);
-                if (networkResponse != null && networkResponse.Verb == "DisconnectResult")
+            // Read response with available networks
+            var networkResponse = await GetNextRequest(_DataReader);
+            if (networkResponse != null && networkResponse.Verb == "DisconnectResult")
+            {
+                if (ClientNetworkConnectedEvent != null)
                 {
-                    if (ClientNetworkConnectedEvent != null)
-                    {
-                        ClientNetworkConnectedEvent(networkResponse.Data);
-                    }
+                    ClientNetworkConnectedEvent(networkResponse.Data);
                 }
-            };
-            ThreadPool.RunAsync(worker);
+            }
         }
 
-        public void Disconnect()
+        public async Task Disconnect()
         {
             if (_DataReader != null)
             {
@@ -242,11 +224,15 @@ namespace CompanionAppClient.UWP
 
         private void HandleSocket(StreamSocket socket)
         {
+            _SocketLock.Wait();
+
             Debug.WriteLine(string.Format("Connection established from: {0}:{1}", socket.Information.RemoteAddress.DisplayName, socket.Information.RemotePort));
             _ConnectedSocket = socket;
             _DataWriter = new DataWriter(_ConnectedSocket.OutputStream);
             _DataReader = new DataReader(_ConnectedSocket.InputStream);
             _DataReader.InputStreamOptions = InputStreamOptions.Partial;
+
+            _SocketLock.Release();
         }
 
         private async Task SendRequest(CompanionAppCommunication communication, DataWriter writer)
@@ -257,42 +243,59 @@ namespace CompanionAppClient.UWP
             // based on a trust relationship between the Companion App client
             // and server.
             //
-
-            string requestData = Jsonify(typeof(CompanionAppCommunication), communication);
-            writer.WriteString(requestData);
-            await writer.StoreAsync();
-            Debug.WriteLine(string.Format("Sent: {0}", requestData));
+            await _SocketLock.WaitAsync();
+            try
+            {
+                string requestData = Jsonify(typeof(CompanionAppCommunication), communication);
+                writer.WriteString(requestData);
+                await writer.StoreAsync();
+                Debug.WriteLine(string.Format("Sent: {0}", requestData));
+            }
+            finally
+            {
+                _SocketLock.Release();
+            }
         }
 
         private async Task<CompanionAppCommunication> GetNextRequest(DataReader reader)
         {
-            await reader.LoadAsync(1024);
+            CompanionAppCommunication msg = null;
 
-            string data = string.Empty;
-            while (reader.UnconsumedBufferLength > 0)
+            await _SocketLock.WaitAsync();
+            try
             {
-                data += reader.ReadString(reader.UnconsumedBufferLength);
-            }
+                await reader.LoadAsync(1024);
 
-            //
-            // In this sample, protected information is sent over the channel
-            // as plain text.  This data needs to be protcted with encryption
-            // based on a trust relationship between the Companion App client
-            // and server.
-            //
-
-            if (data.Length != 0)
-            {
-                Debug.WriteLine(string.Format("incoming request {0}", data));
-    
-                using (var stream = new MemoryStream(Encoding.Unicode.GetBytes(data)))
+                string data = string.Empty;
+                while (reader.UnconsumedBufferLength > 0)
                 {
-                    var serializer = new DataContractJsonSerializer(typeof(CompanionAppCommunication));
-                    return serializer.ReadObject(stream) as CompanionAppCommunication;
+                    data += reader.ReadString(reader.UnconsumedBufferLength);
+                }
+
+                //
+                // In this sample, protected information is sent over the channel
+                // as plain text.  This data needs to be protcted with encryption
+                // based on a trust relationship between the Companion App client
+                // and server.
+                //
+
+                if (data.Length != 0)
+                {
+                    Debug.WriteLine(string.Format("incoming request {0}", data));
+    
+                    using (var stream = new MemoryStream(Encoding.Unicode.GetBytes(data)))
+                    {
+                        var serializer = new DataContractJsonSerializer(typeof(CompanionAppCommunication));
+                        msg = serializer.ReadObject(stream) as CompanionAppCommunication;
+                    }
                 }
             }
+            finally
+            {
+                _SocketLock.Release();
+            }
 
-            return null;
+            return msg;
         }
 
         private string Jsonify(Type typeInfo, object data)

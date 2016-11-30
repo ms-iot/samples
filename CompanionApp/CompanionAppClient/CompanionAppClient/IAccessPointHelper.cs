@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace CompanionAppClient
 {
@@ -12,11 +13,11 @@ namespace CompanionAppClient
         event Action<string> ClientNetworkConnectedEvent;
         event Action<string> ClientNetworksEnumeratedEvent;
 
-        void FindAccessPoints(ObservableCollection<AccessPoint> availableAccessPoints);
-        void ConnectToAccessPoint(AccessPoint accessPoint);
-        void RequestClientNetworks(ObservableCollection<Network> availableNetworks);
-        void ConnectToClientNetwork(string networkSsid, string password);
-        void DisconnectFromClientNetwork(string networkSsid);
-        void Disconnect();
+        Task FindAccessPoints(ObservableCollection<AccessPoint> availableAccessPoints);
+        Task ConnectToAccessPoint(AccessPoint accessPoint);
+        Task RequestClientNetworks(ObservableCollection<Network> availableNetworks);
+        Task ConnectToClientNetwork(string networkSsid, string password);
+        Task DisconnectFromClientNetwork(string networkSsid);
+        Task Disconnect();
     }
 }
