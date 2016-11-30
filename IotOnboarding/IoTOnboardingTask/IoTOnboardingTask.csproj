@@ -32,7 +32,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
-    <CompilerResponseFile>$(MSBuildProjectDirectory)\..\CscOptions.rsp</CompilerResponseFile>  
+    <CompilerResponseFile>$(MSBuildProjectDirectory)\..\CscOptions.rsp</CompilerResponseFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
     <OutputPath>bin\ARM\Release\</OutputPath>
@@ -112,7 +112,9 @@
     <None Include="IoTOnboardingTask_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Config.xml" />
+    <Content Include="Config.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png">
       <InProject>false</InProject>
@@ -140,6 +142,10 @@
     <ProjectReference Include="..\IoTOnboardingService\IoTOnboardingService.csproj">
       <Project>{e3b0785f-7a90-45e5-9d0b-a96d0a615bb1}</Project>
       <Name>IoTOnboardingService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IoTOnboardingUtils\IoTOnboardingUtils.vcxproj">
+      <Project>{caf3ef02-b6ae-4dc9-b390-47c342dca8ec}</Project>
+      <Name>IoTOnboardingUtils</Name>
     </ProjectReference>
     <ProjectReference Include="..\org.alljoyn.Icon\org.alljoyn.Icon.vcxproj">
       <Project>{17d9a54e-091e-4fea-a947-1e260358ade0}</Project>

@@ -106,6 +106,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\IoTOnboardingUtils\IoTOnboardingUtils.vcxproj">
+      <Project>{caf3ef02-b6ae-4dc9-b390-47c342dca8ec}</Project>
+      <Name>IoTOnboardingUtils</Name>
+    </ProjectReference>
     <ProjectReference Include="..\org.alljoyn.Icon\org.alljoyn.Icon.vcxproj">
       <Project>{17d9a54e-091e-4fea-a947-1e260358ade0}</Project>
       <Name>org.alljoyn.Icon</Name>
