@@ -1,0 +1,138 @@
+﻿<!--
+    Copyright(c) Microsoft Open Technologies, Inc. All rights reserved.
+    The MIT License(MIT)
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files(the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions :
+    The above copyright notice and this permission notice shall be included in
+    all copies or substantial portions of the Software.
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+    THE SOFTWARE.
+-->
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:CompanionAppClient"
+             x:Class="CompanionAppClient.MainPage">
+
+  <Grid RowSpacing="1">
+    <Grid.RowDefinitions>
+      <RowDefinition><RowDefinition.Height><OnPlatform x:TypeArguments="GridLength" WinPhone="Auto" iOS="Auto" Android="40" /></RowDefinition.Height></RowDefinition>
+      <RowDefinition><RowDefinition.Height><OnPlatform x:TypeArguments="GridLength" WinPhone="Auto" iOS="Auto" Android="40" /></RowDefinition.Height></RowDefinition>
+      <RowDefinition><RowDefinition.Height><OnPlatform x:TypeArguments="GridLength" WinPhone="Auto" iOS="Auto" Android="40" /></RowDefinition.Height></RowDefinition>
+      <RowDefinition><RowDefinition.Height><OnPlatform x:TypeArguments="GridLength" WinPhone="Auto" iOS="Auto" Android="40" /></RowDefinition.Height></RowDefinition>
+      <RowDefinition><RowDefinition.Height><OnPlatform x:TypeArguments="GridLength" WinPhone="Auto" iOS="Auto" Android="40" /></RowDefinition.Height></RowDefinition>
+      <RowDefinition><RowDefinition.Height><OnPlatform x:TypeArguments="GridLength" WinPhone="Auto" iOS="Auto" Android="40" /></RowDefinition.Height></RowDefinition>
+      <RowDefinition><RowDefinition.Height><OnPlatform x:TypeArguments="GridLength" WinPhone="Auto" iOS="Auto" Android="40" /></RowDefinition.Height></RowDefinition>
+      <RowDefinition><RowDefinition.Height><OnPlatform x:TypeArguments="GridLength" WinPhone="300" iOS="Auto" Android="*" /></RowDefinition.Height></RowDefinition>
+      <RowDefinition><RowDefinition.Height><OnPlatform x:TypeArguments="GridLength" WinPhone="Auto" iOS="Auto" Android="40" /></RowDefinition.Height></RowDefinition>
+    </Grid.RowDefinitions>
+    
+    <Frame x:Name="_ScanApsGrouping" Padding="1" Grid.Row="0">
+      <StackLayout Orientation="Horizontal">
+        <Label Text="1.  " VerticalTextAlignment="Center" />
+	      <Button Text="Scan for Access Points" 
+                Clicked="FindAccessPoints"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center" />
+      </StackLayout>
+    </Frame>
+    <Frame x:Name="_ConnectApGrouping" Padding="1" Grid.Row="1">
+      <StackLayout Orientation="Horizontal">
+        <Label Text="2.  " VerticalTextAlignment="Center" />
+        <Button x:Name="_connectButton"
+              Clicked="ConnectToAccessPoint"
+              Text="Connect to Access Point"
+              VerticalOptions="Center"
+              HorizontalOptions="Center" />
+      </StackLayout>
+    </Frame>
+    <Frame x:Name="_NetworksGrouping" Padding="1" Grid.Row="2">
+      <StackLayout Orientation="Horizontal">
+        <Label Text="3.  " VerticalTextAlignment="Center" />
+        <Button x:Name="_requestClientNetworks"
+              Clicked="RequestClientNetworks"
+              Text="Get Networks"
+              VerticalOptions="Center"
+              HorizontalOptions="Center" />
+      </StackLayout>
+    </Frame>
+    <Frame x:Name="_ConnectGrouping" Padding="1" Grid.Row="3">
+      <StackLayout Orientation="Horizontal">
+        <Label Text="4.  " VerticalTextAlignment="Center" />
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+          </Grid.RowDefinitions>
+          <Entry x:Name="_clientNetworkPassword" 
+                  Grid.Column="0" 
+                  Grid.Row="0" />
+          <Button x:Name="_connectClientNetwork"
+                  Grid.Column="1"
+                  Grid.Row="0"
+                  Clicked="ConnectClientNetwork"
+                  Text="Connect"
+                  VerticalOptions="Center"
+                  HorizontalOptions="Center" />
+        </Grid>
+      </StackLayout>
+    </Frame>
+    <Frame x:Name="_DisconnectGrouping" Padding="1" Grid.Row="4">
+      <StackLayout Orientation="Horizontal">
+        <Label Text="5.  " VerticalTextAlignment="Center" />
+        <Button x:Name="_disconnectClientNetwork"
+              Clicked="DisconnectClientNetwork"
+              Text="Disconnect"
+              VerticalOptions="Center"
+              HorizontalOptions="Center" />
+      </StackLayout>
+    </Frame>
+    <Frame x:Name="_ExitGrouping" Padding="1" Grid.Row="5">
+      <StackLayout Orientation="Horizontal">
+        <Label Text="6.  " VerticalTextAlignment="Center" />
+        <Button x:Name="_exitButton"
+              Clicked="Exit"
+              Text="Exit"
+              VerticalOptions="Center"
+              HorizontalOptions="Center" />
+      </StackLayout>
+    </Frame>
+
+    <Label x:Name="_Spacer" Text="   "  Grid.Row="6"/>
+
+    <StackLayout Orientation="Horizontal" Grid.Row="7">
+      <ListView x:Name="_availableAccessPointListView"
+                Header="Access Points"
+                ItemSelected="SelectAccessPoint">
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <TextCell Text="{Binding Ssid}" />
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+      <ListView x:Name="_availableNetworkListView"
+                Header="Client Networks"
+                ItemSelected="SelectClientNetwork">
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <TextCell Text="{Binding Ssid}" />
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+    </StackLayout>
+
+    <Label x:Name="_Status" Text="" BackgroundColor="Gray" Grid.Row="8"/>
+
+  </Grid>
+</ContentPage>
