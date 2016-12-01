@@ -41,15 +41,13 @@ The general communication flow between Client and Server
     ```
     reg add hklm\system\currentcontrolset\services\mpssvc\parameters /v IoTInboundLoopbackPolicy /t REG_DWORD /d 1
     checknetisolation loopbackexempt -a -n=IoTOnboardingTask-uwp_1w720vyc4ccym
-    checknetisolation loopbackexempt -a -n=CompanionAppServer-UI_1w720vyc4ccym
     checknetisolation loopbackexempt -a -n=CompanionAppServer_1w720vyc4ccym
     ```
 1. Restart your device.
-1. Open **CompanionApp\CompanionAppServer.sln**, select the appropriate startup project, platform and use F5 to build, deploy, and launch.
+1. Open **CompanionAppServer\CompanionAppServer.sln**, select the appropriate startup project, platform and use F5 to build, deploy, and launch.
     + `CompanionAppServer` is a Background Application
-    + `CompanionAppServer-UI` is a foreground UI App 
 1. Connect Android phone or Windows Phone 10 to computer.
-1. Open **CompanionApp\CompanionAppClient.sln**, select the appropriate startup project, platform and use F5 to build, deploy, and launch.
+1. Open **CompanionAppClient\CompanionAppClient.sln**, select the appropriate startup project, platform and use F5 to build, deploy, and launch.
     + `CompanionAppClient.Droid` and Any CPU for Android
     + `CompanionAppClient.UWP` and ARM for Windows Phone 10
 1. On your phone, follow the flow:
