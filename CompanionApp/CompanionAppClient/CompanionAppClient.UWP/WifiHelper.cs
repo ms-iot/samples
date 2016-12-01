@@ -68,10 +68,10 @@ namespace CompanionAppClient.UWP
 
             var networkRequest = new CompanionAppCommunication() { Verb = "GetAvailableNetworks" };
             // Send request for available networks
-            await SendRequest(networkRequest, _DataWriter);
+            await SendRequest(networkRequest);
 
             // Read response with available networks                
-            var networkResponse = await GetNextRequest(_DataReader);
+            var networkResponse = await GetNextRequest();
             if (networkResponse != null && networkResponse.Verb == "AvailableNetworks")
             {
                 var availableNetworkArray = Dejsonify(typeof(string[]), networkResponse.Data) as string[];
@@ -163,10 +163,10 @@ namespace CompanionAppClient.UWP
 
             var connectRequest = new CompanionAppCommunication() { Verb = "ConnectToNetwork", Data = string.Format("{0}={1}", networkSsid, password) };
             // Send request to connect to network
-            await SendRequest(connectRequest, _DataWriter);
+            await SendRequest(connectRequest);
 
             // Read response with available networks
-            var networkResponse = await GetNextRequest(_DataReader);
+            var networkResponse = await GetNextRequest();
             if (networkResponse != null && networkResponse.Verb == "ConnectResult")
             {
                 if (ClientNetworkConnectedEvent != null)
@@ -182,10 +182,10 @@ namespace CompanionAppClient.UWP
 
             var disconnectRequest = new CompanionAppCommunication() { Verb = "DisconnectFromNetwork", Data = networkSsid };
             // Send request to connect to network
-            await SendRequest(disconnectRequest, _DataWriter);
+            await SendRequest(disconnectRequest);
 
             // Read response with available networks
-            var networkResponse = await GetNextRequest(_DataReader);
+            var networkResponse = await GetNextRequest();
             if (networkResponse != null && networkResponse.Verb == "DisconnectResult")
             {
                 if (ClientNetworkConnectedEvent != null)
@@ -197,21 +197,31 @@ namespace CompanionAppClient.UWP
 
         public async Task Disconnect()
         {
-            if (_DataReader != null)
+            _SocketLock.Wait();
+
+            try
             {
-                _DataReader.Dispose();
-                _DataReader = null;
+                if (_DataReader != null)
+                {
+                    _DataReader.Dispose();
+                    _DataReader = null;
+                }
+                if (_DataWriter != null)
+                {
+                    _DataWriter.Dispose();
+                    _DataWriter = null;
+                }
+                if (_ConnectedSocket != null)
+                {
+                    _ConnectedSocket.Dispose();
+                    _ConnectedSocket = null;
+                }
             }
-            if (_DataWriter != null)
+            finally
             {
-                _DataWriter.Dispose();
-                _DataWriter = null;
+                _SocketLock.Release();
             }
-            if (_ConnectedSocket != null)
-            {
-                _ConnectedSocket.Dispose();
-                _ConnectedSocket = null;
-            }
+
             if (_connectedWifiAdapter != null)
             {
                 var wifiAdapter = _connectedWifiAdapter;
@@ -226,16 +236,21 @@ namespace CompanionAppClient.UWP
         {
             _SocketLock.Wait();
 
-            Debug.WriteLine(string.Format("Connection established from: {0}:{1}", socket.Information.RemoteAddress.DisplayName, socket.Information.RemotePort));
-            _ConnectedSocket = socket;
-            _DataWriter = new DataWriter(_ConnectedSocket.OutputStream);
-            _DataReader = new DataReader(_ConnectedSocket.InputStream);
-            _DataReader.InputStreamOptions = InputStreamOptions.Partial;
-
-            _SocketLock.Release();
+            try
+            {
+                Debug.WriteLine(string.Format("Connection established from: {0}:{1}", socket.Information.RemoteAddress.DisplayName, socket.Information.RemotePort));
+                _ConnectedSocket = socket;
+                _DataWriter = new DataWriter(_ConnectedSocket.OutputStream);
+                _DataReader = new DataReader(_ConnectedSocket.InputStream);
+                _DataReader.InputStreamOptions = InputStreamOptions.Partial;
+            }
+            finally
+            {
+                _SocketLock.Release();
+            }
         }
 
-        private async Task SendRequest(CompanionAppCommunication communication, DataWriter writer)
+        private async Task SendRequest(CompanionAppCommunication communication)
         {
             //
             // In this sample, protected information is sent over the channel
@@ -247,8 +262,8 @@ namespace CompanionAppClient.UWP
             try
             {
                 string requestData = Jsonify(typeof(CompanionAppCommunication), communication);
-                writer.WriteString(requestData);
-                await writer.StoreAsync();
+                _DataWriter.WriteString(requestData);
+                await _DataWriter.StoreAsync();
                 Debug.WriteLine(string.Format("Sent: {0}", requestData));
             }
             finally
@@ -257,19 +272,19 @@ namespace CompanionAppClient.UWP
             }
         }
 
-        private async Task<CompanionAppCommunication> GetNextRequest(DataReader reader)
+        private async Task<CompanionAppCommunication> GetNextRequest()
         {
             CompanionAppCommunication msg = null;
 
             await _SocketLock.WaitAsync();
             try
             {
-                await reader.LoadAsync(1024);
+                await _DataReader.LoadAsync(1024);
 
                 string data = string.Empty;
-                while (reader.UnconsumedBufferLength > 0)
+                while (_DataReader.UnconsumedBufferLength > 0)
                 {
-                    data += reader.ReadString(reader.UnconsumedBufferLength);
+                    data += _DataReader.ReadString(_DataReader.UnconsumedBufferLength);
                 }
 
                 //

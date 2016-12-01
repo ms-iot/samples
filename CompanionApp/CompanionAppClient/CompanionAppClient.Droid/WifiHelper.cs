@@ -97,7 +97,7 @@ namespace CompanionAppClient.Droid
             WriteToSocket(networkRequest);
 
             // Read response with available networks                
-            var networkResponse = await GetNextRequest(_NetworkStream);
+            var networkResponse = await GetNextRequest();
             if (networkResponse != null && networkResponse.Verb == "AvailableNetworks")
             {
                 var availableNetworkArray = JsonToStringList(networkResponse.Data);
@@ -144,9 +144,7 @@ namespace CompanionAppClient.Droid
             wc.Ssid = string.Format("\"{0}\"", accessPoint.Ssid);
             wc.PreSharedKey = string.Format("\"{0}\"", "p@ssw0rd");
             wc.StatusField = WifiStatus.Enabled;
-            //
-            // what to set here????  http://stackoverflow.com/questions/8818290/how-do-i-connect-to-a-specific-wi-fi-network-in-android-programmatically
-            //
+
             wc.AllowedGroupCiphers.Set((int)GroupCipherType.Tkip);
             wc.AllowedGroupCiphers.Set((int)GroupCipherType.Ccmp);
             wc.AllowedKeyManagement.Set((int)KeyManagementType.WpaPsk);
@@ -168,7 +166,7 @@ namespace CompanionAppClient.Droid
 
                 Debug.WriteLine(string.Format("Connected successfully to: {0}", wc.Ssid));
 
-                new ManualResetEvent(false).WaitOne(5 * 1000);
+                await Task.Delay(TimeSpan.FromSeconds(5));
 
                 Android.Net.Network wifiNetwork = null;
                 if (connectivityManager.ActiveNetworkInfo.TypeName.Equals("WIFI"))
@@ -208,7 +206,7 @@ namespace CompanionAppClient.Droid
             WriteToSocket(connectRequest);
 
             // Read response with available networks
-            var networkResponse = await GetNextRequest(_NetworkStream);
+            var networkResponse = await GetNextRequest();
             if (networkResponse != null && networkResponse.Verb == "ConnectResult")
             {
                 if (ClientNetworkConnectedEvent != null)
@@ -227,7 +225,7 @@ namespace CompanionAppClient.Droid
             WriteToSocket(disconnectRequest);
 
             // Read response with available networks
-            var networkResponse = await GetNextRequest(_NetworkStream);
+            var networkResponse = await GetNextRequest();
             if (networkResponse != null && networkResponse.Verb == "DisconnectResult")
             {
                 if (ClientNetworkConnectedEvent != null)
@@ -239,15 +237,24 @@ namespace CompanionAppClient.Droid
 
         public async Task Disconnect()
         {
-            if (_NetworkStream != null)
+            _SocketLock.Wait();
+
+            try
             {
-                _NetworkStream.Dispose();
-                _NetworkStream = null;
+                if (_NetworkStream != null)
+                {
+                    _NetworkStream.Dispose();
+                    _NetworkStream = null;
+                }
+                if (_ConnectedSocket != null)
+                {
+                    _ConnectedSocket.Dispose();
+                    _ConnectedSocket = null;
+                }
             }
-            if (_ConnectedSocket != null)
+            finally
             {
-                _ConnectedSocket.Dispose();
-                _ConnectedSocket = null;
+                _SocketLock.Release();
             }
 
             var activity = (Activity)Forms.Context;
@@ -269,7 +276,7 @@ namespace CompanionAppClient.Droid
             }
         }
 
-        private async Task<CompanionAppCommunication> GetNextRequest(NetworkStream stream)
+        private async Task<CompanionAppCommunication> GetNextRequest()
         {
             CompanionAppCommunication msg = null;
 
@@ -282,9 +289,9 @@ namespace CompanionAppClient.Droid
 
                 do
                 {
-                    bytes = stream.Read(resp, 0, resp.Length);
+                    bytes = _NetworkStream.Read(resp, 0, resp.Length);
                     memStream.Write(resp, 0, bytes);
-                } while (stream.DataAvailable);
+                } while (_NetworkStream.DataAvailable);
 
                 ASCIIEncoding asen = new ASCIIEncoding();
                 var data = asen.GetString(memStream.ToArray());
