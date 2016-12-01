@@ -4,15 +4,19 @@
 
 namespace CompanionAppServer
 {
+    public sealed class Foo
+    {
+        public string Bar { get; set; }
+    }
     public sealed class StartupTask : IBackgroundTask
     {
         BackgroundTaskDeferral deferral;
-        public void Run(IBackgroundTaskInstance taskInstance)
+        public async void Run(IBackgroundTaskInstance taskInstance)
         {
             deferral = taskInstance.GetDeferral();
 
-            var util = new CompanionAppServerShared.Util();
-            util.ServerAsync();
+            var server = new Server();
+            await server.Start();
         }
     }
 }

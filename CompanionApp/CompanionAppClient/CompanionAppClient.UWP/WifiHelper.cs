@@ -101,7 +101,7 @@ namespace CompanionAppClient.UWP
                 Debug.WriteLine(string.Format("Socket connected: {0}:{1}", hostName, connectionPortString));
                 HandleSocket(Client);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 // Handle failure here as desired.  In this sample, 
                 // the failure will be handled by ConnectToAccessPoint

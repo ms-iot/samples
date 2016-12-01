@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 
 //#define AUTOMATE_FOR_TESTING
+using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Windows.UI.Xaml.Data;
 using Xamarin.Forms;
 
@@ -15,12 +17,44 @@ namespace CompanionAppClient
         private string _TestAutomation_NetworkPartial = "";
         private string _TestAutomation_NetworkPassword = "";
 #endif
+        enum State
+        {
+            Started,
+            AccessPointsEnmerated,
+            AccessPointSelected,
+            AccessPointConnected,
+            NetworksRequested,
+            NetworksEnumerated,
+            NetworkSelected,
+            NetworkInfoSent,
+            NetworkConnected,
+        }
+
+        private State CurrentState { get; set; }
+
+        private void HandleState(State nextState)
+        {
+            _connectButton.IsEnabled = (nextState != State.Started) && (_availableAccessPointListView.SelectedItem != null);
+            _requestClientNetworks.IsEnabled = (nextState >= State.AccessPointConnected);
+            _clientNetworkPassword.IsEnabled = (nextState >= State.NetworksEnumerated) && (_availableNetworkListView.SelectedItem != null);
+            _connectClientNetwork.IsEnabled = (nextState >= State.NetworksEnumerated) && (_availableNetworkListView.SelectedItem != null);
+
+            _ScanApsGrouping.OutlineColor = (nextState == State.Started) ? Color.Yellow : Color.Default;
+            _ConnectApGrouping.OutlineColor = (nextState == State.AccessPointsEnmerated || nextState == State.AccessPointSelected) ? Color.Yellow : Color.Default;
+            _NetworksGrouping.OutlineColor = (nextState == State.AccessPointConnected) ? Color.Yellow : Color.Default;
+            _ConnectGrouping.OutlineColor = (nextState == State.NetworksEnumerated || nextState == State.NetworkSelected) ? Color.Yellow : Color.Default;
+            _DisconnectGrouping.OutlineColor = (nextState == State.NetworkConnected) ? Color.Yellow : Color.Default;
+
+            CurrentState = nextState;
+        }
+
         public static IAccessPointHelper AccessPointHelper { get; set; }
         private ObservableCollection<AccessPoint> _AvailableAccessPoints = new ObservableCollection<AccessPoint>();
         private ObservableCollection<Network> _AvailableNetworks = new ObservableCollection<Network>();
 
         private string _StatusAction = "";
         private string _StatusResult = "";
+
 
         private bool AccessPointsScanned { get; set; }
         private bool AccessPointConnected { get; set; }
@@ -75,17 +109,10 @@ namespace CompanionAppClient
         private void AccessPointHelper_ClientNetworksEnumeratedEvent(string status)
         {
             Device.BeginInvokeOnMainThread(() => {
-                ClientNetworksEnumerated = true;
 
-                _requestClientNetworks.IsEnabled = ClientNetworksEnumerated;
-
-                _ScanApsGrouping.OutlineColor = Color.Default;
-                _ConnectApGrouping.OutlineColor = Color.Default;
-                _NetworksGrouping.OutlineColor = Color.Default;
-                _ConnectGrouping.OutlineColor = ClientNetworksEnumerated ? Color.Yellow : Color.Default;
-                _DisconnectGrouping.OutlineColor = Color.Default;
-
+                HandleState(State.NetworksEnumerated);
                 UpdateStatus(null, status);
+
 #if AUTOMATE_FOR_TESTING
                 foreach (var n in _AvailableNetworks)
                 {
@@ -102,15 +129,7 @@ namespace CompanionAppClient
         private void AccessPointHelper_ClientNetworkConnectedEvent(string status)
         {
             Device.BeginInvokeOnMainThread(() => {
-                ClientNetworkConnected = true;
-                _disconnectClientNetwork.IsEnabled = ClientNetworkConnected;
-
-                _ScanApsGrouping.OutlineColor = Color.Default;
-                _ConnectApGrouping.OutlineColor = Color.Default;
-                _NetworksGrouping.OutlineColor = Color.Default;
-                _ConnectGrouping.OutlineColor = Color.Default;
-                _DisconnectGrouping.OutlineColor = ClientNetworkConnected ? Color.Yellow : Color.Default;
-
+                HandleState(State.NetworkConnected);
                 UpdateStatus(null, status);
             });
         }
@@ -118,15 +137,7 @@ namespace CompanionAppClient
         private void AccessPointHelper_AccessPointsEnumeratedEvent(string status)
         {
             Device.BeginInvokeOnMainThread(() => {
-                AccessPointsScanned = true;
-                _clientNetworkPassword.IsEnabled = AccessPointsScanned;
-
-                _ScanApsGrouping.OutlineColor = Color.Default;
-                _ConnectApGrouping.OutlineColor = AccessPointsScanned ? Color.Yellow : Color.Default;
-                _NetworksGrouping.OutlineColor = Color.Default;
-                _DisconnectGrouping.OutlineColor = Color.Default;
-                _ConnectGrouping.OutlineColor = Color.Default;
-
+                HandleState(State.AccessPointsEnmerated);
                 UpdateStatus(null, status);
 
 #if AUTOMATE_FOR_TESTING
@@ -146,15 +157,7 @@ namespace CompanionAppClient
         private void AccessPointHelper_AccessPointConnectedEvent(string status)
         {
             Device.BeginInvokeOnMainThread(() => {
-                AccessPointConnected = true;
-                _requestClientNetworks.IsEnabled = AccessPointConnected;
-
-                _ScanApsGrouping.OutlineColor = Color.Default;
-                _ConnectApGrouping.OutlineColor = Color.Default;
-                _NetworksGrouping.OutlineColor = AccessPointConnected ? Color.Yellow : Color.Default;
-                _DisconnectGrouping.OutlineColor = Color.Default;
-                _ConnectGrouping.OutlineColor = Color.Default;
-
+                HandleState(State.AccessPointConnected);
                 UpdateStatus(null, status);
 
 #if AUTOMATE_FOR_TESTING
@@ -170,45 +173,59 @@ namespace CompanionAppClient
 
         void SelectAccessPoint(object sender, SelectedItemChangedEventArgs e)
         {
-            _connectButton.IsEnabled = AccessPointsScanned;
+            HandleState(State.AccessPointSelected);
         }
 
         void SelectClientNetwork(object sender, SelectedItemChangedEventArgs e)
         {
-            _connectClientNetwork.IsEnabled = ClientNetworksEnumerated;
+            HandleState(State.NetworkSelected);
+        }
+
+        void HandleException(AggregateException exception)
+        {
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                HandleState(State.Started);
+                UpdateStatus(null, string.Format("Encountered problem: {0}", exception.Message));
+            });
         }
 
         void ConnectClientNetwork(object sender, System.EventArgs e)
         {
             UpdateStatus("Connecting to client network", "");
             var network = _availableNetworkListView.SelectedItem as Network;
-            AccessPointHelper.ConnectToClientNetwork(network.Ssid, _clientNetworkPassword.Text);
+            var task = AccessPointHelper.ConnectToClientNetwork(network.Ssid, _clientNetworkPassword.Text);
+            task.ContinueWith(t => { HandleException(t.Exception); }, TaskContinuationOptions.OnlyOnFaulted);
         }
 
         void DisconnectClientNetwork(object sender, System.EventArgs e)
         {
             UpdateStatus("Disconnecting from client network", "");
             var network = _availableNetworkListView.SelectedItem as Network;
-            AccessPointHelper.DisconnectFromClientNetwork(network.Ssid);
+            var task = AccessPointHelper.DisconnectFromClientNetwork(network.Ssid);
+            task.ContinueWith(t => { HandleException(t.Exception); }, TaskContinuationOptions.OnlyOnFaulted);
         }
 
         void ConnectToAccessPoint(object sender, System.EventArgs e)
         {
             UpdateStatus("Connecting to access point", "");
             var accessPoint = _availableAccessPointListView.SelectedItem as AccessPoint;
-            AccessPointHelper.ConnectToAccessPoint(accessPoint);
+            var task = AccessPointHelper.ConnectToAccessPoint(accessPoint);
+            task.ContinueWith(t => { HandleException(t.Exception); }, TaskContinuationOptions.OnlyOnFaulted);
         }
 
         public void RequestClientNetworks(object sender, System.EventArgs e)
         {
             UpdateStatus("Getting available client networks", "");
-            AccessPointHelper.RequestClientNetworks(_AvailableNetworks);
+            var task = AccessPointHelper.RequestClientNetworks(_AvailableNetworks);
+            task.ContinueWith(t => { HandleException(t.Exception); }, TaskContinuationOptions.OnlyOnFaulted);
         }
 
         public void FindAccessPoints(object sender, System.EventArgs e)
         {
             UpdateStatus("Getting available access points", "");
-            AccessPointHelper.FindAccessPoints(_AvailableAccessPoints);
+            var task = AccessPointHelper.FindAccessPoints(_AvailableAccessPoints);
+            task.ContinueWith(t => { HandleException(t.Exception); }, TaskContinuationOptions.OnlyOnFaulted);
         }
 
         public void Exit(object sender, System.EventArgs e)

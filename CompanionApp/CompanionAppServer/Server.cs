@@ -1,20 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Json;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.Devices.WiFi;
 using Windows.Networking.Sockets;
 using Windows.Security.Credentials;
 using Windows.Storage.Streams;
-using Windows.System.Threading;
 
 // The Background Application template is documented at http://go.microsoft.com/fwlink/?LinkID=533884&clcid=0x409
 
-namespace CompanionAppServerShared
+namespace CompanionAppServer
 {
     public sealed class CompanionAppCommunication
     {
@@ -23,7 +22,7 @@ namespace CompanionAppServerShared
         public string Data { get; set; }
     }
 
-    public sealed class Util
+    class Server
     {
         public event Action<string> DebugInfo;
 
@@ -36,19 +35,15 @@ namespace CompanionAppServerShared
             Debug.WriteLine(msg);
         }
 
-        public void ServerAsync()
+        public async Task Start()
         {
             HandleDebugInfo(string.Format("Server starting"));
-            WorkItemHandler streamSocketWorker = async (context) =>
-            {
-                var Listener = new StreamSocketListener();
-                Listener.ConnectionReceived += Listener_ConnectionReceived;
-                string connectionString = "50074";
-                await Listener.BindServiceNameAsync(connectionString);
-                HandleDebugInfo(string.Format("Listening for StreamSocket connection on {0}", connectionString));
-            };
 
-            ThreadPool.RunAsync(streamSocketWorker);
+            var Listener = new StreamSocketListener();
+            Listener.ConnectionReceived += Listener_ConnectionReceived;
+            string connectionString = "50074";
+            await Listener.BindServiceNameAsync(connectionString);
+            HandleDebugInfo(string.Format("Listening for StreamSocket connection on {0}", connectionString));
         }
 
         private string Jsonify(Type typeInfo, object data)
@@ -79,7 +74,7 @@ namespace CompanionAppServerShared
             var wifiAdapterList = await WiFiAdapter.FindAllAdaptersAsync();
             var wifiList = from adapter in wifiAdapterList
                            from network in adapter.NetworkReport.AvailableNetworks
-                           where network.Equals(ssid)
+                           where network.Ssid.Equals(ssid)
                            select new WifiSet() { Adapter = adapter, Network = network };
             return wifiList.First();
         }
@@ -207,7 +202,7 @@ namespace CompanionAppServerShared
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 // Connection lost.
             }
