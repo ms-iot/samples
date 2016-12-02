@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoTOnboardingTask", "IoTOnboardingTask\IoTOnboardingTask.csproj", "{E95ABB20-8F13-43D7-BCE0-B7D4475D407C}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "org.alljoyn.Icon", "org.alljoyn.Icon\org.alljoyn.Icon.vcxproj", "{17D9A54E-091E-4FEA-A947-1E260358ADE0}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "org.alljoyn.Onboarding", "org.alljoyn.Onboarding\org.alljoyn.Onboarding.vcxproj", "{29C5A19B-4FB3-48C7-AC7F-D6A145143E56}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IoTOnboardingUtils", "IoTOnboardingUtils\IoTOnboardingUtils.vcxproj", "{CAF3EF02-B6AE-4DC9-B390-47C342DCA8EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +77,18 @@ Global
 		{29C5A19B-4FB3-48C7-AC7F-D6A145143E56}.Release|x64.Build.0 = Release|x64
 		{29C5A19B-4FB3-48C7-AC7F-D6A145143E56}.Release|x86.ActiveCfg = Release|Win32
 		{29C5A19B-4FB3-48C7-AC7F-D6A145143E56}.Release|x86.Build.0 = Release|Win32
+		{CAF3EF02-B6AE-4DC9-B390-47C342DCA8EC}.Debug|ARM.ActiveCfg = Debug|ARM
+		{CAF3EF02-B6AE-4DC9-B390-47C342DCA8EC}.Debug|ARM.Build.0 = Debug|ARM
+		{CAF3EF02-B6AE-4DC9-B390-47C342DCA8EC}.Debug|x64.ActiveCfg = Debug|x64
+		{CAF3EF02-B6AE-4DC9-B390-47C342DCA8EC}.Debug|x64.Build.0 = Debug|x64
+		{CAF3EF02-B6AE-4DC9-B390-47C342DCA8EC}.Debug|x86.ActiveCfg = Debug|Win32
+		{CAF3EF02-B6AE-4DC9-B390-47C342DCA8EC}.Debug|x86.Build.0 = Debug|Win32
+		{CAF3EF02-B6AE-4DC9-B390-47C342DCA8EC}.Release|ARM.ActiveCfg = Release|ARM
+		{CAF3EF02-B6AE-4DC9-B390-47C342DCA8EC}.Release|ARM.Build.0 = Release|ARM
+		{CAF3EF02-B6AE-4DC9-B390-47C342DCA8EC}.Release|x64.ActiveCfg = Release|x64
+		{CAF3EF02-B6AE-4DC9-B390-47C342DCA8EC}.Release|x64.Build.0 = Release|x64
+		{CAF3EF02-B6AE-4DC9-B390-47C342DCA8EC}.Release|x86.ActiveCfg = Release|Win32
+		{CAF3EF02-B6AE-4DC9-B390-47C342DCA8EC}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
