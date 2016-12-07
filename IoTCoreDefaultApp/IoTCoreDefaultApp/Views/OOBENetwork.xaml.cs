@@ -34,9 +34,11 @@ namespace IoTCoreDefaultApp
 
             this.DataContext = LanguageManager.GetInstance();
 
-            this.Loaded += (sender, e) =>
+            this.Loaded += async (sender, e) =>
             {
-                SetupNetwork();
+                await OOBENetworkPageDispatcher.RunAsync(CoreDispatcherPriority.Low, () => {
+                    SetupNetwork();
+                });
             };
         }
 
