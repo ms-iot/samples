@@ -154,9 +154,17 @@ BOOL SendTouch(HANDLE File,
         TouchState.Report.TouchReport.ContactCount = i == 0 ? count : 0; // Only the first report contains the contact count for the frame.
         TouchState.Report.TouchReport.ContactIndentifier = contacts[i].pointerInfo.pointerId;
 
-        //the value is expected to be normalized and clamped to[0, 65535]
-        TouchState.Report.TouchReport.AbsoluteX = (USHORT)max(0, min(contacts[i].pointerInfo.ptPixelLocation.x * GetSystemMetrics(SM_CXSCREEN), 0x7FFF));
-        TouchState.Report.TouchReport.AbsoluteY = (USHORT)max(0, min(contacts[i].pointerInfo.ptPixelLocation.y * GetSystemMetrics(SM_CYSCREEN), 0x7FFF));
+        //the value is expected to be normalized and clamped to[0, 32767]
+		USHORT physicalMaxX = 0x7FFF;	//Physical maximum given for the X usage at the touch part of the HID_REPORT_DESCRIPTOR at the driver (HidInjectorKd.c).
+		USHORT physicalMaxY = 0x7FFF;	//Physical maximum given for the Y usage at the touch part of the HID_REPORT_DESCRIPTOR at the driver (HidInjectorKd.c).
+
+		//normalize factor -> physical resolution to screen resolution
+		float normX = (float)physicalMaxX / GetSystemMetrics(SM_CXSCREEN);
+		float normY = (float)physicalMaxY / GetSystemMetrics(SM_CYSCREEN);
+
+		//normalize and clamp
+        TouchState.Report.TouchReport.AbsoluteX = (USHORT)max(0, min(contacts[i].pointerInfo.ptPixelLocation.x * normX, 0x7FFF));
+        TouchState.Report.TouchReport.AbsoluteY = (USHORT)max(0, min(contacts[i].pointerInfo.ptPixelLocation.y * normY, 0x7FFF));
 
         if (contacts[i].pointerInfo.pointerFlags & POINTER_FLAG_INCONTACT)
         {
