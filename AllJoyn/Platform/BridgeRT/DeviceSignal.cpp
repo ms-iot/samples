@@ -231,7 +231,7 @@ QStatus DeviceSignal::BuildSignature()
         // add parameter name to parameter list
         if (0 != m_parameterNames.length())
         {
-            m_parameterNames == ",";
+            m_parameterNames += ",";
         }
         m_parameterNames += ConvertTo<std::string>(signalParam->Name->Data());
         m_parameterNames += hint;
