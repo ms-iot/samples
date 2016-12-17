@@ -1,0 +1,182 @@
+;
+; VirtualAudioMicArray.inf
+;
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=MEDIA
+ClassGUID={4d36e96c-e325-11ce-bfc1-08002be10318}
+Provider=%ManufacturerName%
+CatalogFile=VirtualAudioMicArray.cat
+DriverVer= ; DriverVer set in stampinf property pages
+
+[DestinationDirs]
+DefaultDestDir = 12
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+[SourceDisksFiles]
+VirtualAudioMicArray.sys  = 1,,
+
+;*****************************************
+; Install Section
+;*****************************************
+
+[Manufacturer]
+%ManufacturerName%=Standard,NT$ARCH$
+
+[Standard.NT$ARCH$]
+%VirtualAudioMicArray.DeviceDesc%=VirtualAudioMicArray_Device, ACPI\VMIC0001 ; 
+
+[VirtualAudioMicArray_Device.NT]
+Include=ks.inf,wdmaudio.inf
+Needs=KS.Registration, WDMAUDIO.Registration, MsApoFxProxy.Registration
+CopyFiles=Drivers_Dir
+AddReg=VirtualAudioMicArray_Device.AddReg
+
+[Drivers_Dir]
+VirtualAudioMicArray.sys
+
+;-------------- Service installation
+[VirtualAudioMicArray_Device.NT.Services]
+AddService = VirtualAudioMicArray,%SPSVCINST_ASSOCSERVICE%, VirtualAudioMicArray_Service_Inst
+
+; -------------- VirtualAudioMicArray driver install sections
+[VirtualAudioMicArray_Service_Inst]
+DisplayName    = %VirtualAudioMicArray.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\VirtualAudioMicArray.sys
+
+[VirtualAudioMicArray_Device.AddReg]
+HKR,,AssociatedFilters,,"wdmaud,swmidi,redbook"
+HKR,,Driver,,tabletaudiosample.sys
+
+HKR,Drivers,SubClasses,,"wave,midi,mixer"
+
+HKR,Drivers\wave\wdmaud.drv,Driver,,wdmaud.drv
+HKR,Drivers\midi\wdmaud.drv,Driver,,wdmaud.drv
+HKR,Drivers\mixer\wdmaud.drv,Driver,,wdmaud.drv
+
+HKR,Drivers\wave\wdmaud.drv,Description,,%VirtualAudioMicArray.DeviceDesc%
+HKR,Drivers\mixer\wdmaud.drv,Description,,%VirtualAudioMicArray.DeviceDesc%
+
+HKLM,%MEDIA_CATEGORIES%\%MicArray1CustomNameGUID%,Name,,%MicArray1CustomName%
+
+HKR, "Parameters", "NumChannels", 0x00010001, 2
+HKR, "Parameters", "SamplesPerSecond", 0x00010001, 44100
+HKR, "Parameters", "BitsPerSample", 0x00010001, 16
+HKR, "Parameters", "InputDevices", 0x00010000, "\??\ACPI#FSCL000X#3#{6994ad04-93ef-11d0-a3cc-00a0c9223196}\WaveMicIn", "\??\USB#VID_0D8C&PID_013C&MI_00#6&1080137A&0&0000#{6994ad04-93ef-11d0-a3cc-00a0c9223196}\GLOBAL"
+;======================================================
+; capture interfaces: mic array (internal: front)
+;======================================================
+[VirtualAudioMicArray_Device.I.WaveMicArray1]
+AddReg=VirtualAudioMicArray_Device.I.WaveMicArray1.AddReg
+[VirtualAudioMicArray_Device.I.WaveMicArray1.AddReg]
+HKR,,CLSID,,%Proxy.CLSID%
+HKR,,FriendlyName,,%VirtualAudioMicArray_Device.WaveMicArray1.szPname%
+
+[VirtualAudioMicArray_Device.I.TopologyMicArray1]
+AddReg=VirtualAudioMicArray_Device.I.TopologyMicArray1.AddReg
+
+[VirtualAudioMicArray_Device.I.TopologyMicArray1.AddReg]
+HKR,,CLSID,,%Proxy.CLSID%
+HKR,,FriendlyName,,%VirtualAudioMicArray_Device.TopologyMicArray1.szPname%
+
+; The following lines opt-in to pull mode.
+HKR,EP\0,%PKEY_AudioEndpoint_Supports_EventDriven_Mode%,0x00010001,0x1
+
+; The following line overrides the default volume (in dB) for an endpoint.
+; It is only applicable when hardware volume is not implemented.
+; Float value expressed in fixed point 16.16 format and stored as a DWORD.
+; 10 dB
+;HKR,EP\0,%PKEY_AudioEndpoint_Default_VolumeInDb%,0x00010001,0xA0000
+;-10 dB
+;HKR,EP\0,%PKEY_AudioEndpoint_Default_VolumeInDb%,0x00010001,0xFFF60000
+
+
+
+
+[VirtualAudioMicArray_Device.NT.Interfaces]
+
+;
+; Interfaces for microphone array 1 (internal: front) capture endpoint.
+;
+AddInterface=%KSCATEGORY_AUDIO%,    %KSNAME_WaveMicArray1%, VirtualAudioMicArray_Device.I.WaveMicArray1
+AddInterface=%KSCATEGORY_REALTIME%, %KSNAME_WaveMicArray1%, VirtualAudioMicArray_Device.I.WaveMicArray1
+AddInterface=%KSCATEGORY_CAPTURE%,  %KSNAME_WaveMicArray1%, VirtualAudioMicArray_Device.I.WaveMicArray1
+AddInterface=%KSCATEGORY_AUDIO%,    %KSNAME_TopologyMicArray1%, VirtualAudioMicArray_Device.I.TopologyMicArray1
+AddInterface=%KSCATEGORY_TOPOLOGY%, %KSNAME_TopologyMicArray1%, VirtualAudioMicArray_Device.I.TopologyMicArray1
+
+
+[VirtualAudioMicArray_Device.NT.HW]
+AddReg = AUDIOHW.AddReg
+
+[AUDIOHW.AddReg]
+; FILE_DEVICE_SOUND
+HKR,,DeviceType,0x10001,0x0000001D
+; SDDL_DEVOBJ_SYS_ALL_ADM_RWX_WORLD_RWX_RES_RWX
+HKR,,Security,,"D:P(A;;GA;;;SY)(A;;GRGWGX;;;BA)(A;;GRGWGX;;;WD)(A;;GRGWGX;;;RC)"
+
+
+;======================================================
+; WDF
+;======================================================
+[VirtualAudioMicArray_Device.NT.Wdf]
+KmdfService = VirtualAudioMicArray, VirtualAudioMicArray_Device_WdfSect
+[VirtualAudioMicArray_Device_WdfSect]
+KmdfLibraryVersion = $KMDFVERSION$
+
+[DestinationDirs]
+VirtualAudioMicArray_Device_CoInstaller_CopyFiles = 11
+
+[VirtualAudioMicArray_Device.NT.CoInstallers]
+AddReg=VirtualAudioMicArray_Device_CoInstaller_AddReg
+CopyFiles=VirtualAudioMicArray_Device_CoInstaller_CopyFiles
+
+[VirtualAudioMicArray_Device_CoInstaller_AddReg]
+HKR,,CoInstallers32,0x00010000, "WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll,WdfCoInstaller"
+
+[VirtualAudioMicArray_Device_CoInstaller_CopyFiles]
+WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll
+
+[SourceDisksFiles]
+WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll=1 ; make sure the number matches with SourceDisksNames
+
+[VirtualAudioMicArray_Device.NT.Wdf]
+KmdfService =  VirtualAudioMicArray, VirtualAudioMicArray_wdfsect
+[VirtualAudioMicArray_wdfsect]
+KmdfLibraryVersion = $KMDFVERSION$
+
+[Strings]
+SPSVCINST_ASSOCSERVICE= 0x00000002
+ManufacturerName="<Your manufacturer name>" ;TODO: Replace with your manufacturer name
+
+DiskName = "VirtualAudioMicArray Installation Disk"
+VirtualAudioMicArray.DeviceDesc = "VirtualAudioMicArray Device"
+VirtualAudioMicArray.SVCDESC = "VirtualAudioMicArray Service"
+
+
+KSNAME_WaveMicArray1="WaveMicArray1"
+KSNAME_TopologyMicArray1="TopologyMicArray1"
+
+Proxy.CLSID="{17CCA71B-ECD7-11D0-B908-00A0C9223196}"
+KSCATEGORY_AUDIO="{6994AD04-93EF-11D0-A3CC-00A0C9223196}"
+KSCATEGORY_RENDER="{65E8773E-8F56-11D0-A3B9-00A0C9223196}"
+KSCATEGORY_CAPTURE="{65E8773D-8F56-11D0-A3B9-00A0C9223196}"
+KSCATEGORY_REALTIME ="{EB115FFC-10C8-4964-831D-6DCB02E6F23F}"
+KSCATEGORY_TOPOLOGY = "{DDA54A40-1E4C-11D1-A050-405705C10000}"
+
+PKEY_AudioEndpoint_Supports_EventDriven_Mode = "{1DA5D803-D492-4EDD-8C23-E0C0FFEE7F0E},7"
+
+VirtualAudioMicArray_Device.WaveMicArray1.szPname="SYSVAD Wave Microphone Array - Front"
+VirtualAudioMicArray_Device.TopologyMicArray1.szPname="SYSVAD Topology Microphone Array - Front"
+
+Proxy.CLSID="{17CCA71B-ECD7-11D0-B908-00A0C9223196}"
+
+MEDIA_CATEGORIES = "SYSTEM\CurrentControlSet\Control\MediaCategories"
+MicArray1CustomNameGUID = {6ae81ff4-203e-4fe1-88aa-f2d57775cd4a}
+MicArray1CustomName= "Internal Microphone Array"
+
