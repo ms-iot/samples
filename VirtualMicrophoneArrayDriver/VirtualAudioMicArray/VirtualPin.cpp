@@ -4,8 +4,9 @@
 
 #include "VirtualAudioMicArray.h"
 #include "minwavertstream.h"
+#if defined(_M_ARM)
 #include <arm_neon.h>
-
+#endif
 
 VirtualPin::VirtualPin() :
     m_cInputPins(0),
