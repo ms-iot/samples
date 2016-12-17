@@ -696,7 +696,7 @@ void KsPin::SetMuted(BOOLEAN bMuted)
 
             if (m_RtBuffer.CallMemoryBarrier == TRUE)
             {
-                MemoryBarrier();
+                KeMemoryBarrier();
             }
         }
     }
