@@ -119,6 +119,11 @@ namespace IoTCoreDefaultApp
 
             await Window.Current.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
+                // If the next screen is the main-page, navigate there, but also launch Cortana to its Consent Page independently
+                if (nextScreen == typeof(MainPage))
+                {
+                    CortanaHelper.LaunchCortanaToConsentPageAsyncIfNeeded();
+                }
                 NavigationUtils.NavigateToScreen(nextScreen);
             });
         }

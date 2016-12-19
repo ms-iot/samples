@@ -5,6 +5,7 @@ using System;
 using Windows.Devices.WiFi;
 using Windows.Networking.Connectivity;
 using Windows.Security.Credentials;
+using Windows.Services.Cortana;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -138,6 +139,7 @@ namespace IoTCoreDefaultApp
             {
                 await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
+                    CortanaHelper.LaunchCortanaToConsentPageAsyncIfNeeded();
                     NavigationUtils.NavigateToScreen(typeof(MainPage));
                 });
             }
@@ -200,6 +202,7 @@ namespace IoTCoreDefaultApp
 
         private void SkipButton_Clicked(object sender, RoutedEventArgs e)
         {
+            CortanaHelper.LaunchCortanaToConsentPageAsyncIfNeeded();
             NavigationUtils.NavigateToScreen(typeof(MainPage));
         }
 
