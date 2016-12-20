@@ -8,7 +8,9 @@ using Windows.Devices.Enumeration;
 using Windows.Devices.WiFi;
 using Windows.Foundation;
 using Windows.Security.Credentials;
+#if BUILDWITHCORTANA
 using Windows.Services.Cortana;
+#endif
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -102,6 +104,7 @@ namespace IoTCoreDefaultApp
 
         private void SetupCortana()
         {
+#if BUILDWITHCORTANA
             var isCortanaSupported = CortanaSettings.IsSupported();
             cortanaConsentRequestedFromSwitch = false;
 
@@ -123,6 +126,7 @@ namespace IoTCoreDefaultApp
                     CortanaVoiceActivationSwitch.IsOn = cortanaSettings.IsVoiceActivationEnabled;
                 }
             }
+#endif
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -1054,6 +1058,7 @@ namespace IoTCoreDefaultApp
 
         private void CortanaVoiceActivationSwitch_Toggled(object sender, RoutedEventArgs e)
         {
+#if BUILDWITHCORTANA
             var cortanaSettings = CortanaSettings.GetDefault();
             var cortanaVoiceActivationSwitch = (ToggleSwitch) sender;
 
@@ -1087,10 +1092,12 @@ namespace IoTCoreDefaultApp
                     CortanaVoiceActivationSwitch.IsEnabled = true;
                 });                
             }
+#endif
         }
 
         private void Window_Activated(object sender, WindowActivatedEventArgs e)
         {
+#if BUILDWITHCORTANA
             switch (e.WindowActivationState)
             {
                 case CoreWindowActivationState.PointerActivated:
@@ -1126,6 +1133,7 @@ namespace IoTCoreDefaultApp
                 default:
                     break;
             }
+#endif
         }
 
         private void CortanaAboutMeButton_Click(object sender, RoutedEventArgs e)
