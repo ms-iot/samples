@@ -278,7 +278,7 @@
   -->
   <Target Name="CortanaSDKCompatPatch" BeforeTargets="ResolveSDKReference" AfterTargets="GetInstalledSDKLocations">
     <PropertyGroup>
-      <IoTCortanaApiMinVersion>10.0.14993.0</IoTCortanaApiMinVersion>
+      <IoTCortanaApiMinVersion>10.0.14999.0</IoTCortanaApiMinVersion>
       <IoTCortanaApiPresent Condition="Exists('$(TargetPlatformSdkPath)\bin\$(IoTCortanaApiMinVersion)\')">true</IoTCortanaApiPresent>
     </PropertyGroup>
     <PropertyGroup Condition="'$(IoTCortanaApiPresent)' == 'true'">
