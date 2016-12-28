@@ -138,6 +138,7 @@ namespace IoTCoreDefaultApp
             {
                 await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
+                    CortanaHelper.LaunchCortanaToConsentPageAsyncIfNeeded();
                     NavigationUtils.NavigateToScreen(typeof(MainPage));
                 });
             }
@@ -200,6 +201,7 @@ namespace IoTCoreDefaultApp
 
         private void SkipButton_Clicked(object sender, RoutedEventArgs e)
         {
+            CortanaHelper.LaunchCortanaToConsentPageAsyncIfNeeded();
             NavigationUtils.NavigateToScreen(typeof(MainPage));
         }
 

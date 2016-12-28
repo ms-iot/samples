@@ -12,7 +12,7 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10545.0</TargetPlatformMinVersion>
+    <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
     <FileAlignment>512</FileAlignment>
@@ -107,13 +107,13 @@
     <CompilerResponseFile>$(MSBuildProjectDirectory)\CscOptions.rsp</CompilerResponseFile>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <None Include="project.json" />
+    <SDKReference Include="WindowsIoT, Version=10.0.10586.0">
+      <Name>Windows IoT Extensions for the UWP</Name>
+    </SDKReference>
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="WindowsIoT, Version=10.0.10586.0">
-      <Name>Windows IoT Extension SDK</Name>
-    </SDKReference>
+    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -124,6 +124,7 @@
     <Compile Include="Presenters\DeviceInfoPresenter.cs" />
     <Compile Include="Presenters\LanguageManager.cs" />
     <Compile Include="Presenters\NetworkPresenter.cs" />
+    <Compile Include="Utils\CortanaHelper.cs" />
     <Compile Include="Utils\DeviceTypeInformation.cs" />
     <Compile Include="Utils\Constants.cs" />
     <Compile Include="Utils\NativeTimeMethods.cs" />
@@ -275,4 +276,21 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Target Name="CortanaSDKCompatPatch" BeforeTargets="ResolveSDKReference" AfterTargets="GetInstalledSDKLocations">
+    <PropertyGroup>
+      <IoTCortanaApiMinVersion>10.0.14999.0</IoTCortanaApiMinVersion>
+      <IoTCortanaApiPresent Condition="Exists('$(TargetPlatformSdkPath)\bin\$(IoTCortanaApiMinVersion)\')">true</IoTCortanaApiPresent>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(IoTCortanaApiPresent)' == 'true'">
+      <TargetPlatformVersion>$(IoTCortanaApiMinVersion)</TargetPlatformVersion>
+      <TargetPlatformMinVersion>$(IoTCortanaApiMinVersion)</TargetPlatformMinVersion>
+      <DefineConstants>$(DefineConstants);BUILDWITHCORTANA</DefineConstants>
+    </PropertyGroup>
+    <ItemGroup Condition="'$(IoTCortanaApiPresent)' == 'true'">
+      <SDKReference Remove="WindowsIoT, Version=10.0.10586.0"/>
+      <SDKReference Include="WindowsIoT, Version=$(IoTCortanaApiMinVersion)">
+        <Name>Windows IoT Extensions for the UWP</Name>
+      </SDKReference>
+    </ItemGroup>
+  </Target>
 </Project>
