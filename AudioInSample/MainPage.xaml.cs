@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
+// Copyright (c) Microsoft. All rights reserved.
 
 using System;
 using System.Collections.ObjectModel;
@@ -9,6 +9,7 @@ using Windows.Media.MediaProperties;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Windows.Media.Playback;
 
 namespace AudioInSample
 {
@@ -19,7 +20,10 @@ namespace AudioInSample
     {
         Windows.Media.Capture.MediaCapture audioCapture;
         MediaCaptureInitializationSettings captureInitSettings;
-        ObservableCollection<DeviceInformation> deviceList;
+        ObservableCollection<DeviceInformation> captureDeviceList;
+        ObservableCollection<DeviceInformation> renderDeviceList;
+        Windows.Media.Playback.MediaPlayer mediaPlayer;
+
         bool isRecording = false;
         
         string audioFileName = null;
@@ -27,16 +31,35 @@ namespace AudioInSample
         public MainPage()
         {
             this.InitializeComponent();
-            deviceList = new ObservableCollection<DeviceInformation>();
-            deviceListView.ItemsSource = deviceList;
-            outputTextBlock.Text = "Select an audio device to start recording.";
-            media.MediaEnded += Media_MediaEnded;
+
+            mediaPlayer = new MediaPlayer();
+
+            captureDeviceList = new ObservableCollection<DeviceInformation>();
+            captureDeviceListView.ItemsSource = captureDeviceList;
+
+            renderDeviceList = new ObservableCollection<DeviceInformation>();
+            renderDeviceListView.ItemsSource = renderDeviceList;
+
+            renderDeviceListView.SelectionChanged += RenderDeviceListView_SelectionChanged;
+
+            outputTextBlock.Text = "Ready to record.";
+            mediaPlayer.MediaEnded += MediaPlayer_MediaEnded;
         }
 
-        private void Media_MediaEnded(object sender, RoutedEventArgs e)
+        private void RenderDeviceListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            outputTextBlock.Text = "Done playing.";
-            refreshUI();
+            mediaPlayer.AudioDevice = renderDeviceList[renderDeviceListView.SelectedIndex];
+        }
+
+
+        private async void MediaPlayer_MediaEnded(MediaPlayer sender, object args)
+        {
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+            {
+                outputTextBlock.Text = "Done playing.";
+                refreshUI();
+            });
+
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -47,7 +70,7 @@ namespace AudioInSample
 
         private async void startRecord(object sender, RoutedEventArgs e)
         {
-            var selected = deviceListView.SelectedItem as DeviceInformation;
+            var selected = captureDeviceListView.SelectedItem as DeviceInformation;
             if (selected != null)
             {
                 InitCaptureSettings(selected.Id);
@@ -71,14 +94,27 @@ namespace AudioInSample
 
         private async void EnumerateAudioDevice()
         {
-            deviceList.Clear();
+            captureDeviceList.Clear();
             var devices = await DeviceInformation.FindAllAsync(DeviceClass.AudioCapture);
             if (devices.Count > 0)
             {
                 for (var i = 0; i < devices.Count; i++)
                 {
-                    deviceList.Add(devices[i]);
+                    captureDeviceList.Add(devices[i]);
                 }
+                captureDeviceListView.SelectedItem = devices[0];
+                
+            }
+
+            renderDeviceList.Clear();
+            devices = await DeviceInformation.FindAllAsync(DeviceClass.AudioRender);
+            if (devices.Count > 0)
+            {
+                for (var i = 0; i < devices.Count; i++)
+                {
+                    renderDeviceList.Add(devices[i]);
+                }
+                renderDeviceListView.SelectedItem = devices[0];
             }
         }
 
@@ -127,20 +163,12 @@ namespace AudioInSample
         private async void playRecordedAudio(object sender, RoutedEventArgs e)
         {
             Windows.Storage.StorageFile storageFile = await Windows.Storage.KnownFolders.VideosLibrary.GetFileAsync(audioFileName);
-            var stream = await storageFile.OpenAsync(Windows.Storage.FileAccessMode.Read);
-            
-            if (null != stream)
-            {
-                media.SetSource(stream, storageFile.ContentType);
-                media.Play();
-                outputTextBlock.Text = "Playing audio...";
 
-                startRecordButton.IsEnabled = endRecordButton.IsEnabled = false;
-            }
-            else
-            {
-                outputTextBlock.Text = "Error: No audio file found";
-            }
+            media.SetMediaPlayer(mediaPlayer);
+            media.Source = Windows.Media.Core.MediaSource.CreateFromStorageFile(storageFile);
+            mediaPlayer.Play();
+            outputTextBlock.Text = "Playing audio...";
+            startRecordButton.IsEnabled = endRecordButton.IsEnabled = false;
         }
     }
 }
