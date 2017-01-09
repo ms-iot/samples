@@ -5,7 +5,7 @@
    xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
    xmlns:iot="http://schemas.microsoft.com/appx/manifest/iot/windows10"
    IgnorableNamespaces="uap mp iot">
-  <Identity Name="IoTCoreDefaultApp" Publisher="CN=MSFT" Version="1.1.0.0" />
+  <Identity Name="IoTCoreDefaultApp" Publisher="CN=MSFT" Version="1.2.0.0" />
   <mp:PhoneIdentity PhoneProductId="6803bb24-895c-48b4-915c-13e4ea5d023e" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>IoTCoreDefaultApp</DisplayName>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="VSIX..bee6b3cd-47e4-4c20-863c-ff848f12685c" Version="1.0" Language="en-US" Publisher="Microsoft" />
+    <Identity Id="VSIX..bee6b3cd-47e4-4c20-863c-ff848f12685c" Version="1.1" Language="en-US" Publisher="Microsoft" />
     <DisplayName>AllJoyn Device System Bridge Template</DisplayName>
     <Description xml:space="preserve">C++ and C# project templates to develop custom AllJoyn Device System Bridge applications.</Description>
-    <License>License.txt</License>
+    <License>License.rtf</License>
     <Icon>icon.png</Icon>
     <PreviewImage>preview.png</PreviewImage>
   </Metadata>

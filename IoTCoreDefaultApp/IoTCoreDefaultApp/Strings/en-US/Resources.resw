@@ -769,4 +769,20 @@ Alternatively, click the button below to enter the administrator's username/pass
   <data name="VirtualNetworkAdapter" xml:space="preserve">
     <value>Virtual Network Adapter</value>
   </data>
+  <data name="CortanaAboutMeText" xml:space="preserve">
+    <value>About Me</value>
+    <comment>Button launches Cortana's "About Me" page to manage certain Cortana Settings</comment>
+  </data>
+  <data name="CortanaTitleText" xml:space="preserve">
+    <value>Manage Cortana Settings</value>
+    <comment>Title of Cortana Settings Management Page</comment>
+  </data>
+  <data name="CortanaPreferencesText" xml:space="preserve">
+    <value>Cortana</value>
+    <comment>Cortana Preferences on left side of settings screen</comment>
+  </data>
+  <data name="CortanaVoiceActivationText" xml:space="preserve">
+    <value>Let Cortana respond to "Hey Cortana"</value>
+    <comment>Toggle switch for enabling voice activation.</comment>
+  </data>
 </root>

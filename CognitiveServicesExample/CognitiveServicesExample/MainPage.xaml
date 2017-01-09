@@ -1,0 +1,36 @@
+﻿<Page
+	x:Class="CognitiveServicesExample.MainPage"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:local="using:CognitiveServicesExample"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" BorderThickness="5" Margin="50" >
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+
+        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+
+            <Border BorderBrush="Black" BorderThickness="1" Margin="20" Width="600" Height="600">
+                <Canvas x:Name="ImageCanvas" Width="598" Height="598"/>
+                <!-- <Image x:Name="SampleImage" Stretch="Uniform" Width="600" Height="550" Margin="10"/> -->
+            </Border>
+            <TextBlock Grid.Row="1" x:Name="detectionStatus" Width="600" HorizontalAlignment="Center" Margin="10"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Width="600" Margin="10">
+                <TextBox x:Name="ImageURL" Width="440" HorizontalAlignment="Left" Margin="0,0,10,0" Text="http://blogs.cdc.gov/genomics/files/2015/11/ThinkstockPhotos-177826416.jpg"/>
+                <Button Content="Detect Emotions" Width="140" HorizontalAlignment="Left" Click="button_Clicked"/>
+            </StackPanel>
+        </StackPanel>
+
+        <Grid Grid.Column="1" VerticalAlignment="Center">
+            <ListBox x:Name="ResultBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        </Grid>
+
+    </Grid>
+</Page>

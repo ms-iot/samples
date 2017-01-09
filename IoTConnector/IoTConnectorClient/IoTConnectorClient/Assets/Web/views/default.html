@@ -1,0 +1,100 @@
+﻿<!doctype html> 
+<html lang="en"> 
+ 	<head> 
+ 		<meta charset="utf-8"> 
+ 		<link rel="Stylesheet" href= 'https://assets.onestore.ms/cdnfiles/external/webcore/4.13.1/stylesheets/WebCore.4.13.1.ltr.light.min.css' />
+         <link rel="stylesheet" href="../css/default.css"/>
+ 	  <title> IoT Connector Client </title> 
+ 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="https://assets.onestore.ms/cdnfiles/external/webcore/4.13.1/scripts/bootstrap.js "></script> 
+ 		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
+   </head> 
+   <body> 
+     <div class='main'> 
+     <div class="row" id = 'title-row'>
+         <div class="title-elements" id="logo">
+             <img src="../images/CETIoTConnectorAppList.scale-400.png"  id="title-img"/>
+         </div>
+               <div class="title-elements" id="title-col">
+                   <h1 id="title icon-row"> IoT Connector Client</h1>
+                   <p id="subtitle">Send messages to Azure</p>
+               </div>
+           </div>
+       <div class='container'>
+           
+           <div class="row client-row">
+               <p>The application demonstrates how Azure connection information can be securely stored and used in Windows. 
+               The application uses the Azure IoT Hub connection information that is stored in the TPM to send location data to the cloud service. 
+               </p>
+           </div>
+           <div class="row client-row">
+             <h3> Info</h3>
+             <hr>
+             <div class= "row info-row">
+                 <div class="col-md-1">
+                     <span class="symbol info-symbol">&#xE820</span>
+                 </div>
+                 <div class="col-md-12">
+                     <p class="info-element"> Device Location: #location# </p>
+                 </div>
+             </div>
+               <div class="row info-row">
+                   <div class="col-md-1">
+                       <span class="symbol info-symbol">&#xE96C</span>
+                   </div>
+                   <div class="col-md-12">
+                       <p class="info-element"> Status: Ready to send messages </p>
+                   </div>
+                   
+               </div>
+           </div>
+           <div class="row client-row">
+             <h3> Messaging</h3>
+             <hr>
+             <div class="col-md-6 messaging-col">
+               <form action="message" method="post">
+                   <div class="form-button">
+                       <input type="radio" id="radio1" name="msgs" value="1">
+                       <label for="radio1">1 message</label>
+
+                   </div>
+                    <div class="form-button">
+                        <input type="radio" id="radio2" name="msgs" value="10">
+                        <label for="radio2">10 messages</label>
+
+                    </div>
+                   <div class="form-button">
+                       <input type="radio" id="radio3" name="msgs" value="100">
+                       <label for="radio3">100 messages</label>
+                   </div>
+                       <input type="submit" value="Send" class="msg-btn-wrapper">
+               </form>
+                 <div class="msg-btn-wrapper" id="stop-wrapper">
+                     <a class="msg-btn"  id="stop" href="/stop">Stop</a>
+                 </div> 
+             </div>
+             <div class="col-md-18 messaging-col">
+               <div id="log" class="row log-container">
+                   <ul id="msg-log">
+                       <p id='start-list'>#msgList#</p>
+                   </ul>
+               </div>
+               <div class="row" id="button-row">
+                <div class="col-md-3 button-col">
+                  <div class="msg-btn-wrapper">
+                       <a class="msg-btn" id="clear-log"href="/clear">Clear</a>
+                   </div> 
+                </div>
+                <div class="col-md-3 button-col">
+                   <div class="msg-btn-wrapper" >
+                       <a class="msg-btn" id="refresh-log" href="/refresh">Refresh </a>
+                   </div> 
+                </div>
+               </div>
+             </div>
+             
+           </div>
+       </div> 
+     </div> 
+   </body> 
+ </html> 

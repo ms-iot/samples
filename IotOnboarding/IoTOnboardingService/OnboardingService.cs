@@ -4,9 +4,7 @@ using org.alljoyn.Icon;
 using org.alljoyn.Onboarding;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Resources;
 using Windows.Devices.AllJoyn;
 using Windows.Devices.Enumeration;
 using Windows.Devices.WiFi;
@@ -18,6 +16,8 @@ using Windows.Storage.Search;
 using Windows.Storage.Streams;
 using Windows.ApplicationModel;
 using Windows.Data.Xml.Dom;
+using Windows.Security.Cryptography;
+using IoTOnboardingUtils;
 
 namespace IoTOnboardingService
 {
@@ -58,9 +58,11 @@ namespace IoTOnboardingService
 
         private static ushort _onboardingInterfaceVersion = 1412;
         private static ushort _iconInterfaceVersion = 1412;
-        private static string _onboardingInstanceIdSettingName = "OnboardingInstanceId";
+        private static string _onboardingDeviceIdSettingName = "OnboardingDeviceId";
 
-        private string _onboardingInstanceId;
+        private Guid _onboardingDeviceId;
+
+        private string _mac;
         private OnboardingProducer _onboardingProducer;
         private IconProducer _iconProducer;
         private AllJoynBusAttachment _busAttachment;
@@ -200,8 +202,8 @@ namespace IoTOnboardingService
                 var files = await _query.GetFilesAsync();
 
             }
-            catch (Exception ex)
-            {
+            catch (Exception /*ex*/)
+            {                
                 retVal = false;
             }
 
@@ -239,17 +241,33 @@ namespace IoTOnboardingService
             _stateLock = new object();
 
             var settings = ApplicationData.Current.LocalSettings.Values;
-            if (settings.ContainsKey(_onboardingInstanceIdSettingName))
+
+            // If an Oboarding Instance ID has already been established, then just use it
+            if (settings.ContainsKey(_onboardingDeviceIdSettingName))
             {
-                _onboardingInstanceId = settings[_onboardingInstanceIdSettingName] as string;
+                var deviceIdString = settings[_onboardingDeviceIdSettingName] as string;
+                _onboardingDeviceId = new Guid(deviceIdString);
             }
+            // Otherwise, we need to have some kind of unique identifier for the SoftAP and AllJoyn Onboarding ID
             else
             {
                 var guid = Guid.NewGuid();
-                _onboardingInstanceId = guid.GetHashCode().ToString("X8");
-                settings[_onboardingInstanceIdSettingName] = _onboardingInstanceId;
+                settings[_onboardingDeviceIdSettingName] = guid.ToString();
+                _onboardingDeviceId = guid;
+
+            }
+
+            // Obtain the WiFi MAC address if this device has a WiFi interface
+            _mac = MACFinder.GetWiFiAdapterMAC();
+
+            // If there isn't a MAC, then this device doesn't have a WiFi interface, so dummy-up a MAC address
+            // The AllJoyn Onboarding Interface will still appear on a wired network.
+            if (String.IsNullOrEmpty(_mac))
+            {
+                _mac = _onboardingDeviceId.GetHashCode().ToString("X8");
             }
         }
+
 
         public async void Start()
         {
@@ -298,23 +316,36 @@ namespace IoTOnboardingService
                 {
                     return;
                 }
-
+               
                 // create softAP 
                 if (_softAccessPoint == null &&
                     (_softAPConfig.enabled ||
                      _ajOnboardingConfig.enabled))
                 {
+                    // The following builds up an Access Point SSID from information available to the IotOnboarding Task
+                    // If AllJoyn is enabled, then we must add AJ_ to the start of the SSID
+                    // If a Soft AP SSID value is specified in the configuration settings, then we will add that next
+                    // Finally we add the Soft AP's MAC Address to the end.  Note that if a device does not have a WiFi adapter,
+                    // this _mac value will be a forced to the onboardingDevice ID GUID created the first time this app runs
+                    //
+                    // Examples:  AllJoyn enabled, Wifi:        AJ_SoftAPSsid_<MACADDRESS> 
+                    //            AllJoyn disabled, Wifi:       SoftAPSsid_<MACADDRESS>
+                    //            AllJoyn disabled, No Wifi:    SoftAPSsid_<8Chars_of_Onboarding_GUID>
+                    //
+                    //
+
                     string prefix = "";
-                    string suffix = "";
+                    string suffix = "_" + _mac;
                     string ssid = "";
+
                     if (_ajOnboardingConfig.enabled)
                     {
                         prefix = SOFTAP_SSID_AJONBOARDING_PREFIX;
-                        suffix = "_" + _onboardingInstanceId;
                     }
 
+                    // SSID examples:  AJ_SoftAPSsid_AABBCCDDEEFF
                     ssid = prefix + _softAPConfig.ssid + suffix;
-                    _softAccessPoint = new OnboardingAccessPoint(ssid, _softAPConfig.password);
+                    _softAccessPoint = new OnboardingAccessPoint(ssid, _softAPConfig.password, _onboardingDeviceId);
                 }
 
                 // create AllJoyn related things
@@ -322,7 +353,7 @@ namespace IoTOnboardingService
                     _ajOnboardingConfig.enabled)
                 {
                     _busAttachment = new AllJoynBusAttachment();
-                    _busAttachment.AboutData.DefaultDescription = _ajOnboardingConfig.defaultDescription + " instance Id " + _onboardingInstanceId;
+                    _busAttachment.AboutData.DefaultDescription = _ajOnboardingConfig.defaultDescription + " MAC: " + _mac;
                     _busAttachment.AboutData.DefaultManufacturer = _ajOnboardingConfig.defaultManufacturer;
                     _busAttachment.AboutData.ModelNumber = _ajOnboardingConfig.modelNumber;
                     _onboardingProducer = new OnboardingProducer(_busAttachment);
@@ -438,11 +469,11 @@ namespace IoTOnboardingService
         private void HandleAdapterAdded(DeviceWatcher sender, DeviceInformation information)
         {
             if (String.IsNullOrEmpty(_wlanAdapterId))
-            {
+            {              
                 _wlanAdapterId = information.Id;
 
                 lock (_stateLock)
-                {
+                {                 
                     if (_state != OnboardingState.ConfiguredValidated)
                     {
                         _softAccessPoint.Start();
@@ -465,6 +496,24 @@ namespace IoTOnboardingService
             }
         }
 
+        private string ConvertHexToPassPhrase(NetworkAuthenticationType authType, string presharedKey)
+        {
+            // If this is a WPA/WPA2-PSK type network then convert the HEX STRING back to a passphrase
+            // Note that a 64 character WPA/2 network key is expected as a 128 character HEX-ized that will be
+            // converted back to a 64 character network key.
+            if ((authType == NetworkAuthenticationType.WpaPsk) ||
+                (authType == NetworkAuthenticationType.RsnaPsk))
+            {
+                var tempBuffer = CryptographicBuffer.DecodeFromHexString(presharedKey);
+                var hexString = CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, tempBuffer);
+                return hexString;
+            }
+
+            // If this is a WEP key then it should arrive here as a 10 or 26 character hex-ized 
+            // string which will be passed straight through
+            return presharedKey;
+        }
+
         private async Task<WiFiConnectionStatus> ConnectToNetwork(WiFiAdapter adapter, WiFiAvailableNetwork network)
         {
             lock (_stateLock)
@@ -472,15 +521,25 @@ namespace IoTOnboardingService
                 _state = OnboardingState.ConfiguredValidating;
             }
 
+            string resultPassword = "";
             WiFiConnectionResult connectionResult;
-            if (network.SecuritySettings.NetworkAuthenticationType == NetworkAuthenticationType.Open80211)
+
+            // For all open networks (when no PSK was provided) connect without a password
+            // Note, that in test, we have seen some WEP networks identify themselves as Open even though
+            // they required a PSK, so use the PSK as a determining factor
+            if ((network.SecuritySettings.NetworkAuthenticationType == NetworkAuthenticationType.Open80211) &&
+                string.IsNullOrEmpty(_personalApPassword))
             {
                 connectionResult = await adapter.ConnectAsync(network, WiFiReconnectionKind.Automatic);
             }
+            // Otherwise for all WEP/WPA/WPA2 networks convert the PSK back from a hex-ized format back to a passphrase, if necessary,
+            // and onboard this device to the requested network.
             else
-            {                
-                connectionResult = await adapter.ConnectAsync(network, WiFiReconnectionKind.Automatic, 
-                    new PasswordCredential { Password = _personalApPassword });
+            {
+                PasswordCredential pwd = new PasswordCredential();
+                resultPassword = ConvertHexToPassPhrase(network.SecuritySettings.NetworkAuthenticationType, _personalApPassword);
+                pwd.Password = resultPassword;
+                connectionResult = await adapter.ConnectAsync(network, WiFiReconnectionKind.Automatic, pwd);
             }
 
             lock (_stateLock)
@@ -518,9 +577,18 @@ namespace IoTOnboardingService
                                 break;
                             }
                     }
-                }
+                }                
 
             }
+#if DEBUG           
+            var folder = Windows.Storage.ApplicationData.Current.LocalFolder;
+            var file = await folder.CreateFileAsync("ConnectionResult.Txt", Windows.Storage.CreationCollisionOption.ReplaceExisting);
+            string myout = "ConnectionResult= " + connectionResult.ConnectionStatus.ToString() + "\r\n";
+            myout += "Type=" + network.SecuritySettings.NetworkAuthenticationType.ToString() + "\r\n";
+            myout += "InputPassword= " + _personalApPassword + "\r\n";
+            myout += "ResultPassword= " + resultPassword + "\r\n";
+            await Windows.Storage.FileIO.WriteTextAsync(file, myout);
+#endif
             return connectionResult.ConnectionStatus;
 
         }

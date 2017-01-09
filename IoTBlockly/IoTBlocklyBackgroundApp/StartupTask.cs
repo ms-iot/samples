@@ -34,7 +34,7 @@ namespace IoTBlocklyBackgroundApp
             deferral = taskInstance.GetDeferral();
             var publicFolder = await localFolder.GetFolderAsync("public");
 
-            await StartMostRecentScript();
+            // await StartMostRecentScript();  // problematic if JS Corrupt when stored
 
             var server = new SimpleWebServer();
 
@@ -54,15 +54,15 @@ namespace IoTBlocklyBackgroundApp
                 var blocks = req.GetValue("blocks");
                 if (!String.IsNullOrEmpty(code))
                 {
-                    await SaveMostRecentScript(code, blocks);
-                    host.runScriptAsync(code);
+                    // await SaveMostRecentScript(code, blocks);
+                    host.RunScriptAsync(code);
                 }
                 await res.RedirectAsync("..");
             });
 
             server.Post("/stopcode", async (req, res) =>
             {
-                host.haltScript();
+                host.HaltScript();
                 await res.RedirectAsync("..");
             });
 
@@ -87,7 +87,7 @@ namespace IoTBlocklyBackgroundApp
             {
                 var lastScript = await storageFolder.GetFileAsync(mostRecentScriptCacheJSCode);
                 string jscode = await FileIO.ReadTextAsync(lastScript);
-                host.runScriptAsync(jscode);
+                host.RunScriptAsync(jscode);
             }
             catch (Exception)
             {

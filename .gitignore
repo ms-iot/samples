@@ -69,6 +69,8 @@ ipch/
 *.opensdf
 *.sdf
 *.cachefile
+*.VC.VC.opendb
+*.VC.db
 
 # Visual Studio profiler
 *.psess
@@ -202,3 +204,7 @@ IotTemplates/WindowsIotCoreTemplates/VSIX/ProjectTemplates/VisualBasic/Windows/W
 IotTemplates/WindowsIotCoreTemplates/VSIX/ProjectTemplates/VC/Windows/Windows IoT Core/WiringApplication.zip
 IotTemplates/WindowsIotCoreTemplates/VSIX/ProjectTemplates/CSharp/Windows/Windows IoT Core/BackgroundServiceCsharp.zip
 IoTCoreDefaultApp/IoTCoreDefaultApp.VC.opendb
+*.pfx
+IoTConnector/IoTConnector/IoTConnector/IoTConnector_StoreKey.pfx
+IoTConnector/IoTConnector/IoTConnector/Package.StoreAssociation.xml
+/IoTConnector/IoTConnector/IoTConnector/BundleArtifacts

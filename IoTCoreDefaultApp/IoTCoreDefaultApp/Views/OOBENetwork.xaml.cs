@@ -34,9 +34,11 @@ namespace IoTCoreDefaultApp
 
             this.DataContext = LanguageManager.GetInstance();
 
-            this.Loaded += (sender, e) =>
+            this.Loaded += async (sender, e) =>
             {
-                SetupNetwork();
+                await OOBENetworkPageDispatcher.RunAsync(CoreDispatcherPriority.Low, () => {
+                    SetupNetwork();
+                });
             };
         }
 
@@ -136,6 +138,7 @@ namespace IoTCoreDefaultApp
             {
                 await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
+                    CortanaHelper.LaunchCortanaToConsentPageAsyncIfNeeded();
                     NavigationUtils.NavigateToScreen(typeof(MainPage));
                 });
             }
@@ -198,6 +201,7 @@ namespace IoTCoreDefaultApp
 
         private void SkipButton_Clicked(object sender, RoutedEventArgs e)
         {
+            CortanaHelper.LaunchCortanaToConsentPageAsyncIfNeeded();
             NavigationUtils.NavigateToScreen(typeof(MainPage));
         }
 
