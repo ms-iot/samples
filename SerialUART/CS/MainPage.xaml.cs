@@ -216,17 +216,14 @@ namespace SerialSample
                     }
                 }
             }
+            catch (TaskCanceledException tce) 
+            {
+                status.Text = "Reading task was cancelled, closing device and cleaning up";
+                CloseDevice();            
+            }
             catch (Exception ex)
             {
-                if (ex.GetType().Name == "TaskCanceledException")
-                {
-                    status.Text = "Reading task was cancelled, closing device and cleaning up";
-                    CloseDevice();
-                }
-                else
-                {
-                    status.Text = ex.Message;
-                }
+                status.Text = ex.Message;
             }
             finally
             {

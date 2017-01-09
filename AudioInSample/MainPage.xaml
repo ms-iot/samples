@@ -27,29 +27,36 @@
     mc:Ignorable="d">
 
     <Grid Background="White">
-        <StackPanel Margin="10" Width="500">
-            <ListView x:Name="deviceListView" Header="Audio Devices" Height="200" Margin="10" FontSize="22" FontWeight="Light">
-                <ListView.ItemTemplate>
+        <StackPanel Margin="10" MinWidth="500">
+            <ComboBox x:Name="captureDeviceListView" Header="Audio Capture Device" Height="100" Margin="10" FontSize="22" FontWeight="Light">
+                <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="&#xE767;    " FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center"/>
-                            <TextBlock Text="{Binding Path=Name}" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
                         </StackPanel>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <ComboBox x:Name="renderDeviceListView" Header="Audio Render Device" Height="100" Margin="10" FontSize="22" FontWeight="Light">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="&#xE767;    " FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
             <TextBlock x:Name="outputTextBlock" Margin="10"/>
             <Button x:Name="startRecordButton" Click="startRecord" Content="Start Recording" Margin="10" HorizontalAlignment="Stretch"/>
             <Button x:Name="endRecordButton" Click="endRecord" Content="End Recording" Margin="10" HorizontalAlignment="Stretch"/>
             <Button x:Name="playRecordedAudioButton" Click="playRecordedAudio" Content="Play Recorded Audio" Margin="10" HorizontalAlignment="Stretch"/>
-            <MediaElement x:Name="media" Margin="10" Width="100"
+            <MediaPlayerElement x:Name="media" Margin="10" Width="100"
                       Height="100"
                       AreTransportControlsEnabled="False"
                       AutoPlay="True" Visibility="Collapsed">
-
-            </MediaElement>
-            
+            </MediaPlayerElement>
         </StackPanel>
-
     </Grid>
 </Page>
