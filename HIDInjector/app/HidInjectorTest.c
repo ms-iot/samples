@@ -155,12 +155,9 @@ BOOL SendTouch(HANDLE File,
         TouchState.Report.TouchReport.ContactIndentifier = contacts[i].pointerInfo.pointerId;
 
         //the value is expected to be normalized and clamped to[0, 32767]
-		USHORT physicalMaxX = 0x7FFF;	//Physical maximum given for the X usage at the touch part of the HID_REPORT_DESCRIPTOR at the driver (HidInjectorKd.c).
-		USHORT physicalMaxY = 0x7FFF;	//Physical maximum given for the Y usage at the touch part of the HID_REPORT_DESCRIPTOR at the driver (HidInjectorKd.c).
-
 		//normalize factor -> physical resolution to screen resolution
-		float normX = (float)physicalMaxX / GetSystemMetrics(SM_CXSCREEN);
-		float normY = (float)physicalMaxY / GetSystemMetrics(SM_CYSCREEN);
+		float normX = (float)TOUCH_PHYSICAL_MAX / GetSystemMetrics(SM_CXSCREEN);
+		float normY = (float)TOUCH_PHYSICAL_MAX / GetSystemMetrics(SM_CYSCREEN);
 
 		//normalize and clamp
         TouchState.Report.TouchReport.AbsoluteX = (USHORT)max(0, min(contacts[i].pointerInfo.ptPixelLocation.x * normX, 0x7FFF));
