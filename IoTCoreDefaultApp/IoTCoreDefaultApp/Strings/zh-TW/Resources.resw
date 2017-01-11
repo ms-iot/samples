@@ -730,18 +730,59 @@
     <value>目前不支援變更目錄。請在您的命令中使用完整路徑。</value>
   </data>
   <data name="CmdNotEnabled" xml:space="preserve">
-    <value>不允許您的裝置執行命令列處理程式。
-若要啟用它，請以裝置上的 "Administrator" 身分執行下列命令:
+    <value>您的裝置無法執行命令列處理程式。
+若要啟用，請在您的裝置上以「系統管理員」的身分執行下列命令:
 
     reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
 
-您可以在 IoT Windows Device Portal 的的 [處理程序] 頁面執行此命令。或者，使用 PowerShell 連線到您的 Windows IoT 裝置。
-如需詳細資訊，請瀏覽 http://go.microsoft.com/fwlink/p/?LinkId=698488
+或者，您也可以按一下下列按鈕，輸入系統管理員的使用者名稱/密碼，然後嘗試執行命令。
+
     </value>
     <comment>New lines need to be preserved</comment>
   </data>
   <data name="ExecAsDefaultAccount" xml:space="preserve">
     <value>正在以 DefaultAccount 的身分執行命令
     </value>
+  </data>
+  <data name="CloseText" xml:space="preserve">
+    <value>關閉</value>
+  </data>
+  <data name="EnableCmdText" xml:space="preserve">
+    <value>啟用命令列處理程式</value>
+  </data>
+  <data name="UsernameText" xml:space="preserve">
+    <value>使用者名稱</value>
+  </data>
+  <data name="PasswordText" xml:space="preserve">
+    <value>密碼</value>
+  </data>
+  <data name="CmdTextEnabledSuccess" xml:space="preserve">
+    <value>已成功啟用裝置上的命令列處理程式 (cmd.exe)。</value>
+  </data>
+  <data name="CmdTextEnabledFailure" xml:space="preserve">
+    <value>無法啟用裝置上的命令列處理程式 (cmd.exe)。狀態 = {0}</value>
+  </data>
+  <data name="DisconnectButtonContent" xml:space="preserve">
+    <value>中斷連線</value>
+    <comment>This disconnects the connected network</comment>
+  </data>
+  <data name="VirtualNetworkAdapter" xml:space="preserve">
+    <value>虛擬網路介面卡</value>
+  </data>
+  <data name="CortanaAboutMeText" xml:space="preserve">
+    <value>關於我</value>
+    <comment>Button launches Cortana's "About Me" page to manage certain Cortana Settings</comment>
+  </data>
+  <data name="CortanaTitleText" xml:space="preserve">
+    <value>管理 Cortana 設定</value>
+    <comment>Title of Cortana Settings Management Page</comment>
+  </data>
+  <data name="CortanaPreferencesText" xml:space="preserve">
+    <value>Cortana</value>
+    <comment>Cortana Preferences on left side of settings screen</comment>
+  </data>
+  <data name="CortanaVoiceActivationText" xml:space="preserve">
+    <value>讓 Cortana 回應「嗨 Cortana」</value>
+    <comment>Toggle switch for enabling voice activation.</comment>
   </data>
 </root>

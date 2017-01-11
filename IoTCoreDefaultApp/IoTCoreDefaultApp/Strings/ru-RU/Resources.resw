@@ -727,18 +727,59 @@
     <value>Изменение каталога пока не поддерживается. Используйте в командах полные пути.</value>
   </data>
   <data name="CmdNotEnabled" xml:space="preserve">
-    <value>На вашем устройстве запрещается запускать процессор командной строки.
-Чтобы включить его, выполните на своем устройстве от имени администратора следующую команду:
+    <value>На устройстве не разрешено запускать процессор командной строки.
+Чтобы включить его, выполните на устройстве от имени администратора следующую команду:
 
     reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
 
-Эту команду можно выполнить на странице процессов портала IoT Windows Device. Для подключения к устройству с Windows IoT также можно использовать PowerShell.
-Дополнительные сведения см. на веб-странице http://go.microsoft.com/fwlink/p/?LinkId=698488
+Также можете нажать расположенную ниже кнопку, чтобы ввести имя и пароль администратора и попробовать выполнить команду.
+
     </value>
     <comment>New lines need to be preserved</comment>
   </data>
   <data name="ExecAsDefaultAccount" xml:space="preserve">
     <value>Выполнение команд в роли DefaultAccount
     </value>
+  </data>
+  <data name="CloseText" xml:space="preserve">
+    <value>Закрыть</value>
+  </data>
+  <data name="EnableCmdText" xml:space="preserve">
+    <value>Включить процессор командной строки</value>
+  </data>
+  <data name="UsernameText" xml:space="preserve">
+    <value>Имя пользователя</value>
+  </data>
+  <data name="PasswordText" xml:space="preserve">
+    <value>Пароль</value>
+  </data>
+  <data name="CmdTextEnabledSuccess" xml:space="preserve">
+    <value>На устройстве успешно включен процессор командной строки (cmd.exe).</value>
+  </data>
+  <data name="CmdTextEnabledFailure" xml:space="preserve">
+    <value>Не удалось включить на устройстве процессор командной строки (cmd.exe). Состояние = {0}</value>
+  </data>
+  <data name="DisconnectButtonContent" xml:space="preserve">
+    <value>Отключить</value>
+    <comment>This disconnects the connected network</comment>
+  </data>
+  <data name="VirtualNetworkAdapter" xml:space="preserve">
+    <value>Виртуальный сетевой адаптер</value>
+  </data>
+  <data name="CortanaAboutMeText" xml:space="preserve">
+    <value>О себе</value>
+    <comment>Button launches Cortana's "About Me" page to manage certain Cortana Settings</comment>
+  </data>
+  <data name="CortanaTitleText" xml:space="preserve">
+    <value>Управление параметрами Кортаны</value>
+    <comment>Title of Cortana Settings Management Page</comment>
+  </data>
+  <data name="CortanaPreferencesText" xml:space="preserve">
+    <value>Кортана</value>
+    <comment>Cortana Preferences on left side of settings screen</comment>
+  </data>
+  <data name="CortanaVoiceActivationText" xml:space="preserve">
+    <value>Разрешить Кортане отвечать на фразу "Привет, Кортана!"</value>
+    <comment>Toggle switch for enabling voice activation.</comment>
   </data>
 </root>

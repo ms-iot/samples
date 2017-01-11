@@ -732,13 +732,54 @@
 
     reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
 
-このコマンドは、IoT Windows Device Portal の [プロセス] ページで実行できます。または、PowerShell を使用して、Windows IoT デバイスに接続してください。
-詳細については、http://go.microsoft.com/fwlink/p/?LinkId=698488 をご覧ください。
+または、下のボタンをクリックして管理者のユーザー名とパスワードを入力し、コマンドを実行してください。
+
     </value>
     <comment>New lines need to be preserved</comment>
   </data>
   <data name="ExecAsDefaultAccount" xml:space="preserve">
     <value>DefaultAccount としてコマンドを実行中
     </value>
+  </data>
+  <data name="CloseText" xml:space="preserve">
+    <value>閉じる</value>
+  </data>
+  <data name="EnableCmdText" xml:space="preserve">
+    <value>コマンド ライン プロセッサを有効にする</value>
+  </data>
+  <data name="UsernameText" xml:space="preserve">
+    <value>ユーザー名</value>
+  </data>
+  <data name="PasswordText" xml:space="preserve">
+    <value>パスワード</value>
+  </data>
+  <data name="CmdTextEnabledSuccess" xml:space="preserve">
+    <value>お使いのデバイスで、コマンド ライン プロセッサ (cmd.exe) が有効になりました。</value>
+  </data>
+  <data name="CmdTextEnabledFailure" xml:space="preserve">
+    <value>お使いのデバイスで、コマンド ライン プロセッサ (cmd.exe) を有効にできませんでした。状態 = {0}</value>
+  </data>
+  <data name="DisconnectButtonContent" xml:space="preserve">
+    <value>切断</value>
+    <comment>This disconnects the connected network</comment>
+  </data>
+  <data name="VirtualNetworkAdapter" xml:space="preserve">
+    <value>仮想ネットワーク アダプター</value>
+  </data>
+  <data name="CortanaAboutMeText" xml:space="preserve">
+    <value>ユーザー情報</value>
+    <comment>Button launches Cortana's "About Me" page to manage certain Cortana Settings</comment>
+  </data>
+  <data name="CortanaTitleText" xml:space="preserve">
+    <value>Cortana 設定の管理</value>
+    <comment>Title of Cortana Settings Management Page</comment>
+  </data>
+  <data name="CortanaPreferencesText" xml:space="preserve">
+    <value>Cortana</value>
+    <comment>Cortana Preferences on left side of settings screen</comment>
+  </data>
+  <data name="CortanaVoiceActivationText" xml:space="preserve">
+    <value>「コルタナさん」と言ったら Cortana が応答するようにする</value>
+    <comment>Toggle switch for enabling voice activation.</comment>
   </data>
 </root>
