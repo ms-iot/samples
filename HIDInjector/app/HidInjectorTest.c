@@ -154,14 +154,14 @@ BOOL SendTouch(HANDLE File,
         TouchState.Report.TouchReport.ContactCount = i == 0 ? count : 0; // Only the first report contains the contact count for the frame.
         TouchState.Report.TouchReport.ContactIndentifier = contacts[i].pointerInfo.pointerId;
 
-        //the value is expected to be normalized and clamped to[0, 32767]
+        //the value is expected to be normalized and clamped to[0, TOUCH_PHYSICAL_MAX]
 		//normalize factor -> physical resolution to screen resolution
 		float normX = (float)TOUCH_PHYSICAL_MAX / GetSystemMetrics(SM_CXSCREEN);
 		float normY = (float)TOUCH_PHYSICAL_MAX / GetSystemMetrics(SM_CYSCREEN);
 
 		//normalize and clamp
-        TouchState.Report.TouchReport.AbsoluteX = (USHORT)max(0, min(contacts[i].pointerInfo.ptPixelLocation.x * normX, 0x7FFF));
-        TouchState.Report.TouchReport.AbsoluteY = (USHORT)max(0, min(contacts[i].pointerInfo.ptPixelLocation.y * normY, 0x7FFF));
+        TouchState.Report.TouchReport.AbsoluteX = (USHORT)max(0, min(contacts[i].pointerInfo.ptPixelLocation.x * normX, TOUCH_PHYSICAL_MAX));
+        TouchState.Report.TouchReport.AbsoluteY = (USHORT)max(0, min(contacts[i].pointerInfo.ptPixelLocation.y * normY, TOUCH_PHYSICAL_MAX));
 
         if (contacts[i].pointerInfo.pointerFlags & POINTER_FLAG_INCONTACT)
         {
