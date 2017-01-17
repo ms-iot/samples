@@ -110,7 +110,7 @@ HID_REPORT_DESCRIPTOR       G_DefaultReportDescriptor[] =
     0x16, 0x00, 0x00,               //     Logical Minimum(0)
     0x26, 0xFF, 0x7F,               //     Logical Maximum(32767)
     0x36, 0x00, 0x00,               //     Physical Minimum(0)
-    0x46, 0xFF, 0x7F,               //     Physical Maximum(32767)
+    0x46, TOUCH_PHYSICAL_MAX & 0xFF, (TOUCH_PHYSICAL_MAX >> 8) & 0xFF, //     Physical Maximum(32767)
     0x66, 0x00, 0x00,               //     Unit(None)
     0x75, 0x10,                     //     REPORT_SIZE(16)
     0x95, 0x02,                     //     REPORT_COUNT(2)
