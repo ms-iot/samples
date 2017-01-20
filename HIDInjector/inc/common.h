@@ -77,6 +77,7 @@ typedef struct _HIDINJECTOR_INPUT_REPORT {
 #define TOUCH_TIP_SWITCH		0x01
 #define TOUCH_IN_RANGE			0x02
 #define TOUCH_MAX_FINGER		0x0a // 10
+#define TOUCH_PHYSICAL_MAX		0x7FFF	//Physical maximum given for the X and Y usage at the touch part of the HID_REPORT_DESCRIPTOR at the driver.
 
 #include <poppack.h>
 
