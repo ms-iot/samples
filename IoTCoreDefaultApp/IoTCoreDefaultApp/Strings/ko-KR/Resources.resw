@@ -208,7 +208,7 @@
     <comment>Label for Wi-Fi list in options page</comment>
   </data>
   <data name="StartDevelopingText" xml:space="preserve">
-    <value> 방문하세요.</value>
+    <value>을 방문하세요.</value>
     <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
   </data>
   <data name="VisitText" xml:space="preserve">
@@ -727,18 +727,59 @@
     <value>디렉터리 변경이 현재 지원되지 않습니다. 명령에 전체 경로를 사용하세요.</value>
   </data>
   <data name="CmdNotEnabled" xml:space="preserve">
-    <value>디바이스에서 명령줄 처리기를 실행하도록 허용되지 않았습니다.
-사용하도록 설정하려면 장치에서 "관리자"로 다음 명령을 실행하세요.
+    <value>장치에서 명령줄 프로세서를 실행할 수 없습니다.
+실행하도록 하려면 디바이스에서 다음 명령을 "관리자"로 실행하세요.
 
     reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
 
-IoT Windows Device Portal의 Processes(프로세스) 페이지에서 명령을 실행할 수 있습니다. PowerShell을 사용하여 Windows IoT 디바이스에 연결해도 됩니다.
-자세한 내용은 다음 페이지를 참조하세요. http://go.microsoft.com/fwlink/p/?LinkId=698488
+또는 아래 버튼을 클릭하여 관리자의 사용자 이름/비밀번호를 입력하고 명령을 실행해 보세요.
+
     </value>
     <comment>New lines need to be preserved</comment>
   </data>
   <data name="ExecAsDefaultAccount" xml:space="preserve">
     <value>DefaultAccount로 명령 실행 중
     </value>
+  </data>
+  <data name="CloseText" xml:space="preserve">
+    <value>닫기</value>
+  </data>
+  <data name="EnableCmdText" xml:space="preserve">
+    <value>명령줄 프로세서 사용</value>
+  </data>
+  <data name="UsernameText" xml:space="preserve">
+    <value>사용자 이름</value>
+  </data>
+  <data name="PasswordText" xml:space="preserve">
+    <value>비밀번호</value>
+  </data>
+  <data name="CmdTextEnabledSuccess" xml:space="preserve">
+    <value>디바이스에서 명령줄 프로세서(cmd.exe)를 사용하도록 설정했습니다.</value>
+  </data>
+  <data name="CmdTextEnabledFailure" xml:space="preserve">
+    <value>디바이스에서 명령줄 프로세서(cmd.exe)를 사용하도록 설정하지 못했습니다. 상태 = {0}</value>
+  </data>
+  <data name="DisconnectButtonContent" xml:space="preserve">
+    <value>연결 끊기</value>
+    <comment>This disconnects the connected network</comment>
+  </data>
+  <data name="VirtualNetworkAdapter" xml:space="preserve">
+    <value>가상 네트워크 어댑터</value>
+  </data>
+  <data name="CortanaAboutMeText" xml:space="preserve">
+    <value>내 정보</value>
+    <comment>Button launches Cortana's "About Me" page to manage certain Cortana Settings</comment>
+  </data>
+  <data name="CortanaTitleText" xml:space="preserve">
+    <value>Cortana 설정 관리</value>
+    <comment>Title of Cortana Settings Management Page</comment>
+  </data>
+  <data name="CortanaPreferencesText" xml:space="preserve">
+    <value>Cortana</value>
+    <comment>Cortana Preferences on left side of settings screen</comment>
+  </data>
+  <data name="CortanaVoiceActivationText" xml:space="preserve">
+    <value>"안녕 코타나"라고 말하면 Cortana가 응답하게 함</value>
+    <comment>Toggle switch for enabling voice activation.</comment>
   </data>
 </root>

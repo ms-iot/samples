@@ -122,7 +122,7 @@
     <comment>The Operating System Name</comment>
   </data>
   <data name="GenericBoardName" xml:space="preserve">
-    <value>IoTCore 板</value>
+    <value>IoT 核心板</value>
     <comment>A generic board name</comment>
   </data>
   <data name="MainPageDeviceNameText" xml:space="preserve">
@@ -208,7 +208,7 @@
     <comment>Label for Wi-Fi list in options page</comment>
   </data>
   <data name="StartDevelopingText" xml:space="preserve">
-    <value> 以开始开发</value>
+    <value>开始开发</value>
     <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
   </data>
   <data name="VisitText" xml:space="preserve">
@@ -730,18 +730,59 @@
     <value>更改当前不支持的目录。请在命令中使用完整路径。</value>
   </data>
   <data name="CmdNotEnabled" xml:space="preserve">
-    <value>不允许你的设备运行命令行处理器。
-若要启用它，请以 "Administrator" 身份在你的设备上运行以下命令:
+    <value>你的设备不允许运行命令行处理器。
+要想启用该功能，在你的设备上以“管理员”身份运行以下命令：
 
     reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
 
-You can run the command in IoT Windows Device Portal's Processes page. Or use PowerShell to connect to your Windows IoT device.
-For more information, please visit http://go.microsoft.com/fwlink/p/?LinkId=698488
-    </value>
+或者，单击下面的按钮输入管理员用户名和密码并尝试执行命令。
+
+</value>
     <comment>New lines need to be preserved</comment>
   </data>
   <data name="ExecAsDefaultAccount" xml:space="preserve">
     <value>正在以 DefaultAccount 身份执行命令
     </value>
+  </data>
+  <data name="CloseText" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="EnableCmdText" xml:space="preserve">
+    <value>启用命令行处理器</value>
+  </data>
+  <data name="UsernameText" xml:space="preserve">
+    <value>用户名</value>
+  </data>
+  <data name="PasswordText" xml:space="preserve">
+    <value>密码</value>
+  </data>
+  <data name="CmdTextEnabledSuccess" xml:space="preserve">
+    <value>已在你的设备上成功启用命令行处理器 (cmd.exe)。</value>
+  </data>
+  <data name="CmdTextEnabledFailure" xml:space="preserve">
+    <value>在你的设备上无法启用命令行处理器 (cmd.exe)。状态 = {0}</value>
+  </data>
+  <data name="DisconnectButtonContent" xml:space="preserve">
+    <value>断开连接</value>
+    <comment>This disconnects the connected network</comment>
+  </data>
+  <data name="VirtualNetworkAdapter" xml:space="preserve">
+    <value>虚拟网络适配器</value>
+  </data>
+  <data name="CortanaAboutMeText" xml:space="preserve">
+    <value>关于我</value>
+    <comment>Button launches Cortana's "About Me" page to manage certain Cortana Settings</comment>
+  </data>
+  <data name="CortanaTitleText" xml:space="preserve">
+    <value>管理 Cortana 设置</value>
+    <comment>Title of Cortana Settings Management Page</comment>
+  </data>
+  <data name="CortanaPreferencesText" xml:space="preserve">
+    <value>Cortana</value>
+    <comment>Cortana Preferences on left side of settings screen</comment>
+  </data>
+  <data name="CortanaVoiceActivationText" xml:space="preserve">
+    <value>让 Cortana 响应“你好小娜”</value>
+    <comment>Toggle switch for enabling voice activation.</comment>
   </data>
 </root>

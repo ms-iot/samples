@@ -731,17 +731,58 @@
   </data>
   <data name="CmdNotEnabled" xml:space="preserve">
     <value>El dispositivo no puede ejecutar el procesador de línea de comandos.
-Para habilitarlo, ejecuta el siguiente comando como "administrador" en el dispositivo:
+Para habilitarlo, ejecuta el siguiente comando como "Administrador" en el dispositivo:
 
- reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
+    reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
 
-Puedes ejecutar el comando en la página Procesos de IoT Windows Device Portal. De lo contrario, también puedes usar PowerShell para conectarte al dispositivo de Windows IoT.
-Si quieres obtener más información, visita http://go.microsoft.com/fwlink/p/?LinkId=698488
+Como alternativa, haz clic en el botón siguiente para escribir el nombre de usuario y la contraseña del administrador e intenta ejecutar el comando.
+
     </value>
     <comment>New lines need to be preserved</comment>
   </data>
   <data name="ExecAsDefaultAccount" xml:space="preserve">
     <value>Ejecutar comandos como DefaultAccount
     </value>
+  </data>
+  <data name="CloseText" xml:space="preserve">
+    <value>Cerrar</value>
+  </data>
+  <data name="EnableCmdText" xml:space="preserve">
+    <value>Habilitar procesador de línea de comandos</value>
+  </data>
+  <data name="UsernameText" xml:space="preserve">
+    <value>Nombre de usuario</value>
+  </data>
+  <data name="PasswordText" xml:space="preserve">
+    <value>Contraseña</value>
+  </data>
+  <data name="CmdTextEnabledSuccess" xml:space="preserve">
+    <value>El procesador de línea de comandos (cmd.exe) se habilitó correctamente en el dispositivo.</value>
+  </data>
+  <data name="CmdTextEnabledFailure" xml:space="preserve">
+    <value>No se pudo habilitar el procesador de línea de comandos (cmd.exe) en el dispositivo. Estado = {0}</value>
+  </data>
+  <data name="DisconnectButtonContent" xml:space="preserve">
+    <value>Desconectar</value>
+    <comment>This disconnects the connected network</comment>
+  </data>
+  <data name="VirtualNetworkAdapter" xml:space="preserve">
+    <value>Adaptador de red virtual</value>
+  </data>
+  <data name="CortanaAboutMeText" xml:space="preserve">
+    <value>Acerca de mí</value>
+    <comment>Button launches Cortana's "About Me" page to manage certain Cortana Settings</comment>
+  </data>
+  <data name="CortanaTitleText" xml:space="preserve">
+    <value>Administrar la configuración de Cortana</value>
+    <comment>Title of Cortana Settings Management Page</comment>
+  </data>
+  <data name="CortanaPreferencesText" xml:space="preserve">
+    <value>Cortana</value>
+    <comment>Cortana Preferences on left side of settings screen</comment>
+  </data>
+  <data name="CortanaVoiceActivationText" xml:space="preserve">
+    <value>Permitir a Cortana responder cuando digas "Hola Cortana"</value>
+    <comment>Toggle switch for enabling voice activation.</comment>
   </data>
 </root>

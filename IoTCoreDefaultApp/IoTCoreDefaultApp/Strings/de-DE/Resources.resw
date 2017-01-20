@@ -731,17 +731,58 @@
   </data>
   <data name="CmdNotEnabled" xml:space="preserve">
     <value>Ihr Gerät ist nicht zur Ausführung des Befehlszeilenprozessors berechtigt.
-Führen Sie den folgenden Befehl auf Ihrem Gerät als „Administrator“ aus, um es zu aktivieren:
+Führen Sie den folgenden Befehl auf Ihrem Gerät als Administrator aus, um ihn zu aktivieren:
 
     reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
 
-Sie können den Befehl auf der Seite für Prozesse im IoT Windows Device Portal ausführen oder PowerShell verwenden, um eine Verbindung mit Ihrem Windows IoT-Gerät herzustellen.
-Weitere Informationen finden Sie unter „http://go.microsoft.com/fwlink/p/?LinkId=698488“.
+Klicken Sie alternativ auf die Schaltfläche unten, um den Benutzernamen und das Kennwort des Administrators einzugeben und den Befehl auszuführen.
+
     </value>
     <comment>New lines need to be preserved</comment>
   </data>
   <data name="ExecAsDefaultAccount" xml:space="preserve">
     <value>Befehle werden unter DefaultAccount ausgeführt.
     </value>
+  </data>
+  <data name="CloseText" xml:space="preserve">
+    <value>Schließen</value>
+  </data>
+  <data name="EnableCmdText" xml:space="preserve">
+    <value>Befehlszeilenprozessor aktivieren</value>
+  </data>
+  <data name="UsernameText" xml:space="preserve">
+    <value>Benutzername</value>
+  </data>
+  <data name="PasswordText" xml:space="preserve">
+    <value>Kennwort</value>
+  </data>
+  <data name="CmdTextEnabledSuccess" xml:space="preserve">
+    <value>Der Befehlszeilenprozessor (cmd.exe) wurde erfolgreich auf Ihrem Gerät aktiviert.</value>
+  </data>
+  <data name="CmdTextEnabledFailure" xml:space="preserve">
+    <value>Fehler beim Aktivieren des Befehlszeilenprozessors (cmd.exe) auf Ihrem Gerät. Status = {0}</value>
+  </data>
+  <data name="DisconnectButtonContent" xml:space="preserve">
+    <value>Trennen</value>
+    <comment>This disconnects the connected network</comment>
+  </data>
+  <data name="VirtualNetworkAdapter" xml:space="preserve">
+    <value>Virtueller Netzwerkadapter</value>
+  </data>
+  <data name="CortanaAboutMeText" xml:space="preserve">
+    <value>Persönliche Infos</value>
+    <comment>Button launches Cortana's "About Me" page to manage certain Cortana Settings</comment>
+  </data>
+  <data name="CortanaTitleText" xml:space="preserve">
+    <value>Cortana-Einstellungen verwalten</value>
+    <comment>Title of Cortana Settings Management Page</comment>
+  </data>
+  <data name="CortanaPreferencesText" xml:space="preserve">
+    <value>Cortana</value>
+    <comment>Cortana Preferences on left side of settings screen</comment>
+  </data>
+  <data name="CortanaVoiceActivationText" xml:space="preserve">
+    <value>Cortana soll auf „Hey Cortana“ reagieren</value>
+    <comment>Toggle switch for enabling voice activation.</comment>
   </data>
 </root>
