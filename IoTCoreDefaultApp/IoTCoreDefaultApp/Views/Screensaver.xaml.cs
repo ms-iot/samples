@@ -94,6 +94,7 @@ namespace IoTCoreDefaultApp
             view.Width = bounds.Width;
             view.Height = bounds.Height;
             view.image.Width = view.Width / 5; //Make screensaver image 1/5 the width of the screen
+            Window.Current.CoreWindow.PointerCursor = null; // Hide the cursor
             screensaverContainer.IsOpen = true;
         }
 
@@ -118,6 +119,7 @@ namespace IoTCoreDefaultApp
         {
             timeoutTimer.Stop();
             timeoutTimer.Start();
+            Window.Current.CoreWindow.PointerCursor = new CoreCursor(CoreCursorType.Arrow, 1);
             screensaverContainer.IsOpen = false;
         }
 
