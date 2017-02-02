@@ -158,6 +158,7 @@ namespace IoTBlocklyHelper
 
         public void PlotBarGraph(int value, int high)
         {
+            if (senseHat == null) { return; }
             value = Math.Abs(value);
             high = Math.Abs(high);
 
