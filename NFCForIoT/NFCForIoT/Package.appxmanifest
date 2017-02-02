@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="bef1a04d-e492-446d-bfa6-7ff90fe26038" Publisher="CN=lamadio" Version="1.0.0.0" />
+  <Identity Name="bef1a04d-e492-446d-bfa6-7ff90fe26038" Publisher="CN=MSFT" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="bef1a04d-e492-446d-bfa6-7ff90fe26038" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>NFCForIoT</DisplayName>
-    <PublisherDisplayName>lamadio</PublisherDisplayName>
+    <PublisherDisplayName>MSFT</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>
