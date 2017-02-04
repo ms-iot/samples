@@ -10,6 +10,7 @@ using Windows.Foundation;
 using Windows.Security.Credentials;
 #if BUILDWITHCORTANA
 using Windows.Services.Cortana;
+using System.Threading.Tasks;
 #endif
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -1086,9 +1087,9 @@ namespace IoTCoreDefaultApp
             else
             {
                 CortanaVoiceActivationSwitch.IsEnabled = false;
-                Window.Current.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                Window.Current.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                 {
-                    cortanaSettings.IsVoiceActivationEnabled = enableVoiceActivation;
+                    await SetVoiceActivation(enableVoiceActivation);
                     CortanaVoiceActivationSwitch.IsEnabled = true;
                 });                
             }
@@ -1117,7 +1118,7 @@ namespace IoTCoreDefaultApp
                             // so update the switch state to the current global setting)                           
                             if (cortanaConsentRequestedFromSwitch)
                             {
-                                cortanaSettings.IsVoiceActivationEnabled = true;
+                                SetVoiceActivation(true);
                                 cortanaConsentRequestedFromSwitch = false;
                             }
 
@@ -1135,6 +1136,39 @@ namespace IoTCoreDefaultApp
             }
 #endif
         }
+
+#if BUILDWITHCORTANA
+        const int RPC_S_CALL_FAILED = -2147023170;
+        const int RPC_S_SERVER_UNAVAILABLE = -2147023174;
+        const int RPC_S_SERVER_TOO_BUSY = -2147023175;
+        private async Task SetVoiceActivation(bool value)
+        {
+            var cortanaSettings = CortanaSettings.GetDefault();
+            for (int i = 0; i < 5; i++)
+            {
+                try
+                {
+                    cortanaSettings.IsVoiceActivationEnabled = value;
+                }
+                catch (System.Exception ex)
+                {
+                    if (ex.HResult == RPC_S_CALL_FAILED ||
+                        ex.HResult == RPC_S_SERVER_UNAVAILABLE ||
+                        ex.HResult == RPC_S_SERVER_TOO_BUSY)
+                    {
+                        // VoiceActivation server is very likely busy =>
+                        // yield and take a new ref to CortanaSettings API
+                        await Task.Delay(TimeSpan.FromMilliseconds(10));
+                        cortanaSettings = CortanaSettings.GetDefault();
+                    }
+                    else
+                    {
+                        throw ex;
+                    }
+                }
+            }
+        }
+#endif
 
         private void CortanaAboutMeButton_Click(object sender, RoutedEventArgs e)
         {
