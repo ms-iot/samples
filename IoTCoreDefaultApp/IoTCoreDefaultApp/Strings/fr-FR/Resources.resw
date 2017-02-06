@@ -231,7 +231,7 @@
     <value>Connecté</value>
   </data>
   <data name="NetworkPreferencesText" xml:space="preserve">
-    <value>&amp;Réseau et Wi-Fi</value>
+    <value>Réseau et Wi-Fi</value>
   </data>
   <data name="BluetoothPreferencesText" xml:space="preserve">
     <value>Bluetooth</value>
