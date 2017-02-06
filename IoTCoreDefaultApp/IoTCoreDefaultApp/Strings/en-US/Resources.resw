@@ -730,12 +730,12 @@
     <value>Change Directory not currently supported. Please use full paths in your commands.</value>
   </data>
   <data name="CmdNotEnabled" xml:space="preserve">
-    <value>Your device is not allowed to run the command line processor.
-To enable it, run the following command as "Administrator" on your device:
+    <value>Your device is not enabled to run the command line processor.
+To enable it, connect to your device as "Administrator" (e.g. using PowerShell or SSH) or use Windows Device Portal to run this command:
 
-    reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
+    reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /f /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
 
-Alternatively, click the button below to enter the administrator's username/password and attempt to execute the command.
+Alternatively, click or tap the button below to enter your Administrator account's password and attempt to enable the command line processor.
 
     </value>
     <comment>New lines need to be preserved</comment>
