@@ -39,7 +39,14 @@ namespace IoTBlocklyHelper
 
         public SenseHat()
         {
-            InitSenseHat().Wait();
+            try
+            {
+                InitSenseHat().Wait();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
 
             // Recreate the font from the serialized bytes.
             font = SingleColorFont.Deserialize(FontBytes);
@@ -151,6 +158,7 @@ namespace IoTBlocklyHelper
 
         public void PlotBarGraph(int value, int high)
         {
+            if (senseHat == null) { return; }
             value = Math.Abs(value);
             high = Math.Abs(high);
 
@@ -195,6 +203,7 @@ namespace IoTBlocklyHelper
 
         public SenseHatJoystickButton GetJoystickState(SenseHatJoystickButton mask)
         {
+            if (senseHat == null) { return SenseHatJoystickButton.None; }
             senseHat.Joystick.Update();
 
             SenseHatJoystickButton state = SenseHatJoystickButton.None;
@@ -226,6 +235,7 @@ namespace IoTBlocklyHelper
 
         public int GetCompassHeading()
         {
+            if (senseHat == null) { return 0; }
             const double fullCircle = Math.PI * 2;
 
             senseHat.Sensors.ImuSensor.Update();
@@ -244,6 +254,7 @@ namespace IoTBlocklyHelper
 
         public int GetTemperature()
         {
+            if (senseHat == null) { return 0; }
             senseHat.Sensors.HumiditySensor.Update();
             if (!senseHat.Sensors.Temperature.HasValue)
             {
@@ -254,6 +265,7 @@ namespace IoTBlocklyHelper
 
         public int GetHumidity()
         {
+            if (senseHat == null) { return 0; }
             senseHat.Sensors.HumiditySensor.Update();
             if (!senseHat.Sensors.Humidity.HasValue)
             {
@@ -264,6 +276,7 @@ namespace IoTBlocklyHelper
 
         public int GetPressure()
         {
+            if (senseHat == null) { return 0; }
             senseHat.Sensors.PressureSensor.Update();
             if (!senseHat.Sensors.Pressure.HasValue)
             {
