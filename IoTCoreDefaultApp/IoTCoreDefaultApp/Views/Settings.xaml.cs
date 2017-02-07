@@ -1141,10 +1141,12 @@ namespace IoTCoreDefaultApp
         const int RPC_S_CALL_FAILED = -2147023170;
         const int RPC_S_SERVER_UNAVAILABLE = -2147023174;
         const int RPC_S_SERVER_TOO_BUSY = -2147023175;
+        const int MAX_VOICEACTIVATION_TRIALS = 5;
+        const int TIMEINTERVAL_VOICEACTIVATION = 10;    // milli sec
         private async Task SetVoiceActivation(bool value)
         {
             var cortanaSettings = CortanaSettings.GetDefault();
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < MAX_VOICEACTIVATION_TRIALS; i++)
             {
                 try
                 {
@@ -1158,7 +1160,7 @@ namespace IoTCoreDefaultApp
                     {
                         // VoiceActivation server is very likely busy =>
                         // yield and take a new ref to CortanaSettings API
-                        await Task.Delay(TimeSpan.FromMilliseconds(10));
+                        await Task.Delay(TimeSpan.FromMilliseconds(TIMEINTERVAL_VOICEACTIVATION));
                         cortanaSettings = CortanaSettings.GetDefault();
                     }
                     else
