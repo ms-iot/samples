@@ -1,0 +1,56 @@
+﻿<Page
+    x:Class="NFCForIoT.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:NFCForIoT"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Pivot Title="NTAG21x Tags">
+            <PivotItem Header="Diagnostics">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0">
+                        <StackPanel Orientation="Horizontal"  x:Name="AccessPanel" Margin="5,5,5,5" >
+                            <TextBlock x:Name="accessCountLabel" Margin="0,0,5, 0" TextWrapping="Wrap" Text="Access Count:" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="accessCount" Margin="0,0,5, 0" TextWrapping="Wrap" MinWidth="100" Text="0" VerticalAlignment="Center"/>
+                            <Button x:Name="accessCountEnable" Visibility ="Collapsed" Content="Enable" HorizontalAlignment="Right" VerticalAlignment="Stretch"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" x:Name="UidPanel" Margin="5,5,5,5" >
+                            <TextBlock x:Name="uidLabel" Margin="0,0,5, 0" TextWrapping="Wrap" Text="UID:" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="uid" Margin="0,0,5, 0" TextWrapping="Wrap" Text="0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <ScrollViewer  Margin="5,5,5,5" Grid.Row="1" x:Name="StatusBlockScroller" VerticalScrollMode="Auto"  VerticalScrollBarVisibility="Auto">
+                        <TextBlock x:Name="Diagnostics" TextWrapping="Wrap" FontFamily="Consolas" FontSize="8"  />
+                    </ScrollViewer>
+                </Grid>
+            </PivotItem>
+            <PivotItem Header="Setup">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" x:Name="autoProvision" Content="Automatically Provision NTAG21x tags" HorizontalAlignment="Left" VerticalAlignment="Top" Height="32" Margin="5,0,0,0" />
+                    <TextBlock Grid.Row="1" Grid.Column="0"  x:Name="passwordLabel" Margin="5,11,0,11" Text="Password:" VerticalAlignment="Center" Height="20"/>
+                    <PasswordBox Grid.Row="1" Grid.Column="1" x:Name="passwordBox" Margin="10,5,5,5" HorizontalAlignment="Stretch" PlaceholderText="AABBCCDD" />
+                    <TextBlock Grid.Row="2" Grid.Column="0" x:Name="passwordAckLabel" Margin="5,11,0,11" Text="Password Ack:" VerticalAlignment="Center" Height="20"/>
+                    <PasswordBox Grid.Row="2" Grid.Column="1" x:Name="passwordAckBox" Margin="10,5,5,5" HorizontalAlignment="Stretch" PlaceholderText="EEFF" />
+                </Grid>
+            </PivotItem>
+        </Pivot>
+    </Grid></Page>
