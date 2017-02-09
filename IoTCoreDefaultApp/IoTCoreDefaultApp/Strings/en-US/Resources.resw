@@ -785,4 +785,12 @@ Alternatively, click or tap the button below to enter your Administrator account
     <value>Let Cortana respond to "Hey Cortana"</value>
     <comment>Toggle switch for enabling voice activation.</comment>
   </data>
+  <data name="ToggleOnText" xml:space="preserve">
+    <value>On</value>
+    <comment>Text used in toggle switches for 'on' state.</comment>
+  </data>
+  <data name="ToggleOffText" xml:space="preserve">
+    <value>Off</value>
+    <comment>Text used in toggle switches for 'off' state.</comment>
+  </data>
 </root>
