@@ -191,7 +191,15 @@ namespace IoTCoreDefaultApp
                     return false;
                 }
 
-                await adapter.ScanAsync();
+                try
+                {
+                    await adapter.ScanAsync();
+                }
+                catch (Exception)
+                {
+                    // ScanAsync() can throw an exception if the scan timeouts.
+                    continue;
+                }
 
                 if (adapter.NetworkReport == null)
                 {
