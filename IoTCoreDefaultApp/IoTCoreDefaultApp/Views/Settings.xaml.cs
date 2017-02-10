@@ -50,6 +50,9 @@ namespace IoTCoreDefaultApp
         private Windows.UI.Xaml.Controls.Button inProgressPairButton;
         Windows.UI.Xaml.Controls.Primitives.FlyoutBase savedPairButtonFlyout;
 
+        private bool needsCortanaConsent = false;
+        private bool cortanaConsentRequestedFromSwitch = false;
+
         static public ObservableCollection<BluetoothDeviceInformationDisplay> bluetoothDeviceObservableCollection
         {
             get;
