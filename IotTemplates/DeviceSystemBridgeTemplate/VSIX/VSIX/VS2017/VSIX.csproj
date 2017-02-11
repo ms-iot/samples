@@ -47,7 +47,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>VSIX</RootNamespace>
-    <AssemblyName>DeviceSystemBridgeTemplate</AssemblyName>
+    <AssemblyName>DeviceSystemBridgeTemplate_2017</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <GeneratePkgDefFile>false</GeneratePkgDefFile>
     <IncludeAssemblyInVSIXContainer>false</IncludeAssemblyInVSIXContainer>
