@@ -1,0 +1,44 @@
+<VSTemplate Version="3.0.0" Type="ProjectGroup"
+    xmlns="http://schemas.microsoft.com/developer/vstemplate/2005">
+    <TemplateData>
+      <Name>AllJoyn Device System Bridge App (UWP)</Name>
+      <Description>A C++ project template to develop a custom AllJoyn Device System Bridge adapter.</Description>
+      <ProjectType>VC</ProjectType>
+      <DefaultName>App</DefaultName>
+      <Icon Package="{2581426E-BF4F-4A49-A42A-20EF9D51EF49}" ID="4002" />
+      <SortOrder>1</SortOrder>
+    </TemplateData>
+    <TemplateContent>
+      <ProjectCollection>
+       <SolutionFolder Name="Adapter">
+        <ProjectTemplateLink ProjectName="HeadedAdapterApp">
+          HeadedAdapterApp\HeadedAdapterApp.vstemplate
+        </ProjectTemplateLink>
+        <ProjectTemplateLink ProjectName="AdapterLib">
+          AdapterLib\AdapterLib.vstemplate
+        </ProjectTemplateLink>
+        <ProjectTemplateLink ProjectName="HeadlessAdapterApp">
+          HeadlessAdapterApp\HeadlessAdapterApp.vstemplate
+        </ProjectTemplateLink>
+      </SolutionFolder>
+      <SolutionFolder Name="Platform">
+        <ProjectTemplateLink ProjectName="BridgeRT">
+          BridgeRT\BridgeRT.vstemplate
+        </ProjectTemplateLink>				
+        <ProjectTemplateLink ProjectName="BackgroundHost">
+          BackgroundHost\BackgroundHost\BackgroundHost.vstemplate
+        </ProjectTemplateLink>				
+        <ProjectTemplateLink ProjectName="BackgroundHost.Headed">
+          BackgroundHost\BackgroundHost.Headed\BackgroundHost.Headed.vstemplate
+        </ProjectTemplateLink>				
+        <ProjectTemplateLink ProjectName="BackgroundHost.Headless">
+          BackgroundHost\BackgroundHost.Headless\BackgroundHost.Headless.vstemplate
+        </ProjectTemplateLink>				
+      </SolutionFolder>
+    </ProjectCollection>
+  </TemplateContent>
+  <WizardExtension>
+    <Assembly>CustomWizard, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</Assembly>
+    <FullClassName>CustomWizard.RootWizard</FullClassName>
+  </WizardExtension>    
+</VSTemplate>
