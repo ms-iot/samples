@@ -1,0 +1,106 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>BridgeRT</Name>
+    <Description>BridgeRT Windows Runtime Component</Description>
+    <ProjectType>VC</ProjectType>
+    <ProjectSubType>
+    </ProjectSubType>
+    <SortOrder>1000</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>BridgeRT</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <Hidden>true</Hidden>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="BridgeRT.vcxproj" File="BridgeRT.vcxproj" ReplaceParameters="true">
+      <ProjectItem ReplaceParameters="false" TargetFileName="BridgeRT.vcxproj.filters">BridgeRT.vcxproj.filters</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="AdapterBridgeServiceImplementation.h">AdapterBridgeServiceImplementation.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="AdapterBridgeServiceImplementation.cpp">AdapterBridgeServiceImplementation.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="AllJoynAbout.cpp">AllJoynAbout.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="AllJoynAboutIcon.cpp">AllJoynAboutIcon.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="AllJoynFileTransfer.cpp">AllJoynFileTransfer.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="AllJoynHelper.cpp">AllJoynHelper.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="AllJoynProperty.cpp">AllJoynProperty.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="BridgeConfig.cpp">BridgeConfig.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="BridgeAuthHandler.cpp">BridgeAuthHandler.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="Bridge.cpp">Bridge.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="BridgeDevice.cpp">BridgeDevice.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="BridgeLog.cpp">BridgeLog.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="BridgeUtils.cpp">BridgeUtils.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="ConfigManager.cpp">ConfigManager.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="ControlPanel.cpp">ControlPanel.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="CspAdapter.cpp">CspAdapter.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="CspBridge.cpp">CspBridge.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="DeviceMain.cpp">DeviceMain.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="DeviceMethod.cpp">DeviceMethod.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="DeviceProperty.cpp">DeviceProperty.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="DeviceSignal.cpp">DeviceSignal.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="PropertyInterface.cpp">PropertyInterface.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="pch.cpp">pch.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="Widget.cpp">Widget.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="WidgetAction.cpp">WidgetAction.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="WidgetContainer.cpp">WidgetContainer.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="WidgetProperty.cpp">WidgetProperty.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="WidgetPropertyLabel.cpp">WidgetPropertyLabel.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="WidgetPropertySwitch.cpp">WidgetPropertySwitch.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="WidgetPropertyTextBox.cpp">WidgetPropertyTextBox.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="WidgetSignalHandler.cpp">WidgetSignalHandler.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="AllJoynAbout.h">AllJoynAbout.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="AllJoynAboutIcon.h">AllJoynAboutIcon.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="AllJoynFileTransfer.h">AllJoynFileTransfer.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="AllJoynHelper.h">AllJoynHelper.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="AllJoynProperty.h">AllJoynProperty.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="AdapterConstants.h">AdapterConstants.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="AdapterDefinitions.h">AdapterDefinitions.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="BridgeConfig.h">BridgeConfig.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="DsbServiceNames.h">DsbServiceNames.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="BridgeAuthHandler.h">BridgeAuthHandler.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="Bridge.h">Bridge.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="BridgeDevice.h">BridgeDevice.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="BridgeLog.h">BridgeLog.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="BridgeUtils.h">BridgeUtils.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="ConfigManager.h">ConfigManager.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="ControlPanel.h">ControlPanel.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="CspAdapter.h">CspAdapter.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="CspBridge.h">CspBridge.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="DeviceMain.h">DeviceMain.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="DeviceMethod.h">DeviceMethod.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="DeviceProperty.h">DeviceProperty.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="DeviceSignal.h">DeviceSignal.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="PropertyInterface.h">PropertyInterface.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="IAdapter.h">IAdapter.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="IControlPanelHandler.h">IControlPanelHandler.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="ILSFHandler.h">ILSFHandler.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="pch.h">pch.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="Widget.h">Widget.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="WidgetAction.h">WidgetAction.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="WidgetConsts.h">WidgetConsts.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="WidgetContainer.h">WidgetContainer.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="WidgetProperty.h">WidgetProperty.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="WidgetPropertyLabel.h">WidgetPropertyLabel.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="WidgetPropertySwitch.h">WidgetPropertySwitch.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="WidgetPropertyTextBox.h">WidgetPropertyTextBox.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="WidgetSignalHandler.h">WidgetSignalHandler.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="LampDetails.cpp">LampDetails.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="LampDetails.h">LampDetails.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="LampParameters.cpp">LampParameters.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="LampParameters.h">LampParameters.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="LampService.cpp">LampService.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="LampService.h">LampService.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="LSFSignalHandler.cpp">LSFSignalHandler.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="LSFSignalHandler.h">LSFSignalHandler.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="LampState.cpp">LampState.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="LampState.h">LampState.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="LSF.cpp">LSF.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="LSF.h">LSF.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="LSFConsts.h">LSFConsts.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="LSFEnums.h">LSFEnums.h</ProjectItem>
+    </Project>
+  </TemplateContent>
+  <WizardExtension>
+    <Assembly>Microsoft.VisualStudio.Universal.TemplateWizards, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</Assembly>
+    <FullClassName>Microsoft.VisualStudio.Universal.TemplateWizards.PlatformVersion.Wizard</FullClassName>
+  </WizardExtension>
+</VSTemplate>

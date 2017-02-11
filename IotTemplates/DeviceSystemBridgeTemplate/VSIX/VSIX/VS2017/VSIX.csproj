@@ -1,0 +1,320 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="GenerateTemplate; Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!--  ReplaceFileText Method.  This task exposes the ability to replace strings in a source file -->
+  <!--  by passing a filename and regular expressions for match and substitution.                  -->
+  <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <Import Project="..\..\packages\Microsoft.VisualStudio.Sdk.BuildTasks.14.0.14.0.23-pre\build\Microsoft.VisualStudio.Sdk.BuildTasks.14.0.props" Condition="Exists('..\..\packages\Microsoft.VisualStudio.Sdk.BuildTasks.14.0.14.0.23-pre\build\Microsoft.VisualStudio.Sdk.BuildTasks.14.0.props')" />
+  <UsingTask TaskName="ReplaceFileText" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+    <ParameterGroup>
+      <InputFilename ParameterType="System.String" Required="true" />
+      <OutputFilename ParameterType="System.String" Required="true" />
+      <MatchExpression ParameterType="System.String" Required="true" />
+      <ReplacementText ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Reference Include="System.Core" />
+      <Using Namespace="System" />
+      <Using Namespace="System.IO" />
+      <Using Namespace="System.Text.RegularExpressions" />
+      <Code Type="Fragment" Language="cs"><![CDATA[
+              File.WriteAllText(
+                  OutputFilename,
+                  Regex.Replace(File.ReadAllText(InputFilename), MatchExpression, ReplacementText)
+                  );
+        ]]></Code>
+    </Task>
+  </UsingTask>
+  <PropertyGroup>
+    <VsixTargetVisualStudioVersion>v15.0</VsixTargetVisualStudioVersion>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <MSBuildCommunityTasksPath>$(SolutionDir)\..\..\.build\v15.0</MSBuildCommunityTasksPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.Targets" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <VsixType>v3</VsixType>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectTypeGuids>{82b43b9b-a64c-4715-b499-d71e9ca2bd60};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{CDFA499F-2F7F-4CEF-8ACD-379B274E5A22}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VSIX</RootNamespace>
+    <AssemblyName>DeviceSystemBridgeTemplate</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <GeneratePkgDefFile>false</GeneratePkgDefFile>
+    <IncludeAssemblyInVSIXContainer>false</IncludeAssemblyInVSIXContainer>
+    <IncludeDebugSymbolsInVSIXContainer>false</IncludeDebugSymbolsInVSIXContainer>
+    <IncludeDebugSymbolsInLocalVSIXDeployment>false</IncludeDebugSymbolsInLocalVSIXDeployment>
+    <CopyBuildOutputToOutputDirectory>false</CopyBuildOutputToOutputDirectory>
+    <CopyOutputSymbolsToOutputDirectory>false</CopyOutputSymbolsToOutputDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Exports\BackgroundHost\BackgroundHost.Headed\BackgroundHost.Headed.vstemplate" />
+    <Content Include="Exports\BackgroundHost\BackgroundHost.Headless\BackgroundHost.Headless.vstemplate" />
+    <Content Include="Exports\BackgroundHost\BackgroundHost\BackgroundHost.vstemplate" />
+    <Content Include="Exports\BridgeRT\BridgeRT.vstemplate">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Exports\Native\HeadlessAdapterApp\HeadlessAdapterApp.vstemplate" />
+    <Content Include="Exports\Native\HeadedAdapterApp\HeadedAdapterApp.vstemplate">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Exports\Native\AdapterLib\AdapterLib.vstemplate" />
+    <Content Include="Exports\Native\CustomAdapter.vstemplate" />
+    <Content Include="Exports\Managed\HeadlessAdapterApp\HeadlessAdapterApp.vstemplate">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Exports\Managed\HeadedAdapterApp\HeadedAdapterApp.vstemplate">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Exports\Managed\AdapterLib\AdapterLib.vstemplate" />
+    <Content Include="Exports\Managed\CustomAdapter.vstemplate">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="..\icon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\License.rtf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\preview.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <None Include="packages.config" />
+    <None Include="source.extension.vsixmanifest">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\CustomWizard\CustomWizard.csproj">
+      <Project>{9d7b51db-bd89-4b2c-a5d5-9dc1526faec7}</Project>
+      <Name>CustomWizard</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <OutputItemType>Content</OutputItemType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Target Name="GenerateTemplate">
+    <CallTarget Targets="CleanTemplate" RunEachTargetSeparately="true" />
+    <CallTarget Targets="ExportTemplate" RunEachTargetSeparately="true" />
+    <CallTarget Targets="ZipTemplate" RunEachTargetSeparately="true" />
+    <ItemGroup>
+      <Content Include="ProjectTemplates\VC\Windows UAP\DSB.zip">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <IncludeInVSIX>true</IncludeInVSIX>
+      </Content>
+      <Content Include="ProjectTemplates\CSharp\Windows UAP\DSB.zip">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <IncludeInVSIX>true</IncludeInVSIX>
+      </Content>
+    </ItemGroup>
+  </Target>
+  <PropertyGroup>
+    <AllJoynRootPath Condition="Exists('..\..\..\..\..\AllJoyn\Platform\')">..\..\..\..\..\AllJoyn\</AllJoynRootPath>
+    <AllJoynRootPath Condition="'$(AllJoynRootPath)' == ''">..\..\..\..\..\</AllJoynRootPath>
+    <AllJoynRootPath Condition="'$(AllJoynRootPath)' == ''">..\..\..\..\..\</AllJoynRootPath>
+    <ProjectTemplatesRootPath>..\..\..\ProjectTemplates\</ProjectTemplatesRootPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <BackgroundHostSourceFiles Include="$(AllJoynRootPath)Platform\BackgroundHost\BackgroundHost\*.*" />
+    <BackgroundHostResources Include="$(AllJoynRootPath)Platform\BackgroundHost\BackgroundHost\Resources\*.*" />
+    <BackgroundHostResourcesEnUS Include="$(AllJoynRootPath)Platform\BackgroundHost\BackgroundHost\Resources\en-US\*.*" />
+    <BackgroundHostHeadedSourceFiles Include="$(AllJoynRootPath)Platform\BackgroundHost\BackgroundHost.Headed\*.*" />
+    <BackgroundHostHeadedResources Include="$(AllJoynRootPath)Platform\BackgroundHost\BackgroundHost.Headed\Resources\*.*" />
+    <BackgroundHostHeadedResourcesEnUS Include="$(AllJoynRootPath)Platform\BackgroundHost\BackgroundHost.Headed\Resources\en-US\*.*" />
+    <BackgroundHostHeadedComponentModel Include="$(AllJoynRootPath)Platform\BackgroundHost\BackgroundHost.Headed\ComponentModel\*.*" />
+    <BackgroundHostHeadedModels Include="$(AllJoynRootPath)Platform\BackgroundHost\BackgroundHost.Headed\Models\*.*" />
+    <BackgroundHostHeadedTasks Include="$(AllJoynRootPath)Platform\BackgroundHost\BackgroundHost.Headed\Tasks\*.*" />
+    <BackgroundHostHeadedViewModels Include="$(AllJoynRootPath)Platform\BackgroundHost\BackgroundHost.Headed\ViewModels\*.*" />
+    <BackgroundHostHeadedViews Include="$(AllJoynRootPath)Platform\BackgroundHost\BackgroundHost.Headed\Views\*.*" />
+    <BackgroundHostHeadlessSourceFiles Include="$(AllJoynRootPath)Platform\BackgroundHost\BackgroundHost.Headless\*.*" />
+    <BridgeRTSourceFiles Include="$(AllJoynRootPath)Platform\BridgeRT\*.*" />
+    <NativeAdapterLibSourceFiles Include="$(ProjectTemplatesRootPath)CustomAdapter\AdapterLib\*.*" />
+    <NativeHeadedAdapterAppSourceFiles Include="$(ProjectTemplatesRootPath)CustomAdapter\HeadedAdapterApp\*.*" />
+    <NativeHeadedAdapterAppAssets Include="$(ProjectTemplatesRootPath)CustomAdapter\HeadedAdapterApp\Assets\*.*" />
+    <NativeHeadedAdapterAppResources Include="$(ProjectTemplatesRootPath)CustomAdapter\HeadedAdapterApp\Resources\*.*" />
+    <NativeHeadedAdapterAppResourcesEnUS Include="$(ProjectTemplatesRootPath)CustomAdapter\HeadedAdapterApp\Resources\en-US\*.*" />
+    <NativeHeadlessAdapterAppSourceFiles Include="$(ProjectTemplatesRootPath)CustomAdapter\HeadlessAdapterApp\*.*" />
+    <NativeHeadlessAdapterAppAssets Include="$(ProjectTemplatesRootPath)CustomAdapter\HeadlessAdapterApp\Assets\*.*" />
+    <NativeHeadlessAdapterAppResources Include="$(ProjectTemplatesRootPath)CustomAdapter\HeadlessAdapterApp\Resources\*.*" />
+    <NativeHeadlessAdapterAppResourcesEnUS Include="$(ProjectTemplatesRootPath)CustomAdapter\HeadlessAdapterApp\Resources\en-US\*.*" />
+    <ManagedAdapterLibSourceFiles Include="$(ProjectTemplatesRootPath)ManagedCustomAdapter\AdapterLib\**\*.*" />
+    <ManagedHeadedAdapterSourceFiles Include="$(ProjectTemplatesRootPath)ManagedCustomAdapter\HeadedAdapterApp\**\*.*" />
+    <ManagedHeadlessAdapterSourceFiles Include="$(ProjectTemplatesRootPath)ManagedCustomAdapter\HeadlessAdapterApp\**\*.*" />
+  </ItemGroup>
+  <ItemGroup>
+    <BackgroundHostTemplateFiles Include="Exports\BackgroundHost\BackgroundHost\*.*" />
+    <BackgroundHostHeadedTemplateFiles Include="Exports\BackgroundHost\BackgroundHost.Headed\*.*" />
+    <BackgroundHostHeadlessTemplateFiles Include="Exports\BackgroundHost\BackgroundHost.Headless\*.*" />
+    <BridgeRTTemplateFiles Include="Exports\BridgeRT\*.*" />
+    <NativeAdapterLibTemplateFiles Include="Exports\Native\AdapterLib\*.*" />
+    <NativeHeadedAdapterAppTemplateFiles Include="Exports\Native\HeadedAdapterApp\*.*" />
+    <NativeHeadlessAdapterAppTemplateFiles Include="Exports\Native\HeadlessAdapterApp\*.*" />
+    <NativeRootTemplateFile Include="Exports\Native\CustomAdapter.vstemplate" />
+    <ManagedAdapterLibTemplateFiles Include="Exports\Managed\AdapterLib\*.*" />
+    <ManagedHeadedAdapterTemplateFiles Include="Exports\Managed\HeadedAdapterApp\*.*" />
+    <ManagedHeadlessAdapterTemplateFiles Include="Exports\Managed\HeadlessAdapterApp\*.*" />
+    <ManagedRootTemplateFile Include="Exports\Managed\CustomAdapter.vstemplate" />
+  </ItemGroup>
+  <ItemGroup />
+  <Target Name="ExportTemplate">
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Stage the Native Files                                                                           -->
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <Copy SourceFiles="@(BackgroundHostSourceFiles); @(BackgroundHostTemplateFiles)" DestinationFolder="$(OutputPath)\Staged\Native\BackgroundHost\BackgroundHost" />
+    <Copy SourceFiles="@(BackgroundHostResources);" DestinationFolder="$(OutputPath)\Staged\Native\BackgroundHost\BackgroundHost\Resources" />
+    <Copy SourceFiles="@(BackgroundHostResourcesEnUS);" DestinationFolder="$(OutputPath)\Staged\Native\BackgroundHost\BackgroundHost\Resources\en-US" />
+    <Copy SourceFiles="@(BackgroundHostHeadedSourceFiles); @(BackgroundHostHeadedTemplateFiles)" DestinationFolder="$(OutputPath)\Staged\Native\BackgroundHost\BackgroundHost.Headed" />
+    <Copy SourceFiles="@(BackgroundHostHeadedComponentModel);" DestinationFolder="$(OutputPath)\Staged\Native\BackgroundHost\BackgroundHost.Headed\ComponentModel" />
+    <Copy SourceFiles="@(BackgroundHostHeadedModels);" DestinationFolder="$(OutputPath)\Staged\Native\BackgroundHost\BackgroundHost.Headed\Models" />
+    <Copy SourceFiles="@(BackgroundHostHeadedResources);" DestinationFolder="$(OutputPath)\Staged\Native\BackgroundHost\BackgroundHost.Headed\Resources" />
+    <Copy SourceFiles="@(BackgroundHostHeadedResourcesEnUS);" DestinationFolder="$(OutputPath)\Staged\Native\BackgroundHost\BackgroundHost.Headed\Resources\en-US" />
+    <Copy SourceFiles="@(BackgroundHostHeadedTasks);" DestinationFolder="$(OutputPath)\Staged\Native\BackgroundHost\BackgroundHost.Headed\Tasks" />
+    <Copy SourceFiles="@(BackgroundHostHeadedViewModels);" DestinationFolder="$(OutputPath)\Staged\Native\BackgroundHost\BackgroundHost.Headed\ViewModels" />
+    <Copy SourceFiles="@(BackgroundHostHeadedViews);" DestinationFolder="$(OutputPath)\Staged\Native\BackgroundHost\BackgroundHost.Headed\Views" />
+    <Copy SourceFiles="@(BackgroundHostHeadlessSourceFiles); @(BackgroundHostHeadlessTemplateFiles)" DestinationFolder="$(OutputPath)\Staged\Native\BackgroundHost\BackgroundHost.Headless" />
+    <Copy SourceFiles="@(BridgeRTSourceFiles); @(BridgeRTTemplateFiles)" DestinationFolder="$(OutputPath)\Staged\Native\BridgeRT" />
+    <Copy SourceFiles="@(NativeAdapterLibSourceFiles); @(NativeAdapterLibTemplateFiles)" DestinationFolder="$(OutputPath)\Staged\Native\AdapterLib" />
+    <Copy SourceFiles="@(NativeHeadedAdapterAppSourceFiles); @(NativeHeadedAdapterAppTemplateFiles)" DestinationFolder="$(OutputPath)\Staged\Native\HeadedAdapterApp" />
+    <Copy SourceFiles="@(NativeHeadedAdapterAppAssets)" DestinationFolder="$(OutputPath)\Staged\Native\HeadedAdapterApp\Assets" />
+    <Copy SourceFiles="@(NativeHeadedAdapterAppResources)" DestinationFolder="$(OutputPath)\Staged\Native\HeadedAdapterApp\Resources" />
+    <Copy SourceFiles="@(NativeHeadedAdapterAppResourcesEnUs)" DestinationFolder="$(OutputPath)\Staged\Native\HeadedAdapterApp\Resources\en-US" />
+    <Copy SourceFiles="@(NativeHeadlessAdapterAppSourceFiles); @(NativeHeadlessAdapterAppTemplateFiles)" DestinationFolder="$(OutputPath)\Staged\Native\HeadlessAdapterApp" />
+    <Copy SourceFiles="@(NativeHeadlessAdapterAppAssets)" DestinationFolder="$(OutputPath)\Staged\Native\HeadlessAdapterApp\Assets" />
+    <Copy SourceFiles="@(NativeHeadlessAdapterAppResources)" DestinationFolder="$(OutputPath)\Staged\Native\HeadlessAdapterApp\Resources" />
+    <Copy SourceFiles="@(NativeHeadlessAdapterAppResourcesEnUs)" DestinationFolder="$(OutputPath)\Staged\Native\HeadlessAdapterApp\Resources\en-US" />
+    <Copy SourceFiles="@(NativeRootTemplateFile)" DestinationFolder="$(OutputPath)\Staged\Native" />
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Stage the Managed Files                                                                           -->
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <Copy SourceFiles="@(BridgeRTSourceFiles); @(BridgeRTTemplateFiles)" DestinationFolder="$(OutputPath)\Staged\Managed\BridgeRT" />
+    <Copy SourceFiles="@(BackgroundHostSourceFiles); @(BackgroundHostTemplateFiles)" DestinationFolder="$(OutputPath)\Staged\Managed\BackgroundHost\BackgroundHost" />
+    <Copy SourceFiles="@(BackgroundHostResources);" DestinationFolder="$(OutputPath)\Staged\Managed\BackgroundHost\BackgroundHost\Resources" />
+    <Copy SourceFiles="@(BackgroundHostResourcesEnUS);" DestinationFolder="$(OutputPath)\Staged\Managed\BackgroundHost\BackgroundHost\Resources\en-US" />
+    <Copy SourceFiles="@(BackgroundHostHeadedSourceFiles); @(BackgroundHostHeadedTemplateFiles)" DestinationFolder="$(OutputPath)\Staged\Managed\BackgroundHost\BackgroundHost.Headed" />
+    <Copy SourceFiles="@(BackgroundHostHeadedComponentModel);" DestinationFolder="$(OutputPath)\Staged\Managed\BackgroundHost\BackgroundHost.Headed\ComponentModel" />
+    <Copy SourceFiles="@(BackgroundHostHeadedModels);" DestinationFolder="$(OutputPath)\Staged\Managed\BackgroundHost\BackgroundHost.Headed\Models" />
+    <Copy SourceFiles="@(BackgroundHostHeadedResources);" DestinationFolder="$(OutputPath)\Staged\Managed\BackgroundHost\BackgroundHost.Headed\Resources" />
+    <Copy SourceFiles="@(BackgroundHostHeadedResourcesEnUS);" DestinationFolder="$(OutputPath)\Staged\Managed\BackgroundHost\BackgroundHost.Headed\Resources\en-US" />
+    <Copy SourceFiles="@(BackgroundHostHeadedTasks);" DestinationFolder="$(OutputPath)\Staged\Managed\BackgroundHost\BackgroundHost.Headed\Tasks" />
+    <Copy SourceFiles="@(BackgroundHostHeadedViewModels);" DestinationFolder="$(OutputPath)\Staged\Managed\BackgroundHost\BackgroundHost.Headed\ViewModels" />
+    <Copy SourceFiles="@(BackgroundHostHeadedViews);" DestinationFolder="$(OutputPath)\Staged\Managed\BackgroundHost\BackgroundHost.Headed\Views" />
+    <Copy SourceFiles="@(BackgroundHostHeadlessSourceFiles); @(BackgroundHostHeadlessTemplateFiles)" DestinationFolder="$(OutputPath)\Staged\Managed\BackgroundHost\BackgroundHost.Headless" />
+    <Copy SourceFiles="@(ManagedAdapterLibSourceFiles); @(ManagedAdapterLibTemplateFiles)" DestinationFolder="$(OutputPath)\Staged\Managed\AdapterLib\%(RecursiveDir)" />
+    <Copy SourceFiles="@(ManagedHeadedAdapterSourceFiles); @(ManagedHeadedAdapterTemplateFiles)" DestinationFolder="$(OutputPath)\Staged\Managed\HeadedAdapterApp\%(RecursiveDir)" />
+    <Copy SourceFiles="@(ManagedHeadlessAdapterSourceFiles); @(ManagedHeadlessAdapterTemplateFiles)" DestinationFolder="$(OutputPath)\Staged\Managed\HeadlessAdapterApp\%(RecursiveDir)" />
+    <Copy SourceFiles="@(ManagedRootTemplateFile)" DestinationFolder="$(OutputPath)\Staged\Managed" />
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!--                                                                                                   -->
+    <!-- Patch the MANAGED Project Files                                                                   -->
+    <!--                                                                                                   -->
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- PATCH BRIDGERT.VCXPROJ -->
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Patch BridgeRT VCX PROJ to automatically select the highest installed platform version -->
+    <ReplaceFileText InputFilename="$(OutputPath)Staged\Managed\BridgeRT\BridgeRT.vcxproj" OutputFilename="$(OutputPath)Staged\Managed\BridgeRT\BridgeRT.vcxproj" MatchExpression="&lt;WindowsTargetPlatformVersion&gt;*&lt;/WindowsTargetPlatformVersion&gt;" ReplacementText="&lt;WindowsTargetPlatformVersion&gt;$$targetplatformversion$$&lt;/WindowsTargetPlatformVersion&gt;" />
+    <ReplaceFileText InputFilename="$(OutputPath)Staged\Managed\BridgeRT\BridgeRT.vcxproj" OutputFilename="$(OutputPath)Staged\Managed\BridgeRT\BridgeRT.vcxproj" MatchExpression="&lt;WindowsTargetPlatformMinVersion&gt;.*&lt;/WindowsTargetPlatformMinVersion&gt;" ReplacementText="&lt;WindowsTargetPlatformMinVersion&gt;$$targetplatformminversion$$&lt;/WindowsTargetPlatformMinVersion&gt;" />
+    <ReplaceFileText InputFilename="$(OutputPath)Staged\Managed\BridgeRT\BridgeRT.vcxproj" OutputFilename="$(OutputPath)Staged\Managed\BridgeRT\BridgeRT.vcxproj" MatchExpression="..\\BackgroundHost\\BackgroundHost" ReplacementText="..\BackgroundHost" />
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- PATCH HEADED PACKAGE.APPXMANIFEST -->
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Change Identity XML Node to generate an adapter name -->
+    <ReplaceFileText InputFilename="$(OutputPath)Staged\Managed\HeadedAdapterApp\Package.appxmanifest" OutputFilename="$(OutputPath)Staged\Managed\HeadedAdapterApp\Package.appxmanifest" MatchExpression="&lt;Identity.*\n.*\n.*\n.*/&gt;" ReplacementText="&lt;Identity Name=&quot;$$saferootprojectname$$HeadedAdapterApp&quot; Publisher=&quot;CN=MSFT&quot; Version=&quot;1.0.0.0&quot;/&gt;" />
+    <!-- Change PhoneIdentity XML Node to generate new GUID-->
+    <ReplaceFileText InputFilename="$(OutputPath)Staged\Managed\HeadedAdapterApp\Package.appxmanifest" OutputFilename="$(OutputPath)Staged\Managed\HeadedAdapterApp\Package.appxmanifest" MatchExpression="&lt;mp:PhoneIdentity PhoneProductId=.*/&gt;" ReplacementText="&lt;mp:PhoneIdentity PhoneProductId=&quot;$$guid1$$&quot; PhonePublisherId=&quot;00000000-0000-0000-0000-000000000000&quot;/&gt;" />
+    <!-- Change Hard Coded Display name to a generated display name -->
+    <ReplaceFileText InputFilename="$(OutputPath)Staged\Managed\HeadedAdapterApp\Package.appxmanifest" OutputFilename="$(OutputPath)Staged\Managed\HeadedAdapterApp\Package.appxmanifest" MatchExpression="&lt;DisplayName&gt;.*&lt;/DisplayName&gt;" ReplacementText="&lt;DisplayName&gt;$$saferootprojectname$$HeadedAdapterApp&lt;/DisplayName&gt;" />
+    <!-- Change PublisherDisplayName to MSFT -->
+    <ReplaceFileText InputFilename="$(OutputPath)Staged\Managed\HeadedAdapterApp\Package.appxmanifest" OutputFilename="$(OutputPath)Staged\Managed\HeadedAdapterApp\Package.appxmanifest" MatchExpression="&lt;PublisherDisplayName&gt;.*&lt;/PublisherDisplayName&gt;" ReplacementText="&lt;PublisherDisplayName&gt;MSFT&lt;/PublisherDisplayName&gt;" />
+    <!-- Change Application node's ID to token -->
+    <ReplaceFileText InputFilename="$(OutputPath)Staged\Managed\HeadedAdapterApp\Package.appxmanifest" OutputFilename="$(OutputPath)Staged\Managed\HeadedAdapterApp\Package.appxmanifest" MatchExpression="&lt;Application Id=&quot;.*&quot;" ReplacementText="&lt;Application Id=&quot;$$saferootprojectname$$HeadedAdapterApp&quot;" />
+    <!-- Change uap:VisualElements - DisplayName Attribute to a generated display name-->
+    <ReplaceFileText InputFilename="$(OutputPath)Staged\Managed\HeadedAdapterApp\Package.appxmanifest" OutputFilename="$(OutputPath)Staged\Managed\HeadedAdapterApp\Package.appxmanifest" MatchExpression="DisplayName=&quot;.*&quot;" ReplacementText="DisplayName=&quot;$$saferootprojectname$$HeadedAdapterApp&quot;" />
+    <!-- Change uap:VisualElements - Description Attribute to a generated description-->
+    <ReplaceFileText InputFilename="$(OutputPath)Staged\Managed\HeadedAdapterApp\Package.appxmanifest" OutputFilename="$(OutputPath)Staged\Managed\HeadedAdapterApp\Package.appxmanifest" MatchExpression="Description=&quot;.*&quot;" ReplacementText="Description=&quot;$$saferootprojectname$$HeadedAdapterApp&quot;" />
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- PATCH HEADLESS PACKAGE.APPXMANIFEST -->
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Change Identity XML Node to generate an adapter name -->
+    <ReplaceFileText InputFilename="$(OutputPath)Staged\Managed\HeadlessAdapterApp\Package.appxmanifest" OutputFilename="$(OutputPath)Staged\Managed\HeadlessAdapterApp\Package.appxmanifest" MatchExpression="&lt;Identity.*\n.*\n.*\n.*/&gt;" ReplacementText="&lt;Identity Name=&quot;$$saferootprojectname$$HeadlessAdapterApp&quot; Publisher=&quot;CN=MSFT&quot; Version=&quot;1.0.0.0&quot;/&gt;" />
+    <!-- Change PhoneIdentity XML Node to generate new GUID-->
+    <ReplaceFileText InputFilename="$(OutputPath)Staged\Managed\HeadlessAdapterApp\Package.appxmanifest" OutputFilename="$(OutputPath)Staged\Managed\HeadlessAdapterApp\Package.appxmanifest" MatchExpression="&lt;mp:PhoneIdentity PhoneProductId=.*/&gt;" ReplacementText="&lt;mp:PhoneIdentity PhoneProductId=&quot;$$guid1$$&quot; PhonePublisherId=&quot;00000000-0000-0000-0000-000000000000&quot;/&gt;" />
+    <!-- Change PublisherDisplayName to MSFT -->
+    <ReplaceFileText InputFilename="$(OutputPath)Staged\Managed\HeadlessAdapterApp\Package.appxmanifest" OutputFilename="$(OutputPath)Staged\Managed\HeadlessAdapterApp\Package.appxmanifest" MatchExpression="&lt;PublisherDisplayName&gt;.*&lt;/PublisherDisplayName&gt;" ReplacementText="&lt;PublisherDisplayName&gt;MSFT&lt;/PublisherDisplayName&gt;" />
+    <!-- Change Application node's ID to token -->
+    <ReplaceFileText InputFilename="$(OutputPath)Staged\Managed\HeadlessAdapterApp\Package.appxmanifest" OutputFilename="$(OutputPath)Staged\Managed\HeadlessAdapterApp\Package.appxmanifest" MatchExpression="&lt;Application Id=&quot;.*&quot;" ReplacementText="&lt;Application Id=&quot;$$saferootprojectname$$HeadlessAdapterApp&quot;" />
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!--                                                                                                   -->
+    <!-- Patch the NATIVE Project Files                                                                   -->
+    <!--                                                                                                   -->
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- PATCH BRIDGERT.VCXPROJ -->
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Patch BridgeRT VCX PROJ to automatically select the highest installed platform version -->
+    <ReplaceFileText InputFilename="$(OutputPath)Staged\Native\BridgeRT\BridgeRT.vcxproj" OutputFilename="$(OutputPath)Staged\Native\BridgeRT\BridgeRT.vcxproj" MatchExpression="&lt;WindowsTargetPlatformVersion.*&lt;/WindowsTargetPlatformVersion&gt;" ReplacementText="&lt;WindowsTargetPlatformVersion&gt;$$targetplatformversion$$&lt;/WindowsTargetPlatformVersion&gt;" />
+    <ReplaceFileText InputFilename="$(OutputPath)Staged\Native\BridgeRT\BridgeRT.vcxproj" OutputFilename="$(OutputPath)Staged\Native\BridgeRT\BridgeRT.vcxproj" MatchExpression="&lt;WindowsTargetPlatformMinVersion&gt;.*&lt;/WindowsTargetPlatformMinVersion&gt;" ReplacementText="&lt;WindowsTargetPlatformMinVersion&gt;$$targetplatformminversion$$&lt;/WindowsTargetPlatformMinVersion&gt;" />
+    <ReplaceFileText InputFilename="$(OutputPath)Staged\Native\BridgeRT\BridgeRT.vcxproj" OutputFilename="$(OutputPath)Staged\Native\BridgeRT\BridgeRT.vcxproj" MatchExpression="..\\BackgroundHost\\BackgroundHost" ReplacementText="..\BackgroundHost" />
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- PATCH HEADED PACKAGE.APPXMANIFEST (Copy version created for the Managed App Above) -->
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <Copy SourceFiles="$(OutputPath)Staged\Managed\HeadedAdapterApp\Package.appxmanifest" DestinationFolder="$(OutputPath)Staged\Native\HeadedAdapterApp" />
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- PATCH HEADLESS PACKAGE.APPXMANIFEST (Copy version created for the Managed App Above) -->
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <Copy SourceFiles="$(OutputPath)Staged\Managed\HeadlessAdapterApp\Package.appxmanifest" DestinationFolder="$(OutputPath)Staged\Native\HeadlessAdapterApp" />
+  </Target>
+  <Target Name="ZipTemplate">
+    <ItemGroup>
+      <ToZipNative Include="$(OutputPath)\Staged\Native\**\*.*" />
+      <ToZipManaged Include="$(OutputPath)\Staged\Managed\**\*.*" />
+    </ItemGroup>
+    <Zip Files="@(ToZipNative)" WorkingDirectory="$(OutputPath)\Staged\Native" ZipFileName="ProjectTemplates\VC\Windows UAP\DSB.zip" />
+    <Zip Files="@(ToZipManaged)" WorkingDirectory="$(OutputPath)\Staged\Managed" ZipFileName="ProjectTemplates\CSharp\Windows UAP\DSB.zip" />
+  </Target>
+  <Target Name="CleanTemplate">
+    <RemoveDir Directories="$(OutputPath)\Staged" />
+  </Target>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\Microsoft.VisualStudio.Sdk.BuildTasks.14.0.14.0.23-pre\build\Microsoft.VisualStudio.Sdk.BuildTasks.14.0.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.VisualStudio.Sdk.BuildTasks.14.0.14.0.23-pre\build\Microsoft.VisualStudio.Sdk.BuildTasks.14.0.props'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.VisualStudio.Sdk.BuildTasks.14.0.14.0.23-pre\build\Microsoft.VisualStudio.Sdk.BuildTasks.14.0.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.VisualStudio.Sdk.BuildTasks.14.0.14.0.23-pre\build\Microsoft.VisualStudio.Sdk.BuildTasks.14.0.targets'))" />
+  </Target>
+  <Import Project="..\..\packages\Microsoft.VisualStudio.Sdk.BuildTasks.14.0.14.0.23-pre\build\Microsoft.VisualStudio.Sdk.BuildTasks.14.0.targets" Condition="Exists('..\..\packages\Microsoft.VisualStudio.Sdk.BuildTasks.14.0.14.0.23-pre\build\Microsoft.VisualStudio.Sdk.BuildTasks.14.0.targets')" />
+</Project>

@@ -71,7 +71,7 @@ namespace AdapterLib
                 //Create Adapter Signals
                 this.createSignals();
             }
-            catch (OutOfMemoryException ex)
+            catch (OutOfMemoryException)
             {
                 throw;
             }
@@ -110,7 +110,7 @@ namespace AdapterLib
             {
                 DeviceListPtr = new List<IAdapterDevice>(this.devices);
             }
-            catch (OutOfMemoryException ex)
+            catch (OutOfMemoryException)
             {
                 throw;
             }
@@ -218,7 +218,7 @@ namespace AdapterLib
                     {
                         newEntryList = new List<SIGNAL_LISTENER_ENTRY>();
                     }
-                    catch (OutOfMemoryException ex)
+                    catch (OutOfMemoryException)
                     {
                         throw;
                     }
@@ -313,7 +313,7 @@ namespace AdapterLib
                 this.Signals.Add(deviceArrivalSignal);
                 this.Signals.Add(deviceRemovalSignal);
             }
-            catch (OutOfMemoryException ex)
+            catch (OutOfMemoryException)
             {
                 throw;
             }
