@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -191,7 +192,15 @@ namespace IoTCoreDefaultApp
                     return false;
                 }
 
-                await adapter.ScanAsync();
+                try
+                {
+                    await adapter.ScanAsync();
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(String.Format("Error scanning {0}: 0x{1:X}: {2}", adapter.NetworkAdapter.NetworkAdapterId, e.HResult, e.Message));
+                    continue;
+                }
 
                 if (adapter.NetworkReport == null)
                 {
