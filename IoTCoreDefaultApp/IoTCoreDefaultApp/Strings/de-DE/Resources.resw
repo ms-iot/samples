@@ -201,7 +201,7 @@
     <comment>Board name</comment>
   </data>
   <data name="SkipStepText" xml:space="preserve">
-    <value>Diesen Schritt überspringen,</value>
+    <value>Diesen Schritt überspringen</value>
   </data>
   <data name="WifiText" xml:space="preserve">
     <value>WLAN</value>

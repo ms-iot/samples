@@ -192,15 +192,7 @@ namespace IoTCoreDefaultApp
                     return false;
                 }
 
-                try
-                {
-                    await adapter.ScanAsync();
-                }
-                catch (Exception e)
-                {
-                    Debug.WriteLine(String.Format("Error scanning {0}: 0x{1:X}: {2}", adapter.NetworkAdapter.NetworkAdapterId, e.HResult, e.Message));
-                    continue;
-                }
+                await adapter.ScanAsync();
 
                 if (adapter.NetworkReport == null)
                 {
