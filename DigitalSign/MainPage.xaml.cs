@@ -45,12 +45,14 @@ namespace DigitalSignageUAP
         static private Page currentPage;
         static readonly TimeSpan heartbeatDuration = new TimeSpan(0, 30, 0);
         static readonly TimeSpan reloadContentIntervalDuration = new TimeSpan(0, 1, 0);
+        static bool reloadContentDone = false;
 
         static public void StartReloadContentTimer(Page page)
         {
             currentPage = page;
             if (reloadContentTimer == null)
             {
+                reloadContentDone = false;
                 reloadContentTimer = new DispatcherTimer();
                 reloadContentTimer.Interval = reloadContentIntervalDuration;
                 reloadContentTimer.Tick += reloadContentTimer_Tick; // ensure this is only added once
@@ -66,11 +68,22 @@ namespace DigitalSignageUAP
         static void reloadContentTimer_Tick(object sender, object e)
         {
             DateTime time = DateTime.Now;
-            if (time.Hour == 0 && time.Minute == 0) // we want the content reload happens only at 0:00 every day, exact mid-night
+            // since DispatcherTimer aren't guarantee to fire immediately after interval expires and also because
+            // it started some when seconds within a minute there is no guarantee that time will exactly be 0:00
+            if (time.Hour == 0 && time.Minute >= 0 && time.Minute < 2)
             {
-                // go to main page and reload slideshow page would trigger a content reload
-                currentPage.Frame.Navigate(typeof(MainPage));
-                currentPage.Frame.Navigate(typeof(SlideshowPage));
+                if (!reloadContentDone)
+                {
+                    reloadContentDone = true;
+
+                    // go to main page and reload slideshow page would trigger a content reload
+                    currentPage.Frame.Navigate(typeof(MainPage));
+                    currentPage.Frame.Navigate(typeof(SlideshowPage));
+                }
+            }
+            else
+            {
+                reloadContentDone = false;
             }
         }
     }
