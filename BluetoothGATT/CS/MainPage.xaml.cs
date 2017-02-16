@@ -24,6 +24,7 @@ using Windows.Devices.Enumeration;
 
 // Required APIs for buffer manipulation & async operations
 using Windows.Storage.Streams;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -42,10 +43,7 @@ namespace BluetoothGATT
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        // Arrays for information that needs to be saved
-        private byte[] baroCalibrationData;
-        private GattDeviceService[] serviceList = new GattDeviceService[7];
-        private GattCharacteristic[] activeCharacteristics = new GattCharacteristic[7];
+        const int E_FILE_NOT_FOUND = -2147024894;
 
         // IDs for Sensors
         const int NUM_SENSORS = 7;
@@ -57,7 +55,11 @@ namespace BluetoothGATT
         const int GYROSCOPE = 5;
         const int KEYS = 6;
 
-        
+        // Arrays for information that needs to be saved
+        private byte[] baroCalibrationData;
+        private Dictionary<int, GattDeviceService> _serviceList = new Dictionary<int, GattDeviceService>();
+        private Dictionary<int, GattCharacteristic> _notifyList = new Dictionary<int, GattCharacteristic>();
+
         const string SENSOR_GUID_PREFIX = "F000AA";
         const string SENSOR_GUID_SUFFFIX = "0-0451-4000-B000-000000000000";
         const string SENSOR_NOTIFICATION_GUID_SUFFFIX = "1-0451-4000-B000-000000000000";
@@ -73,6 +75,7 @@ namespace BluetoothGATT
 
 
 
+        const int BLEWATCHER_STOP_TIMEOUT = 1;          // minute
         private DeviceWatcher deviceWatcher = null;
 
         private DeviceInformationDisplay DeviceInfoConnected = null;
@@ -84,9 +87,7 @@ namespace BluetoothGATT
         private TypedEventHandler<DeviceWatcher, Object> handlerEnumCompleted = null;
 
         private DeviceWatcher blewatcher = null;
-        private TypedEventHandler<DeviceWatcher, DeviceInformation> OnBLEAdded = null;
-        private TypedEventHandler<DeviceWatcher, DeviceInformationUpdate> OnBLEUpdated = null;
-        private TypedEventHandler<DeviceWatcher, DeviceInformationUpdate> OnBLERemoved = null;
+        private EventWaitHandle blewatcherStopped = new EventWaitHandle(false, EventResetMode.AutoReset);
 
         TaskCompletionSource<string> providePinTaskSrc;
         TaskCompletionSource<bool> confirmPinTaskSrc;
@@ -243,76 +244,150 @@ namespace BluetoothGATT
         }
 
         //Watcher for Bluetooth LE Services
-        private void StartBLEWatcher()
+        private async void OnBLEAdded(DeviceWatcher watcher, DeviceInformation deviceInfo)
         {
-            int discoveredServices = 0;
-            // Hook up handlers for the watcher events before starting the watcher
-            OnBLEAdded = async (watcher, deviceInfo) =>
+            if (blewatcher == null ||
+                (watcher.Status != DeviceWatcherStatus.Started && watcher.Status != DeviceWatcherStatus.EnumerationCompleted) ||
+                _serviceList.Count >= NUM_SENSORS)
             {
-                Dispatcher.RunAsync(CoreDispatcherPriority.Low, async () =>
+                // nothing to do => return
+                return;
+            }
+
+            // note that BLE device can go off without notice (e.g.: low battery or out of range...)
+            // => getting device info can fail right during the on added event
+            try
+            {
+                Debug.WriteLine("OnBLEAdded: " + deviceInfo.Id);
+                GattDeviceService service = await GattDeviceService.FromIdAsync(deviceInfo.Id);
+                if (service != null)
                 {
-                    Debug.WriteLine("OnBLEAdded: " + deviceInfo.Id);
-                    GattDeviceService service = await GattDeviceService.FromIdAsync(deviceInfo.Id);
-                    if (service != null)
+                    int sensorIdx = -1;
+                    string svcGuid = service.Uuid.ToString().ToUpper();
+                    Debug.WriteLine("Found Service: " + svcGuid);
+
+                    // Add this service to the list if it conforms to the TI-GUID pattern for most sensors
+                    if (svcGuid.StartsWith(SENSOR_GUID_PREFIX))
                     {
-                        int sensorIdx = -1;
-                        string svcGuid = service.Uuid.ToString().ToUpper();
-                        Debug.WriteLine("Found Service: " + svcGuid);
+                        // The character at this position indicates the index into the serviceList 
+                        // container that we want to save this service to.  The rest of this program
+                        // assumes that specific sensor types are at specific indexes in this array
+                        sensorIdx = svcGuid[6] - '0';
+                    }
+                    // otherwise, if this is the GUID for the KEYS, then handle it special
+                    else if (svcGuid == BUTTONS_GUID_STR)
+                    {
+                        sensorIdx = KEYS;
+                    }
+                    // If the index is legal and a service hasn't already been cached, then
+                    // cache this service in our serviceList
+                    bool doEnableSensor = false;
+                    lock (_serviceList)
+                    {
+                        if (((sensorIdx >= 0) && (sensorIdx <= KEYS)) &&
+                            !_serviceList.ContainsKey(sensorIdx))
+                        {
+                            _serviceList.Add(sensorIdx, service);
+                            doEnableSensor = true;
+                        }
+                    }
+                    if (doEnableSensor)
+                    {
+                        await enableSensor(sensorIdx);
+                    }
 
-                        // Add this service to the list if it conforms to the TI-GUID pattern for most sensors
-                        if (svcGuid.StartsWith(SENSOR_GUID_PREFIX))
-                        {
-                            // The character at this position indicates the index into the serviceList 
-                            // container that we want to save this service to.  The rest of this program
-                            // assumes that specific sensor types are at specific indexes in this array
-                            sensorIdx = svcGuid[6] - '0';
-                        }
-                        // otherwise, if this is the GUID for the KEYS, then handle it special
-                        else if (svcGuid == BUTTONS_GUID_STR)
-                        {
-                            sensorIdx = KEYS;
-                        }
-                        // If the index is legal and a service hasn't already been cached, then
-                        // cache this service in our serviceList
-                        if (((sensorIdx >= 0) && (sensorIdx <= KEYS)) && (serviceList[sensorIdx] == null))
-                        {
-                            serviceList[sensorIdx] = service;
-                            await enableSensor(sensorIdx);
-                            System.Threading.Interlocked.Increment(ref discoveredServices);
-                        }
-
-                        // When all sensors have been discovered, notify the user
-                        if (discoveredServices == NUM_SENSORS)
+                    // When all sensors have been discovered, notify the user
+                    if (_serviceList.Count == NUM_SENSORS)
+                    {
+                        await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                         {
                             SensorList.IsEnabled = true;
                             DisableButton.IsEnabled = true;
                             EnableButton.IsEnabled = true;
-                            discoveredServices = 0;
                             UserOut.Text = "Sensors on!";
-                        }
-                    }
-                });
-            };
-
-
-            OnBLEUpdated = async (watcher, deviceInfoUpdate) =>
-                    {
-                        Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
-                        {
-                            Debug.WriteLine($"OnBLEUpdated: {deviceInfoUpdate.Id}");
                         });
-                    };
-
-
-            OnBLERemoved = async (watcher, deviceInfoUpdate) =>
+                    }
+                }
+            }
+            catch (System.Exception ex)
             {
-                Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                if (ex.HResult == E_FILE_NOT_FOUND)
                 {
-                    Debug.WriteLine("OnBLERemoved");
+                    Debug.WriteLine($"OnBLEAdded eror: {ex.Message}");
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
+        }
 
+        private async void OnBLEUpdated(DeviceWatcher watcher, DeviceInformationUpdate deviceInfo)
+        {
+        }
+        private async void OnBLERemoved(DeviceWatcher watcher, DeviceInformationUpdate deviceInfo)
+        {
+        }
+
+        private async void OnBLEStopped(DeviceWatcher sender, object e)
+        {
+            // watcher is now stopped
+            blewatcherStopped.Set();
+        }
+
+        private Task StopBLEWatcherAsync(DeviceInformationDisplay deviceInfoDisp)
+        {
+            return Task.Run(async () =>
+            {
+                Debug.WriteLine("Disable Sensors");
+                foreach(var sensor in _serviceList)
+                {
+                    await disableSensor(sensor.Key);
+                }
+                lock(_serviceList)
+                {
+                    _serviceList.Clear();
+                }
+                lock(_notifyList)
+                {
+                    _notifyList.Clear();
+                }
+
+                // stop BLE watcher
+                if (null != blewatcher)
+                {
+                    // Unregister all event handlers but stopped,
+                    // stop the watcher and wait it is stopped.
+                    blewatcher.Added -= OnBLEAdded;
+                    blewatcher.Updated -= OnBLEUpdated;
+                    blewatcher.Removed -= OnBLERemoved;
+                    blewatcher.Stop();
+                    if (blewatcherStopped.WaitOne(TimeSpan.FromMinutes(BLEWATCHER_STOP_TIMEOUT)))
+                    {
+                        Debug.WriteLine($"BLE watcher {blewatcher.Status.ToString()}");
+                        blewatcher.Stopped -= OnBLEStopped;
+                        blewatcher = null;
+                    }
+                    else
+                    {
+                        Debug.WriteLine($"CANNOT stop BLE watcher - timeout expired - BLE status: {blewatcher.Status.ToString()}");
+                    }
+                }
+
+                Debug.WriteLine("UnpairAsync");
+                DeviceUnpairingResult dupr = await deviceInfoDisp.DeviceInformation.Pairing.UnpairAsync();
+                string unpairResult = $"Unpairing result = {dupr.Status}";
+                Debug.WriteLine(unpairResult);
+
+                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                {
+                    UserOut.Text = unpairResult;
                 });
-            };
+            });
+        }
 
+        private void StartBLEWatcher()
+        {
             string aqs = "";
             for (int i = 0; i < NUM_SENSORS; i++)
             {
@@ -334,23 +409,8 @@ namespace BluetoothGATT
             blewatcher.Added += OnBLEAdded;
             blewatcher.Updated += OnBLEUpdated;
             blewatcher.Removed += OnBLERemoved;
+            blewatcher.Stopped += OnBLEStopped;
             blewatcher.Start();
-        }
-
-        private void StopBLEWatcher()
-        {
-            if (null != blewatcher)
-            {
-                blewatcher.Added -= OnBLEAdded;
-                blewatcher.Updated -= OnBLEUpdated;
-                blewatcher.Removed -= OnBLERemoved;
-
-                if (DeviceWatcherStatus.Started == blewatcher.Status ||
-                    DeviceWatcherStatus.EnumerationCompleted == blewatcher.Status)
-                {
-                    blewatcher.Stop();
-                }
-            }
         }
 
         // ---------------------------------------------------
@@ -360,11 +420,11 @@ namespace BluetoothGATT
         // Retrieve Barometer Calibration data
         private async void calibrateBarometer()
         {
-            GattDeviceService gattService = serviceList[BAROMETRIC_PRESSURE];
-            if (gattService != null)
+            GattDeviceService service;
+            if (_serviceList.TryGetValue(BAROMETRIC_PRESSURE, out service))
             {
                 // Set Barometer configuration to 2, so that calibration data is saved
-                var characteristicList = gattService.GetCharacteristics(BAROMETER_CONFIGURATION_GUID);
+                var characteristicList = service.GetCharacteristics(BAROMETER_CONFIGURATION_GUID);
                 if (characteristicList != null)
                 {
                     GattCharacteristic characteristic = characteristicList[0];
@@ -378,7 +438,7 @@ namespace BluetoothGATT
                 }
 
                 // Save Barometer calibration data
-                characteristicList = gattService.GetCharacteristics(BAROMETER_CALIBRATION_GUID);
+                characteristicList = service.GetCharacteristics(BAROMETER_CALIBRATION_GUID);
                 if (characteristicList != null)
                 {
                     GattReadResult result = await characteristicList[0].ReadValueAsync(BluetoothCacheMode.Uncached);
@@ -391,10 +451,11 @@ namespace BluetoothGATT
         // Set sensor update period 
         private async void setSensorPeriod(int sensor, int period)
         {
-            GattDeviceService gattService = serviceList[sensor];
-            if (sensor != KEYS && gattService != null)
+            GattDeviceService service;
+            if (sensor != KEYS && 
+                _serviceList.TryGetValue(sensor, out service))
             {
-                var characteristicList = gattService.GetCharacteristics(new Guid(SENSOR_GUID_PREFIX + sensor + SENSOR_PERIOD_GUID_SUFFFIX));
+                var characteristicList = service.GetCharacteristics(new Guid(SENSOR_GUID_PREFIX + sensor + SENSOR_PERIOD_GUID_SUFFFIX));
                 if (characteristicList != null)
                 {
                     GattCharacteristic characteristic = characteristicList[0];
@@ -413,73 +474,76 @@ namespace BluetoothGATT
         // Enable and subscribe to specified GATT characteristic
         private async Task enableSensor(int sensor)
         {
-            Debug.WriteLine("Begin enable sensor: " + sensor.ToString());
-            GattDeviceService gattService = serviceList[sensor];
-            if (gattService != null)
+            GattDeviceService sensorDevice;
+            if (_serviceList.TryGetValue(sensor, out sensorDevice))
             {
-                // Turn on notifications
-                IReadOnlyList<GattCharacteristic> characteristicList;
-                if (sensor >= 0 && sensor <= 5)
-                    characteristicList = gattService.GetCharacteristics(new Guid(SENSOR_GUID_PREFIX + sensor + SENSOR_NOTIFICATION_GUID_SUFFFIX));
-                else
-                    characteristicList = gattService.GetCharacteristics(BUTTONS_NOTIFICATION_GUID);
-
-                if (characteristicList != null)
+                GattCharacteristic notification;
+                lock (_notifyList)
                 {
-                    GattCharacteristic characteristic = characteristicList[0];
-                    if (characteristic.CharacteristicProperties.HasFlag(GattCharacteristicProperties.Notify))
+                    if (!_notifyList.TryGetValue(sensor, out notification))
+                    {
+                        IReadOnlyList<GattCharacteristic> notificationList;
+                        if (sensor >= 0 && sensor <= 5)
+                        {
+                            notificationList = sensorDevice.GetCharacteristics(new Guid(SENSOR_GUID_PREFIX + sensor + SENSOR_NOTIFICATION_GUID_SUFFFIX));
+                        }
+                        else
+                        {
+                            notificationList = sensorDevice.GetCharacteristics(BUTTONS_NOTIFICATION_GUID);
+                        }
+                        if (notificationList != null)
+                        {
+                            _notifyList.Add(sensor, notificationList[0]);
+                        }
+                    }
+                }
+
+                if (_notifyList.TryGetValue(sensor, out notification))
+                {
+                    Debug.WriteLine($"Begin enable sensor {sensor} - {notification.UserDescription}");
+                    if (notification.CharacteristicProperties.HasFlag(GattCharacteristicProperties.Notify))
                     {
                         switch (sensor)
                         {
                             case (IR_SENSOR):
-                                characteristic.ValueChanged += tempChanged;
-                                IRTitle.Foreground = new SolidColorBrush(Colors.Green);
+                                notification.ValueChanged += tempChanged;
                                 break;
                             case (ACCELEROMETER):
-                                characteristic.ValueChanged += accelChanged;
-                                AccelTitle.Foreground = new SolidColorBrush(Colors.Green);
+                                notification.ValueChanged += accelChanged;
                                 setSensorPeriod(ACCELEROMETER, 250);
                                 break;
                             case (HUMIDITY):
-                                characteristic.ValueChanged += humidChanged;
-                                HumidTitle.Foreground = new SolidColorBrush(Colors.Green);
+                                notification.ValueChanged += humidChanged;
                                 break;
                             case (MAGNETOMETER):
-                                characteristic.ValueChanged += magnoChanged;
-                                MagnoTitle.Foreground = new SolidColorBrush(Colors.Green);
+                                notification.ValueChanged += magnoChanged;
                                 break;
                             case (BAROMETRIC_PRESSURE):
-                                characteristic.ValueChanged += pressureChanged;
-                                BaroTitle.Foreground = new SolidColorBrush(Colors.Green);
+                                notification.ValueChanged += pressureChanged;
                                 calibrateBarometer();
                                 break;
                             case (GYROSCOPE):
-                                characteristic.ValueChanged += gyroChanged;
-                                GyroTitle.Foreground = new SolidColorBrush(Colors.Green);
+                                notification.ValueChanged += gyroChanged;
                                 break;
                             case (KEYS):
-                                characteristic.ValueChanged += keyChanged;
-                                KeyTitle.Foreground = new SolidColorBrush(Colors.Green);
+                                notification.ValueChanged += keyChanged;
                                 break;
                             default:
                                 break;
                         }
 
-                        // Save a reference to each active characteristic, so that handlers do not get prematurely killed
-                        activeCharacteristics[sensor] = characteristic;
-
                         // Set the notify enable flag
-                        await characteristic.WriteClientCharacteristicConfigurationDescriptorAsync(GattClientCharacteristicConfigurationDescriptorValue.Notify);
+                        var unused = await notification.WriteClientCharacteristicConfigurationDescriptorAsync(GattClientCharacteristicConfigurationDescriptorValue.Notify);
                     }
                 }
 
                 // Turn on sensor
                 if (sensor >= 0 && sensor <= 5)
                 {
-                    characteristicList = gattService.GetCharacteristics(new Guid(SENSOR_GUID_PREFIX + sensor + SENSOR_ENABLE_GUID_SUFFFIX));
-                    if (characteristicList != null)
+                    IReadOnlyList<GattCharacteristic> enableCharacteristicList = sensorDevice.GetCharacteristics(new Guid(SENSOR_GUID_PREFIX + sensor + SENSOR_ENABLE_GUID_SUFFFIX));
+                    if (enableCharacteristicList != null)
                     {
-                        GattCharacteristic characteristic = characteristicList[0];
+                        GattCharacteristic characteristic = enableCharacteristicList[0];
                         if (characteristic.CharacteristicProperties.HasFlag(GattCharacteristicProperties.Write))
                         {
                             var writer = new Windows.Storage.Streams.DataWriter();
@@ -493,64 +557,112 @@ namespace BluetoothGATT
                         }
                     }
                 }
-            }
-            Debug.WriteLine("End enable sensor: " + sensor.ToString());
 
+                // update UI and set value changed
+                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                {
+                    switch (sensor)
+                    {
+                        case (IR_SENSOR):
+                            IRTitle.Foreground = new SolidColorBrush(Colors.Green);
+                            break;
+                        case (ACCELEROMETER):
+                            AccelTitle.Foreground = new SolidColorBrush(Colors.Green);
+                            break;
+                        case (HUMIDITY):
+                            HumidTitle.Foreground = new SolidColorBrush(Colors.Green);
+                            break;
+                        case (MAGNETOMETER):
+                            MagnoTitle.Foreground = new SolidColorBrush(Colors.Green);
+                            break;
+                        case (BAROMETRIC_PRESSURE):
+                            BaroTitle.Foreground = new SolidColorBrush(Colors.Green);
+                            break;
+                        case (GYROSCOPE):
+                            GyroTitle.Foreground = new SolidColorBrush(Colors.Green);
+                            break;
+                        case (KEYS):
+                            KeyTitle.Foreground = new SolidColorBrush(Colors.Green);
+                            break;
+                        default:
+                            break;
+                    }
+                });
+            }
         }
 
         // Disable notifications to specified GATT characteristic
         private async Task disableSensor(int sensor)
         {
-            Debug.WriteLine("Begin disable of sensor: " + sensor.ToString());
-            GattDeviceService gattService = serviceList[sensor];
-            if (gattService != null)
+            GattCharacteristic notification;
+            if (_notifyList.TryGetValue(sensor, out notification))
             {
                 // Disable notifications
-                IReadOnlyList<GattCharacteristic> characteristicList;
-                if (sensor >= 0 && sensor <= 5)
-                    characteristicList = gattService.GetCharacteristics(new Guid(SENSOR_GUID_PREFIX + sensor + SENSOR_NOTIFICATION_GUID_SUFFFIX));
-                else
-                    characteristicList = gattService.GetCharacteristics(BUTTONS_NOTIFICATION_GUID);
-
-                if (characteristicList != null)
+                Debug.WriteLine($"Begin disable of sensor {sensor} - {notification.UserDescription}");
+                switch (sensor)
                 {
-                    GattCharacteristic characteristic = characteristicList[0];
-                    if (characteristic.CharacteristicProperties.HasFlag(GattCharacteristicProperties.Notify))
-                    {
-                        GattCommunicationStatus status = await characteristic.WriteClientCharacteristicConfigurationDescriptorAsync(GattClientCharacteristicConfigurationDescriptorValue.None);
-                    }
+                    case (IR_SENSOR):
+                        notification.ValueChanged -= tempChanged;
+                        break;
+                    case (ACCELEROMETER):
+                        notification.ValueChanged -= accelChanged;
+                        break;
+                    case (HUMIDITY):
+                        notification.ValueChanged -= humidChanged;
+                        break;
+                    case (MAGNETOMETER):
+                        notification.ValueChanged -= magnoChanged;
+                        break;
+                    case (BAROMETRIC_PRESSURE):
+                        notification.ValueChanged -= pressureChanged;
+                        break;
+                    case (GYROSCOPE):
+                        notification.ValueChanged -= gyroChanged;
+                        break;
+                    case (KEYS):
+                        notification.ValueChanged -= keyChanged;
+                        break;
+                    default:
+                        break;
+                }
+                if (notification.CharacteristicProperties.HasFlag(GattCharacteristicProperties.Notify))
+                {
+                    var unused = await notification.WriteClientCharacteristicConfigurationDescriptorAsync(GattClientCharacteristicConfigurationDescriptorValue.None);
                 }
             }
 
-            switch (sensor)
+            // update UI
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
             {
-                case (IR_SENSOR):
-                    IRTitle.Foreground = new SolidColorBrush(Colors.White);
-                    break;
-                case (ACCELEROMETER):
-                    AccelTitle.Foreground = new SolidColorBrush(Colors.White);
-                    break;
-                case (HUMIDITY):
-                    HumidTitle.Foreground = new SolidColorBrush(Colors.White);
-                    break;
-                case (MAGNETOMETER):
-                    MagnoTitle.Foreground = new SolidColorBrush(Colors.White);
-                    break;
-                case (BAROMETRIC_PRESSURE):
-                    BaroTitle.Foreground = new SolidColorBrush(Colors.White);
-                    break;
-                case (GYROSCOPE):
-                    GyroTitle.Foreground = new SolidColorBrush(Colors.White);
-                    break;
-                case (KEYS):
-                    KeyTitle.Foreground = new SolidColorBrush(Colors.White);
-                    KeyROut.Background = new SolidColorBrush(Colors.Red);
-                    KeyLOut.Background = new SolidColorBrush(Colors.Red);
-                    break;
-                default:
-                    break;
-            }
-            activeCharacteristics[sensor] = null;
+                switch (sensor)
+                {
+                    case (IR_SENSOR):
+                        IRTitle.Foreground = new SolidColorBrush(Colors.White);
+                        break;
+                    case (ACCELEROMETER):
+                        AccelTitle.Foreground = new SolidColorBrush(Colors.White);
+                        break;
+                    case (HUMIDITY):
+                        HumidTitle.Foreground = new SolidColorBrush(Colors.White);
+                        break;
+                    case (MAGNETOMETER):
+                        MagnoTitle.Foreground = new SolidColorBrush(Colors.White);
+                        break;
+                    case (BAROMETRIC_PRESSURE):
+                        BaroTitle.Foreground = new SolidColorBrush(Colors.White);
+                        break;
+                    case (GYROSCOPE):
+                        GyroTitle.Foreground = new SolidColorBrush(Colors.White);
+                        break;
+                    case (KEYS):
+                        KeyTitle.Foreground = new SolidColorBrush(Colors.White);
+                        KeyROut.Background = new SolidColorBrush(Colors.Red);
+                        KeyLOut.Background = new SolidColorBrush(Colors.Red);
+                        break;
+                    default:
+                        break;
+                }
+            });
             Debug.WriteLine("End disable for sensor: " + sensor.ToString());
 
         }
@@ -786,33 +898,11 @@ namespace BluetoothGATT
             DisableButton.IsEnabled = false;
             DeviceInfoConnected = null;
 
-            Debug.WriteLine("Disable Sensors");
-            for (int i = 0; i < NUM_SENSORS; i++)
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
             {
-                if (serviceList[i] != null)
-                {
-                    await disableSensor(i);
-                }
-            }
+                await StopBLEWatcherAsync(deviceInfoDisp);
+            });
 
-            Debug.WriteLine("UnpairAsync");
-            try
-            {
-                DeviceUnpairingResult dupr = await deviceInfoDisp.DeviceInformation.Pairing.UnpairAsync();
-                string unpairResult = $"Unpairing result = {dupr.Status}";
-                Debug.WriteLine(unpairResult);
-                UserOut.Text = unpairResult;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Unpair exception = " + ex.Message);
-            }           
-
-            for (int i = 0; i < NUM_SENSORS; i++)
-            {
-                serviceList[i] = null;
-            }
-                
             UpdatePairingButtons();
         }
 
