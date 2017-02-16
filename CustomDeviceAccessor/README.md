@@ -1,4 +1,4 @@
-Windows 10 IoT Core sample code
+Custom Device Accessor
 ===============
 
 [Documentation for this sample](https://developer.microsoft.com/en-us/windows/iot/samples/customdeviceaccessor)
