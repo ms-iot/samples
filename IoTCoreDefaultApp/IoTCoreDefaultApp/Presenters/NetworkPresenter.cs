@@ -191,7 +191,15 @@ namespace IoTCoreDefaultApp
                     return false;
                 }
 
-                await adapter.ScanAsync();
+                try
+                {
+                    await adapter.ScanAsync();
+                }
+                catch (Exception)
+                {
+                    // ScanAsync() can throw an exception if the scan timeouts.
+                    continue;
+                }
 
                 if (adapter.NetworkReport == null)
                 {
@@ -260,7 +268,16 @@ namespace IoTCoreDefaultApp
                 return false;
             }
 
-            var result = await networkNameToInfo[network].ConnectAsync(network, autoConnect ? WiFiReconnectionKind.Automatic : WiFiReconnectionKind.Manual);
+            // We need to use TryGetValue here.  If we are rescanning for Wifi networks
+            // (ie. 'await'ing on ScanAsync() in UpdateInfo(), 'networkNameToInfo' may not
+            // have an entry described by the key'network'.
+            WiFiAdapter wifiAdapter;
+            if (!networkNameToInfo.TryGetValue(network, out wifiAdapter))
+            {
+                return false;
+            }
+
+            var result = await wifiAdapter.ConnectAsync(network, autoConnect ? WiFiReconnectionKind.Automatic : WiFiReconnectionKind.Manual);
 
             return (result.ConnectionStatus == WiFiConnectionStatus.Success);
         }
@@ -282,7 +299,16 @@ namespace IoTCoreDefaultApp
                 return false;
             }
 
-            var result = await networkNameToInfo[network].ConnectAsync(
+            // We need to use TryGetValue here.  If we are rescanning for Wifi networks
+            // (ie. 'await'ing on ScanAsync() in UpdateInfo(), 'networkNameToInfo' may not
+            // have an entry described by the key'network'.
+            WiFiAdapter wifiAdapter;
+            if (!networkNameToInfo.TryGetValue(network, out wifiAdapter))
+            {
+                return false;
+            }
+
+            var result = await wifiAdapter.ConnectAsync(
                 network,
                 autoConnect ? WiFiReconnectionKind.Automatic : WiFiReconnectionKind.Manual,
                 password);

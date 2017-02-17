@@ -33,6 +33,10 @@ namespace IoTCoreDefaultApp
 
             this.DataContext = LanguageManager.GetInstance();
 
+            timer = new DispatcherTimer();
+            timer.Tick += timer_Tick;
+            timer.Interval = TimeSpan.FromSeconds(30);
+
             this.Loaded += async (sender, e) =>
             {
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
@@ -40,16 +44,12 @@ namespace IoTCoreDefaultApp
                     UpdateBoardInfo();
                     UpdateDateTime();
 
-                    timer = new DispatcherTimer();
-                    timer.Tick += timer_Tick;
-                    timer.Interval = TimeSpan.FromSeconds(30);
                     timer.Start();
                 });
             };
             this.Unloaded += (sender, e) =>
             {
                 timer.Stop();
-                timer = null;
             };
         }
 
