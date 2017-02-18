@@ -2,7 +2,9 @@
 
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using Windows.Devices.Bluetooth.Rfcomm;
 using Windows.Devices.Enumeration;
 using Windows.Devices.WiFi;
@@ -267,9 +269,20 @@ namespace IoTCoreDefaultApp
         private async void SetupWifi()
         {
             if (await networkPresenter.WifiIsAvailable())
-            {    
-                var networks = await networkPresenter.GetAvailableNetworks();
-             
+            {
+                IList<WiFiAvailableNetwork> networks;
+                try
+                {
+                    networks = await networkPresenter.GetAvailableNetworks();
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(String.Format("Error scanning: 0x{0:X}: {1}", e.HResult, e.Message));
+                    NoWifiFoundText.Text = e.Message;
+                    NoWifiFoundText.Visibility = Visibility.Visible;
+                    return;
+                }
+
                 if (networks.Count > 0)
                 {
 

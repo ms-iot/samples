@@ -2,6 +2,8 @@
 
 
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using Windows.Devices.WiFi;
 using Windows.Networking.Connectivity;
 using Windows.Security.Credentials;
@@ -76,7 +78,18 @@ namespace IoTCoreDefaultApp
         {
             if (await networkPresenter.WifiIsAvailable())
             {
-                var networks = await networkPresenter.GetAvailableNetworks();
+                IList<WiFiAvailableNetwork> networks;
+                try
+                {
+                    networks = await networkPresenter.GetAvailableNetworks();
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(String.Format("Error scanning: 0x{0:X}: {1}", e.HResult, e.Message));
+                    NoWifiFoundText.Text = e.Message;
+                    NoWifiFoundText.Visibility = Visibility.Visible;
+                    return;
+                }
 
                 if (networks.Count > 0)
                 {

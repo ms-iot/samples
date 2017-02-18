@@ -70,7 +70,15 @@ namespace WiFiConnect
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            await firstAdapter.ScanAsync();
+            try
+            {
+                await firstAdapter.ScanAsync();
+            }
+            catch (Exception err)
+            {
+                rootPage.NotifyUser(String.Format("Error scanning WiFi adapter: 0x{0:X}: {1}", err.HResult, err.Message), NotifyType.ErrorMessage);
+                return;
+            }
             ConnectionBar.Visibility = Visibility.Collapsed;
             DisplayNetworkReport(firstAdapter.NetworkReport);
         }
