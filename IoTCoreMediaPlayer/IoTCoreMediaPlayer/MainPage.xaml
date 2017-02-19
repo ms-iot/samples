@@ -1,0 +1,70 @@
+﻿<Page
+    x:Class="IoTCoreMediaPlayer.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:IoTCoreMediaPlayer"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100" />
+            <RowDefinition Height="80" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="80" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="80" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="1" Text="IoTCore Media Player" VerticalAlignment="Bottom" Style="{StaticResource HeaderTextBlockStyle}" />
+
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBox x:Name="txtFileName"  Grid.Column="0" VerticalAlignment="Bottom" TextChanged="txtFileName_TextChanged" />
+            <Button x:Name="btnOpen" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Content="Open" Margin="10, 0, 0, 0" Click="btnOpen_Click" />
+            <Button x:Name="btnBrowse" Grid.Column="2" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Content="Browse" Margin="10, 0, 0, 0" Click="btnBrowse_Click" />
+            <Button x:Name="btnClear" Grid.Column="3" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Content="Clear" Margin="10, 0, 0, 0" Click="btnClear_Click" />
+        </Grid>
+
+        <MediaElement x:Name="mediaElement" Grid.Row="2" Grid.Column="1" Margin="0,20" AreTransportControlsEnabled="True" />
+
+        <TextBlock x:Name="lblError" Grid.Row="2" Grid.Column="1" Visibility="Collapsed" Foreground="Red" Style="{StaticResource SubheaderTextBlockStyle}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+
+        <Grid x:Name="grdPicker" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="3" Margin="40" Background="Bisque" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="40" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Row="0" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock x:Name="lblBreadcrumb"  Grid.Column="0" VerticalAlignment="Bottom" Margin="10, 0, 0, 0" Text="> My PC" Style="{StaticResource TitleTextBlockStyle}" />
+                <Button x:Name="btnSelect" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Content="Select" Margin="10, 0, 0, 0" Click="btnSelect_Click" />
+                <Button x:Name="btnCancel" Grid.Column="2" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Content="Cancel" Margin="10, 0, 0, 0" Click="btnCancel_Click" />
+            </Grid>
+
+            <ListView x:Name="lstFiles" Grid.Row="1" Grid.Column="1" Margin="0,20" KeyUp="lstFiles_KeyUp" DoubleTapped="lstFiles_DoubleTapped" IsTabStop="True" />
+
+        </Grid>
+
+    </Grid>
+</Page>

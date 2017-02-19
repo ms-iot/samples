@@ -40,7 +40,7 @@ namespace PotentiometerSensor
         {
             if (ADC_DEVICE == AdcDevice.NONE)
             {
-                StatusText.Text = "Please change the ADC_DEVICE variable to either MCP3002 or MCP3208";
+                StatusText.Text = "Please change the ADC_DEVICE variable to either MCP3002 or MCP3208, or MCP3008";
                 return;
             }
 
@@ -70,9 +70,8 @@ namespace PotentiometerSensor
                 settings.ClockFrequency = 500000;   /* 0.5MHz clock rate                                        */
                 settings.Mode = SpiMode.Mode0;      /* The ADC expects idle-low clock polarity so we use Mode0  */
 
-                string spiAqs = SpiDevice.GetDeviceSelector(SPI_CONTROLLER_NAME);
-                var deviceInfo = await DeviceInformation.FindAllAsync(spiAqs);
-                SpiADC = await SpiDevice.FromIdAsync(deviceInfo[0].Id, settings);
+                var controller = await SpiController.GetDefaultAsync();
+                SpiADC = controller.GetDevice(settings);
             }
 
             /* If initialization fails, display the exception and stop running */
@@ -112,6 +111,9 @@ namespace PotentiometerSensor
                 case AdcDevice.MCP3208:
                     adcResolution = 4096;
                     break;
+                case AdcDevice.MCP3008:
+                    adcResolution = 1024;
+                    break;
             }
 
             /* Turn on LED if pot is rotated more halfway through its range */
@@ -147,6 +149,10 @@ namespace PotentiometerSensor
                 case AdcDevice.MCP3208:
                     writeBuffer[0] = MCP3208_CONFIG;
                     break;
+                case AdcDevice.MCP3008:
+                    writeBuffer[0] = MCP3008_CONFIG[0];
+                    writeBuffer[1] = MCP3008_CONFIG[1];
+                    break;
             }
 
             SpiADC.TransferFullDuplex(writeBuffer, readBuffer); /* Read data from the ADC                           */
@@ -175,6 +181,11 @@ namespace PotentiometerSensor
                     result <<= 8;
                     result += data[2];
                     break;
+                case AdcDevice.MCP3008:
+                    result = data[1] & 0x03;
+                    result <<= 8;
+                    result += data[2];
+                    break;
             }
             return result;
         }
@@ -192,12 +203,12 @@ namespace PotentiometerSensor
                 ledPin.Dispose();
             }
         }
-        enum AdcDevice { NONE, MCP3002, MCP3208 };
+        enum AdcDevice { NONE, MCP3002, MCP3208, MCP3008};
 
-        /* Important! Change this to either AdcDevice.MCP3002 or AdcDevice.MCP3208 depending on which ADC you chose     */
+        /* Important! Change this to either AdcDevice.MCP3002, AdcDevice.MCP3208 or AdcDevice.MCP3008 depending on which ADC you chose     */
         private AdcDevice ADC_DEVICE = AdcDevice.NONE;
 
-        private const int LED_PIN = 4;
+        private const int LED_PIN = 4; // Use pin 12 if you are using DragonBoard
         private GpioPin ledPin;
 
         private const string SPI_CONTROLLER_NAME = "SPI0";  /* Friendly name for Raspberry Pi 2 SPI controller          */
@@ -206,6 +217,7 @@ namespace PotentiometerSensor
 
         private const byte MCP3002_CONFIG = 0x68; /* 01101000 channel configuration data for the MCP3002 */
         private const byte MCP3208_CONFIG = 0x06; /* 00000110 channel configuration data for the MCP3208 */
+        private readonly byte[] MCP3008_CONFIG = { 0x01, 0x80 }; /* 00000001 10000000 channel configuration data for the MCP3008 */
 
         private Timer periodicTimer;
         private int adcValue;

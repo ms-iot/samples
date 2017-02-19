@@ -1,0 +1,176 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: bacnet - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\VMWare\LOCALS~1\Temp\RSP2E.tmp" with contents
+[
+/nologo /MTd /W3 /Gm /GX /ZI /Od /I "..\..\..\include\\" /I ".." /I "..\..\..\demo\object\\" /I "..\..\..\demo\handler\\" /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D "BACAPP_ALL" /D PRINT_ENABLED=1 /D BIG_ENDIAN=0 /D "BACDL_BIP" /D USE_INADDR=1 /FR"Debug/" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"C:\code\bacnet-stack\src\bacdevobjpropref.c"
+"C:\code\bacnet-stack\src\memcopy.c"
+]
+Creating command line "cl.exe @C:\DOCUME~1\VMWare\LOCALS~1\Temp\RSP2E.tmp" 
+Creating temporary file "C:\DOCUME~1\VMWare\LOCALS~1\Temp\RSP2F.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib wsock32.lib /nologo /subsystem:console /incremental:yes /pdb:"Debug/bacnet.pdb" /debug /machine:I386 /out:"Debug/bacnet.exe" /pdbtype:sept 
+".\Debug\abort.obj"
+".\Debug\address.obj"
+".\Debug\ai.obj"
+".\Debug\ao.obj"
+".\Debug\apdu.obj"
+".\Debug\arf.obj"
+".\Debug\av.obj"
+".\Debug\bacaddr.obj"
+".\Debug\bacapp.obj"
+".\Debug\bacdcode.obj"
+".\Debug\bacerror.obj"
+".\Debug\bacfile.obj"
+".\Debug\bacint.obj"
+".\Debug\bacreal.obj"
+".\Debug\bacstr.obj"
+".\Debug\bactext.obj"
+".\Debug\bi.obj"
+".\Debug\bip-init.obj"
+".\Debug\bip.obj"
+".\Debug\bo.obj"
+".\Debug\bv.obj"
+".\Debug\bvlc.obj"
+".\Debug\cov.obj"
+".\Debug\crc.obj"
+".\Debug\datetime.obj"
+".\Debug\dcc.obj"
+".\Debug\debug.obj"
+".\Debug\device.obj"
+".\Debug\dlmstp.obj"
+".\Debug\h_arf.obj"
+".\Debug\h_arf_a.obj"
+".\Debug\h_cov.obj"
+".\Debug\h_iam.obj"
+".\Debug\h_rp.obj"
+".\Debug\h_rp_a.obj"
+".\Debug\h_whois.obj"
+".\Debug\h_npdu.obj"
+".\Debug\h_wp.obj"
+".\Debug\iam.obj"
+".\Debug\indtext.obj"
+".\Debug\lc.obj"
+".\Debug\lsp.obj"
+".\Debug\main.obj"
+".\Debug\mso.obj"
+".\Debug\mstp.obj"
+".\Debug\mstptext.obj"
+".\Debug\noserv.obj"
+".\Debug\s_iam.obj"
+".\Debug\npdu.obj"
+".\Debug\reject.obj"
+".\Debug\ringbuf.obj"
+".\Debug\rp.obj"
+".\Debug\rs485.obj"
+".\Debug\s_rp.obj"
+".\Debug\s_whois.obj"
+".\Debug\s_wp.obj"
+".\Debug\tsm.obj"
+".\Debug\txbuf.obj"
+".\Debug\dlenv.obj"
+".\Debug\version.obj"
+".\Debug\whois.obj"
+".\Debug\wp.obj"
+".\Debug\ms-input.obj"
+".\Debug\trendlog.obj"
+".\Debug\h_rpm.obj"
+".\Debug\rpm.obj"
+".\Debug\bacdevobjpropref.obj"
+".\Debug\memcopy.obj"
+]
+Creating command line "link.exe @C:\DOCUME~1\VMWare\LOCALS~1\Temp\RSP2F.tmp"
+<h3>Output Window</h3>
+Compiling...
+bacdevobjpropref.c
+memcopy.c
+Generating Code...
+Linking...
+Creating temporary file "C:\DOCUME~1\VMWare\LOCALS~1\Temp\RSP31.tmp" with contents
+[
+/nologo /o"Debug/bacnet.bsc" 
+".\Debug\abort.sbr"
+".\Debug\address.sbr"
+".\Debug\ai.sbr"
+".\Debug\ao.sbr"
+".\Debug\apdu.sbr"
+".\Debug\arf.sbr"
+".\Debug\av.sbr"
+".\Debug\bacaddr.sbr"
+".\Debug\bacapp.sbr"
+".\Debug\bacdcode.sbr"
+".\Debug\bacerror.sbr"
+".\Debug\bacfile.sbr"
+".\Debug\bacint.sbr"
+".\Debug\bacreal.sbr"
+".\Debug\bacstr.sbr"
+".\Debug\bactext.sbr"
+".\Debug\bi.sbr"
+".\Debug\bip-init.sbr"
+".\Debug\bip.sbr"
+".\Debug\bo.sbr"
+".\Debug\bv.sbr"
+".\Debug\bvlc.sbr"
+".\Debug\cov.sbr"
+".\Debug\crc.sbr"
+".\Debug\datetime.sbr"
+".\Debug\dcc.sbr"
+".\Debug\debug.sbr"
+".\Debug\device.sbr"
+".\Debug\dlmstp.sbr"
+".\Debug\h_arf.sbr"
+".\Debug\h_arf_a.sbr"
+".\Debug\h_cov.sbr"
+".\Debug\h_iam.sbr"
+".\Debug\h_rp.sbr"
+".\Debug\h_rp_a.sbr"
+".\Debug\h_whois.sbr"
+".\Debug\h_npdu.sbr"
+".\Debug\h_wp.sbr"
+".\Debug\iam.sbr"
+".\Debug\indtext.sbr"
+".\Debug\lc.sbr"
+".\Debug\lsp.sbr"
+".\Debug\main.sbr"
+".\Debug\mso.sbr"
+".\Debug\mstp.sbr"
+".\Debug\mstptext.sbr"
+".\Debug\noserv.sbr"
+".\Debug\s_iam.sbr"
+".\Debug\npdu.sbr"
+".\Debug\reject.sbr"
+".\Debug\ringbuf.sbr"
+".\Debug\rp.sbr"
+".\Debug\rs485.sbr"
+".\Debug\s_rp.sbr"
+".\Debug\s_whois.sbr"
+".\Debug\s_wp.sbr"
+".\Debug\tsm.sbr"
+".\Debug\txbuf.sbr"
+".\Debug\dlenv.sbr"
+".\Debug\version.sbr"
+".\Debug\whois.sbr"
+".\Debug\wp.sbr"
+".\Debug\ms-input.sbr"
+".\Debug\trendlog.sbr"
+".\Debug\h_rpm.sbr"
+".\Debug\rpm.sbr"
+".\Debug\bacdevobjpropref.sbr"
+".\Debug\memcopy.sbr"]
+Creating command line "bscmake.exe @C:\DOCUME~1\VMWare\LOCALS~1\Temp\RSP31.tmp"
+Creating browse info file...
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+bacnet.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

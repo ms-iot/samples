@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="BACnet Server Demo" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin\Debug\bacserv" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Debug\" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-g" />
+					<Add directory="." />
+					<Add directory="..\handler" />
+					<Add directory="..\object" />
+					<Add directory="..\..\..\bacnet-stack" />
+					<Add directory="..\..\ports\win32" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin\Release\bacserv" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Release\" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-Wall" />
+					<Add directory="." />
+					<Add directory="..\handler" />
+					<Add directory="..\object" />
+					<Add directory="..\..\..\bacnet-stack" />
+					<Add directory="..\..\ports\win32" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-O" />
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+			<Add option="-DBACDL_BIP" />
+			<Add option="-DPRINT_ENABLED=1" />
+			<Add option="-DBACAPP_ALL" />
+			<Add directory="..\..\include" />
+			<Add directory="..\handler" />
+			<Add directory="..\object" />
+			<Add directory="..\..\ports\win32" />
+		</Compiler>
+		<Linker>
+			<Add library="..\..\lib\libbacnet.a" />
+			<Add library="ws2_32" />
+			<Add library="iphlpapi" />
+		</Linker>
+		<Unit filename="..\object\ai.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\object\ai.h" />
+		<Unit filename="..\object\ao.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\object\ao.h" />
+		<Unit filename="..\object\av.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\object\av.h" />
+		<Unit filename="..\object\bacfile.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\object\bacfile.h" />
+		<Unit filename="..\object\bi.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\object\bi.h" />
+		<Unit filename="..\object\bo.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\object\bo.h" />
+		<Unit filename="..\object\bv.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\object\bv.h" />
+		<Unit filename="..\object\csv.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\object\csv.h" />
+		<Unit filename="..\object\device.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\object\device.h" />
+		<Unit filename="..\object\lc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\object\lc.h" />
+		<Unit filename="..\object\lo.h" />
+		<Unit filename="..\object\lsp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\object\lsp.h" />
+		<Unit filename="..\object\ms-input.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\object\ms-input.h" />
+		<Unit filename="..\object\mso.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\object\mso.h" />
+		<Unit filename="..\object\msv.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\object\msv.h" />
+		<Unit filename="..\object\nc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\object\nc.h" />
+		<Unit filename="..\object\trendlog.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\object\trendlog.h" />
+		<Unit filename="main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

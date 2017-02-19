@@ -3,9 +3,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
+using Windows.Devices.Enumeration;
 using Windows.Devices.WiFi;
 using Windows.Networking;
 using Windows.Networking.Connectivity;
@@ -16,6 +19,47 @@ namespace IoTCoreDefaultApp
     public class NetworkPresenter
     {
         private readonly static uint EthernetIanaType = 6;
+        private readonly static uint WirelessInterfaceIanaType = 71;
+        private Dictionary<String, WiFiAdapter> WiFiAdapters = new Dictionary<string, WiFiAdapter>();
+        private DeviceWatcher WiFiAdaptersWatcher;
+        ManualResetEvent EnumAdaptersCompleted = new ManualResetEvent(false);
+
+        public NetworkPresenter()
+        {
+            WiFiAdaptersWatcher = DeviceInformation.CreateWatcher(WiFiAdapter.GetDeviceSelector());
+            WiFiAdaptersWatcher.EnumerationCompleted += AdaptersEnumCompleted;
+            WiFiAdaptersWatcher.Added += AdaptersAdded;
+            WiFiAdaptersWatcher.Removed += AdaptersRemoved;
+            WiFiAdaptersWatcher.Start();
+        }
+
+        private void AdaptersRemoved(DeviceWatcher sender, DeviceInformationUpdate args)
+        {
+            WiFiAdapters.Remove(args.Id);
+        }
+
+        private void AdaptersAdded(DeviceWatcher sender, DeviceInformation args)
+        {
+            WiFiAdapters.Add(args.Id, null);
+        }
+
+        private async void AdaptersEnumCompleted(DeviceWatcher sender, object args)
+        {
+            List<String> WiFiAdaptersID = new List<string>(WiFiAdapters.Keys);
+            for(int i = 0; i < WiFiAdaptersID.Count; i++)
+            {
+                string id = WiFiAdaptersID[i];
+                try
+                {
+                    WiFiAdapters[id] = await WiFiAdapter.FromIdAsync(id);
+                }
+                catch (Exception)
+                {
+                    WiFiAdapters.Remove(id);
+                }
+            }
+            EnumAdaptersCompleted.Set();
+        }
 
         public static string GetDirectConnectionName()
         {
@@ -51,18 +95,26 @@ namespace IoTCoreDefaultApp
             {
                 var name = icp.ProfileName;
 
-                var hostnames = NetworkInformation.GetHostNames();
-
-                foreach (var hn in hostnames)
+                try
                 {
-                    if (hn.IPInformation != null &&
-                        hn.IPInformation.NetworkAdapter != null &&
-                        hn.IPInformation.NetworkAdapter.NetworkAdapterId != null &&
-                        hn.IPInformation.NetworkAdapter.NetworkAdapterId == icp.NetworkAdapter.NetworkAdapterId &&
-                        hn.Type == HostNameType.Ipv4)
+                    var hostnames = NetworkInformation.GetHostNames();
+
+                    foreach (var hn in hostnames)
                     {
-                        return hn.CanonicalName;
+                        if (hn.IPInformation != null &&
+                            hn.IPInformation.NetworkAdapter != null &&
+                            hn.IPInformation.NetworkAdapter.NetworkAdapterId != null &&
+                            hn.IPInformation.NetworkAdapter.NetworkAdapterId == icp.NetworkAdapter.NetworkAdapterId &&
+                            hn.Type == HostNameType.Ipv4)
+                        {
+                            return hn.CanonicalName;
+                        }
                     }
+                }
+                catch (Exception)
+                {
+                    // do nothing
+                    // in some (strange) cases NetworkInformation.GetHostNames() fails... maybe a bug in the API...
                 }
             }
 
@@ -75,7 +127,37 @@ namespace IoTCoreDefaultApp
 
         private static WiFiAccessStatus? accessStatus;
 
-        public static async Task<bool> WifiIsAvailable()
+        // Call this method before accessing WiFiAdapters Dictionary
+        private async Task UpdateAdapters()
+        {
+            bool fInit = false;
+            foreach (var adapter in WiFiAdapters)
+            {
+                if (adapter.Value == null)
+                {
+                    // New Adapter plugged-in which requires Initialization
+                    fInit = true;
+                }
+            }
+
+            if (fInit)
+            {
+                List<String> WiFiAdaptersID = new List<string>(WiFiAdapters.Keys);
+                for (int i = 0; i < WiFiAdaptersID.Count; i++)
+                {
+                    string id = WiFiAdaptersID[i];
+                    try
+                    {
+                        WiFiAdapters[id] = await WiFiAdapter.FromIdAsync(id);
+                    }
+                    catch (Exception)
+                    {
+                        WiFiAdapters.Remove(id);
+                    }
+                }
+            }
+        }
+        public async Task<bool> WifiIsAvailable()
         {
             if ((await TestAccess()) == false)
             {
@@ -84,8 +166,9 @@ namespace IoTCoreDefaultApp
 
             try
             {
-                var adapters = await WiFiAdapter.FindAllAdaptersAsync();
-                return adapters.Count > 0;
+                EnumAdaptersCompleted.WaitOne();
+                await UpdateAdapters();
+                return (WiFiAdapters.Count > 0);
             }
             catch (Exception)
             {
@@ -101,12 +184,23 @@ namespace IoTCoreDefaultApp
             }
 
             networkNameToInfo = new Dictionary<WiFiAvailableNetwork, WiFiAdapter>();
-
-            var adapters = WiFiAdapter.FindAllAdaptersAsync();
-
-            foreach (var adapter in await adapters)
+            List<WiFiAdapter> WiFiAdaptersList = new List<WiFiAdapter>(WiFiAdapters.Values);
+            foreach (var adapter in WiFiAdaptersList)
             {
-                await adapter.ScanAsync();
+                if (adapter == null)
+                {
+                    return false;
+                }
+
+                try
+                {
+                    await adapter.ScanAsync();
+                }
+                catch (Exception)
+                {
+                    // ScanAsync() can throw an exception if the scan timeouts.
+                    continue;
+                }
 
                 if (adapter.NetworkReport == null)
                 {
@@ -165,7 +259,7 @@ namespace IoTCoreDefaultApp
 
             var firstProfile = validProfiles.First() as ConnectionProfile;
 
-            return networkNameToInfo.Keys.First(wifiNetwork => wifiNetwork.Ssid.Equals(firstProfile.ProfileName));
+            return networkNameToInfo.Keys.FirstOrDefault(wifiNetwork => wifiNetwork.Ssid.Equals(firstProfile.ProfileName));
         }
 
         public async Task<bool> ConnectToNetwork(WiFiAvailableNetwork network, bool autoConnect)
@@ -175,7 +269,16 @@ namespace IoTCoreDefaultApp
                 return false;
             }
 
-            var result = await networkNameToInfo[network].ConnectAsync(network, autoConnect ? WiFiReconnectionKind.Automatic : WiFiReconnectionKind.Manual);
+            // We need to use TryGetValue here.  If we are rescanning for Wifi networks
+            // (ie. 'await'ing on ScanAsync() in UpdateInfo(), 'networkNameToInfo' may not
+            // have an entry described by the key'network'.
+            WiFiAdapter wifiAdapter;
+            if (!networkNameToInfo.TryGetValue(network, out wifiAdapter))
+            {
+                return false;
+            }
+
+            var result = await wifiAdapter.ConnectAsync(network, autoConnect ? WiFiReconnectionKind.Automatic : WiFiReconnectionKind.Manual);
 
             return (result.ConnectionStatus == WiFiConnectionStatus.Success);
         }
@@ -197,7 +300,16 @@ namespace IoTCoreDefaultApp
                 return false;
             }
 
-            var result = await networkNameToInfo[network].ConnectAsync(
+            // We need to use TryGetValue here.  If we are rescanning for Wifi networks
+            // (ie. 'await'ing on ScanAsync() in UpdateInfo(), 'networkNameToInfo' may not
+            // have an entry described by the key'network'.
+            WiFiAdapter wifiAdapter;
+            if (!networkNameToInfo.TryGetValue(network, out wifiAdapter))
+            {
+                return false;
+            }
+
+            var result = await wifiAdapter.ConnectAsync(
                 network,
                 autoConnect ? WiFiReconnectionKind.Automatic : WiFiReconnectionKind.Manual,
                 password);
@@ -226,27 +338,60 @@ namespace IoTCoreDefaultApp
 
         public static async Task<IList<NetworkInfo>> GetNetworkInformation()
         {
-            var networkList = new Dictionary<string, NetworkInfo>();
-            var hostNamesList = NetworkInformation.GetHostNames();
-            var resourceLoader = ResourceLoader.GetForCurrentView();
+            var networkList = new Dictionary<Guid, NetworkInfo>();
 
-            foreach (var hostName in hostNamesList)
+            try
             {
-                if ((hostName.Type == HostNameType.Ipv4 || hostName.Type == HostNameType.Ipv6) &&
-                    (hostName != null && hostName.IPInformation != null && hostName.IPInformation.NetworkAdapter != null))
+                var hostNamesList = NetworkInformation.GetHostNames();
+                var resourceLoader = ResourceLoader.GetForCurrentView();
+
+                foreach (var hostName in hostNamesList)
                 {
-                    var profile = await hostName.IPInformation.NetworkAdapter.GetConnectedProfileAsync();
-                    if (profile != null)
+                    if (hostName.Type == HostNameType.Ipv4 || hostName.Type == HostNameType.Ipv6)
                     {
-                        NetworkInfo info;
-                        var found = networkList.TryGetValue(profile.ProfileName, out info);
-                        if (!found)
+                        NetworkInfo info = null;
+                        if (hostName.IPInformation != null && hostName.IPInformation.NetworkAdapter != null)
+                        {
+                            var profile = await hostName.IPInformation.NetworkAdapter.GetConnectedProfileAsync();
+                            if (profile != null)
+                            {
+                                var found = networkList.TryGetValue(hostName.IPInformation.NetworkAdapter.NetworkAdapterId, out info);
+                                if (!found)
+                                {
+                                    info = new NetworkInfo();
+                                    networkList[hostName.IPInformation.NetworkAdapter.NetworkAdapterId] = info;
+
+                                    // NetworkAdapter API does not provide a way to tell if this is a physical adapter or virtual one; e.g. soft AP
+                                    // So, provide heuristics to check for virtual network adapter
+                                    if ((hostName.IPInformation.NetworkAdapter.IanaInterfaceType == WirelessInterfaceIanaType &&
+                                        profile.ProfileName.Equals("Ethernet")) ||
+                                        (hostName.IPInformation.NetworkAdapter.IanaInterfaceType == WirelessInterfaceIanaType &&
+                                        hostName.IPInformation.NetworkAdapter.InboundMaxBitsPerSecond == 0 &&
+                                        hostName.IPInformation.NetworkAdapter.OutboundMaxBitsPerSecond == 0)
+                                        )
+                                    {
+                                        info.NetworkName = resourceLoader.GetString("VirtualNetworkAdapter");
+                                    }
+                                    else
+                                    {
+                                        info.NetworkName = profile.ProfileName;
+                                    }
+                                    var statusTag = profile.GetNetworkConnectivityLevel().ToString();
+                                    info.NetworkStatus = resourceLoader.GetString("NetworkConnectivityLevel_" + statusTag);
+                                }
+                            }
+                        }
+
+                        // No network adapter was found. So, assign the network info to a virtual adapter header
+                        if (info == null)
                         {
                             info = new NetworkInfo();
-                            info.NetworkName = profile.ProfileName;
-                            var statusTag = profile.GetNetworkConnectivityLevel().ToString();
-                            info.NetworkStatus = resourceLoader.GetString("NetworkConnectivityLevel_" + statusTag);
+                            info.NetworkName = resourceLoader.GetString("VirtualNetworkAdapter");
+                            // Assign a new GUID, since we don't have a network adapter
+                            networkList[Guid.NewGuid()] = info;
+                            info.NetworkStatus = resourceLoader.GetString("NetworkConnectivityLevel_LocalAccess");
                         }
+
                         if (hostName.Type == HostNameType.Ipv4)
                         {
                             info.NetworkIpv4 = hostName.CanonicalName;
@@ -255,12 +400,13 @@ namespace IoTCoreDefaultApp
                         {
                             info.NetworkIpv6 = hostName.CanonicalName;
                         }
-                        if (!found)
-                        {
-                            networkList[profile.ProfileName] = info;
-                        }
                     }
                 }
+            }
+            catch (Exception)
+            {
+                // do nothing
+                // in some (strange) cases NetworkInformation.GetHostNames() fails... maybe a bug in the API...
             }
 
             var res = new List<NetworkInfo>();

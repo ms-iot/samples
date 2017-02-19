@@ -1,0 +1,28 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>Blank Windows IoT Core Console Application</Name>
+    <Description>A project for creating a Win32 console application for Windows IoT Core</Description>
+    <ProjectType>VC</ProjectType>
+    <TemplateID>Microsoft.CPP.WindowsIoTCore.ConsoleApp</TemplateID>
+    <SortOrder>101</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>ConsoleApplication</DefaultName>
+    <NumberOfParentCategoriesToRollUp>1</NumberOfParentCategoriesToRollUp>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <Icon>win32console.ico</Icon>
+  </TemplateData>
+  <TemplateContent PreferedSolutionConfiguration="Debug|ARM">
+    <Project File="ConsoleApplication.vcxproj" ReplaceParameters="true">
+      <ProjectItem ReplaceParameters="false" TargetFileName="$projectname$.vcxproj.filters">ConsoleApplication.vcxproj.filters</ProjectItem>
+      <ProjectItem ReplaceParameters="false" OpenInEditor="true" BlendOpenInEditor="false" TargetFileName="ConsoleApplication.cpp">ConsoleApplication.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="pch.cpp">pch.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="pch.h">pch.h</ProjectItem>
+    </Project>
+  </TemplateContent>
+  <WizardExtension>
+    <Assembly>Microsoft.VisualStudio.Universal.TemplateWizards, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</Assembly>
+    <FullClassName>Microsoft.VisualStudio.Universal.TemplateWizards.PlatformVersion.Wizard</FullClassName>
+  </WizardExtension>
+</VSTemplate>

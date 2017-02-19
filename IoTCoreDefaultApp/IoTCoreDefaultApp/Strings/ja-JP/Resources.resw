@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="IoTCoreHeader.Text" xml:space="preserve">
+  <data name="IoTCoreHeaderText" xml:space="preserve">
     <value>Windows 10 IoT Core</value>
     <comment>The Operating System Name</comment>
   </data>
@@ -125,11 +125,11 @@
     <value>IoTCore ボード</value>
     <comment>A generic board name</comment>
   </data>
-  <data name="MainPageDeviceName.Text" xml:space="preserve">
+  <data name="MainPageDeviceNameText" xml:space="preserve">
     <value>デバイス名</value>
     <comment>Field label</comment>
   </data>
-  <data name="MainPageNetwork.Text" xml:space="preserve">
+  <data name="MainPageNetworkText" xml:space="preserve">
     <value>ネットワーク</value>
     <comment>Field label</comment>
   </data>
@@ -137,191 +137,213 @@
     <value>MinnowBoard Max</value>
     <comment>Board name</comment>
   </data>
-  <data name="RestartText.Text" xml:space="preserve">
+  <data name="RestartText" xml:space="preserve">
     <value>再起動</value>
     <comment>Restart entry in the shutdown menu</comment>
   </data>
-  <data name="ShutdownText.Text" xml:space="preserve">
+  <data name="ShutdownText" xml:space="preserve">
     <value>シャットダウン</value>
     <comment>Shutdown entry in the shutdown menu</comment>
   </data>
-  <data name="BackButton.Content" xml:space="preserve">
+  <data name="BackButtonContent" xml:space="preserve">
     <value>戻る</value>
   </data>
-  <data name="CancelButton.Content" xml:space="preserve">
+  <data name="CancelButtonContent" xml:space="preserve">
     <value>キャンセル</value>
   </data>
-  <data name="ConnectAutomatically.Text" xml:space="preserve">
-    <value>自動的に接続する</value>
+  <data name="ConnectAutomaticallyText" xml:space="preserve">
+    <value>自動的に接続</value>
   </data>
-  <data name="ConnectButton.Content" xml:space="preserve">
+  <data name="ConnectButtonContent" xml:space="preserve">
     <value>接続</value>
   </data>
-  <data name="DirectConnections.Text" xml:space="preserve">
+  <data name="DirectConnectionsText" xml:space="preserve">
     <value>直接接続</value>
   </data>
-  <data name="Ethernet.Text" xml:space="preserve">
+  <data name="EthernetText" xml:space="preserve">
     <value>イーサネット</value>
     <comment>Field label</comment>
   </data>
-  <data name="NetworkConnectingMessage.Text" xml:space="preserve">
-    <value>ネットワーク要件を確認しています</value>
+  <data name="NetworkConnectingMessageText" xml:space="preserve">
+    <value>ネットワークの要件をチェックしています</value>
   </data>
-  <data name="NetworkPasswordPrompt.Text" xml:space="preserve">
-    <value>ネットワーク セキュリティ キーを入力</value>
+  <data name="NetworkPasswordPromptText" xml:space="preserve">
+    <value>ネットワーク セキュリティ キーを入力してください</value>
   </data>
-  <data name="NextButton.Content" xml:space="preserve">
+  <data name="NextButtonContent" xml:space="preserve">
     <value>次へ</value>
   </data>
-  <data name="NoNetworks.Text" xml:space="preserve">
-    <value>見つかりませんでした</value>
+  <data name="NoNetworksText" xml:space="preserve">
+    <value>見つかりません</value>
   </data>
-  <data name="OOBEIntro.Text" xml:space="preserve">
+  <data name="OOBEIntroText" xml:space="preserve">
     <value>いくつか基本的なことを確認してみましょう。</value>
   </data>
-  <data name="OOBELanguageSelect.Text" xml:space="preserve">
-    <value>言語を選択</value>
+  <data name="OOBELanguageSelectText" xml:space="preserve">
+    <value>言語を選択してください</value>
   </data>
-  <data name="OOBENetworkTitle.Text" xml:space="preserve">
-    <value>さぁ、接続してみましょう</value>
+  <data name="OOBENetworkTitleText" xml:space="preserve">
+    <value>接続しましょう</value>
   </data>
-  <data name="OOBEWelcomeTitle.Text" xml:space="preserve">
+  <data name="OOBEWelcomeTitleText" xml:space="preserve">
     <value>Windows 10 IoT Core へようこそ</value>
   </data>
   <data name="Rpi2Name" xml:space="preserve">
     <value>Raspberry Pi 2</value>
     <comment>Board name</comment>
   </data>
-  <data name="SkipStep.Text" xml:space="preserve">
-    <value>このステップをスキップ</value>
+  <data name="Rpi3Name" xml:space="preserve">
+    <value>Raspberry Pi 3</value>
+    <comment>Board name</comment>
   </data>
-  <data name="Wifi.Text" xml:space="preserve">
+  <data name="DB410Name" xml:space="preserve">
+    <value>DragonBoard 410c</value>
+    <comment>Board name</comment>
+  </data>
+  <data name="SkipStepText" xml:space="preserve">
+    <value>この手順をスキップする</value>
+  </data>
+  <data name="WifiText" xml:space="preserve">
     <value>Wi-Fi</value>
     <comment>Label for Wi-Fi list in options page</comment>
   </data>
-  <data name="StartDeveloping.Text" xml:space="preserve">
-    <value> にアクセスしてください</value>
+  <data name="StartDevelopingText" xml:space="preserve">
+    <value> にアクセスしてください</value>
     <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
   </data>
-  <data name="Visit.Text" xml:space="preserve">
-    <value>開発を始めるには </value>
+  <data name="VisitText" xml:space="preserve">
+    <value>開発を始めるには、</value>
     <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
   </data>
-  <data name="KeyboardTitle.Text" xml:space="preserve">
+  <data name="WindowsOnDevicesUrlText" xml:space="preserve">
+    <value> www.windowsondevices.com</value>
+    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
+  </data>
+  <data name="KeyboardTitleText" xml:space="preserve">
     <value>キーボード レイアウト</value>
     <comment>Field label</comment>
   </data>
-  <data name="LanguageTitle.Text" xml:space="preserve">
+  <data name="LanguageTitleText" xml:space="preserve">
     <value>言語</value>
     <comment>Field label</comment>
   </data>
-  <data name="NetworkConnected.Text" xml:space="preserve">
-    <value>接続完了</value>
+  <data name="NetworkConnectedText" xml:space="preserve">
+    <value>接続済み</value>
   </data>
-  <data name="NetworkPreferences.Text" xml:space="preserve">
+  <data name="NetworkPreferencesText" xml:space="preserve">
     <value>ネットワークと Wi-Fi</value>
   </data>
-  <data name="SettingsPreferences.Text" xml:space="preserve">
+  <data name="BluetoothPreferencesText" xml:space="preserve">
+    <value>Bluetooth</value>
+    <comment>Label for Setting item tp control Bluetooth pairing</comment>
+  </data>
+  <data name="SettingsPreferencesText" xml:space="preserve">
     <value>基本設定</value>
   </data>
-  <data name="SettingsTitle.Text" xml:space="preserve">
-    <value>デバイス設定</value>
+  <data name="SettingsTitleText" xml:space="preserve">
+    <value>デバイスの設定</value>
   </data>
-  <data name="TimeZoneTitle.Text" xml:space="preserve">
-    <value>タイムゾーン</value>
+  <data name="TimeZoneTitleText" xml:space="preserve">
+    <value>タイム ゾーン</value>
   </data>
-  <data name="DeviceInfo.Text" xml:space="preserve">
+  <data name="DeviceInfoText" xml:space="preserve">
     <value>デバイス情報</value>
   </data>
-  <data name="Tutorials.Text" xml:space="preserve">
+  <data name="TutorialsText" xml:space="preserve">
     <value>チュートリアル</value>
     <comment>Text under the Tutorials button on the top bar</comment>
   </data>
-  <data name="ConnectedDevices.Text" xml:space="preserve">
-    <value>接続済みデバイス</value>
+  <data name="ConnectedDevicesText" xml:space="preserve">
+    <value>接続中のデバイス</value>
   </data>
-  <data name="Ipv4.Text" xml:space="preserve">
+  <data name="Ipv4Text" xml:space="preserve">
     <value>IPv4</value>
     <comment>Field label</comment>
   </data>
-  <data name="Ipv6.Text" xml:space="preserve">
+  <data name="Ipv6Text" xml:space="preserve">
     <value>IPv6</value>
     <comment>Field label</comment>
   </data>
-  <data name="MainPageIPAddress.Text" xml:space="preserve">
+  <data name="MainPageIPAddressText" xml:space="preserve">
     <value>IP アドレス</value>
     <comment>Field label</comment>
   </data>
-  <data name="NetworkInformation.Text" xml:space="preserve">
+  <data name="NetworkInformationText" xml:space="preserve">
     <value>ネットワーク情報</value>
   </data>
-  <data name="Status.Text" xml:space="preserve">
-    <value>ステータス</value>
+  <data name="StatusText" xml:space="preserve">
+    <value>状態</value>
     <comment>Status of the network connection (e.g. not connected, limited, etc.)</comment>
   </data>
-  <data name="TutorialGetCodingDescription.Text" xml:space="preserve">
-    <value>PC からリモートでコードを書く方法</value>
+  <data name="TutorialGetCodingDescriptionText" xml:space="preserve">
+    <value>PC からリモートでコードを記述する方法</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialGetCodingTitle.Text" xml:space="preserve">
-    <value>コードを取得</value>
+  <data name="TutorialGetCodingTitleText" xml:space="preserve">
+    <value>コーディング</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialGetConnectedDescription.Text" xml:space="preserve">
+  <data name="TutorialGetConnectedDescriptionText" xml:space="preserve">
     <value>デバイスをインターネットと PC に接続</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialGetConnectedTitle.Text" xml:space="preserve">
-    <value>接続</value>
+  <data name="TutorialGetConnectedTitleText" xml:space="preserve">
+    <value>接続する</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialGetStartedDescription.Text" xml:space="preserve">
+  <data name="TutorialGetStartedDescriptionText" xml:space="preserve">
     <value>Windows 10 IoT Core の紹介</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialGetStartedTitle.Text" xml:space="preserve">
-    <value>はじめに</value>
+  <data name="TutorialGetStartedTitleText" xml:space="preserve">
+    <value>開始する</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialHeader.Text" xml:space="preserve">
+  <data name="TutorialHeaderText" xml:space="preserve">
     <value>Windows 10 IoT Core の活用方法</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialHelloBlinkyDescription.Text" xml:space="preserve">
-    <value>デバイスの LED を切り替え</value>
+  <data name="TutorialHelloBlinkyDescriptionText" xml:space="preserve">
+    <value>デバイスでの LED の切り替え</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialHelloBlinkyTitle.Text" xml:space="preserve">
-    <value>LED を点滅</value>
+  <data name="TutorialHelloBlinkyTitleText" xml:space="preserve">
+    <value>LED の点滅</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialTitle.Text" xml:space="preserve">
+  <data name="TutorialTitleText" xml:space="preserve">
     <value>接続と開発に役立つリソースとツール</value>
   </data>
-  <data name="TutorialBlinkyBody1.Text" xml:space="preserve">
+  <data name="TutorialBlinkyBody1Text" xml:space="preserve">
     <value>ボードを使って一番初めに行う最も基本的なことは点滅です。</value>
   </data>
-  <data name="TutorialBlinkyBody2.Text" xml:space="preserve">
-    <value>「はじめに」セクションで説明したとおり、このオープン ソースのソース コードは www. windowsondevices.com からダウンロードできます (IoTCoreDefaultApp を探してみてください)。</value>
+  <data name="TutorialBlinkyBody2Text" xml:space="preserve">
+    <value>「はじめに」セクションで説明したとおり、ソース コードはすべてオープン ソースであり、www.windowsondevices.com からダウンロードできます (IoTCoreDefaultApp を探してみてください)。</value>
   </data>
-  <data name="TutorialBlinkyBody3.Text" xml:space="preserve">
+  <data name="TutorialBlinkyBody3Text" xml:space="preserve">
     <value>セットアップは必要ありません。[開始] を押すだけです。</value>
   </data>
-  <data name="TutorialBlinkyBody4.Text" xml:space="preserve">
-    <value>点滅の頻度を変更することもできます。友だちをたくさん集めて Raspberry Pi 2 の周りでダンス パーティーをしてみるのもいいですね。</value>
+  <data name="TutorialBlinkyBody4Text" xml:space="preserve">
+    <value>点滅の頻度を変更することもできます。友だちをたくさん集めてデバイスの周りでダンス パーティーをしてみるのもいいですね。</value>
   </data>
-  <data name="TutorialBlinkyBody5.Text" xml:space="preserve">
-    <value>免責事項: ボードで LED を点滅させてレイヴ パーティーなどを開催した結果発生したいかなる損害にも Microsoft は責任を負いません。</value>
+  <data name="TutorialBlinkyBody5Text" xml:space="preserve">
+    <value>免責事項: ボードで LED を点滅させてレイヴ パーティーなどを開催した結果発生したいかなる損害にも Microsoft は責任を負いません。</value>
   </data>
-  <data name="TutorialBlinkyTitle1.Text" xml:space="preserve">
-    <value>LED を点滅</value>
+  <data name="TutorialBlinkyBody6Text_Rpi3" xml:space="preserve">
+    <value>Raspberry Pi 3 の場合は、LED を GPIO ピン 5 に接続します。</value>
+  </data>
+  <data name="TutorialBlinkyBody6Text_Dragonboard" xml:space="preserve">
+    <value>DragonBoard 410c の場合は、LED を GPIO ピン 115 に接続します。</value>
+  </data>
+  <data name="TutorialBlinkyTitle1Text" xml:space="preserve">
+    <value>LED の点滅</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="TutorialBlinkyTitle2.Text" xml:space="preserve">
+  <data name="TutorialBlinkyTitle2Text" xml:space="preserve">
     <value>ボードを点滅させる</value>
     <comment>Tutorial titles and subtitles</comment>
   </data>
-  <data name="MainPageOSVersion.Text" xml:space="preserve">
+  <data name="MainPageOSVersionText" xml:space="preserve">
     <value>OS バージョン</value>
     <comment>Label for OS Version field in main page</comment>
   </data>
@@ -329,9 +351,13 @@
     <value>利用不可</value>
     <comment>Text shown when we cannot retrieve the OS Version</comment>
   </data>
-  <data name="Refresh.Content" xml:space="preserve">
+  <data name="RefreshContent" xml:space="preserve">
     <value>最新の情報に更新</value>
     <comment>Refresh button</comment>
+  </data>
+  <data name="Tutorial.GetStarted.001.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetStarted-{0}.jpg</value>
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetStarted.002.title" xml:space="preserve">
     <value>作業の開始</value>
@@ -398,6 +424,10 @@
     <value />
     <comment>Please do NOT localize this string</comment>
   </data>
+  <data name="Tutorial.GetConnected.001.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetConnected-{0}.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.002.title" xml:space="preserve">
     <value>接続</value>
   </data>
@@ -421,6 +451,10 @@
   </data>
   <data name="Tutorial.GetConnected.009.p" xml:space="preserve">
     <value>購入したら、接続しましょう!</value>
+  </data>
+  <data name="Tutorial.GetConnected.010.620x350.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetConnected-004.jpg</value>
+    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.011.p" xml:space="preserve">
     <value>画面の右上にあるのは "設定ギア" です。ギアをクリックし、[ネットワークと Wi-Fi] に移動します。そこでは、ローカル ネットワークに接続できます。</value>
@@ -479,8 +513,16 @@
   <data name="Tutorial.GetConnected.026.p" xml:space="preserve">
     <value>問題をデバッグする際に役立つ高度なネットワーク診断機能をメイン ページにいくつか追加しました。サポートが必要な場合は、www.windowsondevices.com にアクセスしてください</value>
   </data>
+  <data name="Tutorial.GetConnected.027.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetConnected-006.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
   <data name="Tutorial.GetConnected.028.br" xml:space="preserve">
     <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetCoding.001.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetCoding.jpg</value>
     <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetCoding.002.title" xml:space="preserve">
@@ -523,18 +565,9 @@
   <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
     <value>ドライバーを開発する場合は、WDK をインストールします。</value>
   </data>
-  <data name="Tutorial.GetCoding.015.ul" xml:space="preserve">
-    <value>IoT ツールの MSI をインストールします。</value>
-  </data>
-  <data name="Tutorial.GetCoding.016.ul" xml:space="preserve">
-    <value>これで、アプリを開発する準備が整いました。ログオンすると、Windows IoT Core Watcher アプリケーションが自動的に起動します。このアプリケーションを使用して、アプリの展開先として使用できる Windows 10 IoT Core デバイスを検索できます。</value>
-  </data>
   <data name="Tutorial.GetCoding.016a.br" xml:space="preserve">
     <value />
     <comment>Please do NOT localize this string</comment>
-  </data>
-  <data name="Tutorial.GetCoding.018.p" xml:space="preserve">
-    <value>ネットワーク上でデバイスが見つかったら、www.windowsondevices.com にアクセスし、サンプル コードをダウンロードして、実行してみてください。</value>
   </data>
   <data name="Tutorial.GetCoding.019.br" xml:space="preserve">
     <value />
@@ -556,7 +589,7 @@
     <value>&lt;インターネット接続がありません&gt;</value>
     <comment>Used in the main page under "IP address"</comment>
   </data>
-  <data name="DefaultLanguageTimeout.Text" xml:space="preserve">
+  <data name="DefaultLanguageTimeoutText" xml:space="preserve">
     <value>既定の言語を自動的に選択しています...</value>
   </data>
   <data name="BlinkyStart" xml:space="preserve">
@@ -577,5 +610,176 @@
   </data>
   <data name="ProblemsInitializingGPIOPin" xml:space="preserve">
     <value>GPIO ピンの初期化で問題が発生しました。</value>
+  </data>
+  <data name="BluetoothAttemptingToPairFormat" xml:space="preserve">
+    <value>{0} ({1}) とのペアリングを試みています</value>
+    <comment>Format string for message displayed when pairing attempt starts</comment>
+  </data>
+  <data name="BluetoothConfirmOnlyFormat" xml:space="preserve">
+    <value>{0}({1}) とのペアリング</value>
+    <comment>Format string for message displayed when ConfirmOnly ceremony is invoked</comment>
+  </data>
+  <data name="BluetoothConfirmPinMatchFormat" xml:space="preserve">
+    <value>デバイスに表示されている PIN は、{0} と一致しますか?</value>
+    <comment>Format string for message displayed when ConfirmPinMatch ceremony is invoked</comment>
+  </data>
+  <data name="BluetoothDisplayPinFormat" xml:space="preserve">
+    <value>ペアリング先デバイスで、この PIN を入力してください: {0}</value>
+    <comment>Format string for message displayed when DisplayPin ceremony is invoked</comment>
+  </data>
+  <data name="BluetoothInboundRegistrationAlreadyDoneFormat" xml:space="preserve">
+    <value>受信ペアリング用に既に登録されている、サポートされているセレモニー: {0}</value>
+    <comment>Format string for message displayed when Inbound pairing handler registration already done</comment>
+  </data>
+  <data name="BluetoothInboundRegistrationFailed" xml:space="preserve">
+    <value>受信ペアリング用に登録できませんでした。</value>
+    <comment>Message displayed when Inbound pairing handler registration fails</comment>
+  </data>
+  <data name="BluetoothInboundRegistrationSucceededFormat" xml:space="preserve">
+    <value>受信ペアリング用に正しく登録されている、サポートされているセレモニー: {0}</value>
+    <comment>Format string for message displayed when Inbound pairing handler registration succeeds</comment>
+  </data>
+  <data name="BluetoothPairingFailureFormat" xml:space="preserve">
+    <value>ペアリングの結果は {0} でした: {1} ({2}) とペアリングできませんでした</value>
+    <comment>Format string for message displayed when pairing attempt fails</comment>
+  </data>
+  <data name="BluetoothPairingSuccessFormat" xml:space="preserve">
+    <value>{0} ({1}) とのペアリングに成功しました</value>
+    <comment>Format string for message displayed when pairing attempt succeeds</comment>
+  </data>
+  <data name="BluetoothStartedWatching" xml:space="preserve">
+    <value>このデバイスは、他の Bluetooth デバイスを検索しています。他の Bluetooth デバイスからこのデバイスを検出することもできます。</value>
+    <comment>Message display when "Start Watcher" button is pressed</comment>
+  </data>
+  <data name="BluetoothStoppedWatching" xml:space="preserve">
+    <value>Bluetooth デバイスの監視を停止しました</value>
+    <comment>Message display when "Stop Watcher" button is pressed</comment>
+  </data>
+  <data name="BluetoothUnpairingFailureFormat" xml:space="preserve">
+    <value>ペアリング解除の結果は {0} でした: {1} ({2}) からペアリングを解除できませんでした</value>
+    <comment>Format string for message displayed when unpairing attempt fails</comment>
+  </data>
+  <data name="BluetoothUnpairingSuccessFormat" xml:space="preserve">
+    <value>{0} ({1}) から正常にペアリングを解除しました</value>
+    <comment>Format string for message displayed when unpairing attempt succeeds</comment>
+  </data>
+  <data name="PinLabelTextBox.Text" xml:space="preserve">
+    <value>PIN を入力してください:</value>
+    <comment>Message on flyout control for PIN entry for ProvidePin ceremony</comment>
+  </data>
+  <data name="BluetoothPairButtonContent" xml:space="preserve">
+    <value>ペアリング</value>
+    <comment>Text displayed on the button to pair Bluetooth list item</comment>
+  </data>
+  <data name="BluetoothUnpairButtonContent" xml:space="preserve">
+    <value>ペアリングの解除</value>
+    <comment>Text displayed on the button to unpair Bluetooth list item</comment>
+  </data>
+  <data name="BluetoothDeviceStatePairedText" xml:space="preserve">
+    <value>ペアリング済み</value>
+  </data>
+  <data name="BluetoothDeviceStateReadyToPairText" xml:space="preserve">
+    <value>ペアリングの準備完了</value>
+  </data>
+  <data name="BluetoothManageDevicesText" xml:space="preserve">
+    <value>Bluetooth デバイスの管理</value>
+  </data>
+  <data name="BluetoothWatcherToggleLabel" xml:space="preserve">
+    <value>Bluetooth</value>
+    <comment>Label text for Bluetooth watcher toggle switch</comment>
+  </data>
+  <data name="BluetoothNoDeviceAvailableFormat" xml:space="preserve">
+    <value>このコンピューターで使用可能な Bluetooth アダプターが見つかりません:
+{0}</value>
+    <comment>Message displayed on systems which do not have a Bluetooth adapter. The new line before {0} is deliberate and should be kept</comment>
+  </data>
+  <data name="BluetoothEnterPINText" xml:space="preserve">
+    <value>PIN を入力してください:</value>
+  </data>
+  <data name="BluetoothDeviceStateUnknownText" xml:space="preserve">
+    <value>不明な状態</value>
+  </data>
+  <data name="BluetoothInboundPairingRequestFormat" xml:space="preserve">
+    <value>受信要求: {0}
+{1}</value>
+    <comment>Format for message displayed when an inbounbd pairing request is received</comment>
+  </data>
+  <data name="EnableScreensaverText" xml:space="preserve">
+    <value>スクリーンセーバー</value>
+    <comment>Toggle switch for enabling the screensaver</comment>
+  </data>
+  <data name="NoDeviceName" xml:space="preserve">
+    <value>&lt;デバイス名がありません&gt;</value>
+    <comment>This is shown when we fail to retrieve a valid device name (very strange case)</comment>
+  </data>
+  <data name="CommandLineText" xml:space="preserve">
+    <value>コマンド ライン</value>
+    <comment>Title for command line page</comment>
+  </data>
+  <data name="CommandLinePlaceholderText" xml:space="preserve">
+    <value>{0}&gt; コマンド ラインを入力してください</value>
+    <comment>Placeholder for command line input text box</comment>
+  </data>
+  <data name="ClearPageText" xml:space="preserve">
+    <value>クリア</value>
+  </data>
+  <data name="CdNotSupported" xml:space="preserve">
+    <value>ディレクトリの変更は現在サポートされていません。コマンドの完全パスを使用してください。</value>
+  </data>
+  <data name="CmdNotEnabled" xml:space="preserve">
+    <value>お使いのデバイスではコマンド ライン プロセッサを実行できません。
+有効にするには、お使いのデバイスで、管理者として次のコマンドを実行してください:
+
+    reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
+
+または、下のボタンをクリックして管理者のユーザー名とパスワードを入力し、コマンドを実行してください。
+
+    </value>
+    <comment>New lines need to be preserved</comment>
+  </data>
+  <data name="ExecAsDefaultAccount" xml:space="preserve">
+    <value>DefaultAccount としてコマンドを実行中
+    </value>
+  </data>
+  <data name="CloseText" xml:space="preserve">
+    <value>閉じる</value>
+  </data>
+  <data name="EnableCmdText" xml:space="preserve">
+    <value>コマンド ライン プロセッサを有効にする</value>
+  </data>
+  <data name="UsernameText" xml:space="preserve">
+    <value>ユーザー名</value>
+  </data>
+  <data name="PasswordText" xml:space="preserve">
+    <value>パスワード</value>
+  </data>
+  <data name="CmdTextEnabledSuccess" xml:space="preserve">
+    <value>お使いのデバイスで、コマンド ライン プロセッサ (cmd.exe) が有効になりました。</value>
+  </data>
+  <data name="CmdTextEnabledFailure" xml:space="preserve">
+    <value>お使いのデバイスで、コマンド ライン プロセッサ (cmd.exe) を有効にできませんでした。状態 = {0}</value>
+  </data>
+  <data name="DisconnectButtonContent" xml:space="preserve">
+    <value>切断</value>
+    <comment>This disconnects the connected network</comment>
+  </data>
+  <data name="VirtualNetworkAdapter" xml:space="preserve">
+    <value>仮想ネットワーク アダプター</value>
+  </data>
+  <data name="CortanaAboutMeText" xml:space="preserve">
+    <value>ユーザー情報</value>
+    <comment>Button launches Cortana's "About Me" page to manage certain Cortana Settings</comment>
+  </data>
+  <data name="CortanaTitleText" xml:space="preserve">
+    <value>Cortana 設定の管理</value>
+    <comment>Title of Cortana Settings Management Page</comment>
+  </data>
+  <data name="CortanaPreferencesText" xml:space="preserve">
+    <value>Cortana</value>
+    <comment>Cortana Preferences on left side of settings screen</comment>
+  </data>
+  <data name="CortanaVoiceActivationText" xml:space="preserve">
+    <value>「コルタナさん」と言ったら Cortana が応答するようにする</value>
+    <comment>Toggle switch for enabling voice activation.</comment>
   </data>
 </root>

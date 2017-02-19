@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<container>
+    <bundle>
+        <id>oic.bundle.discomfortIndexSensor</id>
+        <path>data/data/org.iotivity.service.sample.server/files/libDISensorBundle.so</path>
+        <activator>disensor</activator>
+        <version>1.0.0</version>
+        <resources>
+            <resourceInfo>
+                <name>DiscomfortIndexSensor1</name>
+                <resourceType>oic.r.sensor</resourceType>
+                <outputs>
+                    <output>
+                        <name>discomfortIndex</name>
+                        <type>int</type>
+                    </output>
+                    <output>
+                        <name>humidity</name>
+                        <type>double</type>
+                    </output>
+                    <output>
+                        <name>temperature</name>
+                        <type>double</type>
+                    </output>
+                </outputs>
+                <inputs>
+                    <input>
+                        <name>humidity</name>
+                        <type>double</type>
+                        <resourceType>oic.r.humidity</resourceType>
+                    </input>
+                    <input>
+                        <name>temperature</name>
+                        <type>double</type>
+                        <resourceType>oic.r.temperature</resourceType>
+                    </input>
+                </inputs>
+            </resourceInfo>
+        </resources>
+    </bundle>
+</container>

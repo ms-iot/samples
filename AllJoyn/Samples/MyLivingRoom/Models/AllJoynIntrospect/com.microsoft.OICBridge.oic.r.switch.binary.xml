@@ -1,0 +1,7 @@
+﻿<node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.allseenalliance.org/schemas/introspect.xsd">
+  <interface name="com.microsoft.OICBridge.oic.r.switch.binary">
+    <property name="Value" type="b" access="readwrite">
+      <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="true"/>
+    </property>
+  </interface>
+</node>

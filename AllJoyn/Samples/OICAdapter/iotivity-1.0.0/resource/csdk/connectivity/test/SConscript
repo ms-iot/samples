@@ -1,0 +1,86 @@
+#******************************************************************
+#
+# Copyright 2015 Samsung Electronics All Rights Reserved.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+Import('env')
+import os
+import os.path
+catest_env = env.Clone()
+
+src_dir = catest_env.get('SRC_DIR')
+
+######################################################################
+# Build flags
+######################################################################
+catest_env.PrependUnique(CPPPATH = [
+                '../../ocsocket/include',
+                '../../logger/include',
+                '../../stack/include',
+                '../../extlibs/cjson',
+                '../../../oc_logger/include',
+                '../../../../extlibs/gtest/gtest-1.7.0/include'
+               ])
+
+tmplist = catest_env['LINKFLAGS'][:]
+if '-lpthread' in tmplist:
+    tmplist.remove('-lpthread')
+    catest_env.Replace(LINKFLAGS = tmplist)
+
+catest_env.AppendUnique(CXXFLAGS = ['-std=c++0x', '-Wall', '-pthread'])
+catest_env.AppendUnique(LIBS = ['pthread'])
+catest_env.AppendUnique(LIBPATH = [env.get('BUILD_DIR')])
+catest_env.AppendUnique(LIBPATH = [src_dir + '/extlibs/gtest/gtest-1.7.0/lib/.libs'])
+catest_env.PrependUnique(LIBS = ['m',
+                                    'octbstack',
+                                    'connectivity_abstraction',
+                                    'coap',
+                                    'gtest',
+                                    'gtest_main'])
+
+target_os = env.get('TARGET_OS')
+
+if target_os not in ['arduino', 'darwin', 'ios']:
+	catest_env.AppendUnique(LIBS=['rt'])
+
+if env.get('SECURED') == '1':
+    catest_env.AppendUnique(LIBS = ['tinydtls'])
+
+if env.get('LOGGING'):
+	catest_env.AppendUnique(CPPDEFINES = ['TB_LOG'])
+
+######################################################################
+# Source files and Targets
+######################################################################
+catests = catest_env.Program('catests', ['catests.cpp',
+                                         'caprotocolmessagetest.cpp',
+                                               'ca_api_unittest.cpp',
+                                               'camutex_tests.cpp',
+                                               'uarraylist_test.cpp'
+                                               ])
+
+Alias("test", [catests])
+
+env.AppendTarget('test')
+if env.get('TEST') == '1':
+        target_os = env.get('TARGET_OS')
+        if target_os == 'linux':
+                from tools.scons.RunTest import *
+                run_test(catest_env,
+                         'resource_csdk_connectivity_test.memcheck',
+                         'resource/csdk/connectivity/test/catests')

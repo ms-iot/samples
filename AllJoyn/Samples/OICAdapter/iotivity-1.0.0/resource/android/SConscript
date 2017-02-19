@@ -1,0 +1,26 @@
+##
+# Android Compatibility (static library) build script
+##
+Import('env')
+
+compatibilitylib_env = env.Clone()
+######################################################################
+# Build flags
+######################################################################
+compatibilitylib_env.AppendUnique(CPPPATH = ['../include/'])
+
+target_os = env.get('TARGET_OS')
+
+if target_os == 'android':
+	compatibilitylib_env.AppendUnique(CXXFLAGS = ['-frtti', '-fexceptions'])
+	compatibilitylib_env.AppendUnique(LIBS = ['gnustl_shared'])
+
+######################################################################
+# Source files and Targets
+######################################################################
+compatibilitylib_src = ['OCAndroid.cpp']
+
+if target_os == 'android':
+	static_compatibilitylib = compatibilitylib_env.StaticLibrary('compatibility', compatibilitylib_src)
+	compatibilitylib_env.InstallTarget(static_compatibilitylib, 'libcompatibility')
+	compatibilitylib_env.UserInstallTargetLib(static_compatibilitylib, 'libcompatibility')

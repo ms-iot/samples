@@ -1,0 +1,63 @@
+##
+# Script to install (if they do not exist) the Android SDK library (ie. Android JDK)
+##
+
+import os, subprocess, struct
+import urllib2, urlparse
+import SCons.Errors
+import shutil
+
+Import('env')
+
+target_os = env.get('TARGET_OS')
+src_dir = env.get('SRC_DIR')
+
+SConscript(src_dir + '/build_common/tools/UnpackAll.py')
+SConscript(src_dir + '/build_common/external_libs.scons')
+
+# Download
+if target_os == 'android':
+	android_home = env.get('ANDROID_HOME')
+	if not android_home:
+		print 'Creating ANDROID_HOME for Android SDK'
+
+		# older IoTivity versions expected the SDK at this position, this is left for backwards compatibility
+		androidlib_dir      = src_dir + '/extlibs/android/sdk/android-sdk_r24.2'
+
+		if not os.path.exists(androidlib_dir):
+			from sys import platform as _platform
+			if _platform == "linux" or _platform == "linux2":
+				androidlib_zip_file = src_dir + '/extlibs/android/android-sdk_r24.2-linux.tgz'
+				androidlib_url      = 'http://dl.google.com/android/android-sdk_r24.2-linux.tgz'
+				androidlib_dir      = src_dir + '/extlibs/android/sdk/android-sdk-linux'
+			elif _platform == "darwin":
+				androidlib_zip_file = src_dir + '/extlibs/android/android-sdk_r24.2-macosx.zip'
+				androidlib_url      = 'http://dl.google.com/android/android-sdk_r24.2-macosx.zip'
+				androidlib_dir      = src_dir + '/extlibs/android/sdk/android-sdk-macosx'
+			elif _platform == "win32":
+				androidlib_zip_file = src_dir + '/extlibs/android/android-sdk_r24.2-windows.zip'
+				androidlib_url      = 'http://dl.google.com/android/android-sdk_r24.2-windows.zip'
+				androidlib_dir      = src_dir + '/extlibs/android/sdk/android-sdk-windows'
+
+		if not os.path.exists(androidlib_dir):
+			# If the zip file is not already present, download it
+			if not os.path.exists(androidlib_zip_file):
+				androidlib_zip = env.Download(androidlib_zip_file, androidlib_url)
+			else:
+				androidlib_zip = androidlib_zip_file
+
+			# Unzip the lib
+			print 'Unzipping android lib...'
+			env.UnpackAll(androidlib_dir, androidlib_zip)
+			print 'Unzipping android lib complete'
+
+			# Remove downloaded file
+#			os.remove(androidlib_zip_file)
+	else:
+		androidlib_dir = env.get('ANDROID_HOME')
+
+# Set the ANDROID_HOME
+env.Replace(ANDROID_HOME = androidlib_dir)
+print 'ANDROID_HOME = ' + env.get('ANDROID_HOME')
+
+

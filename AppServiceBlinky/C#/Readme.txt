@@ -1,0 +1,3 @@
+This sample shows how to easily build an "AppService" that can communicate with other UWP applications. In this case the "BlinkyService" controls access to Gpio Pin 5 and allows other apps to request a particular value for that pin. This is a very common pattern used when multiple consumers on a machine want to have access to shared resources like hardware. 
+
+To run this sample first run the server and then the client. However, as long as the server is deployed to machine, running the client will cause it to automatically activate .

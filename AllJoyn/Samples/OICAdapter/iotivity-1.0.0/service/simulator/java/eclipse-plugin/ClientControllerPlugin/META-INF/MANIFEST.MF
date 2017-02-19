@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ClientControllerPlugin
+Bundle-SymbolicName: ClientControllerPlugin;singleton:=true
+Bundle-Version: 0.1.0
+Bundle-Activator: oic.simulator.clientcontroller.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy
+Bundle-NativeCode: libs/libSimulatorManager.so
+Bundle-ClassPath: libs/Simulator.jar,
+ .

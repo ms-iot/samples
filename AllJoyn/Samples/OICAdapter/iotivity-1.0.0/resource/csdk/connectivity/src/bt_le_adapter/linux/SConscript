@@ -1,0 +1,142 @@
+# ------------------------------------------------------------------------
+# Copyright 2015 Intel Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ------------------------------------------------------------------------
+
+##########################################
+#       Build BLE adapter for Linux
+##########################################
+
+Import('env')
+
+import os.path
+
+# Top-level build (variant) directory.
+root_build_dir = env['BUILD_DIR']
+
+# Build (variant) directory corresponding to this source directory.
+this_build_dir = os.path.join(root_build_dir,
+                              os.path.dirname(File(SConscript).srcnode().path))
+
+# The Linux BLE adapter implementation uses GDBus to make D-Bus based
+# method calls to BlueZ.  Pull in the necessary dependencies.
+env.ParseConfig("pkg-config gio-unix-2.0 --cflags --libs")
+
+# Set up commands to generate GDBus code from the D-Bus introspection
+# XML.
+freedesktop_prefix = 'org.freedesktop.DBus.'
+bluez_prefix = 'org.bluez.'
+
+dbus_introspection_xml = {
+    'object_manager' : freedesktop_prefix,
+    'bluez'          : bluez_prefix,
+}
+
+# The source files to be compiled as part of the connectivity
+# abstraction library.
+glue_files = []
+
+for file, prefix in dbus_introspection_xml.items():
+    source_xml  = file + '.xml'
+    glue        = file + '-glue'
+    glue_source = glue + '.c'
+    glue_header = glue + '.h'
+    targets     = [ glue_source, glue_header ]
+
+    # Include the glue header in the list as well to make sure it is
+    # generated before other source files that depend on it are
+    # compiled.
+    glue_files += targets
+
+    # Generate GDBus skeletons in the variant (build) directory.
+    env.Command(targets,
+                source_xml,
+                'cd %s '
+                '&& gdbus-codegen --generate-c-code %s --interface-prefix %s %s '
+                '&& cd -'
+                % (this_build_dir,
+                   glue,
+                   prefix,
+                   os.path.join(env['SRC_DIR'], '$SOURCE')))
+
+    # Mark generated file for cleaning when running "scons -c".
+    #
+    # @todo Verify that the generated *-glue.[ch] files are removed on
+    #       running "scons -c" once that is working in the master
+    #       branch again.
+    for target in targets:
+        generated_target = os.path.join(this_build_dir, target)
+        env.Clean(target, generated_target)
+
+# The generated "glue" headers are found in the build directory
+# corresponding to this source directory.
+env.AppendUnique(CPPPATH = this_build_dir)
+
+# The Linux BLE transport exports its GATT and LE advertisement
+# related D-Bus interfaces to the D-Bus system bus so that they may be
+# accessed by BlueZ.  Set the bus names here, i.e. in one place, to
+# avoid potential mismatches, and generate the D-Bus policy
+# configuration file and related C preprocessor symbol definitions.
+service_name = '\"org.iotivity.gatt.service\"'
+
+dbus_policy_in = 'org.iotivity.gatt.service.conf.in'
+
+conf_dict = {}
+subst_env = env.Clone(tools = [ 'default', 'textfile' ],
+                      SUBST_DICT = conf_dict)
+
+conf_dict = { '@service_name@' : service_name }
+
+subst_env.Substfile(dbus_policy_in, SUBST_DICT = conf_dict)
+
+# The resulting D-Bus policy file should go in to the appropriate
+# D-Bus configuration directory, such as /etc/dbus-1/system.d/.
+
+dbus_policy    = os.path.splitext(dbus_policy_in)[0]  # Drop '.in' extension.
+generated_dbus_policy = os.path.join(this_build_dir, dbus_policy)
+env.Clean(dbus_policy, generated_dbus_policy)
+
+# Define the D-Bus bus name as a preprocessor symbol.  Note the
+# multiple quote levels to ensure that the double quotes surrounding
+# the string are included as part of the preprocess symbol.
+#
+# Also add a minimum required version of GLib 2.32, which is what the
+# older GNU/Linux distributions supported by IoTivity shipped with.
+env.AppendUnique(
+    CPPDEFINES = [
+        ('CA_DBUS_GATT_SERVICE_NAME', "'%s'" % service_name),
+        ('GLIB_VERSION_MIN_REQUIRED', 'GLIB_VERSION_2_32')
+    ])
+
+src_files = [ 'characteristic.c',
+              'descriptor.c',
+              'service.c',
+              'advertisement.c',
+              'utils.c',
+              'central.c',
+              'peripheral.c',
+              'client.c',
+              'server.c',
+              'recv.c',
+              'caleinterface.c'
+          ]
+src_files = glue_files + src_files
+
+Return('src_files')
+
+
+# Local Variables:
+# mode:python
+# indent-tabs-mode: nil
+# End:

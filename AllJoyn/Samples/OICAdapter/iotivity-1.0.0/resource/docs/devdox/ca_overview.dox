@@ -1,0 +1,501 @@
+//******************************************************************
+//
+// Copyright 2015 Samsung Electronics All Rights Reserved.
+//
+//-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+//-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+/**
+@page ca_overview CA Overview
+
+- @ref cao_overview
+- @ref cao_ddoc
+    - @ref cao_ddoc_freqs
+        - @ref cao_ddoc_freqs_discovery
+            - @ref cao_ddoc_fr1101
+            - @ref cao_ddoc_fr1102
+            - @ref cao_ddoc_fr1103
+            - @ref cao_ddoc_fr1104
+            - @ref cao_ddoc_fr1105
+            - @ref cao_ddoc_fr1106
+            - @ref cao_ddoc_fr1107
+            - @ref cao_ddoc_fr1108
+            - @ref cao_ddoc_fr1109
+        - @ref cao_ddoc_freqs_msg
+            - @ref cao_ddoc_fr1201
+            - @ref cao_ddoc_fr1202
+            - @ref cao_ddoc_fr1203
+            - @ref cao_ddoc_fr1204
+        - @ref cao_ddoc_freqs_obs
+            - @ref cao_ddoc_fr1301
+            - @ref cao_ddoc_fr1302
+            - @ref cao_ddoc_fr1303
+            - @ref cao_ddoc_fr1304
+        - @ref cao_ddoc_freqs_netconfig
+            - @ref cao_ddoc_fr1401
+            - @ref cao_ddoc_fr1402
+            - @ref cao_ddoc_fr1403
+        - @ref cao_ddoc_freqs_control_ip
+            - @ref cao_ddoc_fr2101
+            - @ref cao_ddoc_fr2102
+            - @ref cao_ddoc_fr2103
+            - @ref cao_ddoc_fr2104
+            - @ref cao_ddoc_fr2105
+            - @ref cao_ddoc_fr2106
+        - @ref cao_ddoc_freqs_control_bt
+            - @ref cao_ddoc_fr2201
+            - @ref cao_ddoc_fr2202
+            - @ref cao_ddoc_fr2203
+            - @ref cao_ddoc_fr2204
+            - @ref cao_ddoc_fr2205
+            - @ref cao_ddoc_fr2206
+        - @ref cao_ddoc_freqs_control_ble
+            - @ref cao_ddoc_fr2301
+            - @ref cao_ddoc_fr2302
+            - @ref cao_ddoc_fr2303
+            - @ref cao_ddoc_fr2304
+            - @ref cao_ddoc_fr2305
+            - @ref cao_ddoc_fr2306
+            - @ref cao_ddoc_fr2307
+        - @ref cao_ddoc_freqs_control_zigbee
+            - @ref cao_ddoc_fr2401
+            - @ref cao_ddoc_fr2402
+            - @ref cao_ddoc_fr2403
+            - @ref cao_ddoc_fr2404
+            - @ref cao_ddoc_fr2405
+            - @ref cao_ddoc_fr2406
+        - @ref cao_ddoc_freqs_control_zwave
+            - @ref cao_ddoc_fr2501
+            - @ref cao_ddoc_fr2502
+            - @ref cao_ddoc_fr2503
+            - @ref cao_ddoc_fr2504
+            - @ref cao_ddoc_fr2505
+            - @ref cao_ddoc_fr2506
+    - @ref cao_ddoc_qattr
+        - @ref cao_ddoc_qattr_reliability
+            - @ref cao_ddoc_nfr201
+            - @ref cao_ddoc_nfr202
+        - @ref cao_ddoc_qattr_security
+            - @ref cao_ddoc_nfr301
+            - @ref cao_ddoc_nfr302
+        - @ref cao_ddoc_qattr_maintenance
+            - @ref cao_ddoc_nfr501
+        - @ref cao_ddoc_qattr_portability
+            - @ref cao_ddoc_nfr601
+            - @ref cao_ddoc_nfr602
+            - @ref cao_ddoc_nfr603
+            - @ref cao_ddoc_nfr604
+            - @ref cao_ddoc_nfr605
+        - @ref cao_ddoc_qattr_extensibility
+            - @ref cao_ddoc_nfr701
+    - @ref cao_ddoc_constraints
+        - @ref cao_ddoc_constraints_licence
+            - @ref cao_ddoc_con101
+<hr>
+
+@section cao_overview Overview
+
+The original Connectivity Abstraction design overview diagram was from a presentation format. A similar version has been recreated in dot.
+
+@dotfile ca_overview.gv
+
+
+@section cao_ddoc Design doc info
+
+
+@subsection cao_ddoc_freqs Functional Requirements
+
+
+@subsubsection cao_ddoc_freqs_discovery Discovery
+
+
+@paragraph cao_ddoc_fr1101 FR.1101
+Client can find all resources on the reachable networks.
+- CA should provide the way to discover all resources on the WiFi/Ethernet/BLE/BT network.
+- Resources should be represented by dedicated URI.
+- Add ZigBee and ZWave to supported network. ( 2015.01 ) : TBD
+
+@paragraph cao_ddoc_fr1102 FR.1102
+Client can find all resources on the specific network.
+- CA should provide the way to discover all resources on the specified network.
+- The specified network can be the one of or those of WiFi/Ethernet/BLE/BT network.
+- Resources should be represented by dedicated URI.
+- Add ZigBee and ZWave to supported network. ( 2015.01 ) : TBD
+
+@paragraph cao_ddoc_fr1103 FR.1103
+Client can find specific resource on the reachable networks.
+- CA should provide discovery method to find specific resource on the WiFi/Ethernet/BLE/BT network.
+- Resource should be represented by URI.
+- Add ZigBee and ZWave to supported network. ( 2015.01 ) : TBD
+
+@paragraph cao_ddoc_fr1104 FR.1104
+Client can find specific resource on the specific network.
+- CA should provide discovery method to find specific resource on the specific network.
+- The specified network can be the one of or those of WiFi/Ethernet/BLE/BT network.
+- Resources should be represented by dedicated URI.
+- Add ZigBee and ZWave to supported network. ( 2015.01 ) : TBD
+
+@paragraph cao_ddoc_fr1105 FR.1105
+Server can advertise single resource on the reachable network.
+- CA should provide advertising method to notify the resource on the WiFi/Ethernet/BLE/BT network.
+- Resource should be represented by URI
+- Advertising can include 'alive' or 'disappear'.
+- Add ZigBee and ZWave to supported network. ( 2015.01 ) : TBD
+
+@paragraph cao_ddoc_fr1106 FR.1106
+Server can advertise single resource on the specific network.
+- CA should provide advertising method to notify the resource on the specified network.
+- The spefied network can be the on of or those of WiFi/Ethernet/BLE/BT network
+- Resource should be represented by URI
+- Advertising can include 'alive' or 'disappear'.
+- Add ZigBee and ZWave to supported network. ( 2015.01 ) : TBD
+
+@paragraph cao_ddoc_fr1107 FR.1107
+Server can advertise all resources at a time on the reachable network.
+- CA should provide advertising method to notify the all resources on the WiFi/Ethernet/BLE/BT network.
+- Resource should be represented by URI
+- Advertising can include 'alive' or 'disappear'.
+- Add ZigBee and ZWave to supported network. ( 2015.01 ) : TBD
+
+@paragraph cao_ddoc_fr1108 FR.1108
+Server can advertise all resource  at a time on the specific network.
+- CA should provide advertising method to notify the all resources on the specified network.
+- The spefied network can be the on of or those of WiFi/Ethernet/BLE/BT network
+- Resource should be represented by URI
+- Advertising can include 'alive' or 'disappear'.
+- Add ZigBee and ZWave to supported network. ( 2015.01 ) : TBD
+
+@paragraph cao_ddoc_fr1109 FR.1109
+Client can send periodic hearbeat request on the specific resource.
+- CA should check the status of discovered resource periodically.
+- Heartbeat policy can be followed by IoTivity specification.
+
+
+@subsubsection cao_ddoc_freqs_msg Messaging
+
+
+@paragraph cao_ddoc_fr1201 FR.1201
+Client can send request message to server
+- CA should provide the way to send request message to server on the supported network.
+- CA should notify the event to server when the request message arrives from client.
+
+@paragraph cao_ddoc_fr1202 FR.1202
+Server can send response message to client
+- CA should provide the way to send response messate to client on the supported network.
+- CA should notify the event to client when the response message arrives from server.
+
+@paragraph cao_ddoc_fr1203 FR.1203
+Client and Server can select QoS level for each message
+- CA should provide the way to select message QoS level to the server and client.
+- QoS level policy can follow CoAP guideline ( CON / NON / ACK / RESET )
+
+@paragraph cao_ddoc_fr1204 FR.1204
+Message can be re-sent if acknowledgement didn't received.
+- CA should send high QoS level message repeatly until the acknowledgement arrive.
+- Retransmission policy can follows CoAP guideline.
+
+
+@subsubsection cao_ddoc_freqs_obs Observation
+
+
+@paragraph cao_ddoc_fr1301 FR.1301
+Client can send observation request message to server 
+- CA should provide the way to send observation request message to server on the supported network.
+
+@paragraph cao_ddoc_fr1302 FR.1302
+Server can send observation message 
+- CA should provider the way to send observation event to the clients which request observation on the supported network.
+
+@paragraph cao_ddoc_fr1303 FR.1303
+Client can send observation cancel request message to server
+- CA should provide the way to send observation cancel request message to server on the supported network.
+
+@paragraph cao_ddoc_fr1304 FR.1304
+Server can cancel observation
+- CA should provide the way to send observation cancel event to the clients which request observation on the supported network.
+
+
+@subsubsection cao_ddoc_freqs_netconfig Network Configuration
+
+
+@paragraph cao_ddoc_fr1401 FR.1401
+Server / Client can select the network interfaces to use.
+- CA should provide the way to select network interfaces to use for communication.
+
+@paragraph cao_ddoc_fr1402 FR.1402
+Server / Client can unselect the network interfaces
+- CA should provide the way to unselect network interfaces to use for communication.
+
+@paragraph cao_ddoc_fr1403 FR.1403
+Server / Client can receive the status changes of network interface
+- CA should notify whenever the network interface status changes.
+
+
+@subsubsection cao_ddoc_freqs_control_ip Connectivity Control - Wifi/Ethernet
+
+
+@paragraph cao_ddoc_fr2101 FR.2101
+Server / client can listen multicast message
+- CA should bind multicast port
+- Multicast IP address and port policy can be followed by IoTivity specification.
+
+@paragraph cao_ddoc_fr2102 FR.2102
+Server / client can send multicast message
+- CA should bind multicast port
+- Multicast IP address and port policy can be followed by IoTivity specification.
+
+@paragraph cao_ddoc_fr2103 FR.2103
+Serve / client can listen unicast message
+- CA should bind unicast port
+- Unicast IP address and port policy can be followed by IoTivity specification.
+
+@paragraph cao_ddoc_fr2104 FR.2104
+Server / client can send unicast message
+- CA should bind unicast port
+- Unicast IP address and port policy can be followed by IoTivity specification.
+
+@paragraph cao_ddoc_fr2105 FR.2105
+Server / client can monitor the interface status.
+- CA should notify the status of interface whenever change the status
+
+@paragraph cao_ddoc_fr2106 FR.2106
+Server / client can communicate in secured way
+- CA should provde the way to send / receive data in secure way
+- DTLS should be supported as a secure transfer
+
+
+@subsubsection cao_ddoc_freqs_control_bt Connectivity Control - Bluetooth
+
+
+@paragraph cao_ddoc_fr2201 FR.2201
+Client can discover the device has IoTivity server when inquiry time.
+- CA should scan the device using the specific UUID.
+- The specific UUID should represent IoTivity service and be unique
+
+@paragraph cao_ddoc_fr2202 FR.2202
+Server can register IoTivity service which can be found when inquiry scan time
+- CA should register the specific UUID to BT service.
+- The specific UUID should represent IoTivity service and be unique
+
+@paragraph cao_ddoc_fr2203 FR.2203
+Client can request bonding to the device has IoTivity server.
+- CA should request bonding to the device.
+- CA should delegate the bonding procedure to the platform
+
+@paragraph cao_ddoc_fr2204 FR.2204
+Server can accept / deny the bonding request from client device
+- CA should deletage the bonding procedure to the platform
+
+@paragraph cao_ddoc_fr2205 FR.2205
+Server / client can get the bonded device list from BT service
+
+@paragraph cao_ddoc_fr2206 FR.2206
+Server / client can communicate throuth the RFCOMM
+- Serial Port Profile( SPP ) should be provided by platform.
+- Platform should provide the fundamental operation functions to CA.
+  : connect(), accept(), disconnect(), send(), recv()
+
+@subsubsection cao_ddoc_freqs_control_ble Connectivity Control - BLE
+
+
+@paragraph cao_ddoc_fr2301 FR.2301
+Client can discover the device has IoTivity server when scan time.
+- CA should scan the device using the specific UUID
+- The specific UUID should represent IoTivity service ahd be unique
+
+@paragraph cao_ddoc_fr2302 FR.2302
+Server can register IoTivity service which can be found when
+advertising time
+- CA should register the specific UUID to BT service.
+- The specific UUID should represent IoTivity service and be unique
+
+@paragraph cao_ddoc_fr2303 FR.2303
+Client can request bonding to the device has IoTivity server.
+- CA should request bonding to the device.
+- CA should delegate the bonding procedure to the platform
+
+@paragraph cao_ddoc_fr2304 FR.2304
+Server can accept / deny the bonding request from client device
+- CA should deletage the bonding procedure to the platform
+
+@paragraph cao_ddoc_fr2305 FR.2305
+Server / client can get the bonded device list from BT service
+
+@paragraph cao_ddoc_fr2306 FR.2306
+Server / client can communicate throuth the RFCOMM
+- General Attribute Profile( GATT ) should be provided by platform.
+- Platform should provide the fundamental operation functions to CA.
+  : connect(), accept(), disconnect(), send(), recv()
+
+@paragraph cao_ddoc_fr2307 FR.2307
+Server / client can send more lager data than 23 bytes
+- (Optional) Platform may provide 'read long' and 'write long' feature of BLE
+- CA should fragment and reassemble the lager data
+
+
+@subsubsection cao_ddoc_freqs_control_zigbee Connectivity Control - ZigBee
+
+
+@paragraph cao_ddoc_fr2401 FR.2401
+Client can start forming the ZigBee network
+- Client means ZigBee coordinator device
+- ZigBee service should provide the way to start ZigBee network forming
+
+@paragraph cao_ddoc_fr2402 FR.2402
+Client can finish the formed ZigBee network
+- Client means ZigBee coordinator device
+- ZigBee service should provide the way to finish ZigBee network forming
+
+@paragraph cao_ddoc_fr2403 FR.2403
+Client can receive the event whenever the ZigBee end-device joins and leaves
+- CA should know the identifier of ZigBee end-device when joins and leaves.
+- CA should know the identifier of ZigBee end-device joined through ZigBee router when joins and leaves.
+- CA could select the ZigBee end-device to join
+
+@paragraph cao_ddoc_fr2404 FR.2404
+Client can convert common ZigBee cluster to IoTivity URI.
+- CA should convert the common ZigBee cluster to URI.
+- The common ZigBee cluster can be one of the clusters announced by ZigBee alliance.
+  : eg. Home Automation Profile, Smart Energy Profile, and so on.
+
+@paragraph cao_ddoc_fr2405 FR.2405
+Client can convert common ZigBee cluster attributes to IoTivity attributes
+- CA should convert the common ZigBee cluster to attribute of the URI.
+- The common ZigBee profile can be one of the clusters announced by ZigBee alliance.
+
+@paragraph cao_ddoc_fr2406 FR.2406
+Client can convert CoAP message to ZCL command
+- CA should convert CoAP message to ZCL command to send ZigBee end-device
+
+
+@subsubsection cao_ddoc_freqs_control_zwave Connectivity Control - ZWave
+
+
+@paragraph cao_ddoc_fr2501 FR.2501
+Client can start creating PAN ( ZWave network )
+- Client means ZWave controller device
+- ZWave service should provide the way to start ZWave network creation
+
+@paragraph cao_ddoc_fr2502 FR.2502
+Client can finish the created PAN ( ZWave network )
+- Client means ZWave controller device
+- ZWave service should provide the way to finish created ZWave network
+
+@paragraph cao_ddoc_fr2503 FR.2503
+Client can receive the event whenever the ZWave slave joins and leaves
+- CA should know the identifier of ZWave slave when joins and leaves.
+- CA should know the identifier of ZWave slave joined through ZWave router when joins and leaves.
+- CA could select the ZWave slave to join
+
+@paragraph cao_ddoc_fr2504 FR.2504
+Client can convert common ZWave device class to IoTivity URI
+- CA should convert the common ZWave device class to URI.
+- The common ZWave device class can be one of the device classes announced by ZWave alliance.
+
+@paragraph cao_ddoc_fr2505 FR.2505
+Client can convert common ZWave command class to IoTivity attribute
+- CA should convert the common ZWave command class to attribute of the URI.
+- The common ZWave command class can be one of the command classes announced by ZWave alliance.
+
+@paragraph cao_ddoc_fr2506 FR.2506
+Client can convert CoAP message to ZWave command
+- CA should convert CoAP message to command class to send ZWave slave
+
+
+@subsection cao_ddoc_qattr Quality Attributes
+
+
+@subsubsection cao_ddoc_qattr_reliability Reliability
+
+
+@paragraph cao_ddoc_nfr201 NFR.201
+Network availability detection
+- Maxinum number of messaging failure is 3 during 10 minutes in available network .
+- Terminate the connection when the number is over the maximum value.
+
+@paragraph cao_ddoc_nfr202 NFR.202
+Messaging
+- The transmitted message from source has to be deliverd to the destination completely.
+
+@subsubsection cao_ddoc_qattr_security Security
+
+
+@paragraph cao_ddoc_nfr301 NFR.301
+Transfer Channel Protection
+- should protect the transfer channel using DTLS in CoaP , authentication in BT and other mechanisms in connectivities
+
+@paragraph cao_ddoc_nfr302 NFR.302
+Message Protection ( TBD )
+- should be able to encrypt the message to protect using RSA??
+
+
+@subsubsection cao_ddoc_qattr_maintenance Maintenance
+
+
+@paragraph cao_ddoc_nfr501 NFR.501
+Modularization for connectivities
+- One connectivity module change shouldn't have an effect on the other connectivity module.
+
+@subsubsection cao_ddoc_qattr_portability Portability
+
+
+@paragraph cao_ddoc_nfr601 NFR.601
+Support on Ubuntu 12.04
+- The software should be ported on Ubuntu (12.04) without change.
+- The platform specific portion should be controlled by build configurations.
+
+@paragraph cao_ddoc_nfr602 NFR.602
+Support on Android 4.4 / 5.0 and higher
+- The software should be ported on Android v5.0 and higher without change.
+- The platform specific portion should be controlled by build configurations.
+- JNI block can be added
+
+@paragraph cao_ddoc_nfr603 NFR.603
+Support on Tizen v2.3 and higher
+- The software should be ported on Tizen v2.3 and higher without change.
+- The platform specific portion should be controlled by build configurations.
+
+@paragraph cao_ddoc_nfr604 NFR.604
+Support on Arduino Mega
+- The software should be ported on Arduino Mega without change.
+- Connectivity function can be supported through the various shields.
+- The platform specific portion should be controlled by build configurations.
+
+@paragraph cao_ddoc_nfr605 NFR.605
+Support on Arduino Due
+- The software should be ported on Arduino Due without change.
+- Connectivity function can be supported through the various shields.
+- The platform specific portion should be controlled by build configurations.
+
+
+@subsubsection cao_ddoc_qattr_extensibility Extensibility
+
+@paragraph cao_ddoc_nfr701 NFR.701
+Connectivity Extension
+- The Architecture change has to be minimized when expanding Connectivities.
+
+
+@subsection cao_ddoc_constraints Constraints
+
+
+@subsubsection cao_ddoc_constraints_licence License
+
+
+@paragraph cao_ddoc_con101 CON.101
+Open source license
+- All source codes should be released under Apache License v2 or compatible.
+
+*/

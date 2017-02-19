@@ -1,0 +1,81 @@
+﻿<vw:BasePageView
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="using:Windows.UI"
+    xmlns:vm="using:MyLivingRoom.ViewModels"
+    xmlns:vw="using:MyLivingRoom.Views"
+
+    x:Class="MyLivingRoom.Views.EnOceanRockerButtonView"
+    >
+    <vw:BasePageView.Resources>
+        <vw:MappingConverter x:Key="IsPressedToBrushConverter">
+            <vw:BooleanMapping Key="True">
+                <vw:BooleanMapping.Value>
+                    <SolidColorBrush Color="#3FFFFFFF" />
+                </vw:BooleanMapping.Value>
+            </vw:BooleanMapping>
+            <vw:BooleanMapping Key="False">
+                <vw:BooleanMapping.Value>
+                    <SolidColorBrush Color="#013B3D" />
+                </vw:BooleanMapping.Value>
+            </vw:BooleanMapping>
+        </vw:MappingConverter>
+    </vw:BasePageView.Resources>
+
+    <StackPanel>
+        <StackPanel.Resources>
+        </StackPanel.Resources>
+        <vw:DeviceHeaderView DataContext="{x:Bind ViewModel.TopicDefinition}" />
+
+        <TextBlock
+            Style="{StaticResource TitleTextBlockStyle}"
+            Text="Controls"
+            />
+
+        <Grid Margin="0,20,0,0" >
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="40" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+                <Border
+                    x:Name="ButtonA0"
+                    Width="100" Height="100"
+                    Background="{Binding IsButtonA0Pressed,Converter={StaticResource IsPressedToBrushConverter}}"
+                    PointerPressed="ButtonA0_PointerPressed"
+                    PointerReleased="ButtonA0_PointerReleased"
+                    />
+                <Border
+                    x:Name="ButtonAI"
+                    Margin="0,8,0,0"
+                    Width="100" Height="100"
+                    Background="{Binding IsButtonAIPressed,Converter={StaticResource IsPressedToBrushConverter}}"
+                    PointerPressed="ButtonAI_PointerPressed"
+                    PointerReleased="ButtonAI_PointerReleased"
+                    />
+            </StackPanel>
+
+            <StackPanel Grid.Column="2">
+                <Border
+                    x:Name="ButtonB0"
+                    Width="100" Height="100"
+                    Background="{Binding IsButtonB0Pressed,Converter={StaticResource IsPressedToBrushConverter}}"
+                    PointerPressed="ButtonB0_PointerPressed"
+                    PointerReleased="ButtonB0_PointerReleased"
+                    />
+                <Border
+                    x:Name="ButtonBI"
+                    Margin="0,8,0,0"
+                    Width="100" Height="100"
+                    Background="{Binding IsButtonBIPressed,Converter={StaticResource IsPressedToBrushConverter}}"
+                    PointerPressed="ButtonBI_PointerPressed"
+                    PointerReleased="ButtonBI_PointerReleased"
+                    />
+            </StackPanel>
+        </Grid>
+
+    </StackPanel>
+</vw:BasePageView>

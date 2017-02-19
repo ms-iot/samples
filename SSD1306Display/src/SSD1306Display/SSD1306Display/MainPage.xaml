@@ -1,0 +1,19 @@
+﻿<Page
+    x:Class="SSD1306Display.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SSD1306Display"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <TextBlock x:Name="Title" HorizontalAlignment="Center" Margin="0,250,0,0" TextWrapping="Wrap" Text="SPI Display" VerticalAlignment="Top" Height="67" Width="640" FontSize="48" TextAlignment="Center"/>
+
+        <TextBlock x:Name="Text_Status" HorizontalAlignment="Center" Margin="10,575,10,0" TextWrapping="Wrap" Text="Status: Not Initialized" VerticalAlignment="Top" Width="1004" FontSize="32" TextAlignment="Center"/>
+        <TextBox x:Name="Display_TextBoxLine0" HorizontalAlignment="Center" Margin="0,322,0,0" Text="Hello SPI!" VerticalAlignment="Top" FontFamily="Microsoft Sans Serif" FontSize="32" Width="350" Height="48"/>
+        <TextBox x:Name="Display_TextBoxLine1" HorizontalAlignment="Center" Margin="0,375,0,0" Text="&lt;Edit This&gt;" VerticalAlignment="Top" FontFamily="Microsoft Sans Serif" FontSize="32" Width="350" Height="48"/>
+        <TextBox x:Name="Display_TextBoxLine2" HorizontalAlignment="Center" Margin="0,428,0,0" Text="1234" VerticalAlignment="Top" FontFamily="Microsoft Sans Serif" FontSize="32" Width="350" Height="48"/>
+        <TextBox x:Name="Display_TextBoxLine3" HorizontalAlignment="Center" Margin="0,481,0,0" Text="abcd" VerticalAlignment="Top" FontFamily="Microsoft Sans Serif" FontSize="32" Width="350" Height="48"/>
+    </Grid>
+</Page>

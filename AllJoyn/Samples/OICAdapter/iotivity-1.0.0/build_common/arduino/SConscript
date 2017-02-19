@@ -1,0 +1,450 @@
+##
+# This script includes arduino specific config
+##
+import os
+import platform
+
+Import('env')
+
+def __parse_config(f):
+	dict = {}
+
+	if not os.path.isfile(f):
+		return dict
+
+	file = open(f, 'r')
+	strs = file.readlines()
+	for str in strs:
+		str = str.strip()
+		if len(str) > 0 and str[0] == '#':
+			continue
+
+		idx = str.find('=')
+		if idx > 0:
+			dict.setdefault(str[0:idx], str[idx + 1:])
+
+	return dict
+
+def __get_boards(dict):
+	boards = []
+	keys = dict.keys()
+	for key in keys:
+		idx = key.find('.name')
+		if idx > 0:
+			if key.endswith('.name'):
+				boards.append(key[0:idx])
+	return boards
+
+def __get_cpu(dict, board):
+	cpus = []
+	keys = dict.keys()
+	for key in keys:
+		idx = key.find(board + '.menu.cpu.')
+		start = len(board + '.menu.cpu.')
+		if idx >= 0:
+			end = key.find('.', start)
+			if end > 0:
+				cpu = key[start:end]
+				exist = False
+				for c in cpus:
+					if c == cpu:
+						exist = True
+						break
+
+				if not exist:
+					cpus.append(cpu)
+	return cpus
+
+def __get_board_info(board, key):
+	if cpu:
+		v = boards_info.get(board + '.menu.cpu.' + cpu + key)
+		if not v:
+			v = boards_info.get(board + key)
+	else:
+		v = boards_info.get(board + key)
+	return v
+
+def __search_files(path, pattern, ondisk=True, source=True, strings=False, recursive=True):
+	if not recursive:
+		return Glob(pattern, ondisk, source, strings)
+
+	matches = []
+	for root, dirnames, filenames in os.walk(path):
+		# This is a helper function to build Arduino libraries. Scripts are using this function
+		# to add all the files in a folder as compilation targets rather than specifying each
+		# file to compile from a Arduino library folder.
+
+		# Since the function is recursive, it adds even "/library/<library-name>/examples" to the
+		# compilation list. This is an extra overhead as stack is never going to use ".o" generated
+		# for these examples.
+		if 'examples' not in root:
+			matches.extend(Glob(os.path.join(root, pattern), ondisk, source, strings))
+	return matches
+
+# To make sure the src is built in 'BUILD_DIR' (by default it will be built at
+# the same directory as the .c .cpp .S)
+def __src_to_obj(env, srcs):
+	objs = []
+	prefix = env.get('BOARD') + '_'
+	if env.get('CPU'):
+		prefix += env.get('CPU') + '_'
+
+	build_dir = os.path.join(env.get('BUILD_DIR'), 'arduino')
+	for src in srcs:
+		if (os.path.isabs(src.path)):
+			obj = src.path.replace(arduino_home, build_dir)
+		else:
+			obj = os.path.join(build_dir, src.path)
+		i = obj.rfind('.')
+		obj = obj[0:i]
+		if env.get('OBJSUFFIX'):
+			obj += env.get('OBJSUFFIX')
+		objs.extend(env.Object(obj, src, OBJPREFIX=prefix))
+	return objs
+
+def __import_lib(env, lib):
+	lib_path = os.path.join(arduino_home, 'libraries', lib)
+	if not os.path.exists(lib_path):
+		if target_arch == 'avr':
+			lib_path = os.path.join(arduino_home, 'hardware', 'arduino', 'avr', 'libraries', lib)
+		else:
+			lib_path = os.path.join(arduino_home, 'hardware', 'arduino', 'sam', 'libraries', lib)
+
+	if os.path.exists(os.path.join(lib_path, 'src')):
+		lib_path = os.path.join(lib_path, 'src')
+
+	env.AppendUnique(CPPPATH = [lib_path])
+
+	if os.path.exists(os.path.join(lib_path, 'utility')):
+		env.AppendUnique(CPPPATH = [os.path.join(lib_path, 'utility')])
+
+	lib_src = []
+	lib_src.extend(__search_files(lib_path, '*.S'))
+	lib_src.extend(__search_files(lib_path, '*.c'))
+	lib_src.extend(__search_files(lib_path, '*.cpp'))
+
+	lib_obj = __src_to_obj(env, lib_src)
+	build_dir = env.get('BUILD_DIR')
+	if build_dir:
+		lib_a = env.StaticLibrary(build_dir + lib, lib_obj)
+	else:
+		lib_a = env.StaticLibrary(lib, lib_obj)
+
+	# If we link libSPI.a, the final binary is not getting launched
+	# on the board.  Which is not the case if we directly use SPI.o.
+
+	if env.get('TARGET_ARCH') == 'arm':
+		if lib == 'SPI':
+			for obj in lib_obj:
+				if obj.name.endswith('SPI.o'):
+					env.PrependUnique(LIBS = [File(obj)])
+		else:
+
+			env.AppendUnique(LIBS = [File(lib_a[0])])
+	else:
+		env.PrependUnique(LIBS = [File(lib_a[0])])
+
+	#env.AppendUnique(LIBS = [File(lib_a[0])])
+
+def __build_core(env):
+	core_src = __search_files(core_folder, '*.S')
+	core_src.extend(__search_files(core_folder, '*.c'))
+	core_src.extend(__search_files(core_folder, '*.cpp'))
+
+	core_src.extend(__search_files(variant_folder, '*.S'))
+	core_src.extend(__search_files(variant_folder, '*.c'))
+	core_src.extend(__search_files(variant_folder, '*.cpp'))
+
+	core_obj = __src_to_obj(env, core_src)
+
+	prefix = env.get('BOARD') + '_'
+	if env.get('CPU'):
+		prefix += env.get('CPU') + '_'
+
+	core = os.path.join(env.get('BUILD_DIR', '.'), 'arduino', prefix + 'core')
+	s_core = env.StaticLibrary(core, core_obj)
+
+	env.AppendUnique(LIBS = [File(s_core[0])])
+
+	# To avoid compiler issue. Otherewise there may be warnings:
+	# 	undefined reference to '_exit' '_close', '_getpid' ...
+	# Above functions are used in libc.a and implemented in syscalls_sam3.c
+	if env.get('TARGET_ARCH') == 'arm':
+		for obj in core_obj:
+			if obj.name.endswith('syscalls_sam3.o'):
+				env.AppendUnique(LIBS = [File(obj)])
+
+def __create_bin(env, source):
+	name = source
+	if env.get('TARGET_ARCH') == 'avr':
+		eep = env.Command(name + '.eep', source, 'avr-objcopy -O ihex -j .eeprom --set-section-flags=.eeprom=alloc,load --no-change-warnings --change-section-lma .eeprom=0 $SOURCE $TARGET')
+		hex = env.Command(name + '.hex', source, 'avr-objcopy -O ihex -R .eeprom $SOURCE $TARGET')
+	else:
+		hex = env.Command(name + '.hex', source, 'arm-none-eabi-objcopy -O binary $SOURCE $TARGET')
+
+#Currently supporting only mega (ie. Arduino ATMega2560) and arduino_due_x/arduino_due_x_dbg (i.e. Arduino Due) builds
+def __upload(env, binary):
+        if target_arch == 'avr':
+                protocol = __get_board_info(board, '.upload.protocol')
+                speed = __get_board_info(board, '.upload.speed')
+                port = '/dev/ttyACM0'
+                upload_cmd = arduino_home + '/hardware/tools/avr/bin/avrdude -C' + arduino_home +'/hardware/tools/avr/etc/avrdude.conf -p' \
+                + mcu + ' -c' + protocol + ' -P' + port + ' -b' + speed + ' -D -Uflash:w:' + binary + ':i'
+                print "Upload command: %s" %upload_cmd
+                install_cmd = env.Command('install_cmd', None, upload_cmd)
+                env.Default('install_cmd')
+        elif target_arch == 'arm':
+                port = 'ttyACM0'
+                upload_cmd = 'stty -F /dev/' + port + ' speed 1200 cs8 -cstopb -parenb \n' + arduino_home + '/hardware/tools/bossac -i --port=' + port + ' -U false -e -w -b ' + binary + ' -R'
+                print "Upload command: %s" %upload_cmd
+                install_cmd = env.Command('install_cmd', None, upload_cmd)
+                env.Default('install_cmd')
+
+# Print the command line that to upload binary to the board
+def __upload_help(env):
+	if target_arch == 'avr':
+		protocol = __get_board_info(board, '.upload.protocol')
+		speed = __get_board_info(board, '.upload.speed')
+
+		upload_cmd = arduino_home + '/hardware/tools/avr/bin/avrdude -C' + arduino_home +'/hardware/tools/avr/etc/avrdude.conf -v -v -v -v -p' \
+	+ mcu + ' -c' + protocol + ' -P<serial_port>' + ' -b' + speed + ' -D -Uflash:w:<hex_file>:i'
+	else:
+		uu = __get_board_info(board, '.upload.native_usb')
+		upload_cmd = arduino_home + '/hardware/tools/bossac -i -d --port=<serial_port> -U ' + uu + ' -e -w -v -b <bin file> -R'
+
+	Help('''
+===============================================================================
+You can upload the bin file with following command line:
+''')
+	Help('\n   $ ' + upload_cmd)
+	Help('''
+\nPlease replace <xxx> according to the actual situation.
+===============================================================================
+''')
+
+# ARDUINO_HOME build option
+help_vars = Variables()
+help_vars.Add(PathVariable('ARDUINO_HOME', 'ARDUINO root directory', os.environ.get('ARDUINO_HOME')))
+help_vars.Update(env)
+Help(help_vars.GenerateHelpText(env))
+
+target_arch = env.get('TARGET_ARCH')
+
+# Verify that the arduino, time, red bear, and nordic libraries are
+# installed.  If not, get them and install them.
+SConscript(os.path.join(env.get('SRC_DIR'), 'extlibs', 'arduino', 'SConscript'))
+arduino_home = env.get('ARDUINO_HOME')
+print 'ARDUINO_HOME = ' + env.get('ARDUINO_HOME')
+
+# Overwrite suffixes and prefixes
+if env['HOST_OS'] == 'win32':
+	env['OBJSUFFIX'] = '.o'
+	env['SHOBJSUFFIX'] = '.os'
+	env['LIBPREFIX'] = 'lib'
+	env['LIBSUFFIX'] = '.a'
+	env['SHLIBPREFIX'] = 'lib'
+	env['SHLIBSUFFIX'] = '.so'
+	env['LIBPREFIXES'] = ['lib']
+	env['LIBSUFFIXES'] = ['.a', '.so']
+	env['PROGSUFFIX'] = ''
+elif platform.system().lower() == 'darwin':
+	env['SHLIBSUFFIX'] = '.so'
+	env['LIBSUFFIXES'] = ['.a', '.so']
+	env['PROGSUFFIX'] = ''
+
+# Debug/release relative flags
+if env.get('RELEASE'):
+	env.AppendUnique(CCFLAGS = ['-Os'])
+	env.AppendUnique(CPPDEFINES = ['NDEBUG'])
+else:
+	env.AppendUnique(CCFLAGS = ['-g'])
+
+# BOARD / CPU option
+
+# Get IDE version
+if os.path.exists(os.path.join(arduino_home, 'lib', 'version.txt')):
+	vf = open(os.path.join(arduino_home, 'lib', 'version.txt'), 'r')
+	version = vf.readline().replace('.', '').strip()
+else:
+	print '''
+************************************* Error ***********************************
+* Can't find version file (lib/version.txt), please check if (%s)
+* is arduino root directory.                                                  *
+*******************************************************************************
+''' % arduino_home
+	Exit(1)
+
+if version[0:2] == '10':
+	is_1_0_x = True
+	boards_info = __parse_config(os.path.join(arduino_home, 'hardware', 'arduino', 'boards.txt'))
+	env.PrependENVPath('PATH', os.path.join(arduino_home, 'hardware', 'tools', 'avr', 'bin'))
+	env.Replace(CC = 'avr-gcc')
+	env.Replace(CXX = 'avr-g++')
+	env.Replace(AR = 'avr-ar')
+	env.Replace(AS = 'avr-as')
+	env.Replace(LINK = 'avr-gcc')
+	env.Replace(RANLIB = 'avr-ranlib')
+	if target_arch != 'avr':
+		print '''
+************************************* Error ***********************************
+* Arduino 1.0.x IDE only support 'avr', to support other arch at least 1.5.x  *
+* is required.
+*******************************************************************************
+'''
+		Exit(1)
+else:
+	is_1_0_x = False
+	if target_arch == 'avr':
+		boards_info = __parse_config(os.path.join(arduino_home, 'hardware', 'arduino', 'avr', 'boards.txt'))
+		platform_info = __parse_config(os.path.join(arduino_home, 'hardware', 'arduino', 'avr', 'platform.txt'))
+	elif target_arch == 'arm':
+		boards_info = __parse_config(os.path.join(arduino_home, 'hardware', 'arduino', 'sam', 'boards.txt'))
+		platform_info = __parse_config(os.path.join(arduino_home, 'hardware', 'arduino', 'sam', 'platform.txt'))
+	else:
+		print '''
+************************************* Error ***********************************
+* CPU arch %s isn't supported currently.
+*******************************************************************************
+''' % target_arch
+
+#Board option, let user to select the board
+boards = __get_boards(boards_info)
+help_vars = Variables()
+help_vars.Add(EnumVariable('BOARD', 'arduino board', boards[0], boards))
+help_vars.Update(env)
+Help(help_vars.GenerateHelpText(env))
+
+#CPU option
+board = env.get('BOARD')
+cpus = __get_cpu(boards_info, board)
+if len(cpus) > 0:
+	help_vars = Variables()
+	help_vars.Add(EnumVariable('CPU', 'arduino board cpu', cpus[0], cpus))
+	help_vars.Update(env)
+	Help(help_vars.GenerateHelpText(env))
+
+# Arduino commom flags
+cpu = env.get('CPU')
+board = env.get('BOARD')
+mcu = __get_board_info(board, '.build.mcu')
+f_cpu = __get_board_info(board, '.build.f_cpu')
+usb_vid = __get_board_info(board, '.build.vid')
+usb_pid = __get_board_info(board, '.build.pid')
+variant = __get_board_info(board, '.build.variant')
+
+if not usb_vid:
+	usb_vid = __get_board_info(board, '.vid.0')
+if not usb_pid:
+	usb_pid = __get_board_info(board, '.pid.0')
+
+if is_1_0_x:
+	core_base = os.path.join(arduino_home, 'hardware', 'arduino')
+else:
+	if target_arch == 'avr':
+		core_base = os.path.join(arduino_home, 'hardware', 'arduino', 'avr')
+	else:
+		core_base = os.path.join(arduino_home, 'hardware', 'arduino', 'sam')
+
+variant_folder = os.path.join(core_base, 'variants', variant)
+env.AppendUnique(CPPPATH = [variant_folder])
+
+core = __get_board_info(board, '.build.core')
+core_folder = os.path.join(core_base, 'cores', core)
+env.AppendUnique(CPPPATH = [core_folder])
+
+if is_1_0_x:
+	comm_flags = ['-std=c99']
+	if mcu:
+		comm_flags.extend(['-mmcu=' + mcu])
+	if f_cpu:
+		comm_flags.extend(['-DF_CPU=' + f_cpu])
+	comm_flags.extend(['-DARDUINO=' + version])
+	if usb_vid:
+		comm_flags.extend(['-DUSB_VID=' + usb_vid])
+	if usb_pid:
+		comm_flags.extend(['-DUSB_PID=' + usb_pid])
+
+	env.AppendUnique(ASFLAGS = ['-x', 'assembler-with-cpp'])
+	env.AppendUnique(ASFLAGS = comm_flags)
+
+	env.AppendUnique(CFLAGS = ['-Os', '-ffunction-sections', '-fdata-sections', '-MMD'])
+	env.AppendUnique(CFLAGS = comm_flags)
+
+	env.AppendUnique(CXXFLAGS = ['-Os', '-fno-exceptions', '-ffunction-sections', '-fdata-sections','-MMD'])
+	env.AppendUnique(CXXFLAGS = comm_flags)
+
+	env.AppendUnique(LINKFLAGS = ['-Os'])
+	if mcu == 'atmega2560':
+		env.AppendUnique(LINKFLAGS = ['-Wl,--gc-sections,--relax'])
+	else:
+		env.AppendUnique(LINKFLAGS = ['-Wl,--gc-sections'])
+	env.AppendUnique(LINKFLAGS = ['-mmcu=' + mcu])
+else:
+	if target_arch == 'avr':
+		cpu_flag = '-mmcu=' + mcu
+	else:
+		cpu_flag = '-mcpu=' + mcu
+
+	comm_flag = [cpu_flag, '-DF_CPU=' + f_cpu, '-DARDUINO=' + version, '-DARDUINO_' + __get_board_info(board, '.build.board')]
+	if target_arch == 'arm':
+ 		# As of 1.5.8 the arduino headers for arm had _asm_ bugs with ARM and
+ 		# require gnu99 to be used
+		comm_flag.extend(['-std=gnu99', '-DARDUINO_ARCH_SAM'])
+	else:
+		comm_flag.extend(['-std=c99', '-DARDUINO_ARCH_AVR'])
+
+	compiler_path = platform_info.get('compiler.path')
+	compiler_path = compiler_path.replace('{runtime.ide.path}', arduino_home)
+	env.PrependENVPath('PATH', compiler_path)
+	env.Replace(CC = platform_info.get('compiler.c.cmd'))
+	env.Replace(CXX = platform_info.get('compiler.cpp.cmd'))
+	env.Replace(AR = platform_info.get('compiler.ar.cmd'))
+	if target_arch == 'arm':
+		env.AppendUnique(CPPPATH = [os.path.join(arduino_home, 'hardware', 'arduino', 'sam', 'system', 'libsam'),
+							os.path.join(arduino_home, 'hardware', 'arduino', 'sam', 'system', 'CMSIS', 'CMSIS', 'Include'),
+							os.path.join(arduino_home, 'hardware', 'arduino', 'sam', 'system', '', 'CMSIS', 'Device', 'ATMEL')])
+	env.AppendUnique(ASFLAGS = ['-x', 'assembler-with-cpp'])
+	env.AppendUnique(ASFLAGS = comm_flag)
+	env.AppendUnique(CFLAGS = Split(platform_info.get('compiler.c.flags')))
+	env.AppendUnique(CXXFLAGS = Split(platform_info.get('compiler.cpp.flags')))
+	env.AppendUnique(ARFLAGS = Split(platform_info.get('compiler.ar.flags')))
+	env.AppendUnique(CCFLAGS = comm_flag)
+
+	extra_flags = __get_board_info(board, '.build.extra_flags')
+	if extra_flags:
+		extra_flags = extra_flags.replace('{build.usb_flags}', '')
+		env.AppendUnique(CCFLAGS = Split(extra_flags))
+		usb_flags = ['-DUSB_VID=' + usb_vid, '-DUSB_PID=' + usb_pid, '-DUSBCON', '-DUSB_MANUFACTURER="Unknown"']
+		env.AppendUnique(CCFLAGS = usb_flags)
+
+	if target_arch == 'arm':
+		env.AppendUnique(LINKFLAGS = ['-Os', '-Wl,--gc-sections', cpu_flag,
+					'-T' + os.path.join(variant_folder,  __get_board_info(board, '.build.ldscript'))])
+		env.AppendUnique(LINKFLAGS = Split('-lm -lgcc -mthumb -Wl,--check-sections -Wl,--gc-sections -Wl,--entry=Reset_Handler -Wl,--unresolved-symbols=report-all -Wl,--warn-common -Wl,--warn-section-align -Wl,--warn-unresolved-symbols -Wl,--start-group'))
+
+		variant_system_lib = __get_board_info(board, '.build.variant_system_lib')
+		if variant_system_lib:
+			if variant_folder.find(' ') >= 0:
+				variant_folder = '"' + variant_folder + '"'
+			env.Replace(LINKCOM = '$LINK -o $TARGET $_LIBDIRFLAGS $LINKFLAGS $SOURCES $_LIBFLAGS '
+					+ os.path.join(variant_folder, variant_system_lib) + ' -Wl,--end-group')
+		else:
+			env.Replace(LINKCOM = '$LINK -o $TARGET $_LIBDIRFLAGS $LINKFLAGS $SOURCES $_LIBFLAGS -Wl,--end-group')
+	else:
+		env.AppendUnique(LINKFLAGS = Split(platform_info.get('compiler.c.elf.flags')))
+		env.AppendUnique(LINKFLAGS = [cpu_flag])
+		env.AppendUnique(LIBS = 'm')
+	env.Replace(ARCOM = '$AR ' + platform_info.get('compiler.ar.flags') + ' $TARGET $SOURCES')
+
+# Make sure the .d files are removed when clean the build
+if env.GetOption('clean'):
+	dfs = __search_files(env.get('BUILD_DIR'), '*.d')
+	for df in dfs:
+		Execute(Delete(df))
+__build_core(env)
+
+env.AddMethod(__import_lib, "ImportLib") #import arduino library
+env.AddMethod(__build_core, "BuildCore") #build arduino core
+env.AddMethod(__create_bin, "CreateBin") #create binary files(.eep and .hex)
+env.AddMethod(__upload, "Upload") #Upload binary to board
+env.AddMethod(__upload_help, "UploadHelp") #print the command line that to upload binary to the boardf

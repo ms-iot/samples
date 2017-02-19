@@ -1,0 +1,148 @@
+/******************************************************************
+ *
+ * Copyright 2015 Samsung Electronics All Rights Reserved.
+ *
+ *
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ ******************************************************************/
+
+#define POPUP_CONTENT_DEFAULT_PADDING_LEFT_MIN_INC 15
+#define POPUP_EDITFIELD_LAYOUT_MINMAX_HEIGHT_INC 96
+
+group
+{
+    name: "group_layout";
+    parts
+    {
+        part
+        {
+            name: "button1";
+            type: SWALLOW;
+            scale: 1;
+            description
+            {
+                rel1.relative: 0.01 0.01;
+                rel2.relative: 0.5 0.09;
+            }
+        }
+        part
+        {
+            name: "button2";
+            type: SWALLOW;
+            scale: 1;
+            description
+            {
+                rel1.relative: 0.51 0.01;
+                rel2.relative: 1.0 0.09;
+            }
+        }
+        part
+        {
+            name: "list";
+            type: SWALLOW;
+            scale: 1;
+            description
+            {
+                rel1.relative: 0.01 0.1;
+                rel2.relative: 0.99 0.7;
+            }
+        }
+        part
+        {
+            name: "log_bg";
+            type: RECT;
+            scale: 1;
+            description
+            {
+                state: "default" 0.0;
+                rel1.relative: 0.01 0.45;
+                rel2.relative: 0.98 1.0;
+                color: 220 220 220 255;
+            }
+        }
+        part
+        {
+            name: "log";
+            type: SWALLOW;
+            scale: 1;
+            description
+            {
+                rel1.to: "log_bg";
+                rel2.to: "log_bg";
+            }
+        }
+    }
+}
+
+group
+{
+    name: "popup_datetime_text";
+    parts
+    {
+        part
+        {
+            name: "pad_l";
+            type: SPACER;
+            scale: 1;
+            description
+            {
+                state: "default" 0.0;
+                min: POPUP_CONTENT_DEFAULT_PADDING_LEFT_MIN_INC 0;
+                fixed: 1 0;
+                rel1.relative: 0.0 0.0;
+                rel2.relative: 0.0 1.0;
+                align: 0.0 0.0;
+            }
+        }
+        part
+        {
+            name: "pad_r";
+            type: SPACER;
+            scale: 1;
+            description
+            {
+                state: "default" 0.0;
+                min: POPUP_CONTENT_DEFAULT_PADDING_LEFT_MIN_INC 0;
+                fixed: 1 0;
+                rel1.relative: 1.0 0.0;
+                rel2.relative: 1.0 1.0;
+                align: 1.0 0.0;
+            }
+        }
+        part
+        {
+            name: "elm.swallow.content";
+            type: SWALLOW;
+            scale: 1;
+            description
+            {
+                state: "default" 0.0;
+                min: 0 POPUP_EDITFIELD_LAYOUT_MINMAX_HEIGHT_INC;
+                max: -1 POPUP_EDITFIELD_LAYOUT_MINMAX_HEIGHT_INC;
+                align: 0.5 0.5;
+                rel1
+                {
+                    relative: 1.0 0.0;
+                    to_x: "pad_l";
+                }
+                rel2
+                {
+                    relative: 0.0 1.0;
+                    to_x: "pad_r";
+                }
+            }
+        }
+    }
+}

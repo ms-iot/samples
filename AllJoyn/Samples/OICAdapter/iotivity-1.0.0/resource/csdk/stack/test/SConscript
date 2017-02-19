@@ -1,0 +1,82 @@
+#******************************************************************
+#
+# Copyright 2014 Intel Mobile Communications GmbH All Rights Reserved.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+Import('env')
+import os
+import os.path
+stacktest_env = env.Clone()
+
+src_dir = stacktest_env.get('SRC_DIR')
+
+######################################################################
+# Build flags
+######################################################################
+stacktest_env.PrependUnique(CPPPATH = [
+		'../../security/include',
+		'../../ocsocket/include',
+		'../../logger/include',
+		'../../ocrandom/include',
+		'../../stack/include',
+		'../../stack/include/internal',
+		'../../connectivity/api',
+		'../../connectivity/external/inc',
+		'../../extlibs/cjson',
+		'../../../oc_logger/include',
+		'#extlibs/gtest/gtest-1.7.0/include'
+		])
+
+stacktest_env.AppendUnique(CXXFLAGS = ['-std=c++0x', '-Wall', '-pthread'])
+stacktest_env.AppendUnique(LIBS = ['-lpthread'])
+stacktest_env.AppendUnique(LIBPATH = [env.get('BUILD_DIR')])
+stacktest_env.AppendUnique(LIBPATH = [src_dir + '/extlibs/gtest/gtest-1.7.0/lib/.libs'])
+stacktest_env.PrependUnique(LIBS = ['m',
+                                    'octbstack',
+                                    'ocsrm',
+                                    'connectivity_abstraction',
+                                    'coap',
+                                    'gtest',
+                                    'gtest_main'])
+
+target_os = env.get('TARGET_OS')
+if target_os != 'darwin':
+    stacktest_env.PrependUnique(LIBS = ['oc_logger'])
+
+
+if env.get('SECURED') == '1':
+    stacktest_env.AppendUnique(LIBS = ['tinydtls'])
+
+if env.get('LOGGING'):
+	stacktest_env.AppendUnique(CPPDEFINES = ['TB_LOG'])
+
+######################################################################
+# Source files and Targets
+######################################################################
+stacktests = stacktest_env.Program('stacktests', ['stacktests.cpp'])
+
+Alias("test", [stacktests])
+
+env.AppendTarget('test')
+if env.get('TEST') == '1':
+	target_os = env.get('TARGET_OS')
+	if target_os == 'linux':
+                from tools.scons.RunTest import *
+                run_test(stacktest_env,
+                         'resource_csdk_stack_test.memcheck',
+                         'resource/csdk/stack/test/stacktests')

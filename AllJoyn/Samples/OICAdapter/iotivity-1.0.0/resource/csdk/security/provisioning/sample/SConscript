@@ -1,0 +1,86 @@
+# //******************************************************************
+# //
+# // Copyright 2015 Samsung Electronics All Rights Reserved.
+# //
+# //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+# //
+# // Licensed under the Apache License, Version 2.0 (the "License");
+# // you may not use this file except in compliance with the License.
+# // You may obtain a copy of the License at
+# //
+# //      http://www.apache.org/licenses/LICENSE-2.0
+# //
+# // Unless required by applicable law or agreed to in writing, software
+# // distributed under the License is distributed on an "AS IS" BASIS,
+# // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# // See the License for the specific language governing permissions and
+# // limitations under the License.
+# //
+# //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+
+Import('env')
+
+provisioning_env = env.Clone()
+
+######################################################################
+# Build flags
+######################################################################
+provisioning_env.AppendUnique(CPPPATH = [
+		'../../../stack/include',
+		'../../../ocrandom/include',
+		'../../../logger/include',
+		'../../../stack/include',
+		'../../../security/include',
+		'../../../security/provisioning/include/internal',
+		'../../../../oc_logger/include',
+		'../include',
+		'../include/oxm',
+		'../../include',
+		'../../../../../extlibs/tinydtls',
+		'../../../../../extlibs/cjson',
+		'../../../../../extlibs/base64',
+		'../../../connectivity/inc',
+		'../../../connectivity/common/inc',
+		'../../../connectivity/lib/libcoap-4.1.1',
+		'../../../connectivity/api'
+		])
+
+provisioning_env.AppendUnique(CFLAGS = ['-D__WITH_DTLS__','-std=c99'])
+provisioning_env.AppendUnique(CXXFLAGS = ['-std=c++0x', '-Wall', '-pthread', '-fpermissive'])
+provisioning_env.AppendUnique(RPATH = [env.get('BUILD_DIR')])
+provisioning_env.AppendUnique(LIBS = ['-lpthread','-ldl'])
+provisioning_env.AppendUnique(LIBPATH = [env.get('BUILD_DIR')])
+provisioning_env.PrependUnique(LIBS = ['ocpmapi','oc', 'oc_logger', 'ocsrm','m', 'octbstack', 'connectivity_abstraction', 'coap'])
+
+if env.get('SECURED') == '1':
+    provisioning_env.AppendUnique(LIBS = ['tinydtls'])
+if env.get('DTLS_WITH_X509') == '1':
+	provisioning_env.AppendUnique(LIBS = ['CKManager'])
+	provisioning_env.AppendUnique(LIBS = ['asn1'])
+provisioning_env.ParseConfig('pkg-config --libs glib-2.0');
+
+provisioning_env.AppendUnique(CPPDEFINES = ['TB_LOG'])
+
+######################################################################
+# Source files and Targets
+######################################################################
+
+provisioningclient = provisioning_env.Program('provisioningclient', 'provisioningclient.c')
+sampleserver_justworks = provisioning_env.Program('sampleserver_justworks', 'sampleserver_justworks.cpp')
+sampleserver_randompin = provisioning_env.Program('sampleserver_randompin', 'sampleserver_randompin.cpp')
+
+Alias("samples", [provisioningclient, sampleserver_justworks, sampleserver_randompin])
+
+provisioning_env.AppendTarget('samples')
+
+src_dir = provisioning_env.get('SRC_DIR')
+sec_provisioning_src_dir = src_dir + '/resource/csdk/security/provisioning/sample/'
+sec_provisioning_build_dir = env.get('BUILD_DIR') +'/resource/csdk/security/provisioning/sample/'
+
+provisioning_env.Alias("install", provisioning_env.Install( sec_provisioning_build_dir,
+    sec_provisioning_src_dir + 'oic_svr_db_client.json'))
+provisioning_env.Alias("install", provisioning_env.Install( sec_provisioning_build_dir,
+    sec_provisioning_src_dir + 'oic_svr_db_server_justworks.json'))
+provisioning_env.Alias("install", provisioning_env.Install( sec_provisioning_build_dir,
+    sec_provisioning_src_dir + 'oic_svr_db_server_randompin.json'))

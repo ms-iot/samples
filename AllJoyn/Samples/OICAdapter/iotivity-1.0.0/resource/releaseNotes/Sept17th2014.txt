@@ -1,0 +1,146 @@
+Release notes
+****************************************************************************
+Release date: Sept 17th, 2014.
+OS: Ubuntu 12.0.4 and above
+Requires boost version 1.55 to build.
+Code buildable in gcc 4.6.3 and above.
+NOTE: Boost is not distributed but should be installed in the Ubuntu machine.
+*****************************************************************************
+
+What is new?
+
+--------------------------------------------
+Class OCPlatform (Header file: OCPlatform.h)
+--------------------------------------------
+
+*****************
+notifyAllObservers API
+*****************
+
+Previously, this API was named as 'notifyObservers'. This API is used for notifying base that resource's attributes have changed.
+NOTE: This applies to server side functionality only.
+
+*******************
+notifyListOfObservers API
+*******************
+
+This new API allows server's entity handler to specify a list of observers to be notified. Parameters of this API include
+resource handle, vector of observation IDs for which notification needs to be sent and OCResourceResponse pointer to fill the
+response. Before this API is invoked by entity handler, server app would have finished processing queries for the associated
+observers.
+
+NOTE: This applies to server side functionality.
+
+--------------------------------------------
+ Header file: OCStack.h (in base)
+--------------------------------------------
+
+*****************
+OCNotifyAllObservers API
+*****************
+
+Previously, this API was named as 'notifyObservers'. This API is used for notifying base that resource's attributes have changed.
+
+NOTE: This applies to server side functionality only.
+
+*******************
+OCNotifyListOfObservers API
+*******************
+
+This new API allows server's entity handler to specify a list of observers to be notified. Parameters of this API include
+resource handle, pointer to array of observation IDs for which notification needs to be sent, number of observation IDS and
+buffer for response. Before this API is invoked by entity handler, server app would have finished processing queries for the associated
+observers.
+
+NOTE: This applies to server side functionality.
+
+------------
+Other Notes:
+------------
+
+Security model is still open.
+APIs have OCStackResult as return type. This is will indicate success or failure for the API operation.
+
+Maximum length of URI supported is 64 bytes (sent from the client)
+Maximum length of query supported is 64 bytes (sent from the client)
+Maximum length of request and response from server for Ardunio is is 256 bytes
+Maximum length of request and response from server for non-Ardunio is is 1024 bytes
+
+OIC base now supports Arduino WiFi shield.
+This support has been tested with Arduino Mega 2560 and with Arduino 1.0.5 WiFi library.
+Please refer to oic-resource/csdk/README file for building OIC base with WiFi support.
+
+As part of this release, clean up items included are:
+Removal of header files, source files, folders which are not used as part of build. OCLib
+More typedefs for clarity and readability.
+More comments in sample files.
+
+Bug fixes:
+IOT-25
+IOT-31
+IOT-45
+IOT-48
+Minor bugs fixed
+Memory leak issues fixed
+
+Presence notifications:
+OCStartPresence and OCStopPresence are updated so that if can be called when server comes online and offline respectively.
+Notifications will now be sent when a resource is modified or deleted.
+Now notifications to the app are sent only when there is a change in nonce.
+
+Observe notifications:
+When using OCNotifyListOfObservers, the memory for obsIdList and notificationJSONPayload is managed by the entity handler invoking the API.
+The maximum size of the notification is 1015 bytes for non-Arduino platforms and 247 bytes for Arduino platforms.
+
+Server sample (oic-resource/examples/simpleserver.cpp) has been updated to showcase invoking either notifyAllObservers or notifyListOfObservers.
+Once the samples are built (see 'How to build' section below), if notifyAllObservers needs to be used, the app can be run as
+'./simpleserver 0"
+Note: './simpleserver' without any input parameter will also invoke notifyAllObservers.
+
+If notifyListOfObservers needs to be used, the app can be run as
+'./simpleserver 1'
+
+Improvements:
+OCRepresentation provides simpler interface to setValue and getValue from the apps. Apps do not need to use AttributeMap in OCRepresentation.
+OCRepresentation now supports serialization/deserilization for primitive (numbers, booleans and strings), so app need not directly have to
+deal with strings.
+
+Known issues:
+More than one presence notification is sent out when a new resource is created instead of one notification (IOT-49)
+When OCNotifyListOfObservers is invoked with a list of observer IDs and if any of observer ID does not exist in the base, flow continues processing
+other observe IDs.
+
+-------------
+How to build:
+-------------
+
+REFER https://oic-review.01.org/gerrit for more details on getting oic-resource repo.
+If the code is not cloned:
+Clone the oic-resource repo using this command: git clone oic:oic-resource
+Clone the oic-utilities repo using this command: git clone oic:oic-utilities
+
+NOTE: If the repo is already cloned, use 'git pull' inside oic-resource folder to get the latest code.
+
+In repo oic-core, root folder ccf-opensource consists of 'OIC' folder.  Inside OIC folder there is a Makefile.
+
+Before building, make sure to have contents from oic-utilities repo at the folder level where oic-resource is.
+
+Inside oic-resource directory, use 'make'to build the entire OIC code. This would build the C++ SDK, core(i.e base) and samples.
+
+Use 'make BUILD=debug' to build the entire OIC code in debug mode. This would build the C++ SDK, core(i.e base) and samples. All the executables for debug build
+are in 'oic-resource/debug'.
+
+--------
+Samples:
+--------
+
+After building the code in oic-resource, executables for samples are in directory named 'oic-resource/samples/release'.
+After building the code in oic-resource, executables are in directory named 'oic-resource/release'.
+A sample for hosting a resource on a server and a sample for client for discovering resources are provided in the following paths:
+
+Server sample location: oic-resource/examples/simpleserver.cpp
+Client sample location: oic-resource/examples/simpleclient.cpp
+Server and client mode (mode type both) location: oic-resource/examples/simpleclientserver.cpp
+
+Sample with basic presence feature for server side: oic-resource/examples/presenceserver.cpp
+Sample with basic presence feature for client side: oic-resource/examples/presenceclient.cpp

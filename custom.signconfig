@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- This file is used by the build system to do a post-build code sign operation -->
+<SignConfigXML>
+  <!-- AnyCPU Release sign job -->
+  <job platform="AnyCPU" configuration="Release" dest="__RELBINPATH__\bin\signed" jobname="IOT Samples" approvers="artemz;torstens">
+    <file src="__RELBINPATH__\bin\DeviceSystemBridgeTemplate_2015\DeviceSystemBridgeTemplate.vsix" signType="100040160" dest="__RELBINPATH__\bin\signed\DeviceSystemBridgeTemplate.vsix" />
+    <file src="__RELBINPATH__\bin\DeviceSystemBridgeTemplate_2017\DeviceSystemBridgeTemplate_2017.vsix" signType="100040160" dest="__RELBINPATH__\bin\signed\DeviceSystemBridgeTemplate_2017.vsix" />
+    <file src="__RELBINPATH__\bin\WindowsIotCoreTemplatesDev14\WindowsIotCoreTemplates.vsix" signType="100040160" dest="__RELBINPATH__\bin\signed\WindowsIotCoreTemplates.vsix" />
+  </job>
+</SignConfigXML>

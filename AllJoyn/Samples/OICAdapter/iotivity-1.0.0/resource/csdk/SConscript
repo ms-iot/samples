@@ -1,0 +1,151 @@
+#******************************************************************
+#
+# Copyright 2014 Intel Mobile Communications GmbH All Rights Reserved.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+##
+# liboctbstack (share library) build script
+##
+Import('env')
+
+lib_env = env.Clone()
+SConscript(env.get('SRC_DIR') + '/resource/third_party_libs.scons', 'lib_env')
+
+liboctbstack_env = lib_env.Clone()
+
+target_os = env.get('TARGET_OS')
+with_ra = env.get('WITH_RA')
+# As in the source code, it includes arduino Time library (C++)
+# It requires compile the .c with g++
+if target_os == 'arduino':
+	liboctbstack_env.Replace(CC = env.get('CXX'))
+	liboctbstack_env.Replace(CFLAGS = env.get('CXXFLAGS'))
+
+######################################################################
+# Build flags
+######################################################################
+liboctbstack_env.PrependUnique(CPPPATH = [
+		'../../extlibs/cjson/',
+		'../../extlibs/timer/',
+		'logger/include',
+		'ocrandom/include',
+		'stack/include',
+		'stack/include/internal',
+		'../oc_logger/include',
+		'connectivity/lib/libcoap-4.1.1',
+		'connectivity/inc',
+		'connectivity/api',
+		'connectivity/external/inc',
+		'security/include',
+		'security/include/internal',
+		])
+
+liboctbstack_env.AppendUnique(LIBS = ['ocsrm'])
+
+if target_os not in ['arduino', 'windows', 'winrt']:
+	liboctbstack_env.AppendUnique(CPPDEFINES  = ['WITH_POSIX'])
+	liboctbstack_env.AppendUnique(CFLAGS = ['-std=c99'])
+
+if liboctbstack_env.get('ROUTING') == 'GW':
+	liboctbstack_env.AppendUnique(CPPDEFINES = ['ROUTING_GATEWAY'])
+elif liboctbstack_env.get('ROUTING') == 'EP':
+	liboctbstack_env.AppendUnique(CPPDEFINES = ['ROUTING_EP'])
+
+if target_os not in ['windows', 'winrt']:
+	liboctbstack_env.AppendUnique(CFLAGS = ['-Wall'])
+
+liboctbstack_env.AppendUnique(LIBPATH = [env.get('BUILD_DIR')])
+
+if target_os in ['android', 'linux', 'tizen']:
+	liboctbstack_env.PrependUnique(LIBS = ['connectivity_abstraction'])
+
+	if with_ra:
+		liboctbstack_env.AppendUnique(LIBS = ['ra_xmpp'])
+
+liboctbstack_env.AppendUnique(LIBS = ['coap', 'm'])
+
+if target_os == 'tizen':
+    liboctbstack_env.ParseConfig("pkg-config --cflags --libs uuid")
+
+if target_os not in ['android', 'arduino', 'windows', 'winrt']:
+	liboctbstack_env.AppendUnique(LIBS = ['pthread'])
+
+if target_os == 'arduino':
+	liboctbstack_env.AppendUnique(CPPDEFINES = ['NDEBUG', 'WITH_ARDUINO'])
+elif target_os not in ['darwin','ios']:
+	liboctbstack_env.AppendUnique(CFLAGS = ['-fPIC'])
+if target_os in ['darwin', 'ios']:
+	env.AppendUnique(CPPDEFINES = ['_DARWIN_C_SOURCE'])
+	liboctbstack_env.AppendUnique(CPPDEFINES = ['_DARWIN_C_SOURCE'])
+	liboctbstack_env.AppendUnique(LIBPATH = [env.get('BUILD_DIR')])
+if target_os not in ['arduino']:
+	liboctbstack_env.AppendUnique(LINKFLAGS = ['-Wl,--no-undefined'])
+
+if env.get('SECURED') == '1':
+	liboctbstack_env.AppendUnique(LIBS = ['tinydtls'])
+
+if env.get('LOGGING'):
+	liboctbstack_env.AppendUnique(CPPDEFINES = ['TB_LOG'])
+
+if env.get('DTLS_WITH_X509') == '1':
+	liboctbstack_env.AppendUnique(CPPDEFINES = ['__WITH_X509__'])
+
+liboctbstack_env.Append(LIBS = ['c_common'])
+
+if liboctbstack_env.get('ROUTING') in ['GW', 'EP']:
+	liboctbstack_env.Prepend(LIBS = ['routingmanager'])
+
+######################################################################
+# Source files and Targets
+######################################################################
+OCTBSTACK_SRC = 'stack/src/'
+liboctbstack_src = [
+	'../../extlibs/cjson/cJSON.c',
+	'../../extlibs/timer/timer.c',
+	OCTBSTACK_SRC + 'ocstack.c',
+	OCTBSTACK_SRC + 'ocpayload.c',
+	OCTBSTACK_SRC + 'ocpayloadparse.c',
+	OCTBSTACK_SRC + 'ocpayloadconvert.c',
+	OCTBSTACK_SRC + 'occlientcb.c',
+	OCTBSTACK_SRC + 'ocresource.c',
+	OCTBSTACK_SRC + 'ocobserve.c',
+	OCTBSTACK_SRC + 'ocserverrequest.c',
+	OCTBSTACK_SRC + 'occollection.c',
+	OCTBSTACK_SRC + 'oicgroup.c',
+	'logger/src/logger.c',
+	'ocrandom/src/ocrandom.c',
+	OCTBSTACK_SRC + "rdpayload.c"
+	]
+
+liboctbstack_src.extend(env['cbor_files'])
+
+if target_os in ['arduino','darwin','ios'] :
+	static_liboctbstack = liboctbstack_env.StaticLibrary('octbstack', liboctbstack_src)
+	liboctbstack_env.InstallTarget(static_liboctbstack, 'liboctbstack')
+	liboctbstack_env.UserInstallTargetLib(static_liboctbstack, 'liboctbstack')
+	liboctbstack_env.UserInstallTargetHeader('stack/include/ocstackconfig.h', 'resource', 'ocstackconfig.h')
+	liboctbstack_env.UserInstallTargetHeader('stack/include/octypes.h', 'resource', 'octypes.h')
+else:
+	static_liboctbstack = liboctbstack_env.StaticLibrary('octbstack', liboctbstack_src)
+	shared_liboctbstack = liboctbstack_env.SharedLibrary('octbstack', liboctbstack_src)
+	liboctbstack_env.InstallTarget([static_liboctbstack, shared_liboctbstack], 'liboctbstack')
+	liboctbstack_env.UserInstallTargetLib([static_liboctbstack, shared_liboctbstack], 'liboctbstack')
+	liboctbstack_env.UserInstallTargetHeader('stack/include/ocstackconfig.h', 'resource', 'ocstackconfig.h')
+	liboctbstack_env.UserInstallTargetHeader('stack/include/octypes.h', 'resource', 'octypes.h')
+	liboctbstack_env.UserInstallTargetHeader('stack/include/ocstack.h', 'resource', 'ocstack.h')
+

@@ -1,0 +1,53 @@
+{
+    "acl": [
+        {
+            "sub": "Kg==",
+            "rsrc": [
+                "/oic/res",
+                "/oic/d",
+                "/oic/p",
+                "/oic/res/types/d",
+                "/oic/ad",
+                "/oic/sec/acl"
+			],
+			"perms": 2,
+			"ownrs" : [
+				"MjIyMjIyMjIyMjIyMjIyMg=="
+			]
+		},
+        {
+            "sub": "Kg==",
+            "rsrc": [
+                "/oic/sec/doxm",
+                "/oic/sec/pstat"
+			],
+			"perms": 6,
+			"ownrs" : [
+				"MjIyMjIyMjIyMjIyMjIyMg=="
+			]
+		},
+        {
+            "sub": "MTExMTExMTExMTExMTExMQ==",
+            "rsrc": [
+				"/oic/light",
+				"/oic/fan"
+			],
+			"perms": 255,
+			"ownrs" : [
+				"MjIyMjIyMjIyMjIyMjIyMg=="
+			]
+		},
+		{
+            "sub": "MzMzMzMzMzMzMzMzMzMzMw==",
+            "rsrc": [
+				"/oic/light",
+				"/oic/garage"
+			],
+			"perms": 255,
+			"ownrs" : [
+				"MjIyMjIyMjIyMjIyMjIyMg==",
+                "NDQ0NDQ0NDQ0NDQ0NDQ0NA=="
+			]
+		}
+	]
+}

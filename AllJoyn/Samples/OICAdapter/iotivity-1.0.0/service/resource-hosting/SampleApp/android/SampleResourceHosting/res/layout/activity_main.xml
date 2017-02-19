@@ -1,0 +1,80 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:paddingBottom="5dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        
+            <Button
+                android:id="@+id/btnStartHosting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="startHosting"
+                android:textSize="18sp" />    
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        
+            <Button
+                android:id="@+id/btnStopHosting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="StopHosting"
+                android:textSize="18sp" />    
+    </LinearLayout>
+
+	
+	<Space
+		android:layout_width="match_parent"
+		android:layout_height="10dp" />
+
+	<LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="5dp"
+	    android:orientation="vertical"
+	    android:background="#111111" >
+	</LinearLayout>
+
+	<Space
+	    android:layout_width="match_parent"
+	    android:layout_height="5dp" />
+      
+	<LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical"
+	    android:paddingTop="0dp" >
+
+		<Button
+		    android:id="@+id/btLogClear"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:text="CLEAR LOG"
+		    android:textSize="18sp" />
+
+		<ScrollView
+		    android:id="@+id/sclLog"
+		    android:layout_width="match_parent"
+		    android:layout_height="match_parent" >
+			
+			<TextView
+			    android:id="@+id/txtLog"
+			    android:layout_width="match_parent"
+			    android:layout_height="match_parent"
+			    android:layout_alignParentBottom="true"
+			    android:layout_alignParentLeft="true"
+			    android:textSize="15sp" />
+          
+		</ScrollView>
+	
+	</LinearLayout>
+
+</LinearLayout>

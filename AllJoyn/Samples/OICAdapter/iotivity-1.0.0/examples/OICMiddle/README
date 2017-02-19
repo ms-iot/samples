@@ -1,0 +1,37 @@
+OICMiddle was written to
+* be part of a demonstration of OIC Yocto capability,
+* act as an example of resource callbacks using class methods,
+* provide a simple promiscuous resource editor for examining OIC systems, and
+* act as a starting code base for further exploration of OIC capabilities.
+
+As a demonstration, it runs on an Minnowboard running a Yocto-built OS, acting
+as a gateway between an Android device (acting as an OIC client) and an
+Edison board (acting as an OIC server) with sensors and actuators.
+
+As an example of resource callbacks, it shows a method of using class methods
+as callbacks, a critical capability not shown in any of the examples in
+iotivity/resource/examples.
+
+As a promiscuous resource editor, it can find, get, put and observe any
+resource using a simple command-line interface using the system console.
+
+As a code base, the command-line editor can be the basis for adding additional
+editing capabilities, like the additions of various filters.
+
+Running OICMiddle with no arguments on a console shows the various capabilities
+it offers.  The most important are:
+ -client.   Act as an OIC client.
+ -console.  Accept command lines from console input to drive the OIC client.
+ -server.   Advertise resources found by the OIC client as OIC resources.
+
+The -server capabilites might be the basis for a gateway.
+
+Typing 'help' (or invalid commands) to the console gives a console usage
+message.  The important ones are:
+ find       Find all resources.  Also performed automatically at startup.
+ show       Show the found resources and an assigned index.
+ get        Get the value(s) of the resource with the given index.
+ put        Put one or more resource values for the given index.
+
+
+12/24/2014

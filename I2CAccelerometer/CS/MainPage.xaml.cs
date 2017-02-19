@@ -43,26 +43,12 @@ namespace I2CAccelerometer
 
         private async void InitI2CAccel()
         {
-            string aqs = I2cDevice.GetDeviceSelector();                     /* Get a selector string that will return all I2C controllers on the system */
-            var dis = await DeviceInformation.FindAllAsync(aqs);            /* Find the I2C bus controller device with our selector string           */
-            if (dis.Count == 0)
-            {
-                Text_Status.Text = "No I2C controllers were found on the system";
-                return;
-            }
-            
+
             var settings = new I2cConnectionSettings(ACCEL_I2C_ADDR); 
             settings.BusSpeed = I2cBusSpeed.FastMode;
-            I2CAccel = await I2cDevice.FromIdAsync(dis[0].Id, settings);    /* Create an I2cDevice with our selected bus controller and I2C settings */
-            if (I2CAccel == null)
-            {
-                Text_Status.Text = string.Format(
-                    "Slave address {0} on I2C Controller {1} is currently in use by " +
-                    "another application. Please ensure that no other applications are using I2C.",
-                    settings.SlaveAddress,
-                    dis[0].Id);
-                return;
-            }
+            var controller = await I2cController.GetDefaultAsync();
+            I2CAccel = controller.GetDevice(settings);    /* Create an I2cDevice with our selected bus controller and I2C settings */
+
 
             /* 
              * Initialize the accelerometer:

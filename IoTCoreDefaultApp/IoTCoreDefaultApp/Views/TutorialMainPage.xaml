@@ -33,9 +33,6 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="72"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="36"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -45,8 +42,9 @@
         </Grid.ColumnDefinitions>
 
         <!-- Header row -->
-        <Grid Grid.Column="0" Grid.ColumnSpan="5" Background="#2a2a2a">
+        <Grid Grid.Column="0" Grid.ColumnSpan="3" Background="#2a2a2a">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="*" />
@@ -66,11 +64,24 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="1" FontFamily="{StaticResource IoTIconFontFamily}" FontSize="24" Text="{StaticResource IconPrototypingBoard}" TextAlignment="Center"/>
-                    <TextBlock Grid.Row="2" x:Uid="DeviceInfo" Style="{StaticResource CaptionTextBlockStyle}" TextAlignment="Center" Margin="0,5,0,0"/>
+                    <TextBlock Grid.Row="2" Text="{Binding [DeviceInfoText]}" Style="{StaticResource CaptionTextBlockStyle}" TextAlignment="Center" Margin="0,5,0,0"/>
                 </Grid>
             </Button>
 
-            <Grid Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource AccentBrush}">
+            <Button Grid.Column="1" x:Name="CommandLine" Style="{StaticResource ShutdownButtonStyle}" Background="Transparent" BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="CommandLineButton_Clicked">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="1" FontFamily="{StaticResource IconFontFamily}" FontSize="24" Text="{StaticResource IconCommandLine}" TextAlignment="Center"/>
+                    <TextBlock Grid.Row="2" Text="{Binding [CommandLineText]}" Style="{StaticResource CaptionTextBlockStyle}" TextAlignment="Center" Margin="0,5,0,0"/>
+                </Grid>
+            </Button>
+
+            <Grid Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource AccentBrush}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
@@ -78,35 +89,37 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="1" FontFamily="{StaticResource IconFontFamily}" FontSize="24" Text="{StaticResource IconEducation}" TextAlignment="Center"/>
-                <TextBlock Grid.Row="2" x:Uid="Tutorials" Style="{StaticResource CaptionTextBlockStyle}" TextAlignment="Center" Margin="0,5,0,0"/>
+                <TextBlock Grid.Row="2" Text="{Binding [TutorialsText]}" Style="{StaticResource CaptionTextBlockStyle}" TextAlignment="Center" Margin="0,5,0,0"/>
             </Grid>
 
-            <TextBlock Grid.Column="2" x:Name="CurrentTime" HorizontalAlignment="Right" Style="{StaticResource IoTCoreDefaultAppBodyTextBlockStyle}" VerticalAlignment="Center" Padding="0,0,14,0"/>
+            <TextBlock Grid.Column="3" x:Name="CurrentTime" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Right" Style="{StaticResource IoTCoreDefaultAppBodyTextBlockStyle}" VerticalAlignment="Center" Padding="0,0,14,0"/>
 
-            <Button Grid.Column="4" x:Name="SettingsButton" Style="{StaticResource ShutdownButtonStyle}" Content="{StaticResource IconSettings}" FontFamily="{StaticResource IconFontFamily}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Click="SettingsButton_Clicked" Background="Transparent" BorderThickness="0" Height="48" Width="48"/>
+            <Button Grid.Column="5" x:Name="SettingsButton" Style="{StaticResource ShutdownButtonStyle}" Content="{StaticResource IconSettings}" FontFamily="{StaticResource IconFontFamily}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Click="SettingsButton_Clicked" Background="Transparent" BorderThickness="0" Height="48" Width="48"/>
 
-            <Button Grid.Column="6" x:Name="ShutdownButton" Style="{StaticResource ShutdownButtonStyle}" Content="{StaticResource IconShutdown}" FontFamily="{StaticResource IconFontFamily}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Click="ShutdownButton_Clicked" Background="Transparent" BorderThickness="0" Height="48" Width="48"/>
+            <Button Grid.Column="7" x:Name="ShutdownButton" Style="{StaticResource ShutdownButtonStyle}" Content="{StaticResource IconShutdown}" FontFamily="{StaticResource IconFontFamily}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Click="ShutdownButton_Clicked" Background="Transparent" BorderThickness="0" Height="48" Width="48"/>
 
-            <Popup Grid.Column="6" x:Name="ShutdownDropdown" HorizontalAlignment="Left" IsLightDismissEnabled="True" VerticalOffset="72" Opened="ShutdownDropdown_Opened">
+            <Popup Grid.Column="7" x:Name="ShutdownDropdown" HorizontalAlignment="Left" IsLightDismissEnabled="True" VerticalOffset="72" Opened="ShutdownDropdown_Opened">
                 <ListView x:Name="ShutdownListView" Background="White" ItemContainerStyle="{StaticResource IoTCoreDefaultAppShutdownListViewItemStyle}" BorderThickness="2.0" BorderBrush="{StaticResource ShutdownBorderBrush}" ItemClick="ShutdownListView_ItemClick" IsItemClickEnabled="True" IsTabStop="True" >
                     <ListViewItem HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Height="40" Margin="0,5,0,0" >
-                        <TextBlock x:Name="ShutdownOption" x:Uid="ShutdownText" Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource IoTCoreDefaultAppDarkBodyTextBlockStyle}" Margin="20,0,20,0"/>
+                        <TextBlock x:Name="ShutdownOption" Text="{Binding [ShutdownText]}" Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource IoTCoreDefaultAppDarkBodyTextBlockStyle}" Margin="20,0,20,0"/>
                     </ListViewItem>
                     <ListViewItem HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Height="40" Margin="0,0,0,5" >
-                        <TextBlock x:Name="RestartOption" x:Uid="RestartText" Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource IoTCoreDefaultAppDarkBodyTextBlockStyle}" Margin="20,0,20,0"/>
+                        <TextBlock x:Name="RestartOption" Text="{Binding [RestartText]}" Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource IoTCoreDefaultAppDarkBodyTextBlockStyle}" Margin="20,0,20,0"/>
                     </ListViewItem>
                 </ListView>
             </Popup>
 
         </Grid>
 
-        <Image Grid.Row="1" Grid.Column="1" Source="ms-appx:///Assets/rpi2-tutorials.png"/>
-        <StackPanel VerticalAlignment="Bottom" Grid.Row="2" Grid.Column="1">
-            <TextBlock x:Uid="TutorialHeader" Style="{StaticResource HeaderTextBlockStyle}" TextWrapping="WrapWholeWords" />
-            <TextBlock x:Uid="TutorialTitle" Style="{StaticResource TitleTextBlockStyle}" TextWrapping="WrapWholeWords" />
-        </StackPanel>
-        
-        <GridView x:Name="TutorialList" Grid.Row="4" Grid.Column="1" ItemClick="TutorialList_ItemClick" IsItemClickEnabled="True" >
+        <GridView x:Name="TutorialList" Grid.Row="1" Grid.Column="1" ItemClick="TutorialList_ItemClick" IsItemClickEnabled="True" >
+            <GridView.Header>
+                <StackPanel VerticalAlignment="Bottom">
+                    <Image x:Name="TutorialsImage" Grid.Row="1" Grid.Column="1" Source="ms-appx:///Assets/rpi2-tutorials.png"/>
+                    <TextBlock Text="{Binding [TutorialHeaderText]}" Style="{StaticResource HeaderTextBlockStyle}" TextWrapping="WrapWholeWords" />
+                    <TextBlock Text="{Binding [TutorialTitleText]}" Style="{StaticResource TitleTextBlockStyle}" TextWrapping="WrapWholeWords" />
+                </StackPanel>
+            </GridView.Header>
+
             <GridViewItem>
                 <Grid x:Name="GetStarted">
                     <Grid.RowDefinitions>
@@ -122,11 +135,11 @@
                         <ColumnDefinition Width="4"/>
                         <ColumnDefinition Width="4"/>
                     </Grid.ColumnDefinitions>
-                        
-                    <Image Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Source="ms-appx:///Assets/Tutorials/GetStarted.jpg" Width="317"/>
+
+                    <Image x:Name="GetStartedImage" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Source="ms-appx:///Assets/Tutorials/GetStarted-RPI2.jpg" Width="317"/>
                     <StackPanel VerticalAlignment="Bottom" Grid.Row="2" Grid.Column="2">
-                        <TextBlock x:Uid="TutorialGetStartedTitle" Style="{StaticResource BodyTextBlockStyle}" TextWrapping="WrapWholeWords" />
-                        <TextBlock x:Uid="TutorialGetStartedDescription" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}" TextWrapping="WrapWholeWords" />
+                        <TextBlock Text="{Binding [TutorialGetStartedTitleText]}" Style="{StaticResource BodyTextBlockStyle}" TextWrapping="WrapWholeWords" />
+                        <TextBlock Text="{Binding [TutorialGetStartedDescriptionText]}" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}" TextWrapping="WrapWholeWords" />
                     </StackPanel>
                 </Grid>
             </GridViewItem>
@@ -146,10 +159,10 @@
                         <ColumnDefinition Width="4"/>
                     </Grid.ColumnDefinitions>
 
-                    <Image Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Source="ms-appx:///Assets/Tutorials/HelloBlinkyTile.jpg" Width="317"/>
+                    <Image x:Name="HelloBlinkyTileImage" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Source="ms-appx:///Assets/Tutorials/HelloBlinkyTile-RPI2.jpg" Width="317"/>
                     <StackPanel VerticalAlignment="Bottom" Grid.Row="2" Grid.Column="2">
-                        <TextBlock x:Uid="TutorialHelloBlinkyTitle" Style="{StaticResource BodyTextBlockStyle}" TextWrapping="WrapWholeWords" />
-                        <TextBlock x:Uid="TutorialHelloBlinkyDescription" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}" TextWrapping="WrapWholeWords" />
+                        <TextBlock Text="{Binding [TutorialHelloBlinkyTitleText]}" Style="{StaticResource BodyTextBlockStyle}" TextWrapping="WrapWholeWords" />
+                        <TextBlock Text="{Binding [TutorialHelloBlinkyDescriptionText]}" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}" TextWrapping="WrapWholeWords" />
                     </StackPanel>
                 </Grid>
             </GridViewItem>
@@ -169,10 +182,10 @@
                         <ColumnDefinition Width="4"/>
                     </Grid.ColumnDefinitions>
 
-                    <Image Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Source="ms-appx:///Assets/Tutorials/GetConnected.jpg" Width="317"/>
+                    <Image x:Name="GetConnectedImage" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Source="ms-appx:///Assets/Tutorials/GetConnected-RPI2.jpg" Width="317"/>
                     <StackPanel VerticalAlignment="Bottom" Grid.Row="2" Grid.Column="2">
-                        <TextBlock x:Uid="TutorialGetConnectedTitle" Style="{StaticResource BodyTextBlockStyle}" TextWrapping="WrapWholeWords" />
-                        <TextBlock x:Uid="TutorialGetConnectedDescription" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}" TextWrapping="WrapWholeWords" />
+                        <TextBlock Text="{Binding [TutorialGetConnectedTitleText]}" Style="{StaticResource BodyTextBlockStyle}" TextWrapping="WrapWholeWords" />
+                        <TextBlock Text="{Binding [TutorialGetConnectedDescriptionText]}" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}" TextWrapping="WrapWholeWords" />
                     </StackPanel>
                 </Grid>
             </GridViewItem>
@@ -194,8 +207,8 @@
 
                     <Image Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Source="ms-appx:///Assets/Tutorials/GetCodingTile.jpg" Width="317"/>
                     <StackPanel VerticalAlignment="Bottom" Grid.Row="2" Grid.Column="2">
-                        <TextBlock x:Uid="TutorialGetCodingTitle" Style="{StaticResource BodyTextBlockStyle}" TextWrapping="WrapWholeWords" />
-                        <TextBlock x:Uid="TutorialGetCodingDescription" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}" TextWrapping="WrapWholeWords" />
+                        <TextBlock Text="{Binding [TutorialGetCodingTitleText]}" Style="{StaticResource BodyTextBlockStyle}" TextWrapping="WrapWholeWords" />
+                        <TextBlock Text="{Binding [TutorialGetCodingDescriptionText]}" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}" TextWrapping="WrapWholeWords" />
                     </StackPanel>
                 </Grid>
             </GridViewItem>

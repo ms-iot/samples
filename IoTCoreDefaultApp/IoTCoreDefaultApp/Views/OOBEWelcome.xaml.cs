@@ -6,7 +6,6 @@ using System.Globalization;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -26,20 +25,31 @@ namespace IoTCoreDefaultApp
         {
             this.InitializeComponent();
 
-            Unloaded += MainPage_Unloaded;
+            this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
 
-            SetupLanguages();
-            UpdateBoardInfo();
-            UpdateNetworkInfo();
+            this.DataContext = LanguageManager.GetInstance();
 
             timer = new DispatcherTimer();
             timer.Tick += timer_Tick;
             timer.Interval = TimeSpan.FromSeconds(60);
-            timer.Start();
 
             countdown = new DispatcherTimer();
             countdown.Tick += countdown_Tick;
             countdown.Interval = TimeSpan.FromMilliseconds(100);
+
+            this.Loaded += async (sender, e) =>
+            {
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                {
+                    SetupLanguages();
+                    UpdateBoardInfo();
+                    UpdateNetworkInfo();
+
+                    timer.Start();
+                });
+            };
+
+            Unloaded += MainPage_Unloaded;
         }
 
         private void MainPage_Unloaded(object sender, RoutedEventArgs e)
@@ -72,16 +82,16 @@ namespace IoTCoreDefaultApp
 
         private void SetupLanguages()
         {
-            languageManager = new LanguageManager();
+            languageManager = LanguageManager.GetInstance();
 
-            LanguagesListBox.ItemsSource = languageManager.LanguageDisplayNames;
-            LanguagesListBox.SelectedItem = LanguageManager.GetCurrentLanguageDisplayName();
+            LanguagesListView.ItemsSource = languageManager.LanguageDisplayNames;
+            LanguagesListView.SelectedItem = LanguageManager.GetCurrentLanguageDisplayName();
         }
 
-        private bool SetPreferences()
+        private void SetPreferences()
         {
-            var selectedLanguage = LanguagesListBox.SelectedItem as string;
-            return languageManager.UpdateLanguage(selectedLanguage);
+            var selectedLanguage = LanguagesListView.SelectedItem as string;
+            languageManager.UpdateLanguage(selectedLanguage);
         }
 
         private void CancelButton_Clicked(object sender, RoutedEventArgs e)
@@ -93,7 +103,8 @@ namespace IoTCoreDefaultApp
 
         private async void NextButton_Clicked(object sender, RoutedEventArgs e)
         {
-            var wifiAvailable = NetworkPresenter.WifiIsAvailable();
+            var networkPresenter = new NetworkPresenter();
+            var wifiAvailable = networkPresenter.WifiIsAvailable();
             SetPreferences();
             Type nextScreen;
 
@@ -108,31 +119,18 @@ namespace IoTCoreDefaultApp
 
             await Window.Current.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
+                // If the next screen is the main-page, navigate there, but also launch Cortana to its Consent Page independently
+                if (nextScreen == typeof(MainPage))
+                {
+                    CortanaHelper.LaunchCortanaToConsentPageAsyncIfNeeded();
+                }
                 NavigationUtils.NavigateToScreen(nextScreen);
             });
         }
 
         private void LanguagesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (!SetPreferences())
-            {
-                // just exit if the language has not changed
-                return;
-            }
-
-            // reload
-            if (this.Frame != null)
-            {
-                Type type = this.Frame.CurrentSourcePageType;
-                try
-                {
-                    this.Frame.Navigate(type);
-                    this.Frame.BackStack.Remove(this.Frame.BackStack[this.Frame.BackStack.Count - 1]);
-                }
-                catch
-                {
-                }
-            }
+            SetPreferences();
         }
 
         private void UpdateBoardInfo()

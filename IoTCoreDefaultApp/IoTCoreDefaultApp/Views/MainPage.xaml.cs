@@ -1,16 +1,14 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 
-using OnBoardee;
+using IoTCoreDefaultApp.Utils;
 using System;
 using System.Globalization;
-using System.Threading.Tasks;
 using Windows.Networking.Connectivity;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
@@ -18,30 +16,60 @@ namespace IoTCoreDefaultApp
 {
     public sealed partial class MainPage : Page
     {
+        public static MainPage Current;
         private CoreDispatcher MainPageDispatcher;
         private DispatcherTimer timer;
         private ConnectedDevicePresenter connectedDevicePresenter;
-        private OnboardingService OnboardingService;
+
+        public CoreDispatcher UIThreadDispatcher
+        {
+            get
+            {
+                return MainPageDispatcher;
+            }
+
+            set
+            {
+                MainPageDispatcher = value;
+            }
+        }
 
         public MainPage()
         {
             this.InitializeComponent();
 
-            MainPageDispatcher = Window.Current.Dispatcher;
+            // This is a static public property that allows downstream pages to get a handle to the MainPage instance
+            // in order to call methods that are in this class.
+            Current = this;
 
-            UpdateBoardInfo();
-            UpdateNetworkInfo();
-            UpdateDateTime();
-            UpdateConnectedDevices();
+            MainPageDispatcher = Window.Current.Dispatcher;
 
             NetworkInformation.NetworkStatusChanged += NetworkInformation_NetworkStatusChanged;
 
+            this.NavigationCacheMode = NavigationCacheMode.Enabled;
+
+            this.DataContext = LanguageManager.GetInstance();
+
             timer = new DispatcherTimer();
             timer.Tick += timer_Tick;
-            timer.Interval = TimeSpan.FromSeconds(30);
-            timer.Start();
+            timer.Interval = TimeSpan.FromSeconds(10);
 
-            OnboardingService = new OnboardingService();
+            this.Loaded += async (sender, e) => 
+            {
+                await MainPageDispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                {
+                    UpdateBoardInfo();
+                    UpdateNetworkInfo();
+                    UpdateDateTime();
+                    UpdateConnectedDevices();
+
+                    timer.Start();
+                });
+            };
+            this.Unloaded += (sender, e) =>
+            {
+                timer.Stop();
+            };
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -50,10 +78,6 @@ namespace IoTCoreDefaultApp
             {
                 ApplicationData.Current.LocalSettings.Values[Constants.HasDoneOOBEKey] = Constants.HasDoneOOBEValue;
             }
-
-            Task.Run(() => {
-                OnboardingService.Initialize();
-            });
 
             base.OnNavigatedTo(e);
         }
@@ -94,8 +118,12 @@ namespace IoTCoreDefaultApp
 
         private void UpdateDateTime()
         {
-            var t = DateTime.Now;
-            this.CurrentTime.Text = t.ToString("t", CultureInfo.CurrentCulture);
+            // Using DateTime.Now is simpler, but the time zone is cached. So, we use a native method insead.
+            SYSTEMTIME localTime;
+            NativeTimeMethods.GetLocalTime(out localTime);
+
+            DateTime t = localTime.ToDateTime();
+            CurrentTime.Text = t.ToString("t", CultureInfo.CurrentCulture) + Environment.NewLine + t.ToString("d", CultureInfo.CurrentCulture);
         }
 
         private async void UpdateNetworkInfo()
@@ -117,6 +145,11 @@ namespace IoTCoreDefaultApp
             ShutdownDropdown.IsOpen = true;
         }
 
+        private void CommandLineButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            NavigationUtils.NavigateToScreen(typeof(CommandLinePage));
+        }
+
         private void SettingsButton_Clicked(object sender, RoutedEventArgs e)
         {
             NavigationUtils.NavigateToScreen(typeof(Settings));
@@ -129,7 +162,10 @@ namespace IoTCoreDefaultApp
 
         private void ShutdownHelper(ShutdownKind kind)
         {
-            ShutdownManager.BeginShutdown(kind, TimeSpan.FromSeconds(0.5));
+            new System.Threading.Tasks.Task(() =>
+            {
+                ShutdownManager.BeginShutdown(kind, TimeSpan.FromSeconds(0));
+            }).Start();
         }
 
         private void ShutdownListView_ItemClick(object sender, ItemClickEventArgs e)

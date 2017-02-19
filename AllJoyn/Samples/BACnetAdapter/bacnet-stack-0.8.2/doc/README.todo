@@ -1,0 +1,36 @@
+To Do List - BACnet Stack at SourceForge
+Here are some things to do:
+
+A. Finish demo/epics/main.c - EPICS demo. Use object property lists.
+B. Update demo/object/lo.c - Lighting Output object demo - match addendum
+C. Add storage hooks to bvlc.c for BDT and FDT.
+D. Merge blvc.c network variable storage (ntohl, htonl) to bip.c.
+E. Add HTTP demo like bacnet4linux
+F. Add SubscribeCOVProperty support in server demo.
+G. Add hooks to increment Database_Revision property
+H. Change demo objects and WhoHas to use CharacterString for Object_Name.
+I. Change core encode/decode to pass length for safe handling
+J. Change bip.c to not use extra buffer (shift data)
+K. Add Visual Studio makefiles, projects, or solutions for demos.
+L. Add Code::Blocks projects for demos.
+M. Add function headers to each module and function with
+   doc-tags for document generator doxygen (in progress).
+N. Add option to address module that use file store address cache
+   instead of having to send who-is for each query.
+   This will make scripting cleaner/effecient.
+O. Convert object methods to use an array of object methods
+   for ReadProperty and Device object counts, ids, and names.
+P. Convert datalink methods to use function pointers that can be
+   overridden in main.c.
+Q. Create BACnet router code that uses more than one datalink.
+R. splint more of the code.  Make intelligent fixes.
+S. Fix src/mstp.c so that indent can parse it correctly.
+T. Add "inline" to static functions that are only used once.
+U. Modify code to compile with MISRA C rules.
+V. Change OBJECT_ID to only be 32 bits, and add macro handlers.
+W. Add #ifdef for all MAX_ defines so they can be overridden.
+X. Change WhoIs demo to list all I-Am's received such that duplicate
+   IDs with different MAC addresses can be detected.
+Y. Add tsm_alloc to allocate memory and invoke ID for sending.
+Z. Make alternate TSM that handles segmentation.
+AA. Create debug.c module for PC ports which replace printf and fix line end.

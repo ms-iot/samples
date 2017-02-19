@@ -1,0 +1,20 @@
+##
+# This script is for fixing android platform compatibility problem
+##
+
+# To fix android NDK compatibility problem
+# Some functions, e.g. rand, srand. strtof ... are static inline prior to
+# android-L. So before android-L libc.so doesn't include them. If build
+# on android-L and run on an old platform(earlier than android-L), there will
+# be 'can't locate xxx' problem.
+import os
+
+Import('env')
+
+sif_env = env.Clone()
+
+sif_lib = sif_env.StaticLibrary(env.get('BUILD_DIR') + '/c_compat',
+	env.SrcToObj(os.path.abspath('./c_compat.c'), env.get('SRC_DIR')))
+
+env.AppendUnique(LIBPATH = [env.get('BUILD_DIR')])
+env.AppendUnique(LIBS = ['c_compat'])

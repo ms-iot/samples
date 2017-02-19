@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="rx_fsm" />
+		<Option makefile="makefile" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="rx_fsm" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Debug\" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add directory="." />
+					<Add directory="..\..\" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="rx_fsm" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Release\" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+			<Add option="-DBACDL_MSTP=1" />
+			<Add option="-DBACAPP_ALL" />
+			<Add option="-DPRINT_ENABLED=1" />
+			<Add directory="." />
+			<Add directory="..\..\include" />
+		</Compiler>
+		<Unit filename="..\..\include\crc.h" />
+		<Unit filename="..\..\include\debug.h" />
+		<Unit filename="..\..\include\indtext.h" />
+		<Unit filename="..\..\include\mstp.h" />
+		<Unit filename="..\..\include\mstptext.h" />
+		<Unit filename="rs485.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="rx_fsm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="stdbool.h" />
+		<Unit filename="stdint.h" />
+		<Unit filename="..\..\src\crc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\debug.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\indtext.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\mstp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\mstptext.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

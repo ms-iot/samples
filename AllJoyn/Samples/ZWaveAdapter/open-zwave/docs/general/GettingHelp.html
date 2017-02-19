@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Getting Help with OpenZWave</title>
+<link href="../images+css/OpenZWave.css" rel="stylesheet" type="text/css" /></head>
+<body bgcolor="#FFFFFF">
+<div class="Section1">
+<div id="Main">
+  <table width="700" height="100" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td class=Heading1 width="250" valign="top"><a href="../default.htm"><img src="../images+css/image003.gif" alt="Logo" width="134" height="55" border="0" /></a> </td>
+      <td class=Heading1 width="445" valign="top">Getting Help<br />
+        With OpenZWave </td>
+    </tr>
+  </table>
+  <table width="700" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td class="BodyText"><p class="Heading2">Need Help?</p>
+        <p class="BodyText">Since the OpenZWave library is still in early stages of development, you should not be surprised if it doesn't work as you might expect (despite our continuing efforts to stamp out bugs and add features).&nbsp; </p>
+        <p class="BodyText">In particular, given the wide variety of Z-Wave devices and the fact that the developers of OpenZWave do not have access to the full protocol, certain portions of the code have not been tested with actual devices, so some problems are (unfortunately) inevitable.&nbsp;However, with more users testing the library with new Z-Wave devices, we should be able to identify and eliminate any faulty assumptions or logical (or careless) errors. </p>
+        <p class="BodyText">Based on the questions raised in the OpenZWave forum (link), here are some pointers to getting your questions answered.</p>
+        <p class="Heading2">I.&nbsp;&nbsp;Generate and Review the Documentation</p>
+        <p class="BodyText">Although OpenZWave doesn't have user documentation as yet, the source code has been commented in a way that will allow an external program, Doxygen, to produce HTML documentation for the library.&nbsp; <a href="MakingDocumentation.html"><strong>Here</strong></a> is a description of how to generate this documentation. </p>
+        <p class="Heading2">II.&nbsp;&nbsp;Isolate the Problem Using the MinOZW or OZWForm Examples</p>
+        <p class="BodyText">Some users' issues with OpenZWave have proven to be related to either their own (calling) code or a misunderstanding about how the library is supposed to work.&nbsp; The documentation (see I above) should help reduce misunderstandings.&nbsp; And reproducing the problem using small changes to the example code will help other developers and users try to replicate the issue.&nbsp;&nbsp;Once you can reproduce the problem, post a forum message identifying:</p>
+        <ol>
+          <li>The nature of the problem (what's wrong?) </li>
+          <li>What changes you made to MinOZW or OZWForm to replicate the issue (if they're substantial, you may want to attach the modified source code file(s) to your post) </li>
+          <li>What hardware is involved (in particular, the Z-Wave controller attached to the PC and the device/node in question)--manufacturer and model number</li>
+          <li>Where the problem is evident in an OZWlog.txt file (and attaching the log file to your post--see below) </li>
+        </ol>
+        <p class="Heading2">III.&nbsp;&nbsp;The OpenZWave Execution Log: OZWlog.txt</p>
+        <p class="BodyText"> The OpenZWave library generates an execution log whenever it is run. (The library has been designed to allow this feature to be turned off, but at this early stage in development it should always be produced.)&nbsp; The log file can be very helpful in diagnosing problems with OpenZWave.&nbsp; It identifies the startup steps, communication between the OpenZWave library and the controller (and, through the controller, with the various nodes on the Z-Wave network).&nbsp; It can help identify whether there is a problem with the library, the controller or a Z-Wave node).</p>
+        <p class="BodyText">So, if you're having a problem, try the following:</p>
+        <ol>
+          <li class="BodyText">Stop the OpenZWave application (if one is running)</li>
+          <li class="BodyText">Locate and delete any copies of the zwcfg*.xml file.&nbsp;(The actual file name will have the Z-Wave network's HomeID in place of the '*' in the file name.)&nbsp; This will cause the OpenZWave library to identify each node on the network as &quot;New&quot; and poll each device for its capabilities, settings, etc.</li>
+          <li class="BodyText">Run the application using OpenZWave until the problem occurs.</li>
+          <li class="BodyText">Exit the program and review the OZWlog.txt file that was created.&nbsp;Are there any unusual errors on startup?&nbsp; Do the Z-Wave devices report the capabilities (command classes handled) that you expect?&nbsp; Do the static, session and dynamic values look right?&nbsp; Can you identify where execution went &quot;off track&quot; (sent a new command? unexpected response received? no response received to a command?)?</li>
+          <li class="BodyText">Review of the log file may help you identify what went wrong with your code (or what's wrong with the OpenZWave library).</li>
+          <li class="BodyText">If you can't figure out what's going wrong from the review of the log and the other suggestions outlined on this page, consider posting a message to the discussion forum and attach a copy of the OZWlog.txt file.&nbsp; But keep in mind, it is often very helpful to have a &quot;clean&quot; log file to work with...one that shows the nodes in the network as &quot;New,&quot; and not as &quot;Known.&quot;&nbsp; (See Step 2 above.)</li>
+        </ol>
+		</td>
+    </tr>
+  </table>
+  </div><!--Main -->
+  <div id="Footer" class="FooterText"><br />
+<br />
+
+   DRAFT&nbsp;&nbsp;&nbsp;Last updated 2011/02/17
+  </div><!--footer -->
+</div>
+</body>
+</html>

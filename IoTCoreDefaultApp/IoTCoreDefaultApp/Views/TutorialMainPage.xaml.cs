@@ -1,22 +1,13 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 
-
+using IoTCoreDefaultApp.Utils;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 namespace IoTCoreDefaultApp
@@ -31,18 +22,35 @@ namespace IoTCoreDefaultApp
         public TutorialMainPage()
         {
             this.InitializeComponent();
-#if RPI || ALWAYS_SHOW_BLINKY
-            // nothing to remove
-#else
-            TutorialList.Items.Remove(HelloBlinkyGridViewItem);
-#endif
 
-            UpdateDateTime();
+#if !ALWAYS_SHOW_BLINKY
+            if (!DeviceTypeInformation.IsRaspberryPi && DeviceTypeInformation.Type != DeviceTypes.DB410)
+            {
+                TutorialList.Items.Remove(HelloBlinkyGridViewItem);
+            }
+#endif
+            this.NavigationCacheMode = NavigationCacheMode.Enabled;
+
+            this.DataContext = LanguageManager.GetInstance();
 
             timer = new DispatcherTimer();
             timer.Tick += timer_Tick;
             timer.Interval = TimeSpan.FromSeconds(30);
-            timer.Start();
+
+            this.Loaded += async (sender, e) =>
+            {
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                {
+                    UpdateBoardInfo();
+                    UpdateDateTime();
+
+                    timer.Start();
+                });
+            };
+            this.Unloaded += (sender, e) =>
+            {
+                timer.Stop();
+            };
         }
 
         private void timer_Tick(object sender, object e)
@@ -50,10 +58,21 @@ namespace IoTCoreDefaultApp
             UpdateDateTime();
         }
 
+        private void UpdateBoardInfo()
+        {
+            if (DeviceTypeInformation.Type == DeviceTypes.DB410)
+            {
+                TutorialsImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/DB410-tutorials.png"));
+                GetStartedImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/Tutorials/GetStarted-DB410.jpg"));
+                HelloBlinkyTileImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/Tutorials/HelloBlinkyTile-DB410.jpg"));
+                GetConnectedImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/Tutorials/GetConnected-DB410.jpg"));
+            }
+        }
+
         private void UpdateDateTime()
         {
             var t = DateTime.Now;
-            this.CurrentTime.Text = t.ToString("t", CultureInfo.CurrentCulture);
+            this.CurrentTime.Text = t.ToString("t", CultureInfo.CurrentCulture) + Environment.NewLine + t.ToString("d", CultureInfo.CurrentCulture);
         }
 
         private void ShutdownButton_Clicked(object sender, RoutedEventArgs e)
@@ -95,6 +114,11 @@ namespace IoTCoreDefaultApp
                     ShutdownHelper(ShutdownKind.Restart);
                     break;
             }
+        }
+
+        private void CommandLineButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            NavigationUtils.NavigateToScreen(typeof(CommandLinePage));
         }
 
         private void SettingsButton_Clicked(object sender, RoutedEventArgs e)

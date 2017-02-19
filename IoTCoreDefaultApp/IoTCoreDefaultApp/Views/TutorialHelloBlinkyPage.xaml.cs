@@ -1,22 +1,14 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 
-
+using IoTCoreDefaultApp.Utils;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Devices.Gpio;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
@@ -27,7 +19,7 @@ namespace IoTCoreDefaultApp
         private DispatcherTimer timer;
         private DispatcherTimer blinkyTimer;
         private int LEDStatus = 0;
-        private const int LED_PIN = 47; // on-board LED on the Rpi2
+        private readonly int LED_PIN = 47; // on-board LED on the Rpi2
         private GpioPin pin;
         private SolidColorBrush redBrush = new SolidColorBrush(Windows.UI.Colors.Red);
         private SolidColorBrush grayBrush = new SolidColorBrush(Windows.UI.Colors.LightGray);
@@ -38,23 +30,59 @@ namespace IoTCoreDefaultApp
         {
             this.InitializeComponent();
 
+            switch (DeviceTypeInformation.Type)
+            {
+                case DeviceTypes.RPI2:
+                    LED_PIN = 47; // onboard LED
+                    break;
+                case DeviceTypes.RPI3:
+                    LED_PIN = 5;
+                    break;
+                case DeviceTypes.DB410:
+                    LED_PIN = 115;
+                    break;
+            }
+
             var rootFrame = Window.Current.Content as Frame;
             rootFrame.Navigated += RootFrame_Navigated;
             Unloaded += MainPage_Unloaded;
 
-            UpdateDateTime();
+            this.NavigationCacheMode = NavigationCacheMode.Enabled;
 
-            timer = new DispatcherTimer();
-            timer.Tick += timer_Tick;
-            timer.Interval = TimeSpan.FromSeconds(30);
-            timer.Start();
+            this.DataContext = LanguageManager.GetInstance();
 
-            blinkyTimer = new DispatcherTimer();
-            blinkyTimer.Interval = TimeSpan.FromMilliseconds(500);
-            blinkyTimer.Tick += Timer_Tick;
+            this.Loaded += async (sender, e) =>
+            {
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                {
+                    UpdateDateTime();
 
-            loader = new Windows.ApplicationModel.Resources.ResourceLoader();
-            BlinkyStartStop.Content = loader.GetString("BlinkyStart");
+                    timer = new DispatcherTimer();
+                    timer.Tick += timer_Tick;
+                    timer.Interval = TimeSpan.FromSeconds(30);
+                    timer.Start();
+
+                    blinkyTimer = new DispatcherTimer();
+                    blinkyTimer.Interval = TimeSpan.FromMilliseconds(500);
+                    blinkyTimer.Tick += Timer_Tick;
+
+                    loader = new Windows.ApplicationModel.Resources.ResourceLoader();
+                    BlinkyStartStop.Content = loader.GetString("BlinkyStart");
+
+                    switch (DeviceTypeInformation.Type)
+                    {
+                        case DeviceTypes.RPI2:
+                            GpioPinInstructions.Text = "";
+                            break;
+                        case DeviceTypes.RPI3:
+                            GpioPinInstructions.Text = loader.GetString("TutorialBlinkyBody6Text_Rpi3");
+                            break;
+                        case DeviceTypes.DB410:
+                            GpioPinInstructions.Text = loader.GetString("TutorialBlinkyBody6Text_Dragonboard");
+                            break;
+                    }
+                });
+            };
         }
 
         private void RootFrame_Navigated(object sender, NavigationEventArgs e)
@@ -74,7 +102,7 @@ namespace IoTCoreDefaultApp
         private void UpdateDateTime()
         {
             var t = DateTime.Now;
-            this.CurrentTime.Text = t.ToString("t", CultureInfo.CurrentCulture);
+            this.CurrentTime.Text = t.ToString("t", CultureInfo.CurrentCulture) + Environment.NewLine + t.ToString("d", CultureInfo.CurrentCulture);
         }
 
         private void ShutdownButton_Clicked(object sender, RoutedEventArgs e)
@@ -121,6 +149,11 @@ namespace IoTCoreDefaultApp
         private void SettingsButton_Clicked(object sender, RoutedEventArgs e)
         {
             NavigationUtils.NavigateToScreen(typeof(Settings));
+        }
+
+        private void CommandLineButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            NavigationUtils.NavigateToScreen(typeof(CommandLinePage));
         }
 
         private void BackButton_Clicked(object sender, RoutedEventArgs e)

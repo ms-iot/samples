@@ -1,0 +1,718 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="IoTCoreHeaderText" xml:space="preserve">
+    <value>Windows 10 IoT Core</value>
+    <comment>The Operating System Name</comment>
+  </data>
+  <data name="GenericBoardName" xml:space="preserve">
+    <value>IoTCore Board</value>
+    <comment>A generic board name</comment>
+  </data>
+  <data name="MainPageDeviceNameText" xml:space="preserve">
+    <value>Apparaatnaam</value>
+    <comment>Field label</comment>
+  </data>
+  <data name="MainPageNetworkText" xml:space="preserve">
+    <value>Netwerk</value>
+    <comment>Field label</comment>
+  </data>
+  <data name="MBMName" xml:space="preserve">
+    <value>MinnowBoard Max</value>
+    <comment>Board name</comment>
+  </data>
+  <data name="RestartText" xml:space="preserve">
+    <value>Opnieuw opstarten</value>
+    <comment>Restart entry in the shutdown menu</comment>
+  </data>
+  <data name="ShutdownText" xml:space="preserve">
+    <value>Afsluiten</value>
+    <comment>Shutdown entry in the shutdown menu</comment>
+  </data>
+  <data name="BackButtonContent" xml:space="preserve">
+    <value>Terug</value>
+  </data>
+  <data name="CancelButtonContent" xml:space="preserve">
+    <value>Afbreken</value>
+  </data>
+  <data name="ConnectAutomaticallyText" xml:space="preserve">
+    <value>Automatisch verbinden</value>
+  </data>
+  <data name="ConnectButtonContent" xml:space="preserve">
+    <value>Verbinden</value>
+  </data>
+  <data name="DirectConnectionsText" xml:space="preserve">
+    <value>Directe verbindingen</value>
+  </data>
+  <data name="EthernetText" xml:space="preserve">
+    <value>Ethernet</value>
+    <comment>Field label</comment>
+  </data>
+  <data name="NetworkConnectingMessageText" xml:space="preserve">
+    <value>Controleren van de network requirements</value>
+  </data>
+  <data name="NetworkPasswordPromptText" xml:space="preserve">
+    <value>Voer de network security key in</value>
+  </data>
+  <data name="NextButtonContent" xml:space="preserve">
+    <value>Volgende</value>
+  </data>
+  <data name="NoNetworksText" xml:space="preserve">
+    <value>Niets gevonden</value>
+  </data>
+  <data name="OOBEIntroText" xml:space="preserve">
+    <value>Laten we wat standaard instellingen doen.</value>
+  </data>
+  <data name="OOBELanguageSelectText" xml:space="preserve">
+    <value>Kies uw taal</value>
+  </data>
+  <data name="OOBENetworkTitleText" xml:space="preserve">
+    <value>Laten we iets verbinden</value>
+  </data>
+  <data name="OOBEWelcomeTitleText" xml:space="preserve">
+    <value>Hallo, welkom bij Windows 10 IoT Core</value>
+  </data>
+  <data name="Rpi2Name" xml:space="preserve">
+    <value>Raspberry Pi 2</value>
+    <comment>Board name</comment>
+  </data>
+  <data name="Rpi3Name" xml:space="preserve">
+    <value>Raspberry Pi 3</value>
+    <comment>Board name</comment>
+  </data>
+  <data name="DB410Name" xml:space="preserve">
+    <value>DragonBoard 410c</value>
+    <comment>Board name</comment>
+  </data>
+  <data name="SkipStepText" xml:space="preserve">
+    <value>Deze stap overslaan</value>
+  </data>
+  <data name="WifiText" xml:space="preserve">
+    <value>Wi-Fi</value>
+    <comment>Label for Wi-Fi list in options page</comment>
+  </data>
+  <data name="StartDevelopingText" xml:space="preserve">
+    <value>om te beginnen met ontwikkelen</value>
+    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
+  </data>
+  <data name="VisitText" xml:space="preserve">
+    <value>Bezoek</value>
+    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
+  </data>
+  <data name="WindowsOnDevicesUrlText" xml:space="preserve">
+    <value> www.windowsondevices.com</value>
+    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
+  </data>
+  <data name="KeyboardTitleText" xml:space="preserve">
+    <value>Keyboard layout</value>
+    <comment>Field label</comment>
+  </data>
+  <data name="LanguageTitleText" xml:space="preserve">
+    <value>Taal</value>
+    <comment>Field label</comment>
+  </data>
+  <data name="NetworkConnectedText" xml:space="preserve">
+    <value>Verbonden</value>
+  </data>
+  <data name="NetworkPreferencesText" xml:space="preserve">
+    <value>Network &amp; Wi-Fi</value>
+  </data>
+  <data name="BluetoothPreferencesText" xml:space="preserve">
+    <value>Bluetooth</value>
+    <comment>Label for Setting item tp control Bluetooth pairing</comment>
+  </data>
+  <data name="SettingsPreferencesText" xml:space="preserve">
+    <value>Standaard instellingen</value>
+  </data>
+  <data name="SettingsTitleText" xml:space="preserve">
+    <value>Apparaat instellingen</value>
+  </data>
+  <data name="TimeZoneTitleText" xml:space="preserve">
+    <value>Tijdzone</value>
+  </data>
+  <data name="DeviceInfoText" xml:space="preserve">
+    <value>Apparaat informatie</value>
+  </data>
+  <data name="TutorialsText" xml:space="preserve">
+    <value>Handleidingen</value>
+    <comment>Text under the Tutorials button on the top bar</comment>
+  </data>
+  <data name="ConnectedDevicesText" xml:space="preserve">
+    <value>Verbonden apparaten</value>
+  </data>
+  <data name="Ipv4Text" xml:space="preserve">
+    <value>IPv4</value>
+    <comment>Field label</comment>
+  </data>
+  <data name="Ipv6Text" xml:space="preserve">
+    <value>IPv6</value>
+    <comment>Field label</comment>
+  </data>
+  <data name="MainPageIPAddressText" xml:space="preserve">
+    <value>IP adres</value>
+    <comment>Field label</comment>
+  </data>
+  <data name="NetworkInformationText" xml:space="preserve">
+    <value>Netwerk informatie</value>
+  </data>
+  <data name="StatusText" xml:space="preserve">
+    <value>Status</value>
+    <comment>Status of the network connection (e.g. not connected, limited, etc.)</comment>
+  </data>
+  <data name="TutorialGetCodingDescriptionText" xml:space="preserve">
+    <value>Leer hoe je code maakt vanaf je PC </value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialGetCodingTitleText" xml:space="preserve">
+    <value>Begin met programmeren</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialGetConnectedDescriptionText" xml:space="preserve">
+    <value>Verbind je apparaat met internet en je PC</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialGetConnectedTitleText" xml:space="preserve">
+    <value>Verbindingen maken</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialGetStartedDescriptionText" xml:space="preserve">
+    <value>Introductie van Windows 10 IoT Core</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialGetStartedTitleText" xml:space="preserve">
+    <value>Ga beginnen</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialHeaderText" xml:space="preserve">
+    <value>Haal het maximale uit Windows 10 IoT Core</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialHelloBlinkyDescriptionText" xml:space="preserve">
+    <value>Knipperen van een verbonden LED </value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialHelloBlinkyTitleText" xml:space="preserve">
+    <value>Hallo Blinky</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialTitleText" xml:space="preserve">
+    <value>Resources en tools om je verder op weg te helpen met je projecten en ontwikkelingen.</value>
+  </data>
+  <data name="TutorialBlinkyBody1Text" xml:space="preserve">
+    <value>Het eerste en meest eenvoudige I/O voorbeeld is een LED laten knipperen.</value>
+  </data>
+  <data name="TutorialBlinkyBody2Text" xml:space="preserve">
+    <value>Zoals eerder genoemd in het "Ga beginnen" deel, alle broncode van dit open source project is beschikbaar op  www. windowsondevices.com (zoek naar de IoTCoreDefaultApp).</value>
+  </data>
+  <data name="TutorialBlinkyBody3Text" xml:space="preserve">
+    <value>Er is geen configuratie nodig. Druk op start.</value>
+  </data>
+  <data name="TutorialBlinkyBody4Text" xml:space="preserve">
+    <value>Je kan de knipper-frequentie aanpassen. Nodig gerust je vrienden uit voor een dansje rond de knipperende LED. </value>
+  </data>
+  <data name="TutorialBlinkyBody5Text" xml:space="preserve">
+    <value>Disclaimer: Microsoft is niet verantwoordelijk voor wat voor schade dan ook welke veroorzaakt kan worden tijdens het dansje rond de knipperende LED.</value>
+  </data>
+  <data name="TutorialBlinkyBody6Text_Rpi3" xml:space="preserve">
+    <value>Voor de Raspberry Pi 3, verbind een LED aan GPIO pin 5.</value>
+  </data>
+  <data name="TutorialBlinkyBody6Text_Dragonboard" xml:space="preserve">
+    <value>Voor de DragonBoard 410c, verbind een LED aan GPIO pin 115.</value>
+  </data>
+  <data name="TutorialBlinkyTitle1Text" xml:space="preserve">
+    <value>Hallo Blinky</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="TutorialBlinkyTitle2Text" xml:space="preserve">
+    <value>Laat een LED knipperen</value>
+    <comment>Tutorial titles and subtitles</comment>
+  </data>
+  <data name="MainPageOSVersionText" xml:space="preserve">
+    <value>OS Versie</value>
+    <comment>Label for OS Version field in main page</comment>
+  </data>
+  <data name="OSVersionNotAvailable" xml:space="preserve">
+    <value>Niet beschikbaar</value>
+    <comment>Text shown when we cannot retrieve the OS Version</comment>
+  </data>
+  <data name="RefreshContent" xml:space="preserve">
+    <value>Verversen</value>
+    <comment>Refresh button</comment>
+  </data>
+  <data name="Tutorial.GetStarted.001.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetStarted-{0}.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetStarted.002.title" xml:space="preserve">
+    <value>We gaan beginnen</value>
+  </data>
+  <data name="Tutorial.GetStarted.003.subtitle" xml:space="preserve">
+    <value>Welkom bij Windows 10 IoT Core</value>
+  </data>
+  <data name="Tutorial.GetStarted.004.h1" xml:space="preserve">
+    <value>Introductie</value>
+  </data>
+  <data name="Tutorial.GetStarted.005.p" xml:space="preserve">
+    <value>Gefeliciteerd! Je bent klaar om Windows 10 IoT Core te verkennen; een licht gewicht operating systeem ontworpen om creative dingen mee te doen. Met IoT Core, brengt Windows alle noodzakelijke tools om je IoT apparaat te verbinden en je bent up-and-running in no time. Ons doel is het om jou ideeën zo snel mogelijk realiteit te laten worden.</value>
+  </data>
+  <data name="Tutorial.GetStarted.006.p" xml:space="preserve">
+    <value>Als je hulp of uitgebreide documentatie en voorbeelden wilt hebben, ga dan naar  www.windowsondevices.com.</value>
+  </data>
+  <data name="Tutorial.GetStarted.007.h1" xml:space="preserve">
+    <value>Hoe kan ik een applicatie maken?</value>
+  </data>
+  <data name="Tutorial.GetStarted.008.p" xml:space="preserve">
+    <value>Windows 10 IoT Core gebruikt de kracht van de PC om je projecten en applicaties te realiseren.</value>
+  </data>
+  <data name="Tutorial.GetStarted.009.p" xml:space="preserve">
+    <value>Je applicatie ontwikkel je op de PC met behulp van Visual Studio. Visual studio maakt het mogelijk om je applicatie te maken, naar je IoT apparaat te sturen en ook op afstand te testen en te debuggen.</value>
+  </data>
+  <data name="Tutorial.GetStarted.010.h1" xml:space="preserve">
+    <value>Wat heb je nodig</value>
+  </data>
+  <data name="Tutorial.GetStarted.011.ul" xml:space="preserve">
+    <value>Een Windows 10 PC</value>
+  </data>
+  <data name="Tutorial.GetStarted.012.ul" xml:space="preserve">
+    <value>Internet connectie</value>
+  </data>
+  <data name="Tutorial.GetStarted.013.ul" xml:space="preserve">
+    <value>Jou IoT apparaat (bv. raspberry PI2 of PI3)</value>
+  </data>
+  <data name="Tutorial.GetStarted.014.ul" xml:space="preserve">
+    <value>Visual Studio 2015</value>
+  </data>
+  <data name="Tutorial.GetStarted.014a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetStarted.015.p" xml:space="preserve">
+    <value>Druk op de “Begin met programeren” handleiding voor meer informatie</value>
+  </data>
+  <data name="Tutorial.GetStarted.016.h1" xml:space="preserve">
+    <value>Waar is het start menu ?!</value>
+  </data>
+  <data name="Tutorial.GetStarted.017.p" xml:space="preserve">
+    <value>Windows 10 IoT Core is ontwikkeld om extreem compact en ontzichtbaar voor de eindgebruiker de gemaakte applicaties uit te voeren. Dit betekend dat er geen desktop, windows shell en zelfs geen start menu is. Alle vensters, menus en navigatie knoppen voor UI moet van jou komen, op de manier zoals jij die ontwikkeld en programmeert.</value>
+  </data>
+  <data name="Tutorial.GetStarted.018.p" xml:space="preserve">
+    <value>Maar maak je geen zorgen, wij zijn hier om je te helpen.</value>
+  </data>
+  <data name="Tutorial.GetStarted.019.p" xml:space="preserve">
+    <value>Deze applicatie is volledig open source! Alles wat je ziet in deze applicatie is open source en kan je vinden op www.windowsondevices.com.</value>
+  </data>
+  <data name="Tutorial.GetStarted.020.p" xml:space="preserve">
+    <value>Je bent vrij om dit voorbeeld te gebruiken als template om je eigen applicatie te maken. </value>
+  </data>
+  <data name="Tutorial.GetStarted.021.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetConnected.001.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetConnected-{0}.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetConnected.002.title" xml:space="preserve">
+    <value>Get Connected</value>
+  </data>
+  <data name="Tutorial.GetConnected.003.subtitle" xml:space="preserve">
+    <value>Internet of Things (IoT) stelt niet veel voor zonder het internet deel, dus verbind internet.</value>
+  </data>
+  <data name="Tutorial.GetConnected.004.p" xml:space="preserve">
+    <value>Er zijn 3 manieren om met internet te verbinden: Ethernet, Wi-Fi, en Internet Connection Sharing (ICS)</value>
+  </data>
+  <data name="Tutorial.GetConnected.005.h1" xml:space="preserve">
+    <value>Ethernet</value>
+  </data>
+  <data name="Tutorial.GetConnected.006.p" xml:space="preserve">
+    <value>Het eenvoudingst en meest betrouwbaar is te koppelen via de Ethernet verbinding. Verbind een Ethernet kabel aan het board en verbind het met een router of netwerk switch.</value>
+  </data>
+  <data name="Tutorial.GetConnected.007.h1" xml:space="preserve">
+    <value>Wi-Fi</value>
+  </data>
+  <data name="Tutorial.GetConnected.008.p" xml:space="preserve">
+    <value>Sommige apparaten hebben ingebouwde Wi-Fi, maar de meeste niet. Als jou apparaat geen ingebouwde Wi-Fi heeft, koop dan een USB Wi-Fi Adapter.</value>
+  </data>
+  <data name="Tutorial.GetConnected.009.p" xml:space="preserve">
+    <value>Heb jij er één ? Mooi, stop die in een vrije USB poort!</value>
+  </data>
+  <data name="Tutorial.GetConnected.010.620x350.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetConnected-004.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetConnected.011.p" xml:space="preserve">
+    <value>Kies "Instellingen" rechts boven in het scherm om het Netwerk en Wi-Fi in te stellen. Daar kan je verbinden met het locale netwerk.</value>
+  </data>
+  <data name="Tutorial.GetConnected.012.h1" xml:space="preserve">
+    <value>Internet Connection Sharing</value>
+  </data>
+  <data name="Tutorial.GetConnected.013.p" xml:space="preserve">
+    <value>Om het IoT apparaat met het internet te kunnen verbinden via de gedeelde internet verbinding van je PC, heb je het volgende nodig:</value>
+  </data>
+  <data name="Tutorial.GetConnected.014.ul" xml:space="preserve">
+    <value>Een vrije ethernet poort op je ontwikkelmachine (PC). Dit kan via een extra PCI Ethernet kaart of via een USB-to-Ethernet dongle.</value>
+  </data>
+  <data name="Tutorial.GetConnected.015.ul" xml:space="preserve">
+    <value>Een Ethernet kabel om je ontwikkelmachine (PC) met je IoT apparaat te koppelen.</value>
+  </data>
+  <data name="Tutorial.GetConnected.015a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetConnected.016.p" xml:space="preserve">
+    <value>Voer de volgende instructies uit om de Internet Connection Sharing (ICS) op je ontwikkelmachine (PC) te activeren</value>
+  </data>
+  <data name="Tutorial.GetConnected.017.ul" xml:space="preserve">
+    <value>Open het configuratiescherm, door rechts te klikken op de Windows start-knop en selecteer het 'Configuratiescherm', of open een command prompt window en type 'control.exe'</value>
+  </data>
+  <data name="Tutorial.GetConnected.018.ul" xml:space="preserve">
+    <value>In het zoek vak van het configuratiescherm, type adapter</value>
+  </data>
+  <data name="Tutorial.GetConnected.019.ul" xml:space="preserve">
+    <value>Onder 'Network and Sharing Center', klik Toon netwerk connecties'</value>
+  </data>
+  <data name="Tutorial.GetConnected.020.ul" xml:space="preserve">
+    <value>Klik rechts op de netwerk connectie die je wilt delen, and klik 'Properties'</value>
+  </data>
+  <data name="Tutorial.GetConnected.021.ul" xml:space="preserve">
+    <value>Klik op de 'Sharing' tab, and selecteer de 'Allow other network users to connect through this computer’s Internet connection' optie.</value>
+  </data>
+  <data name="Tutorial.GetConnected.021a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetConnected.022.p" xml:space="preserve">
+    <value>Nadat de Internet Connection Sharing (ICS) is geactiveerd op je PC kan je jou Windows 10 IoT Core apparaat direct aansluiten op je PC. Je doet dit door de Ethernet kabel te verbinden aan de vrije Ethernet poort van je PC, en aan de andere kant van de kabel aan de Ethernet port van je IoT apparaat.</value>
+  </data>
+  <data name="Tutorial.GetConnected.023.p" xml:space="preserve">
+    <value>Let op:</value>
+  </data>
+  <data name="Tutorial.GetConnected.024.ul" xml:space="preserve">
+    <value>De 'Sharing' tab is niet beschikbaar als je maar één netwerk connectie hebt in je PC.</value>
+  </data>
+  <data name="Tutorial.GetConnected.024a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetConnected.025.h1" xml:space="preserve">
+    <value>Problemen?</value>
+  </data>
+  <data name="Tutorial.GetConnected.026.p" xml:space="preserve">
+    <value>We hebben wat geadvanceerde network diagnose op de main page aangebracht om je te helpen mochten er problemen optreden. Voor meer ondersteuning ga naar www.windowsondevices.com</value>
+  </data>
+  <data name="Tutorial.GetConnected.027.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetConnected-006.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetConnected.028.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetCoding.001.620x400.image" xml:space="preserve">
+    <value>Assets/Tutorials/GetCoding.jpg</value>
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetCoding.002.title" xml:space="preserve">
+    <value>Begin met programmeren</value>
+  </data>
+  <data name="Tutorial.GetCoding.003.subtitle" xml:space="preserve">
+    <value>Windows 10 IoT Core gebruikt de kracht van de PC om projecten te realiseren.</value>
+  </data>
+  <data name="Tutorial.GetCoding.004.p" xml:space="preserve">
+    <value>Alle software ontwikkeling is gedaan vanuit Visual Studio. Het is daarmee eenvoudig om een programma te ontwikkelen naar het apparaat te sturen en te testen.</value>
+  </data>
+  <data name="Tutorial.GetCoding.005.h1" xml:space="preserve">
+    <value>Wat heb je nodig</value>
+  </data>
+  <data name="Tutorial.GetCoding.006.ul" xml:space="preserve">
+    <value>Een Windows 10 PC</value>
+  </data>
+  <data name="Tutorial.GetCoding.007.ul" xml:space="preserve">
+    <value>Internet verbinding</value>
+  </data>
+  <data name="Tutorial.GetCoding.008.ul" xml:space="preserve">
+    <value>Een ontwikkelboard (bv. eens Raspberry PI2 of PI3)</value>
+  </data>
+  <data name="Tutorial.GetCoding.009.ul" xml:space="preserve">
+    <value>Visual Studio 2015</value>
+  </data>
+  <data name="Tutorial.GetCoding.009a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetCoding.010.h1" xml:space="preserve">
+    <value>Visual Studio 2015 installeren op je PC</value>
+  </data>
+  <data name="Tutorial.GetCoding.012.ul" xml:space="preserve">
+    <value>Windows 10 installeren</value>
+  </data>
+  <data name="Tutorial.GetCoding.013.ul" xml:space="preserve">
+    <value>Visual Studio 2015 installeren. Kies de "Custom" optie bij het installeren en installeer de Windows 10 tools.</value>
+  </data>
+  <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
+    <value>Als je device drivers gaat ontwikkelen, installeer dan ook de WDK.</value>
+  </data>
+  <data name="Tutorial.GetCoding.016a.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="Tutorial.GetCoding.019.br" xml:space="preserve">
+    <value />
+    <comment>Please do NOT localize this string</comment>
+  </data>
+  <data name="NetworkConnectivityLevel_ConstrainedInternetAccess" xml:space="preserve">
+    <value>Beperkte internet toegang</value>
+  </data>
+  <data name="NetworkConnectivityLevel_InternetAccess" xml:space="preserve">
+    <value>Lokaal en internet toegang</value>
+  </data>
+  <data name="NetworkConnectivityLevel_LocalAccess" xml:space="preserve">
+    <value>Alleen lokaal netwerk toegang</value>
+  </data>
+  <data name="NetworkConnectivityLevel_None" xml:space="preserve">
+    <value>Geen netwerk toegang</value>
+  </data>
+  <data name="NoInternetConnection" xml:space="preserve">
+    <value>&lt;geen internet verbinding&gt;</value>
+    <comment>Used in the main page under "IP address"</comment>
+  </data>
+  <data name="DefaultLanguageTimeoutText" xml:space="preserve">
+    <value>We selecteren de default taal automatisch...</value>
+  </data>
+  <data name="BlinkyStart" xml:space="preserve">
+    <value>START</value>
+  </data>
+  <data name="BlinkyStop" xml:space="preserve">
+    <value>STOP</value>
+  </data>
+  <data name="BlinkyStopped" xml:space="preserve">
+    <value>Gestopt</value>
+    <comment>This message is shown when the user turn off the slider to make the LED blink</comment>
+  </data>
+  <data name="GPIOPinInitializedCorrectly" xml:space="preserve">
+    <value>GPIO pin is goed geïnitialiseerd.</value>
+  </data>
+  <data name="NoGPIOController" xml:space="preserve">
+    <value>Er is geen GPIO controller in dit apparaat.</value>
+  </data>
+  <data name="ProblemsInitializingGPIOPin" xml:space="preserve">
+    <value>Er waren problemen bij het initialiseren van de GPIO pin.</value>
+  </data>
+  <data name="BluetoothAttemptingToPairFormat" xml:space="preserve">
+    <value>Bluetooth-koppeling maken met {0} ({1})</value>
+    <comment>Format string for message displayed when pairing attempt starts</comment>
+  </data>
+  <data name="BluetoothConfirmOnlyFormat" xml:space="preserve">
+    <value>Koppelen met {0} ({1})</value>
+    <comment>Format string for message displayed when ConfirmOnly ceremony is invoked</comment>
+  </data>
+  <data name="BluetoothConfirmPinMatchFormat" xml:space="preserve">
+    <value>Komt de getoonde PIN overeen {0} ?</value>
+    <comment>Format string for message displayed when ConfirmPinMatch ceremony is invoked</comment>
+  </data>
+  <data name="BluetoothDisplayPinFormat" xml:space="preserve">
+    <value>Voer de PIN in die getoond wordt op het apparaat: {0}</value>
+    <comment>Format string for message displayed when DisplayPin ceremony is invoked</comment>
+  </data>
+  <data name="BluetoothInboundRegistrationAlreadyDoneFormat" xml:space="preserve">
+    <value>Reeds geregistreed voor inkomende pairing, ondersteunende ceremonies: {0}</value>
+    <comment>Format string for message displayed when Inbound pairing handler registration already done</comment>
+  </data>
+  <data name="BluetoothInboundRegistrationFailed" xml:space="preserve">
+    <value>Inkomende bluetooth paring is mislukt</value>
+    <comment>Message displayed when Inbound pairing handler registration fails</comment>
+  </data>
+  <data name="BluetoothInboundRegistrationSucceededFormat" xml:space="preserve">
+    <value>Inkomende bluetooth paring is gelukt, ondersteunende ceremonies: {0}</value>
+    <comment>Format string for message displayed when Inbound pairing handler registration succeeds</comment>
+  </data>
+  <data name="BluetoothPairingFailureFormat" xml:space="preserve">
+    <value>Koppeling resultaat {0}: Mislukt te verbinden met {1} ({2})</value>
+    <comment>Format string for message displayed when pairing attempt fails</comment>
+  </data>
+  <data name="BluetoothPairingSuccessFormat" xml:space="preserve">
+    <value>Succesvol verbonden met {0} ({1})</value>
+    <comment>Format string for message displayed when pairing attempt succeeds</comment>
+  </data>
+  <data name="BluetoothStartedWatching" xml:space="preserve">
+    <value>Het apparaat zoekt naar andere bluetooth apparaten en kan zelf ook gevonden worden door andere bluetooth apparaten</value>
+    <comment>Message display when "Start Watcher" button is pressed</comment>
+  </data>
+  <data name="BluetoothStoppedWatching" xml:space="preserve">
+    <value>Zoeken naar andere bluetooth apparaten is gestopt</value>
+    <comment>Message display when "Stop Watcher" button is pressed</comment>
+  </data>
+  <data name="BluetoothUnpairingFailureFormat" xml:space="preserve">
+    <value>Resultaat {0}: Verbinding verbreken is mislukt met {1} ({2})</value>
+    <comment>Format string for message displayed when unpairing attempt fails</comment>
+  </data>
+  <data name="BluetoothUnpairingSuccessFormat" xml:space="preserve">
+    <value>De verbinding is succesvol verbroken met {0} ({1})</value>
+    <comment>Format string for message displayed when unpairing attempt succeeds</comment>
+  </data>
+  <data name="PinLabelTextBox.Text" xml:space="preserve">
+    <value>Geef de PIN:</value>
+    <comment>Message on flyout control for PIN entry for ProvidePin ceremony</comment>
+  </data>
+  <data name="BluetoothPairButtonContent" xml:space="preserve">
+    <value>Pair</value>
+    <comment>Text displayed on the button to pair Bluetooth list item</comment>
+  </data>
+  <data name="BluetoothUnpairButtonContent" xml:space="preserve">
+    <value>Verbinding verbreken</value>
+    <comment>Text displayed on the button to unpair Bluetooth list item</comment>
+  </data>
+  <data name="BluetoothDeviceStatePairedText" xml:space="preserve">
+    <value>Gekoppeld</value>
+  </data>
+  <data name="BluetoothDeviceStateReadyToPairText" xml:space="preserve">
+    <value>Gereed om te koppelen</value>
+  </data>
+  <data name="BluetoothManageDevicesText" xml:space="preserve">
+    <value>Bluetooth apparaten beheer</value>
+  </data>
+  <data name="BluetoothWatcherToggleLabel" xml:space="preserve">
+    <value>Bluetooth</value>
+    <comment>Label text for Bluetooth watcher toggle switch</comment>
+  </data>
+  <data name="BluetoothNoDeviceAvailableFormat" xml:space="preserve">
+    <value>Er is geen bruikbare bluetooth-adapter gevonden op deze computer:
+{0}</value>
+    <comment>Message displayed on systems which do not have a Bluetooth adapter. The new line before {0} is deliberate and should be kept</comment>
+  </data>
+  <data name="BluetoothEnterPINText" xml:space="preserve">
+    <value>Voer de PIN in:</value>
+  </data>
+  <data name="BluetoothDeviceStateUnknownText" xml:space="preserve">
+    <value>Onbekende toestand</value>
+  </data>
+  <data name="BluetoothInboundPairingRequestFormat" xml:space="preserve">
+    <value>Inkomend verzoek: {0}
+{1}</value>
+    <comment>Format for message displayed when an inbounbd pairing request is received</comment>
+  </data>
+  <data name="EnableScreensaverText" xml:space="preserve">
+    <value>Screensaver</value>
+    <comment>Toggle switch for enabling the screensaver</comment>
+  </data>
+  <data name="NoDeviceName" xml:space="preserve">
+    <value>&lt;geen apparaatnaam&gt;</value>
+    <comment>This is shown when we fail to retrieve a valid device name (very strange case)</comment>
+  </data>
+</root>

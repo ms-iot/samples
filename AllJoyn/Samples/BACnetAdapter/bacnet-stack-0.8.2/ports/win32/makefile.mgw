@@ -1,0 +1,92 @@
+# Makefile for mingw32 on Linux
+# Written by Steve Karg <skarg@users.sourceforge.net> 06-Aug-2007
+
+TARGET=bacnet
+
+# Tools
+CC=i586-mingw32msvc-gcc
+RANLIB = /usr/i586-mingw32msvc/bin/ranlib
+ASM = /usr/i586-mingw32msvc/bin/as
+MKLIB = /usr/i586-mingw32msvc/bin/ar r
+DLLWRAP = /usr/bin/i586-mingw32msvc-dllwrap
+
+BACNET_FLAGS = -DBACDL_MSTP
+BACNET_FLAGS += -DPRINT_ENABLED=0
+BACNET_FLAGS += -DBIG_ENDIAN=0
+BACNET_FLAGS += -DMAX_APDU=480
+#BACNET_FLAGS += -DDLMSTP_TEST
+
+INCLUDES = -I. -I../.. -I../../demo/handler -I../../demo/object
+OPTIMIZATION = -O0
+#OPTIMIZATION = -Os
+CFLAGS = $(OPTIMIZATION) $(INCLUDES) $(BACNET_FLAGS) -Wall -g
+LIBRARY = lib$(TARGET).a
+#  -Wl,<options> Pass comma-separated <options> on to the linker
+LIBRARIES=-lc,-lgcc,-lm,-lwsock32,-L=.,-l$(TARGET)
+LDFLAGS = -Wl,-nostdlib,-Map=$(TARGET).map,$(LIBRARIES)
+
+PORTSRC = main.c \
+	rs485.c \
+	dlmstp.c \
+	../../crc.c \
+	../../mstp.c
+
+DEMOSRC = ai.c \
+	../../demo/object/av.c \
+	../../demo/object/bi.c \
+	../../demo/object/bv.c \
+	../../demo/object/h_rp.c \
+	../../demo/object/h_wp.c \
+	../../demo/object/device.c \
+	../../demo/handler/txbuf.c \
+	../../demo/handler/h_whois.c \
+	../../demo/handler/noserv.c \
+	../../demo/handler/s_iam.c \
+	../../demo/handler/h_rd.c \
+	../../demo/handler/h_dcc.c
+
+CORESRC = ../../npdu.c \
+	../../bacint.c \
+	../../apdu.c \
+	../../bacdcode.c \
+	../../bacstr.c \
+	../../abort.c \
+	../../bacerror.c \
+	../../reject.c \
+	../../bacapp.c \
+	../../datetime.c \
+	../../debug.c \
+	../../rp.c \
+	../../wp.c \
+	../../dcc.c \
+	../../rd.c \
+	../../whois.c \
+	../../iam.c \
+	../../version.c
+
+CSRC = $(PORTSRC) $(DEMOSRC)
+
+COBJ = $(CSRC:.c=.o)
+COREOBJ = $(CORESRC:.c=.o)
+
+all: $(TARGET).exe
+
+$(TARGET).exe: $(COBJ) $(LIBRARY) Makefile
+	$(CC) $(CFLAGS) $(COBJ) $(LDFLAGS) -o $@
+
+lib: $(LIBRARY)
+
+$(LIBRARY): $(COREOBJ) Makefile
+	$(AR) rcs $@ $(COREOBJ)
+
+.c.o:
+	$(CC) -c $(CFLAGS) $*.c -o $@
+
+.s.o:
+	$(CC) -c $(AFLAGS) $*.s -o $@
+
+clean:
+	touch Makefile
+	rm $(COBJ) $(COREOBJ)
+	rm $(TARGET).exe
+	rm $(LIBRARY)

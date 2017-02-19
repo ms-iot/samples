@@ -1,0 +1,197 @@
+//******************************************************************
+//
+// Copyright 2015 Samsung Electronics All Rights Reserved.
+//
+//-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+//-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+// Note that this diagram is not the best example of efficient
+// graphviz/doxygen use. It was recreating the look of an existing
+// graphic and thus is focused too much on appearance over
+// functionality.
+//
+
+digraph G {
+    label = "Abstracted Architecture";
+
+    z [
+        label = "Resource Introspection",
+        shape = box,
+        style = filled,
+        fillcolor="#efefef:#bdbdbd",
+        gradientangle=270,
+        width=8
+    ];
+
+    subgraph cluster_0 {
+        label = "Connectivity Framework";
+        labeljust="l";
+
+        yy [
+            label = "Connectivity API",
+            shape = box,
+            style = filled,
+            color = "#4a7bbd",
+            fillcolor="#e6efff:#a5c5ff",
+            gradientangle=270,
+            width=8
+        ];
+
+        subgraph cluster_1 {
+            label = "Control layer";
+            style=filled;
+            color = "#4a7bbd";
+            fillcolor="#e6efff:#a5c5ff";
+            gradientangle=270;
+
+            node [
+                style=filled,
+                color="#9cbd52",
+                fillcolor="#f7ffe6:#deffad",
+                gradientangle=270,
+                shape=box
+            ];
+
+            a0 [label="Network\nConfiguration"];
+            a1 [label="CoAP\nProtocol"];
+            a2 [label="Interface\nController"];
+
+            {rank = same a0 a1 a2}
+        }
+
+        subgraph cluster_2 {
+            label = "Transport Adapter";
+            style=filled;
+            color = "#4a7bbd"
+            fillcolor="#e6efff:#a5c5ff";
+            gradientangle=270;
+            node [
+                style=filled,
+                color="#9cbd52",
+                fillcolor="#f7ffe6:#deffad",
+                gradientangle=270,
+                shape=box
+            ];
+
+            bb [label = "Common Adapter Interface", width=5];
+
+            b0 [label="IP\nAdapter"];
+            b1 [label="LE GATT\nAdapter"];
+            b2 [label="BT SPP\nAdapter"];
+            b3 [label="XXX\nAdapter"];
+
+            {rank = same b0 b1 b2 b3}
+        }
+
+        subgraph cluster_3 {
+            label = "Platform Adapter";
+            style=filled;
+            color = "#4a7bbd"
+            fillcolor="#e6efff:#a5c5ff";
+            gradientangle=270;
+            node [
+                style=filled
+                color="#7b5aa5"
+                fillcolor="#f7e6f7:#c5b5ef";
+                gradientangle=270;
+                shape=box
+            ];
+
+            c0 [label="Ubuntu\nAdapter\n(ETH/WIFI/BT)"];
+            c1 [label="Android\nAdapter\n(WIFI/BLE/BT)"];
+            c2 [label="Tizen\nAdapter\n(WIFI/BLE/BT)"];
+            c3 [label="Arduino\nAdapter\n(ETH/WIFI/BLE)"];
+            c4 [label="Platform\n(6loWPAN)\n ", color="#f7e6f7"];
+
+            {rank = same c0 c1 c2 c3 c4}
+        }
+    }
+
+    {
+        node [
+            style = filled,
+            fillcolor="#efefef:#bdbdbd",
+            gradientangle=270,
+            shape=box
+        ];
+
+        d0 [label="Ubuntu"];
+        d1 [label="Android"];
+        d2 [label="Tizen"];
+        d3 [label="Arduino"];
+        d4 [label="????"];
+
+        {rank = same d0 d1 d2 d3 d4}
+    }
+
+    subgraph cluster_lgd {
+        label = "Legend";
+
+        node [
+            style = filled,
+            width=0.25,
+            height=0.25,
+            fixedsize=true,
+            shape=box,
+            gradientangle=270
+        ];
+
+        e0 [label=" ", color="#4a7bbd", fillcolor="#e6efff:#a5c5ff"];
+        e1 [label=" ", color="#9cbd52", fillcolor="#f7ffe6:#deffad"];
+        e2 [label=" ", color="#7b5aa5", fillcolor="#f7e6f7:#c5b5ef"];
+        e3 [label=" ", fillcolor="#efefef:#bdbdbd"];
+        e_dummy[shape=point, style=invis];
+
+        edge [penwidth=0,
+              arrowhead=none,
+              fontsize=10];
+        e0 -> e1 [label="CA Component    "];
+        e1 -> e2 [label="CA Module-platform independent    "];
+        e2 -> e3 [label="CA Module-platform specific    "];
+        e3 -> e_dummy [label="External"];
+
+        {rank = same e0 e1 e2 e3 e_dummy}
+    }
+
+    // In order to control placement of the sets of items in a
+    // top-to-bottom placement, invisible edges/arrows are used.
+    // This gives a logcial control for the physical appearance we want.
+    {
+        edge[style = invis];
+
+        // order groups to get top-to-bottom
+        z -> yy
+        yy -> {a0 a2}
+        a1 -> bb
+        {a0 a2} -> {b1 b2}
+        bb -> {b1 b2}
+        {b0 b1 b2 b3} -> c2
+        c0 -> d0
+        c1 -> d1
+        c2 -> d2
+        c3 -> d3
+        d0 -> e0
+        {d2} -> {e1 e2}
+        d4 -> e3
+
+        // order nodes left-to-right
+        a0 -> a1 -> a2
+        b0 -> b1 -> b2 -> b3
+        c0 -> c1 -> c2 -> c3 -> c4
+        d0 -> d1 -> d2 -> d3 -> d4
+        e0 -> e1 -> e2 -> e3
+    }
+}

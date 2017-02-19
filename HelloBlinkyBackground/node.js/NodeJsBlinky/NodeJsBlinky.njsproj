@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <Name>NodeJsBlinky</Name>
+    <RootNamespace>NodeJsBlinky</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == 'Any CPU' ">x86</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>67e6eea5-8a58-4aab-8f82-1f7b613adec6</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>server.js</StartupFile>
+    <StartWebBrowser>False</StartWebBrowser>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{00251F00-BA30-4CE4-96A2-B8A1085F37AA};{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+    <ProjectView>ShowAllFiles</ProjectView>
+    <StartWebBrowser>false</StartWebBrowser>
+    <PackageCertificateKeyFile>NodeJsBlinky_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
+    <AppContainerApplication>true</AppContainerApplication>
+    <ApplicationType>Windows Store</ApplicationType>
+    <WindowsTargetPlatformVersion>10.0.10586.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.10240.0</WindowsTargetPlatformMinVersion>
+    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+    <AppxPackage>true</AppxPackage>
+    <WindowsAppContainer>true</WindowsAppContainer>
+    <RemoteDebugEnabled>true</RemoteDebugEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <OutputPath>bin\Release\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="server.js" />
+    <Content Include="package.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+    <Content Include="Assets\Logo.scale-100.png" />
+    <Content Include="Assets\SmallLogo.scale-100.png" />
+    <Content Include="Assets\SplashScreen.scale-100.png" />
+    <Content Include="Assets\StoreLogo.scale-100.png" />
+    <Content Include="Assets\WideLogo.scale-100.png" />
+    <None Include="NodeJsBlinky_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\" />
+  </ItemGroup>
+  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsUwp.targets" />
+  <PropertyGroup>
+    <PlatformAware>true</PlatformAware>
+    <AvailablePlatforms>x86,x64,ARM</AvailablePlatforms>
+  </PropertyGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{00251f00-ba30-4ce4-96a2-b8a1085f37aa}" Configuration="Debug" Platform="x86">
+        <NodejsUwpProjectFlavorCfg />
+      </FlavorProperties>
+      <FlavorProperties GUID="{00251f00-ba30-4ce4-96a2-b8a1085f37aa}" Configuration="Release" Platform="x86">
+        <NodejsUwpProjectFlavorCfg />
+      </FlavorProperties>
+      <FlavorProperties GUID="{00251f00-ba30-4ce4-96a2-b8a1085f37aa}" Configuration="Debug" Platform="x64">
+        <NodejsUwpProjectFlavorCfg />
+      </FlavorProperties>
+      <FlavorProperties GUID="{00251f00-ba30-4ce4-96a2-b8a1085f37aa}" Configuration="Release" Platform="x64">
+        <NodejsUwpProjectFlavorCfg />
+      </FlavorProperties>
+      <FlavorProperties GUID="{00251f00-ba30-4ce4-96a2-b8a1085f37aa}" Configuration="Debug" Platform="ARM">
+        <NodejsUwpProjectFlavorCfg>
+          <NodeExeArguments>--debug</NodeExeArguments>
+          <DebuggerMachineName>10.125.152.143</DebuggerMachineName>
+        </NodejsUwpProjectFlavorCfg>
+      </FlavorProperties>
+      <FlavorProperties GUID="{00251f00-ba30-4ce4-96a2-b8a1085f37aa}" Configuration="Release" Platform="ARM">
+        <NodejsUwpProjectFlavorCfg />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

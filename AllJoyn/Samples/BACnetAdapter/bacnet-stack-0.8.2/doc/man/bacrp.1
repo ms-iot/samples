@@ -1,0 +1,127 @@
+.\" Process this file with
+.\" groff -man -Tascii bacrp.1
+.\" Contact <skarg@users.sourceforge.net> to correct errors or ommissions
+.TH bacrp 1 "July 2008" "0.4.5" "BACnet Stack at SourceForge Tool Manual"
+.SH NAME
+bacrp \- send BACnet ReadProperty service request to BACnet devices
+.SH SYNOPSIS
+
+.B bacrp  device-instance object-type object-instance property [index]
+
+.SH DESCRIPTION
+.B bacrp uses the BACnet ReadProperty service request to elicit
+a ReadPropertyAck or BACnet Error service response from a BACnet
+device on the network.  WhoIs and I-Am are used for device binding.
+The property value or error message is returned to stdio.
+
+.SH OPTIONS
+.IP device-instance
+Device object instance number that you are trying to
+send a ReadProperty service request.  The value should be in
+the range of 0 to 4194303.
+
+.IP "object-type"
+The object type is the integer value of the enumeration
+BACNET_OBJECT_TYPE in bacenum.h.  It is the object
+that you are reading.  For example if you were
+reading Analog Output 2, the object-type would be 1.
+
+.IP "object-instance"
+This is the object instance number of the object that
+you are reading.  For example, if you were reading
+Analog Output 2, the object-instance would be 2.
+
+.IP "property"
+The property is an integer value of the enumeration
+BACNET_PROPERTY_ID in bacenum.h.  It is the property
+you are reading.  For example, if you were reading the
+Present Value property, use 85 as the property.
+
+.IP "index"
+This integer parameter is the index number of an array.
+If the property is a BACnetARRAY, individual elements can
+be read.  If this parameter is missing and the property
+is an array, the entire array will be read.
+
+.SH EXAMPLES
+If you want read the Present-Value of Analog Output 101
+in Device 123, you could send the following command:
+$ bacrp 123 1 101 85
+If you want read the Priority-Array of Analog Output 101
+in Device 123, you could send the following command:
+$ bacrp 123 1 101 87
+If you want read the length of Priority-Array of Analog 
+Output 101 in Device 123, you could send the following command:
+$ bacrp 123 1 101 87 0
+
+.SH FILES
+.I address_cache
+.RS
+A cache that is read for static binding. See
+.BR address_cache (5)
+for further details.
+.SH ENVIRONMENT
+.IP BACNET_IP_PORT
+If non-null, the number of the UDP port for BACnet/IP datalink.
+The default UDP port number is 47808 (0xBAC0).
+.IP BACNET_IFACE
+If non-null, the device name for the datalink.
+The default is "eth0".
+.IP BACNET_BBMD_PORT
+If non-null, the number of the UDP port that the BBMD is using.
+The default UDP port number is 47808 (0xBAC0).
+Used for BACnet/IP datalink only.
+.IP BACNET_BBMD_TIMETOLIVE
+If non-null, the number of seconds used in the Foreign Device
+Registration.  A 16-bit unsigned value of 0 to 65535 is expected.
+The default number of seconds is 65535 (0xFFFF).
+Used for BACnet/IP datalink only.
+.IP BACNET_BBMD_ADDRESS
+If non-null, the IP address of the BBMD that is handling the
+Foreign Device Registration.  If this environment variable is
+missing or NULL, then Foreign Device Registration does not occur.
+Used for BACnet/IP datalink only.
+.IP BACNET_MAX_INFO_FRAMES
+If non-null, the Max-Info-Frames value between 1 and 255.
+The default number of frames is 1.
+Used for BACnet MS/TP datalink only.
+.IP BACNET_MAX_MASTER
+If non-null, the Max-Master value between 1 and 127.
+The default Max-Master is 127.
+Used for BACnet MS/TP datalink only.
+.IP BACNET_MSTP_BAUD
+If non-null, a value baud rate of 9600, 19200, 38400, 57600,
+and 115200.  
+The default baud rate is 9600.
+Used for BACnet MS/TP datalink only.
+.IP BACNET_MSTP_MAC
+If non-null, the MS/TP MAC address value between 0 and 127.
+The default MAC address is 0.
+Used for BACnet MS/TP datalink only.
+
+.SH DIAGNOSTICS
+The following diagnostics may be issued on stderr:
+
+device-instance=x - it must be less than 4194304
+object-type=x - it must be less than 1024
+object-instance=x - it must be less than 4194304
+property=x - it must be less than 4194304
+Error: TSM Timeout!
+Error: APDU Timeout!
+
+.SH BUGS
+No bugs are known to exist at this time.
+.SH AUTHOR
+Steve Karg <skarg@users.sourceforge.net>
+.SH "SEE ALSO"
+.BR bacarf (1),
+.BR bacawf (1),
+.BR bacdcc (1),
+.BR bacepics (1),
+.BR bacrd (1),
+.BR bacserv (1),
+.BR bacts (1),
+.BR bacucov (1),
+.BR bacwh (1),
+.BR bacwp (1),
+.BR address_cache (5)

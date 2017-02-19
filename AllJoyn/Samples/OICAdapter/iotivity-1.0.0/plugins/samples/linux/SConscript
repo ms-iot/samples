@@ -1,0 +1,83 @@
+#******************************************************************
+#
+# Copyright 2014 Intel Mobile Communications GmbH All Rights Reserved.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+Import('env')
+import os
+import os.path
+target_os = env.get('TARGET_OS')
+target_arch = env.get('TARGET_ARCH')
+samples_env = env.Clone()
+src_dir = env.get('SRC_DIR')
+pi_dir = os.path.join(src_dir, 'plugins')
+
+######################################################################
+# Build flags
+######################################################################
+samples_env.PrependUnique(CPPPATH = [
+		os.path.join(src_dir, 'resource', 'oc_logger', 'include'),
+		os.path.join(src_dir, 'resource', 'csdk', 'logger', 'include'),
+		os.path.join(src_dir, 'resource', 'csdk', 'stack', 'include'),
+                os.path.join(pi_dir, 'include')
+                ])
+
+samples_env.AppendUnique(CXXFLAGS = ['-std=c++0x', '-Wall', '-Wextra', '-Werror'])
+samples_env.AppendUnique(RPATH = [env.get('BUILD_DIR')])
+samples_env.AppendUnique(LIBPATH = [env.get('BUILD_DIR')])
+
+if target_os in ['darwin', 'ios']:
+	samples_env.PrependUnique(LIBS = ['m',
+                                          'octbstack',
+                                          'ocsrm',
+                                          'connectivity_abstraction',
+                                          'coap' ])
+elif target_os not in ['arduino']:
+	samples_env.PrependUnique(LIBS = ['m',
+                                          'octbstack',
+                                          'ocsrm',
+                                          'connectivity_abstraction',
+                                          'coap',
+                                          'plugin_interface'])
+	samples_env.AppendUnique(LIBS = ['rt'])
+	if target_arch in ['x86_64', 'arm64']:
+		samples_env.AppendUnique(CPPFLAGS = ['-Llib64'])
+	else:
+		samples_env.AppendUnique(CPPFLAGS = ['-Llib'])
+	samples_env.AppendUnique(LIBS = ['pthread'])
+
+if env.get('SECURED') == '1':
+    samples_env.AppendUnique(LIBS = ['tinydtls'])
+
+samples_env.AppendUnique(CPPDEFINES = ['TB_LOG'])
+
+######################################################################
+# Source files and Targets
+######################################################################
+iotivityandzigbeeserver = samples_env.Program('iotivityandzigbeeserver',
+        ['IotivityandZigbeeServer.c'])
+iotivityandzigbeeclient = samples_env.Program('iotivityandzigbeeclient',
+        ['IotivityandZigbeeClient.c'])
+
+list_of_samples = [iotivityandzigbeeserver, iotivityandzigbeeclient]
+
+Alias("samples", list_of_samples)
+
+env.AppendTarget('samples')
+
+

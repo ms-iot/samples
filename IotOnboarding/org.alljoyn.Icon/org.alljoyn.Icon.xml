@@ -1,0 +1,15 @@
+<node name="/About/DeviceIcon"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="http://www.alljoyn.org/schemas/introspect.xsd">
+    <interface name="org.alljoyn.Icon">
+        <property name="Version" type="q" access="read"/>
+        <property name="MimeType" type="s" access="read"/>
+        <property name="Size" type="u" access="read"/>
+        <method name="GetUrl">
+            <arg type="s" direction="out"/>
+        </method>
+        <method name="GetContent">
+            <arg type="ay" direction="out"/>
+        </method>
+    </interface>
+</node>

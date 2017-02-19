@@ -2,14 +2,14 @@
 
 
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using Windows.Devices.WiFi;
+using Windows.Networking.Connectivity;
 using Windows.Security.Credentials;
-using Windows.System.Threading;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
-using Windows.Networking.Connectivity;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -20,7 +20,7 @@ namespace IoTCoreDefaultApp
     /// </summary>
     public sealed partial class OOBENetwork : Page
     {
-        private NetworkPresenter networkPresenter;
+        private NetworkPresenter networkPresenter = new NetworkPresenter();
         private CoreDispatcher OOBENetworkPageDispatcher;
         private bool Automatic = true;
         private string CurrentPassword = string.Empty;
@@ -29,8 +29,19 @@ namespace IoTCoreDefaultApp
         {
             this.InitializeComponent();
             OOBENetworkPageDispatcher = Window.Current.Dispatcher;
-            SetupNetwork();
+
             NetworkInformation.NetworkStatusChanged += NetworkInformation_NetworkStatusChanged;
+
+            this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
+
+            this.DataContext = LanguageManager.GetInstance();
+
+            this.Loaded += async (sender, e) =>
+            {
+                await OOBENetworkPageDispatcher.RunAsync(CoreDispatcherPriority.Low, () => {
+                    SetupNetwork();
+                });
+            };
         }
 
         private void SetupNetwork()
@@ -65,16 +76,26 @@ namespace IoTCoreDefaultApp
 
         private async void SetupWifi()
         {
-            networkPresenter = new NetworkPresenter();
-
-            if (await NetworkPresenter.WifiIsAvailable())
+            if (await networkPresenter.WifiIsAvailable())
             {
-                var networks = await networkPresenter.GetAvailableNetworks();
+                IList<WiFiAvailableNetwork> networks;
+                try
+                {
+                    networks = await networkPresenter.GetAvailableNetworks();
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(String.Format("Error scanning: 0x{0:X}: {1}", e.HResult, e.Message));
+                    NoWifiFoundText.Text = e.Message;
+                    NoWifiFoundText.Visibility = Visibility.Visible;
+                    return;
+                }
 
                 if (networks.Count > 0)
                 {
+                    
                     WifiListView.ItemsSource = networks;
-
+                  
                     NoWifiFoundText.Visibility = Visibility.Collapsed;
                     WifiListView.Visibility = Visibility.Visible;
                     return;
@@ -130,6 +151,7 @@ namespace IoTCoreDefaultApp
             {
                 await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
+                    CortanaHelper.LaunchCortanaToConsentPageAsyncIfNeeded();
                     NavigationUtils.NavigateToScreen(typeof(MainPage));
                 });
             }
@@ -142,7 +164,7 @@ namespace IoTCoreDefaultApp
                 });
             }
         }
-
+       
         private void NextButton_Clicked(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
@@ -192,10 +214,11 @@ namespace IoTCoreDefaultApp
 
         private void SkipButton_Clicked(object sender, RoutedEventArgs e)
         {
+            CortanaHelper.LaunchCortanaToConsentPageAsyncIfNeeded();
             NavigationUtils.NavigateToScreen(typeof(MainPage));
         }
 
-        private void ConnectAutomaticallyCheckBox_Checked(object sender, RoutedEventArgs e)
+        private void ConnectAutomaticallyCheckBox_Changed(object sender, RoutedEventArgs e)
         {
             var checkbox = sender as CheckBox;
 
@@ -210,7 +233,18 @@ namespace IoTCoreDefaultApp
 
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
+            RefreshButton.IsEnabled = false;
             SetupWifi();
+            RefreshButton.IsEnabled = true;
+        }
+
+        private void WifiPasswordBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            var passwordBox = sender as PasswordBox;
+            if (passwordBox != null)
+            {
+                passwordBox.Focus(FocusState.Programmatic);
+            }
         }
     }
 }

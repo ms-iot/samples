@@ -1,24 +1,17 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 
+using IoTCoreDefaultApp.Utils;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media.Imaging;
+using Windows.UI.Xaml.Navigation;
 
 namespace IoTCoreDefaultApp
 {
@@ -34,20 +27,54 @@ namespace IoTCoreDefaultApp
             var rootFrame = Window.Current.Content as Frame;
             rootFrame.Navigated += RootFrame_Navigated;
 
-            UpdateDateTime();
+            this.NavigationCacheMode = NavigationCacheMode.Enabled;
+
+            var languageManager = LanguageManager.GetInstance();
+            this.DataContext = languageManager;
+
+            languageManager.PropertyChanged += (sender, e) =>
+            {
+                // If the language manager updates the 
+                // language, the current content needs to
+                // be reloaded.
+                if (e.PropertyName == "Item[]")
+                {
+// Disable await warning
+#pragma warning disable 4014
+                    Dispatcher.RunAsync(CoreDispatcherPriority.Low, () => { LoadDocument(docName); });
+#pragma warning restore 4014
+                }
+            };
 
             timer = new DispatcherTimer();
             timer.Tick += timer_Tick;
             timer.Interval = TimeSpan.FromSeconds(30);
-            timer.Start();
+
+            this.Loaded += async (sender, e) =>
+            {
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                {
+                    UpdateDateTime();
+
+                    timer.Start();
+                });
+            };
+            this.Unloaded += (sender, e) =>
+            {
+                timer.Stop();
+            };
         }
 
         private void RootFrame_Navigated(object sender, NavigationEventArgs e)
         {
-            docName = e.Parameter as string;
-            if (docName != null)
+            var newDocName = e.Parameter as string;
+            if (docName != newDocName && newDocName != null)
             {
-                LoadDocument(docName);
+                docName = newDocName;
+// Disable await warning
+#pragma warning disable 4014
+                Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>{ LoadDocument(docName); });
+#pragma warning restore 4014
                 NextButton.Visibility = (NavigationUtils.IsNextTutorialButtonVisible(docName) ? Visibility.Visible : Visibility.Collapsed);
             }
         }
@@ -121,7 +148,13 @@ namespace IoTCoreDefaultApp
                     case "image":
                         try
                         {
-                            var imageSource = new BitmapImage(new Uri("ms-appx:///" + value));
+                            var deviceType = DeviceTypeInformation.Type;
+                            if (deviceType != DeviceTypes.DB410)
+                            {
+                                deviceType = DeviceTypes.RPI2; // default to RPI2 images
+                            }
+
+                            var imageSource = new BitmapImage(new Uri("ms-appx:///" + String.Format(value, deviceType)));
                             var size = split[split.Length - 2];
                             if (size.Contains('x'))
                             {
@@ -154,7 +187,7 @@ namespace IoTCoreDefaultApp
         private void UpdateDateTime()
         {
             var t = DateTime.Now;
-            this.CurrentTime.Text = t.ToString("t", CultureInfo.CurrentCulture);
+            this.CurrentTime.Text = t.ToString("t", CultureInfo.CurrentCulture) + Environment.NewLine + t.ToString("d", CultureInfo.CurrentCulture);
         }
 
         private void ShutdownButton_Clicked(object sender, RoutedEventArgs e)
@@ -202,6 +235,11 @@ namespace IoTCoreDefaultApp
         private void SettingsButton_Clicked(object sender, RoutedEventArgs e)
         {
             NavigationUtils.NavigateToScreen(typeof(Settings));
+        }
+
+        private void CommandLineButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            NavigationUtils.NavigateToScreen(typeof(CommandLinePage));
         }
 
         private void BackButton_Clicked(object sender, RoutedEventArgs e)

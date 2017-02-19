@@ -1,0 +1,61 @@
+CERTIFICATE DEFINITIONS ::= BEGIN
+
+Certificate ::= SEQUENCE {
+        tbsCertificate      TBSCertificate,
+        signatureAlgorithm  AlgorithmIdentifier,
+        signatureValue      BIT STRING
+}
+
+AlgorithmIdentifier ::= SEQUENCE {
+        algorithm       OBJECT IDENTIFIER,
+        id-ecPublicKey 	OBJECT IDENTIFIER OPTIONAL,
+        nul				NULL OPTIONAL
+}
+
+TBSCertificate ::= SEQUENCE {
+        version         [0]    EXPLICIT Version DEFAULT v1,
+        serialNumber           CertificateSerialNumber,
+        signature              AlgorithmIdentifier,
+        issuer                 Name,
+        validity               Validity,
+        subject                Name,
+        subjectPublicKeyInfo   SubjectPublicKeyInfo
+}
+
+Version  ::=  INTEGER  {  v1(0), v2(1), v3(2)  }
+
+CertificateSerialNumber ::= INTEGER
+
+Name ::= RDNSequence
+
+RDNSequence ::= SEQUENCE OF RelativeDistinguishedName
+
+RelativeDistinguishedName ::= SET OF AttributeTypeAndValue
+
+AttributeTypeAndValue ::= SEQUENCE {
+     type     AttributeType,
+     value    AttributeValue}
+
+AttributeType ::= OBJECT IDENTIFIER
+
+AttributeValue ::= UTF8String
+
+Validity ::= SEQUENCE {
+        notBefore   Time,
+        notAfter    Time
+}
+
+Time ::= UTCTime
+
+SubjectPublicKeyInfo ::= SEQUENCE {
+        algorithm           AlgorithmIdentifier,
+        subjectPublicKey    BIT STRING
+}
+
+ECDSA-Sig-Value ::= SEQUENCE {
+          r  INTEGER,
+          s  INTEGER
+}
+
+END
+

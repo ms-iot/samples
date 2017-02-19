@@ -1,0 +1,28 @@
+Import('env')
+lib_env = env.Clone()
+SConscript(env.get('SRC_DIR') + '/service/third_party_libs.scons', 'lib_env')
+sim_env = lib_env.Clone()
+
+######################################################################
+# Build flags
+######################################################################
+sim_env.AppendUnique(CPPPATH = ['../../../../extlibs/timer'])
+sim_env.AppendUnique(CPPPATH = ['../../inc'])
+sim_env.AppendUnique(CXXFLAGS = ['-std=c++0x', '-Wall', '-pthread'])
+sim_env.AppendUnique(CPPDEFINES = ['LINUX'])
+sim_env.AppendUnique(LIBS = ['SimulatorManager'])
+
+sim_env.AppendUnique(LIBPATH = [env.get('BUILD_DIR')])
+sim_env.AppendUnique(RPATH = [env.get('BUILD_DIR')])
+sim_env.PrependUnique(LIBS = ['SimulatorManager'])
+
+if sim_env.get('SECURED') == '1':
+    sim_env.AppendUnique(LIBS = ['tinydtls'])
+
+######################################################################
+# Source files and Targets
+######################################################################
+clientcontroller = sim_env.Program('client-controller', 'client_controller.cpp')
+
+Alias("clientcontroller", clientcontroller)
+env.AppendTarget('clientcontroller')

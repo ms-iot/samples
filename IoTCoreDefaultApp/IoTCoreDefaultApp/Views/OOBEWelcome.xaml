@@ -32,45 +32,47 @@
 
     <Grid Background="{StaticResource AccentBrush}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="60"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="300"/>
-            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="*" MaxWidth="40"/>
+            <ColumnDefinition Width="*" MinWidth="120"/>
+            <ColumnDefinition Width="*" MinWidth="120"/>
+            <ColumnDefinition Width="*" MaxWidth="40"/>
         </Grid.ColumnDefinitions>
             
         <Grid.RowDefinitions>
-            <RowDefinition Height="120"/>
+            <RowDefinition Height="*" MaxHeight="120"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="5*"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Column="1" Grid.Row="1" x:Uid="OOBEWelcomeTitle" Style="{ThemeResource SubheaderTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBlock Grid.Column="1" Grid.Row="2" x:Uid="OOBEIntro" Text="Let's get some basic stuff out of the way." Style="{ThemeResource BodyTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,14,0,0"/>
+        <TextBlock Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Text="{Binding [OOBEWelcomeTitleText]}" Style="{ThemeResource SubheaderTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBlock Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Text="{Binding [OOBEIntroText]}" Style="{ThemeResource BodyTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,14,0,0"/>
 
-        <TextBlock Grid.Column="1" Grid.Row="3" x:Uid="OOBELanguageSelect" Text="Choose Your Language" Style="{ThemeResource BaseTextBlockStyle}" HorizontalAlignment="Left" FontWeight="Normal" VerticalAlignment="Top" Margin="0,54,0,0"/>
-        <ListBox Grid.Column="1" Grid.Row="4" x:Name="LanguagesListBox" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionMode="Single" Margin="0,14,0,0" Width="446" HorizontalContentAlignment="Stretch" SelectionChanged="LanguagesListBox_SelectionChanged" />
+        <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding [OOBELanguageSelectText]}" Style="{ThemeResource BaseTextBlockStyle}" HorizontalAlignment="Left" FontWeight="Normal" VerticalAlignment="Top" Margin="0,54,0,0"/>
+        <ListView Grid.Column="1" Grid.Row="4" x:Name="LanguagesListView" ItemContainerStyle="{ThemeResource LanguageSelectionListViewItemStyle}" Margin="0,14,20,0" SelectionMode="Single" HorizontalContentAlignment="Stretch" SelectionChanged="LanguagesListBox_SelectionChanged" />
 
         <Grid Grid.Column="2" Grid.Row="4">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="*" MaxHeight="120" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0">
-                <TextBlock x:Uid="MainPageDeviceName" Style="{StaticResource BaseTextBlockStyle}" />
-                <TextBlock x:Name="DeviceName" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}" />
-                <TextBlock x:Uid="MainPageIPAddress" x:Name="IPAddressCaption" Style="{StaticResource BaseTextBlockStyle}" Margin="0,16,0,0" />
-                <TextBlock x:Name="IPAddress1" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}"/>
-                <TextBlock x:Uid="MainPageOSVersion" x:Name="OSVersionCaption" Style="{StaticResource BaseTextBlockStyle}" Margin="0,16,0,0" />
-                <TextBlock x:Name="OSVersion" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}"/>
-            </StackPanel>
+            <ScrollViewer Grid.Row="0">
+                <StackPanel>
+                    <TextBlock Text="{Binding [MainPageDeviceNameText]}" Style="{StaticResource BaseTextBlockStyle}" />
+                    <TextBlock x:Name="DeviceName" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}" />
+                    <TextBlock Text="{Binding [MainPageIPAddressText]}" x:Name="IPAddressCaption" Style="{StaticResource BaseTextBlockStyle}" Margin="0,16,0,0" />
+                    <TextBlock x:Name="IPAddress1" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}"/>
+                    <TextBlock Text="{Binding [MainPageOSVersionText]}" x:Name="OSVersionCaption" Style="{StaticResource BaseTextBlockStyle}" Margin="0,16,0,0" />
+                    <TextBlock x:Name="OSVersion" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}"/>
+                </StackPanel>
+            </ScrollViewer>
 
             <StackPanel x:Name="ChooseDefaultLanguage" Grid.Row="2" Visibility="Collapsed">
-                <TextBlock x:Uid="DefaultLanguageTimeout" Text="We're choosing the default language automatically..." TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding [DefaultLanguageTimeoutText]}" TextWrapping="Wrap"/>
                 <ProgressBar x:Name="DefaultLanguageProgress" Height="5" Margin="0, 10, 0, 10" Maximum="50" />
             </StackPanel>
             
@@ -81,8 +83,8 @@
                     <ColumnDefinition Width="24" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="1" x:Name="CancelButton" x:Uid="CancelButton" Click="CancelButton_Clicked" Content="Cancel" Width="120" Height="32" Visibility="Collapsed"/>
-                <Button Grid.Column="3" x:Name="NextButton" x:Uid="NextButton" Click="NextButton_Clicked" Content="Next" Width="120" Height="32"/>
+                <Button Grid.Column="1" x:Name="CancelButton" Content="{Binding [CancelButtonContent]}" Click="CancelButton_Clicked" Width="120" Height="32" Visibility="Collapsed"/>
+                <Button Grid.Column="3" x:Name="NextButton" Content="{Binding [NextButtonContent]}" Click="NextButton_Clicked" Width="120" Height="32"/>
             </Grid>
         </Grid>
 

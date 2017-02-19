@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\security\src\aclresource.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\security\src\base64.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\security\src\credresource.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\security\src\doxmresource.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\security\src\policyengine.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\security\src\psinterface.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\security\src\pstatresource.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\security\src\resourcemanager.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\security\src\secureresourcemanager.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\security\src\srmresourcestrings.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\security\src\srmutility.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\security\src\amaclresource.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\security\src\amsmgr.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\security\src\iotvticalendar.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\security\src\svcresource.c" />
+    <ClCompile Include="..\..\iotivity-1.0.0\resource\csdk\security\src\strptime.c" />
+  </ItemGroup>
+</Project>

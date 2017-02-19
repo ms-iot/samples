@@ -1,0 +1,85 @@
+<node name="/org/allseen/LSF/Lamp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://allseenalliance.org/schemas/introspect.xsd">
+<interface name="org.freedesktop.DBus.Properties">
+  <method name="Get">
+    <arg type="s" direction="in"/>
+    <arg type="s" direction="in"/>
+    <arg type="v" direction="out"/>
+  </method>
+  <method name="Set">
+    <arg type="s" direction="in"/>
+    <arg type="s" direction="in"/>
+    <arg type="v" direction="in"/>
+  </method>
+  <method name="GetAll">
+    <arg type="s" direction="in"/>
+    <arg type="a{sv}" direction="out"/>
+  </method>
+</interface>
+
+<interface name="org.allseen.LSF.LampService">
+  <property name="Version" type="u" access="read"/>
+  <property name="LampServiceVersion" type="u" access="read"/>
+  <method name="ClearLampFault">
+    <arg name="LampFaultCode" type="u" direction="in"/>
+    <arg name="LampResponseCode" type="u" direction="out"/>
+    <arg name="LampFaultCode" type="u" direction="out"/>
+  </method>
+  <property name="LampFaults" type="au" access="read"/>
+</interface>
+
+<interface name="org.allseen.LSF.LampParameters">
+  <property name="Version" type="u" access="read"/>
+  <property name="Energy_Usage_Milliwatts" type="u" access="read"/>
+  <property name="Brightness_Lumens" type="u" access="read"/>
+</interface>
+
+<interface name="org.allseen.LSF.LampDetails">
+  <property name="Version" type="u" access="read"/>
+  <property name="Make" type="u" access="read"/>
+  <property name="Model" type="u" access="read"/>
+  <property name="Type" type="u" access="read"/>
+  <property name="LampType" type="u" access="read"/>
+  <property name="LampBaseType" type="u" access="read"/>
+  <property name="LampBeamAngle" type="u" access="read"/>
+  <property name="Dimmable" type="b" access="read"/>
+  <property name="Color" type="b" access="read"/>
+  <property name="VariableColorTemp" type="b" access="read"/>
+  <property name="HasEffects" type="b" access="read"/>
+  <property name="MinVoltage" type="u" access="read"/>
+  <property name="MaxVoltage" type="u" access="read"/>
+  <property name="Wattage" type="u" access="read"/>
+  <property name="IncandescentEquivalent" type="u" access="read"/>
+  <property name="MaxLumens" type="u" access="read"/>
+  <property name="MinTemperature" type="u" access="read"/>
+  <property name="MaxTemperature" type="u" access="read"/>
+  <property name="ColorRenderingIndex" type="u" access="read"/>
+  <property name="LampID" type="s" access="read"/>
+</interface>
+
+<interface name="org.allseen.LSF.LampState">
+  <property name="Version" type="u" access="read"/>
+  <method name="TransitionLampState">
+    <arg name="Timestamp" type="t" direction="in"/>
+    <arg name="NewState" type="a{sv}" direction="in"/>
+    <arg name="TransitionPeriod" type="u" direction="in"/>
+    <arg name="LampResponseCode" type="u" direction="out"/>
+  </method>
+  <method name="ApplyPulseEffect">
+    <arg name="FromState" type="a{sv}" direction="in"/>
+    <arg name="ToState" type="a{sv}" direction="in"/>
+    <arg name="period" type="u" direction="in"/>
+    <arg name="duration" type="u" direction="in"/>
+    <arg name="numPulses" type="u" direction="in"/>
+    <arg name="timestamp" type="t" direction="in"/>
+    <arg name="LampResponseCode" type="u" direction="out"/>
+  </method>
+  <signal name="LampStateChanged">
+    <arg name="LampID" type="s"/>
+  </signal>
+  <property name="OnOff" type="b" access="readwrite"/>
+  <property name="Hue" type="u" access="readwrite"/>
+  <property name="Saturation" type="u" access="readwrite"/>
+  <property name="ColorTemp" type="u" access="readwrite"/>
+  <property name="Brightness" type="u" access="readwrite"/>
+</interface>
+</node>

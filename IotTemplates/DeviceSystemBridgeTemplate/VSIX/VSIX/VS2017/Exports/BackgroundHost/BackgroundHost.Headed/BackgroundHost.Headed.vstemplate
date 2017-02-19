@@ -1,0 +1,52 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>BackgroundHost.Headed</Name>
+    <Description>Background Headed Host Component</Description>
+    <ProjectType>VC</ProjectType>
+    <ProjectSubType>
+    </ProjectSubType>
+    <SortOrder>1000</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>BackgroundHost.Headed</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <Hidden>true</Hidden>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="BackgroundHost.Headed.vcxproj" File="BackgroundHost.Headed.vcxproj" ReplaceParameters="true">
+      <ProjectItem ReplaceParameters="false" TargetFileName="BackgroundHost.Headed.vcxproj.filters">BackgroundHost.Headed.vcxproj.filters</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="ApplicationImplementation.cpp">ApplicationImplementation.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="ApplicationImplementation.h">ApplicationImplementation.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="pch.cpp">pch.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="pch.h">pch.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="BindableBase.cpp">ComponentModel\BindableBase.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="BindableBase.h">ComponentModel\BindableBase.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="BindableBaseHelpers.h">ComponentModel\BindableBaseHelpers.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="DelegateCommand.cpp">ComponentModel\DelegateCommand.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="DelegateCommand.h">ComponentModel\DelegateCommand.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="BackgroundServiceOperationModel.cpp">Models\BackgroundServiceOperationModel.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="BackgroundServiceOperationModel.h">Models\BackgroundServiceOperationModel.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="IServiceOperationModel.h">Models\IServiceOperationModel.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="ServiceFailedEventArgs.cpp">Models\ServiceFailedEventArgs.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="ServiceFailedEventArgs.h">Models\ServiceFailedEventArgs.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="Resources.h">Resources\Resources.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="Resources.resw">Resources\en-US\Resources.resw</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="HeadedBackgroundTaskImplementation.cpp">Tasks\HeadedBackgroundTaskImplementation.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="HeadedBackgroundTaskImplementation.h">Tasks\HeadedBackgroundTaskImplementation.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="HeartBeatDuration.h">Tasks\HeartBeatDuration.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="TaskProgress.h">Tasks\TaskProgress.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="ServiceOperationViewModel.h">ViewModels\ServiceOperationViewModel.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="ServiceOperationViewModel.cpp">ViewModels\ServiceOperationViewModel.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="BooleanValueConverter.h">Views\BooleanValueConverter.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="BooleanValueConverter.cpp">Views\BooleanValueConverter.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="ServiceOperationView.xaml">Views\ServiceOperationView.xaml</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="ServiceOperationView.xaml.cpp">Views\ServiceOperationView.xaml.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="ServiceOperationView.xaml.h">Views\ServiceOperationView.xaml.h</ProjectItem>
+    </Project>
+  </TemplateContent>
+  <WizardExtension>
+    <Assembly>Microsoft.VisualStudio.Universal.TemplateWizards, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</Assembly>
+    <FullClassName>Microsoft.VisualStudio.Universal.TemplateWizards.PlatformVersion.Wizard</FullClassName>
+  </WizardExtension>
+</VSTemplate>

@@ -1,0 +1,343 @@
+﻿{
+  "codeword": "GERTY",
+  "actions": [
+    {
+      "actionID": "shut up",
+      "spokenCommands": [
+        "shut up"
+      ],
+      "interactions": [
+      ]
+    },
+    {
+      "actionID": "turn off AC",
+      "spokenCommands": [
+        "turn off the AC"
+      ],
+      "interactions": [
+        {
+          "deviceID": "*",
+          "path": "/ControlPanel/AirConditioner/rootContainer/en/airconSet/power",
+          "interface": "org.alljoyn.ControlPanel.Property",
+          "propertyName": "Value",
+          "propertyValue": {
+            "q": 0
+          }
+        }
+      ]
+    },
+    {
+      "actionID": "turn on AC",
+      "spokenCommands": [
+        "turn on the AC"
+      ],
+      "interactions": [
+        {
+          "deviceID": "*",
+          "path": "/ControlPanel/AirConditioner/rootContainer/en/airconSet/power",
+          "interface": "org.alljoyn.ControlPanel.Property",
+          "propertyName": "Value",
+          "propertyValue": {
+            "q": 1
+          }
+        }
+      ]
+    },
+    {
+      "actionID": "circulate air",
+      "spokenCommands": [
+        "circulate the air in the room"
+      ],
+      "interactions": [
+        {
+          "deviceID": "*",
+          "path": "/ControlPanel/AirConditioner/rootContainer/en/airconSet4/WindDirVStepProperty",
+          "interface": "org.alljoyn.ControlPanel.Property",
+          "propertyName": "Value",
+          "propertyValue": {
+            "q": 100
+          }
+        }
+      ]
+    },
+    {
+      "actionID": "stop circulating air",
+      "spokenCommands": [
+        "stop circulating the air"
+      ],
+      "interactions": [
+        {
+          "deviceID": "*",
+          "path": "/ControlPanel/AirConditioner/rootContainer/en/airconSet4/WindDirVStepProperty",
+          "interface": "org.alljoyn.ControlPanel.Property",
+          "propertyName": "Value",
+          "propertyValue": {
+            "q": 0
+          }
+        }
+      ]
+    },
+    {
+      "actionID": "temperature",
+      "spokenCommands": [
+        "change the temperature"
+      ],
+      "interactions": [
+        {
+          "deviceID": "*",
+          "path": "/ControlPanel/AirConditioner/rootContainer/en/set_temperature",
+          "interface": "org.alljoyn.ControlPanel.Property",
+          "propertyName": "Value",
+          "propertyValue": {
+            "q": 18
+          }
+        }
+      ]
+    },
+    {
+      "actionID": "switch on",
+      "spokenCommands": [
+        "turn switch on",
+        "open blinds"
+      ],
+      "interactions": [
+        {
+          "deviceID": "*",
+          "path": "/SwitchBinary/Switch",
+          "interface": "com.microsoft.ZWaveBridge.SwitchBinary.Switch",
+          "propertyName": "Value",
+          "propertyValue": true
+        }
+      ]
+    },
+    {
+      "actionID": "switch off",
+      "spokenCommands": [
+        "turn switch off",
+        "close blinds"
+      ],
+      "interactions": [
+        {
+          "deviceID": "*",
+          "path": "*",
+          "interface": "com.microsoft.ZWaveBridge.SwitchBinary.Switch",
+          "propertyName": "Value",
+          "propertyValue": false
+        }
+      ]
+    },
+    {
+      "actionID": "lamp on",
+      "spokenCommands": [
+        "turn the lights on"
+      ],
+      "interactions": [
+        {
+          "deviceID": "*",
+          "path": "*",
+          "interface": "org.allseen.LSF.LampState",
+          "propertyName": "OnOff",
+          "propertyValue": true
+        }
+      ]
+    },
+    {
+      "actionID": "lamp off",
+      "spokenCommands": [
+        "turn the lights off"
+      ],
+      "interactions": [
+        {
+          "deviceID": "*",
+          "path": "*",
+          "interface": "org.allseen.LSF.LampState",
+          "propertyName": "OnOff",
+          "propertyValue": false
+        }
+      ]
+    },
+    {
+      "actionID": "lamp hue",
+      "spokenCommands": [
+        "play with the lamp"
+      ],
+      "interactions": [
+        {
+          "deviceID": "*",
+          "path": "*",
+          "interface": "org.allseen.LSF.LampState",
+          "propertyName": "Hue",
+          "propertyValue": 10101000
+        }
+      ]
+    },
+    {
+      "actionID": "tv mute",
+      "spokenCommands": [
+        "mute the TV"
+      ],
+      "interactions": [
+        {
+          "deviceID": "*",
+          "path": "*",
+          "interface": "org.alljoyn.Control.Volume",
+          "propertyName": "Mute",
+          "propertyValue": true
+        }
+      ]
+    },
+    {
+      "actionID": "tv unmute",
+      "spokenCommands": [
+        "unmute the TV"
+      ],
+      "interactions": [
+        {
+          "deviceID": "*",
+          "path": "*",
+          "interface": "org.alljoyn.Control.Volume",
+          "propertyName": "Mute",
+          "propertyValue": false
+        }
+      ]
+    },
+    {
+      "actionID": "play xbox",
+      "spokenCommands": [
+        "xbox"
+      ],
+      "interactions": [
+        {
+          "deviceID": "*",
+          "path": "*",
+          "interface": "org.alljoyn.Control.Volume",
+          "propertyName": "Volume",
+          "propertyValue": 10
+        },
+        {
+          "deviceID": "*",
+          "path": "*",
+          "interface": "com.lg.Control.TV",
+          "propertyName": "InputSource",
+          "propertyValue": 4
+        },
+        {
+          "deviceID": "*",
+          "path": "*",
+          "interface": "org.allseen.LSF.LampState",
+          "propertyName": "OnOff",
+          "propertyValue": true
+        },
+        {
+          "deviceID": "*",
+          "path": "*",
+          "interface": "com.microsoft.ZWaveBridge.SwitchBinary.Switch",
+          "propertyName": "Value",
+          "propertyValue": false
+        },
+        {
+          "delay": 50,
+          "deviceID": "*",
+          "path": "*",
+          "interface": "org.allseen.LSF.LampState",
+          "propertyName": "Hue",
+          "propertyValue": 1431655765
+        },
+        {
+          "delay": 50,
+          "deviceID": "*",
+          "path": "*",
+          "interface": "org.allseen.LSF.LampState",
+          "propertyName": "ColorTemp",
+          "propertyValue": 0
+        },
+        {
+          "delay": 50,
+          "deviceID": "*",
+          "path": "*",
+          "interface": "org.allseen.LSF.LampState",
+          "propertyName": "Brightness",
+          "propertyValue": 4294967294
+        },
+        {
+          "delay": 50,
+          "deviceID": "*",
+          "path": "*",
+          "interface": "org.allseen.LSF.LampState",
+          "propertyName": "Saturation",
+          "propertyValue": 4294967294
+        }
+      ]
+    },
+    {
+      "actionID": "relax",
+      "spokenCommands": [
+        "relax"
+      ],
+      "interactions": [
+        {
+          "deviceID": "*",
+          "path": "*",
+          "interface": "org.alljoyn.Control.Volume",
+          "propertyName": "Mute",
+          "propertyValue": false
+        },
+        {
+          "deviceID": "*",
+          "path": "*",
+          "interface": "org.allseen.LSF.LampState",
+          "propertyName": "OnOff",
+          "propertyValue": true
+        },
+        {
+          "deviceID": "*",
+          "path": "*",
+          "interface": "com.microsoft.ZWaveBridge.SwitchBinary.Switch",
+          "propertyName": "Value",
+          "propertyValue": true
+        },
+        {
+          "delay": 50,
+          "deviceID": "*",
+          "path": "*",
+          "interface": "org.allseen.LSF.LampState",
+          "propertyName": "Hue",
+          "propertyValue": 0
+        },
+        {
+          "delay": 50,
+          "deviceID": "*",
+          "path": "*",
+          "interface": "org.allseen.LSF.LampState",
+          "propertyName": "ColorTemp",
+          "propertyValue": 0
+        },
+        {
+          "delay": 50,
+          "deviceID": "*",
+          "path": "*",
+          "interface": "org.allseen.LSF.LampState",
+          "propertyName": "Brightness",
+          "propertyValue": 4294967294
+        },
+        {
+          "delay": 50,
+          "deviceID": "*",
+          "path": "*",
+          "interface": "org.allseen.LSF.LampState",
+          "propertyName": "Saturation",
+          "propertyValue": 4294967294
+        },
+        {
+          "deviceID": "*",
+          "path": "/ControlPanel/AirConditioner/rootContainer/en/airconSet/power",
+          "interface": "org.alljoyn.ControlPanel.Property",
+          "propertyName": "Value",
+          "propertyValue": {
+            "q": 1
+          }
+        }
+      ]
+    }
+  ]
+}

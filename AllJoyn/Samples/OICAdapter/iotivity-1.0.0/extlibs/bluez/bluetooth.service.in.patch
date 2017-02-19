@@ -1,0 +1,13 @@
+diff --git a/src/bluetooth.service.in b/src/bluetooth.service.in
+index 35e9457..8204a79 100644
+--- a/src/bluetooth.service.in
++++ b/src/bluetooth.service.in
+@@ -5,7 +5,7 @@ Documentation=man:bluetoothd(8)
+ [Service]
+ Type=dbus
+ BusName=org.bluez
+-ExecStart=@libexecdir@/bluetoothd
++ExecStart=@libexecdir@/bluetoothd --experimental
+ NotifyAccess=main
+ #WatchdogSec=10
+ #Restart=on-failure

@@ -1,7 +1,10 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using Windows.Devices.Gpio;
+using Windows.Security.ExchangeActiveSyncProvisioning;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -14,99 +17,122 @@ namespace RGBLED
         public MainPage()
         {
             InitializeComponent();
-
-            timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(500);
-            timer.Tick += Timer_Tick;
-            timer.Start();
-
-            Unloaded += MainPage_Unloaded;
-
-            InitGPIO();
         }
 
-        private void InitGPIO()
+        private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             var gpio = GpioController.GetDefault();
 
             // Show an error if there is no GPIO controller
             if (gpio == null)
             {
-                redpin = null;
-                bluepin = null;
-                greenpin = null;
                 GpioStatus.Text = "There is no GPIO controller on this device.";
                 return;
             }
 
-            redpin = gpio.OpenPin(REDLED_PIN);
-            bluepin = gpio.OpenPin(BLUELED_PIN);
-            greenpin = gpio.OpenPin(GREENLED_PIN);
+            var deviceModel = GetDeviceModel();
+            if (deviceModel == DeviceModel.RaspberryPi2)
+            {
+                // Use pin numbers compatible with documentation
+                const int RPI2_RED_LED_PIN = 5;
+                const int RPI2_GREEN_LED_PIN = 13;
+                const int RPI2_BLUE_LED_PIN = 6;
 
+                redpin = gpio.OpenPin(RPI2_RED_LED_PIN);
+                greenpin = gpio.OpenPin(RPI2_GREEN_LED_PIN);
+                bluepin = gpio.OpenPin(RPI2_BLUE_LED_PIN);
+            }
+            else
+            {
+                // take the first 3 available GPIO pins
+                var pins = new List<GpioPin>(3);
+                for (int pinNumber = 0; pinNumber < gpio.PinCount; pinNumber++)
+                {
+                    // ignore pins used for onboard LEDs
+                    switch (deviceModel)
+                    {
+                        case DeviceModel.DragonBoard410:
+                            if (pinNumber == 21 || pinNumber == 120)
+                                continue;
+                            break;
+                    }
+
+                    GpioPin pin;
+                    GpioOpenStatus status;
+                    if (gpio.TryOpenPin(pinNumber, GpioSharingMode.Exclusive, out pin, out status))
+                    {
+                        pins.Add(pin);
+                        if (pins.Count == 3)
+                        {
+                            break;
+                        }
+                    }
+                }
+
+                if (pins.Count != 3)
+                {
+                    GpioStatus.Text = "Could not find 3 available pins. This sample requires 3 GPIO pins.";
+                    return;
+                }
+
+                redpin = pins[0];
+                greenpin = pins[1];
+                bluepin = pins[2];
+            }
+            
             redpin.Write(GpioPinValue.High);
             redpin.SetDriveMode(GpioPinDriveMode.Output);
-            bluepin.Write(GpioPinValue.High);
-            bluepin.SetDriveMode(GpioPinDriveMode.Output);
             greenpin.Write(GpioPinValue.High);
             greenpin.SetDriveMode(GpioPinDriveMode.Output);
+            bluepin.Write(GpioPinValue.High);
+            bluepin.SetDriveMode(GpioPinDriveMode.Output);
 
-            GpioStatus.Text = "GPIO blue/red/green pin initialized correctly.";
-        }
+            GpioStatus.Text = string.Format(
+                "Red Pin = {0}, Green Pin = {1}, Blue Pin = {2}",
+                redpin.PinNumber,
+                greenpin.PinNumber,
+                bluepin.PinNumber);
 
-        private void MainPage_Unloaded(object sender, object args)
-        {
-            // Cleanup
-            redpin.Dispose();
-            bluepin.Dispose();
-            greenpin.Dispose();
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(500);
+            timer.Tick += Timer_Tick;
+            timer.Start();
         }
 
         private void FlipLED()
         {
-            if (LEDStatus == 0)
+            Debug.Assert(redpin != null && bluepin != null && greenpin != null);
+
+            switch (ledStatus)
             {
-               LEDStatus = 1;
-                if (redpin != null && bluepin != null && greenpin != null)
-                {
+                case LedStatus.Red:
                     //turn on red
                     redpin.Write(GpioPinValue.High);
                     bluepin.Write(GpioPinValue.Low);
                     greenpin.Write(GpioPinValue.Low);
-                }
-                LED.Fill = redBrush;
-            }
-            else if (LEDStatus == 1)
-            {
-                LEDStatus = 2;
-                if (redpin != null && bluepin != null && greenpin != null)
-                {
-                    //turn on blue
-                    redpin.Write(GpioPinValue.Low);
-                    bluepin.Write(GpioPinValue.High);
-                    greenpin.Write(GpioPinValue.Low);
-                }
-               LED.Fill = blueBrush;
-            }
 
-          else
-            {
-                LEDStatus = 0;
-                if (redpin != null && bluepin != null && greenpin != null)
-                {
+                    LED.Fill = redBrush;
+                    ledStatus = LedStatus.Green;    // go to next state
+                    break;
+                case LedStatus.Green:
+
                     //turn on green
                     redpin.Write(GpioPinValue.Low);
-                    bluepin.Write(GpioPinValue.Low);
                     greenpin.Write(GpioPinValue.High);
-                }
-                LED.Fill = greenBrush;
-            }
-        }
+                    bluepin.Write(GpioPinValue.Low);
 
-        private void TurnOffLED()
-        {
-            if (LEDStatus == 1)
-            {
-                FlipLED();
+                    LED.Fill = greenBrush;
+                    ledStatus = LedStatus.Blue;     // go to next state
+                    break;
+                case LedStatus.Blue:
+                    //turn on blue
+                    redpin.Write(GpioPinValue.Low);
+                    greenpin.Write(GpioPinValue.Low);
+                    bluepin.Write(GpioPinValue.High);
+
+                    LED.Fill = blueBrush;
+                    ledStatus = LedStatus.Red;      // go to next state
+                    break;
             }
         }
 
@@ -115,12 +141,20 @@ namespace RGBLED
             FlipLED();
         }
 
+        private void TurnOffLED()
+        {
+            redpin.Write(GpioPinValue.Low);
+            greenpin.Write(GpioPinValue.Low);
+            bluepin.Write(GpioPinValue.Low);
+        }
+
         private void Delay_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {            
             if (timer == null)
             {
                 return;
             }
+
             if (e.NewValue == Delay.Minimum)
             {
                 DelayText.Text = "Stopped";
@@ -135,16 +169,38 @@ namespace RGBLED
             }
         }
 
-        private int LEDStatus = 0;
-       private const int REDLED_PIN = 5;
-       private const int BLUELED_PIN = 6;
-       private const int GREENLED_PIN = 13;
+        public enum DeviceModel { RaspberryPi2, MinnowBoardMax, DragonBoard410, Unknown };
+
+        static DeviceModel GetDeviceModel()
+        {
+            var deviceInfo = new EasClientDeviceInformation();
+            if (deviceInfo.SystemProductName.IndexOf("Raspberry", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                return DeviceModel.RaspberryPi2;
+            }
+            else if (deviceInfo.SystemProductName.IndexOf("MinnowBoard", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                return DeviceModel.MinnowBoardMax;
+            }
+            else if (deviceInfo.SystemProductName == "SBC")
+            {
+                return DeviceModel.DragonBoard410;
+            }
+            else
+            {
+                return DeviceModel.Unknown;
+            }
+        }
+
+        enum LedStatus { Red, Green, Blue };
+
+        private LedStatus ledStatus;
         private GpioPin redpin;
-        private GpioPin bluepin;
         private GpioPin greenpin;
+        private GpioPin bluepin;
         private DispatcherTimer timer;
         private SolidColorBrush redBrush = new SolidColorBrush(Windows.UI.Colors.Red);
-        private SolidColorBrush blueBrush = new SolidColorBrush(Windows.UI.Colors.Blue);
         private SolidColorBrush greenBrush = new SolidColorBrush(Windows.UI.Colors.Green);
+        private SolidColorBrush blueBrush = new SolidColorBrush(Windows.UI.Colors.Blue);
     }
 }

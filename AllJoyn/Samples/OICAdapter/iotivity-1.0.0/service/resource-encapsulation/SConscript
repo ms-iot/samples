@@ -1,0 +1,122 @@
+#******************************************************************
+#
+# Copyright 2015 Samsung Electronics All Rights Reserved.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+######################################################################
+#  Resource-encapsulation build script
+######################################################################
+import platform
+Import('env')
+
+SConscript('src/common/SConscript')
+SConscript('src/serverBuilder/SConscript')
+
+######################################################################
+#building Resource client, resourceBroker and resourceCache
+######################################################################
+
+if env.get('RELEASE'):
+    env.AppendUnique(CCFLAGS = ['-Os'])
+    env.AppendUnique(CPPDEFINES = ['NDEBUG'])
+else:
+    env.AppendUnique(CCFLAGS = ['-g'])
+
+if env.get('LOGGING'):
+    env.AppendUnique(CPPDEFINES = ['TB_LOG'])
+
+# Add third party libraries
+lib_env = env.Clone()
+SConscript(env.get('SRC_DIR') + '/service/third_party_libs.scons', 'lib_env')
+
+resourceClient_env = lib_env.Clone()
+target_os = env.get('TARGET_OS')
+
+######################################################################
+# Build flags
+######################################################################
+resourceClient_env.AppendUnique(CPPPATH = [
+    'include',
+    'src/common/primitiveResource/include',
+    'src/common/expiryTimer/include',
+    'src/common/utils/include',
+    'src/resourceBroker/include',
+    'src/resourceCache/include'
+])
+
+resourceClient_env.PrependUnique(LIBS = ['oc', 'rcs_common', 'octbstack','oc_logger'])
+
+if target_os not in ['windows', 'winrt']:
+    resourceClient_env.AppendUnique(CXXFLAGS = ['-Wall', '-std=c++0x'])
+if target_os == 'linux':
+   resourceClient_env.AppendUnique(LIBS = ['pthread'])
+
+if target_os == 'android':
+    resourceClient_env.AppendUnique(CXXFLAGS = ['-frtti', '-fexceptions'])
+    resourceClient_env.PrependUnique(LIBS = ['gnustl_shared', 'log'])
+
+resourceClient_env.AppendUnique(LIBS = ['dl'])
+
+######################################################################
+# Source files and Targets
+######################################################################
+BROKER_SRC_DIR = 'src/resourceBroker/src/'
+CACHE_SRC_DIR = 'src/resourceCache/src/'
+RESOURCECLIENT_DIR = 'src/resourceClient/'
+
+client_src = [
+        BROKER_SRC_DIR + 'DeviceAssociation.cpp',
+        BROKER_SRC_DIR + 'DevicePresence.cpp',
+        BROKER_SRC_DIR + 'ResourcePresence.cpp',
+        BROKER_SRC_DIR + 'ResourceBroker.cpp',
+        CACHE_SRC_DIR + 'DataCache.cpp',
+        CACHE_SRC_DIR + 'ResourceCacheManager.cpp',
+        RESOURCECLIENT_DIR + 'RCSDiscoveryManager.cpp',
+        RESOURCECLIENT_DIR + 'RCSDiscoveryManagerImpl.cpp',
+        RESOURCECLIENT_DIR + 'RCSRemoteResourceObject.cpp'
+        ]
+ResourceClientsdk_static = resourceClient_env.StaticLibrary('rcs_client', client_src)
+ResourceClientsdk_shared = resourceClient_env.SharedLibrary('rcs_client', client_src)
+
+resourceClient_env.InstallTarget([ResourceClientsdk_static,ResourceClientsdk_shared], 'librcs_client')
+resourceClient_env.UserInstallTargetLib([ResourceClientsdk_static,ResourceClientsdk_shared], 'librcs_client')
+resourceClient_env.UserInstallTargetHeader('include/RCSAddress.h', 'service/resource-encapsulation', 'RCSAddress.h')
+resourceClient_env.UserInstallTargetHeader('include/RCSDiscoveryManager.h', 'service/resource-encapsulation', 'RCSDiscoveryManager.h')
+resourceClient_env.UserInstallTargetHeader('include/RCSRemoteResourceObject.h', 'service/resource-encapsulation', 'RCSRemoteResourceObject.h')
+resourceClient_env.UserInstallTargetHeader('include/RCSResourceAttributes.h', 'service/resource-encapsulation', 'RCSResourceAttributes.h')
+resourceClient_env.UserInstallTargetHeader('include/RCSResourceObject.h', 'service/resource-encapsulation', 'RCSResourceObject.h')
+resourceClient_env.UserInstallTargetHeader('include/RCSException.h', 'service/resource-encapsulation', 'RCSException.h')
+resourceClient_env.UserInstallTargetHeader('include/RCSRequest.h', 'service/resource-encapsulation', 'RCSRequest.h')
+resourceClient_env.UserInstallTargetHeader('include/RCSResponse.h', 'service/resource-encapsulation', 'RCSResponse.h')
+
+######################################################################
+# Build Sample App: SampleResourceClient & SampleResourceServer
+######################################################################
+SConscript('examples/SConscript')
+
+######################################################################
+# Build UnitTests Resource Client , resourceCache and resourceBroker and 
+# DiscoveryManager
+################################################ ######################
+if target_os == 'linux':
+    SConscript('unittests/SConscript')
+    SConscript('src/resourceCache/unittests/SConscript')
+    SConscript('src/resourceBroker/unittest/SConscript')
+
+if target_os == 'android':
+    SConscript('android/SConscript')

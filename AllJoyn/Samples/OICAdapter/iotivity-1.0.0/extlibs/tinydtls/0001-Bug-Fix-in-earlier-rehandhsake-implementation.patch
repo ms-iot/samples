@@ -1,0 +1,174 @@
+From e25d93dec6d2907430f3680ad5fbdfedc1ee94d8 Mon Sep 17 00:00:00 2001
+From: Sachin Agrawal <sachin.agrawal@intel.com>
+Date: Sun, 15 Feb 2015 22:16:43 -0800
+Subject: [PATCH 1/1] Bug Fix in earlier rehandhsake implementation
+
+Identified a corner case in earlier rehandshake implementation where if
+no data transfer takes place between client and Server before re-handshake
+is issued, re-handshake process was failing. DTLS state machine does not
+update it's state at Server until the first data packet was received from
+client. Updated logic to detect for 're-handshake' situation when epoch
+mis-match happens. Also updated dtls-client test app to conveniently test
+the feature. Use 'client:rehandshake' command for testing.
+
+Change-Id: Idfaad7d477508603c35ad7948ca7c8f05e3228d0
+Signed-off-by: Sachin Agrawal <sachin.agrawal@intel.com>
+---
+ extlibs/tinydtls/dtls.c              |   44 ++++++++++++++++++----------------
+ extlibs/tinydtls/tests/dtls-client.c |   27 +++++++++++++++++++++
+ 2 files changed, 50 insertions(+), 21 deletions(-)
+
+diff --git a/extlibs/tinydtls/dtls.c b/extlibs/tinydtls/dtls.c
+index a87d7f1..a923386 100644
+--- a/extlibs/tinydtls/dtls.c
++++ b/extlibs/tinydtls/dtls.c
+@@ -1562,6 +1562,7 @@ static void dtls_destroy_peer(dtls_context_t *ctx, dtls_peer_t *peer, int unlink
+  * \param ctx     The DTLS context.
+  * \param peer    The remote party we are talking to, if any.
+  * \param session Transport address of the remote peer.
++ * \param state   Current state of the connection.
+  * \param msg     The received datagram.
+  * \param msglen  Length of \p msg.
+  * \return \c 1 if msg is a Client Hello with a valid cookie, \c 0 or
+@@ -3644,7 +3645,6 @@ dtls_handle_message(dtls_context_t *ctx,
+   int data_length;		/* length of decrypted payload 
+ 				   (without MAC and padding) */
+   int err;
+-  int bypass_epoch_check = 0;
+ 
+   /* check if we have DTLS state for addr/port/ifindex */
+   peer = dtls_get_peer(ctx, session);
+@@ -3668,24 +3668,21 @@ dtls_handle_message(dtls_context_t *ctx,
+           data = msg + DTLS_RH_LENGTH;
+           data_length = rlen - DTLS_RH_LENGTH;
+           state = DTLS_STATE_WAIT_CLIENTHELLO;
+-          role = DTLS_SERVER;
+-          /* Bypass epoch check as the epoch for incoming msg is 0
+-             and expected epoch MAY be different */
+-          bypass_epoch_check = 1;
++          role = DTLS_SERVER;       
+         } else {
+-	int err =  dtls_alert_fatal_create(DTLS_ALERT_DECRYPT_ERROR);
+-        dtls_info("decrypt_verify() failed\n");
+-	if (peer->state < DTLS_STATE_CONNECTED) {
+-	  dtls_alert_send_from_err(ctx, peer, &peer->session, err);
+-	  peer->state = DTLS_STATE_CLOSED;
+-	  /* dtls_stop_retransmission(ctx, peer); */
+-	  dtls_destroy_peer(ctx, peer, 1);
+-	}
+-        return err;
+-      }
+-    } else {
+-      role = peer->role;
+-      state = peer->state;
++	  int err =  dtls_alert_fatal_create(DTLS_ALERT_DECRYPT_ERROR);
++          dtls_info("decrypt_verify() failed\n");
++	  if (peer->state < DTLS_STATE_CONNECTED) {
++	    dtls_alert_send_from_err(ctx, peer, &peer->session, err);
++	    peer->state = DTLS_STATE_CLOSED;
++	    /* dtls_stop_retransmission(ctx, peer); */
++	    dtls_destroy_peer(ctx, peer, 1);
++	  }
++          return err;
++        }
++      } else {
++        role = peer->role;
++        state = peer->state;
+       }
+     } else {
+       /* is_record() ensures that msg contains at least a record header */
+@@ -3739,7 +3736,7 @@ dtls_handle_message(dtls_context_t *ctx,
+       /* Handshake messages other than Finish must use the current
+        * epoch, Finish has epoch + 1. */
+ 
+-      if (peer && !bypass_epoch_check) {
++      if (peer) {
+ 	uint16_t expected_epoch = dtls_security_params(peer)->epoch;
+ 	uint16_t msg_epoch = 
+ 	  dtls_uint16_to_int(DTLS_RECORD_HEADER(msg)->epoch);
+@@ -3754,9 +3751,14 @@ dtls_handle_message(dtls_context_t *ctx,
+ 	}
+ 
+ 	if (expected_epoch != msg_epoch) {
+-	  dtls_warn("Wrong epoch, expected %i, got: %i\n",
++          if (hs_attempt_with_existing_peer(msg, rlen, peer)) {
++            state = DTLS_STATE_WAIT_CLIENTHELLO;
++            role = DTLS_SERVER;
++          } else {
++	    dtls_warn("Wrong epoch, expected %i, got: %i\n",
+ 		    expected_epoch, msg_epoch);
+-	  break;
++	    break;
++	  }
+ 	}
+       }
+ 
+diff --git a/extlibs/tinydtls/tests/dtls-client.c b/extlibs/tinydtls/tests/dtls-client.c
+index 306a380..05cb98f 100644
+--- a/extlibs/tinydtls/tests/dtls-client.c
++++ b/extlibs/tinydtls/tests/dtls-client.c
+@@ -44,6 +44,7 @@ typedef struct {
+ static dtls_str output_file = { 0, NULL }; /* output file name */
+ 
+ static dtls_context_t *dtls_context = NULL;
++static dtls_context_t *orig_dtls_context = NULL;
+ 
+ 
+ static const unsigned char ecdsa_priv_key[] = {
+@@ -235,6 +236,7 @@ dtls_handle_read(struct dtls_context_t *ctx) {
+ static void dtls_handle_signal(int sig)
+ {
+   dtls_free_context(dtls_context);
++  dtls_free_context(orig_dtls_context);
+   signal(sig, SIG_DFL);
+   kill(getpid(), sig);
+ }
+@@ -324,6 +326,12 @@ static dtls_handler_t cb = {
+ #define DTLS_CLIENT_CMD_CLOSE "client:close"
+ #define DTLS_CLIENT_CMD_RENEGOTIATE "client:renegotiate"
+ 
++/* As per RFC 6347 section 4.2.8, DTLS Server should support requests
++ * from clients who have silently abandoned the existing association
++ * and initiated a new handshake request by sending a ClientHello.
++ * Below command tests this feature.
++ */
++#define DTLS_CLIENT_CMD_REHANDSHAKE "client:rehandshake"
+ int 
+ main(int argc, char **argv) {
+   fd_set rfds, wfds;
+@@ -504,6 +512,24 @@ main(int argc, char **argv) {
+ 	printf("client: renegotiate connection\n");
+ 	dtls_renegotiate(dtls_context, &dst);
+ 	len = 0;
++      } else if (len >= strlen(DTLS_CLIENT_CMD_REHANDSHAKE) &&
++	         !memcmp(buf, DTLS_CLIENT_CMD_REHANDSHAKE, strlen(DTLS_CLIENT_CMD_REHANDSHAKE))) {
++	printf("client: rehandshake connection\n");
++	if (orig_dtls_context == NULL) {
++	  /* Cache the current context. We cannot free the current context as it will notify 
++	   * the Server to close the connection (which we do not want).
++	   */
++	  orig_dtls_context = dtls_context;
++	  /* Now, Create a new context and attempt to initiate a handshake. */
++	  dtls_context = dtls_new_context(&fd);
++	  if (!dtls_context) {
++	    dtls_emerg("cannot create context\n");
++	    exit(-1);
++          }
++	  dtls_set_handler(dtls_context, &cb);
++	  dtls_connect(dtls_context, &dst);
++	}
++	len = 0;
+       } else {
+ 	try_send(dtls_context, &dst);
+       }
+@@ -511,6 +537,7 @@ main(int argc, char **argv) {
+   }
+   
+   dtls_free_context(dtls_context);
++  dtls_free_context(orig_dtls_context);
+   exit(0);
+ }
+ 
+-- 
+1.7.9.5
+

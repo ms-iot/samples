@@ -1,0 +1,58 @@
+##
+# build script for expat library
+#
+# Note:
+#   1) Only a part of source code are required to be built.
+#   2) Download code from https://android.googlesource.com/platform/external/expat.git
+# otherwise, after code is downloaded, it's required to execute './configure' to
+# generate expat_config.h
+#
+##
+
+import os
+
+Import('env')
+
+expat_env = env.Clone()
+SConscript(env.get('SRC_DIR') + '/build_common/tools/UnpackAll.py')
+######################################################################
+# Build flags
+######################################################################
+src_dir = 'expat-2.1.0/'
+
+if not os.path.exists(src_dir):
+	# Prepare source code (download / unpack / run configure)
+	env.Download('expat.tar.gz', 'http://sourceforge.net/projects/expat/files/expat/2.1.0/expat-2.1.0.tar.gz/download')
+	expat_src = env.UnpackAll(src_dir + '/Makefile', 'expat.tar.gz')
+	env.Configure(src_dir, './configure')
+
+expat_env.AppendUnique(CPPPATH = [src_dir, src_dir + 'lib', src_dir + 'vms'])
+
+target_os = env.get('TARGET_OS')
+if target_os not in ['windows', 'winrt']:
+	expat_env.AppendUnique(CCFLAGS = ['-g', '-O2', '-Wall',
+			'-Wmissing-prototypes', '-Wstrict-prototypes',
+			'-fexceptions', '-fno-common'])
+	expat_env.AppendUnique(CPPDEFINES = ['HAVE_EXPAT_CONFIG_H'])
+
+if target_os not in ['darwin', 'ios', 'windows', 'winrt']:
+	expat_env.AppendUnique(LINKFLAGS = ['-Wl,--no-undefined'])
+
+######################################################################
+# Source files and Targets
+######################################################################
+expat_src = [
+	src_dir + 'lib/xmlparse.c',
+	src_dir + 'lib/xmltok.c',
+	src_dir + 'lib/xmlrole.c',
+	]
+
+libexpat = expat_env.SharedLibrary('expat', expat_src)
+
+######################################################################
+# Install header files and library binary
+######################################################################
+h = expat_env.InstallHeadFile([src_dir + 'lib/expat.h', src_dir + 'lib/expat_external.h'])
+lib = expat_env.InstallLib(libexpat)
+
+expat_env.AppendTarget('libexpat', [h, lib])

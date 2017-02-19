@@ -1,0 +1,746 @@
+From 947179cd0d3646359272cc0645e5049e2426f9e0 Mon Sep 17 00:00:00 2001
+From: Sachin Agrawal <sachin.agrawal@intel.com>
+Date: Thu, 6 Aug 2015 15:13:29 -0700
+Subject: [PATCH 1/1] Add TLS_ECDHE_PSK_WITH_AES_128_CBC_SHA_256 cipher suite
+ in tinydtls
+
+[Patch #1] Initial upload
+[Patch #2] Add function to calculate the pre-master key of ECDHE_PSK cipher suite.
+[Patch #3] Update codes according to review comments
+[Patch #4] Modify code alignment.
+
+Change-Id: I70be3a8e9469cc1913373d820b4a3d4f4a6d6d0d
+Signed-off-by: leechul <chuls.lee@samsung.com>
+Signed-off-by: Sachin Agrawal <sachin.agrawal@intel.com>
+---
+ extlibs/tinydtls/crypto.c            |   41 +++-
+ extlibs/tinydtls/crypto.h            |    9 +
+ extlibs/tinydtls/dtls.c              |  401 ++++++++++++++++++++++++++++++++--
+ extlibs/tinydtls/global.h            |    1 +
+ extlibs/tinydtls/tests/dtls-client.c |    8 +-
+ 5 files changed, 444 insertions(+), 16 deletions(-)
+
+diff --git a/extlibs/tinydtls/crypto.c b/extlibs/tinydtls/crypto.c
+index 3fbb993..deaf581 100644
+--- a/extlibs/tinydtls/crypto.c
++++ b/extlibs/tinydtls/crypto.c
+@@ -641,6 +641,41 @@ dtls_ecdsa_verify_sig(const unsigned char *pub_key_x,
+ }
+ #endif /* DTLS_ECC */
+ 
++#if defined(DTLS_PSK) && defined(DTLS_ECC)
++int dtls_ecdhe_psk_pre_master_secret(unsigned char *psk, size_t psklen,
++                                     unsigned char *ecc_priv_key,
++                                     unsigned char *ecc_pub_key_x,
++                                     unsigned char *ecc_pub_key_y,
++                                     size_t ecc_key_size,
++                                     unsigned char *result,
++                                     size_t result_len)
++{
++  uint8_t eccPublicKey[64];
++  uint8_t eccPrivateKey[32];
++  unsigned char *p = result;
++
++  if (result_len < uECC_BYTES + psklen + (sizeof(uint16) * 2)) {
++    return -1;
++  }
++
++  dtls_int_to_uint16(p, uECC_BYTES);
++  p += sizeof(uint16);
++
++  memcpy(eccPublicKey, ecc_pub_key_x, 32);
++  memcpy(eccPublicKey + 32, ecc_pub_key_y, 32);
++  memcpy(eccPrivateKey, ecc_priv_key, 32);
++  uECC_shared_secret(eccPublicKey, eccPrivateKey, p);
++  p += uECC_BYTES;
++
++  dtls_int_to_uint16(p, psklen);
++  p += sizeof(uint16);
++
++  memcpy(p, psk, psklen);
++
++  return uECC_BYTES + psklen + (sizeof(uint16) * 2);
++}
++#endif /* defined(DTLS_PSK) && defined(DTLS_ECC) */
++
+ int
+ dtls_encrypt(const unsigned char *src, size_t length,
+ 	     unsigned char *buf,
+@@ -665,7 +700,8 @@ dtls_encrypt(const unsigned char *src, size_t length,
+         memmove(buf, src, length);
+       ret = dtls_ccm_encrypt(&ctx->data, src, length, buf, nounce, aad, la);
+   }
+-  if(cipher == TLS_ECDH_anon_WITH_AES_128_CBC_SHA_256) {
++  if(cipher == TLS_ECDH_anon_WITH_AES_128_CBC_SHA_256 ||
++     cipher == TLS_ECDHE_PSK_WITH_AES_128_CBC_SHA_256) {
+       ret = rijndael_set_key(&ctx->data.ctx, key, 8 * keylen);
+       if (ret < 0) {
+         /* cleanup everything in case the key has the wrong size */
+@@ -708,7 +744,8 @@ dtls_decrypt(const unsigned char *src, size_t length,
+       ret = dtls_ccm_decrypt(&ctx->data, src, length, buf, nounce, aad, la);
+   }
+ 
+-  if(cipher == TLS_ECDH_anon_WITH_AES_128_CBC_SHA_256) {
++  if(cipher == TLS_ECDH_anon_WITH_AES_128_CBC_SHA_256 ||
++     cipher == TLS_ECDHE_PSK_WITH_AES_128_CBC_SHA_256) {
+       ret = rijndael_set_key(&ctx->data.ctx, key, 8 * keylen);
+       if (ret < 0) {
+         /* cleanup everything in case the key has the wrong size */
+diff --git a/extlibs/tinydtls/crypto.h b/extlibs/tinydtls/crypto.h
+index a81d306..f4cfc66 100644
+--- a/extlibs/tinydtls/crypto.h
++++ b/extlibs/tinydtls/crypto.h
+@@ -39,6 +39,7 @@
+ #include "numeric.h"
+ #include "hmac.h"
+ #include "ccm.h"
++#include "ecc/ecc.h"
+ 
+ /* TLS_PSK_WITH_AES_128_CCM_8 */
+ #define DTLS_MAC_KEY_LENGTH    0
+@@ -129,6 +130,13 @@ typedef struct {
+   dtls_compression_t compression;		/**< compression method */
+   dtls_cipher_t cipher;		/**< cipher type */
+   unsigned int do_client_auth:1;
++
++#ifdef DTLS_ECC && DTLS_PSK
++  struct keyx_t {
++    dtls_handshake_parameters_ecc_t ecc;
++    dtls_handshake_parameters_psk_t psk;
++  } keyx;
++#else /* DTLS_ECC && DTLS_PSK */
+   union {
+ #ifdef DTLS_ECC
+     dtls_handshake_parameters_ecc_t ecc;
+@@ -137,6 +145,7 @@ typedef struct {
+     dtls_handshake_parameters_psk_t psk;
+ #endif /* DTLS_PSK */
+   } keyx;
++#endif /* DTLS_ECC && DTLS_PSK */
+ } dtls_handshake_parameters_t;
+ 
+ /* The following macros provide access to the components of the
+diff --git a/extlibs/tinydtls/dtls.c b/extlibs/tinydtls/dtls.c
+index b5b8fd1..6104a08 100644
+--- a/extlibs/tinydtls/dtls.c
++++ b/extlibs/tinydtls/dtls.c
+@@ -506,6 +506,17 @@ static inline int is_tls_ecdh_anon_with_aes_128_cbc_sha_256(dtls_cipher_t cipher
+ #endif
+ }
+ 
++/** returns true if the cipher matches TLS_ECDHE_PSK_WITH_AES_128_CBC_SHA_256 */
++static inline int is_tls_ecdhe_psk_with_aes_128_cbc_sha_256(dtls_cipher_t cipher)
++{
++#if defined(DTLS_ECC) && defined(DTLS_PSK)
++  return cipher == TLS_ECDHE_PSK_WITH_AES_128_CBC_SHA_256;
++#else
++  return 0;
++#endif /* defined(DTLS_PSK) && defined(DTLS_ECC) */
++}
++
++
+ 
+ /** returns true if the application is configured for psk */
+ static inline int is_psk_supported(dtls_context_t *ctx)
+@@ -549,6 +560,17 @@ static inline int is_ecdh_anon_supported(dtls_context_t *ctx)
+ #endif
+ }
+ 
++/** returns true if ecdhe_psk_with_aes_128_cbc_sha_256 is supported */
++static inline int is_ecdhe_psk_supported(dtls_context_t *ctx)
++{
++#if defined(DTLS_ECC) && defined(DTLS_PSK)
++    return is_psk_supported(ctx);
++#else
++    return 0;
++#endif /* defined(DTLS_PSK) && defined(DTLS_ECC) */
++}
++
++
+ /**
+  * Returns @c 1 if @p code is a cipher suite other than @c
+  * TLS_NULL_WITH_NULL_NULL that we recognize.
+@@ -563,14 +585,17 @@ known_cipher(dtls_context_t *ctx, dtls_cipher_t code, int is_client) {
+   int psk;
+   int ecdsa;
+   int ecdh_anon;
++  int ecdhe_psk;
+ 
+   psk = is_psk_supported(ctx);
+   ecdsa = is_ecdsa_supported(ctx, is_client);
+   ecdh_anon = is_ecdh_anon_supported(ctx);
++  ecdhe_psk = is_ecdhe_psk_supported(ctx);
+ 
+   return (psk && is_tls_psk_with_aes_128_ccm_8(code)) ||
+ 	 (ecdsa && is_tls_ecdhe_ecdsa_with_aes_128_ccm_8(code)) ||
+-	 (ecdh_anon && is_tls_ecdh_anon_with_aes_128_cbc_sha_256(code));
++	 (ecdh_anon && is_tls_ecdh_anon_with_aes_128_cbc_sha_256(code)) ||
++	 (ecdhe_psk && is_tls_ecdhe_psk_with_aes_128_cbc_sha_256(code));
+ }
+ 
+ /**
+@@ -676,7 +701,11 @@ calculate_key_block(dtls_context_t *ctx,
+ 		    dtls_peer_t *peer,
+ 		    session_t *session,
+ 		    dtls_peer_type role) {
+-  unsigned char *pre_master_secret;
++#if defined(DTLS_PSK) && defined(DTLS_ECC)
++  unsigned char pre_master_secret[MAX_KEYBLOCK_LENGTH + uECC_BYTES];
++#else
++  unsigned char pre_master_secret[MAX_KEYBLOCK_LENGTH];
++#endif /* defined(DTLS_PSK) && defined(DTLS_ECC) */
+   int pre_master_len = 0;
+   dtls_security_parameters_t *security = dtls_security_params_next(peer);
+   uint8 master_secret[DTLS_MASTER_SECRET_LENGTH];
+@@ -685,8 +714,6 @@ calculate_key_block(dtls_context_t *ctx,
+     return dtls_alert_fatal_create(DTLS_ALERT_INTERNAL_ERROR);
+   }
+ 
+-  pre_master_secret = security->key_block;
+-
+   switch (handshake->cipher) {
+ #ifdef DTLS_PSK
+   case TLS_PSK_WITH_AES_128_CCM_8: {
+@@ -733,6 +760,35 @@ calculate_key_block(dtls_context_t *ctx,
+     break;
+   }
+ #endif /* DTLS_ECC */
++#if defined(DTLS_PSK) && defined(DTLS_ECC)
++    case TLS_ECDHE_PSK_WITH_AES_128_CBC_SHA_256: {
++      unsigned char psk[DTLS_PSK_MAX_KEY_LEN];
++      int psklen;
++
++      psklen = CALL(ctx, get_psk_info, session, DTLS_PSK_KEY,
++             handshake->keyx.psk.identity,
++             handshake->keyx.psk.id_length,
++             psk, DTLS_PSK_MAX_KEY_LEN);
++      if (psklen < 0) {
++        dtls_crit("no psk key for session available\n");
++        return psklen;
++      }
++
++      pre_master_len = dtls_ecdhe_psk_pre_master_secret(psk, psklen,
++                           handshake->keyx.ecc.own_eph_priv,
++                           handshake->keyx.ecc.other_eph_pub_x,
++                           handshake->keyx.ecc.other_eph_pub_y,
++                           sizeof(handshake->keyx.ecc.own_eph_priv),
++                           pre_master_secret,
++                           MAX_KEYBLOCK_LENGTH + uECC_BYTES);
++
++      if (pre_master_len < 0) {
++        dtls_crit("the curve was too long, for the pre master secret\n");
++        return dtls_alert_fatal_create(DTLS_ALERT_INTERNAL_ERROR);
++      }
++      break;
++    }
++#endif /* defined(DTLS_PSK) && defined(DTLS_ECC)  */
+   default:
+     dtls_crit("calculate_key_block: unknown cipher\n");
+     return dtls_alert_fatal_create(DTLS_ALERT_INTERNAL_ERROR);
+@@ -1113,6 +1169,56 @@ check_client_keyexchange(dtls_context_t *ctx,
+     data += sizeof(handshake->keyx.ecc.other_eph_pub_y);
+   }
+ #endif /* DTLS_ECC */
++#if defined(DTLS_PSK) && defined(DTLS_ECC)
++  if (is_tls_ecdhe_psk_with_aes_128_cbc_sha_256(handshake->cipher)) {
++    int id_length;
++
++    if (length < DTLS_HS_LENGTH + DTLS_CKXEC_LENGTH) {
++      dtls_debug("The client key exchange is too short\n");
++      return dtls_alert_fatal_create(DTLS_ALERT_HANDSHAKE_FAILURE);
++    }
++    data += DTLS_HS_LENGTH;
++
++    //PSK hint
++    id_length = dtls_uint16_to_int(data);
++    data += sizeof(uint16);
++
++    if (DTLS_HS_LENGTH + DTLS_CKXPSK_LENGTH_MIN + DTLS_CKXEC_LENGTH + id_length != length) {
++      dtls_debug("The identity has a wrong length\n");
++      return dtls_alert_fatal_create(DTLS_ALERT_HANDSHAKE_FAILURE);
++    }
++
++    if (id_length > DTLS_PSK_MAX_CLIENT_IDENTITY_LEN) {
++      dtls_warn("please use a smaller client identity\n");
++      return dtls_alert_fatal_create(DTLS_ALERT_INTERNAL_ERROR);
++    }
++
++    handshake->keyx.psk.id_length = id_length;
++    memcpy(handshake->keyx.psk.identity, data, id_length);
++    data += id_length;
++
++    //ECDH public
++    if (dtls_uint8_to_int(data) != 1 + 2 * DTLS_EC_KEY_SIZE) {
++      dtls_alert("expected 65 bytes long public point\n");
++      return dtls_alert_fatal_create(DTLS_ALERT_HANDSHAKE_FAILURE);
++    }
++    data += sizeof(uint8);
++
++    if (dtls_uint8_to_int(data) != 4) {
++      dtls_alert("expected uncompressed public point\n");
++      return dtls_alert_fatal_create(DTLS_ALERT_HANDSHAKE_FAILURE);
++    }
++    data += sizeof(uint8);
++
++    memcpy(handshake->keyx.ecc.other_eph_pub_x, data,
++       sizeof(handshake->keyx.ecc.other_eph_pub_x));
++    data += sizeof(handshake->keyx.ecc.other_eph_pub_x);
++
++    memcpy(handshake->keyx.ecc.other_eph_pub_y, data,
++       sizeof(handshake->keyx.ecc.other_eph_pub_y));
++    data += sizeof(handshake->keyx.ecc.other_eph_pub_y);
++  }
++#endif /* defined(DTLS_PSK) && defined(DTLS_ECC) */
+ #ifdef DTLS_PSK
+   if (is_tls_psk_with_aes_128_ccm_8(handshake->cipher)) {
+     int id_length;
+@@ -1286,7 +1392,8 @@ dtls_prepare_record(dtls_peer_t *peer, dtls_security_parameters_t *security,
+       p += data_len_array[i];
+       res += data_len_array[i];
+     }
+-  } else if (is_tls_ecdh_anon_with_aes_128_cbc_sha_256(security->cipher)) {
++  } else if (is_tls_ecdh_anon_with_aes_128_cbc_sha_256(security->cipher) ||
++             is_tls_ecdhe_psk_with_aes_128_cbc_sha_256(security->cipher)) {
+ 
+     unsigned char nonce[DTLS_CBC_IV_LENGTH];
+ 
+@@ -2116,6 +2223,80 @@ dtls_send_server_key_exchange_ecdh(dtls_context_t *ctx, dtls_peer_t *peer,
+ }
+ #endif /* DTLS_ECC */
+ 
++#if defined(DTLS_PSK) && defined(DTLS_ECC)
++static int dtls_send_server_key_exchange_ecdhe_psk(dtls_context_t *ctx, dtls_peer_t *peer,
++				  const unsigned char *psk_hint, size_t psk_hint_len)
++{
++  /* The ASN.1 Integer representation of an 32 byte unsigned int could be
++   * 33 bytes long add space for that */
++  uint8 buf[DTLS_SKEXEC_LENGTH + DTLS_SKEXECPSK_LENGTH_MAX + 2];
++  uint8 *p;
++  uint8 *ephemeral_pub_x;
++  uint8 *ephemeral_pub_y;
++  dtls_handshake_parameters_t *config = peer->handshake_params;
++
++  /* ServerKeyExchange
++    * Please see Session 2, RFC 5489.
++
++         struct {
++          select (KeyExchangeAlgorithm) {
++              //other cases for rsa, diffie_hellman, etc.
++              case ec_diffie_hellman_psk:  // NEW
++                  opaque psk_identity_hint<0..2^16-1>;
++                  ServerECDHParams params;
++          };
++      } ServerKeyExchange; */
++  p = buf;
++
++  assert(psk_hint_len <= DTLS_PSK_MAX_CLIENT_IDENTITY_LEN);
++  if (psk_hint_len > DTLS_PSK_MAX_CLIENT_IDENTITY_LEN) {
++    // should never happen
++    dtls_warn("psk identity hint is too long\n");
++    return dtls_alert_fatal_create(DTLS_ALERT_INTERNAL_ERROR);
++  }
++
++  // psk_identity_hint
++  dtls_int_to_uint16(p, psk_hint_len);
++  p += sizeof(uint16);
++
++  memcpy(p, psk_hint, psk_hint_len);
++  p += psk_hint_len;
++
++  /* ServerECDHParams. */
++  /* ECCurveType curve_type: named_curve */
++  dtls_int_to_uint8(p, TLS_EC_CURVE_TYPE_NAMED_CURVE);
++  p += sizeof(uint8);
++
++  /* NamedCurve namedcurve: secp256r1 */
++  dtls_int_to_uint16(p, TLS_EXT_ELLIPTIC_CURVES_SECP256R1);
++  p += sizeof(uint16);
++
++  dtls_int_to_uint8(p, 1 + 2 * DTLS_EC_KEY_SIZE);
++  p += sizeof(uint8);
++
++  /* This should be an uncompressed point, but I do not have access to the spec. */
++  dtls_int_to_uint8(p, 4);
++  p += sizeof(uint8);
++
++  /* store the pointer to the x component of the pub key and make space */
++  ephemeral_pub_x = p;
++  p += DTLS_EC_KEY_SIZE;
++
++  /* store the pointer to the y component of the pub key and make space */
++  ephemeral_pub_y = p;
++  p += DTLS_EC_KEY_SIZE;
++
++  dtls_ecdsa_generate_key(config->keyx.ecc.own_eph_priv,
++              ephemeral_pub_x, ephemeral_pub_y,
++              DTLS_EC_KEY_SIZE);
++
++  assert(p - buf <= sizeof(buf));
++
++  return dtls_send_handshake_msg(ctx, peer, DTLS_HT_SERVER_KEY_EXCHANGE,
++				 buf, p - buf);
++}
++#endif /* defined(DTLS_PSK) && defined(DTLS_ECC) */
++
+ #ifdef DTLS_PSK
+ static int
+ dtls_send_server_key_exchange_psk(dtls_context_t *ctx, dtls_peer_t *peer,
+@@ -2207,6 +2388,7 @@ dtls_send_server_hello_msgs(dtls_context_t *ctx, dtls_peer_t *peer)
+   int res;
+   int ecdsa;
+   int ecdh_anon;
++  int ecdhe_psk;
+ 
+   res = dtls_send_server_hello(ctx, peer);
+ 
+@@ -2217,6 +2399,7 @@ dtls_send_server_hello_msgs(dtls_context_t *ctx, dtls_peer_t *peer)
+ 
+   ecdsa = is_tls_ecdhe_ecdsa_with_aes_128_ccm_8(peer->handshake_params->cipher);
+   ecdh_anon = is_tls_ecdh_anon_with_aes_128_cbc_sha_256(peer->handshake_params->cipher);
++  ecdhe_psk = is_tls_ecdhe_psk_with_aes_128_cbc_sha_256(peer->handshake_params->cipher);
+ 
+ #ifdef DTLS_ECC
+   if(ecdh_anon) {
+@@ -2261,7 +2444,31 @@ dtls_send_server_hello_msgs(dtls_context_t *ctx, dtls_peer_t *peer)
+     }
+   }
+ #endif /* DTLS_ECC */
++#if defined(DTLS_PSK) && defined(DTLS_ECC)
++  else if(ecdhe_psk) {
++    unsigned char psk_hint[DTLS_PSK_MAX_CLIENT_IDENTITY_LEN];
++    int psk_len;
++
++    /* The identity hint is optional, therefore we ignore the result
++     * and check psk only. */
++    psk_len = CALL(ctx, get_psk_info, &peer->session, DTLS_PSK_HINT,
++	       NULL, 0, psk_hint, DTLS_PSK_MAX_CLIENT_IDENTITY_LEN);
+ 
++    if (psk_len < 0) {
++      dtls_debug("dtls_server_hello: cannot create ServerKeyExchange\n");
++      return psk_len;
++    }
++
++    if (psk_len > 0) {
++      res = dtls_send_server_key_exchange_ecdhe_psk(ctx, peer, psk_hint, (size_t)psk_len);
++
++      if (res < 0) {
++        dtls_debug("dtls_server_hello(with ECDHE): cannot prepare Server Key Exchange record\n");
++        return res;
++      }
++    }
++  }
++#endif /* defined(DTLS_PSK) && defined(DTLS_ECC) */
+ #ifdef DTLS_PSK
+   if (is_tls_psk_with_aes_128_ccm_8(peer->handshake_params->cipher)) {
+     unsigned char psk_hint[DTLS_PSK_MAX_CLIENT_IDENTITY_LEN];
+@@ -2308,7 +2515,11 @@ dtls_send_ccs(dtls_context_t *ctx, dtls_peer_t *peer) {
+ static int
+ dtls_send_client_key_exchange(dtls_context_t *ctx, dtls_peer_t *peer)
+ {
++#if defined(DTLS_PSK) && defined(DTLS_ECC)
++  uint8 buf[DTLS_CKXEC_LENGTH + 2 + DTLS_PSK_MAX_CLIENT_IDENTITY_LEN];
++#else
+   uint8 buf[DTLS_CKXEC_LENGTH];
++#endif /* defined(DTLS_PSK) && defined(DTLS_ECC) */
+   uint8 client_id[DTLS_PSK_MAX_CLIENT_IDENTITY_LEN];
+   uint8 *p;
+   dtls_handshake_parameters_t *handshake = peer->handshake_params;
+@@ -2368,6 +2579,60 @@ dtls_send_client_key_exchange(dtls_context_t *ctx, dtls_peer_t *peer)
+     break;
+   }
+ #endif /* DTLS_ECC */
++#if defined(DTLS_PSK) && defined(DTLS_ECC)
++  case TLS_ECDHE_PSK_WITH_AES_128_CBC_SHA_256: {
++      int psk_len;
++      uint8 *ephemeral_pub_x;
++      uint8 *ephemeral_pub_y;
++
++    /* Please see Session 2, RFC 5489.
++         struct {
++            select (KeyExchangeAlgorithm) {
++                // other cases for rsa, diffie_hellman, etc.
++                case ec_diffie_hellman_psk:
++                    opaque psk_identity<0..2^16-1>;
++                    ClientECDiffieHellmanPublic public;
++            } exchange_keys;
++        } ClientKeyExchange;
++    */
++
++    psk_len = CALL(ctx, get_psk_info, &peer->session, DTLS_PSK_IDENTITY,
++               NULL, 0,
++               client_id,
++               sizeof(client_id));
++    if (psk_len < 0) {
++      dtls_crit("no psk identity set in kx\n");
++      return psk_len;
++    }
++
++    if (psk_len + sizeof(uint16) > DTLS_CKXEC_LENGTH) {
++      dtls_warn("the psk identity is too long\n");
++      return dtls_alert_fatal_create(DTLS_ALERT_INTERNAL_ERROR);
++    }
++
++    dtls_int_to_uint16(p, psk_len);
++    p += sizeof(uint16);
++
++    memcpy(p, client_id, psk_len);
++    p += psk_len;
++
++    dtls_int_to_uint8(p, 1 + 2 * DTLS_EC_KEY_SIZE);
++    p += sizeof(uint8);
++
++    dtls_int_to_uint8(p, 4);
++    p += sizeof(uint8);
++
++    ephemeral_pub_x = p;
++    p += DTLS_EC_KEY_SIZE;
++    ephemeral_pub_y = p;
++    p += DTLS_EC_KEY_SIZE;
++
++    dtls_ecdsa_generate_key(peer->handshake_params->keyx.ecc.own_eph_priv,
++    			    ephemeral_pub_x, ephemeral_pub_y,
++    			    DTLS_EC_KEY_SIZE);
++    break;
++  }
++#endif /* defined(DTLS_PSK) && defined(DTLS_ECC) */
+   default:
+     dtls_crit("cipher not supported\n");
+     return dtls_alert_fatal_create(DTLS_ALERT_INTERNAL_ERROR);
+@@ -2457,6 +2722,7 @@ dtls_send_client_hello(dtls_context_t *ctx, dtls_peer_t *peer,
+   int psk = 0;
+   int ecdsa = 0;
+   int ecdh_anon = 0;
++  int ecdhe_psk = 0;
+   dtls_handshake_parameters_t *handshake = peer->handshake_params;
+   dtls_tick_t now;
+ 
+@@ -2471,14 +2737,18 @@ dtls_send_client_hello(dtls_context_t *ctx, dtls_peer_t *peer,
+       case TLS_ECDH_anon_WITH_AES_128_CBC_SHA_256:
+         ecdh_anon = is_ecdh_anon_supported(ctx);
+         break;
++      case TLS_ECDHE_PSK_WITH_AES_128_CBC_SHA_256:
++        ecdhe_psk = is_ecdhe_psk_supported(ctx);
++        break;
+       default:
+         psk = is_psk_supported(ctx);
+         ecdsa = is_ecdsa_supported(ctx, 1);
+         ecdh_anon = is_ecdh_anon_supported(ctx);
++        ecdhe_psk = is_ecdhe_psk_supported(ctx);
+         break;
+    }
+ 
+-  cipher_size = 2 + (ecdsa ? 2 : 0) + (psk ? 2 : 0) + (ecdh_anon ? 2 : 0);
++  cipher_size = 2 + (ecdsa ? 2 : 0) + (psk ? 2 : 0) + (ecdh_anon ? 2 : 0) + (ecdhe_psk ? 2 : 0);
+   extension_size = (ecdsa) ? (2 + 6 + 6 + 8 + 6) : 0;
+ 
+   if (cipher_size == 0) {
+@@ -2533,6 +2803,10 @@ dtls_send_client_hello(dtls_context_t *ctx, dtls_peer_t *peer,
+     dtls_int_to_uint16(p, TLS_ECDHE_ECDSA_WITH_AES_128_CCM_8);
+     p += sizeof(uint16);
+   }
++  if (ecdhe_psk) {
++      dtls_int_to_uint16(p, TLS_ECDHE_PSK_WITH_AES_128_CBC_SHA_256);
++      p += sizeof(uint16);
++  }
+ 
+   /* compression method */
+   dtls_int_to_uint8(p, 1);
+@@ -2900,8 +3174,97 @@ check_server_key_exchange_ecdh(dtls_context_t *ctx,
+ 
+   return 0;
+ }
+-
+ #endif /* DTLS_ECC */
++#if defined(DTLS_PSK) && defined(DTLS_ECC)
++check_server_key_exchange_ecdhe_psk(dtls_context_t *ctx,
++			      dtls_peer_t *peer,
++			      uint8 *data, size_t data_length)
++{
++  dtls_handshake_parameters_t *config = peer->handshake_params;
++  uint16_t psk_len = 0;
++
++  /* ServerKeyExchange
++    * Please see Session 2, RFC 5489.
++
++         struct {
++          select (KeyExchangeAlgorithm) {
++              //other cases for rsa, diffie_hellman, etc.
++              case ec_diffie_hellman_psk:  // NEW
++                  opaque psk_identity_hint<0..2^16-1>;
++                  ServerECDHParams params;
++          };
++      } ServerKeyExchange; */
++
++  update_hs_hash(peer, data, data_length);
++
++  assert(is_tls_ecdhe_psk_with_aes_128_cbc_sha_256(config->cipher));
++
++  data += DTLS_HS_LENGTH;
++
++  psk_len = dtls_uint16_to_int(data);
++  data += sizeof(uint16);
++
++  if (psk_len != data_length - DTLS_HS_LENGTH - DTLS_SKEXEC_ECDH_ANON_LENGTH - sizeof(uint16)) {
++    dtls_warn("the length of the server identity hint is worng\n");
++    return dtls_alert_fatal_create(DTLS_ALERT_DECODE_ERROR);
++  }
++
++  if (psk_len > DTLS_PSK_MAX_CLIENT_IDENTITY_LEN) {
++    dtls_warn("please use a smaller server identity hint\n");
++    return dtls_alert_fatal_create(DTLS_ALERT_INTERNAL_ERROR);
++  }
++
++  // store the psk_identity_hint in config->keyx.psk for later use
++  config->keyx.psk.id_length = psk_len;
++  memcpy(config->keyx.psk.identity, data, psk_len);
++
++  data += psk_len;
++  data_length -= psk_len;
++
++  if (data_length < DTLS_HS_LENGTH + DTLS_SKEXEC_ECDH_ANON_LENGTH) {
++    dtls_alert("the packet length does not match the expected\n");
++    return dtls_alert_fatal_create(DTLS_ALERT_DECODE_ERROR);
++  }
++
++  if (dtls_uint8_to_int(data) != TLS_EC_CURVE_TYPE_NAMED_CURVE) {
++    dtls_alert("Only named curves supported\n");
++    return dtls_alert_fatal_create(DTLS_ALERT_HANDSHAKE_FAILURE);
++  }
++  data += sizeof(uint8);
++  data_length -= sizeof(uint8);
++
++  if (dtls_uint16_to_int(data) != TLS_EXT_ELLIPTIC_CURVES_SECP256R1) {
++    dtls_alert("secp256r1 supported\n");
++    return dtls_alert_fatal_create(DTLS_ALERT_HANDSHAKE_FAILURE);
++  }
++  data += sizeof(uint16);
++  data_length -= sizeof(uint16);
++
++  if (dtls_uint8_to_int(data) != 1 + 2 * DTLS_EC_KEY_SIZE) {
++    dtls_alert("expected 65 bytes long public point\n");
++    return dtls_alert_fatal_create(DTLS_ALERT_HANDSHAKE_FAILURE);
++  }
++  data += sizeof(uint8);
++  data_length -= sizeof(uint8);
++
++  if (dtls_uint8_to_int(data) != 4) {
++    dtls_alert("expected uncompressed public point\n");
++    return dtls_alert_fatal_create(DTLS_ALERT_DECODE_ERROR);
++  }
++  data += sizeof(uint8);
++  data_length -= sizeof(uint8);
++
++  memcpy(config->keyx.ecc.other_eph_pub_x, data, sizeof(config->keyx.ecc.other_eph_pub_x));
++  data += sizeof(config->keyx.ecc.other_eph_pub_x);
++  data_length -= sizeof(config->keyx.ecc.other_eph_pub_x);
++
++  memcpy(config->keyx.ecc.other_eph_pub_y, data, sizeof(config->keyx.ecc.other_eph_pub_y));
++  data += sizeof(config->keyx.ecc.other_eph_pub_y);
++  data_length -= sizeof(config->keyx.ecc.other_eph_pub_y);
++
++  return 0;
++}
++#endif /* defined(DTLS_PSK) && defined(DTLS_ECC) */
+ 
+ #ifdef DTLS_PSK
+ static int
+@@ -3113,7 +3476,8 @@ decrypt_verify(dtls_peer_t *peer, uint8 *packet, size_t length,
+   if (security->cipher == TLS_NULL_WITH_NULL_NULL) {
+     /* no cipher suite selected */
+     return clen;
+-  } else if (is_tls_ecdh_anon_with_aes_128_cbc_sha_256(security->cipher)) {
++  } else if (is_tls_ecdh_anon_with_aes_128_cbc_sha_256(security->cipher) ||
++             is_tls_ecdhe_psk_with_aes_128_cbc_sha_256(security->cipher)) {
+ 
+     unsigned char nonce[DTLS_CBC_IV_LENGTH];
+ 
+@@ -3169,17 +3533,17 @@ decrypt_verify(dtls_peer_t *peer, uint8 *packet, size_t length,
+ 		       dtls_kb_remote_write_key(security, peer->role),
+ 		       dtls_kb_key_size(security, peer->role),
+ 		       A_DATA, A_DATA_LEN,
+-  	               security->cipher);
++		       security->cipher);
+   }
+ 
+   if (clen < 0)
+     dtls_warn("decryption failed\n");
+   else {
+ #ifndef NDEBUG
+-      dtls_debug("decrypt_verify(): found %i bytes cleartext\n", clen);
++    dtls_debug("decrypt_verify(): found %i bytes cleartext\n", clen);
+ #endif
+-      dtls_security_params_free_other(peer);
+-      dtls_debug_dump("cleartext", *cleartext, clen);
++    dtls_security_params_free_other(peer);
++    dtls_debug_dump("cleartext", *cleartext, clen);
+   }
+ 
+   return clen;
+@@ -3282,7 +3646,8 @@ handle_handshake_msg(dtls_context_t *ctx, dtls_peer_t *peer, session_t *session,
+     }
+     if (is_tls_ecdhe_ecdsa_with_aes_128_ccm_8(peer->handshake_params->cipher))
+       peer->state = DTLS_STATE_WAIT_SERVERCERTIFICATE; //ecdsa
+-    else if (is_tls_ecdh_anon_with_aes_128_cbc_sha_256(peer->handshake_params->cipher))
++    else if (is_tls_ecdh_anon_with_aes_128_cbc_sha_256(peer->handshake_params->cipher) ||
++        is_tls_ecdhe_psk_with_aes_128_cbc_sha_256(peer->handshake_params->cipher))
+         peer->state = DTLS_STATE_WAIT_SERVERKEYEXCHANGE; //ecdh
+     else
+       peer->state = DTLS_STATE_WAIT_SERVERHELLODONE; //psk
+@@ -3329,6 +3694,16 @@ handle_handshake_msg(dtls_context_t *ctx, dtls_peer_t *peer, session_t *session,
+       err = check_server_key_exchange_ecdh(ctx, peer, data, data_length);
+     }
+ #endif /* DTLS_ECC */
++
++#if defined(DTLS_PSK) && defined(DTLS_ECC)
++    if (is_tls_ecdhe_psk_with_aes_128_cbc_sha_256(peer->handshake_params->cipher)) {
++        if (state != DTLS_STATE_WAIT_SERVERKEYEXCHANGE) {
++          return dtls_alert_fatal_create(DTLS_ALERT_UNEXPECTED_MESSAGE);
++        }
++      err = check_server_key_exchange_ecdhe_psk(ctx, peer, data, data_length);
++    }
++#endif defined(DTLS_PSK) && defined(DTLS_ECC)
++
+ #ifdef DTLS_PSK
+     if (is_tls_psk_with_aes_128_ccm_8(peer->handshake_params->cipher)) {
+       if (state != DTLS_STATE_WAIT_SERVERHELLODONE) {
+diff --git a/extlibs/tinydtls/global.h b/extlibs/tinydtls/global.h
+index 169c726..8b3c518 100644
+--- a/extlibs/tinydtls/global.h
++++ b/extlibs/tinydtls/global.h
+@@ -75,6 +75,7 @@ typedef enum {
+   TLS_NULL_WITH_NULL_NULL = 0x0000,   /**< NULL cipher  */
+   TLS_ECDH_anon_WITH_AES_128_CBC_SHA_256 = 0xC018, /**< see RFC 4492 */
+   TLS_PSK_WITH_AES_128_CCM_8 = 0xC0A8, /**< see RFC 6655 */
++  TLS_ECDHE_PSK_WITH_AES_128_CBC_SHA_256 = 0xC037, /**< see RFC 5489 */
+   TLS_ECDHE_ECDSA_WITH_AES_128_CCM_8 = 0xC0AE /**< see RFC 7251 */
+ } dtls_cipher_t;
+ 
+diff --git a/extlibs/tinydtls/tests/dtls-client.c b/extlibs/tinydtls/tests/dtls-client.c
+index dfc822a..dfd34c8 100644
+--- a/extlibs/tinydtls/tests/dtls-client.c
++++ b/extlibs/tinydtls/tests/dtls-client.c
+@@ -311,7 +311,8 @@ usage( const char *program, const char *version) {
+           "\t-c num\t\tcipher suite (default: 1)\n"
+           "\t\t\t1: TLS_ECDH_anon_WITH_AES_128_CBC_SHA_256 \n"
+           "\t\t\t2: TLS_PSK_WITH_AES_128_CCM_8\n"
+-          "\t\t\t3: TLS_ECDHE_ECDSA_WITH_AES_128_CCM_8\n",
++          "\t\t\t3: TLS_ECDHE_ECDSA_WITH_AES_128_CCM_8\n"
++          "\t\t\t4: TLS_ECDHE_PSK_WITH_AES_128_CBC_SHA_256\n",
+ 	   program, version, program, DEFAULT_PORT);
+ }
+ 
+@@ -430,6 +431,11 @@ main(int argc, char **argv) {
+           selected_cipher = TLS_ECDHE_ECDSA_WITH_AES_128_CCM_8 ;
+           ecdh_anon_enalbe = DTLS_CIPHER_DISABLE;
+       }
++      else if( strcmp(optarg, "4") == 0)
++      {
++          selected_cipher = TLS_ECDHE_PSK_WITH_AES_128_CBC_SHA_256;
++          ecdh_anon_enalbe = DTLS_CIPHER_DISABLE;
++      }
+       break;
+     default:
+       usage(argv[0], dtls_package_version());
+-- 
+1.7.9.5
+

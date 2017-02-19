@@ -1,0 +1,25 @@
+language: cpp
+os:
+  - linux
+  - osx
+env:
+  - CFLAGS="-O0 -g" QMAKEFLAGS="-config debug" PATH=/opt/qt55/bin:/usr/local/opt/qt5/bin:$PATH
+install:
+  - if [ "${TRAVIS_OS_NAME}" = "linux" ]; then
+        sudo apt-add-repository -y ppa:beineri/opt-qt55;
+        sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test;
+        sudo apt-get update -qq;
+        sudo apt-get install -y qt55base valgrind g++-5;
+    else
+        brew install qt5;
+    fi
+script:
+  - if [ "${TRAVIS_OS_NAME}" = "linux" ]; then
+        sudo ln -sf g++-5 /usr/bin/g++;
+    fi
+  - make -s -f Makefile.configure configure | tee .config
+  - make
+        CFLAGS="$CFLAGS"
+        all tests/Makefile
+  - cd tests && make check -k
+        TESTRUNNER=`which valgrind 2>/dev/null`

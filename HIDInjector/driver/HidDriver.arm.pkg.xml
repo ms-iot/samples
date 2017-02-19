@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (c) Microsoft Corporation.  All rights reserved.
+-->
+<Package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  Owner="Microsoft"
+  Component="HidInjectionSample"
+  SubComponent="HidInjectionSample"
+  OwnerType="OEM"
+  ReleaseType="Production"
+  Platform="RPi2" xmlns="urn:Microsoft.WindowsPhone/PackageSchema.v8.00">
+  <Components>
+    <Driver
+      InfSource=".\arm\Release\HidInjectorSample.inf">
+      <Reference
+        Source=".\arm\Release\HidInjectorSample.sys" />
+      <Files>
+        <File Source=".\arm\Release\HidInjectorSample.sys" />
+      </Files>
+    </Driver>
+  </Components>
+</Package>
