@@ -727,12 +727,12 @@
     <value>ディレクトリの変更は現在サポートされていません。コマンドの完全パスを使用してください。</value>
   </data>
   <data name="CmdNotEnabled" xml:space="preserve">
-    <value>お使いのデバイスではコマンド ライン プロセッサを実行できません。
-有効にするには、お使いのデバイスで、管理者として次のコマンドを実行してください:
+    <value>デバイスでコマンド ライン プロセッサの実行が有効になっていません。
+有効にするには、"管理者" としてデバイスに (たとえば PowerShell や SSH を使用して) 接続するか、Windows Device Portal を使用してこのコマンドを実行します:
 
-    reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
+    reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /f /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
 
-または、下のボタンをクリックして管理者のユーザー名とパスワードを入力し、コマンドを実行してください。
+または、下にあるボタンをクリックするかタップして管理者アカウントのパスワードを入力し、コマンド ライン プロセッサを有効にしてください。
 
     </value>
     <comment>New lines need to be preserved</comment>
@@ -781,5 +781,13 @@
   <data name="CortanaVoiceActivationText" xml:space="preserve">
     <value>「コルタナさん」と言ったら Cortana が応答するようにする</value>
     <comment>Toggle switch for enabling voice activation.</comment>
+  </data>
+  <data name="ToggleOnText" xml:space="preserve">
+    <value>オン</value>
+    <comment>Text used in toggle switches for 'on' state.</comment>
+  </data>
+  <data name="ToggleOffText" xml:space="preserve">
+    <value>オフ</value>
+    <comment>Text used in toggle switches for 'off' state.</comment>
   </data>
 </root>

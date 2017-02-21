@@ -730,12 +730,12 @@
     <value>更改当前不支持的目录。请在命令中使用完整路径。</value>
   </data>
   <data name="CmdNotEnabled" xml:space="preserve">
-    <value>你的设备不允许运行命令行处理器。
-要想启用该功能，在你的设备上以“管理员”身份运行以下命令：
+    <value>你的设备未启用，无法运行命令行处理器。
+要启用它，请以“管理员”身份(例如使用 PowerShell 或 SSH)连接到你的设备或使用 Windows Device Portal 运行以下命令:
 
-    reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
+    reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /f /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
 
-或者，单击下面的按钮输入管理员用户名和密码并尝试执行命令。
+或者，单击或点击下面的按钮，输入你管理员帐户的密码并尝试启用命令行处理器。
 
 </value>
     <comment>New lines need to be preserved</comment>
@@ -784,5 +784,13 @@
   <data name="CortanaVoiceActivationText" xml:space="preserve">
     <value>让 Cortana 响应“你好小娜”</value>
     <comment>Toggle switch for enabling voice activation.</comment>
+  </data>
+  <data name="ToggleOnText" xml:space="preserve">
+    <value>打开</value>
+    <comment>Text used in toggle switches for 'on' state.</comment>
+  </data>
+  <data name="ToggleOffText" xml:space="preserve">
+    <value>关闭</value>
+    <comment>Text used in toggle switches for 'off' state.</comment>
   </data>
 </root>

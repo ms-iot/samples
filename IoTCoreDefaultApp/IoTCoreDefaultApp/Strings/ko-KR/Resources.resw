@@ -728,11 +728,11 @@
   </data>
   <data name="CmdNotEnabled" xml:space="preserve">
     <value>장치에서 명령줄 프로세서를 실행할 수 없습니다.
-실행하도록 하려면 디바이스에서 다음 명령을 "관리자"로 실행하세요.
+실행하도록 하려면 "관리자"로 장치에 연결하거나(PowerShell 또는 SSH 사용) Windows Device Portal을 사용해 이 명령을 실행하세요.
 
-    reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
+    reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /f /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
 
-또는 아래 버튼을 클릭하여 관리자의 사용자 이름/비밀번호를 입력하고 명령을 실행해 보세요.
+또는 아래 버튼을 클릭하거나 탭하여 관리자 계정의 비밀번호를 입력하고 명령줄 프로세서를 사용하도록 설정해 보세요.
 
     </value>
     <comment>New lines need to be preserved</comment>
@@ -781,5 +781,13 @@
   <data name="CortanaVoiceActivationText" xml:space="preserve">
     <value>"안녕 코타나"라고 말하면 Cortana가 응답하게 함</value>
     <comment>Toggle switch for enabling voice activation.</comment>
+  </data>
+  <data name="ToggleOnText" xml:space="preserve">
+    <value>켜기</value>
+    <comment>Text used in toggle switches for 'on' state.</comment>
+  </data>
+  <data name="ToggleOffText" xml:space="preserve">
+    <value>끄기</value>
+    <comment>Text used in toggle switches for 'off' state.</comment>
   </data>
 </root>
