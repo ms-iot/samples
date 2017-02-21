@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!-- This file is used by the build system to do a post-build code sign operation -->
-<SignConfigXML>
-  <!-- AnyCPU Release sign job -->
-  <job platform="x86" configuration="Release" dest="__RELBINPATH__\bin\IoTCoreDefaultApp\ilc" jobname="IOTCoreDefaultApp" approvers="artemz;alecont">
-    <file src="__RELBINPATH__\bin\IoTCoreDefaultApp\ilc\IoTCoreDefaultApp.dll" signType="Authenticode" dest="__RELBINPATH__\bin\IoTCoreDefaultApp\ilc\IoTCoreDefaultApp.dll" />
-    <file src="__RELBINPATH__\bin\IoTCoreDefaultApp\ilc\IoTCoreDefaultApp.exe" signType="Authenticode" dest="__RELBINPATH__\bin\IoTCoreDefaultApp\ilc\IoTCoreDefaultApp.exe" />
-  </job>
-</SignConfigXML>
