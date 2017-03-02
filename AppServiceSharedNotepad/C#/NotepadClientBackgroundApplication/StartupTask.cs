@@ -26,9 +26,11 @@ namespace NotepadClientBackgroundApplication
         public async void Run(IBackgroundTaskInstance taskInstance)
         {
             deferral = taskInstance.GetDeferral();
+            taskInstance.Canceled += TaskInstance_Canceled;
+
             connection = new AppServiceConnection();
             connection.AppServiceName = "NotepadService";
-            connection.PackageFamilyName = "NotepadService-uwp_gpek5j0d8wyr0";
+            connection.PackageFamilyName = "NotepadService-uwp_1w720vyc4ccym";
             AppServiceConnectionStatus status = await connection.OpenAsync();
             if (status != AppServiceConnectionStatus.Success)
             {
@@ -52,6 +54,14 @@ namespace NotepadClientBackgroundApplication
             
         }
 
+        private void TaskInstance_Canceled(IBackgroundTaskInstance sender, BackgroundTaskCancellationReason reason)
+        {
+            if (deferral != null)
+            {
+                deferral.Complete();
+                deferral = null;
+            }
+        }
 
         public async void Tick(ThreadPoolTimer sender)
         {
