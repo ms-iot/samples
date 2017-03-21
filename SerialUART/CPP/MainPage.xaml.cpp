@@ -81,7 +81,9 @@ Windows::Foundation::IAsyncOperation<Windows::Devices::Enumeration::DeviceInform
 /// </summary
 Concurrency::task<void> MainPage::ConnectToSerialDeviceAsync(Windows::Devices::Enumeration::DeviceInformation ^device, Concurrency::cancellation_token cancellationToken)
 {
-    return Concurrency::create_task(Windows::Devices::SerialCommunication::SerialDevice::FromIdAsync(device->Id), cancellationToken)
+    auto childTokenSource = Concurrency::cancellation_token_source::create_linked_source(cancellationToken);
+    auto childToken = childTokenSource.get_token();
+    return Concurrency::create_task(Windows::Devices::SerialCommunication::SerialDevice::FromIdAsync(device->Id), childToken)
         .then([this](Windows::Devices::SerialCommunication::SerialDevice ^serial_device)
     {
         try
@@ -139,7 +141,9 @@ Concurrency::task<void> MainPage::WriteAsync(Concurrency::cancellation_token can
 {
     _dataWriterObject->WriteString(sendText->Text);
 
-    return concurrency::create_task(_dataWriterObject->StoreAsync(), cancellationToken).then([this](unsigned int bytesWritten)
+    auto childTokenSource = Concurrency::cancellation_token_source::create_linked_source(cancellationToken);
+    auto childToken = childTokenSource.get_token();
+    return concurrency::create_task(_dataWriterObject->StoreAsync(), childToken).then([this](unsigned int bytesWritten)
     {
         if (bytesWritten > 0)
         {
@@ -157,7 +161,9 @@ Concurrency::task<void> MainPage::ReadAsync(Concurrency::cancellation_token canc
 {
     unsigned int _readBufferLength = 1024;
     
-    return concurrency::create_task(_dataReaderObject->LoadAsync(_readBufferLength), cancellationToken).then([this](unsigned int bytesRead)
+    auto childTokenSource = Concurrency::cancellation_token_source::create_linked_source(cancellationToken);
+    auto childToken = childTokenSource.get_token();
+    return concurrency::create_task(_dataReaderObject->LoadAsync(_readBufferLength), childToken).then([this](unsigned int bytesRead)
     {
         if (bytesRead > 0)
         {

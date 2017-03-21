@@ -86,6 +86,7 @@ namespace SerialSample
             try
             {                
                 serialPort = await SerialDevice.FromIdAsync(entry.Id);
+                if (serialPort == null) return;
 
                 // Disable the 'Connect' button 
                 comPortInput.IsEnabled = false;
@@ -253,16 +254,19 @@ namespace SerialSample
             // Set InputStreamOptions to complete the asynchronous read operation when one or more bytes is available
             dataReaderObject.InputStreamOptions = InputStreamOptions.Partial;
 
-            // Create a task object to wait for data on the serialPort.InputStream
-            loadAsyncTask = dataReaderObject.LoadAsync(ReadBufferLength).AsTask(cancellationToken);
-
-            // Launch the task and wait
-            UInt32 bytesRead = await loadAsyncTask;
-            if (bytesRead > 0)
+            using (var childCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken))
             {
-                rcvdText.Text = dataReaderObject.ReadString(bytesRead);
-                status.Text = "bytes read successfully!";
-            }            
+                // Create a task object to wait for data on the serialPort.InputStream
+                loadAsyncTask = dataReaderObject.LoadAsync(ReadBufferLength).AsTask(childCancellationTokenSource.Token);
+
+                // Launch the task and wait
+                UInt32 bytesRead = await loadAsyncTask;
+                if (bytesRead > 0)
+                {
+                    rcvdText.Text = dataReaderObject.ReadString(bytesRead);
+                    status.Text = "bytes read successfully!";
+                }
+            }
         }
 
         /// <summary>

@@ -19,13 +19,15 @@ namespace NotepadService
     {
         //Notepad is static to allow a single instance to be shared among all connections 
         private static Notepad notePad;
-        BackgroundTaskDeferral deferral;
+        BackgroundTaskDeferral serviceDeferral;
         AppServiceConnection appServiceConnection;
 
         public void Run(IBackgroundTaskInstance taskInstance)
         { 
 
-            deferral = taskInstance.GetDeferral();
+            serviceDeferral = taskInstance.GetDeferral();
+            taskInstance.Canceled += TaskInstance_Canceled;
+
             System.Diagnostics.Debug.WriteLine(Windows.ApplicationModel.Package.Current.Id.FamilyName);
 
             if (notePad == null)
@@ -42,13 +44,28 @@ namespace NotepadService
                 {
                     appServiceConnection = appServiceTrigger.AppServiceConnection;
                     appServiceConnection.RequestReceived += AppServiceConnection_RequestReceived;
+                    appServiceConnection.ServiceClosed += AppServiceConnection_ServiceClosed;
                     notePad.NoteAdded += NotePad_NoteAdded;
                 }
                 else
                 {
-                    deferral.Complete();
+                    serviceDeferral.Complete();
                 }
             }
+        }
+
+        private void TaskInstance_Canceled(IBackgroundTaskInstance sender, BackgroundTaskCancellationReason reason)
+        {
+            if (serviceDeferral != null)
+            {
+                serviceDeferral.Complete();
+                serviceDeferral = null;
+            }
+        }
+
+        private void AppServiceConnection_ServiceClosed(AppServiceConnection sender, AppServiceClosedEventArgs args)
+        {
+            System.Diagnostics.Debug.WriteLine("Service closed. Status=" + args.Status.ToString());
         }
 
         //Every time the underlying notepad gets a new note, send a message back to the client indicating that a new message is available

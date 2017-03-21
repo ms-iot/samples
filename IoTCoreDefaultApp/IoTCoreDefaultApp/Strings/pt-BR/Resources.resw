@@ -730,12 +730,12 @@
     <value>Não há suporte para alteração de diretório no momento. Use caminhos completos em seus comandos.</value>
   </data>
   <data name="CmdNotEnabled" xml:space="preserve">
-    <value>Seu dispositivo não tem permissão para executar o processador de linha de comando.
-Para habilitá-lo, execute o seguinte comando como "Administrador" em seu dispositivo:
+    <value>Seu dispositivo não está habilitado para executar o processador de linha de comando.
+Para habilitá-lo, conecte-se ao seu dispositivo como "Administrador" (por exemplo, usando o PowerShell ou SSH) ou use o Windows Device Portal para executar este comando:
 
-    reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
+    reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /f /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
 
-Você também pode clicar no botão abaixo para inserir o nome de usuário/senha do administrador e tentar executar o comando.
+Você também pode clicar ou tocar no botão abaixo para inserir a senha da sua conta de Administrador e tentar habilitar o processador de linha de comando.
 
     </value>
     <comment>New lines need to be preserved</comment>
@@ -784,5 +784,13 @@ Você também pode clicar no botão abaixo para inserir o nome de usuário/senha
   <data name="CortanaVoiceActivationText" xml:space="preserve">
     <value>Permitir que a Cortana responda a "Ei Cortana"</value>
     <comment>Toggle switch for enabling voice activation.</comment>
+  </data>
+  <data name="ToggleOnText" xml:space="preserve">
+    <value>Ativado</value>
+    <comment>Text used in toggle switches for 'on' state.</comment>
+  </data>
+  <data name="ToggleOffText" xml:space="preserve">
+    <value>Desativado</value>
+    <comment>Text used in toggle switches for 'off' state.</comment>
   </data>
 </root>

@@ -731,11 +731,11 @@
   </data>
   <data name="CmdNotEnabled" xml:space="preserve">
     <value>Ihr Gerät ist nicht zur Ausführung des Befehlszeilenprozessors berechtigt.
-Führen Sie den folgenden Befehl auf Ihrem Gerät als Administrator aus, um ihn zu aktivieren:
+Stellen Sie als "Administrator" (z. B. über PowerShell oder SSH) eine Verbindung mit Ihrem Gerät her, oder führen Sie im Windows Device Portal den folgenden Befehl aus, um die Ausführung zu aktivieren:
 
-    reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
+    reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /f /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
 
-Klicken Sie alternativ auf die Schaltfläche unten, um den Benutzernamen und das Kennwort des Administrators einzugeben und den Befehl auszuführen.
+Klicken oder tippen Sie alternativ auf die Schaltfläche unten, um das Kennwort Ihres Administratorkontos einzugeben und den Befehlszeilenprozessor zu aktivieren.
 
     </value>
     <comment>New lines need to be preserved</comment>
@@ -784,5 +784,13 @@ Klicken Sie alternativ auf die Schaltfläche unten, um den Benutzernamen und das
   <data name="CortanaVoiceActivationText" xml:space="preserve">
     <value>Cortana soll auf „Hey Cortana“ reagieren</value>
     <comment>Toggle switch for enabling voice activation.</comment>
+  </data>
+  <data name="ToggleOnText" xml:space="preserve">
+    <value>Aktiviert</value>
+    <comment>Text used in toggle switches for 'on' state.</comment>
+  </data>
+  <data name="ToggleOffText" xml:space="preserve">
+    <value>Deaktiviert</value>
+    <comment>Text used in toggle switches for 'off' state.</comment>
   </data>
 </root>
