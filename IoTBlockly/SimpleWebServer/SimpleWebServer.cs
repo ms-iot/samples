@@ -216,7 +216,16 @@ namespace IoTUtilities
         public SimpleWebServer()
         {
             listener = new StreamSocketListener();
-            listener.ConnectionReceived += (s, e) => { ProcessRequestAsync(e.Socket); };
+            listener.ConnectionReceived += (s, e) => {
+                try
+                {
+                    ProcessRequestAsync(e.Socket);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }
+            };
         }
 
         public async void Listen(int port)

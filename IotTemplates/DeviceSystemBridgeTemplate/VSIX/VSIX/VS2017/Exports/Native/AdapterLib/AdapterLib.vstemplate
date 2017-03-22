@@ -1,0 +1,40 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>AdapterLib</Name>
+    <Description>AdapterLib Static Library</Description>
+    <ProjectType>VC</ProjectType>
+    <ProjectSubType>
+    </ProjectSubType>
+    <SortOrder>1000</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>AdapterLib</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <Hidden>true</Hidden>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="AdapterLib.vcxproj" File="AdapterLib.vcxproj" ReplaceParameters="true">
+      <ProjectItem ReplaceParameters="false" TargetFileName="AdapterLib.vcxproj.filters">AdapterLib.vcxproj.filters</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Adapter.cpp">Adapter.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="AdapterDevice.cpp">AdapterDevice.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="pch.cpp">pch.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="Adapter.h">Adapter.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="AdapterDevice.h">AdapterDevice.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="pch.h">pch.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="targetver.h">targetver.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="HeadlessStartupTask.h">HeadlessStartupTask.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="HeadlessStartupTask.cpp">HeadlessStartupTask.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="HeadedBackgroundTask.h">HeadedBackgroundTask.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="HeadedBackgroundTask.cpp">HeadedBackgroundTask.cpp</ProjectItem>
+    </Project>
+  </TemplateContent>
+  <WizardExtension>
+    <Assembly>CustomWizard, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</Assembly>
+    <FullClassName>CustomWizard.ChildWizard</FullClassName>
+  </WizardExtension>
+  <WizardExtension>
+    <Assembly>Microsoft.VisualStudio.Universal.TemplateWizards, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</Assembly>
+    <FullClassName>Microsoft.VisualStudio.Universal.TemplateWizards.PlatformVersion.Wizard</FullClassName>
+  </WizardExtension>
+</VSTemplate>

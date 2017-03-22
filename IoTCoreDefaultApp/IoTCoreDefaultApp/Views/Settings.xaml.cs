@@ -2,7 +2,9 @@
 
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using Windows.Devices.Bluetooth.Rfcomm;
 using Windows.Devices.Enumeration;
 using Windows.Devices.WiFi;
@@ -10,6 +12,7 @@ using Windows.Foundation;
 using Windows.Security.Credentials;
 #if BUILDWITHCORTANA
 using Windows.Services.Cortana;
+using System.Threading.Tasks;
 #endif
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -266,9 +269,20 @@ namespace IoTCoreDefaultApp
         private async void SetupWifi()
         {
             if (await networkPresenter.WifiIsAvailable())
-            {    
-                var networks = await networkPresenter.GetAvailableNetworks();
-             
+            {
+                IList<WiFiAvailableNetwork> networks;
+                try
+                {
+                    networks = await networkPresenter.GetAvailableNetworks();
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(String.Format("Error scanning: 0x{0:X}: {1}", e.HResult, e.Message));
+                    NoWifiFoundText.Text = e.Message;
+                    NoWifiFoundText.Visibility = Visibility.Visible;
+                    return;
+                }
+
                 if (networks.Count > 0)
                 {
 
@@ -1086,9 +1100,9 @@ namespace IoTCoreDefaultApp
             else
             {
                 CortanaVoiceActivationSwitch.IsEnabled = false;
-                Window.Current.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                Window.Current.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                 {
-                    cortanaSettings.IsVoiceActivationEnabled = enableVoiceActivation;
+                    await SetVoiceActivation(enableVoiceActivation);
                     CortanaVoiceActivationSwitch.IsEnabled = true;
                 });                
             }
@@ -1117,7 +1131,7 @@ namespace IoTCoreDefaultApp
                             // so update the switch state to the current global setting)                           
                             if (cortanaConsentRequestedFromSwitch)
                             {
-                                cortanaSettings.IsVoiceActivationEnabled = true;
+                                SetVoiceActivation(true);
                                 cortanaConsentRequestedFromSwitch = false;
                             }
 
@@ -1135,6 +1149,41 @@ namespace IoTCoreDefaultApp
             }
 #endif
         }
+
+#if BUILDWITHCORTANA
+        const int RPC_S_CALL_FAILED = -2147023170;
+        const int RPC_S_SERVER_UNAVAILABLE = -2147023174;
+        const int RPC_S_SERVER_TOO_BUSY = -2147023175;
+        const int MAX_VOICEACTIVATION_TRIALS = 5;
+        const int TIMEINTERVAL_VOICEACTIVATION = 10;    // milli sec
+        private async Task SetVoiceActivation(bool value)
+        {
+            var cortanaSettings = CortanaSettings.GetDefault();
+            for (int i = 0; i < MAX_VOICEACTIVATION_TRIALS; i++)
+            {
+                try
+                {
+                    cortanaSettings.IsVoiceActivationEnabled = value;
+                }
+                catch (System.Exception ex)
+                {
+                    if (ex.HResult == RPC_S_CALL_FAILED ||
+                        ex.HResult == RPC_S_SERVER_UNAVAILABLE ||
+                        ex.HResult == RPC_S_SERVER_TOO_BUSY)
+                    {
+                        // VoiceActivation server is very likely busy =>
+                        // yield and take a new ref to CortanaSettings API
+                        await Task.Delay(TimeSpan.FromMilliseconds(TIMEINTERVAL_VOICEACTIVATION));
+                        cortanaSettings = CortanaSettings.GetDefault();
+                    }
+                    else
+                    {
+                        throw ex;
+                    }
+                }
+            }
+        }
+#endif
 
         private void CortanaAboutMeButton_Click(object sender, RoutedEventArgs e)
         {

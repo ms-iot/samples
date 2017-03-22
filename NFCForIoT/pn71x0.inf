@@ -1,0 +1,48 @@
+[Version]
+Signature="$Windows NT$"
+Class=Proximity
+ClassGuid={5630831C-06C9-4856-B327-F5D32586E060}
+Provider=%ManufacturerName%
+DriverVer=06/21/2006,10.0.10572.1000
+[Manufacturer]
+%ManufacturerName%=Standard,NTarm
+[Standard.NTarm]
+%DeviceName%=MyDevice_Install, ACPI\PN71x0
+[SourceDisksNames]
+1=%DiskName%
+[SourceDisksFiles]
+; =================== UMDF Device ==================================
+[DefaultInstall]
+[MyDevice_Install.NT]
+[MyDevice_Install.NT.hw]
+[MyDevice_Install.NT.Services]
+AddService=WUDFRd,0x000001fa,WUDFRD_ServiceInstall
+[MyDevice_Install.NT.CoInstallers]
+AddReg=CoInstallers_AddReg
+[MyDevice_Install.NT.Wdf]
+UmdfService=NxpNfcPn71x0ClientDriver,NxpNfcPn71x0ClientDriver_Install
+UmdfServiceOrder=NxpNfcPn71x0ClientDriver
+UmdfDirectHardwareAccess=AllowDirectHardwareAccess
+UmdfFileObjectPolicy=AllowNullAndUnknownFileObjects
+UmdfImpersonationLevel=Impersonation
+[NxpNfcPn71x0ClientDriver_Install]
+UmdfLibraryVersion=2.0.0
+ServiceBinary=%12%\UMDF\MSNfcI2C547.dll
+UmdfExtensions=NfcCx0102
+[WUDFRD_ServiceInstall]
+DisplayName=%WudfRdDisplayName%
+ServiceType=1
+StartType=3
+ErrorControl=1
+ServiceBinary=%12%\WUDFRd.sys
+[CoInstallers_AddReg]
+HKR,,CoInstallers32,0x00010000,"WUDFCoinstaller.dll"
+[DestinationDirs]
+[ControlFlags]
+ExcludeFromSelect=*
+; =================== Generic ==================================
+[Strings]
+ManufacturerName="NXP Semiconductors"
+DiskName="NxpNfcPn71x0ClientDriver Installation Disk"
+WudfRdDisplayName="Windows Driver Foundation - User-mode Driver Framework Reflector"
+DeviceName="NxpNfcPn71x0ClientDriver Device"

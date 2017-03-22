@@ -50,6 +50,10 @@ namespace IoTCoreDefaultApp
 
             this.DataContext = LanguageManager.GetInstance();
 
+            timer = new DispatcherTimer();
+            timer.Tick += timer_Tick;
+            timer.Interval = TimeSpan.FromSeconds(10);
+
             this.Loaded += async (sender, e) => 
             {
                 await MainPageDispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
@@ -59,16 +63,12 @@ namespace IoTCoreDefaultApp
                     UpdateDateTime();
                     UpdateConnectedDevices();
 
-                    timer = new DispatcherTimer();
-                    timer.Tick += timer_Tick;
-                    timer.Interval = TimeSpan.FromSeconds(10);
                     timer.Start();
                 });
             };
             this.Unloaded += (sender, e) =>
             {
                 timer.Stop();
-                timer = null;
             };
         }
 

@@ -52,7 +52,7 @@ namespace AdapterLib
             {
                 this.Attributes = new List<IAdapterAttribute>();
             }
-            catch (OutOfMemoryException ex)
+            catch (OutOfMemoryException)
             {
                 throw;
             }
@@ -67,7 +67,7 @@ namespace AdapterLib
             {
                 this.Attributes = new List<IAdapterAttribute>(Other.Attributes);
             }
-            catch (OutOfMemoryException ex)
+            catch (OutOfMemoryException)
             {
                 throw;
             }
@@ -97,7 +97,7 @@ namespace AdapterLib
                 this.Access = access;
                 this.COVBehavior = SignalBehavior.Never;
             }
-            catch (OutOfMemoryException ex)
+            catch (OutOfMemoryException)
             {
                 throw;
             }
@@ -144,7 +144,7 @@ namespace AdapterLib
                 this.InputParams = new List<IAdapterValue>();
                 this.OutputParams = new List<IAdapterValue>();
             }
-            catch (OutOfMemoryException ex)
+            catch (OutOfMemoryException)
             {
                 throw;
             }
@@ -161,7 +161,7 @@ namespace AdapterLib
                 this.InputParams = new List<IAdapterValue>(Other.InputParams);
                 this.OutputParams = new List<IAdapterValue>(Other.OutputParams);
             }
-            catch (OutOfMemoryException ex)
+            catch (OutOfMemoryException)
             {
                 throw;
             }
@@ -193,7 +193,7 @@ namespace AdapterLib
             {
                 this.Params = new List<IAdapterValue>();
             }
-            catch (OutOfMemoryException ex)
+            catch (OutOfMemoryException)
             {
                 throw;
             }
@@ -207,7 +207,7 @@ namespace AdapterLib
             {
                 this.Params = new List<IAdapterValue>(Other.Params);
             }
-            catch (OutOfMemoryException ex)
+            catch (OutOfMemoryException)
             {
                 throw;
             }
@@ -298,7 +298,7 @@ namespace AdapterLib
                 this.Methods     = new List<IAdapterMethod>();
                 this.Signals     = new List<IAdapterSignal>();
             }
-            catch (OutOfMemoryException ex)
+            catch (OutOfMemoryException)
             {
                 throw;
             }
@@ -320,7 +320,7 @@ namespace AdapterLib
                 this.Methods = new List<IAdapterMethod>(Other.Methods);
                 this.Signals = new List<IAdapterSignal>(Other.Signals);
             }
-            catch (OutOfMemoryException ex)
+            catch (OutOfMemoryException)
             {
                 throw;
             }
@@ -349,7 +349,7 @@ namespace AdapterLib
 
                 this.Signals.Add(covSignal);
             }
-            catch (OutOfMemoryException ex)
+            catch (OutOfMemoryException)
             {
                 throw;
             }

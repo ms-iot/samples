@@ -727,12 +727,12 @@
     <value>Изменение каталога пока не поддерживается. Используйте в командах полные пути.</value>
   </data>
   <data name="CmdNotEnabled" xml:space="preserve">
-    <value>На устройстве не разрешено запускать процессор командной строки.
-Чтобы включить его, выполните на устройстве от имени администратора следующую команду:
+    <value>На вашем устройстве невозможно запускать процессор командной строки.
+Чтобы это изменить, подключитесь к устройству как администратор (например, с помощью PowerShell или SSH) или войдите на портал устройств с Windows и запустите эту команду:
 
-    reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
+    reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /f /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
 
-Также можете нажать расположенную ниже кнопку, чтобы ввести имя и пароль администратора и попробовать выполнить команду.
+Также можно нажать расположенную ниже кнопку. Это позволит ввести пароль к учетной записи администратора и попытаться включить процессор командной строки.
 
     </value>
     <comment>New lines need to be preserved</comment>
@@ -781,5 +781,13 @@
   <data name="CortanaVoiceActivationText" xml:space="preserve">
     <value>Разрешить Кортане отвечать на фразу "Привет, Кортана!"</value>
     <comment>Toggle switch for enabling voice activation.</comment>
+  </data>
+  <data name="ToggleOnText" xml:space="preserve">
+    <value>Включить</value>
+    <comment>Text used in toggle switches for 'on' state.</comment>
+  </data>
+  <data name="ToggleOffText" xml:space="preserve">
+    <value>Выключить</value>
+    <comment>Text used in toggle switches for 'off' state.</comment>
   </data>
 </root>

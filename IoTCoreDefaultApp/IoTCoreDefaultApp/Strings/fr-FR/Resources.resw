@@ -231,7 +231,7 @@
     <value>Connecté</value>
   </data>
   <data name="NetworkPreferencesText" xml:space="preserve">
-    <value>&amp;Réseau et Wi-Fi</value>
+    <value>Réseau et Wi-Fi</value>
   </data>
   <data name="BluetoothPreferencesText" xml:space="preserve">
     <value>Bluetooth</value>
@@ -730,12 +730,12 @@
     <value>La modification du répertoire n’est pas prise en charge pour le moment. Utilisez des chemins complets dans vos commandes.</value>
   </data>
   <data name="CmdNotEnabled" xml:space="preserve">
-    <value>Votre appareil n’est pas autorisé à exécuter le processeur de ligne de commande.
-Pour activer le processeur, exécutez la commande suivante en tant qu’« Administrateur » sur votre appareil :
+    <value>Votre appareil n’est pas configuré de manière à pouvoir exécuter le processeur de ligne de commande.
+Pour qu'il puisse le faire, connectez-vous à votre appareil en tant qu'administrateur (p. ex. à l'aide de PowerShell or SSH) ou utilisez le Windows Device Portal pour exécuter la commande suivante :
 
-    reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
+    reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /f /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
 
-Vous pouvez également cliquer sur le bouton ci-dessous pour saisir le nom d’utilisateur et le mot de passe d’administrateur et tenter d’exécuter la commande.
+Vous pouvez également cliquer ou appuyer sur le bouton ci-dessous pour entrer le mot de passe de votre compte administrateur et tenter d'activer le processeur de ligne de commande.
 
     </value>
     <comment>New lines need to be preserved</comment>
@@ -784,5 +784,13 @@ Vous pouvez également cliquer sur le bouton ci-dessous pour saisir le nom d’u
   <data name="CortanaVoiceActivationText" xml:space="preserve">
     <value>Cortana répond à « Hey Cortana »</value>
     <comment>Toggle switch for enabling voice activation.</comment>
+  </data>
+  <data name="ToggleOnText" xml:space="preserve">
+    <value>Activé</value>
+    <comment>Text used in toggle switches for 'on' state.</comment>
+  </data>
+  <data name="ToggleOffText" xml:space="preserve">
+    <value>Désactivé</value>
+    <comment>Text used in toggle switches for 'off' state.</comment>
   </data>
 </root>

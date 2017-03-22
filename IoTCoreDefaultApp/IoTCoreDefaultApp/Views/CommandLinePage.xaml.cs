@@ -27,7 +27,7 @@ namespace IoTCoreDefaultApp
     public sealed partial class CommandLinePage : Page
     {
         private const string CommandLineProcesserExe = "c:\\windows\\system32\\cmd.exe";
-        private const string EnableCommandLineProcesserRegCommand = "reg ADD \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\EmbeddedMode\\ProcessLauncher\" /v AllowedExecutableFilesList /t REG_MULTI_SZ /d \"c:\\windows\\system32\\cmd.exe\\0\"";
+        private const string EnableCommandLineProcesserRegCommand = "reg ADD \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\EmbeddedMode\\ProcessLauncher\" /f /v AllowedExecutableFilesList /t REG_MULTI_SZ /d \"c:\\windows\\system32\\cmd.exe\\0\"";
         private const uint BufSize = 8192;
 
         private string currentDirectory = "C:\\";

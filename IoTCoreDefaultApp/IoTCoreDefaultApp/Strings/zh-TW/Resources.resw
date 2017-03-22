@@ -730,12 +730,12 @@
     <value>目前不支援變更目錄。請在您的命令中使用完整路徑。</value>
   </data>
   <data name="CmdNotEnabled" xml:space="preserve">
-    <value>您的裝置無法執行命令列處理程式。
-若要啟用，請在您的裝置上以「系統管理員」的身分執行下列命令:
+    <value>您的裝置未啟用所以無法執行命令列處理器。
+若要啟用，請以「系統管理員」身分 (例如：使用 PowerShell 或 SSH) 連接您的裝置，或使用 Windows Device Portal 執行此命令:
 
-    reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
+    reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /f /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
 
-或者，您也可以按一下下列按鈕，輸入系統管理員的使用者名稱/密碼，然後嘗試執行命令。
+或者，按一下或輕觸下方的按鈕，輸入系統管理員帳戶的密碼，然後嘗試啟用命令列處理器。
 
     </value>
     <comment>New lines need to be preserved</comment>
@@ -784,5 +784,13 @@
   <data name="CortanaVoiceActivationText" xml:space="preserve">
     <value>讓 Cortana 回應「嗨 Cortana」</value>
     <comment>Toggle switch for enabling voice activation.</comment>
+  </data>
+  <data name="ToggleOnText" xml:space="preserve">
+    <value>開啟</value>
+    <comment>Text used in toggle switches for 'on' state.</comment>
+  </data>
+  <data name="ToggleOffText" xml:space="preserve">
+    <value>關閉</value>
+    <comment>Text used in toggle switches for 'off' state.</comment>
   </data>
 </root>

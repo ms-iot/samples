@@ -122,11 +122,6 @@
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="Microsoft.UniversalCRT.Debug, Version=10.0.10586.0">
-      <Name>Microsoft Universal CRT Debug Runtime</Name>
-    </SDKReference>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\BackgroundHost.Headless\BackgroundHost.Headless.vcxproj">
       <Project>{14882a0f-8926-4837-8e25-06d3f58b1df8}</Project>
       <Name>BackgroundHost.Headless</Name>
