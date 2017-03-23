@@ -3,9 +3,7 @@
 using System;
 using System.Threading.Tasks;
 using Windows.Foundation;
-#if BUILDWITHCORTANA
 using Windows.Services.Cortana;
-#endif
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
@@ -15,7 +13,6 @@ namespace IoTCoreDefaultApp
     {
         public static void LaunchCortanaToConsentPageAsyncIfNeeded()
         {
-#if BUILDWITHCORTANA
             // Do nothing for devices that do not support Cortana
             if (CortanaSettings.IsSupported())
             {
@@ -29,7 +26,6 @@ namespace IoTCoreDefaultApp
                     LaunchCortanaToConsentPageAsync();
                 }
             }
-#endif
         }
 
         public static Task<bool> LaunchCortanaToConsentPageAsync()

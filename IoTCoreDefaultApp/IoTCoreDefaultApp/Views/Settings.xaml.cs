@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 
-
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,15 +9,12 @@ using Windows.Devices.Enumeration;
 using Windows.Devices.WiFi;
 using Windows.Foundation;
 using Windows.Security.Credentials;
-#if BUILDWITHCORTANA
 using Windows.Services.Cortana;
 using System.Threading.Tasks;
-#endif
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -107,7 +103,6 @@ namespace IoTCoreDefaultApp
 
         private void SetupCortana()
         {
-#if BUILDWITHCORTANA
             var isCortanaSupported = CortanaSettings.IsSupported();
             cortanaConsentRequestedFromSwitch = false;
 
@@ -129,7 +124,6 @@ namespace IoTCoreDefaultApp
                     CortanaVoiceActivationSwitch.IsOn = cortanaSettings.IsVoiceActivationEnabled;
                 }
             }
-#endif
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -899,7 +893,6 @@ namespace IoTCoreDefaultApp
         /// <param name="e"></param>
         private void PinEntryTextBox_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
-
             if (e.Key == Windows.System.VirtualKey.Enter)
             {
                 //  Close the flyout and save the PIN the user entered
@@ -1072,7 +1065,6 @@ namespace IoTCoreDefaultApp
 
         private void CortanaVoiceActivationSwitch_Toggled(object sender, RoutedEventArgs e)
         {
-#if BUILDWITHCORTANA
             var cortanaSettings = CortanaSettings.GetDefault();
             var cortanaVoiceActivationSwitch = (ToggleSwitch) sender;
 
@@ -1106,12 +1098,10 @@ namespace IoTCoreDefaultApp
                     CortanaVoiceActivationSwitch.IsEnabled = true;
                 });                
             }
-#endif
         }
 
         private void Window_Activated(object sender, WindowActivatedEventArgs e)
         {
-#if BUILDWITHCORTANA
             switch (e.WindowActivationState)
             {
                 case CoreWindowActivationState.PointerActivated:
@@ -1147,10 +1137,8 @@ namespace IoTCoreDefaultApp
                 default:
                     break;
             }
-#endif
         }
 
-#if BUILDWITHCORTANA
         const int RPC_S_CALL_FAILED = -2147023170;
         const int RPC_S_SERVER_UNAVAILABLE = -2147023174;
         const int RPC_S_SERVER_TOO_BUSY = -2147023175;
@@ -1183,7 +1171,6 @@ namespace IoTCoreDefaultApp
                 }
             }
         }
-#endif
 
         private void CortanaAboutMeButton_Click(object sender, RoutedEventArgs e)
         {
