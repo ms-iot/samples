@@ -44,7 +44,6 @@
   </Applications>
 
   <Capabilities>
-    <Capability Name="internetClient" />
     <uap:Capability Name="videosLibrary" />
     <DeviceCapability Name="webcam" />
     <DeviceCapability Name="microphone" />
