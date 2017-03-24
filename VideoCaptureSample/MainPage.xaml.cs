@@ -93,7 +93,6 @@ namespace VideoCaptureSample
             await mediaCapture.InitializeAsync(captureInitSettings);
 
             // Add video stabilization effect during Live Capture
-            //await _mediaCapture.AddEffectAsync(MediaStreamType.VideoRecord, Windows.Media.VideoEffects.VideoStabilization, null); //this will be deprecated soon
             Windows.Media.Effects.VideoEffectDefinition def = new Windows.Media.Effects.VideoEffectDefinition(Windows.Media.VideoEffects.VideoStabilization);
             await mediaCapture.AddVideoEffectAsync(def, MediaStreamType.VideoRecord);
 
@@ -108,7 +107,7 @@ namespace VideoCaptureSample
             var transcoder = new Windows.Media.Transcoding.MediaTranscoder();
             transcoder.AddVideoEffect(Windows.Media.VideoEffects.VideoStabilization);
 
-            // wire to XAML element
+            // wire to preview XAML element
             capturePreview.Source = mediaCapture;
             DisplayInformation.AutoRotationPreferences = DisplayOrientations.None;
         }
