@@ -44,7 +44,7 @@ namespace NotepadServiceClientApp
             GetNewMessagesButton.IsEnabled = false;
             connection = new AppServiceConnection();
             connection.AppServiceName = "NotepadService";
-            connection.PackageFamilyName = "NotepadService-uwp_1w720vyc4ccym";
+            connection.PackageFamilyName = "NotepadService-uwp_2yx4q2bk84nj4";
             AppServiceConnectionStatus status = await connection.OpenAsync();
             if (status != AppServiceConnectionStatus.Success)
             {
