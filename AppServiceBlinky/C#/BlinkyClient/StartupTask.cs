@@ -32,7 +32,7 @@ namespace BlinkyClient
             //Connect to the "BlinkyService" implemented in the "BlinkyService" solution
             connection = new AppServiceConnection();
             connection.AppServiceName = "BlinkyService";
-            connection.PackageFamilyName = "BlinkyService-uwp_ph1m9x8skttmg";
+            connection.PackageFamilyName = "BlinkyService-uwp_2yx4q2bk84nj4";
             AppServiceConnectionStatus status = await connection.OpenAsync();
 
             if (status != AppServiceConnectionStatus.Success)
