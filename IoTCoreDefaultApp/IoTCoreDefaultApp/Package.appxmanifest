@@ -39,5 +39,6 @@
     <iot:Capability Name="lowLevelDevices" />
     <DeviceCapability Name="wiFiControl" />
     <DeviceCapability Name="bluetooth.rfcomm" />
+    <DeviceCapability Name="lowLevel" />
   </Capabilities>
 </Package>
