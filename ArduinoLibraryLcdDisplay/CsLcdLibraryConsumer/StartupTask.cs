@@ -30,8 +30,13 @@ namespace CsLcdLibraryConsumer
 
         public void Tick(ThreadPoolTimer timer)
         {
+            if (tickCount == 0)
+            {
+                lcdController.PrintLine(0, "Tick Count:     ");
+            }
+
             tickCount++;
-            lcdController.PrintLine(1, "Tick Count: " + tickCount.ToString());
+            lcdController.PrintLine(1, tickCount.ToString());
         }
     }
 }
