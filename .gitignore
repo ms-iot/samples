@@ -209,3 +209,6 @@ IoTCoreDefaultApp/IoTCoreDefaultApp.VC.opendb
 IoTConnector/IoTConnector/IoTConnector/IoTConnector_StoreKey.pfx
 IoTConnector/IoTConnector/IoTConnector/Package.StoreAssociation.xml
 /IoTConnector/IoTConnector/IoTConnector/BundleArtifacts
+
+# ExternalProcessLauncher generated test files
+ProcessLauncherSample/
