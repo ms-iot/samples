@@ -17,8 +17,12 @@
 #include "MainPage.xaml.h"
 
 #include <ppltasks.h>
+#include <string>
+#include <vector>
+#include <algorithm>
 
 using namespace IotStartApp;
+using namespace std;
 
 using namespace Platform;
 using namespace Platform::Collections;
@@ -30,6 +34,29 @@ using namespace Windows::Storage::Streams;
 using namespace Concurrency;
 using namespace Windows::ApplicationModel::Core;
 using namespace Windows::Management::Deployment;
+
+namespace IotStartApp
+{
+    vector<wstring> filterPackages{
+        L"Microsoft.AAD.BrokerPlugin_cw5n1h2txyewy",
+        L"Microsoft.AccountsControl_cw5n1h2txyewy",
+        L"Microsoft.Windows.CloudExperienceHost_cw5n1h2txyewy",
+        L"Microsoft.Windows.IoTShell.IoTDevicesFlow_cw5n1h2txyewy",
+        L"Microsoft.Windows.IoTShell.IoTShellExperienceHost_cw5n1h2txyewy",
+        L"Microsoft.Windows.IoTShell.OnScreenKeyboard_cw5n1h2txyewy",
+        L"WebAuthBridgeInternetSso_cw5n1h2txyewy",
+        L"WebAuthBridgeInternet_cw5n1h2txyewy",
+        L"WebAuthBridgeIntranetSso_cw5n1h2txyewy",
+        L"ZWaveAdapterHeadlessAdapterApp_1w720vyc4ccym",
+        L"IoTOnboardingTask-uwp_1w720vyc4ccym",
+        L"IotStartApp_1w720vyc4ccym"            //filter self
+    };
+
+    bool isPackageFiltered(wstring pkgFamilyName)
+    {
+        return(find(filterPackages.begin(), filterPackages.end(), pkgFamilyName) != filterPackages.end());
+    }
+}
 
 MainPage::MainPage()
 {
@@ -46,6 +73,8 @@ void MainPage::EnumApplications()
 
     for (auto& pkg : packages)
     {
+        if (isPackageFiltered(pkg->Id->FamilyName->Data())) continue;
+
         auto task = create_task(pkg->GetAppListEntriesAsync());
         task.then([this, pkg](IVectorView<AppListEntry^>^ entryList)
         {
@@ -54,9 +83,8 @@ void MainPage::EnumApplications()
                 try
                 {
                     auto displayInfo = entry->DisplayInfo;
-
                     auto logo = displayInfo->GetLogo(Size(150.0, 150.0));
-
+                    
                     auto appItem = ref new AppListItem;
                     appItem->Name = displayInfo->DisplayName;
                     appItem->PackageFullName = pkg->Id->FullName;
@@ -68,6 +96,7 @@ void MainPage::EnumApplications()
                         appItem->ImgSrc->SetSourceAsync(stream);
 
                     });
+
                     m_AppItemList->Append(appItem);
                 }
                 catch (Exception^ e)
@@ -77,7 +106,6 @@ void MainPage::EnumApplications()
                 catch (...)
                 {
                     OutputDebugString(L"Unknown Exception");
-                    //ignore
                 }
             }
         });
