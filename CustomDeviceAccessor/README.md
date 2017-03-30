@@ -1,6 +1,8 @@
 Custom Device Accessor
 ===============
 
+Use CreateFile() and DeviceIoControl() to access custom devices from UWP.
+
 [Documentation for this sample](https://developer.microsoft.com/en-us/windows/iot/samples/customdeviceaccessor)
 
 ## How to download:
