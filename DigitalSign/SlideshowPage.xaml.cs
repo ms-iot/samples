@@ -90,8 +90,6 @@ namespace DigitalSignageUAP
             // get the current config path from local settings
             currentConfigFilePath = (string)localSettings.Values[configValueName];
 
-            this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
-
             Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
             this.PointerMoved += SlideshowPage_PointerMoved;
             DisplayImageWEBTimer = new DispatcherTimer();
@@ -200,7 +198,7 @@ namespace DigitalSignageUAP
                 MessageDialog dialog = new MessageDialog("You've entered an invalid or empty config file, it's been reset to default.");
                 localSettings.Values[configValueName] = defaultConfigFilePath;
                 dialog.Commands.Add(new UICommand("OK", new UICommandInvokedHandler(InvalidConfigDialogCommandInvokeHandler)));
-                dialog.ShowAsync(); // show a dialog with only one button to return to homepage
+                await dialog.ShowAsync();
                 return;
             }
 
