@@ -55,21 +55,11 @@ namespace DigitalSignageUAP
         }
 
         /// <summary>
-        /// Save the new settings
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void SettingsFlyout1_Unloaded(object sender, RoutedEventArgs e)
-        {
-            localSettings.Values[configValueName] = configFileTextBoxValue;
-        }
-
-        /// <summary>
         /// Load current settings from App settings
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void SettingsFlyout1_Loaded(object sender, RoutedEventArgs e)
+        private void FlyoutStackpanel_Opening(object sender, object e)
         {
             if (localSettings.Values[configValueName] == null) // we don't have this configured yet
             {
@@ -80,6 +70,16 @@ namespace DigitalSignageUAP
                 configFileTextBoxValue = (string)localSettings.Values[configValueName];
                 oldConfigSetting = configFileTextBoxValue;
             }
+        }
+
+        /// <summary>
+        /// Save the new settings
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void FlyoutStackpanel_Closing(FlyoutBase sender, FlyoutBaseClosingEventArgs args)
+        {
+            localSettings.Values[configValueName] = configFileTextBoxValue;
         }
 
         /// <summary>
