@@ -28,5 +28,6 @@
     <Capability Name="privateNetworkClientServer" />
     <DeviceCapability Name="microphone" />
     <DeviceCapability Name="proximity" />
+    <DeviceCapability Name="lowLevel" />
   </Capabilities>
 </Package>

@@ -28,5 +28,6 @@
     <Capability Name="privateNetworkClientServer" />
     <uap:Capability Name="userAccountInformation" />
     <uap:Capability Name="enterpriseAuthentication" />
+    <DeviceCapability Name="lowLevel" />
   </Capabilities>
 </Package>

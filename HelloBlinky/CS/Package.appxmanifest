@@ -47,5 +47,6 @@
 
   <Capabilities>
     <Capability Name="internetClient" />
+    <DeviceCapability Name="lowLevel" />
   </Capabilities>
 </Package>

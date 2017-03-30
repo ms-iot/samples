@@ -29,5 +29,6 @@
     <uap:Capability Name="appointments" />
     <DeviceCapability Name="microphone" />
     <DeviceCapability Name="bluetooth" />
+    <DeviceCapability Name="lowLevel" />
   </Capabilities>
 </Package>
