@@ -18,7 +18,6 @@
     THE SOFTWARE.
 -->
 
-
 <Page
     x:Class="VideoCaptureSample.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -26,7 +25,8 @@
     xmlns:local="using:VideoCaptureSample"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    >
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel Margin="10,0,10,20">
@@ -42,10 +42,7 @@
                           Height="120"
                           Width="120"
                           Margin="0,10,0,10"
-                          >
-            </MediaElement>
+                          />
         </StackPanel>
-
-
     </Grid>
 </Page>

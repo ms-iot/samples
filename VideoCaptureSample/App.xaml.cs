@@ -1,24 +1,11 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-using Windows.Media.Capture;
-using System.Threading.Tasks;
 namespace VideoCaptureSample
 {
     /// <summary>
@@ -26,22 +13,13 @@ namespace VideoCaptureSample
     /// </summary>
     sealed partial class App : Application
     {
-        /// <summary>
-        /// Initializes the singleton application object.  This is the first line of authored code
-        /// executed, and as such is the logical equivalent of main() or WinMain().
-        /// </summary>
-
-         public MediaCapture MediaCapture { get; set; }
-         public CaptureElement PreviewElement { get; set; }
-         public bool IsRecording { get; set; }       
-         public bool IsPreviewing { get; set; }
+         /// <summary>
+         /// Initializes the singleton application object.  This is the first line of authored code
+         /// executed, and as such is the logical equivalent of main() or WinMain().
+         /// </summary>
         public App()
         {
-            Microsoft.ApplicationInsights.WindowsAppInitializer.InitializeAsync(
-                Microsoft.ApplicationInsights.WindowsCollectors.Metadata |
-                Microsoft.ApplicationInsights.WindowsCollectors.Session);
             this.InitializeComponent();
-            this.Suspending += OnSuspending;
         }
 
         /// <summary>
@@ -98,45 +76,6 @@ namespace VideoCaptureSample
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
-        }
-
-        /// <summary>
-        /// Invoked when application execution is being suspended.  Application state is saved
-        /// without knowing whether the application will be terminated or resumed with the contents
-        /// of memory still intact.
-        /// </summary>
-        /// <param name="sender">The source of the suspend request.</param>
-        /// <param name="e">Details about the suspend request.</param>
-        private async void OnSuspending(object sender, SuspendingEventArgs e)
-        {
-            var deferral = e.SuspendingOperation.GetDeferral();
-            //TODO: Save application state and stop any background activity
-
-            await CleanupCaptureResources();
-
-            deferral.Complete();
-        }
-
-        public async Task CleanupCaptureResources()
-        {
-            if(IsRecording && MediaCapture != null)
-            {
-                await MediaCapture.StopRecordAsync();
-                IsRecording = false;
-            }
-            if(IsPreviewing && MediaCapture != null)
-            {
-                await MediaCapture.StopPreviewAsync();
-                IsPreviewing = false;
-            }
-            if (MediaCapture != null)
-            {
-                if (PreviewElement != null)
-                {
-                    PreviewElement.Source = null; 
-                }
-                MediaCapture.Dispose();
-            }
         }
     }
 }

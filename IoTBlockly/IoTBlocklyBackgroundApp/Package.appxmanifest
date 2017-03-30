@@ -32,5 +32,6 @@
   <Capabilities>
     <Capability Name="internetClient" />
     <Capability Name="internetClientServer" />
+    <DeviceCapability Name="lowLevel" />
   </Capabilities>
 </Package>
