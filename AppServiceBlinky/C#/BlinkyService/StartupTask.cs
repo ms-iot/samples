@@ -28,6 +28,8 @@ namespace BlinkyService
         public async void Run(IBackgroundTaskInstance taskInstance)
         {
             deferral = taskInstance.GetDeferral();
+            taskInstance.Canceled += TaskInstance_Canceled;
+
             //Print out the FamilyName
             //This string is needed to connect from a client
             System.Diagnostics.Debug.WriteLine(Windows.ApplicationModel.Package.Current.Id.FamilyName);
@@ -59,6 +61,15 @@ namespace BlinkyService
 
             }
 
+        }
+
+        private void TaskInstance_Canceled(IBackgroundTaskInstance sender, BackgroundTaskCancellationReason reason)
+        {
+            if (deferral != null)
+            {
+                deferral.Complete();
+                deferral = null;
+            }
         }
 
         private void Connection_RequestReceived(AppServiceConnection sender, AppServiceRequestReceivedEventArgs args)
