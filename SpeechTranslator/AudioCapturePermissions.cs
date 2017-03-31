@@ -7,16 +7,18 @@ using Windows.Media.Capture;
 namespace SpeechTranslator
 {
     class AudioCapturePermissions
-    {  // If no recording device is attached, attempting to get access to audio capture devices will throw 
+    {   
+        // If no recording device is attached, attempting to get access to audio capture devices will throw 
         // a System.Exception object, with this HResult set.
         private static int NoCaptureDevicesHResult = -1072845856;
 
         /// <summary>
-        /// On desktop/tablet systems, users are prompted to give permission to use capture devices on a 
-        /// per-app basis. Along with declaring the microphone DeviceCapability in the package manifest,
-        /// this method tests the privacy setting for microphone access for this application.
-        /// Note that this only checks the Settings->Privacy->Microphone setting, it does not handle
-        /// the Cortana/Dictation privacy check, however (Under Settings->Privacy->Speech, Inking and Typing).
+        /// On IOT Devices starting from build 15063 with the Cortana Package installed (the standard production image)
+        /// permission to use the capture device must be granted.  Currently this permission can be granted from Cortana 
+        /// during the "out-of-box-experience".  
+        /// 
+        /// For IoT custom IoT images without Cortana, or older images permission is automatically granted.
+        ///
         /// 
         /// Developers should ideally perform a check like this every time their app gains focus, in order to 
         /// check if the user has changed the setting while the app was suspended or not in focus.
@@ -57,6 +59,5 @@ namespace SpeechTranslator
             }
             return true;
         }
-
     }
 }
