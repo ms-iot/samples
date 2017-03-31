@@ -1,23 +1,16 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
-
+using System.Text;
+using System.Threading.Tasks;
+using Windows.Globalization;
 using Windows.Media.SpeechRecognition;
 using Windows.Media.SpeechSynthesis;
 using Windows.UI.Core;
-
-using Windows.Networking;
-using Windows.Networking.Sockets;
-using Windows.Storage.Streams;
-using System.Text;
-using Windows.ApplicationModel.Core;
-using Windows.Globalization;
-using System.Threading.Tasks;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -61,10 +54,11 @@ namespace SpeechTranslator
 
         private async Task Translate(string text)
         {
-            var translatedS = string.Empty;
+            TranslationResult translatedResult;
             try
             {
-                translatedS = await translator.Translate( text, inLanguageSpecificCode, outLanguageSpecificCode );
+                
+                translatedResult = await translator.Translate( text, inLanguageSpecificCode, outLanguageSpecificCode );               
             }
             catch (Exception e)
             {
@@ -77,16 +71,16 @@ namespace SpeechTranslator
 
                 return;
             }
-
-            SpeechSynthesisStream stream = await synthesizer.SynthesizeTextToStreamAsync(translatedS);
+            
             var ignored2 = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                media.SetSource(stream, stream.ContentType);
+                media.SetSource(translatedResult.voice, @"audio/wav");
                 media.Play();
                 originalmsg.Text = text;
-                ReceivedText.Text = translatedS;
-                ReceivedText.FontSize = 20;
+                ReceivedText.Text = translatedResult.text;
+                ReceivedText.FontSize = 20;                             
             });
+
         }
 
         public async void InitRecogAndSyn()
@@ -102,10 +96,9 @@ namespace SpeechTranslator
         }
 
         private async Task InitializeRecognizer(Language recognizerLanguage, Language speechLanguage = null)
-        {
+        {            
             //Default spoken language to first non-recognizer language
-            speechLanguage = speechLanguage ??
-                             SpeechRecognizer.SupportedGrammarLanguages.FirstOrDefault(
+            speechLanguage = SpeechRecognizer.SupportedGrammarLanguages.FirstOrDefault(
                                  l => l.LanguageTag != recognizerLanguage.LanguageTag);
 
             if (speechLanguage == null)
