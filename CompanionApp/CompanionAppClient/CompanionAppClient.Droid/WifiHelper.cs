@@ -4,6 +4,7 @@ using Android.App;
 using Android.Content;
 using Android.Net;
 using Android.Net.Wifi;
+using Foundation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -85,12 +86,22 @@ namespace CompanionAppClient.Droid
         {
             if (_ConnectedSocket == null) { return; }
 
+            // Assumes thread ID of main thread is 1 for Android
+            var isMainThread = (Thread.CurrentThread.ManagedThreadId == 1);
             var waitForClear = new AutoResetEvent(false);
-            Device.BeginInvokeOnMainThread(() => {
+            Action clearAction = () => {
                 availableNetworks.Clear();
                 waitForClear.Set();
-            });
-            waitForClear.WaitOne();
+            };
+            if (isMainThread)
+            {
+                clearAction.Invoke();
+            }
+            else
+            {
+                Device.BeginInvokeOnMainThread(clearAction);
+                waitForClear.WaitOne();
+            }
 
             var networkRequest = new CompanionAppCommunication() { Verb = "GetAvailableNetworks" };
             // Send request for available networks
@@ -103,11 +114,15 @@ namespace CompanionAppClient.Droid
                 var availableNetworkArray = JsonToStringList(networkResponse.Data);
                 availableNetworkArray.ForEach(availableNetwork => {
                     var network = new Network() { Ssid = availableNetwork };
-                    Device.BeginInvokeOnMainThread(() => {
-                        availableNetworks.Add(network);
-                        waitForClear.Set();
-                    });
-                    waitForClear.WaitOne();
+                    Action addAction = () => { availableNetworks.Add(network); };
+                    if (isMainThread)
+                    {
+                        addAction.Invoke();
+                    }
+                    else
+                    {
+                        Device.BeginInvokeOnMainThread(addAction);
+                    }
                 });
             }
 
