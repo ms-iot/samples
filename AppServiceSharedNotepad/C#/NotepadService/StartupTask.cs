@@ -13,11 +13,11 @@ using Windows.Foundation.Collections;
 
 namespace NotepadService
 {
-    //See the "AppServiceBlinky" sample for a basic introduction to AppServices for IoT devices
-    //Each connection causes a new instance to be spun up in the same process
+    // See the "AppServiceBlinky" sample for a basic introduction to AppServices for IoT devices
+    // Each connection causes a new instance to be spun up in the same process
     public sealed class StartupTask : IBackgroundTask
     {
-        //Notepad is static to allow a single instance to be shared among all connections 
+        // Notepad is static to allow a single instance to be shared among all connections 
         private static Notepad notePad;
         BackgroundTaskDeferral serviceDeferral;
         AppServiceConnection appServiceConnection;
@@ -68,7 +68,7 @@ namespace NotepadService
             System.Diagnostics.Debug.WriteLine("Service closed. Status=" + args.Status.ToString());
         }
 
-        //Every time the underlying notepad gets a new note, send a message back to the client indicating that a new message is available
+        // Every time the underlying notepad gets a new note, send a message back to the client indicating that a new message is available
         private async void NotePad_NoteAdded(object sender, EventArgs e)
         {
             ValueSet message = new ValueSet();
@@ -76,9 +76,10 @@ namespace NotepadService
             await appServiceConnection.SendMessageAsync(message);
         }
 
-        //This AppService supports recieving two types of request: "postNote" and "getMessages"
-        //When a note is sent from the clients the service will pass it to the shared notpad and send a confirmation response to the client
-        //When the client requests messages the repsonse will contain a string[] of all the messages on the notepad
+        // This AppService supports recieving two types of request: "postNote" and "getMessages"
+        // When a note is sent from the clients the service will pass it to the shared notepad
+        // and send a confirmation response to the client
+        // When the client requests messages the repsonse will contain a string[] of all the messages on the notepad
         private async void AppServiceConnection_RequestReceived(AppServiceConnection sender, AppServiceRequestReceivedEventArgs args)
         {
             var messageDefferal = args.GetDeferral();
