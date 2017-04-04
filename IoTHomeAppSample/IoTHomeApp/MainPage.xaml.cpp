@@ -36,7 +36,7 @@ void MainPage::OemApp1_Click(Platform::Object^ sender, Windows::UI::Xaml::Routed
     //https://msdn.microsoft.com/en-us/library/windows/apps/hh701484.aspx
 
     auto options = ref new LauncherOptions();
-    options->TargetApplicationPackageFamilyName = ref new String(L"OemApp1_1w720vyc4ccym");
+    options->TargetApplicationPackageFamilyName = ref new String(L"OemApp1_2yx4q2bk84nj4");
 
     Launcher::LaunchUriAsync(ref new Uri("oemapp1:"), options);
 }
