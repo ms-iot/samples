@@ -104,7 +104,7 @@
     <None Include="SpeechTranslator_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdmAuthentication.cs" />
+    <Compile Include="AzureAuthentication.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -143,6 +143,9 @@
     <SDKReference Include="WindowsIoT, Version=10.0.10586.0">
       <Name>Windows IoT Extensions for the UWP</Name>
     </SDKReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

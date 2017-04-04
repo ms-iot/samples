@@ -1,19 +1,21 @@
-# Windows 10 IoT Home App Sample
+# Windows 10 IoT Core sample code
+===============
 
 This sample demonstrates how one can develop a home app for Windows 10 IoT Core. 
 The sample consist of two sets of app showing two different approaches:
 
 ## IoTHomeApp
-
-Demonstrates how one can use LaunchUriAsync to launch other apps registered for a 'protocol'.
-The solution folder contains OemApp1 and OemApp2 projects that supports protocol 'oemapp1' and 'oemapp2'.
-The app also shows how to resolve ambiguity, in case of multiple apps registered for a protocol, by providing the App Id of the target application in the Launcher options.
-
-OemApp1 and OemApp2 must be built and deployed before one can use IotHomeApp to launch them.
+[Documentation for this sample](https://developer.microsoft.com/en-us/windows/iot/samples/iothomeapp)
 
 ## IoTStartApp
+[Documentation for this sample](https://developer.microsoft.com/en-us/windows/iot/samples/iotstartapp)
 
-IotStartApp illustrates how one can use PackageManager APIs to enumerate and launch apps installed on the system, just like a Start screen.
-In order to use the PackageManager APIs, it uses a restricted capability. This may make it difficult to pass the Store certification process.
+## How to download:
 
-However, one can always sideload the app onto the device.
+Unfortunately, GitHub does not support downloading individual code.
+
+Navigate to [ms-iot/samples](https://github.com/ms-iot/samples) and select **Clone or download** to download the whole repository.
+
+## Additional resources
+* [Windows 10 IoT Core home page](https://developer.microsoft.com/en-us/windows/iot/)
+* [Documentation for all samples](https://developer.microsoft.com/en-us/windows/iot/samples)
