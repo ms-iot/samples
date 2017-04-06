@@ -9,6 +9,5 @@
 #include <collection.h>
 #include <ppltasks.h>
 #include <strsafe.h>
+#include <wrl.h>
 #include <bitset>
-
-#include "App.xaml.h"

@@ -108,7 +108,7 @@
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '14.0'">
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '15.0'">
     <PlatformToolset>v141</PlatformToolset>

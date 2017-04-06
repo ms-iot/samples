@@ -24,6 +24,7 @@
         <uap:Extension Category="windows.protocol">
           <uap:Protocol Name="oemapp1">
             <uap:Logo>Assets\StoreLogo.png</uap:Logo>
+            <uap:DisplayName>OemApp1</uap:DisplayName>
           </uap:Protocol>
         </uap:Extension>
       </Extensions>

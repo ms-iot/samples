@@ -101,6 +101,12 @@ std::wostream& operator<< (std::wostream& os, const I2cTransferResult& result)
     case I2cTransferStatus::SlaveAddressNotAcknowledged:
         os << L"Slave address was not acknowledged\n";
         break;
+    case I2cTransferStatus::ClockStretchTimeout:
+        os << L"A clock stretch timeout occurred\n";
+        break;
+    case I2cTransferStatus::UnknownError:
+        os << L"The transfer failed for an unknown reason\n";
+        break;
     default:
         throw wexception(L"Invalid transfer status value");
     }
@@ -222,6 +228,12 @@ void ShowPrompt (I2cDevice^ device)
             case I2cTransferStatus::SlaveAddressNotAcknowledged:
                 std::wcout << L"Slave address was not acknowledged\n";
                 break;
+            case I2cTransferStatus::ClockStretchTimeout:
+                std::wcout << L"A clock stretch timeout occurred\n";
+                break;
+            case I2cTransferStatus::UnknownError:
+                std::wcout << L"The transfer failed for an unknown reason\n";
+                break;
             default:
                 throw wexception(L"Invalid transfer status value");
             }
@@ -247,6 +259,12 @@ void ShowPrompt (I2cDevice^ device)
                 break;
             case I2cTransferStatus::SlaveAddressNotAcknowledged:
                 std::wcout << L"Slave address was not acknowledged\n";
+                break;
+            case I2cTransferStatus::ClockStretchTimeout:
+                std::wcout << L"A clock stretch timeout occurred\n";
+                break;
+            case I2cTransferStatus::UnknownError:
+                std::wcout << L"The transfer failed for an unknown reason\n";
                 break;
             default:
                 throw wexception(L"Invalid transfer status value");
@@ -290,6 +308,12 @@ void ShowPrompt (I2cDevice^ device)
             }
             case I2cTransferStatus::SlaveAddressNotAcknowledged:
                 std::wcout << L"Slave address was not acknowledged\n";
+                break;
+            case I2cTransferStatus::ClockStretchTimeout:
+                std::wcout << L"A clock stretch timeout occurred\n";
+                break;
+            case I2cTransferStatus::UnknownError:
+                std::wcout << L"The transfer failed for an unknown reason\n";
                 break;
             default:
                 throw wexception(L"Invalid transfer status value");

@@ -16,7 +16,6 @@ using Windows.Graphics.Imaging;
 
 using Microsoft.ProjectOxford.Emotion;
 using Microsoft.ProjectOxford.Emotion.Contract;
-using Microsoft.ProjectOxford.Common.Contract;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using Windows.UI.Xaml.Media.Imaging;
