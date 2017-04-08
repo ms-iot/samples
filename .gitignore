@@ -19,6 +19,7 @@ bld/
 [Bb]in/
 [Oo]bj/
 .vs/
+[Pp]roject[Tt]emplates/
 
 # Roslyn cache directories
 *.ide/
