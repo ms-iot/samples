@@ -20,6 +20,7 @@ bld/
 [Oo]bj/
 .vs/
 [Pp]roject[Tt]emplates/
+[Bb]undle[Aa]rtifacts/
 
 # Roslyn cache directories
 *.ide/
@@ -145,6 +146,10 @@ publish/
 !**/packages/build/
 # If using the old MSBuild-Integrated Package Restore, uncomment this:
 #!**/packages/repositories.config
+
+# NuGet v3's project.json files produces more ignorable files
+*.nuget.props
+*.nuget.targets
 
 # Windows Azure Build Output
 csx/
