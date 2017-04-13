@@ -21,7 +21,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
-    <AppxBundle>Always</AppxBundle>
+    <AppxBundle>Never</AppxBundle>
     <AppxBundlePlatforms>arm</AppxBundlePlatforms>
     <PackageCertificateThumbprint>388246B2FE7053350055782D9825A22DD6E7492B</PackageCertificateThumbprint>
     <PackageCertificateKeyFile>SpeechTranslator_TemporaryKey.pfx</PackageCertificateKeyFile>
