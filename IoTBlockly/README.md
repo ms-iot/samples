@@ -16,4 +16,4 @@ IoTBlockly leverages various pieces of open source software to create a "block" 
 </ol>
 
 ###Usage
-Compile the solution and deploy the IoTBlocklyBackgroundApp to your Raspberry Pi. Once the app is up and running, browse to http://your-rpi-name:8000 and starting coding with Blockly! 
+Compile the solution and deploy the IoTBlocklyBackgroundApp to your Raspberry Pi. Once the app is up and running, browse to http://your-rpi-name:8024 and starting coding with Blockly! 
