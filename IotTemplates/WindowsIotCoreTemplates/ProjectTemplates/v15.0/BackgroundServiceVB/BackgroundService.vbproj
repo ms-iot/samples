@@ -103,10 +103,16 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
+$if$($targetplatformversion$ > 10.0.14393.0)
+  <PropertyGroup>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
+$else$
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <None Include="project.json" />
   </ItemGroup>
+$endif$
   <ItemGroup>
     <Compile Include="StartupTask.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

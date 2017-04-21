@@ -95,10 +95,16 @@
     <Prefer32Bit>true</Prefer32Bit>
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
+$if$($targetplatformversion$ > 10.0.14393.0)
+  <PropertyGroup>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
+$else$
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <None Include="project.json" />
   </ItemGroup>
+$endif$
   <ItemGroup>
     <Compile Include="StartupTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
