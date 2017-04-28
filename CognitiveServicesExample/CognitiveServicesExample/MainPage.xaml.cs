@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -76,6 +76,7 @@ namespace CognitiveServicesExample
         private async void button_Clicked(object sender, RoutedEventArgs e)
         {
             ImageCanvas.Children.Clear();
+            ResultBox.Items.Clear();
 
             string urlString = ImageURL.Text;
             Uri uri;
@@ -112,9 +113,12 @@ namespace CognitiveServicesExample
 
             detectionStatus.Text = "Detection Done";
 
-            displayParsedResults(emotionResult);
-            displayAllResults(emotionResult);
-            DrawFaceRectangle(emotionResult, bitMapImage, urlString);
+            if (emotionResult != null)
+            {
+                displayParsedResults(emotionResult);
+                displayAllResults(emotionResult);
+                DrawFaceRectangle(emotionResult, bitMapImage, urlString);
+            }
         }
 
         private void displayAllResults(Emotion[] resultList)
@@ -138,6 +142,7 @@ namespace CognitiveServicesExample
         {
             int index = 0;
             string textToDisplay = "";
+
             foreach (Emotion emotion in resultList)
             {
                 string emotionString = parseResults(emotion);
