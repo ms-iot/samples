@@ -27,8 +27,8 @@ namespace IoTBlocklyBackgroundApp
         // The JavaScript code uses a few helper functions from the IoTBlocklyHelper WinRT library (which is added applocal to
         // this UWP Background Application).
         // Notice that most of the blocks require the Raspberry Pi Sense Hat (https://www.raspberrypi.org/products/sense-hat/).
-        // And then we start listening on port 8000 and start serving pages: Use your favorite browser to browse to your
-        // Raspberry Pi IP address:8000 and you can start coding.
+        // And then we start listening on port 8024 and start serving pages: Use your favorite browser to browse to your
+        // Raspberry Pi IP address:8024 and you can start coding.
         public async void Run(IBackgroundTaskInstance taskInstance)
         {
             deferral = taskInstance.GetDeferral();
@@ -66,7 +66,7 @@ namespace IoTBlocklyBackgroundApp
                 await res.RedirectAsync("..");
             });
 
-            server.Listen(8000);
+            server.Listen(8024);
         }
 
         private async Task StartMostRecentScript()
