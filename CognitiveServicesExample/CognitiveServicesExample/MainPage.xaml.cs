@@ -111,13 +111,18 @@ namespace CognitiveServicesExample
 
             Emotion[] emotionResult = await UploadAndDetectEmotions(urlString);
 
-            detectionStatus.Text = "Detection Done";
 
             if (emotionResult != null)
             {
                 displayParsedResults(emotionResult);
                 displayAllResults(emotionResult);
                 DrawFaceRectangle(emotionResult, bitMapImage, urlString);
+
+                detectionStatus.Text = "Detection Done";
+            }
+            else
+            {
+                detectionStatus.Text = "Detection Failed";
             }
         }
 
