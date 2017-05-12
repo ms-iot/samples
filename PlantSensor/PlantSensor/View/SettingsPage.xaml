@@ -1,0 +1,59 @@
+﻿<!-- Copyright (c) Microsoft. All rights reserved. -->
+<Page
+    x:Class="PlantSensor.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PlantSensor.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="#323232">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.1*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid x:Name="AppBarGridSettings" Grid.Row="0" Grid.Column="2">
+            <CommandBar Background="#323232" BorderBrush="#ffffff">
+                <AppBarButton x:Name="SettingsHomeAppBar" Icon="Home" Label="Home" Foreground="#ffffff" Click="SettingsHomeAppBar_Click"/>
+                <AppBarButton x:Name="SettingsCalendarAppBar" Icon="Calendar" Label="History" Foreground="#ffffff" Click="SettingsCalendarAppBar_Click"/>
+                <AppBarButton x:Name="SettingsSettingsAppBar" Icon="Setting" Label="Settings" Foreground="#ffffff" Click="SettingsSettingsAppBar_Click"/>
+                <AppBarButton x:Name="SettingsTweetAppBar" Icon="Globe" Label="Twitter" Foreground="#ffffff" Click="SettingsTweetAppBar_Click"/>
+            </CommandBar>
+        </Grid>
+        <TextBlock x:Name="SettingsTitle" FontWeight="Light" Text="Settings" Grid.Column="1" Grid.Row="1" FontSize="60" VerticalAlignment="Bottom" Foreground="#C7F464"/>
+        <Grid x:Name="SettingsMainPanel" Grid.Column="2" Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="NameOfPlant" FontWeight="Light" Text="Name of Plant:"  Margin="0,0,20,0" FontSize="35" VerticalAlignment="Center" Foreground="#FF4E50" Grid.Row="0" Grid.Column="0"/>
+            <TextBlock x:Name="PlantTwitterAccount" FontWeight="Light" Text="Plant Twitter Account:" Margin="0,0,20,0" FontSize="35" VerticalAlignment="Center" Foreground="#FC913A" Grid.Row="1" Grid.Column="0"/>
+            <TextBlock x:Name="Setting1" FontWeight="Light" Text="Ideal Plant Temperature:" Margin="0,0,20,0" FontSize="35" VerticalAlignment="Center" Foreground="#F9D423" Grid.Row="2" Grid.Column="0"/>
+            <TextBlock x:Name="Setting2" FontWeight="Light" Text="Ideal Plant Brightness:" Margin="0,0,20,0" FontSize="35" VerticalAlignment="Center" Foreground="#EDE574" Grid.Row="3" Grid.Column="0"/>
+            <TextBlock x:Name="Setting3" FontWeight="Light" Text="Ideal Plant Soil Moisture:" Margin="0,0,20,0" FontSize="35" VerticalAlignment="Center" Foreground="#E1F5C4" Grid.Row="4" Grid.Column="0"/>
+            <TextBox x:Name="NameOfPlantTextBox" Grid.Column="1" Grid.Row="0"  HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Center" Background="#323232" BorderBrush="#FF4E50" Foreground="#FF4E50"/>
+            <TextBox x:Name="PlantTwitterAccountTextBox" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Center" Background="#323232" BorderBrush="#FC913A" Foreground="#FC913A"/>
+            <TextBox x:Name="IdealTempTextBox" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="0" VerticalAlignment="Center" Background="#323232" BorderBrush="#F9D423" Foreground="#F9D423"/>
+            <TextBox x:Name="IdealBrightTextBox" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="0" VerticalAlignment="Center" Background="#323232" BorderBrush="#EDE574" Foreground="#EDE574"/>
+            <TextBox x:Name="IdealSoilTextBox" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="0" VerticalAlignment="Center" Background="#323232" BorderBrush="#E1F5C4" Foreground="#E1F5C4"/>
+            <TextBlock x:Name="Status" FontWeight="Light" Text="Save Status: all changes unsaved" Grid.Column="0" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#C7F464" FontSize="15"/>
+            <Button x:Name="SettingsSave" Content="Save" Grid.Column="0" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Center" Background="#C7F464" Click="SettingsSave_Click"/>
+        </Grid>
+    </Grid>
+</Page>

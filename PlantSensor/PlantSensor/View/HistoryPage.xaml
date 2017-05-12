@@ -1,0 +1,245 @@
+﻿<!-- Copyright (c) Microsoft. All rights reserved. -->
+<Page
+    x:Class="PlantSensor.HistoryPage"
+    xmlns:Charting="using:WinRTXamlToolkit.Controls.DataVisualization.Charting"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PlantSensor"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled">
+        <Grid x:Name="SkeletonGrid" Background="#323232">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="800"/>
+                <RowDefinition Height="800"/>
+                <RowDefinition Height="800"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="1.2*"/>
+            </Grid.ColumnDefinitions>
+            <Grid x:Name="CommandBarGrid" Grid.Row="0" Grid.Column="2">
+                <CommandBar Background="#323232" BorderBrush="#ffffff">
+                    <AppBarButton Icon="Home" Label="Home" Foreground="#ffffff" Click="return_Click"/>
+                    <AppBarButton Icon="Calendar" Label="History" Foreground="#ffffff" Click="AppBarButton_Click"/>
+                    <AppBarButton Icon="Setting" Label="Settings" Foreground="#ffffff" Click="Setting_Click"/>
+                    <AppBarButton Icon="Globe" Label="Twitter" Foreground="#ffffff" Click="Twitter_Click"/>
+                </CommandBar>
+            </Grid>
+            <Grid x:Name="TemperatureSensorGrid" Background="#323232" Margin="10" Grid.Row="1" Grid.Column="1">
+                <!--<Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stroke="#97FF00"/>-->
+                <Grid x:Name = "GridForButtonsTemperature">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1.2*"/>
+                        <RowDefinition Height="0.6*"/>
+                        <RowDefinition Height="12*"/>
+                        <RowDefinition Height="0.3*"/>
+                        <RowDefinition Height="1.5*"/>
+                        <RowDefinition Height="0.6*"/>
+                        <RowDefinition Height="0.6*"/>
+                        <RowDefinition Height="0.6*"/>
+                    </Grid.RowDefinitions>
+                    <Grid x:Name="Label" Grid.Row="0" Grid.Column="0">
+                        <TextBlock x:Name="textBlock" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Temperature Data" VerticalAlignment="Center" FontSize="40" FontFamily="Calibri" Foreground="#C7F464"/>
+                    </Grid>
+                    <!--
+                    <Grid x:Name="Current" Grid.Row="1" Grid.Column="1">
+                        <TextBlock x:Name="textBlock2" HorizontalAlignment="Center" Text="Current: 27  Suggestion: +0" VerticalAlignment="Center" FontSize="20" FontFamily="Calibri" Foreground="#4B7F00"/>
+                    </Grid>
+                    -->
+                    <Grid x:Name="TemperatureChartGrid" Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.05*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid x:Name="TemperatureUnitsYAxis" Grid.Column="0">
+                            <TextBlock x:Name="CelsiusTextBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Celsius" VerticalAlignment="Center" UseLayoutRounding="False" Width="66" d:LayoutRounding="Auto" Margin="27,291.024,-45,227.024"  Foreground="#C7F464">
+                                <TextBlock.RenderTransform>
+                                    <RotateTransform Angle="270"/>
+                                </TextBlock.RenderTransform>
+                            </TextBlock>
+                        </Grid>
+                        <Grid x:Name="OnlyTemperatureChart" Grid.Column="1">
+                            <ProgressRing x:Name="HistoryTemperatureProgressRing" Foreground="White" IsActive="True" Height="100" Width="100"/>
+                            <Charting:Chart x:Name="TemperatureChart" Padding="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="#C7F464">
+                                <Charting:LineSeries Title="Temperature" Margin="0" IndependentValuePath="Name" DependentValuePath="Amount" IsSelectionEnabled="True"/>
+                                <Charting:LineSeries Title="Ideal" Margin="0" IndependentValuePath="Name" DependentValuePath="Amount" IsSelectionEnabled="True"/>
+                            </Charting:Chart>
+                            <TextBlock x:Name="TemperatureUnits" HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="Days" Foreground="#C7F464"/>
+                        </Grid>
+                        <!--<Rectangle x:Name="TemperatureChartRectangle" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stroke="#79CC00"/>-->
+                    </Grid>
+                    <Grid x:Name="TemperatureChartButtons" Grid.Row="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid x:Name="Temperature1d" Grid.Column="1">
+                            <Button x:Name="d1TemperatureButton" Content="1 day" HorizontalAlignment="Stretch" VerticalAlignment="Top" Click="d1TemperatureButton_Click" BorderBrush="#69D2E7" Foreground="#69D2E7"/>
+                        </Grid>
+                        <Grid x:Name="Temperature3d" Grid.Column="2">
+                            <Button x:Name="d3TemperatureButton" Content="1 week" HorizontalAlignment="Stretch" VerticalAlignment="Top" Click="d3TemperatureButton_Click" BorderBrush="#A7DBD8" Foreground="#A7DBD8"/>
+                        </Grid>
+                        <Grid x:Name="Temperature5d" Grid.Column="3">
+                            <Button x:Name="d5TemperatureButton" Content="2 weeks" HorizontalAlignment="Stretch" VerticalAlignment="Top" Click="d5TemperatureButton_Click" BorderBrush="#E0E4CC" Foreground="#E0E4CC"/>
+                        </Grid>
+                        <Grid x:Name="Temperature7d" Grid.Column="4">
+                            <Button x:Name="d7TemperatureButton" Content="4 weeks" HorizontalAlignment="Stretch" VerticalAlignment="Top" Click="d7TemperatureButton_Click" BorderBrush="#F38630" Foreground="#F38630"/>
+                        </Grid>
+                        <Grid x:Name="Temperature9d" Grid.Column="5">
+                            <Button x:Name="d9TemperatureButton" Content="8 weeks" HorizontalAlignment="Stretch" VerticalAlignment="Top" Click="d9TemperatureButton_Click" BorderBrush="#FA6900" Foreground="#FA6900"/>
+                        </Grid>
+                    </Grid>
+                </Grid>
+
+            </Grid>
+            <Grid x:Name="BrightnessSensorGrid" Background="#323232" Margin="10" Grid.Row="2" Grid.Column="1">
+                <Grid x:Name="GridForButtonsBrightness">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1.2*"/>
+                        <RowDefinition Height="0.6*"/>
+                        <RowDefinition Height="12*"/>
+                        <RowDefinition Height="0.3*"/>
+                        <RowDefinition Height="1.5*"/>
+                        <RowDefinition Height="0.6*"/>
+                        <RowDefinition Height="0.6*"/>
+                        <RowDefinition Height="0.6*"/>
+                    </Grid.RowDefinitions>
+                    <Grid x:Name="BrightnessLabel" Grid.Row="0" Grid.Column="0">
+                        <TextBlock x:Name="BrightnessDatatextBlock" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Brightness Data" VerticalAlignment="Center" FontSize="40" FontFamily="Calibri" Foreground="#C7F464"/>
+                    </Grid>
+                    <!--
+                    <Grid x:Name="BrightnessCurrent" Grid.Row="1" Grid.Column="1">
+                        <TextBlock x:Name="CurrentBrightnessTextBlock" HorizontalAlignment="Center" Text="Current: 27  Suggestion: +0" VerticalAlignment="Center" FontSize="20" FontFamily="Calibri" Foreground="#4B7F00"/>
+                    </Grid>
+                    -->
+                    <Grid x:Name="BrightnessChartAndUnits" Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.05*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid x:Name="BrightnessUnitsYAxis" Grid.Column="0">
+                            <TextBlock x:Name="BrightnessTextBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Brightness" VerticalAlignment="Center" UseLayoutRounding="False" Width="200" d:LayoutRounding="Auto" Margin="27,291.024,-45,227.024"  Foreground="#C7F464">
+                                <TextBlock.RenderTransform>
+                                    <RotateTransform Angle="270"/>
+                                </TextBlock.RenderTransform>
+                            </TextBlock>
+                        </Grid>
+                        <Grid x:Name="BrightnessChartGrid" Grid.Row="2" Grid.Column="1">
+                            <ProgressRing x:Name="HistoryBrightnessProgressRing" Foreground="White" IsActive="True" Height="100" Width="100"/>
+                            <Charting:Chart x:Name="BrightnessChart" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="#C7F464">
+                                <Charting:LineSeries Title="Brightness" Margin="0" IndependentValuePath="Name" DependentValuePath="Amount" IsSelectionEnabled="True"/>
+                                <Charting:LineSeries Title="Ideal" Margin="0" IndependentValuePath="Name" DependentValuePath="Amount" IsSelectionEnabled="True"/>
+                            </Charting:Chart>
+                            <TextBlock x:Name="BrightnessUnits" HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="Days" Foreground="#C7F464"/>
+                        </Grid>
+                    </Grid>
+                    <Grid x:Name="BrightnessChartButtons" Grid.Row="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid x:Name="Brightness1d" Grid.Column="1">
+                            <Button x:Name="d1BrightnessButton" Content="1 day" HorizontalAlignment="Stretch" VerticalAlignment="Top" Click="d1BrightnessButton_Click" BorderBrush="#69D2E7" Foreground="#69D2E7"/>
+                        </Grid>
+                        <Grid x:Name="Brightness3d" Grid.Column="2">
+                            <Button x:Name="d3BrightnessButton" Content="1 week" HorizontalAlignment="Stretch" VerticalAlignment="Top" Click="d3BrightnessButton_Click" BorderBrush="#A7DBD8" Foreground="#A7DBD8"/>
+                        </Grid>
+                        <Grid x:Name="Brightness5d" Grid.Column="3">
+                            <Button x:Name="d5BrightnessButton" Content="2 weeks" HorizontalAlignment="Stretch" VerticalAlignment="Top" Click="d5BrightnessButton_Click" BorderBrush="#E0E4CC" Foreground="#E0E4CC"/>
+                        </Grid>
+                        <Grid x:Name="Brightness7d" Grid.Column="4">
+                            <Button x:Name="d7BrightnessButton" Content="4 weeks" HorizontalAlignment="Stretch" VerticalAlignment="Top" Click="d7BrightnessButton_Click" BorderBrush="#F38630" Foreground="#F38630"/>
+                        </Grid>
+                        <Grid x:Name="Brightness9d" Grid.Column="5">
+                            <Button x:Name="Brightness9dButton" Content="8 weeks" HorizontalAlignment="Stretch" VerticalAlignment="Top" Click="Brightness9dButton_Click" BorderBrush="#FA6900" Foreground="#FA6900"/>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid>
+            <Grid x:Name="SoilMoistureGrid" Background="#323232" Margin="10" Grid.Row="3" Grid.Column="1">
+                <Grid x:Name="GridForButtonsSoilMoisture">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1.2*"/>
+                        <RowDefinition Height="0.6*"/>
+                        <RowDefinition Height="12*"/>
+                        <RowDefinition Height="0.3*"/>
+                        <RowDefinition Height="1.5*"/>
+                        <RowDefinition Height="0.6*"/>
+                        <RowDefinition Height="0.6*"/>
+                        <RowDefinition Height="0.6*"/>
+                    </Grid.RowDefinitions>
+                    <Grid x:Name="SoilMoistureLabel" Grid.Row="0" Grid.Column="0">
+                        <TextBlock x:Name="SoilMoistureDatatextBlock" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Soil Moisture Data" VerticalAlignment="Center" FontSize="40" FontFamily="Calibri" Foreground="#C7F464"/>
+                    </Grid>
+                    <!--
+                    <Grid x:Name="SoilMoistureCurrent" Grid.Row="1" Grid.Column="1">
+                        <TextBlock x:Name="SoilMoistureTextBlock" HorizontalAlignment="Center" Text="Current: 27  Suggestion: +0" VerticalAlignment="Center" FontSize="20" FontFamily="Calibri" Foreground="#4B7F00"/>
+                    </Grid>
+                    -->
+                    <Grid x:Name="SoilMoistureChartGrid" Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.05*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid x:Name="SoilMoistureUnitsYAxis" Grid.Column="0">
+                            <TextBlock x:Name="SoilMoistureTextBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Moisture" VerticalAlignment="Center" UseLayoutRounding="False" Width="200" d:LayoutRounding="Auto" Margin="27,291.024,-45,227.024"  Foreground="#C7F464">
+                                <TextBlock.RenderTransform>
+                                    <RotateTransform Angle="270"/>
+                                </TextBlock.RenderTransform>
+                            </TextBlock>
+                        </Grid>
+                        <Grid x:Name="SoilMoistureChartOnly" Grid.Column="1">
+                            <ProgressRing x:Name="HistorySoilMoistProgressRing" Foreground="White" IsActive="True" Height="100" Width="100"/>
+                            <Charting:Chart x:Name="SoilMoistureChart" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="#C7F464">
+                                <Charting:LineSeries Title="Soil Moisture" Margin="0" IndependentValuePath="Name" DependentValuePath="Amount" IsSelectionEnabled="True"/>
+                                <Charting:LineSeries Title="Ideal" Margin="0" IndependentValuePath="Name" DependentValuePath="Amount" IsSelectionEnabled="True"/>
+                            </Charting:Chart>
+                        <TextBlock x:Name="SoilMoistureUnits" HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="Days" Foreground="#C7F464"/>
+                        </Grid>                    
+                    </Grid>
+                    <Grid x:Name="SoilMoistureChartButtons" Grid.Row="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid x:Name="SoilMoisture1d" Grid.Column="1">
+                            <Button x:Name="d1SoilMoistureButton" Content="1 day" HorizontalAlignment="Stretch" VerticalAlignment="Top" Click="d1SoilMoistureButton_Click" BorderBrush="#69D2E7" Foreground="#69D2E7"/>
+                        </Grid>
+                        <Grid x:Name="SoilMoisture3d" Grid.Column="2">
+                            <Button x:Name="d3SoilMoistureButton" Content="1 week" HorizontalAlignment="Stretch" VerticalAlignment="Top" Click="d3SoilMoistureButton_Click" BorderBrush="#A7DBD8" Foreground="#A7DBD8"/>
+                        </Grid>
+                        <Grid x:Name="SoilMoisture5d" Grid.Column="3">
+                            <Button x:Name="d5SoilMoistureButton" Content="2 weeks" HorizontalAlignment="Stretch" VerticalAlignment="Top" Click="d5SoilMoistureButton_Click" BorderBrush="#E0E4CC" Foreground="#E0E4CC"/>
+                        </Grid>
+                        <Grid x:Name="SoilMoisture7d" Grid.Column="4">
+                            <Button x:Name="d7SoilMoistureButton" Content="4 weeks" HorizontalAlignment="Stretch" VerticalAlignment="Top" Click="d7SoilMoistureButton_Click" BorderBrush="#F38630" Foreground="#F38630"/>
+                        </Grid>
+                        <Grid x:Name="SoilMoisture9d" Grid.Column="5">
+                            <Button x:Name="d9SoilMoistureButton" Content="8 weeks" HorizontalAlignment="Stretch" VerticalAlignment="Top" Click="d9SoilMoistureButton_Click" BorderBrush="#FA6900" Foreground="#FA6900"/>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid>
+    </Grid>
+    </ScrollViewer>
+</Page>
