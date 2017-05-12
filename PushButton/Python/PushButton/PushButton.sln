@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "PushButton", "PushButton.pyproj", "{987760B7-FFF4-44EE-BA2E-41DEDB4E0C39}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM = Debug|ARM
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|ARM = Release|ARM
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{987760B7-FFF4-44EE-BA2E-41DEDB4E0C39}.Debug|ARM.ActiveCfg = Debug|ARM
+		{987760B7-FFF4-44EE-BA2E-41DEDB4E0C39}.Debug|ARM.Build.0 = Debug|ARM
+		{987760B7-FFF4-44EE-BA2E-41DEDB4E0C39}.Debug|ARM.Deploy.0 = Debug|ARM
+		{987760B7-FFF4-44EE-BA2E-41DEDB4E0C39}.Debug|x64.ActiveCfg = Debug|x64
+		{987760B7-FFF4-44EE-BA2E-41DEDB4E0C39}.Debug|x64.Build.0 = Debug|x64
+		{987760B7-FFF4-44EE-BA2E-41DEDB4E0C39}.Debug|x64.Deploy.0 = Debug|x64
+		{987760B7-FFF4-44EE-BA2E-41DEDB4E0C39}.Debug|x86.ActiveCfg = Debug|x86
+		{987760B7-FFF4-44EE-BA2E-41DEDB4E0C39}.Debug|x86.Build.0 = Debug|x86
+		{987760B7-FFF4-44EE-BA2E-41DEDB4E0C39}.Debug|x86.Deploy.0 = Debug|x86
+		{987760B7-FFF4-44EE-BA2E-41DEDB4E0C39}.Release|ARM.ActiveCfg = Release|ARM
+		{987760B7-FFF4-44EE-BA2E-41DEDB4E0C39}.Release|ARM.Build.0 = Release|ARM
+		{987760B7-FFF4-44EE-BA2E-41DEDB4E0C39}.Release|ARM.Deploy.0 = Release|ARM
+		{987760B7-FFF4-44EE-BA2E-41DEDB4E0C39}.Release|x64.ActiveCfg = Release|x64
+		{987760B7-FFF4-44EE-BA2E-41DEDB4E0C39}.Release|x64.Build.0 = Release|x64
+		{987760B7-FFF4-44EE-BA2E-41DEDB4E0C39}.Release|x64.Deploy.0 = Release|x64
+		{987760B7-FFF4-44EE-BA2E-41DEDB4E0C39}.Release|x86.ActiveCfg = Release|x86
+		{987760B7-FFF4-44EE-BA2E-41DEDB4E0C39}.Release|x86.Build.0 = Release|x86
+		{987760B7-FFF4-44EE-BA2E-41DEDB4E0C39}.Release|x86.Deploy.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
