@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module _winspi</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>_winspi</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:_winspi_d.pyd">_winspi_d.pyd</a></font></td></tr></table>
+    <p><tt>SPI&nbsp;functionality&nbsp;of&nbsp;a&nbsp;Windows&nbsp;10&nbsp;IoT&nbsp;Core&nbsp;device</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="_winspi.html#spibusinfo">spibusinfo</a>
+</font></dt><dt><font face="helvetica, arial"><a href="_winspi.html#spidevice">spidevice</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="spibusinfo">class <strong>spibusinfo</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#spibusinfo">spibusinfo</a>(friendlyname)&nbsp;-&gt;&nbsp;<a href="#spibusinfo">spibusinfo</a><br>
+&nbsp;<br>
+Creates&nbsp;a&nbsp;new&nbsp;instance&nbsp;of&nbsp;a&nbsp;SPI&nbsp;bus&nbsp;info&nbsp;<a href="builtins.html#object">object</a><br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="spibusinfo-__getattribute__"><strong>__getattribute__</strong></a>(self, name, /)</dt><dd><tt>Return&nbsp;getattr(self,&nbsp;name).</tt></dd></dl>
+
+<dl><dt><a name="spibusinfo-__init__"><strong>__init__</strong></a>(self, /, *args, **kwargs)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="spibusinfo-__new__"><strong>__new__</strong></a>(*args, **kwargs)<font color="#909090"><font face="helvetica, arial"> from <a href="builtins.html#type">builtins.type</a></font></font></dt><dd><tt>Create&nbsp;and&nbsp;return&nbsp;a&nbsp;new&nbsp;<a href="builtins.html#object">object</a>.&nbsp;&nbsp;See&nbsp;help(type)&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="spibusinfo-chipselectlinecount"><strong>chipselectlinecount</strong></a>(...)</dt><dd><tt><a href="#spibusinfo-chipselectlinecount">chipselectlinecount</a>()&nbsp;-&gt;&nbsp;int<br>
+&nbsp;<br>
+Retrieves&nbsp;the&nbsp;chip&nbsp;select&nbsp;line&nbsp;count&nbsp;for&nbsp;the&nbsp;SPI&nbsp;bus</tt></dd></dl>
+
+<dl><dt><a name="spibusinfo-maxclockfrequency"><strong>maxclockfrequency</strong></a>(...)</dt><dd><tt><a href="#spibusinfo-maxclockfrequency">maxclockfrequency</a>()&nbsp;-&gt;&nbsp;int<br>
+&nbsp;<br>
+Retrieves&nbsp;the&nbsp;max&nbsp;clock&nbsp;frequency&nbsp;for&nbsp;the&nbsp;SPI&nbsp;bus</tt></dd></dl>
+
+<dl><dt><a name="spibusinfo-minclockfrequency"><strong>minclockfrequency</strong></a>(...)</dt><dd><tt><a href="#spibusinfo-minclockfrequency">minclockfrequency</a>()&nbsp;-&gt;&nbsp;int<br>
+&nbsp;<br>
+Retrieves&nbsp;the&nbsp;min&nbsp;clock&nbsp;frequency&nbsp;for&nbsp;the&nbsp;SPI&nbsp;bus</tt></dd></dl>
+
+<dl><dt><a name="spibusinfo-supporteddatalengthbits"><strong>supporteddatalengthbits</strong></a>(...)</dt><dd><tt><a href="#spibusinfo-supporteddatalengthbits">supporteddatalengthbits</a>()&nbsp;-&gt;&nbsp;list(int)<br>
+&nbsp;<br>
+Retrieves&nbsp;the&nbsp;supported&nbsp;data&nbsp;length&nbsp;bits&nbsp;for&nbsp;the&nbsp;SPI&nbsp;bus</tt></dd></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="spidevice">class <strong>spidevice</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#spidevice">spidevice</a>(friendlyname,&nbsp;chipselectline,&nbsp;clockfrequency=&lt;default&gt;,&nbsp;databitlength=&lt;default&gt;,&nbsp;mode=MODE0,&nbsp;sharingmode=EXCLUSIVEMODE)&nbsp;-&gt;&nbsp;<a href="#spidevice">spidevice</a><br>
+&nbsp;<br>
+Creates&nbsp;a&nbsp;new&nbsp;instance&nbsp;of&nbsp;SPI&nbsp;device<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="spidevice-__getattribute__"><strong>__getattribute__</strong></a>(self, name, /)</dt><dd><tt>Return&nbsp;getattr(self,&nbsp;name).</tt></dd></dl>
+
+<dl><dt><a name="spidevice-__init__"><strong>__init__</strong></a>(self, /, *args, **kwargs)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="spidevice-__new__"><strong>__new__</strong></a>(*args, **kwargs)<font color="#909090"><font face="helvetica, arial"> from <a href="builtins.html#type">builtins.type</a></font></font></dt><dd><tt>Create&nbsp;and&nbsp;return&nbsp;a&nbsp;new&nbsp;<a href="builtins.html#object">object</a>.&nbsp;&nbsp;See&nbsp;help(type)&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="spidevice-chipselectline"><strong>chipselectline</strong></a>(...)</dt><dd><tt><a href="#spidevice-chipselectline">chipselectline</a>()&nbsp;-&gt;&nbsp;int<br>
+&nbsp;<br>
+Retrieves&nbsp;the&nbsp;chip&nbsp;select&nbsp;line&nbsp;for&nbsp;the&nbsp;SPI&nbsp;device</tt></dd></dl>
+
+<dl><dt><a name="spidevice-clockfrequency"><strong>clockfrequency</strong></a>(...)</dt><dd><tt><a href="#spidevice-clockfrequency">clockfrequency</a>()&nbsp;-&gt;&nbsp;int<br>
+&nbsp;<br>
+Retrieves&nbsp;the&nbsp;clock&nbsp;frequency&nbsp;for&nbsp;the&nbsp;SPI&nbsp;device</tt></dd></dl>
+
+<dl><dt><a name="spidevice-databitlength"><strong>databitlength</strong></a>(...)</dt><dd><tt><a href="#spidevice-databitlength">databitlength</a>()&nbsp;-&gt;&nbsp;int<br>
+&nbsp;<br>
+Retrieves&nbsp;the&nbsp;data&nbsp;bit&nbsp;length&nbsp;for&nbsp;the&nbsp;SPI&nbsp;device</tt></dd></dl>
+
+<dl><dt><a name="spidevice-deviceid"><strong>deviceid</strong></a>(...)</dt><dd><tt><a href="#spidevice-deviceid">deviceid</a>()&nbsp;-&gt;&nbsp;string<br>
+&nbsp;<br>
+Retrieves&nbsp;the&nbsp;device&nbsp;id&nbsp;for&nbsp;the&nbsp;SPI&nbsp;device</tt></dd></dl>
+
+<dl><dt><a name="spidevice-mode"><strong>mode</strong></a>(...)</dt><dd><tt><a href="#spidevice-mode">mode</a>()&nbsp;-&gt;&nbsp;int&nbsp;(MODE0,MODE1,MODE2&nbsp;or&nbsp;MODE3)<br>
+&nbsp;<br>
+Retrieves&nbsp;the&nbsp;mode&nbsp;for&nbsp;the&nbsp;SPI&nbsp;device</tt></dd></dl>
+
+<dl><dt><a name="spidevice-read"><strong>read</strong></a>(...)</dt><dd><tt><a href="#spidevice-read">read</a>(count)&nbsp;-&gt;&nbsp;bytes<br>
+&nbsp;<br>
+Reads&nbsp;from&nbsp;the&nbsp;device&nbsp;the&nbsp;specified&nbsp;number&nbsp;of&nbsp;bytes<br>
+&nbsp;<br>
+count=Number&nbsp;of&nbsp;bytes&nbsp;to&nbsp;read</tt></dd></dl>
+
+<dl><dt><a name="spidevice-sharingmode"><strong>sharingmode</strong></a>(...)</dt><dd><tt><a href="#spidevice-sharingmode">sharingmode</a>()&nbsp;-&gt;&nbsp;int&nbsp;(EXCLUSIVEMODE&nbsp;or&nbsp;SHAREDMODE)<br>
+&nbsp;<br>
+Retrieves&nbsp;the&nbsp;sharing&nbsp;mode&nbsp;for&nbsp;the&nbsp;SPI&nbsp;device</tt></dd></dl>
+
+<dl><dt><a name="spidevice-transfer"><strong>transfer</strong></a>(...)</dt><dd><tt><a href="#spidevice-transfer">transfer</a>(bytes,&nbsp;count)&nbsp;-&gt;&nbsp;bytes<br>
+&nbsp;<br>
+Writes&nbsp;the&nbsp;bytes&nbsp;to&nbsp;the&nbsp;device&nbsp;and&nbsp;reads&nbsp;the&nbsp;expected&nbsp;number&nbsp;of&nbsp;bytes&nbsp;in&nbsp;full&nbsp;duplex<br>
+&nbsp;<br>
+bytes=Byte&nbsp;array&nbsp;to&nbsp;be&nbsp;written&nbsp;to&nbsp;the&nbsp;device</tt></dd></dl>
+
+<dl><dt><a name="spidevice-transfersequential"><strong>transfersequential</strong></a>(...)</dt><dd><tt><a href="#spidevice-transfersequential">transfersequential</a>(bytes,&nbsp;count)&nbsp;-&gt;&nbsp;bytes<br>
+&nbsp;<br>
+Writes&nbsp;the&nbsp;bytes&nbsp;to&nbsp;the&nbsp;device&nbsp;and&nbsp;reads&nbsp;the&nbsp;expected&nbsp;number&nbsp;of&nbsp;bytes&nbsp;in&nbsp;sequential&nbsp;mode<br>
+&nbsp;<br>
+bytes=Byte&nbsp;array&nbsp;to&nbsp;be&nbsp;written&nbsp;to&nbsp;the&nbsp;device</tt></dd></dl>
+
+<dl><dt><a name="spidevice-write"><strong>write</strong></a>(...)</dt><dd><tt><a href="#spidevice-write">write</a>(bytes)<br>
+&nbsp;<br>
+Writes&nbsp;the&nbsp;bytes&nbsp;to&nbsp;the&nbsp;device<br>
+&nbsp;<br>
+bytes=Byte&nbsp;array&nbsp;to&nbsp;be&nbsp;written&nbsp;to&nbsp;the&nbsp;device</tt></dd></dl>
+
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>EXCLUSIVEMODE</strong> = 0<br>
+<strong>MODE0</strong> = 0<br>
+<strong>MODE1</strong> = 1<br>
+<strong>MODE2</strong> = 2<br>
+<strong>MODE3</strong> = 3<br>
+<strong>SHAREDMODE</strong> = 1</td></tr></table>
+</body></html>
