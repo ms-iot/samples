@@ -58,17 +58,17 @@ void BlinkyService::BlinkyServiceProvider::OnRequestReceived(Windows::Applicatio
                 String^ command = safe_cast<String^>(commandObject);
                 auto pinNumberObject = args->Request->Message->Lookup(L"PinNumber");
                 int pinNumber = safe_cast<int>(pinNumberObject);
-                //auto pin = controller->OpenPin(pinNumber);
-                //pin->SetDriveMode(GpioPinDriveMode::Output);
+                auto pin = controller->OpenPin(pinNumber);
+                pin->SetDriveMode(GpioPinDriveMode::Output);
 
                 if (String::operator==(command, L"SetLedStateOn"))
                 {
-                    //pin->Write(GpioPinValue::High);
+                    pin->Write(GpioPinValue::High);
                     responseMessage->Insert(L"Response", L"Success");
                 }
                 else if (String::operator==(command, L"SetLedStateOff"))
                 {
-                    //pin->Write(GpioPinValue::Low);
+                    pin->Write(GpioPinValue::Low);
                     responseMessage->Insert(L"Response", L"Succes");
                 }
                 else
