@@ -18,7 +18,7 @@ void StartupTask::Run(IBackgroundTaskInstance^ taskInstance)
     serviceDeferral = taskInstance->GetDeferral();
 
     serviceConnection = ref new AppServiceConnection();
-    serviceConnection->PackageFamilyName = L"BlinkyService-uwp_82skx71hc70w6";
+    serviceConnection->PackageFamilyName = L"BlinkyService-uwp_2yx4q2bk84nj4";
     serviceConnection->AppServiceName = L"BlinkyService";
 
     auto connectTask = Concurrency::create_task(serviceConnection->OpenAsync());

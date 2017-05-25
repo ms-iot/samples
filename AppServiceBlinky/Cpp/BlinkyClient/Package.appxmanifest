@@ -9,14 +9,14 @@
 
   <Identity
     Name="BlinkyClient-uwp"
-    Publisher="CN=Microsoft"
+    Publisher="CN=msft"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="13bf0d19-c8ff-4847-bf70-99de15f26576" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>BlinkyClient</DisplayName>
-    <PublisherDisplayName>Microsoft</PublisherDisplayName>
+    <PublisherDisplayName>msft</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
