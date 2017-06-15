@@ -20,7 +20,7 @@
       <ProjectItem ReplaceParameters="true" TargetFileName="HeadedBackgroundTask.cs">HeadedBackgroundTask.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="HeadlessStartupTask.cs">HeadlessStartupTask.cs</ProjectItem>
       <ProjectItem ReplaceParameters="false" TargetFileName="AdapterDevice.cs">AdapterDevice.cs</ProjectItem>
-      <ProjectItem ReplaceParameters="false" TargetFileName="project.json">project.json</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="project.json">project.template.json</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="AssemblyInfo.cs">Properties\AssemblyInfo.cs</ProjectItem>
     </Project>
   </TemplateContent>
