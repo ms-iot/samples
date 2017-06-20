@@ -325,11 +325,11 @@ BOOL SetKeybaordUsage(HIDINJECTOR_INPUT_REPORT *Rep, UCHAR Usage)
 			}
 			else if (Rep->Report.KeyReport.Key3 == 0)
 			{
-				Rep->Report.KeyReport.Key2 = Usage;
+				Rep->Report.KeyReport.Key3 = Usage;
 			}
 			else if (Rep->Report.KeyReport.Key4 == 0)
 			{
-				Rep->Report.KeyReport.Key2 = Usage;
+				Rep->Report.KeyReport.Key4 = Usage;
 			}
 			else
 			{
@@ -359,18 +359,18 @@ BOOL ClearKeyboardUsage(HIDINJECTOR_INPUT_REPORT *Rep, UCHAR Usage)
 			{
 				Rep->Report.KeyReport.Key4 = 0;
 			}
-			if (Rep->Report.KeyReport.Key3 == Usage)
+			else if (Rep->Report.KeyReport.Key3 == Usage)
 			{
 				Rep->Report.KeyReport.Key3 = Rep->Report.KeyReport.Key4;
 				Rep->Report.KeyReport.Key4 = 0;
 			}
-			if (Rep->Report.KeyReport.Key2 == Usage)
+			else if (Rep->Report.KeyReport.Key2 == Usage)
 			{
 				Rep->Report.KeyReport.Key2 = Rep->Report.KeyReport.Key3;
 				Rep->Report.KeyReport.Key3 = Rep->Report.KeyReport.Key4;
 				Rep->Report.KeyReport.Key4 = 0;
 			}
-			if (Rep->Report.KeyReport.Key1 == Usage)
+			else if (Rep->Report.KeyReport.Key1 == Usage)
 			{
 				Rep->Report.KeyReport.Key1 = Rep->Report.KeyReport.Key2;
 				Rep->Report.KeyReport.Key2 = Rep->Report.KeyReport.Key3;
