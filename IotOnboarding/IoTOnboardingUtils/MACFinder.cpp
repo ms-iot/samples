@@ -13,7 +13,9 @@ using namespace IoTOnboardingUtils;
 
 Platform::String^ MACFinder::GetWiFiAdapterMAC()
 {
+#ifndef IF_TYPE_IEEE80211
     const IFTYPE IF_TYPE_IEEE80211 = 71;
+#endif
     const size_t MAX_PHYS_ADDRESS_LENGTH = 32;
     const size_t WORKING_BUFFER_SIZE = 15000;
     const ULONG  MAX_ATTEMPTS = 3;

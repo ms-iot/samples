@@ -59,8 +59,14 @@ namespace IoTOnboardingService
 
         public OnboardingAccessPoint(string ssid, string password, Guid deviceID)
         {
-            Debug.Assert(password.Length <= MAX_WPA2_PASSWORD_LENGTH);
-            Debug.Assert(password.Length >= MIN_WPA2_PASSWORD_LENGTH);
+            // Assert password length meets requirements if password is specified.
+            // If password is null or empty, treat this as Open network.
+            bool WPA2 = !String.IsNullOrEmpty(password);
+            if (WPA2)
+            {
+                Debug.Assert(password.Length <= MAX_WPA2_PASSWORD_LENGTH);
+                Debug.Assert(password.Length >= MIN_WPA2_PASSWORD_LENGTH);
+            }
 
             // Begin advertising for legacy clients
             _publisher = new WiFiDirectAdvertisementPublisher();
@@ -68,54 +74,57 @@ namespace IoTOnboardingService
             // Note: If this flag is not set, the legacy parameters are ignored
             _publisher.Advertisement.IsAutonomousGroupOwnerEnabled = true;
 
-            // Setup Advertisement to use a custom SSID and WPA2 passphrase
+            // Setup Advertisement to use a custom SSID and WPA2 passphrase (null or empty implies Open)
             _publisher.Advertisement.LegacySettings.IsEnabled = true;
             _publisher.Advertisement.LegacySettings.Ssid = ssid;
-            _publisher.Advertisement.LegacySettings.Passphrase = new PasswordCredential { Password = password };
+            _publisher.Advertisement.LegacySettings.Passphrase = WPA2 ? new PasswordCredential { Password = password } : null;
 
-            // Configure this device's WiFi Access Point with the password needed to connect to it
-            // and all other information needed by the Microsoft Onboaring Specification
-            // After the device is onboarded to an end-user's network this will not be broadcast anymore.
+            if (WPA2)
+            { 
+                // If using WPA2, configure this device's WiFi Access Point with the password needed to connect to it
+                // and all other information needed by the Microsoft Onboaring Specification
+                // After the device is onboarded to an end-user's network this will not be broadcast anymore.
 
-            // The following code generates a Wifi Direct Information Element with the following format:
-            //
-            //
-            //  1Byte   1Byte    3Bytes        1Byte      ... Several Bytes...
-            // ---------------------------------------------------------------------------------------
-            // | Type | Length |     OUI     | OUITYPE | Data [ETLV1],[ETLV2]...[ETLVn]              |
-            // ---------------------------------------------------------------------------------------
-            //   DD      num      84 63 d6       00      [01 0A 49 6f 54 20 44 65 76 69 63 65][02....]
-            //          bytes                                  | I  o  T     D  e  v  i  c  e|
-            //                                                 |   "Device Friendly Name"    |
-            //
-            // Where each "ETLV" is
-            //
-            //   1Byte       1Byte     ... Several Bytes...
-            // ---------------------------------------------------------------------------------------
-            // | ETLV Type | Length |   Data                                                         |
-            // ---------------------------------------------------------------------------------------
-            //
-            IEnumerable< byte> ouiData =  MakeStringElement(ETLVType.FRIENDLY_NAME, DEVICE_FRIENDLY_NAME);
-            ouiData = ouiData.Concat(MakeTLVElement(ETLVType.DEVICE_TYPE, DEVICE_TYPE));
-            ouiData = ouiData.Concat(MakeStringElement(ETLVType.DEVICE_MANUFACTURER, DEVICE_MANUFACTURER_NAME));
-            ouiData = ouiData.Concat(MakeStringElement(ETLVType.LANGUAGE_TAG, LANGUAGE_TAG));
-            ouiData = ouiData.Concat(MakeGUIDElement(ETLVType.DEVICE_ID, deviceID));
-            ouiData = ouiData.Concat(MakeStringElement(ETLVType.PASSWORD, password));
-            ouiData = ouiData.Concat(MakeStringElement(ETLVType.UNCLASSIFIED_DEVICE_TYPE, UNCLASSIFIED_DEVICE_TYPE));
+                // The following code generates a Wifi Direct Information Element with the following format:
+                //
+                //
+                //  1Byte   1Byte    3Bytes        1Byte      ... Several Bytes...
+                // ---------------------------------------------------------------------------------------
+                // | Type | Length |     OUI     | OUITYPE | Data [ETLV1],[ETLV2]...[ETLVn]              |
+                // ---------------------------------------------------------------------------------------
+                //   DD      num      84 63 d6       00      [01 0A 49 6f 54 20 44 65 76 69 63 65][02....]
+                //          bytes                                  | I  o  T     D  e  v  i  c  e|
+                //                                                 |   "Device Friendly Name"    |
+                //
+                // Where each "ETLV" is
+                //
+                //   1Byte       1Byte     ... Several Bytes...
+                // ---------------------------------------------------------------------------------------
+                // | ETLV Type | Length |   Data                                                         |
+                // ---------------------------------------------------------------------------------------
+                //
+                IEnumerable< byte> ouiData =  MakeStringElement(ETLVType.FRIENDLY_NAME, DEVICE_FRIENDLY_NAME);
+                ouiData = ouiData.Concat(MakeTLVElement(ETLVType.DEVICE_TYPE, DEVICE_TYPE));
+                ouiData = ouiData.Concat(MakeStringElement(ETLVType.DEVICE_MANUFACTURER, DEVICE_MANUFACTURER_NAME));
+                ouiData = ouiData.Concat(MakeStringElement(ETLVType.LANGUAGE_TAG, LANGUAGE_TAG));
+                ouiData = ouiData.Concat(MakeGUIDElement(ETLVType.DEVICE_ID, deviceID));
+                ouiData = ouiData.Concat(MakeStringElement(ETLVType.PASSWORD, password));
+                ouiData = ouiData.Concat(MakeStringElement(ETLVType.UNCLASSIFIED_DEVICE_TYPE, UNCLASSIFIED_DEVICE_TYPE));
 
-            // Create the IoT Device Wi-Fi Beacons Partner Information Element
-            var infoElement = new WiFiDirectInformationElement();
-            infoElement.OuiType = OUI_TYPE;
-            infoElement.Oui = ByteArrayToBuffer(MICROSOFT_OUI);
-            infoElement.Value = ByteArrayToBuffer(ouiData.ToArray());
+                // Create the IoT Device Wi-Fi Beacons Partner Information Element
+                var infoElement = new WiFiDirectInformationElement();
+                infoElement.OuiType = OUI_TYPE;
+                infoElement.Oui = ByteArrayToBuffer(MICROSOFT_OUI);
+                infoElement.Value = ByteArrayToBuffer(ouiData.ToArray());
 
-            // The Maximum OUI Data Length was exceeded.  Trim ouiData String lengths 
-            Debug.Assert(infoElement.Value.Length < MAX_OUI_DATA_LENGTH);
+                // The Maximum OUI Data Length was exceeded.  Trim ouiData String lengths 
+                Debug.Assert(infoElement.Value.Length < MAX_OUI_DATA_LENGTH);
 
-            // Add the custom Information Elements for publication
-            var wifiInfoElements = new List<WiFiDirectInformationElement>();
-            wifiInfoElements.Add(infoElement);
-            _publisher.Advertisement.InformationElements = wifiInfoElements;
+                // Add the custom Information Elements for publication
+                var wifiInfoElements = new List<WiFiDirectInformationElement>();
+                wifiInfoElements.Add(infoElement);
+                _publisher.Advertisement.InformationElements = wifiInfoElements;
+            }
         }       
 
         private byte[] LongToByteArrayNetworkOrder(Int32 inValue)
