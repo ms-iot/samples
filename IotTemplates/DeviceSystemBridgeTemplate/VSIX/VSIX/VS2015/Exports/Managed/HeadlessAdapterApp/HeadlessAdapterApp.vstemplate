@@ -24,7 +24,7 @@
       <ProjectItem ReplaceParameters="false" TargetFileName="Wide310x150Logo.scale-200.png">Assets\Wide310x150Logo.scale-200.png</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="AssemblyInfo.cs">Properties\AssemblyInfo.cs</ProjectItem>
       <ProjectItem ReplaceParameters="false" TargetFileName="HeadlessAdapterApp_TemporaryKey.pfx">HeadlessAdapterApp_TemporaryKey.pfx</ProjectItem>
-      <ProjectItem ReplaceParameters="false" TargetFileName="project.json">project.json</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="project.json">project.template.json</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="Package.appxmanifest">Package.appxmanifest</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="Resources.resw">Resources\en-US\Resources.resw</ProjectItem>
     </Project>
