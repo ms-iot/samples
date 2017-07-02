@@ -675,10 +675,346 @@
     <Xsd Include="config\zwcfg.xsd" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="config\BeNext\1poleswitch.xml">
+    <Xml Include="config\zwave.me\iTemp.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\BeNext\2poleswitch.xml">
+    <Xml Include="config\zwave.me\kfob.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\zwave.me\popp_kfob-c.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\zwave.me\ZME_06433.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\zwave.me\ZME_06436.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\zwave.me\ZME_064381.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\zwave.me\ZME_064435.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\zwave.me\ZME_KFOB-S.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\zwave.me\ZME_RC2.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\zwave.me\ZME_WALLC-S.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\zwave.me\ZME_WCD2.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\zwave.me\ZUno.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\zwave.me\zweather.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\zipato\MiniKeypad.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\zipato\RGBBulb.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\zipato\RGBBulb2.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\wenzhou\tz88.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\widom\UBS104.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\widom\UME304C_S.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\zipato\vszd2102.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\widom\WDS.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\zooz\zen07.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\zwave.me\ZME_05431.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\zwave.me\ZME_05461.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\zipato\zp3102.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\zooz\zse08.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\zooz\zse09.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\zooz\zse33.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\zooz\zse40.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\wenzhou\sm103.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\wenzhou\tsp01.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\wenzhou\tz55.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\wenzhou\tz56.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\wenzhou\tz65d.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\wenzhou\tz66d.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\wenzhou\tz67.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\wenzhou\tz68.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\wenzhou\tz69.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\vitrum\vitrumBS.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\waynedalton\WDTC-20.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\vision\zm1602eu.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\vision\zm1602eu5.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\vision\zp3102.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\vision\zp3111.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\vision\zs5101eu.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\thermofloor\heatit021.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\swiid\swiidinter.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\swiid\swiidplug.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\telldus\tzdw100.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\trane\TZEMT400AB32MAA.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\trane\TZEMT400BB32MAA.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\trane\TZEMT524AA21MA.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\telldus\tzwp100.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\vision\zd2102.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\vision\zd2201.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\vision\zd2301.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\vision\zf5201.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\vision\zg8101.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\vision\zm1601eu.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\vision\zm1601eu5.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\schlage\BE468CAM619.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\schlage\BE469NXCEN.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\schlagelink\itemp.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\schlagelink\minikeypad.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\shenzen_neo\nas-ab01z.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\shenzen_neo\nas-ds01z.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\shenzen_neo\nas-pd01z.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\shenzen_neo\nas-wr01z.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\shenzen_neo\nas-ws02z.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\sensative\strips.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\stelpro\stzw402.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\remotec\zfm-80.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\remotec\zrc-90.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\remotec\zts-110.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\remotec\zurc.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\remotec\zxt-120.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\rcs\em52-zw.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\rcs\pm12-zw.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\rcs\therm0005.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\rcs\therm0007.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\rcs\therm0009.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\qubino\ZMNHKDx.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\qubino\ZMNHLAx.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\qubino\ZMNHLDx.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\qubino\ZMNHNDx.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\qubino\ZMNHODx.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\qubino\ZMNHSDx.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\qubino\ZMNHTDx.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\qubino\ZMNHTDxS3.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\qubino\ZMNHUD1.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\qubino\ZMNHVDx.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\qubino\ZMNHWD1.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\qubino\ZMNHZDx.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\qees\reto-dimmer-plus.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\qees\reto-plugin-switch.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\qubino\ZMNHAA2.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\qubino\ZMNHADx.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\qubino\ZMNHBA2.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\qubino\ZMNHBDx.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\qubino\ZMNHCA2.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\qubino\ZMNHCDx.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\qubino\ZMNHDA2.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\qubino\ZMNHDDx.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\qubino\ZMNHIA2.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\qubino\ZMNHIDxS1.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\qubino\ZMNHIDxS2.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\qubino\ZMNHJA2.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\qubino\ZMNHJD1.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\popp\zweather.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\popp\004407.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\popp\009105.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\popp\009303.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\popp\009402.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\popp\012501.xml">
       <Filter>config</Filter>
     </Xml>
     <Xml Include="config\popp\123580.xml">
@@ -690,37 +1026,274 @@
     <Xml Include="config\popp\123658.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\BeNext\AlarmSound.xml">
+    <Xml Include="config\popp\700168.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\aeotec\alms.xml">
+    <Xml Include="config\polycontrol\doorlock.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\everspring\an145.xml">
+    <Xml Include="config\polycontrol\keypad.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\everspring\an158.xml">
+    <Xml Include="config\polycontrol\polylock.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\philio\psr04.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\philio\pst02.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\philio\pst02-1c.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\philio\pst02-b.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\popp\smoke-detector.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\popp\solar-siren.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\northq\nq9021.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\northq\nq9121.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\northq\nq92021.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\options.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\philio\pan03.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\philio\pan04.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\philio\pan07.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\philio\pan08.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\philio\pan11.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\philio\pan16.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\philio\phpab01.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\philio\phpat02.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\philio\phpsg01.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\philio\pse02.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\philio\psm02.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\philio\psp05.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\merten\50x5xx.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\merten\507801.xml">
       <Filter>config</Filter>
     </Xml>
     <Xml Include="config\nodon\asp3100SmartPlug.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\BeNext\BuiltinDimmer.xml">
+    <Xml Include="config\nodon\crc360xSofremote.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\nodon\crc3100OctanRemote.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\nodon\cws3101wallswitch.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\nexia\db100z.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\mcohome\mh9co2.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\mcohome\mhp210.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\mcohome\mhs311.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\mcohome\mhs312.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\mcohome\mhs314.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\mcohome\mhs411.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\mcohome\mhs412.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\mcohome\mhs513.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\nodon\msp31xxMicroSmartPlug.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\linear\GC-TBZ48.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\linear\LB60Z-1.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\manufacturer_specific.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\mcohome\mh8fceu.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\linear\PD300Z-2.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\leviton\vri06.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\leviton\vri10.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\linear\WA00Z-1.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\linear\WAPIRZ-1.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\linear\WD500Z-1.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\linear\WS15Z-1.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\linear\WT00Z-1.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\logicsoft\ZHC5010.xml">
       <Filter>config</Filter>
     </Xml>
     <Xml Include="config\intermatic\ca8900.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\2gig\ct30.xml">
+    <Xml Include="config\ingersoll\dwzwave1.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\2gig\ct100.xml">
+    <Xml Include="config\leviton\dz6hd.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\2gig\ct101.xml">
+    <Xml Include="config\leviton\dz15s.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\device_classes.xml">
+    <Xml Include="config\leviton\dzpd3.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\idlock\idlock101.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\kaipule\im20.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\iris\rangeextender.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\leviton\rzi10.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\horstmann\ses302.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\horstmann\ses303.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\horstmann\sir321.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\kwikset\smartcode.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\horstmann\srt323.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\horstmann\ssr302.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\leviton\vrcpg.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\leviton\vrf01.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\horstmann\asrzw.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\homeseer\ezmotionplus.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\horstmann\hrt4zw.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\heiman\HS1CA-Z.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\heiman\HS1CG-Z.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\heiman\HS1DS-Z.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\heiman\HS1HT-Z.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\heiman\HS1MS-Z.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\heiman\HS1SA-Z.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\heiman\HS1WL-Z.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\heiman\HS2SK-Z.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\homeseer\hsm100.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\homeseer\hsm200.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\homeseer\hs-wd100plus.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\homeseer\hs-ws100plus.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\horstmann\scsc17.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\honeywell\th8320zw1000.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\homeseer\ztroller.xml">
       <Filter>config</Filter>
     </Xml>
     <Xml Include="config\ge\dimmer.xml">
@@ -729,43 +1302,121 @@
     <Xml Include="config\ge\dimmer_module.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\polycontrol\doorlock.xml">
+    <Xml Include="config\gocontrol\GC-TBZ48L.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\BeNext\DoorSensor.xml">
+    <Xml Include="config\gr\gr105.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\aeotec\doorwindow.xml">
+    <Xml Include="config\gr\gr105n.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\aeotec\dsd31.xml">
+    <Xml Include="config\ge\hinge-pin.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\rcs\em52-zw.xml">
+    <Xml Include="config\hank\hkzw-dws01.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\BeNext\EnergySwitch.xml">
+    <Xml Include="config\hank\hkzw-ms01.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\eurotronic\eur_stellaz.xml">
+    <Xml Include="config\hank\hkzw-so01-smartplug.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\hank\hkzw-so05-smartplug.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\greenwave\powernode1.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\greenwave\powernode6.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\ge\receptacle.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\ge\relay.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\hank\scenecontroller1.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\hank\scenecontroller4.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\ge\12724-dimmer.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\ge\14282-plugin-switch.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\ge\14291-switch.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\ge\14294-dimmer.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\ge\26933-motion-dimmer.xml">
       <Filter>config</Filter>
     </Xml>
     <Xml Include="config\frostdale\fdn2nxx.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\fibaro\fgbs001.xml">
+    <Xml Include="config\fibaro\fgs223.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\fibaro\fgd211.xml">
+    <Xml Include="config\fibaro\fgsd002.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\fibaro\fgfs101.xml">
+    <Xml Include="config\fibaro\fgss101.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\fibaro\fgwpe.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\fibaro\fgwpfzw5.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\fortrezz\mimolite.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\fortrezz\ssa2.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\fortrezz\ssa3.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\fortrezz\wv01.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\fortrezz\wwa02.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\firstalert\zcombo.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\fibaro\fgfs101zw5.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\fibaro\fggc001.xml">
       <Filter>config</Filter>
     </Xml>
     <Xml Include="config\fibaro\fgk001.xml">
       <Filter>config</Filter>
     </Xml>
+    <Xml Include="config\fibaro\fgk10x.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\fibaro\fgkf601.xml">
+      <Filter>config</Filter>
+    </Xml>
     <Xml Include="config\fibaro\fgms.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\fibaro\fgmszw5.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\fibaro\fgpb101.xml">
       <Filter>config</Filter>
     </Xml>
     <Xml Include="config\fibaro\fgr221.xml">
@@ -783,61 +1434,31 @@
     <Xml Include="config\fibaro\fgs212.xml">
       <Filter>config</Filter>
     </Xml>
+    <Xml Include="config\fibaro\fgs213.xml">
+      <Filter>config</Filter>
+    </Xml>
     <Xml Include="config\fibaro\fgs221.xml">
       <Filter>config</Filter>
     </Xml>
     <Xml Include="config\fibaro\fgs222.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\fibaro\fgsd002.xml">
+    <Xml Include="config\fibaro\fgbs001.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\fibaro\fgss101.xml">
+    <Xml Include="config\fibaro\fgd211.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\fibaro\fgwpe.xml">
+    <Xml Include="config\fibaro\fgd212.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\aeotec\hdss_gen5.xml">
+    <Xml Include="config\fibaro\fgdw2.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\aeotec\hem.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\aeotec\hemg2.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\horstmann\hrt4zw.xml">
+    <Xml Include="config\fibaro\fgfs101.xml">
       <Filter>config</Filter>
     </Xml>
     <Xml Include="config\everspringct\hsm02.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\homeseer\hsm100.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\schlagelink\itemp.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\zwave.me\iTemp.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\aeotec\keyfob.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\aeotec\keyfob2.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\polycontrol\keypad.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\zwave.me\kfob.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\act\lfm20.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\danfoss\living.xml">
       <Filter>config</Filter>
     </Xml>
     <Xml Include="config\evolve\lrm-as.xml">
@@ -849,103 +1470,61 @@
     <Xml Include="config\evolve\ltm-5.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\manufacturer_specific.xml">
+    <Xml Include="config\everspring\st814.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\schlagelink\minikeypad.xml">
+    <Xml Include="config\everspring\st815.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\zipato\MiniKeypad.xml">
+    <Xml Include="config\everspring\tse03.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\aeotec\minimote.xml">
+    <Xml Include="config\fakro\zwp10.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\BeNext\Molite.xml">
+    <Xml Include="config\fakro\zwrs.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\aeotec\msesv2.xml">
+    <Xml Include="config\fakro\zws12.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\aeotec\multisensor_gen5.xml">
+    <Xml Include="config\fakro\zws230.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\northq\nq92021.xml">
+    <Xml Include="config\everspring\ad146.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\options.xml">
+    <Xml Include="config\everspring\ad147.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\philio\pan04.xml">
+    <Xml Include="config\everspring\an145.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\aeotec\panicbtn.xml">
+    <Xml Include="config\everspring\an158.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\BeNext\PluginDimmer.xml">
+    <Xml Include="config\everspring\an179.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\rcs\pm12-zw.xml">
+    <Xml Include="config\everspring\an180.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\greenwave\powernode1.xml">
+    <Xml Include="config\everspring\an181.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\greenwave\powernode6.xml">
+    <Xml Include="config\eurotronic\eur_cometz.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\philio\psm02.xml">
+    <Xml Include="config\eurotronic\eur_stellaz.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\philio\pst02.xml">
+    <Xml Include="config\everspring\hac01.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\philio\pst02-1c.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\philio\pst02-b.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\iris\rangeextender.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\assa_abloy\RealLivingCapTouch.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\aeotec\recessed_doorsensor.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\aeotec\recessed_doorsensor_gen5.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\ge\relay.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\qees\reto-plugin-switch.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\cooper\RF9505-T.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\cooper\RF9540-N.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\zipato\RGBBulb.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\leviton\rzi10.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\BeNext\SceneController.xml">
+    <Xml Include="config\everspring\hsp02.xml">
       <Filter>config</Filter>
     </Xml>
     <Xml Include="config\everspring\se812.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\aeotec\ses.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\aeotec\ses2.xml">
       <Filter>config</Filter>
     </Xml>
     <Xml Include="config\everspring\sf812.xml">
@@ -954,169 +1533,58 @@
     <Xml Include="config\everspring\sm103.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\wenzhou\sm103.xml">
-      <Filter>config</Filter>
-    </Xml>
     <Xml Include="config\everspring\sp103.xml">
       <Filter>config</Filter>
     </Xml>
     <Xml Include="config\everspring\sp814.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\everspring\st814.xml">
+    <Xml Include="config\everspring\st812.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\everspring\st815.xml">
+    <Xml Include="config\electronicsolutions\dbmz.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\swiid\swiidinter.xml">
+    <Xml Include="config\enerwave\zw15rmplus.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\swiid\swiidplug.xml">
+    <Xml Include="config\enerwave\zw15s.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\BeNext\TagReader.xml">
+    <Xml Include="config\enerwave\zw20r.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\honeywell\th8320zw1000.xml">
+    <Xml Include="config\enerwave\zw20rm.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\rcs\therm0005.xml">
+    <Xml Include="config\enerwave\zw500d.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\rcs\therm0007.xml">
+    <Xml Include="config\enerwave\zwn-bpc.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\rcs\therm0009.xml">
+    <Xml Include="config\enerwave\zwnrsm1plus.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\everspring\tse03.xml">
+    <Xml Include="config\enerwave\zwn-sc7.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\wenzhou\tsp01.xml">
+    <Xml Include="config\ecolink\doorwindow.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\wenzhou\tz65d.xml">
+    <Xml Include="config\ecolink\firefighter.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\wenzhou\tz66d.xml">
+    <Xml Include="config\ecolink\motion.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\wenzhou\tz67.xml">
+    <Xml Include="config\ecolink\sensor.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\wenzhou\tz88.xml">
+    <Xml Include="config\duwi\zwfb.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\trane\TZEMT400AB32MAA.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\trane\TZEMT400BB32MAA.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\widom\UBS104.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\vitrum\vitrumBS.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\leviton\vrcpg.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\leviton\vrf01.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\leviton\vri06.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\leviton\vri10.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\aeotec\watersensor.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\dragontech\wd-100.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\waynedalton\WDTC-20.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\danfoss\z.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\vision\zd2102.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\act\zdm230.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\act\zdw103.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\act\zdw232.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\remotec\zfm-80.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\act\zir010.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\vision\zm1601eu.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\zwave.me\ZME_05431.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\zwave.me\ZME_06433.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\zwave.me\ZME_06436.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\zwave.me\ZME_064435.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\zwave.me\ZME_WALLC-S.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\zwave.me\ZME_WCD2.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\qubino\ZMNHAA2.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\qubino\ZMNHBA2.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\qubino\ZMNHCA2.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\qubino\ZMNHDA2.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\qubino\ZMNHIA2.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\qubino\ZMNHJA2.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\vision\zp3102.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\act\zrp110.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\act\zrw103.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\vision\zs5101eu.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\homeseer\ztroller.xml">
-      <Filter>config</Filter>
-    </Xml>
-    <Xml Include="config\remotec\zurc.xml">
+    <Xml Include="config\duwi\05458.xml">
       <Filter>config</Filter>
     </Xml>
     <Xml Include="config\duwi\ZWES1000.xml">
@@ -1125,7 +1593,352 @@
     <Xml Include="config\duwi\ZWESJ300.xml">
       <Filter>config</Filter>
     </Xml>
-    <Xml Include="config\remotec\zxt-120.xml">
+    <Xml Include="config\domux\DX1MS-Z.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\domux\DX1SA-Z.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\domux\DX1WL-Z.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\domux\DX2SK-Z.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\dragontech\wd-100.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\domux\DX1CA-Z.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\domux\DX1CG-Z.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\domux\DX1DS-Z.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\domux\DX1HT-Z.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\domitech\zb22uk.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\domitech\ze27eu.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\dlink\dch-z110.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\dlink\dch-z120.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\dlink\dch-z510.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\devolo\mt2652.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\devolo\mt2653.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\devolo\mt2756.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\devolo\rs014G0159.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\devolo\mt2646.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\devolo\mt2647.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\devolo\mt02648.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\devolo\mt02755.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\devolo\mt02758.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\devolo\mt02792.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\devolo\connectz.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\device_classes.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\danfoss\living.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\danfoss\rsroom.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\danfoss\z.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\assa_abloy\nexTouch.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\cooper\RF9501.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\cooper\RF9505-T.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\cooper\RF9517.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\cooper\RF9540-N.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\cooper\RF9542-Z.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\assa_abloy\KeyfreeConnected.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\assa_abloy\PushButtonDeadbolt.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\assa_abloy\PushButtonLever.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\assa_abloy\TouchDeadbolt.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\assa_abloy\TouchLever.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\zw140.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\zw120.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\zw121.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\zw122.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\zw129.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\zw130.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\zw132.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\zw139.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\zw099.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\zw100.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\zw111.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\zw112.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\zw116.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\zw117.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\zw088.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\zw089.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\zw090.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\zw095.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\zw096.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\zw097.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\zw098.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\dsd37.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\zw056.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\zw062.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\zw074.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\zw075.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\zw078.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\zw080.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\dsc24.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\dsc14104.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\dsc18103.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\dsc19103.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\dsc26103.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\dsc27103.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\dsc35103.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\dsb54.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\dsc10.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\dsc11.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\dsc06106.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\dsc08101.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\dsc12104.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\dsc13104.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\dsa38.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\dsb05.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\dsb28.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\dsb29.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\dsb45.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\dsb04100.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\dsb09104.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\dsa22.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\aeotec\dsa03202.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\act\zdw232.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\act\zir010.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\act\zrp110.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\act\zrw103.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\act\lfm20.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\BeNext\SceneController.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\BeNext\TagReader.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\BeNext\TagReader500.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\act\zdm230.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\act\zdw103.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\BeNext\DoorSensor.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\BeNext\EnergySwitch.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\BeNext\HeatingControl.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\BeNext\Molite.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\BeNext\PanicButton.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\BeNext\PanicWatch.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\BeNext\PluginDimmer.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\BeNext\1poleswitch.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\BeNext\2poleswitch.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\BeNext\AlarmSound.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\BeNext\BuiltinDimmer.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\2gig\ct30.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\2gig\ct50e.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\2gig\ct100.xml">
+      <Filter>config</Filter>
+    </Xml>
+    <Xml Include="config\2gig\ct101.xml">
       <Filter>config</Filter>
     </Xml>
   </ItemGroup>

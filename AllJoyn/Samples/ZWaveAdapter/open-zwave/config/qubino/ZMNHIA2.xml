@@ -31,10 +31,30 @@
 			<Item label="ALL ON active ALL OFF is not active" value="2" />
 		</Value>
 
+		<Value type="short" genre="config" instance="1" index="11" label="Set point set by I2" size="2" min="0" max="65535" value="65535">
+			<Help>
+				When I2 is pressed set point will be set according to the value of this parameter.
+				default value 65535
+				65535 - input I2 does not influence on the set point
+				From 0 to 990 - set point from 0.0 C to 99.0 C
+				From 1001 to 1150 - set point from -0.1 C to -15.0 C
+				</Help>
+		</Value>
+
+		<Value type="short" genre="config" instance="1" index="12" label="Set point set by I3" size="2" min="0" max="65535" value="65535">
+			<Help>
+				When I3 is pressed set point will be set according to the value of this parameter.
+				default value 65535
+				65535 - input I2 does not influence on the set point
+				From 0 to 990 - set point from 0.0 C to 99.0 C
+				From 1001 to 1150 - set point from -0.1 C to -15.0 C
+				</Help>
+		</Value>
+
 		<Value type="list" genre="config" instance="1" index="30" label="Saving the state of the relay after a power failure" size="1" min="0" max="1" value="0">
 			<Help/>
-			<Item label="Flush dimmer module saves its state before power failure (it returns to the last position saved before a power failure)" value="0" />
-			<Item label="Flush dimmer module does not save the state after a power failure, it returns to off position" value="1" />
+			<Item label="Module saves its state before power failure (it returns to the last position saved before a power failure)" value="0" />
+			<Item label="Module does not save the state after a power failure, it returns to off position" value="1" />
 		</Value>
 
 		<Value type="byte" genre="config" instance="1" index="40" label="Power reporting in Watts on power change" size="1" min="0" max="100" value="5">
@@ -46,15 +66,31 @@
 		</Value>
 
 		 <Value type="byte" genre="config" instance="1" index="43" label="Hysteresis On" size="1" min="0" max="255" value="132">
-                        <Help>This parameter defines temperature min difference between real measured temperature and set-point temperature to turn heating on. The parameter can be set from 0 to 255 where 0 to 128 means from 0.0 °C to 12.8 °C and from 129 to 255 means from - 0.0 °C to -12.8 °C.</Help>
-                </Value>
+             <Help>This parameter defines temperature min difference between real measured temperature and set-point temperature to turn heating on. The parameter can be set from 0 to 255 where 0 to 128 means from 0.0 C to 12.8 C and from 129 to 255 means from - 0.0 C to -12.8 C.</Help>
+         </Value>
 
 		<Value type="byte" genre="config" instance="1" index="44" label="Hysteresis Off" size="1" min="0" max="255" value="132">
-			<Help>This parameter defines temperature min difference between real measured temperature and set-point temperature to turn heating off. The parameter can be set from 0 to 255 where 0 to 128 means from 0.0 °C to 12.8 °C and from 129 to 255 means from - 0.0 °C to -12.8 °C.</Help>
+			<Help>This parameter defines temperature min difference between real measured temperature and set-point temperature to turn heating off. The parameter can be set from 0 to 255 where 0 to 128 means from 0.0 C to 12.8 C and from 129 to 255 means from - 0.0 C to -12.8 C.</Help>
 		</Value>
 
-                <Value type="byte" genre="config" instance="1" index="45" label="Antifreeze" size="1" min="0" max="255" value="50">
-			<Help>Set value means at which temperature the heating will be turned on even if the thermostat was manually set to off. The parameter can be set from 0 to 255 where 0 to 128 means from 0.0 °C to 12.8 °C and from 129 to 255 means from - 0.0 °C to -12.8 °C.</Help>
+        <Value type="byte" genre="config" instance="1" index="45" label="Antifreeze" size="1" min="0" max="255" value="50">
+			<Help>Set value means at which temperature the heating will be turned on even if the thermostat was manually set to off. The parameter can be set from 0 to 255 where 0 to 128 means from 0.0 C to 12.8 C and from 129 to 255 means from - 0.0 C to -12.8 C.</Help>
+		</Value>
+
+		<Value type="short" genre="config" instance="1" index="60" label="Minimum Temperature alarm" size="2" min="1" max="1000" value="50">
+			<Help>
+				Default value 50 (Minimum Temperature alarm is 5.0C)
+				1 - 1000 = 0.1C - 100.0C, step is 0.1C.
+				Minimum temperature alarm is set by entered value. In case is set value out of this range, module is changing set value automatically to default value
+				</Help>
+		</Value>
+
+		<Value type="short" genre="config" instance="1" index="61" label="Maximum Temperature alarm" size="2" min="1" max="1000" value="700">
+			<Help>
+				Default value 700 (Minimum Temperature alarm is 70.0C)
+				1 - 1000 = 0.1C - 100.0C, step is 0.1C.
+				Maximum temperature alarm is set by entered value. In case is set value out of this range, module is changing set value automatically to default value
+				</Help>
 		</Value>
 
 		<Value type="list" genre="config" instance="1" index="63" label="Switch selection" size="1" min="0" max="1" value="1">
@@ -67,19 +103,17 @@
 
 	<!-- Association Groups -->
 	<CommandClass id="133">
-		<Associations num_groups="5">
-			<Group index="1" max_associations="5" label="Multilevel" auto="false"/>
-			<Group index="2" max_associations="5" label="Input I1 state" auto="false"/>
-			<Group index="3" max_associations="5" label="Input I2 state" auto="false"/>
-			<Group index="4" max_associations="5" label="Input I3 state" auto="false"/>
-			<Group index="5" max_associations="1" label="Default reporting" auto="true"/>
+		<Associations num_groups="6">
+			<Group index="1" max_associations="16" label="basic on/off (triggered at change of the output Q state and reflecting its state)" auto="false"/>
+			<Group index="2" max_associations="16" label="basic on/off (triggered at change of the input I2 state and reflecting its state)" />
+			<Group index="3" max_associations="16" label="basic on/off (triggered at change of the input I3 state and reflecting its state)" />
+			<Group index="4" max_associations="16" label="basic on/off (triggered at change of the Alarm too high temperature state and reflecting its state)" />
+			<Group index="5" max_associations="16" label="basic on/off (triggered at change of the Alarm too low temperature state and reflecting its state)" />
+			<Group index="6" max_associations="1" label="Lifeline" auto="true"/>
 		</Associations>
 	</CommandClass>
 
-	<!-- Remove COMMAND_CLASS_BASIC -->
-	<CommandClass id="32" action="remove" />
-
-	<!-- Map endpoints to instances -->
-	<CommandClass id="96" mapping="endpoints" />
+	<!-- This thermostat's setpoint descriptions are 0 based, not 1 -->
+  <CommandClass id="67" base="0" />
 
 </Product>

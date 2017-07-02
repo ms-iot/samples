@@ -2,10 +2,44 @@
 
 <Product xmlns='http://code.google.com/p/open-zwave/'>
 
+  <!-- Basic Messages should map to the ColorControl Command Class I hope -->
+  <CommandClass id="32" setasreport="true"/>
+
+  <!-- COMMAND_CLASS_POWERLEVEL does not respond to requests -->
+  <CommandClass id="115" action="remove"/>
+
+  <!-- Fibaro Devices with firmware prior to 25.25 have a bug in the Report
+  message -->
+  <CommandClass id="51" coloridxbug="true" >
+	 <!--  The Fibaro doesn't report immediate color values, so we need to verify the value -->
+  	<Value type="string" genre="user" instance="1" index="0" label="Color" units="#RRGGBBWW" verify_changes="false" value="#00000000" />
+  </CommandClass>
+  <!-- Fibaro devices refuse to send a Report message when color changes are done.. so manually trigger a refresh -->
+  <CommandClass id="38">
+	<TriggerRefreshValue Genre="user" Index="0" Instance="1">
+    	<RefreshClassValue CommandClass="51" RequestFlags="0" Index="255" Instance="1" />
+    </TriggerRefreshValue>
+  	<TriggerRefreshValue Genre="user" Index="0" Instance="2">
+    	<RefreshClassValue CommandClass="51" RequestFlags="0" Index="255" Instance="1" />
+    </TriggerRefreshValue>
+    <TriggerRefreshValue Genre="user" Index="0" Instance="3">
+    	<RefreshClassValue CommandClass="51" RequestFlags="0" Index="255" Instance="1" />
+    </TriggerRefreshValue>
+    <TriggerRefreshValue Genre="user" Index="0" Instance="4">
+    	<RefreshClassValue CommandClass="51" RequestFlags="0" Index="255" Instance="1" />
+    </TriggerRefreshValue>
+    <TriggerRefreshValue Genre="user" Index="0" Instance="5">
+    	<RefreshClassValue CommandClass="51" RequestFlags="0" Index="255" Instance="1" />
+    </TriggerRefreshValue>
+    <TriggerRefreshValue Genre="user" Index="0" Instance="6">
+    	<RefreshClassValue CommandClass="51" RequestFlags="0" Index="255" Instance="1" />
+    </TriggerRefreshValue>
+  </CommandClass>
+
   <!-- Configuration -->
   <CommandClass id="112">
     <Value type="list" genre="config" instance="1" index="1" label="Enable/Disable ALL ON/OFF" size="1" value="255">
-      <Help>Activate/Deactive ALL ON/OFF</Help>
+      <Help>Enable/Disable ALL ON/OFF</Help>
       <Item label="ALL ON disabled/ ALL OFF disabled" value="0" />
       <Item label="ALL ON disabled/ ALL OFF active" value="1" />
       <Item label="ALL ON active / ALL OFF disabled" value="2" />
@@ -47,8 +81,8 @@
       <Item label="Double click disabled" value="0"/>
       <Item label="Double click enabled" value="1"/>
     </Value>
-    <Value type="list" genre="config" instance="1" index="16" label="Saving state before power faillure" size="1" value="1">
-      <Help>Saving state before power faillure</Help>
+    <Value type="list" genre="config" instance="1" index="16" label="Saving state before power failure" size="1" value="1">
+      <Help>Saving state before power failure</Help>
       <Item label="State NOT saved at power failure, all outputs are set to OFF upon power restore" value="0"/>
       <Item label="State saved at power failure, all outputs are set to previous state upon power restore" value="1"/>
     </Value>
@@ -98,15 +132,15 @@
   <!-- Association Groups -->
   <CommandClass id="133">
     <Associations num_groups="5">
-      <Group index="1" max_associations="5" label="Input 1" auto="true"/>
-      <Group index="2" max_associations="5" label="Input 2" auto="true" />
-      <Group index="3" max_associations="5" label="Input 3" auto="true"/>
-      <Group index="4" max_associations="5" label="Input 4" auto="true"/>
-      <Group index="5" max_associations="1" label="Controller Updates" auto="true"/>
+      <Group index="1" max_associations="5" label="Input 1" auto="false"/>
+      <Group index="2" max_associations="5" label="Input 2"/>
+      <Group index="3" max_associations="5" label="Input 3"/>
+      <Group index="4" max_associations="5" label="Input 4"/>
+      <Group index="5" max_associations="1" label="Lifeline" auto="true"/>
     </Associations>
   </CommandClass>
 
   <!-- Remove COMMAND_CLASS_BASIC -->
-  <CommandClass id="32" action="remove" />
+  <!-- <CommandClass id="32" action="remove" /> -->
 
 </Product>

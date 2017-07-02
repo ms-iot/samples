@@ -7,7 +7,7 @@
 	<!-- Configuration Parameters -->
 	<CommandClass id="112">
 		<Value type="byte" index="10" genre="config" label="Typical click timeout" units="x 10 milliseconds" min="1" max="100" value="50">
-			<Help>Typical time used to differentiate click, hold, double and triple clicks Values: 1 – 100 in 10 ms units (default is 50, that is equivalent to 500 ms)</Help>
+			<Help>Typical time used to differentiate click, hold, double and triple clicks Values: 1 to 100 in 10 ms units (default is 50, that is equivalent to 500 ms)</Help>
 		</Value>
 		<Value type="list" index="11" genre="config" label="Invert buttons" units="" min="0" max="1" size="1">
 			<Item label="No (default)" value="0" />
@@ -43,11 +43,15 @@
 	<!-- Basic set as report -->
 	<CommandClass id="32" setasreport="true"/>
 
+	<!-- COMMAND_CLASS_SCENE_ACTIVATION. KFob can be configured to send scene commands but does not advertise it -->
+    <CommandClass id="43" action="add" getsupported="false"/>
+
+
 	<!-- Association Groups -->
 	<CommandClass id="133">
 		<Associations num_groups="2">
 			<Group index="1" max_associations="8" label="Single press" auto="false" />
-			<Group index="2" max_associations="8" label="Double press" auto="false" />
+			<Group index="2" max_associations="8" label="Double press"  />
 		</Associations>
 	</CommandClass>
 
