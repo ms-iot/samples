@@ -149,9 +149,9 @@ namespace IoTCoreDefaultApp
 
             if (await didConnect)
             {
-                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                 {
-                    CortanaHelper.LaunchCortanaToConsentPageAsyncIfNeeded().Wait();
+                    await CortanaHelper.LaunchCortanaToConsentPageAsyncIfNeeded();
                     NavigationUtils.NavigateToScreen(typeof(MainPage));
                 });
             }
@@ -212,9 +212,9 @@ namespace IoTCoreDefaultApp
             NavigationUtils.GoBack();
         }
 
-        private void SkipButton_Clicked(object sender, RoutedEventArgs e)
+        private async void SkipButton_Clicked(object sender, RoutedEventArgs e)
         {
-            CortanaHelper.LaunchCortanaToConsentPageAsyncIfNeeded().Wait();
+            await CortanaHelper.LaunchCortanaToConsentPageAsyncIfNeeded();
             NavigationUtils.NavigateToScreen(typeof(MainPage));
         }
 
