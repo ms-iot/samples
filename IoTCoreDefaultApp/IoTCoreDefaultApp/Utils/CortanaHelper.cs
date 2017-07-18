@@ -11,7 +11,7 @@ namespace IoTCoreDefaultApp
 {
     class CortanaHelper
     {
-        public static void LaunchCortanaToConsentPageAsyncIfNeeded()
+        public static Task<bool> LaunchCortanaToConsentPageAsyncIfNeeded()
         {
             // Do nothing for devices that do not support Cortana
             if (CortanaSettings.IsSupported())
@@ -23,9 +23,11 @@ namespace IoTCoreDefaultApp
                 var cortanaSettings = CortanaSettings.GetDefault();
                 if (!cortanaSettings.HasUserConsentToVoiceActivation)
                 {
-                    LaunchCortanaToConsentPageAsync();
+                    return LaunchCortanaToConsentPageAsync();
                 }
             }
+
+            return Task.FromResult<bool>(false);
         }
 
         public static Task<bool> LaunchCortanaToConsentPageAsync()
