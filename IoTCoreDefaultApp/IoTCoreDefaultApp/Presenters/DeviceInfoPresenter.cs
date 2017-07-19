@@ -19,7 +19,7 @@ namespace IoTCoreDefaultApp
                     .FirstOrDefault(x => x.Type == HostNameType.DomainName);
                 if (hostname != null)
                 {
-                    return hostname.CanonicalName;
+                    return hostname.DisplayName;
                 }
             }
             catch (Exception)
