@@ -13,8 +13,18 @@ namespace IoTCoreDefaultApp
     {
         public static Task<bool> LaunchCortanaToConsentPageAsyncIfNeeded()
         {
+            var isCortanaSupported = false;
+            try
+            {
+                isCortanaSupported = CortanaSettings.IsSupported();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                // Assume this is occuring on Desktop...
+            }
+
             // Do nothing for devices that do not support Cortana
-            if (CortanaSettings.IsSupported())
+            if (isCortanaSupported)
             {
                 // Ordinarily, this is run during a first use Out-of-box-Experience (OOBE) and voice consent will NOT be granted.
                 // So, we launch Cortana to it's Consent Page as part of OOBE to give the end-user an opportunity to give consent.

@@ -103,7 +103,15 @@ namespace IoTCoreDefaultApp
 
         private void SetupCortana()
         {
-            var isCortanaSupported = CortanaSettings.IsSupported();
+            var isCortanaSupported = false;
+            try
+            {
+                isCortanaSupported = CortanaSettings.IsSupported();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                // Assume this is occuring on Desktop...
+            }
             cortanaConsentRequestedFromSwitch = false;
 
             // Only allow the Cortana settings to be enabled if Cortana is available on this device
