@@ -103,7 +103,18 @@ namespace IoTCoreDefaultApp
 
         private void SetupCortana()
         {
-            var isCortanaSupported = CortanaSettings.IsSupported();
+            var isCortanaSupported = false;
+            try
+            {
+                isCortanaSupported = CortanaSettings.IsSupported();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                // This is indicitive of EmbeddedMode not being enabled (i.e.
+                // running IotCoreDefaultApp on Desktop or Mobile without 
+                // enabling EmbeddedMode) 
+                //  https://developer.microsoft.com/en-us/windows/iot/docs/embeddedmode
+            }
             cortanaConsentRequestedFromSwitch = false;
 
             // Only allow the Cortana settings to be enabled if Cortana is available on this device
