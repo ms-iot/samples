@@ -110,7 +110,10 @@ namespace IoTCoreDefaultApp
             }
             catch (UnauthorizedAccessException)
             {
-                // Assume this is occuring on Desktop...
+                // This is indicitive of EmbeddedMode not being enabled (i.e.
+                // running IotCoreDefaultApp on Desktop or Mobile without 
+                // enabline EmbeddedMode) 
+                //  https://developer.microsoft.com/en-us/windows/iot/docs/embeddedmode
             }
             cortanaConsentRequestedFromSwitch = false;
 
