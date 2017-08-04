@@ -112,7 +112,7 @@ namespace IoTCoreDefaultApp
             {
                 // This is indicitive of EmbeddedMode not being enabled (i.e.
                 // running IotCoreDefaultApp on Desktop or Mobile without 
-                // enabline EmbeddedMode) 
+                // enabling EmbeddedMode) 
                 //  https://developer.microsoft.com/en-us/windows/iot/docs/embeddedmode
             }
             cortanaConsentRequestedFromSwitch = false;
