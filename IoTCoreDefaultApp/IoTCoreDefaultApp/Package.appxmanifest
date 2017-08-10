@@ -37,6 +37,8 @@
     <Capability Name="allJoyn" />
     <iot:Capability Name="systemManagement" />
     <iot:Capability Name="lowLevelDevices" />
+    <DeviceCapability Name="bluetooth" />
+    <DeviceCapability Name="radios" />
     <DeviceCapability Name="wiFiControl" />
     <DeviceCapability Name="bluetooth.rfcomm" />
     <DeviceCapability Name="lowLevel" />
