@@ -58,7 +58,7 @@
                     <TextBlock Text="{Binding Ssid}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}"/>
                     <TextBlock Text="{Binding  ElementName='rootPage', Path=DataContext[NetworkConnectedText]}" Style="{StaticResource BodyTextBlockStyle}" Foreground="{StaticResource PaleTextBrush}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 </StackPanel>
-               </Grid>
+            </Grid>
         </DataTemplate>
         <DataTemplate x:Name="WifiConnectState">
             <Grid Height="144">
@@ -251,7 +251,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="30"/>
-                    <RowDefinition Height="Auto"/>                    
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="408"/>
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
@@ -306,7 +306,7 @@
                             <TextBlock x:Uid="BluetoothDevices" Text="{Binding [BluetoothManageDevicesText]}"  Style="{StaticResource SubtitleTextBlockStyle}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Height="64" VerticalAlignment="Bottom" Margin="24,0,0,0">
-                            <ToggleSwitch x:Name="BluetoothWatcherToggle" Header="{Binding [BluetoothWatcherToggleLabel]}" Style="{StaticResource IoTCoreDefaultAppToggleStyle}"  Toggled="BluetoothWatcherToggle_Toggled" IsEnabled="False" OnContent="{Binding [ToggleOnText]}" OffContent="{Binding [ToggleOffText]}" />
+                            <ToggleSwitch x:Name="BluetoothToggle" Header="{Binding [BluetoothToggleLabel]}" Style="{StaticResource IoTCoreDefaultAppToggleStyle}"  Toggled="BluetoothToggle_Toggled" IsEnabled="True" OnContent="{Binding [ToggleOnText]}" OffContent="{Binding [ToggleOffText]}" />
                         </StackPanel>
                         <StackPanel x:Name="confirmationPanel"  Orientation="Horizontal"  Height="88" HorizontalAlignment="Stretch"  Margin="24,0,0,0">
                             <RelativePanel>

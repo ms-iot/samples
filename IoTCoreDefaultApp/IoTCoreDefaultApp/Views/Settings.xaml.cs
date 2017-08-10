@@ -15,6 +15,9 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Windows.Devices.Radios;
+using Windows.Devices.Bluetooth;
+using System.Linq;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -95,6 +98,7 @@ namespace IoTCoreDefaultApp
             SetupEthernet();
             SetupWifi();
         }
+
         private void SetupBluetooth()
         {
             bluetoothDeviceListView.ItemsSource = bluetoothDeviceObservableCollection;
@@ -146,20 +150,19 @@ namespace IoTCoreDefaultApp
             // Handle inbound pairing requests
             App.InboundPairingRequested += App_InboundPairingRequested;
 
-            object oToggleSwitch = this.FindName("BluetoothWatcherToggle");
+            object oToggleSwitch = this.FindName("BluetoothToggle");
             if (oToggleSwitch != null)
             {
                 var watcherToggle = oToggleSwitch as ToggleSwitch;
                 if (watcherToggle.IsOn)
                 {
-                    if (deviceWatcher == null  ||  (DeviceWatcherStatus.Stopped == deviceWatcher.Status) )
+                    if (deviceWatcher == null || (DeviceWatcherStatus.Stopped == deviceWatcher.Status))
                     {
                         StartWatchingAndDisplayConfirmationMessage();
                     }
                 }
             }
         }
-
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
@@ -173,11 +176,11 @@ namespace IoTCoreDefaultApp
             {
                 await MainPage.Current.UIThreadDispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
-                // Make sure the Bluetooth grid is showing
-                SwitchToSelectedSettings("BluetoothListViewItem");
+                    // Make sure the Bluetooth grid is showing
+                    SwitchToSelectedSettingsAsync("BluetoothListViewItem");
 
-                // Restore the ceremonies we registered with
-                var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+                    // Restore the ceremonies we registered with
+                    var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
                     Object supportedPairingKinds = localSettings.Values["supportedPairingKinds"];
                     int iSelectedCeremonies = (int)DevicePairingKinds.ConfirmOnly;
                     if (supportedPairingKinds != null)
@@ -186,15 +189,15 @@ namespace IoTCoreDefaultApp
                     }
                     SetSelectedCeremonies(iSelectedCeremonies);
 
-                // Clear any previous devices
-                bluetoothDeviceObservableCollection.Clear();
+                    // Clear any previous devices
+                    bluetoothDeviceObservableCollection.Clear();
 
-                // Add latest
-                BluetoothDeviceInformationDisplay deviceInfoDisp = new BluetoothDeviceInformationDisplay(inboundArgs.DeviceInfo);
+                    // Add latest
+                    BluetoothDeviceInformationDisplay deviceInfoDisp = new BluetoothDeviceInformationDisplay(inboundArgs.DeviceInfo);
                     bluetoothDeviceObservableCollection.Add(deviceInfoDisp);
 
-                // Display a message about the inbound request
-                string formatString = BluetoothDeviceInformationDisplay.GetResourceString("BluetoothInboundPairingRequestFormat");
+                    // Display a message about the inbound request
+                    string formatString = BluetoothDeviceInformationDisplay.GetResourceString("BluetoothInboundPairingRequestFormat");
                     string confirmationMessage = string.Format(formatString, deviceInfoDisp.Name, deviceInfoDisp.Id);
                     DisplayMessagePanel(confirmationMessage, MessageType.InformationalMessage);
                 });
@@ -208,23 +211,7 @@ namespace IoTCoreDefaultApp
             // Start the watcher
             StartWatcher();
             // Display a message
-            string confirmationMessage = BluetoothDeviceInformationDisplay.GetResourceString("BluetoothStartedWatching");
-            DisplayMessagePanel(confirmationMessage, MessageType.InformationalMessage);
-        }
-
-        private void StopWatcherButton_Click(object sender, RoutedEventArgs e)
-        {
-            StopWatchingAndDisplayConfirmationMessage();
-        }
-
-        private void StopWatchingAndDisplayConfirmationMessage()
-        {
-            // Clear any devices in the list
-            bluetoothDeviceObservableCollection.Clear();
-            // Stop the watcher
-            StopWatcher();
-            // Display a message
-            string confirmationMessage = BluetoothDeviceInformationDisplay.GetResourceString("BluetoothStoppedWatching");
+            string confirmationMessage = BluetoothDeviceInformationDisplay.GetResourceString("BluetoothOn");
             DisplayMessagePanel(confirmationMessage, MessageType.InformationalMessage);
         }
 
@@ -303,8 +290,8 @@ namespace IoTCoreDefaultApp
                     {
                         WifiListView.ItemsSource = networks;
                     }
-                   
-               
+
+
                     NoWifiFoundText.Visibility = Visibility.Collapsed;
                     WifiListView.Visibility = Visibility.Visible;
 
@@ -315,11 +302,11 @@ namespace IoTCoreDefaultApp
             NoWifiFoundText.Visibility = Visibility.Visible;
             WifiListView.Visibility = Visibility.Collapsed;
         }
-       
+
         private void WifiListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var listView = sender as ListView;
-             foreach (var item in e.RemovedItems)
+            foreach (var item in e.RemovedItems)
             {
                 SwitchToItemState(item, WifiInitialState, true);
             }
@@ -337,7 +324,7 @@ namespace IoTCoreDefaultApp
                 {
                     SwitchToItemState(item, WifiConnectState, true);
                 }
-           }
+            }
         }
 
         private void ConnectButton_Clicked(object sender, RoutedEventArgs e)
@@ -370,7 +357,7 @@ namespace IoTCoreDefaultApp
             await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 var item = SwitchToItemState(network, nextState, false);
-                item.IsSelected = false; 
+                item.IsSelected = false;
             });
             SetupWifi();
         }
@@ -456,10 +443,10 @@ namespace IoTCoreDefaultApp
             }
 
             // Language, Network, or Bluetooth settings etc.
-            SwitchToSelectedSettings(item.Name);
+            SwitchToSelectedSettingsAsync(item.Name);
         }
 
-        private void SwitchToSelectedSettings(string itemName)
+        private async void SwitchToSelectedSettingsAsync(string itemName)
         {
             switch (itemName)
             {
@@ -483,7 +470,14 @@ namespace IoTCoreDefaultApp
                 case "BluetoothListViewItem":
                     if (BluetoothGrid.Visibility == Visibility.Collapsed)
                     {
-                        SetupBluetooth();
+                        if (await IsBluetoothEnabledAsync())
+                        {
+                            BluetoothToggle.IsOn = true;
+                        }
+                        else
+                        {
+                            TurnOffBluetooth();
+                        }
                         visibleContent.Visibility = Visibility.Collapsed;
                         BluetoothGrid.Visibility = Visibility.Visible;
                         visibleContent = BluetoothGrid;
@@ -581,7 +575,7 @@ namespace IoTCoreDefaultApp
 
             handlerEnumCompleted = new TypedEventHandler<DeviceWatcher, Object>(async (watcher, obj) =>
             {
-                 await MainPage.Current.UIThreadDispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                await MainPage.Current.UIThreadDispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
                 {
                     // Finished enumerating
                 });
@@ -724,7 +718,7 @@ namespace IoTCoreDefaultApp
         {
             // Use the pair button on the bluetoothDeviceListView.SelectedItem to get the data context
             BluetoothDeviceInformationDisplay deviceInfoDisp =
-                ((Button) sender).DataContext as BluetoothDeviceInformationDisplay;
+                ((Button)sender).DataContext as BluetoothDeviceInformationDisplay;
             string formatString = BluetoothDeviceInformationDisplay.GetResourceString("BluetoothAttemptingToPairFormat");
             string confirmationMessage = string.Format(formatString, deviceInfoDisp.Name, deviceInfoDisp.Id);
             DisplayMessagePanel(confirmationMessage, MessageType.InformationalMessage);
@@ -766,7 +760,7 @@ namespace IoTCoreDefaultApp
             DisplayMessagePanel(confirmationMessage, MessageType.InformationalMessage);
 
             // If the watcher toggle is on, clear any devices in the list and stop and restart the watcher to ensure state is reflected in list
-            if (BluetoothWatcherToggle.IsOn)
+            if (BluetoothToggle.IsOn)
             {
                 bluetoothDeviceObservableCollection.Clear();
                 StopWatcher();
@@ -849,6 +843,68 @@ namespace IoTCoreDefaultApp
         }
 
         /// <summary>
+        /// Turn on Bluetooth Radio and list available Bluetooth Devices
+        /// </summary>
+        private async void TurnOnRadio()
+        {
+            await ToggleBluetoothAsync(true);
+            SetupBluetooth();
+        }
+
+        /// <summary>
+        /// Checks the state of Bluetooth Radio 
+        /// </summary>
+        private async Task<bool> IsBluetoothEnabledAsync()
+        {
+            var radios = await Radio.GetRadiosAsync();
+            var bluetoothRadio = radios.FirstOrDefault(radio => radio.Kind == RadioKind.Bluetooth);
+            return bluetoothRadio != null && bluetoothRadio.State == RadioState.On;
+        }
+
+        private async Task ToggleBluetoothAsync(bool bluetoothState)
+        {
+            try
+            {
+                var access = await Radio.RequestAccessAsync();
+                if (access != RadioAccessStatus.Allowed)
+                {
+                    return;
+                }
+                BluetoothAdapter adapter = await BluetoothAdapter.GetDefaultAsync();
+                var btRadio = await adapter.GetRadioAsync();
+                if (bluetoothState)
+                {
+                    await btRadio.SetStateAsync(RadioState.On);
+                }
+                else
+                {
+                    await btRadio.SetStateAsync(RadioState.Off);
+                }
+            }
+            catch (Exception e)
+            {
+                string formatString = BluetoothDeviceInformationDisplay.GetResourceString("BluetoothNoDeviceAvailableFormat");
+                string confirmationMessage = string.Format(formatString, e.Message);
+                DisplayMessagePanel(confirmationMessage, MessageType.InformationalMessage);
+            }
+        }
+
+        /// <summary>
+        /// Turn off Bluetooth Radio and stops watching for Bluetooth devices
+        /// </summary>
+        private async void TurnOffBluetooth()
+        {
+            // Clear any devices in the list
+            bluetoothDeviceObservableCollection.Clear();
+            // Stop the watcher
+            StopWatcher();
+            // Display a message
+            string confirmationMessage = BluetoothDeviceInformationDisplay.GetResourceString("BluetoothOff");
+            DisplayMessagePanel(confirmationMessage, MessageType.InformationalMessage);
+            await ToggleBluetoothAsync(false);
+        }
+
+        /// <summary>
         /// User wants to unpair from the selected device
         /// </summary>
         /// <param name="sender"></param>
@@ -881,7 +937,7 @@ namespace IoTCoreDefaultApp
             DisplayMessagePanel(confirmationMessage, MessageType.InformationalMessage);
 
             // If the watcher toggle is on, clear any devices in the list and stop and restart the watcher to ensure state is reflected in list
-            if (BluetoothWatcherToggle.IsOn)
+            if (BluetoothToggle.IsOn)
             {
                 bluetoothDeviceObservableCollection.Clear();
                 StopWatcher();
@@ -966,7 +1022,7 @@ namespace IoTCoreDefaultApp
             await MakeDiscoverable();
 
             // If the attempt to make the system discoverable failed then likely there is no Bluetooth device present
-            // so leave the diagnositic message put uot by the call to MakeDiscoverable()
+            // so leave the diagnositic message put out by the call to MakeDiscoverable()
             if (App.IsBluetoothDiscoverable)
             {
                 string formatString;
@@ -997,15 +1053,13 @@ namespace IoTCoreDefaultApp
                     confirmationMessage = string.Format(formatString, ceremoniesSelected.ToString());
                 }
 
+                // Clear the current collection
+                bluetoothDeviceObservableCollection.Clear();
+                // Start the watcher
+                StartWatcher();
+                // Display a message
+                confirmationMessage += BluetoothDeviceInformationDisplay.GetResourceString("BluetoothOn");
                 DisplayMessagePanel(confirmationMessage, MessageType.InformationalMessage);
-
-                // Enable the watcher switch
-                BluetoothWatcherToggle.IsEnabled = true;
-            }
-            else
-            {
-                // Disable the watcher switch
-                BluetoothWatcherToggle.IsEnabled = false;
             }
         }
 
@@ -1046,16 +1100,16 @@ namespace IoTCoreDefaultApp
         {
         }
 
-        private void BluetoothWatcherToggle_Toggled(object sender, RoutedEventArgs e)
+        private void BluetoothToggle_Toggled(object sender, RoutedEventArgs e)
         {
-            var bluetoothWatcherOnOffSwitch = sender as ToggleSwitch;
-            if (bluetoothWatcherOnOffSwitch.IsOn)
+            var bluetoothOnOffSwitch = sender as ToggleSwitch;
+            if (bluetoothOnOffSwitch.IsOn)
             {
-                StartWatchingAndDisplayConfirmationMessage();
+                TurnOnRadio();
             }
             else
             {
-                StopWatchingAndDisplayConfirmationMessage();
+                TurnOffBluetooth();
             }
         }
 
@@ -1077,7 +1131,7 @@ namespace IoTCoreDefaultApp
         private void CortanaVoiceActivationSwitch_Toggled(object sender, RoutedEventArgs e)
         {
             var cortanaSettings = CortanaSettings.GetDefault();
-            var cortanaVoiceActivationSwitch = (ToggleSwitch) sender;
+            var cortanaVoiceActivationSwitch = (ToggleSwitch)sender;
 
             bool enableVoiceActivation = cortanaVoiceActivationSwitch.IsOn;
 
@@ -1107,7 +1161,7 @@ namespace IoTCoreDefaultApp
                 {
                     await SetVoiceActivation(enableVoiceActivation);
                     CortanaVoiceActivationSwitch.IsEnabled = true;
-                });                
+                });
             }
         }
 
@@ -1138,9 +1192,9 @@ namespace IoTCoreDefaultApp
 
                             // Set the switch to the current global state
                             CortanaVoiceActivationSwitch.IsOn = cortanaSettings.IsVoiceActivationEnabled;
-                            
+
                             // We no longer need consent
-                            needsCortanaConsent = false;                            
+                            needsCortanaConsent = false;
                         }
                     }
                     break;
