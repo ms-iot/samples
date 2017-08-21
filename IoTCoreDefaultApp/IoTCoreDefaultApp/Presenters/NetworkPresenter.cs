@@ -277,8 +277,15 @@ namespace IoTCoreDefaultApp
             {
                 return false;
             }
-
+            
             var result = await wifiAdapter.ConnectAsync(network, autoConnect ? WiFiReconnectionKind.Automatic : WiFiReconnectionKind.Manual);
+
+            //Call redirect only for Open Wifi
+            if (IsNetworkOpen(network))
+            {
+                //Navigate to http://www.msftconnecttest.com/redirect 
+                NavigationUtils.NavigateToScreen(typeof(WebBrowserPage), Common.GetLocalizedText("MicrosoftWifiConnect"));
+            }
 
             return (result.ConnectionStatus == WiFiConnectionStatus.Success);
         }

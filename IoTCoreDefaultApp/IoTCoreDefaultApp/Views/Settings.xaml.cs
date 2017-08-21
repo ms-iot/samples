@@ -29,7 +29,6 @@ namespace IoTCoreDefaultApp
     public sealed partial class Settings : Page
     {
         private LanguageManager languageManager;
-        private UIElement visibleContent;
         private NetworkPresenter networkPresenter = new NetworkPresenter();
         private bool Automatic = true;
         private string CurrentPassword = string.Empty;
@@ -64,8 +63,8 @@ namespace IoTCoreDefaultApp
         {
             this.InitializeComponent();
 
-            visibleContent = BasicPreferencesGridView;
-
+            PreferencesListView.IsSelected = true;
+            
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
 
             this.DataContext = LanguageManager.GetInstance();
@@ -162,6 +161,18 @@ namespace IoTCoreDefaultApp
                     }
                 }
             }
+            
+            //Direct Jumping to Specific ListView from Outside
+            if (null == e || null == e.Parameter)
+            {
+                SwitchToSelectedSettingsAsync("PreferencesListViewItem");
+                PreferencesListView.IsSelected = true;
+            }
+            else
+            {
+                SwitchToSelectedSettingsAsync(e.Parameter.ToString());
+            }
+            
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -445,31 +456,48 @@ namespace IoTCoreDefaultApp
             // Language, Network, or Bluetooth settings etc.
             SwitchToSelectedSettingsAsync(item.Name);
         }
-
+        
+        /// <summary>
+        /// Helps Hiding all other Grid Views except the selected Grid
+        /// </summary>
+        /// <param name="itemName"></param>
         private async void SwitchToSelectedSettingsAsync(string itemName)
         {
             switch (itemName)
             {
                 case "PreferencesListViewItem":
+                    NetworkGrid.Visibility = Visibility.Collapsed;
+                    BluetoothGrid.Visibility = Visibility.Collapsed;
+                    CortanaGrid.Visibility = Visibility.Collapsed;
+
                     if (BasicPreferencesGridView.Visibility == Visibility.Collapsed)
                     {
-                        visibleContent.Visibility = Visibility.Collapsed;
                         BasicPreferencesGridView.Visibility = Visibility.Visible;
-                        visibleContent = BasicPreferencesGridView;
+                        PreferencesListView.IsSelected = true;
                     }
                     break;
                 case "NetworkListViewItem":
+                    BasicPreferencesGridView.Visibility = Visibility.Collapsed;
+                    BluetoothGrid.Visibility = Visibility.Collapsed;
+                    CortanaGrid.Visibility = Visibility.Collapsed;
+
                     if (NetworkGrid.Visibility == Visibility.Collapsed)
                     {
                         SetupNetwork();
-                        visibleContent.Visibility = Visibility.Collapsed;
                         NetworkGrid.Visibility = Visibility.Visible;
-                        visibleContent = NetworkGrid;
+                        NetworkListView.IsSelected = true;
                     }
                     break;
                 case "BluetoothListViewItem":
+                    BasicPreferencesGridView.Visibility = Visibility.Collapsed;
+                    NetworkGrid.Visibility = Visibility.Collapsed;
+                    CortanaGrid.Visibility = Visibility.Collapsed;
+
                     if (BluetoothGrid.Visibility == Visibility.Collapsed)
                     {
+                        SetupBluetooth();
+                        BluetoothGrid.Visibility = Visibility.Visible;
+                        BluetoothListView.IsSelected = true;
                         if (await IsBluetoothEnabledAsync())
                         {
                             BluetoothToggle.IsOn = true;
@@ -478,20 +506,23 @@ namespace IoTCoreDefaultApp
                         {
                             TurnOffBluetooth();
                         }
-                        visibleContent.Visibility = Visibility.Collapsed;
-                        BluetoothGrid.Visibility = Visibility.Visible;
-                        visibleContent = BluetoothGrid;
                     }
                     break;
                 case "CortanaListViewItem":
+                    BasicPreferencesGridView.Visibility = Visibility.Collapsed;
+                    NetworkGrid.Visibility = Visibility.Collapsed;
+                    BluetoothGrid.Visibility = Visibility.Collapsed;
+
                     if (CortanaGrid.Visibility == Visibility.Collapsed)
                     {
                         SetupCortana();
-                        visibleContent.Visibility = Visibility.Collapsed;
                         CortanaGrid.Visibility = Visibility.Visible;
-                        visibleContent = CortanaGrid;
+                        CortanaListView.IsSelected = true;
                     }
                     break;
+                default:
+                    break;
+
             }
         }
 
@@ -871,15 +902,19 @@ namespace IoTCoreDefaultApp
                     return;
                 }
                 BluetoothAdapter adapter = await BluetoothAdapter.GetDefaultAsync();
-                var btRadio = await adapter.GetRadioAsync();
-                if (bluetoothState)
+                if(null != adapter )
                 {
-                    await btRadio.SetStateAsync(RadioState.On);
+                    var btRadio = await adapter.GetRadioAsync();
+                    if (bluetoothState)
+                    {
+                        await btRadio.SetStateAsync(RadioState.On);
+                    }
+                    else
+                    {
+                        await btRadio.SetStateAsync(RadioState.Off);
+                    }
                 }
-                else
-                {
-                    await btRadio.SetStateAsync(RadioState.Off);
-                }
+                
             }
             catch (Exception e)
             {
@@ -1241,5 +1276,6 @@ namespace IoTCoreDefaultApp
         {
             CortanaHelper.LaunchCortanaToAboutMeAsync();
         }
+        
     }
 }

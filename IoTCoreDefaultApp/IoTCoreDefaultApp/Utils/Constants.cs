@@ -14,6 +14,11 @@ namespace IoTCoreDefaultApp
             "GetConnected",
             "GetCoding"
         };
+
+        public const string WODUrl = "WindowsOnDevices.com";
+        public const string IoTHacksterUrl = "Hackster.io/windowsiot";
+        public const string IoTGitHubUrl = "Github.com/ms-iot";
+        public const string BingHomePageUrl = "Bing.com";
     }
 }
 

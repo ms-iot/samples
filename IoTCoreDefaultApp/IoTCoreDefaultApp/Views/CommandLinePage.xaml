@@ -32,14 +32,16 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="72"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Stretch" Background="#2a2a2a">
-            <Button x:Name="BackButton" Content="{StaticResource IconBack}" Background="Transparent" BorderThickness="0" BorderBrush="Transparent"  FontFamily="{StaticResource IconFontFamily}" FontSize="24" Click="BackButton_Clicked" Margin="10,5,20,0" Height="48" Width="48" VerticalAlignment="Center"/>
-            <TextBlock x:Name="Title" Text="{Binding [CommandLineText]}" Style="{ThemeResource TitleTextBlockStyle}" VerticalAlignment="Center"/>
-        </StackPanel>
+        <!-- Header row -->
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" x:Name="HeaderRow" >
+            <local:TopBarUC x:Name="TopBar"  UseLayoutRounding="True" d:LayoutRounding="Auto" ScreenName="CommandLine" >
+
+            </local:TopBarUC>
+        </Grid>
 
         <Grid Grid.Row="1" >
             <Grid.RowDefinitions>
@@ -80,7 +82,7 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBox Grid.Column="0" x:Name="CommandLine" PlaceholderText="{Binding [CommandLinePlaceholderText]}" Background="Transparent" BorderThickness="2" BorderBrush="Transparent" FontFamily="Lucida Console" FontSize="14" Padding="6 6" KeyUp="CommandLine_KeyUp" Height="24" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsSpellCheckEnabled="False"/>
+                <TextBox Grid.Column="0" x:Name="CommandLine" PlaceholderText="{Binding [CommandLinePlaceholderText]}" Background="Transparent" BorderThickness="2" BorderBrush="Transparent" FontFamily="Lucida Console" FontSize="14" Padding="6 6" KeyUp="CommandLine_KeyUp" Height="24" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsSpellCheckEnabled="False" />
                 <Button Grid.Column="1" x:Name="RunButton" Content="{StaticResource IconRun}" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" FontFamily="{StaticResource IconFontFamily}" FontSize="16" Click="RunButton_Click" Height="24" Width="32" VerticalAlignment="Center"/>
                 <Button Grid.Column="2" x:Name="ClearButton" Content="{Binding [ClearPageText]}" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" FontSize="14" Click="ClearButton_Click" Height="28" Width="Auto" VerticalAlignment="Center"/>
             </Grid>
