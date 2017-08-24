@@ -90,32 +90,32 @@ namespace IoTCoreDefaultApp
 
         public static string GetCurrentIpv4Address()
         {
-            var icp = NetworkInformation.GetInternetConnectionProfile();
-            if (icp != null && icp.NetworkAdapter != null && icp.NetworkAdapter.NetworkAdapterId != null)
+            try
             {
-                var name = icp.ProfileName;
-
-                try
+                var icp = NetworkInformation.GetInternetConnectionProfile();
+                if (icp != null && icp.NetworkAdapter != null && icp.NetworkAdapter.NetworkAdapterId != null)
                 {
-                    var hostnames = NetworkInformation.GetHostNames();
+                    var name = icp.ProfileName;
 
-                    foreach (var hn in hostnames)
-                    {
-                        if (hn.IPInformation != null &&
-                            hn.IPInformation.NetworkAdapter != null &&
-                            hn.IPInformation.NetworkAdapter.NetworkAdapterId != null &&
-                            hn.IPInformation.NetworkAdapter.NetworkAdapterId == icp.NetworkAdapter.NetworkAdapterId &&
-                            hn.Type == HostNameType.Ipv4)
+                        var hostnames = NetworkInformation.GetHostNames();
+
+                        foreach (var hn in hostnames)
                         {
-                            return hn.CanonicalName;
+                            if (hn.IPInformation != null &&
+                                hn.IPInformation.NetworkAdapter != null &&
+                                hn.IPInformation.NetworkAdapter.NetworkAdapterId != null &&
+                                hn.IPInformation.NetworkAdapter.NetworkAdapterId == icp.NetworkAdapter.NetworkAdapterId &&
+                                hn.Type == HostNameType.Ipv4)
+                            {
+                                return hn.CanonicalName;
+                            }
                         }
                     }
                 }
-                catch (Exception)
-                {
-                    // do nothing
-                    // in some (strange) cases NetworkInformation.GetHostNames() fails... maybe a bug in the API...
-                }
+            catch (Exception)
+            {
+                // do nothing
+                // in some (strange) cases NetworkInformation.GetHostNames() fails... maybe a bug in the API...
             }
 
             var resourceLoader = ResourceLoader.GetForCurrentView();
