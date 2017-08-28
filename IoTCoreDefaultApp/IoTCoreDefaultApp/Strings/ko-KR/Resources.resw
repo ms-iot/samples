@@ -647,13 +647,13 @@
     <value>{0}({1})과(와) 연결했습니다.</value>
     <comment>Format string for message displayed when pairing attempt succeeds</comment>
   </data>
-  <data name="BluetoothStartedWatching" xml:space="preserve">
+  <data name="BluetoothOn" xml:space="preserve">
     <value>디바이스에서 다른 Bluetooth 디바이스를 검색하고 있으며 다른 Bluetooth 디바이스에서 이 디바이스를 검색할 수 있습니다.</value>
-    <comment>Message display when "Start Watcher" button is pressed</comment>
+    <comment>Message display when "Start Bluetooth" button is pressed</comment>
   </data>
-  <data name="BluetoothStoppedWatching" xml:space="preserve">
-    <value>Bluetooth 디바이스의 감시를 중지했습니다.</value>
-    <comment>Message display when "Stop Watcher" button is pressed</comment>
+  <data name="BluetoothOff" xml:space="preserve">
+    <value>Bluetooth가 꺼졌습니다.</value>
+    <comment>Message display when "Stop Bluetooth" button is pressed</comment>
   </data>
   <data name="BluetoothUnpairingFailureFormat" xml:space="preserve">
     <value>언페어링 결과는 {0}입니다. {1}({2})에서 연결을 해제하지 못했습니다.</value>

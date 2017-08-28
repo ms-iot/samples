@@ -201,7 +201,7 @@
     <comment>Board name</comment>
   </data>
   <data name="SkipStepText" xml:space="preserve">
-    <value>Diesen Schritt überspringen</value>
+    <value>Diesen Schritt überspringen,</value>
   </data>
   <data name="WifiText" xml:space="preserve">
     <value>WLAN</value>
@@ -635,11 +635,11 @@
     <comment>Format string for message displayed when Inbound pairing handler registration already done</comment>
   </data>
   <data name="BluetoothInboundRegistrationFailed" xml:space="preserve">
-    <value>Fehler beim Registrieren für eingehende Kopplung</value>
+    <value>Fehler beim Registrieren für eingehende Kopplung.</value>
     <comment>Message displayed when Inbound pairing handler registration fails</comment>
   </data>
   <data name="BluetoothInboundRegistrationSucceededFormat" xml:space="preserve">
-    <value>Registrierung für eingehende Kopplung war erfolgreich, unterstützte Zeremonien: {0}</value>
+    <value>Die Registrierung für die eingehende Kopplung war erfolgreich. Unterstützte Zeremonien: {0}.</value>
     <comment>Format string for message displayed when Inbound pairing handler registration succeeds</comment>
   </data>
   <data name="BluetoothPairingFailureFormat" xml:space="preserve">
@@ -650,13 +650,13 @@
     <value>Erfolgreich mit {0} ({1}) gekoppelt</value>
     <comment>Format string for message displayed when pairing attempt succeeds</comment>
   </data>
-  <data name="BluetoothStartedWatching" xml:space="preserve">
+  <data name="BluetoothOn" xml:space="preserve">
     <value>Ihr Gerät sucht nach Bluetooth-Geräten und ist für andere sichtbar.</value>
-    <comment>Message display when "Start Watcher" button is pressed</comment>
+    <comment>Message display when "Start Bluetooth" button is pressed</comment>
   </data>
-  <data name="BluetoothStoppedWatching" xml:space="preserve">
-    <value>Die Suche nach Bluetooth-Geräten wurde beendet.</value>
-    <comment>Message display when "Stop Watcher" button is pressed</comment>
+  <data name="BluetoothOff" xml:space="preserve">
+    <value>Bluetooth ist deaktiviert.</value>
+    <comment>Message display when "Stop Bluetooth" button is pressed</comment>
   </data>
   <data name="BluetoothUnpairingFailureFormat" xml:space="preserve">
     <value>Ergebnis der Entkopplung war {0}: Fehler beim Entkoppeln von {1} ({2})</value>
