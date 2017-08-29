@@ -166,7 +166,7 @@
   </data>
   <data name="NetworkConnectingMessageText" xml:space="preserve">
     <value>Checking network requirements</value>
-    <comment>Message disply during wifi network connect click</comment>
+    <comment>Message display during wifi network connect click</comment>
   </data>
   <data name="NetworkPasswordPromptText" xml:space="preserve">
     <value>Enter the network security key</value>
