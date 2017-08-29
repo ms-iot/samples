@@ -28,8 +28,9 @@
     </SccAuxPath>
     <SccProvider>
     </SccProvider>
-    <AppxBundlePlatforms>x86</AppxBundlePlatforms>
+    <AppxBundlePlatforms>arm</AppxBundlePlatforms>
     <AppxBundle>Never</AppxBundle>
+    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
@@ -124,6 +125,10 @@
     <Compile Include="Presenters\DeviceInfoPresenter.cs" />
     <Compile Include="Presenters\LanguageManager.cs" />
     <Compile Include="Presenters\NetworkPresenter.cs" />
+    <Compile Include="UserControls\TopBarUC.xaml.cs">
+      <DependentUpon>TopBarUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\Common.cs" />
     <Compile Include="Utils\CortanaHelper.cs" />
     <Compile Include="Utils\DeviceTypeInformation.cs" />
     <Compile Include="Utils\Constants.cs" />
@@ -158,6 +163,9 @@
     <Compile Include="Views\TutorialMainPage.xaml.cs">
       <DependentUpon>TutorialMainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\WebBrowserPage.xaml.cs">
+      <DependentUpon>WebBrowserPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -183,6 +191,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\GenericBoard.png" />
+    <Content Include="Assets\NetworkWarning.PNG" />
     <Content Include="Assets\Tutorials\GetCoding-003.png" />
     <Content Include="Assets\Tutorials\GetCoding.jpg" />
     <Content Include="Assets\Tutorials\GetCodingTile.jpg" />
@@ -221,6 +230,10 @@
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
+    <Page Include="UserControls\TopBarUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\CommandLinePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -257,7 +270,12 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\WebBrowserPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

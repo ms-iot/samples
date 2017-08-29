@@ -2,7 +2,10 @@
 
 using IoTCoreDefaultApp.Utils;
 using System;
+using System.Diagnostics;
 using System.Globalization;
+using System.Reflection;
+using Windows.ApplicationModel;
 using Windows.Networking.Connectivity;
 using Windows.Storage;
 using Windows.System;
@@ -18,7 +21,6 @@ namespace IoTCoreDefaultApp
     {
         public static MainPage Current;
         private CoreDispatcher MainPageDispatcher;
-        private DispatcherTimer timer;
         private ConnectedDevicePresenter connectedDevicePresenter;
 
         public CoreDispatcher UIThreadDispatcher
@@ -49,27 +51,17 @@ namespace IoTCoreDefaultApp
             this.NavigationCacheMode = NavigationCacheMode.Enabled;
 
             this.DataContext = LanguageManager.GetInstance();
-
-            timer = new DispatcherTimer();
-            timer.Tick += timer_Tick;
-            timer.Interval = TimeSpan.FromSeconds(10);
-
+            
             this.Loaded += async (sender, e) => 
             {
                 await MainPageDispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
                 {
                     UpdateBoardInfo();
                     UpdateNetworkInfo();
-                    UpdateDateTime();
                     UpdateConnectedDevices();
-
-                    timer.Start();
                 });
             };
-            this.Unloaded += (sender, e) =>
-            {
-                timer.Stop();
-            };
+
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -88,11 +80,6 @@ namespace IoTCoreDefaultApp
             {
                 UpdateNetworkInfo();
             });
-        }
-
-        private void timer_Tick(object sender, object e)
-        {
-            UpdateDateTime();
         }
 
         private void UpdateBoardInfo()
@@ -116,16 +103,11 @@ namespace IoTCoreDefaultApp
             }
         }
 
-        private void UpdateDateTime()
+        private void WindowsOnDevices_Click(object sender, RoutedEventArgs e)
         {
-            // Using DateTime.Now is simpler, but the time zone is cached. So, we use a native method insead.
-            SYSTEMTIME localTime;
-            NativeTimeMethods.GetLocalTime(out localTime);
-
-            DateTime t = localTime.ToDateTime();
-            CurrentTime.Text = t.ToString("t", CultureInfo.CurrentCulture) + Environment.NewLine + t.ToString("d", CultureInfo.CurrentCulture);
+            NavigationUtils.NavigateToScreen(typeof(WebBrowserPage), Constants.WODUrl);
         }
-
+        
         private async void UpdateNetworkInfo()
         {
             this.DeviceName.Text = DeviceInfoPresenter.GetDeviceName();
@@ -139,64 +121,6 @@ namespace IoTCoreDefaultApp
             connectedDevicePresenter = new ConnectedDevicePresenter(MainPageDispatcher);
             this.ConnectedDevices.ItemsSource = connectedDevicePresenter.GetConnectedDevices();
         }
-
-        private void ShutdownButton_Clicked(object sender, RoutedEventArgs e)
-        {
-            ShutdownDropdown.IsOpen = true;
-        }
-
-        private void CommandLineButton_Clicked(object sender, RoutedEventArgs e)
-        {
-            NavigationUtils.NavigateToScreen(typeof(CommandLinePage));
-        }
-
-        private void SettingsButton_Clicked(object sender, RoutedEventArgs e)
-        {
-            NavigationUtils.NavigateToScreen(typeof(Settings));
-        }
-
-        private void Tutorials_Clicked(object sender, RoutedEventArgs e)
-        {
-            NavigationUtils.NavigateToScreen(typeof(TutorialMainPage));
-        }
-
-        private void ShutdownHelper(ShutdownKind kind)
-        {
-            new System.Threading.Tasks.Task(() =>
-            {
-                ShutdownManager.BeginShutdown(kind, TimeSpan.FromSeconds(0));
-            }).Start();
-        }
-
-        private void ShutdownListView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            var item = e.ClickedItem as FrameworkElement;
-            if (item == null)
-            {
-                return;
-            }
-            switch (item.Name)
-            {
-                case "ShutdownOption":
-                    ShutdownHelper(ShutdownKind.Shutdown);
-                    break;
-                case "RestartOption":
-                    ShutdownHelper(ShutdownKind.Restart);
-                    break;
-            }
-        }
-
-        private void ShutdownDropdown_Opened(object sender, object e)
-        {
-            var w = ShutdownListView.ActualWidth;
-            if (w == 0)
-            {
-                // trick to recalculate the size of the dropdown
-                ShutdownDropdown.IsOpen = false;
-                ShutdownDropdown.IsOpen = true;
-            }
-            var offset = -(ShutdownListView.ActualWidth - ShutdownButton.ActualWidth);
-            ShutdownDropdown.HorizontalOffset = offset;
-        }
+        
     }
 }

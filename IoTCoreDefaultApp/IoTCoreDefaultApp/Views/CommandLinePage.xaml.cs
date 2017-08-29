@@ -49,12 +49,7 @@ namespace IoTCoreDefaultApp
                 CoreDispatcherPriority.Normal,
                 () => CommandLine.Focus(FocusState.Keyboard));
         }
-
-        private void BackButton_Clicked(object sender, RoutedEventArgs e)
-        {
-            NavigationUtils.GoBack();
-        }
-
+        
         private async Task RunProcess()
         {
             if (string.IsNullOrWhiteSpace(CommandLine.Text))
