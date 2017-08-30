@@ -166,6 +166,7 @@
   </data>
   <data name="NetworkConnectingMessageText" xml:space="preserve">
     <value>Проверка требований сети</value>
+    <comment>Message display during wifi network connect click</comment>
   </data>
   <data name="NetworkPasswordPromptText" xml:space="preserve">
     <value>Введите ключ безопасности сети</value>
@@ -206,18 +207,6 @@
   <data name="WifiText" xml:space="preserve">
     <value>Wi-Fi</value>
     <comment>Label for Wi-Fi list in options page</comment>
-  </data>
-  <data name="StartDevelopingText" xml:space="preserve">
-    <value> для начала разработки</value>
-    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
-  </data>
-  <data name="VisitText" xml:space="preserve">
-    <value>Посетите веб-сайт</value>
-    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
-  </data>
-  <data name="WindowsOnDevicesUrlText" xml:space="preserve">
-    <value> www.windowsondevices.com</value>
-    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
   </data>
   <data name="KeyboardTitleText" xml:space="preserve">
     <value>Раскладка клавиатуры</value>
@@ -398,10 +387,6 @@
   <data name="Tutorial.GetStarted.014.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
-  <data name="Tutorial.GetStarted.014a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetStarted.015.p" xml:space="preserve">
     <value>Чтобы получить дополнительные сведения, выберите руководство "Кодирование"</value>
   </data>
@@ -419,10 +404,6 @@
   </data>
   <data name="Tutorial.GetStarted.020.p" xml:space="preserve">
     <value>Смело используйте все это как шаблон, чтобы приступить к созданию собственного приложения</value>
-  </data>
-  <data name="Tutorial.GetStarted.021.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.001.620x400.image" xml:space="preserve">
     <value>Assets/Tutorials/GetConnected-{0}.jpg</value>
@@ -471,10 +452,6 @@
   <data name="Tutorial.GetConnected.015.ul" xml:space="preserve">
     <value>Кабель Ethernet для подключения компьютера, на котором ведется разработка, к устройству с IoT Базовой.</value>
   </data>
-  <data name="Tutorial.GetConnected.015a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetConnected.016.p" xml:space="preserve">
     <value>Чтобы включить на компьютере общий доступ к подключению Интернета, следуйте приведенным ниже инструкциям</value>
   </data>
@@ -493,19 +470,14 @@
   <data name="Tutorial.GetConnected.021.ul" xml:space="preserve">
     <value>Откройте вкладку "Общий доступ" и установите флажок "Разрешить другим пользователям сети использовать подключение к Интернету данного компьютера".</value>
   </data>
-  <data name="Tutorial.GetConnected.021a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetConnected.022.p" xml:space="preserve">
     <value>После включения общего доступа к подключению Интернета на компьютере к нему можно напрямую подключить устройство с Windows 10 IoT Базовой: вставьте один конец свободного кабеля Ethernet в дополнительный порт Ethernet на компьютере, а другой — в порт Ethernet на устройстве с IoT Базовой.</value>
   </data>
+  <data name="Tutorial.GetConnected.023.p" xml:space="preserve">
+    <value>Примечание.</value>
+  </data>
   <data name="Tutorial.GetConnected.024.ul" xml:space="preserve">
     <value>Вкладка "Общий доступ" будет недоступна, если у вас только одно сетевое подключение.</value>
-  </data>
-  <data name="Tutorial.GetConnected.024a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.025.h1" xml:space="preserve">
     <value>Возникли проблемы?</value>
@@ -515,10 +487,6 @@
   </data>
   <data name="Tutorial.GetConnected.027.620x400.image" xml:space="preserve">
     <value>Assets/Tutorials/GetConnected-006.jpg</value>
-    <comment>Please do NOT localize this string</comment>
-  </data>
-  <data name="Tutorial.GetConnected.028.br" xml:space="preserve">
-    <value />
     <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetCoding.001.620x400.image" xml:space="preserve">
@@ -549,10 +517,6 @@
   <data name="Tutorial.GetCoding.009.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
-  <data name="Tutorial.GetCoding.009a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetCoding.010.h1" xml:space="preserve">
     <value>Настройка Visual Studio 2015 на компьютере</value>
   </data>
@@ -564,14 +528,6 @@
   </data>
   <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
     <value>Если вы планируете разрабатывать драйверы, установите WDK.</value>
-  </data>
-  <data name="Tutorial.GetCoding.016a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
-  <data name="Tutorial.GetCoding.019.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="NetworkConnectivityLevel_ConstrainedInternetAccess" xml:space="preserve">
     <value>Ограниченный доступ к Интернету</value>
@@ -728,7 +684,7 @@
   </data>
   <data name="CmdNotEnabled" xml:space="preserve">
     <value>На вашем устройстве невозможно запускать процессор командной строки.
-Чтобы это изменить, подключитесь к устройству как администратор (например, с помощью PowerShell или SSH) или войдите на портал устройств с Windows и запустите эту команду:
+Чтобы это изменить, подключитесь к устройству как администратор (например, с помощью PowerShell или SSH) или войдите на Windows Device Portal и запустите эту команду:
 
     reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EmbeddedMode\ProcessLauncher" /f /v AllowedExecutableFilesList /t REG_MULTI_SZ /d "c:\windows\system32\cmd.exe\0"
 

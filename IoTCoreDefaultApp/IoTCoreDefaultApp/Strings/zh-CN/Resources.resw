@@ -166,6 +166,7 @@
   </data>
   <data name="NetworkConnectingMessageText" xml:space="preserve">
     <value>正在检查网络要求</value>
+    <comment>Message display during wifi network connect click</comment>
   </data>
   <data name="NetworkPasswordPromptText" xml:space="preserve">
     <value>输入网络安全密钥</value>
@@ -206,18 +207,6 @@
   <data name="WifiText" xml:space="preserve">
     <value>WLAN</value>
     <comment>Label for Wi-Fi list in options page</comment>
-  </data>
-  <data name="StartDevelopingText" xml:space="preserve">
-    <value>开始开发</value>
-    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
-  </data>
-  <data name="VisitText" xml:space="preserve">
-    <value>访问</value>
-    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
-  </data>
-  <data name="WindowsOnDevicesUrlText" xml:space="preserve">
-    <value> www.windowsondevices.com</value>
-    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
   </data>
   <data name="KeyboardTitleText" xml:space="preserve">
     <value>键盘布局</value>
@@ -398,10 +387,6 @@
   <data name="Tutorial.GetStarted.014.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
-  <data name="Tutorial.GetStarted.014a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetStarted.015.p" xml:space="preserve">
     <value>有关详细信息，请单击“编写代码”教程</value>
   </data>
@@ -419,10 +404,6 @@
   </data>
   <data name="Tutorial.GetStarted.020.p" xml:space="preserve">
     <value>在构建你自己的应用程序时，请随时使用此应用程序作为入门模板</value>
-  </data>
-  <data name="Tutorial.GetStarted.021.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.001.620x400.image" xml:space="preserve">
     <value>Assets/Tutorials/GetConnected-{0}.jpg</value>
@@ -471,10 +452,6 @@
   <data name="Tutorial.GetConnected.015.ul" xml:space="preserve">
     <value>具备一根以太网电缆，用于将你的开发计算机链接到 IoT 核心版设备。</value>
   </data>
-  <data name="Tutorial.GetConnected.015a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetConnected.016.p" xml:space="preserve">
     <value>按照以下说明在你的电脑上启用 Internet 连接共享(ICS)</value>
   </data>
@@ -493,10 +470,6 @@
   <data name="Tutorial.GetConnected.021.ul" xml:space="preserve">
     <value>单击“共享”选项卡，然后选中“允许其他网络用户通过此计算机的 Internet 连接来连接”框。</value>
   </data>
-  <data name="Tutorial.GetConnected.021a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetConnected.022.p" xml:space="preserve">
     <value>在你的电脑上启用了 ICS 后，现在便可将 Windows 10 IoT 核心版设备直接连接到你的电脑。为此，你可以将备用以太网电缆的一端插入到电脑上的以太网端口，并将该电缆的另一端插入到 IoT 核心版设备上的以太网端口。</value>
   </data>
@@ -506,10 +479,6 @@
   <data name="Tutorial.GetConnected.024.ul" xml:space="preserve">
     <value>如果你只有一个网络连接，则“共享”选项卡将不可用。</value>
   </data>
-  <data name="Tutorial.GetConnected.024a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetConnected.025.h1" xml:space="preserve">
     <value>是否遇到问题?</value>
   </data>
@@ -518,10 +487,6 @@
   </data>
   <data name="Tutorial.GetConnected.027.620x400.image" xml:space="preserve">
     <value>Assets/Tutorials/GetConnected-006.jpg</value>
-    <comment>Please do NOT localize this string</comment>
-  </data>
-  <data name="Tutorial.GetConnected.028.br" xml:space="preserve">
-    <value />
     <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetCoding.001.620x400.image" xml:space="preserve">
@@ -552,10 +517,6 @@
   <data name="Tutorial.GetCoding.009.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
-  <data name="Tutorial.GetCoding.009a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetCoding.010.h1" xml:space="preserve">
     <value>在你的电脑上设置 Visual Studio 2015</value>
   </data>
@@ -567,14 +528,6 @@
   </data>
   <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
     <value>如果你计划开发驱动程序，请安装 WDK。</value>
-  </data>
-  <data name="Tutorial.GetCoding.016a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
-  <data name="Tutorial.GetCoding.019.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="NetworkConnectivityLevel_ConstrainedInternetAccess" xml:space="preserve">
     <value>受限 Internet 访问</value>

@@ -166,6 +166,7 @@
   </data>
   <data name="NetworkConnectingMessageText" xml:space="preserve">
     <value>Verifica dei requisiti di rete in corso</value>
+    <comment>Message display during wifi network connect click</comment>
   </data>
   <data name="NetworkPasswordPromptText" xml:space="preserve">
     <value>Immetti la chiave di sicurezza di rete</value>
@@ -207,17 +208,13 @@
     <value>Wi-Fi</value>
     <comment>Label for Wi-Fi list in options page</comment>
   </data>
-  <data name="StartDevelopingText" xml:space="preserve">
-    <value> per iniziare a sviluppare</value>
-    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
-  </data>
   <data name="VisitText" xml:space="preserve">
-    <value>Visita</value>
-    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
+    <value>Inizia l'esplorazione </value>
+    <comment>Part of "Start exploring WindowsOnDevices.com"</comment>
   </data>
   <data name="WindowsOnDevicesUrlText" xml:space="preserve">
-    <value> www.windowsondevices.com</value>
-    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
+    <value>WindowsOnDevices.com</value>
+    <comment>Part of "Start exploring WindowsOnDevices.com"</comment>
   </data>
   <data name="KeyboardTitleText" xml:space="preserve">
     <value>Layout di tastiera</value>
@@ -398,10 +395,6 @@
   <data name="Tutorial.GetStarted.014.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
-  <data name="Tutorial.GetStarted.014a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetStarted.015.p" xml:space="preserve">
     <value>Per altre informazioni, fai clic sull'esercitazione “Inizia a scrivere codice”</value>
   </data>
@@ -419,10 +412,6 @@
   </data>
   <data name="Tutorial.GetStarted.020.p" xml:space="preserve">
     <value>Usa questa applicazione come modello per iniziare a sviluppare la tua</value>
-  </data>
-  <data name="Tutorial.GetStarted.021.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.001.620x400.image" xml:space="preserve">
     <value>Assets/Tutorials/GetConnected-{0}.jpg</value>
@@ -471,10 +460,6 @@
   <data name="Tutorial.GetConnected.015.ul" xml:space="preserve">
     <value>Un cavo Ethernet per collegare il computer di sviluppo al dispositivo IoT Core.</value>
   </data>
-  <data name="Tutorial.GetConnected.015a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetConnected.016.p" xml:space="preserve">
     <value>Segui le istruzioni seguenti per abilitare Condivisione connessione Internet (ICS) nel PC</value>
   </data>
@@ -493,10 +478,6 @@
   <data name="Tutorial.GetConnected.021.ul" xml:space="preserve">
     <value>Fai clic sulla scheda 'Condivisione' e seleziona la casella 'Consenti ad altri utenti in rete di collegarsi tramite la connessione Internet di questo computer'.</value>
   </data>
-  <data name="Tutorial.GetConnected.021a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetConnected.022.p" xml:space="preserve">
     <value>Dopo avere abilitato Condivisione connessione Internet nel PC, puoi collegare direttamente al PC il tuo dispositivo Windows 10 IoT Core. Per farlo, collega un'estremità del cavo Ethernet alla porta Ethernet aggiuntiva del PC e l'altra estremità alla porta Ethernet del dispositivo IoT Core.</value>
   </data>
@@ -506,10 +487,6 @@
   <data name="Tutorial.GetConnected.024.ul" xml:space="preserve">
     <value>La scheda 'Condivisione' non sarà disponibile se è presente una sola connessione di rete.</value>
   </data>
-  <data name="Tutorial.GetConnected.024a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetConnected.025.h1" xml:space="preserve">
     <value>Problemi?</value>
   </data>
@@ -518,10 +495,6 @@
   </data>
   <data name="Tutorial.GetConnected.027.620x400.image" xml:space="preserve">
     <value>Assets/Tutorials/GetConnected-006.jpg</value>
-    <comment>Please do NOT localize this string</comment>
-  </data>
-  <data name="Tutorial.GetConnected.028.br" xml:space="preserve">
-    <value />
     <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetCoding.001.620x400.image" xml:space="preserve">
@@ -552,10 +525,6 @@
   <data name="Tutorial.GetCoding.009.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
-  <data name="Tutorial.GetCoding.009a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetCoding.010.h1" xml:space="preserve">
     <value>Configurazione di Visual Studio 2015 nel PC</value>
   </data>
@@ -567,14 +536,6 @@
   </data>
   <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
     <value>Se prevedi di sviluppare driver, installa il WDK.</value>
-  </data>
-  <data name="Tutorial.GetCoding.016a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
-  <data name="Tutorial.GetCoding.019.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="NetworkConnectivityLevel_ConstrainedInternetAccess" xml:space="preserve">
     <value>Accesso a Internet limitato</value>
@@ -792,5 +753,33 @@ In alternativa, tocca o fai clic sul pulsante di seguito per immettere la passwo
   <data name="ToggleOffText" xml:space="preserve">
     <value>Disattivato</value>
     <comment>Text used in toggle switches for 'off' state.</comment>
+  </data>
+  <data name="WebBrowserText" xml:space="preserve">
+    <value>Browser</value>
+    <comment>Title for WebBrowser Text</comment>
+  </data>
+  <data name="WebAddressPlaceholderText" xml:space="preserve">
+    <value>Cerca sul Web o scrivi l'indirizzo del sito</value>
+    <comment>WebAddress Placeholder</comment>
+  </data>
+  <data name="MicrosoftWifiConnect" xml:space="preserve">
+    <value>http://www.msftconnecttest.com/redirect</value>
+    <comment>Used by Wifi Connect Redirect</comment>
+  </data>
+  <data name="NetworkNotConnected" xml:space="preserve">
+    <value>Nessuna connessione trovata.</value>
+    <comment>Part1 of NetworkNotConnected. Check to see if Device is connected to network</comment>
+  </data>
+  <data name="WebAddressRequired" xml:space="preserve">
+    <value>Immetti l'indirizzo di un sito o un testo da cercare.</value>
+    <comment>Browser Text Required</comment>
+  </data>
+  <data name="NetworkNotConnected2" xml:space="preserve">
+    <value>Controlla la rete del dispositivo nelle impostazioni.</value>
+    <comment>Part2 of NetworkNotConnected</comment>
+  </data>
+  <data name="Windows10IoTCoreText" xml:space="preserve">
+    <value>Windows 10 IoT Core</value>
+    <comment>Dont Localize</comment>
   </data>
 </root>

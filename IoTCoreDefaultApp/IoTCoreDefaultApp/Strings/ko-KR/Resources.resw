@@ -166,6 +166,7 @@
   </data>
   <data name="NetworkConnectingMessageText" xml:space="preserve">
     <value>네트워크 요구 사항 확인 중</value>
+    <comment>Message display during wifi network connect click</comment>
   </data>
   <data name="NetworkPasswordPromptText" xml:space="preserve">
     <value>네트워크 보안 키 입력</value>
@@ -207,17 +208,13 @@
     <value>Wi-Fi</value>
     <comment>Label for Wi-Fi list in options page</comment>
   </data>
-  <data name="StartDevelopingText" xml:space="preserve">
-    <value>을 방문하세요.</value>
-    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
-  </data>
   <data name="VisitText" xml:space="preserve">
-    <value>개발을 시작하려면</value>
-    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
+    <value>탐색 시작 </value>
+    <comment>Part of "Start exploring WindowsOnDevices.com"</comment>
   </data>
   <data name="WindowsOnDevicesUrlText" xml:space="preserve">
-    <value> www.windowsondevices.com</value>
-    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
+    <value>WindowsOnDevices.com</value>
+    <comment>Part of "Start exploring WindowsOnDevices.com"</comment>
   </data>
   <data name="KeyboardTitleText" xml:space="preserve">
     <value>키보드 레이아웃</value>
@@ -398,10 +395,6 @@
   <data name="Tutorial.GetStarted.014.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
-  <data name="Tutorial.GetStarted.014a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetStarted.015.p" xml:space="preserve">
     <value>자세한 내용을 보려면 [코딩] 자습서를 클릭하세요.</value>
   </data>
@@ -419,10 +412,6 @@
   </data>
   <data name="Tutorial.GetStarted.020.p" xml:space="preserve">
     <value>응용프로그램을 직접 빌드할 때 언제든지 이 응용프로그램을 템플릿으로 사용하여 시작하세요.</value>
-  </data>
-  <data name="Tutorial.GetStarted.021.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.001.620x400.image" xml:space="preserve">
     <value>Assets/Tutorials/GetConnected-{0}.jpg</value>
@@ -462,15 +451,14 @@
   <data name="Tutorial.GetConnected.012.h1" xml:space="preserve">
     <value>인터넷 연결 공유</value>
   </data>
+  <data name="Tutorial.GetConnected.013.p" xml:space="preserve">
+    <value>PC에서 인터넷에 연결하고 IoT Core 장치와 인터넷 연결을 공유하려면 다음 항목이 있어야 합니다.</value>
+  </data>
   <data name="Tutorial.GetConnected.014.ul" xml:space="preserve">
     <value>개발 컴퓨터의 예비 이더넷 포트. 이 포트는 추가 PCI 이더넷 카드나 USB-이더넷 동글일 수 있습니다.</value>
   </data>
   <data name="Tutorial.GetConnected.015.ul" xml:space="preserve">
     <value>개발 컴퓨터를 IoT Core 장치에 연결하는 이더넷 케이블</value>
-  </data>
-  <data name="Tutorial.GetConnected.015a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.016.p" xml:space="preserve">
     <value>아래의 지침에 따라 PC에서 ICS(인터넷 연결 공유)를 사용하도록 설정합니다.</value>
@@ -490,10 +478,6 @@
   <data name="Tutorial.GetConnected.021.ul" xml:space="preserve">
     <value>[공유] 탭을 클릭하고 [다른 네트워크 사용자가 이 컴퓨터의 인터넷 연결을 통해 연결할 수 있도록 허용] 확인란을 선택합니다.</value>
   </data>
-  <data name="Tutorial.GetConnected.021a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetConnected.022.p" xml:space="preserve">
     <value>PC에서 ICS를 사용하도록 설정했으면 이제 Windows 10 IoT Core 장치를 PC에 직접 연결할 수 있습니다. 이렇게 하려면 예비 이더넷 케이블의 한쪽 끝을 PC의 추가 이더넷 포트에 연결하고 케이블의 다른 쪽 끝을 IoT Core 장치의 이더넷 포트에 연결하면 됩니다.</value>
   </data>
@@ -503,10 +487,6 @@
   <data name="Tutorial.GetConnected.024.ul" xml:space="preserve">
     <value>네트워크 연결이 하나만 있는 경우에는 [공유] 탭을 사용할 수 없습니다.</value>
   </data>
-  <data name="Tutorial.GetConnected.024a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetConnected.025.h1" xml:space="preserve">
     <value>문제가 발생하는 경우</value>
   </data>
@@ -515,10 +495,6 @@
   </data>
   <data name="Tutorial.GetConnected.027.620x400.image" xml:space="preserve">
     <value>Assets/Tutorials/GetConnected-006.jpg</value>
-    <comment>Please do NOT localize this string</comment>
-  </data>
-  <data name="Tutorial.GetConnected.028.br" xml:space="preserve">
-    <value />
     <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetCoding.001.620x400.image" xml:space="preserve">
@@ -549,10 +525,6 @@
   <data name="Tutorial.GetCoding.009.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
-  <data name="Tutorial.GetCoding.009a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetCoding.010.h1" xml:space="preserve">
     <value>PC에서 Visual Studio 2015 설정</value>
   </data>
@@ -564,14 +536,6 @@
   </data>
   <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
     <value>드라이버를 개발할 계획인 경우 WDK를 설치합니다.</value>
-  </data>
-  <data name="Tutorial.GetCoding.016a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
-  <data name="Tutorial.GetCoding.019.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="NetworkConnectivityLevel_ConstrainedInternetAccess" xml:space="preserve">
     <value>제한된 인터넷 액세스</value>
@@ -636,7 +600,7 @@
     <comment>Message displayed when Inbound pairing handler registration fails</comment>
   </data>
   <data name="BluetoothInboundRegistrationSucceededFormat" xml:space="preserve">
-    <value>인바운드 페어링에 대해 등록했습니다. 지원되는 양식: {0}</value>
+    <value>인바운드 페어링에 대해 등록했습니다. 지원되는 양식: {0} </value>
     <comment>Format string for message displayed when Inbound pairing handler registration succeeds</comment>
   </data>
   <data name="BluetoothPairingFailureFormat" xml:space="preserve">
@@ -789,5 +753,33 @@
   <data name="ToggleOffText" xml:space="preserve">
     <value>끄기</value>
     <comment>Text used in toggle switches for 'off' state.</comment>
+  </data>
+  <data name="WebBrowserText" xml:space="preserve">
+    <value>브라우저</value>
+    <comment>Title for WebBrowser Text</comment>
+  </data>
+  <data name="WebAddressPlaceholderText" xml:space="preserve">
+    <value>웹 주소 검색 또는 입력</value>
+    <comment>WebAddress Placeholder</comment>
+  </data>
+  <data name="MicrosoftWifiConnect" xml:space="preserve">
+    <value>http://www.msftconnecttest.com/redirect</value>
+    <comment>Used by Wifi Connect Redirect</comment>
+  </data>
+  <data name="NetworkNotConnected" xml:space="preserve">
+    <value>연결을 찾을 수 없습니다.</value>
+    <comment>Part1 of NetworkNotConnected. Check to see if Device is connected to network</comment>
+  </data>
+  <data name="WebAddressRequired" xml:space="preserve">
+    <value>검색할 웹 주소 또는 텍스트를 입력해야 합니다.</value>
+    <comment>Browser Text Required</comment>
+  </data>
+  <data name="NetworkNotConnected2" xml:space="preserve">
+    <value>설정에서 장치 네트워크를 확인하세요.</value>
+    <comment>Part2 of NetworkNotConnected</comment>
+  </data>
+  <data name="Windows10IoTCoreText" xml:space="preserve">
+    <value>Windows 10 IoT Core</value>
+    <comment>Dont Localize</comment>
   </data>
 </root>
