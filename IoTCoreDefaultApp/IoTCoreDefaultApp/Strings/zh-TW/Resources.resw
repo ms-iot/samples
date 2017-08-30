@@ -166,6 +166,7 @@
   </data>
   <data name="NetworkConnectingMessageText" xml:space="preserve">
     <value>正在檢查網路需求</value>
+    <comment>Message display during wifi network connect click</comment>
   </data>
   <data name="NetworkPasswordPromptText" xml:space="preserve">
     <value>輸入網路安全性金鑰</value>
@@ -206,18 +207,6 @@
   <data name="WifiText" xml:space="preserve">
     <value>Wi-Fi</value>
     <comment>Label for Wi-Fi list in options page</comment>
-  </data>
-  <data name="StartDevelopingText" xml:space="preserve">
-    <value> 開始開發</value>
-    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
-  </data>
-  <data name="VisitText" xml:space="preserve">
-    <value>瀏覽</value>
-    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
-  </data>
-  <data name="WindowsOnDevicesUrlText" xml:space="preserve">
-    <value> www.windowsondevices.com</value>
-    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
   </data>
   <data name="KeyboardTitleText" xml:space="preserve">
     <value>鍵盤配置</value>
@@ -398,10 +387,6 @@
   <data name="Tutorial.GetStarted.014.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
-  <data name="Tutorial.GetStarted.014a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetStarted.015.p" xml:space="preserve">
     <value>按一下「開始撰寫程式碼」教學課程以取得詳細資訊</value>
   </data>
@@ -419,10 +404,6 @@
   </data>
   <data name="Tutorial.GetStarted.020.p" xml:space="preserve">
     <value>在設計您專屬的應用程式時，可以將它作為初始範本使用</value>
-  </data>
-  <data name="Tutorial.GetStarted.021.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetConnected.001.620x400.image" xml:space="preserve">
     <value>Assets/Tutorials/GetConnected-{0}.jpg</value>
@@ -471,10 +452,6 @@
   <data name="Tutorial.GetConnected.015.ul" xml:space="preserve">
     <value>可連接開發電腦與 IoT 核心版裝置的乙太網路連接線。</value>
   </data>
-  <data name="Tutorial.GetConnected.015a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetConnected.016.p" xml:space="preserve">
     <value>遵循下方說明在您的電腦上啟用網際網路連線共用 (ICS)</value>
   </data>
@@ -493,10 +470,6 @@
   <data name="Tutorial.GetConnected.021.ul" xml:space="preserve">
     <value>按一下 [共用] 索引標籤，並選取 [允許其他網路使用者透過此電腦的網際網路連線] 方塊。</value>
   </data>
-  <data name="Tutorial.GetConnected.021a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetConnected.022.p" xml:space="preserve">
     <value>當您在電腦上啟用 ICS 後，您即可將 Windows 10 IoT 核心版裝置直接連線至電腦。您可以將乙太網路連接線一端插入電腦上額外的乙太網路連接埠，將另一端插入 IoT 核心版裝置上的乙太網路連接埠。</value>
   </data>
@@ -506,10 +479,6 @@
   <data name="Tutorial.GetConnected.024.ul" xml:space="preserve">
     <value>若您僅有一個網路連線，則無法使用 [共用] 索引標籤。</value>
   </data>
-  <data name="Tutorial.GetConnected.024a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetConnected.025.h1" xml:space="preserve">
     <value>遇到問題?</value>
   </data>
@@ -518,10 +487,6 @@
   </data>
   <data name="Tutorial.GetConnected.027.620x400.image" xml:space="preserve">
     <value>Assets/Tutorials/GetConnected-006.jpg</value>
-    <comment>Please do NOT localize this string</comment>
-  </data>
-  <data name="Tutorial.GetConnected.028.br" xml:space="preserve">
-    <value />
     <comment>Please do NOT localize this string</comment>
   </data>
   <data name="Tutorial.GetCoding.001.620x400.image" xml:space="preserve">
@@ -552,10 +517,6 @@
   <data name="Tutorial.GetCoding.009.ul" xml:space="preserve">
     <value>Visual Studio 2015</value>
   </data>
-  <data name="Tutorial.GetCoding.009a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
   <data name="Tutorial.GetCoding.010.h1" xml:space="preserve">
     <value>在您的電腦上設定 Visual Studio 2015</value>
   </data>
@@ -567,14 +528,6 @@
   </data>
   <data name="Tutorial.GetCoding.014.ul" xml:space="preserve">
     <value>若您計劃開發驅動程式，請安裝 WDK。</value>
-  </data>
-  <data name="Tutorial.GetCoding.016a.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
-  </data>
-  <data name="Tutorial.GetCoding.019.br" xml:space="preserve">
-    <value />
-    <comment>Please do NOT localize this string</comment>
   </data>
   <data name="NetworkConnectivityLevel_ConstrainedInternetAccess" xml:space="preserve">
     <value>受限的網際網路存取</value>
