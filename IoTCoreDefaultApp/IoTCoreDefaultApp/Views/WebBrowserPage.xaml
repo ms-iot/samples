@@ -72,7 +72,7 @@
                 <Button Grid.Column="2" x:Name="WebRefreshButton" Content="{StaticResource IconRefresh}" BorderThickness="0" BorderBrush="Transparent" FontFamily="{StaticResource IconFontFamily}" FontSize="16" Click="WebGoButton_Click" Height="46" Width="30" HorizontalAlignment="Left" Margin="0,6" RenderTransformOrigin="0.5,0.5" Background="Transparent" Padding="4" />
                
                 <AutoSuggestBox x:Name="WebAddressText" TextBoxStyle="{StaticResource AutoSuggestBoxTextBoxStyle}" BorderBrush="Transparent"  Grid.Column="3" Height="Auto" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center"  UpdateTextOnSelect="true" IsSuggestionListOpen="True" 
-                                FontFamily="{StaticResource IconFontFamily}" FontSize="16" AutoMaximizeSuggestionArea="True"
+                                FontFamily="{StaticResource IconFontFamily}" FontSize="16" AutoMaximizeSuggestionArea="True" PlaceholderText="{Binding [WebAddressPlaceholderText]}"
                                 LostFocus="WebAddressText_LostFocus" TextChanged="WebAddressText_TextChanged" KeyUp="WebAddressText_KeyUp" FocusEngaged="WebAddressText_FocusEngaged" SuggestionChosen="WebAddressText_SuggestionChosen" QuerySubmitted="WebAddressText_QuerySubmitted" 
                                 Margin="5,6,0,0" BorderThickness="0,2,0,0">
                     <AutoSuggestBox.QueryIcon>
@@ -93,10 +93,10 @@
 
             <StackPanel x:Name="MessageStackPanel" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed" >
                 <Image Source="/Assets/NetworkWarning.png" HorizontalAlignment="Center" Stretch="None" />
-                <TextBlock x:Name="Message1" FontSize="20" HorizontalAlignment="Center" />
-                <TextBlock x:Name="Message2" FontSize="20" HorizontalAlignment="Center" >
+                <TextBlock x:Name="Message1" FontSize="20" HorizontalAlignment="Center" Text="{Binding [NetworkNotConnected]}"/>
+                <TextBlock x:Name="Message2" FontSize="20" HorizontalAlignment="Center" Text="{Binding [NetworkNotConnected2]}" >
                 </TextBlock>
-                <Button x:Name="SettingsDirect" Content="Settings" HorizontalAlignment="Center" BorderBrush="AliceBlue" Click="OnSettings_Click" Margin="5"/>
+                <Button x:Name="SettingsDirect" Content="{Binding [NetworkPreferencesText]}" HorizontalAlignment="Center" BorderBrush="AliceBlue" Click="OnSettings_Click" Margin="10"/>
             </StackPanel>
 
         </Grid>
