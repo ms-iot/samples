@@ -45,8 +45,7 @@ namespace IoTCoreDefaultApp
             //Initialize
             WebBackButton.IsEnabled = ContentView.CanGoBack;
             WebNextButton.IsEnabled = ContentView.CanGoForward;
-
-            WebAddressText.PlaceholderText = Common.GetLocalizedText("WebAddressPlaceholderText");
+            
             WebAddressText.AutoMaximizeSuggestionArea = true;
 
             WebAddressText.QueryIcon.HorizontalAlignment = HorizontalAlignment.Left;
