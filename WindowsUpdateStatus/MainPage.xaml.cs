@@ -32,7 +32,6 @@ namespace WindowsUpdateStatus
         }
         private async void WindowsUpdateStatus()
         {
-            
             DeviceManagement.WindowsUpdateStatus status = await deviceManagement.ReportWindowsUpdateStatusAsync();
 
             if(status.lastScanTime != "")
