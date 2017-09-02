@@ -14,6 +14,9 @@ namespace WindowsUpdateStatus
     public sealed partial class MainPage : Page
     {
         DeviceManagement deviceManagement;
+
+        //To ensure that the "Update installed successfully." status shows up only once. 
+        bool successfulUpdateNotification = false;
         public MainPage()
         {
             this.InitializeComponent();
@@ -29,6 +32,7 @@ namespace WindowsUpdateStatus
         }
         private async void WindowsUpdateStatus()
         {
+            
             DeviceManagement.WindowsUpdateStatus status = await deviceManagement.ReportWindowsUpdateStatusAsync();
 
             if(status.lastScanTime != "")
@@ -56,7 +60,11 @@ namespace WindowsUpdateStatus
 
             if(status.installed != "")
             {
-                Status.Text = "Update installed successfully.";
+                if (!successfulUpdateNotification)
+                {
+                    Status.Text = "Update installed successfully.";                    
+                    successfulUpdateNotification = true;
+                }
                 Installed.Text = "Last successfully installed update : " + Parser(status.installed);
             }
 
@@ -70,6 +78,7 @@ namespace WindowsUpdateStatus
             {
                 Status.Text = "Device is pending reboot.";
                 PendingReboot.Text = "Reboot is pending for the following upgrade: " + Parser(status.pendingReboot);
+                successfulUpdateNotification = false;
             }
 
         }
