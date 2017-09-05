@@ -20,21 +20,7 @@ namespace IoTCoreDefaultApp
     public sealed partial class MainPage : Page
     {
         public static MainPage Current;
-        private CoreDispatcher MainPageDispatcher;
         private ConnectedDevicePresenter connectedDevicePresenter;
-
-        public CoreDispatcher UIThreadDispatcher
-        {
-            get
-            {
-                return MainPageDispatcher;
-            }
-
-            set
-            {
-                MainPageDispatcher = value;
-            }
-        }
 
         public MainPage()
         {
@@ -44,8 +30,6 @@ namespace IoTCoreDefaultApp
             // in order to call methods that are in this class.
             Current = this;
 
-            MainPageDispatcher = Window.Current.Dispatcher;
-
             NetworkInformation.NetworkStatusChanged += NetworkInformation_NetworkStatusChanged;
 
             this.NavigationCacheMode = NavigationCacheMode.Enabled;
@@ -54,7 +38,7 @@ namespace IoTCoreDefaultApp
             
             this.Loaded += async (sender, e) => 
             {
-                await MainPageDispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
                 {
                     UpdateBoardInfo();
                     UpdateNetworkInfo();
@@ -76,7 +60,7 @@ namespace IoTCoreDefaultApp
 
         private async void NetworkInformation_NetworkStatusChanged(object sender)
         {
-            await MainPageDispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
             {
                 UpdateNetworkInfo();
             });
@@ -118,7 +102,7 @@ namespace IoTCoreDefaultApp
 
         private void UpdateConnectedDevices()
         {
-            connectedDevicePresenter = new ConnectedDevicePresenter(MainPageDispatcher);
+            connectedDevicePresenter = new ConnectedDevicePresenter();
             this.ConnectedDevices.ItemsSource = connectedDevicePresenter.GetConnectedDevices();
         }
         

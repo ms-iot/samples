@@ -38,13 +38,12 @@ namespace IoTCoreDefaultApp
                 // be reloaded.
                 if (e.PropertyName == "Item[]")
                 {
-// Disable await warning
+                    // Disable await warning
 #pragma warning disable 4014
-                    Dispatcher.RunAsync(CoreDispatcherPriority.Low, () => { LoadDocument(docName); });
+                    Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () => { LoadDocument(docName); });
 #pragma warning restore 4014
                 }
             };
-            
         }
 
         private void RootFrame_Navigated(object sender, NavigationEventArgs e)
@@ -55,7 +54,7 @@ namespace IoTCoreDefaultApp
                 docName = newDocName;
 // Disable await warning
 #pragma warning disable 4014
-                Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>{ LoadDocument(docName); });
+                Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>{ LoadDocument(docName); });
 #pragma warning restore 4014
                 NextButton.Visibility = (NavigationUtils.IsNextTutorialButtonVisible(docName) ? Visibility.Visible : Visibility.Collapsed);
             }

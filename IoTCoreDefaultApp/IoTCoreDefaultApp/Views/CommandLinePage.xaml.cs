@@ -45,7 +45,7 @@ namespace IoTCoreDefaultApp
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            await Dispatcher.RunAsync(
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
                 CoreDispatcherPriority.Normal,
                 () => CommandLine.Focus(FocusState.Keyboard));
         }
@@ -131,7 +131,7 @@ namespace IoTCoreDefaultApp
                 }
             }
 
-            await CoreWindow.GetForCurrentThread().Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 Paragraph paragraph = new Paragraph();
 
@@ -225,7 +225,7 @@ namespace IoTCoreDefaultApp
 
         private async Task DoRunCommand(bool isFocus)
         {
-            await Dispatcher.RunAsync(
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
                 CoreDispatcherPriority.Normal,
                 async () =>
                 {

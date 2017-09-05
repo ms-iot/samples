@@ -71,7 +71,7 @@ namespace IoTCoreDefaultApp
 
             this.Loaded += async (sender, e) =>
             {
-                await Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
                 {
                     SetupLanguages();
                     screensaverToggleSwitch.IsOn = Screensaver.IsScreensaverEnabled;
@@ -185,7 +185,7 @@ namespace IoTCoreDefaultApp
             // Ignore the inbound if pairing is already in progress
             if (inProgressPairButton == null)
             {
-                await MainPage.Current.UIThreadDispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
                     // Make sure the Bluetooth grid is showing
                     SwitchToSelectedSettingsAsync("BluetoothListViewItem");
@@ -344,7 +344,7 @@ namespace IoTCoreDefaultApp
             var network = button.DataContext as WiFiAvailableNetwork;
             if (NetworkPresenter.IsNetworkOpen(network))
             {
-                ConnectToWifi(network, null, Window.Current.Dispatcher);
+                ConnectToWifi(network, null);
             }
             else
             {
@@ -352,20 +352,20 @@ namespace IoTCoreDefaultApp
             }
         }
 
-        private async void ConnectToWifi(WiFiAvailableNetwork network, PasswordCredential credential, CoreDispatcher dispatcher)
+        private async void ConnectToWifi(WiFiAvailableNetwork network, PasswordCredential credential)
         {
             var didConnect = credential == null ?
                 networkPresenter.ConnectToNetwork(network, Automatic) :
                 networkPresenter.ConnectToNetworkWithPassword(network, Automatic, credential);
 
-            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 SwitchToItemState(network, WifiConnectingState, false);
             });
 
             DataTemplate nextState = (await didConnect) ? WifiConnectedState : WifiInitialState;
 
-            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 var item = SwitchToItemState(network, nextState, false);
                 item.IsSelected = false;
@@ -408,7 +408,7 @@ namespace IoTCoreDefaultApp
             }
 
             var network = button.DataContext as WiFiAvailableNetwork;
-            ConnectToWifi(network, credential, Window.Current.Dispatcher);
+            ConnectToWifi(network, credential);
         }
 
         private void CancelButton_Clicked(object sender, RoutedEventArgs e)
@@ -559,7 +559,7 @@ namespace IoTCoreDefaultApp
             handlerAdded = new TypedEventHandler<DeviceWatcher, DeviceInformation>(async (watcher, deviceInfo) =>
             {
                 // Since we have the collection databound to a UI element, we need to update the collection on the UI thread.
-                await MainPage.Current.UIThreadDispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
                 {
                     bluetoothDeviceObservableCollection.Add(new BluetoothDeviceInformationDisplay(deviceInfo));
                 });
@@ -569,7 +569,7 @@ namespace IoTCoreDefaultApp
             handlerUpdated = new TypedEventHandler<DeviceWatcher, DeviceInformationUpdate>(async (watcher, deviceInfoUpdate) =>
             {
                 // Since we have the collection databound to a UI element, we need to update the collection on the UI thread.
-                await MainPage.Current.UIThreadDispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
                 {
                     // Find the corresponding updated DeviceInformation in the collection and pass the update object
                     // to the Update method of the existing DeviceInformation. This automatically updates the object
@@ -589,7 +589,7 @@ namespace IoTCoreDefaultApp
             handlerRemoved = new TypedEventHandler<DeviceWatcher, DeviceInformationUpdate>(async (watcher, deviceInfoUpdate) =>
             {
                 // Since we have the collection databound to a UI element, we need to update the collection on the UI thread.
-                await MainPage.Current.UIThreadDispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
                 {
                     // Find the corresponding DeviceInformation in the collection and remove it
                     foreach (BluetoothDeviceInformationDisplay deviceInfoDisp in bluetoothDeviceObservableCollection)
@@ -604,23 +604,23 @@ namespace IoTCoreDefaultApp
             });
             deviceWatcher.Removed += handlerRemoved;
 
-            handlerEnumCompleted = new TypedEventHandler<DeviceWatcher, Object>(async (watcher, obj) =>
-            {
-                await MainPage.Current.UIThreadDispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
-                {
-                    // Finished enumerating
-                });
-            });
-            deviceWatcher.EnumerationCompleted += handlerEnumCompleted;
+            //handlerEnumCompleted = new TypedEventHandler<DeviceWatcher, Object>(async (watcher, obj) =>
+            //{
+            //    await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+            //    {
+            //        // Finished enumerating
+            //    });
+            //});
+            //deviceWatcher.EnumerationCompleted += handlerEnumCompleted;
 
-            handlerStopped = new TypedEventHandler<DeviceWatcher, Object>(async (watcher, obj) =>
-            {
-                await MainPage.Current.UIThreadDispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
-                {
-                    // Device watcher stopped
-                });
-            });
-            deviceWatcher.Stopped += handlerStopped;
+            //handlerStopped = new TypedEventHandler<DeviceWatcher, Object>(async (watcher, obj) =>
+            //{
+            //    await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+            //    {
+            //        // Device watcher stopped
+            //    });
+            //});
+            //deviceWatcher.Stopped += handlerStopped;
 
             // Start the Device Watcher
             deviceWatcher.Start();
@@ -658,7 +658,7 @@ namespace IoTCoreDefaultApp
         private async void DisplayMessagePanel(string confirmationMessage, MessageType messageType)
         {
             // Use UI thread
-            await MainPage.Current.UIThreadDispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
             {
 
                 confirmationText.Text = confirmationMessage;
@@ -853,7 +853,7 @@ namespace IoTCoreDefaultApp
                 case DevicePairingKinds.ProvidePin:
                     // A PIN may be shown on the target device and the user needs to enter the matching PIN on 
                     // this Windows device.
-                    await MainPage.Current.UIThreadDispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                    await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
                     {
                         // PIN Entry
                         inProgressPairButton.Flyout = savedPairButtonFlyout;
@@ -1192,7 +1192,7 @@ namespace IoTCoreDefaultApp
             else
             {
                 CortanaVoiceActivationSwitch.IsEnabled = false;
-                Window.Current.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                 {
                     await SetVoiceActivation(enableVoiceActivation);
                     CortanaVoiceActivationSwitch.IsEnabled = true;

@@ -134,7 +134,7 @@ namespace IoTCoreDefaultApp
 
             this.Loaded += async (sender, e) =>
             {
-                await Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
                 {
                     ScreenSaver_Loaded(sender, e);
                 });
