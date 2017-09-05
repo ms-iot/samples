@@ -39,7 +39,7 @@ namespace IoTCoreDefaultApp
 
             this.Loaded += async (sender, e) =>
             {
-                await Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
                 {
                     SetupLanguages();
                     UpdateBoardInfo();
@@ -65,7 +65,7 @@ namespace IoTCoreDefaultApp
             if (value >= DefaultLanguageProgress.Maximum)
             {
                 countdown.Stop();
-                await Window.Current.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
                     NavigationUtils.NavigateToScreen(typeof(MainPage));
                 });
@@ -117,7 +117,7 @@ namespace IoTCoreDefaultApp
                 nextScreen = typeof(MainPage);
             }
 
-            await Window.Current.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
                 // If the next screen is the main-page, navigate there, but also launch Cortana to its Consent Page independently
                 if (nextScreen == typeof(MainPage))
