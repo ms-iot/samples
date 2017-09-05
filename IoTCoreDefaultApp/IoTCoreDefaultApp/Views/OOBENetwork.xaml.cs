@@ -21,14 +21,12 @@ namespace IoTCoreDefaultApp
     public sealed partial class OOBENetwork : Page
     {
         private NetworkPresenter networkPresenter = new NetworkPresenter();
-        private CoreDispatcher OOBENetworkPageDispatcher;
         private bool Automatic = true;
         private string CurrentPassword = string.Empty;
 
         public OOBENetwork()
         {
             this.InitializeComponent();
-            OOBENetworkPageDispatcher = Window.Current.Dispatcher;
 
             NetworkInformation.NetworkStatusChanged += NetworkInformation_NetworkStatusChanged;
 
@@ -38,7 +36,7 @@ namespace IoTCoreDefaultApp
 
             this.Loaded += async (sender, e) =>
             {
-                await OOBENetworkPageDispatcher.RunAsync(CoreDispatcherPriority.Low, () => {
+                await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () => {
                     SetupNetwork();
                 });
             };
@@ -52,7 +50,7 @@ namespace IoTCoreDefaultApp
 
         private async void NetworkInformation_NetworkStatusChanged(object sender)
         {
-            await OOBENetworkPageDispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
             {
                 SetupNetwork();
             });
@@ -128,7 +126,7 @@ namespace IoTCoreDefaultApp
             var network = button.DataContext as WiFiAvailableNetwork;
             if (NetworkPresenter.IsNetworkOpen(network))
             {
-                ConnectToWifi(network, null, Window.Current.Dispatcher);
+                ConnectToWifi(network, null);
             }
             else
             {
@@ -136,20 +134,20 @@ namespace IoTCoreDefaultApp
             }
         }
 
-        private async void ConnectToWifi(WiFiAvailableNetwork network, PasswordCredential credential, CoreDispatcher dispatcher)
+        private async void ConnectToWifi(WiFiAvailableNetwork network, PasswordCredential credential)
         {
             var didConnect = credential == null ?
                 networkPresenter.ConnectToNetwork(network, Automatic) :
                 networkPresenter.ConnectToNetworkWithPassword(network, Automatic, credential);
 
-            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 SwitchToItemState(network, WifiConnectingState, false);
             });
 
             if (await didConnect)
             {
-                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                 {
                     await CortanaHelper.LaunchCortanaToConsentPageAsyncIfNeeded();
                     NavigationUtils.NavigateToScreen(typeof(MainPage));
@@ -157,7 +155,7 @@ namespace IoTCoreDefaultApp
             }
             else
             {
-                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
                     var item = SwitchToItemState(network, WifiInitialState, false);
                     item.IsSelected = false;
@@ -183,7 +181,7 @@ namespace IoTCoreDefaultApp
             }
 
             var network = button.DataContext as WiFiAvailableNetwork;
-            ConnectToWifi(network, credential, Window.Current.Dispatcher);
+            ConnectToWifi(network, credential);
         }
 
         private void CancelButton_Clicked(object sender, RoutedEventArgs e)

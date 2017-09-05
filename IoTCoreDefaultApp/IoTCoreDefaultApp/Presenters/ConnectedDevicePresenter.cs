@@ -15,13 +15,10 @@ namespace IoTCoreDefaultApp
 {
     public class ConnectedDevicePresenter
     {
-        private CoreDispatcher dispatcher;
         const string usbDevicesSelector = "(System.Devices.InterfaceClassGuid:=\"{" + Constants.GUID_DEVINTERFACE_USB_DEVICE + "}\")";
 
-        public ConnectedDevicePresenter(CoreDispatcher dispatcher)
+        public ConnectedDevicePresenter()
         {
-            this.dispatcher = dispatcher;
-
             usbConnectedDevicesWatcher = DeviceInformation.CreateWatcher(usbDevicesSelector);
             usbConnectedDevicesWatcher.EnumerationCompleted += DevicesEnumCompleted;
             usbConnectedDevicesWatcher.Updated += DevicesUpdated;
@@ -33,7 +30,7 @@ namespace IoTCoreDefaultApp
         {
             Debug.WriteLine("USB Devices Enumeration Completed");
 
-            await dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
             {
                 UpdateDevices();
             });
@@ -43,7 +40,7 @@ namespace IoTCoreDefaultApp
         {
             Debug.WriteLine("Updated USB device: " + args.Id);
 
-            await dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
             {
                 UpdateDevices();
             });
@@ -53,7 +50,7 @@ namespace IoTCoreDefaultApp
         {
             Debug.WriteLine("Removed USB device: " + args.Id);
 
-            await dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
             {
                 UpdateDevices();
             });
