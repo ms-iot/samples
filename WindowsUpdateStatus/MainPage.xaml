@@ -1,4 +1,24 @@
-﻿<Page
+﻿<!--
+    Copyright(c) Microsoft Open Technologies, Inc. All rights reserved.
+    The MIT License(MIT)
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files(the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions :
+    The above copyright notice and this permission notice shall be included in
+    all copies or substantial portions of the Software.
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+    THE SOFTWARE.
+-->
+    
+    <Page
     x:Class="WindowsUpdateStatus.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -8,38 +28,50 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
-        <Grid x:Name="windowsUpdateHeader">
-            <Border BorderBrush="#FF1A82CC" BorderThickness="1" HorizontalAlignment="Left" Height="204" VerticalAlignment="Top" Width="1024" Background="#FF1A82CC" RenderTransformOrigin="0.502,0.227"/>
-            <TextBlock HorizontalAlignment="Left" Height="71" Margin="67,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="392" FontSize="24"  Foreground="White">
-                <Run FontWeight="Bold" Text="Windows Update Status"/>
-            </TextBlock>
-            <TextBlock x:Name="Status" HorizontalAlignment="Left" Height="58" Margin="76,97,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="837" Foreground="White" FontSize="18">
-            <Run FontWeight="Bold" Text="No updates available."/>
-            </TextBlock>
-            <Button Content="Update Status" HorizontalAlignment="Left" Height="65" Margin="75,620,0,0" VerticalAlignment="Top" Width="246" Click="Check_WindowsUpdateAsync"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" x:Name="windowsUpdateHeader" Background="#FF1A82CC">
+            <StackPanel Margin="10">
+                <TextBlock Text="Windows Update Status" Margin="10" FontSize="30"  FontWeight="Bold" Foreground="White"/>
+                <TextBlock x:Name="Status" Text="Windows update check failed." Margin="10" FontSize="18" FontWeight="Bold" Foreground="White"/>
+            </StackPanel>
         </Grid>
-        
-        <Grid x:Name="windowsUpdateStatus">
-            <TextBox x:Name="DeferUpgrade" Text="Upgrades not deferred until the next period." ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="True" HorizontalAlignment="Left" Margin="221,479,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" Width="680"/>
-            <TextBlock HorizontalAlignment="Left" Margin="75,479,0,0" TextWrapping="Wrap" Text="Defer Upgrade :" VerticalAlignment="Top" RenderTransformOrigin="-8.642,-15.587" Height="25" Width="119"/>
 
-            <TextBox x:Name="LastScanTime" Text="Windows update check failed" ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="True" HorizontalAlignment="Left" Margin="221,288,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" Width="680"/>
-            <TextBlock HorizontalAlignment="Left" Margin="76,288,0,0" TextWrapping="Wrap" Text="Last Scan Time : " VerticalAlignment="Top" RenderTransformOrigin="-5.763,-17.066" Height="22" Width="113" />
-
-            <TextBox x:Name="PendingReboot" Text="No pending reboots" ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="True" HorizontalAlignment="Left" Margin="221,430,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" Width="680"/>
-            <TextBlock HorizontalAlignment="Left" Margin="76,430,0,0" TextWrapping="Wrap" Text="Pending Reboot :" VerticalAlignment="Top" Height="26" Width="128"/>
-
-            <TextBlock HorizontalAlignment="Left" Margin="75,241,0,0" TextWrapping="Wrap" Text="Installable Updates : " VerticalAlignment="Top" Height="24" Width="159"/>
-            <TextBox x:Name="InstallableUpdates" ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="True" Text="Your device is up to date. No installable updates available." HorizontalAlignment="Left" Margin="221,241,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="39" Width="680"/>
-
-            <TextBlock HorizontalAlignment="Left" Height="30" Margin="76,378,0,0" TextWrapping="Wrap" Text="Failed Updates :" VerticalAlignment="Top" Width="169"/>
-            <TextBox x:Name="FailedUpdates" Text="No updates failed to install on the device." ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="True" HorizontalAlignment="Left" Margin="221,378,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" Width="680"/>
-
-            <TextBlock HorizontalAlignment="Left" Height="32" Margin="76,532,0,0" TextWrapping="Wrap" Text="Approved :" VerticalAlignment="Top" Width="140"/>
-            <TextBox x:Name="Approved" Text="No update approval has been set for this device." ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="True" HorizontalAlignment="Left" Margin="221,532,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" Width="680"/>
-
-            <TextBlock HorizontalAlignment="Left" Height="21" Margin="76,331,0,0" TextWrapping="Wrap" Text="Installed : " VerticalAlignment="Top" Width="91" RenderTransformOrigin="0.648,-0.06"/>
-            <TextBox x:Name="Installed"  Text="No update was installed." ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="True" HorizontalAlignment="Left" Margin="221,331,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" Width="680"/>
+        <Grid Grid.Row="1" x:Name="windowsUpdateStatus">
+            <StackPanel Orientation="Vertical" Margin="20 ">
+                <StackPanel Margin="10" Orientation="Horizontal">
+                    <TextBlock  Text="Last Scan Time : " Height="25" Width="160" />
+                    <TextBox x:Name="LastScanTime" Text="Windows update check failed." ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="True" TextWrapping="Wrap" Height="30" Width="680"/>
+                </StackPanel>
+                <StackPanel Margin="10" Orientation="Horizontal">
+                    <TextBlock Text="Installed : " Height="25" Width="160"/>
+                    <TextBox x:Name="Installed"  Text="No update was installed." ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="True" TextWrapping="Wrap" Height="30" Width="680"/>
+                </StackPanel>
+                <StackPanel Margin="10" Orientation="Horizontal">
+                    <TextBlock Text="Pending Reboot :" Height="25" Width="160"/>
+                    <TextBox x:Name="PendingReboot" Text="No pending reboots." ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="True" TextWrapping="Wrap" Height="30" Width="680"/>
+                </StackPanel>
+                <StackPanel Margin="10" Orientation="Horizontal">
+                    <TextBlock Text="Installable Updates : " Height="25" Width="160"/>
+                    <TextBox x:Name="InstallableUpdates" Text="Your device is up to date. No installable updates available." ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="True" TextWrapping="Wrap" Height="30" Width="680"/>
+                </StackPanel>
+                <StackPanel Margin="10" Orientation="Horizontal">
+                    <TextBlock Text="Failed Updates :" Height="25" Width="160"/>
+                    <TextBox x:Name="FailedUpdates" Text="No updates failed to install on the device." ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="True" TextWrapping="Wrap" Height="30" Width="680"/>
+                </StackPanel>
+                <StackPanel Margin="10" Orientation="Horizontal">
+                    <TextBlock Text="Defer Upgrade :" Height="25" Width="160"/>
+                    <TextBox x:Name="DeferUpgrade" Text="Upgrades not deferred until the next period." ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="True" TextWrapping="Wrap" Height="30" Width="680"/>
+                </StackPanel>
+                <StackPanel Margin="10" Orientation="Horizontal">
+                    <TextBlock Text="Approved :" Height="25" Width="160"/>
+                    <TextBox x:Name="Approved" Text="No approved updates for this device." ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="True" TextWrapping="Wrap" Height="30" Width="680"/>
+                </StackPanel>
+               
+                <Button Content="Update Status" Margin="10" Height="65" Width="246" Click="CheckWindowsUpdateAsync_click"/>
+            </StackPanel>
         </Grid>
     </Grid>
 </Page>

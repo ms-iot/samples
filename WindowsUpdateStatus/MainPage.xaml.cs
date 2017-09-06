@@ -1,10 +1,11 @@
-﻿using System;
+﻿// Copyright (c) Microsoft. All rights reserved.
+
+using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using System.Threading.Tasks;
 using Microsoft.Devices.Management;
-using Windows.Foundation.Diagnostics;
-
+using System.Diagnostics; 
 
 namespace WindowsUpdateStatus
 {
@@ -21,72 +22,78 @@ namespace WindowsUpdateStatus
         {
             this.InitializeComponent();
             this.InitializeDeviceClient();
-            windowsUpdateHeader.Visibility = Visibility.Visible;
-            windowsUpdateStatus.Visibility = Visibility.Visible;
-            WindowsUpdateStatus();
+
+#pragma warning disable 4014
+            this.WindowsUpdateStatusAsync();
+#pragma warning restore 4014
         }
 
-        private string Parser(string input)
+        private string ConvertToDisplayString(string input)
         {
             return input.Replace("/", ", ");
         }
-        private async void WindowsUpdateStatus()
+
+        private async Task WindowsUpdateStatusAsync()
         {
-            DeviceManagement.WindowsUpdateStatus status = await deviceManagement.ReportWindowsUpdateStatusAsync();
+            DeviceManagement.WindowsUpdateStatus status = await this.deviceManagement.ReportWindowsUpdateStatusAsync();
 
             if(status.lastScanTime != "")
             {
-                Status.Text = "No updates available.";
+                Status.Text = "Your device is up to date. No installable updates available.";
                 
-                LastScanTime.Text = "Last checked time for updates : " + Parser(status.lastScanTime);
+                LastScanTime.Text = "Last checked time for updates : " + status.lastScanTime;
             }
 
             if (status.deferUpgrade)
             {
                 DeferUpgrade.Text = "Upgrades deferred until the next period."; 
             }
+            else
+            {
+                DeferUpgrade.Text = "Upgrades not deferred until the next period.";
+            }
 
             if(status.installable != "")
             {
                 Status.Text = "An update is ready to be installed.";
-                InstallableUpdates.Text = "Your device is not up to date. The following update is installable: " + Parser(status.installable);
+                InstallableUpdates.Text = "Your device is not up to date. The following update is installable: " + ConvertToDisplayString(status.installable);
             }
 
             if(status.approved != "")
             {
-                Approved.Text = "Updates have been approved. Update Information : " + Parser(status.approved);
+                Approved.Text = "Approved updates. Update Information : " + ConvertToDisplayString(status.approved);
             }
 
-            if(status.installed != "")
+            if (status.installed != "")
             {
                 if (!successfulUpdateNotification)
                 {
-                    Status.Text = "Update installed successfully.";                    
+                    Status.Text = "Update installed successfully.";
                     successfulUpdateNotification = true;
                 }
-                Installed.Text = "Last successfully installed update : " + Parser(status.installed);
+                Installed.Text = "Last successfully installed update : " + ConvertToDisplayString(status.installed);
             }
 
             if (status.failed != "")
             {
-                Status.Text = "Device failed to update successfully";
-                FailedUpdates.Text = "Update Failed. Failure Information : " + Parser(status.failed);
+                Status.Text = "Device failed to update successfully.";
+                FailedUpdates.Text = "Update Failed. Failure Information : " + ConvertToDisplayString(status.failed);
             }
 
             if (status.pendingReboot != "")
             {
                 Status.Text = "Device is pending reboot.";
-                PendingReboot.Text = "Reboot is pending for the following upgrade: " + Parser(status.pendingReboot);
+                PendingReboot.Text = "Reboot is pending for the following upgrade: " + ConvertToDisplayString(status.pendingReboot);
                 successfulUpdateNotification = false;
             }
 
         }
-        private async void Check_WindowsUpdateAsync(object sender, RoutedEventArgs e)
+        private async void CheckWindowsUpdateAsync_click(object sender, RoutedEventArgs e)
         {
             windowsUpdateStatus.Visibility = Visibility.Collapsed;
             Status.Text = "Checking update status...";
 
-            WindowsUpdateStatus();
+            await WindowsUpdateStatusAsync();
 
             await Task.Delay(TimeSpan.FromSeconds(1));
             windowsUpdateStatus.Visibility = Visibility.Visible;
@@ -97,14 +104,12 @@ namespace WindowsUpdateStatus
             try
             {
                 // Create the DeviceManagement, the main entry point into device management without azure connection
-                var newDeviceManagement = DeviceManagement.CreateWithoutAzure();
-                this.deviceManagement = newDeviceManagement;
+                this.deviceManagement = DeviceManagement.CreateWithoutAzure();
             }
             catch (Exception e)
             {
                 var msg = "Exception: " + e.Message + "\n" + e.StackTrace;
-                System.Diagnostics.Debug.WriteLine(msg);
-                Logger.Log(msg, LoggingLevel.Error);
+                Debug.WriteLine(msg);
             }
             
         }
