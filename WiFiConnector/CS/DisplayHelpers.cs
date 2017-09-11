@@ -1,12 +1,11 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Devices.WiFi;
+using Windows.Foundation.Metadata;
 using Windows.Networking.Connectivity;
 using Windows.UI.Xaml.Media.Imaging;
 
@@ -19,8 +18,29 @@ namespace WiFiConnect
         {
             AvailableNetwork = availableNetwork;
             this.adapter = adapter;
+        }
+
+        public async Task UpdateAsync()
+        {
             UpdateWiFiImage();
-            UpdateConnectivityLevel();
+            UpdateNetworkKeyVisibility();
+            await UpdateConnectivityLevel();
+            await UpdateWpsPushbuttonAvailable();
+        }
+
+        private void UpdateNetworkKeyVisibility()
+        {
+            // Only show the password box if needed
+            if ((AvailableNetwork.SecuritySettings.NetworkAuthenticationType == NetworkAuthenticationType.Open80211 &&
+                 AvailableNetwork.SecuritySettings.NetworkEncryptionType == NetworkEncryptionType.None) ||
+                 IsEapAvailable)
+            {
+                NetworkKeyInfoVisibility = false;
+            }
+            else
+            {
+                NetworkKeyInfoVisibility = true;
+            }
         }
 
         private void UpdateWiFiImage()
@@ -39,7 +59,7 @@ namespace WiFiConnect
 
         }
 
-        public async void UpdateConnectivityLevel()
+        public async Task UpdateConnectivityLevel()
         {
             string connectivityLevel = "Not Connected";
             string connectedSsid = null;
@@ -61,8 +81,50 @@ namespace WiFiConnect
             }
 
             ConnectivityLevel = connectivityLevel;
-
             OnPropertyChanged("ConnectivityLevel");
+        }
+
+        public async Task UpdateWpsPushbuttonAvailable()
+        { 
+            IsWpsPushButtonAvailable = await IsWpsPushButtonAvailableAsync();
+            OnPropertyChanged("IsWpsPushButtonAvailable");
+        }
+
+        public void Disconnect()
+        {
+            adapter.Disconnect();
+        }
+
+        public bool IsWpsPushButtonAvailable { get; set; }
+
+        public bool NetworkKeyInfoVisibility { get; set; }
+
+        private bool usePassword = false;
+        public bool UsePassword
+        {
+            get
+            {
+                return usePassword;
+            }
+            set
+            {
+                usePassword = value;
+                OnPropertyChanged("UsePassword");
+            }
+        }
+
+        private bool connectAutomatically = false;
+        public bool ConnectAutomatically
+        {
+            get
+            {
+                return connectAutomatically;
+            }
+            set
+            {
+                connectAutomatically = value;
+                OnPropertyChanged("ConnectAutomatically");
+            }
         }
 
         public String Ssid
@@ -117,6 +179,47 @@ namespace WiFiConnect
             private set;
         }
 
+        private string userName;
+        public string UserName
+        {
+            get { return userName; }
+            set { userName = value; OnPropertyChanged("UserName"); }
+        }
+
+        private string password;
+        public string Password
+        {
+            get { return password; }
+            set { password = value; OnPropertyChanged("Password"); }
+        }
+
+        private string domain;
+        public string Domain
+        {
+            get { return domain; }
+            set { domain = value; OnPropertyChanged("Domain"); }
+        }
+
+        public bool IsEapAvailable
+        {
+            get
+            {
+                return ((availableNetwork.SecuritySettings.NetworkAuthenticationType == NetworkAuthenticationType.Rsna) ||
+                    (availableNetwork.SecuritySettings.NetworkAuthenticationType == NetworkAuthenticationType.Wpa));
+            }
+        }
+
+        public async Task<bool> IsWpsPushButtonAvailableAsync()
+        {
+            if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 5, 0))
+            {
+                var result = await adapter.GetWpsConfigurationAsync(availableNetwork);
+                if (result.SupportedWpsKinds.Contains(WiFiWpsKind.PushButton))
+                    return true;
+            }
+
+            return false;
+        }
 
         private WiFiAvailableNetwork availableNetwork;
         public WiFiAvailableNetwork AvailableNetwork
