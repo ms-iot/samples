@@ -136,6 +136,24 @@ OnDeviceAdd(_In_    WDFDRIVER       Driver,
 	WDF_OBJECT_ATTRIBUTES_INIT(&ioqAttributes);
 	ioqAttributes.ExecutionLevel = WdfExecutionLevelPassive;
 
+	//
+	// By default, Static Driver Verifier (SDV) displays a warning if it
+	// doesn't find the EvtIoStop callback on a power-managed queue.
+	// The 'assume' below causes SDV to suppress this warning. If the driver
+	// has not explicitly set PowerManaged to WdfFalse, the framework creates
+	// power-managed queues when the device is not a filter driver. Normally
+	// the EvtIoStop is required for power-managed queues, but for this driver
+	// it is not needed because the driver doesn't hold on to the requests for
+	// a long time or forward them to other drivers.
+	// If the EvtIoStop callback is not implemented, the framework waits for
+	// all driver-owned requests to be done before moving to the Dx/sleep
+	// states or before removing the device, which is the correct behavior
+	// for this type of driver. If the requests were taking an indeterminate
+	// amount of time to complete, or if the driver forwarded the requests
+	// to a lower driver or another stack, the queue should have an
+	// EvtIoStop/EvtIoResume.
+	//
+	__analysis_assume(ioqConfig.EvtIoStop != 0);
 	status = WdfIoQueueCreate(device,
 							  &ioqConfig,
 							  &ioqAttributes,
