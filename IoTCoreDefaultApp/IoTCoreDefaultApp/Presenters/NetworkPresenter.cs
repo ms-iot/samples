@@ -128,7 +128,7 @@ namespace IoTCoreDefaultApp
             return msg;
         }
 
-        private Dictionary<WiFiAvailableNetwork, WiFiAdapter> networkNameToInfo;
+        private Dictionary<WiFiAvailableNetwork, WiFiAdapter> networkNameToInfo = new Dictionary<WiFiAvailableNetwork, WiFiAdapter>();
 
         private static WiFiAccessStatus? accessStatus;
 
@@ -188,7 +188,6 @@ namespace IoTCoreDefaultApp
                 return false;
             }
 
-            networkNameToInfo = new Dictionary<WiFiAvailableNetwork, WiFiAdapter>();
             List<WiFiAdapter> WiFiAdaptersList = new List<WiFiAdapter>(WiFiAdapters.Values);
             foreach (var adapter in WiFiAdaptersList)
             {
@@ -282,17 +281,24 @@ namespace IoTCoreDefaultApp
             {
                 return false;
             }
-            
-            var result = await wifiAdapter.ConnectAsync(network, autoConnect ? WiFiReconnectionKind.Automatic : WiFiReconnectionKind.Manual);
 
-            //Call redirect only for Open Wifi
-            if (IsNetworkOpen(network))
+            try
             {
-                //Navigate to http://www.msftconnecttest.com/redirect 
-                NavigationUtils.NavigateToScreen(typeof(WebBrowserPage), Common.GetLocalizedText("MicrosoftWifiConnect"));
-            }
+                var result = await wifiAdapter.ConnectAsync(network, autoConnect ? WiFiReconnectionKind.Automatic : WiFiReconnectionKind.Manual);
 
-            return (result.ConnectionStatus == WiFiConnectionStatus.Success);
+                //Call redirect only for Open Wifi
+                if (IsNetworkOpen(network))
+                {
+                    //Navigate to http://www.msftconnecttest.com/redirect 
+                    NavigationUtils.NavigateToScreen(typeof(WebBrowserPage), Common.GetLocalizedText("MicrosoftWifiConnect"));
+                }
+
+                return (result.ConnectionStatus == WiFiConnectionStatus.Success);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public void DisconnectNetwork(WiFiAvailableNetwork network)
@@ -321,12 +327,19 @@ namespace IoTCoreDefaultApp
                 return false;
             }
 
-            var result = await wifiAdapter.ConnectAsync(
-                network,
-                autoConnect ? WiFiReconnectionKind.Automatic : WiFiReconnectionKind.Manual,
-                password);
+            try
+            {
+                var result = await wifiAdapter.ConnectAsync(
+                    network,
+                    autoConnect ? WiFiReconnectionKind.Automatic : WiFiReconnectionKind.Manual,
+                    password);
 
-            return (result.ConnectionStatus == WiFiConnectionStatus.Success);
+                return (result.ConnectionStatus == WiFiConnectionStatus.Success);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         private static async Task<bool> TestAccess()
