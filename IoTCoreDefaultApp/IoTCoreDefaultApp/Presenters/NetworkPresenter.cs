@@ -24,6 +24,11 @@ namespace IoTCoreDefaultApp
         private DeviceWatcher WiFiAdaptersWatcher;
         ManualResetEvent EnumAdaptersCompleted = new ManualResetEvent(false);
 
+        private Dictionary<WiFiAvailableNetwork, WiFiAdapter> NetworkNameToInfo = new Dictionary<WiFiAvailableNetwork, WiFiAdapter>();
+        private SemaphoreSlim NetworkNameToInfoLock = new SemaphoreSlim(1, 1);
+
+        private static WiFiAccessStatus? accessStatus;
+
         public NetworkPresenter()
         {
             WiFiAdaptersWatcher = DeviceInformation.CreateWatcher(WiFiAdapter.GetDeviceSelector());
@@ -128,10 +133,6 @@ namespace IoTCoreDefaultApp
             return msg;
         }
 
-        private Dictionary<WiFiAvailableNetwork, WiFiAdapter> networkNameToInfo = new Dictionary<WiFiAvailableNetwork, WiFiAdapter>();
-
-        private static WiFiAccessStatus? accessStatus;
-
         // Call this method before accessing WiFiAdapters Dictionary
         private async Task UpdateAdapters()
         {
@@ -183,44 +184,54 @@ namespace IoTCoreDefaultApp
 
         private async Task<bool> UpdateInfo()
         {
-            if ((await TestAccess()) == false)
+            try
             {
-                return false;
-            }
+                await NetworkNameToInfoLock.WaitAsync();
 
-            List<WiFiAdapter> WiFiAdaptersList = new List<WiFiAdapter>(WiFiAdapters.Values);
-            foreach (var adapter in WiFiAdaptersList)
-            {
-                if (adapter == null)
+                if ((await TestAccess()) == false)
                 {
                     return false;
                 }
 
-                try
+                NetworkNameToInfo.Clear();
+                List<WiFiAdapter> WiFiAdaptersList = new List<WiFiAdapter>(WiFiAdapters.Values);
+                foreach (var adapter in WiFiAdaptersList)
                 {
-                    await adapter.ScanAsync();
-                }
-                catch (Exception)
-                {
-                    // ScanAsync() can throw an exception if the scan timeouts.
-                    continue;
-                }
-
-                if (adapter.NetworkReport == null)
-                {
-                    continue;
-                }
-
-                foreach (var network in adapter.NetworkReport.AvailableNetworks)
-                {
-                    if (!HasSsid(networkNameToInfo, network.Ssid))
+                    if (adapter == null)
                     {
-                        networkNameToInfo[network] = adapter;
+                        return false;
+                    }
+
+                    try
+                    {
+                        await adapter.ScanAsync();
+                    }
+                    catch (Exception)
+                    {
+                        // ScanAsync() can throw an exception if the scan timeouts.
+                        continue;
+                    }
+
+                    if (adapter.NetworkReport == null)
+                    {
+                        continue;
+                    }
+
+                    foreach (var network in adapter.NetworkReport.AvailableNetworks)
+                    {
+                        if (!HasSsid(NetworkNameToInfo, network.Ssid))
+                        {
+                            NetworkNameToInfo[network] = adapter;
+                        }
                     }
                 }
-            }
 
-            return true;
+                return true;
+            }
+            finally
+            {
+                NetworkNameToInfoLock.Release();
+            }
         }
 
         private bool HasSsid(Dictionary<WiFiAvailableNetwork, WiFiAdapter> resultCollection, string ssid)
@@ -239,7 +250,15 @@ namespace IoTCoreDefaultApp
         {
             await UpdateInfo();
 
-            return networkNameToInfo.Keys.ToList();
+            try
+            {
+                await NetworkNameToInfoLock.WaitAsync();
+                return NetworkNameToInfo.Keys.ToList();
+            }
+            finally
+            {
+                NetworkNameToInfoLock.Release();
+            }
         }
 
         public WiFiAvailableNetwork GetCurrentWifiNetwork()
@@ -263,47 +282,71 @@ namespace IoTCoreDefaultApp
 
             var firstProfile = validProfiles.First() as ConnectionProfile;
 
-            return networkNameToInfo.Keys.FirstOrDefault(wifiNetwork => wifiNetwork.Ssid.Equals(firstProfile.ProfileName));
+            try
+            {
+                NetworkNameToInfoLock.Wait();
+                return NetworkNameToInfo.Keys.FirstOrDefault(wifiNetwork => wifiNetwork.Ssid.Equals(firstProfile.ProfileName));
+            }
+            finally
+            {
+                NetworkNameToInfoLock.Release();
+            }
         }
 
         public async Task<bool> ConnectToNetwork(WiFiAvailableNetwork network, bool autoConnect)
         {
-            if (network == null)
-            {
-                return false;
-            }
-
-            // We need to use TryGetValue here.  If we are rescanning for Wifi networks
-            // (ie. 'await'ing on ScanAsync() in UpdateInfo(), 'networkNameToInfo' may not
-            // have an entry described by the key'network'.
-            WiFiAdapter wifiAdapter;
-            if (!networkNameToInfo.TryGetValue(network, out wifiAdapter))
-            {
-                return false;
-            }
-
             try
             {
-                var result = await wifiAdapter.ConnectAsync(network, autoConnect ? WiFiReconnectionKind.Automatic : WiFiReconnectionKind.Manual);
-
-                //Call redirect only for Open Wifi
-                if (IsNetworkOpen(network))
+                await NetworkNameToInfoLock.WaitAsync();
+                if (network == null)
                 {
-                    //Navigate to http://www.msftconnecttest.com/redirect 
-                    NavigationUtils.NavigateToScreen(typeof(WebBrowserPage), Common.GetLocalizedText("MicrosoftWifiConnect"));
+                    return false;
                 }
 
-                return (result.ConnectionStatus == WiFiConnectionStatus.Success);
+                // We need to use TryGetValue here.  If we are rescanning for Wifi networks
+                // (ie. 'await'ing on ScanAsync() in UpdateInfo(), 'NetworkNameToInfo' may not
+                // have an entry described by the key'network'.
+                WiFiAdapter wifiAdapter;
+                if (!NetworkNameToInfo.TryGetValue(network, out wifiAdapter))
+                {
+                    return false;
+                }
+
+                try
+                {
+                    var result = await wifiAdapter.ConnectAsync(network, autoConnect ? WiFiReconnectionKind.Automatic : WiFiReconnectionKind.Manual);
+
+                    //Call redirect only for Open Wifi
+                    if (IsNetworkOpen(network))
+                    {
+                        //Navigate to http://www.msftconnecttest.com/redirect 
+                        NavigationUtils.NavigateToScreen(typeof(WebBrowserPage), Common.GetLocalizedText("MicrosoftWifiConnect"));
+                    }
+
+                    return (result.ConnectionStatus == WiFiConnectionStatus.Success);
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
             }
-            catch (Exception)
+            finally
             {
-                return false;
+                NetworkNameToInfoLock.Release();
             }
         }
 
         public void DisconnectNetwork(WiFiAvailableNetwork network)
         {
-            networkNameToInfo[network].Disconnect();
+            try
+            {
+                NetworkNameToInfoLock.Wait();
+                NetworkNameToInfo[network].Disconnect();
+            }
+            finally
+            {
+                NetworkNameToInfoLock.Release();
+            }
         }
 
         public static bool IsNetworkOpen(WiFiAvailableNetwork network)
@@ -313,32 +356,40 @@ namespace IoTCoreDefaultApp
 
         public async Task<bool> ConnectToNetworkWithPassword(WiFiAvailableNetwork network, bool autoConnect, PasswordCredential password)
         {
-            if (network == null)
-            {
-                return false;
-            }
-
-            // We need to use TryGetValue here.  If we are rescanning for Wifi networks
-            // (ie. 'await'ing on ScanAsync() in UpdateInfo(), 'networkNameToInfo' may not
-            // have an entry described by the key'network'.
-            WiFiAdapter wifiAdapter;
-            if (!networkNameToInfo.TryGetValue(network, out wifiAdapter))
-            {
-                return false;
-            }
-
             try
             {
-                var result = await wifiAdapter.ConnectAsync(
-                    network,
-                    autoConnect ? WiFiReconnectionKind.Automatic : WiFiReconnectionKind.Manual,
-                    password);
+                await NetworkNameToInfoLock.WaitAsync();
+                if (network == null)
+                {
+                    return false;
+                }
 
-                return (result.ConnectionStatus == WiFiConnectionStatus.Success);
+                // We need to use TryGetValue here.  If we are rescanning for Wifi networks
+                // (ie. 'await'ing on ScanAsync() in UpdateInfo(), 'NetworkNameToInfo' may not
+                // have an entry described by the key'network'.
+                WiFiAdapter wifiAdapter;
+                if (!NetworkNameToInfo.TryGetValue(network, out wifiAdapter))
+                {
+                    return false;
+                }
+
+                try
+                {
+                    var result = await wifiAdapter.ConnectAsync(
+                        network,
+                        autoConnect ? WiFiReconnectionKind.Automatic : WiFiReconnectionKind.Manual,
+                        password);
+
+                    return (result.ConnectionStatus == WiFiConnectionStatus.Success);
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
             }
-            catch (Exception)
+            finally
             {
-                return false;
+                NetworkNameToInfoLock.Release();
             }
         }
 
