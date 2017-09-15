@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Windows.Devices.WiFi;
 using Windows.Networking.Connectivity;
 using Windows.Security.Credentials;
@@ -147,7 +148,8 @@ namespace IoTCoreDefaultApp
                 SwitchToItemState(network, WifiConnectingState, false);
             });
 
-            if (await didConnect)
+            var didConnectErrorHandled = didConnect.ContinueWith((t) => { return false; }, TaskContinuationOptions.OnlyOnFaulted);
+            if (await didConnectErrorHandled)
             {
                 await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                 {

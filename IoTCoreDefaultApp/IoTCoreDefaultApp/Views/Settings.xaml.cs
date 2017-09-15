@@ -363,7 +363,8 @@ namespace IoTCoreDefaultApp
                 SwitchToItemState(network, WifiConnectingState, false);
             });
 
-            DataTemplate nextState = (await didConnect) ? WifiConnectedState : WifiInitialState;
+            var didConnectErrorHandled = didConnect.ContinueWith((t) => { return false; }, TaskContinuationOptions.OnlyOnFaulted);
+            DataTemplate nextState = (await didConnectErrorHandled) ? WifiConnectedState : WifiInitialState;
 
             await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
