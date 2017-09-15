@@ -288,7 +288,7 @@
                             <TextBlock Text="{Binding [WifiText]}" Style="{StaticResource SubtitleTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,12,0,12"/>
                             <Button Grid.Column="2" x:Name="RefreshButton" Content="{Binding [RefreshContent]}" Click="RefreshButton_Click" />
                         </Grid>
-                        <ListView x:Name="WifiListView" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionMode="Single" Width="446" ItemTemplate="{StaticResource WifiInitialState}" SelectionChanged="WifiListView_SelectionChanged" ItemContainerStyle="{StaticResource WifiListViewItemStyle}"/>
+                        <ListView x:Name="WifiListView" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionMode="Single" Width="446" ItemTemplate="{StaticResource WifiInitialState}" SelectionChanged="WifiListView_SelectionChanged" ItemContainerStyle="{StaticResource WifiListViewItemStyle}" ItemClick="WifiListView_ItemClick" IsItemClickEnabled="True" />
                         <TextBlock Text="{Binding [NoNetworksText]}" x:Name="NoWifiFoundText" Width="446" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed"  Margin="10,0,0,0"/>
                     </StackPanel>
                 </ScrollViewer>

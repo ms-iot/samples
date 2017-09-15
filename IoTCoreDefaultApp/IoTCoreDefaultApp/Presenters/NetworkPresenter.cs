@@ -284,7 +284,7 @@ namespace IoTCoreDefaultApp
 
             try
             {
-                NetworkNameToInfoLock.Wait();
+                NetworkNameToInfoLock.WaitAsync().ConfigureAwait(false);
                 return NetworkNameToInfo.Keys.FirstOrDefault(wifiNetwork => wifiNetwork.Ssid.Equals(firstProfile.ProfileName));
             }
             finally

@@ -92,10 +92,10 @@ namespace IoTCoreDefaultApp
             InputLanguageComboBox.SelectedItem = LanguageManager.GetCurrentInputLanguageDisplayName();
         }
 
-        private void SetupNetwork()
+        private async Task SetupNetworkAsync()
         {
             SetupEthernet();
-            SetupWifi();
+            await RecreateWifiNetworkList();
         }
 
         private void SetupBluetooth()
@@ -140,7 +140,7 @@ namespace IoTCoreDefaultApp
             }
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             // Resource loading has to happen on the UI thread
             bluetoothConfirmOnlyFormatString = BluetoothDeviceInformationDisplay.GetResourceString("BluetoothConfirmOnlyFormat");
@@ -165,12 +165,12 @@ namespace IoTCoreDefaultApp
             //Direct Jumping to Specific ListView from Outside
             if (null == e || null == e.Parameter)
             {
-                SwitchToSelectedSettingsAsync("PreferencesListViewItem");
+                await SwitchToSelectedSettingsAsync("PreferencesListViewItem");
                 PreferencesListView.IsSelected = true;
             }
             else
             {
-                SwitchToSelectedSettingsAsync(e.Parameter.ToString());
+                await SwitchToSelectedSettingsAsync(e.Parameter.ToString());
             }
             
         }
@@ -210,7 +210,7 @@ namespace IoTCoreDefaultApp
                     // Display a message about the inbound request
                     string formatString = BluetoothDeviceInformationDisplay.GetResourceString("BluetoothInboundPairingRequestFormat");
                     string confirmationMessage = string.Format(formatString, deviceInfoDisp.Name, deviceInfoDisp.Id);
-                    DisplayMessagePanel(confirmationMessage, MessageType.InformationalMessage);
+                    DisplayMessagePanelAsync(confirmationMessage, MessageType.InformationalMessage);
                 });
             }
         }
@@ -223,7 +223,7 @@ namespace IoTCoreDefaultApp
             StartWatcher();
             // Display a message
             string confirmationMessage = BluetoothDeviceInformationDisplay.GetResourceString("BluetoothOn");
-            DisplayMessagePanel(confirmationMessage, MessageType.InformationalMessage);
+            DisplayMessagePanelAsync(confirmationMessage, MessageType.InformationalMessage);
         }
 
         private void BackButton_Clicked(object sender, RoutedEventArgs e)
@@ -269,20 +269,23 @@ namespace IoTCoreDefaultApp
             }
         }
 
-        private async void SetupWifi()
+        private async Task RecreateWifiNetworkList()
         {
             if (await networkPresenter.WifiIsAvailable())
             {
-                IList<WiFiAvailableNetwork> networks;
+                WifiListView.IsEnabled = false;
+
+                ObservableCollection<WiFiAvailableNetwork> networks;
                 try
                 {
-                    networks = await networkPresenter.GetAvailableNetworks();
+                    networks = new ObservableCollection<WiFiAvailableNetwork>(await networkPresenter.GetAvailableNetworks());
                 }
                 catch (Exception e)
                 {
                     Debug.WriteLine(String.Format("Error scanning: 0x{0:X}: {1}", e.HResult, e.Message));
                     NoWifiFoundText.Text = e.Message;
                     NoWifiFoundText.Visibility = Visibility.Visible;
+                    WifiListView.IsEnabled = true;
                     return;
                 }
 
@@ -305,13 +308,23 @@ namespace IoTCoreDefaultApp
 
                     NoWifiFoundText.Visibility = Visibility.Collapsed;
                     WifiListView.Visibility = Visibility.Visible;
-
+                    WifiListView.IsEnabled = true;
                     return;
                 }
             }
 
             NoWifiFoundText.Visibility = Visibility.Visible;
             WifiListView.Visibility = Visibility.Collapsed;
+        }
+
+        private void WifiListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var connectedNetwork = networkPresenter.GetCurrentWifiNetwork();
+            var item = e.ClickedItem;
+            if (connectedNetwork == item)
+            {
+                SwitchToItemState(item, WifiConnectedMoreOptions, true);
+            }
         }
 
         private void WifiListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -338,40 +351,55 @@ namespace IoTCoreDefaultApp
             }
         }
 
-        private void ConnectButton_Clicked(object sender, RoutedEventArgs e)
+        private async void ConnectButton_Clicked(object sender, RoutedEventArgs e)
         {
-            var button = sender as Button;
-            var network = button.DataContext as WiFiAvailableNetwork;
-            if (NetworkPresenter.IsNetworkOpen(network))
+            try
             {
-                ConnectToWifi(network, null, Window.Current.Dispatcher);
+                WifiListView.IsEnabled = false;
+
+                var button = sender as Button;
+                var network = button.DataContext as WiFiAvailableNetwork;
+                if (NetworkPresenter.IsNetworkOpen(network))
+                {
+                    await ConnectToWifiAsync(network, null, Window.Current.Dispatcher);
+                }
+                else
+                {
+                    SwitchToItemState(network, WifiPasswordState, false);
+                }
             }
-            else
+            finally
             {
-                SwitchToItemState(network, WifiPasswordState, false);
+                WifiListView.IsEnabled = true;
             }
         }
 
-        private async void ConnectToWifi(WiFiAvailableNetwork network, PasswordCredential credential, CoreDispatcher dispatcher)
+        private async Task ConnectToWifiAsync(WiFiAvailableNetwork network, PasswordCredential credential, CoreDispatcher dispatcher)
         {
-            var didConnect = credential == null ?
-                networkPresenter.ConnectToNetwork(network, Automatic) :
-                networkPresenter.ConnectToNetworkWithPassword(network, Automatic, credential);
-
             await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 SwitchToItemState(network, WifiConnectingState, false);
             });
 
-            var didConnectErrorHandled = didConnect.ContinueWith((t) => { return false; }, TaskContinuationOptions.OnlyOnFaulted);
-            DataTemplate nextState = (await didConnectErrorHandled) ? WifiConnectedState : WifiInitialState;
+            var didConnect = credential == null ?
+                networkPresenter.ConnectToNetwork(network, Automatic):
+                networkPresenter.ConnectToNetworkWithPassword(network, Automatic, credential);
+            DataTemplate nextState = (await didConnect) ? WifiConnectedState : WifiInitialState;
 
             await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                var item = SwitchToItemState(network, nextState, false);
-                item.IsSelected = false;
+                var list = WifiListView.ItemsSource as ObservableCollection<WiFiAvailableNetwork>;
+                var itemLocation = list.IndexOf(network);
+                if (0 != itemLocation)
+                {
+                    list.Move(itemLocation, 0);
+                }
+                var item = SwitchToItemState(network, nextState, true);
+                if (item != null)
+                {
+                    item.IsSelected = true;
+                }
             });
-            SetupWifi();
         }
 
         private void DisconnectButton_Clicked(object sender, RoutedEventArgs e)
@@ -383,15 +411,12 @@ namespace IoTCoreDefaultApp
             if (network == connectedNetwork)
             {
                 networkPresenter.DisconnectNetwork(network);
+                var item = SwitchToItemState(network, WifiInitialState, true);
+                item.IsSelected = false;
             }
-            else
-            {
-                SwitchToItemState(network, WifiInitialState, true);
-            }
-            SetupWifi();
         }
 
-        private void NextButton_Clicked(object sender, RoutedEventArgs e)
+        private async void NextButton_Clicked(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
             PasswordCredential credential;
@@ -409,7 +434,7 @@ namespace IoTCoreDefaultApp
             }
 
             var network = button.DataContext as WiFiAvailableNetwork;
-            ConnectToWifi(network, credential, Window.Current.Dispatcher);
+            await ConnectToWifiAsync(network, credential, Window.Current.Dispatcher);
         }
 
         private void CancelButton_Clicked(object sender, RoutedEventArgs e)
@@ -446,7 +471,7 @@ namespace IoTCoreDefaultApp
             CurrentPassword = passwordBox.Password;
         }
 
-        private void SettingsChoice_ItemClick(object sender, ItemClickEventArgs e)
+        private async void SettingsChoice_ItemClick(object sender, ItemClickEventArgs e)
         {
             var item = e.ClickedItem as FrameworkElement;
             if (item == null)
@@ -455,14 +480,14 @@ namespace IoTCoreDefaultApp
             }
 
             // Language, Network, or Bluetooth settings etc.
-            SwitchToSelectedSettingsAsync(item.Name);
+            await SwitchToSelectedSettingsAsync(item.Name);
         }
         
         /// <summary>
         /// Helps Hiding all other Grid Views except the selected Grid
         /// </summary>
         /// <param name="itemName"></param>
-        private async void SwitchToSelectedSettingsAsync(string itemName)
+        private async Task SwitchToSelectedSettingsAsync(string itemName)
         {
             switch (itemName)
             {
@@ -484,9 +509,9 @@ namespace IoTCoreDefaultApp
 
                     if (NetworkGrid.Visibility == Visibility.Collapsed)
                     {
-                        SetupNetwork();
                         NetworkGrid.Visibility = Visibility.Visible;
                         NetworkListView.IsSelected = true;
+                        await SetupNetworkAsync();
                     }
                     break;
                 case "BluetoothListViewItem":
@@ -527,10 +552,10 @@ namespace IoTCoreDefaultApp
             }
         }
 
-        private void RefreshButton_Click(object sender, RoutedEventArgs e)
+        private async void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
             RefreshButton.IsEnabled = false;
-            SetupWifi();
+            await RecreateWifiNetworkList();
             RefreshButton.IsEnabled = true;
         }
 
@@ -656,7 +681,7 @@ namespace IoTCoreDefaultApp
         /// </summary>
         /// <param name="confirmationMessage"></param>
         /// <param name="messageType"></param>
-        private async void DisplayMessagePanel(string confirmationMessage, MessageType messageType)
+        private async void DisplayMessagePanelAsync(string confirmationMessage, MessageType messageType)
         {
             // Use UI thread
             await MainPage.Current.UIThreadDispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
@@ -753,7 +778,7 @@ namespace IoTCoreDefaultApp
                 ((Button)sender).DataContext as BluetoothDeviceInformationDisplay;
             string formatString = BluetoothDeviceInformationDisplay.GetResourceString("BluetoothAttemptingToPairFormat");
             string confirmationMessage = string.Format(formatString, deviceInfoDisp.Name, deviceInfoDisp.Id);
-            DisplayMessagePanel(confirmationMessage, MessageType.InformationalMessage);
+            DisplayMessagePanelAsync(confirmationMessage, MessageType.InformationalMessage);
 
             // Save the pair button
             Button pairButton = sender as Button;
@@ -789,7 +814,7 @@ namespace IoTCoreDefaultApp
                     deviceInfoDisp.Id);
             }
             // Display the result of the pairing attempt
-            DisplayMessagePanel(confirmationMessage, MessageType.InformationalMessage);
+            DisplayMessagePanelAsync(confirmationMessage, MessageType.InformationalMessage);
 
             // If the watcher toggle is on, clear any devices in the list and stop and restart the watcher to ensure state is reflected in list
             if (BluetoothToggle.IsOn)
@@ -836,7 +861,7 @@ namespace IoTCoreDefaultApp
                     // If this is an App for Athens where there is no Windows Consent UX, you may want to provide your own confirmation.
                     {
                         confirmationMessage = string.Format(bluetoothConfirmOnlyFormatString, args.DeviceInformation.Name, args.DeviceInformation.Id);
-                        DisplayMessagePanel(confirmationMessage, MessageType.InformationalMessage);
+                        DisplayMessagePanelAsync(confirmationMessage, MessageType.InformationalMessage);
                         // Accept the pairing which also completes the deferral
                         AcceptPairing();
                     }
@@ -847,7 +872,7 @@ namespace IoTCoreDefaultApp
                     // on the target device
                     {
                         confirmationMessage = string.Format(bluetoothDisplayPinFormatString, args.Pin);
-                        DisplayMessagePanel(confirmationMessage, MessageType.OKMessage);
+                        DisplayMessagePanelAsync(confirmationMessage, MessageType.OKMessage);
                     }
                     break;
 
@@ -868,7 +893,7 @@ namespace IoTCoreDefaultApp
                     // then complete the deferral.
                     {
                         confirmationMessage = string.Format(bluetoothConfirmPinMatchFormatString, args.Pin);
-                        DisplayMessagePanel(confirmationMessage, MessageType.YesNoMessage);
+                        DisplayMessagePanelAsync(confirmationMessage, MessageType.YesNoMessage);
                     }
                     break;
             }
@@ -921,7 +946,7 @@ namespace IoTCoreDefaultApp
             {
                 string formatString = BluetoothDeviceInformationDisplay.GetResourceString("BluetoothNoDeviceAvailableFormat");
                 string confirmationMessage = string.Format(formatString, e.Message);
-                DisplayMessagePanel(confirmationMessage, MessageType.InformationalMessage);
+                DisplayMessagePanelAsync(confirmationMessage, MessageType.InformationalMessage);
             }
         }
 
@@ -936,7 +961,7 @@ namespace IoTCoreDefaultApp
             StopWatcher();
             // Display a message
             string confirmationMessage = BluetoothDeviceInformationDisplay.GetResourceString("BluetoothOff");
-            DisplayMessagePanel(confirmationMessage, MessageType.InformationalMessage);
+            DisplayMessagePanelAsync(confirmationMessage, MessageType.InformationalMessage);
             await ToggleBluetoothAsync(false);
         }
 
@@ -970,7 +995,7 @@ namespace IoTCoreDefaultApp
                 confirmationMessage = string.Format(formatString, unpairingResult.Status.ToString(), deviceInfoDisp.Name, deviceInfoDisp.Id);
             }
             // Display the result of the pairing attempt
-            DisplayMessagePanel(confirmationMessage, MessageType.InformationalMessage);
+            DisplayMessagePanelAsync(confirmationMessage, MessageType.InformationalMessage);
 
             // If the watcher toggle is on, clear any devices in the list and stop and restart the watcher to ensure state is reflected in list
             if (BluetoothToggle.IsOn)
@@ -1095,7 +1120,7 @@ namespace IoTCoreDefaultApp
                 StartWatcher();
                 // Display a message
                 confirmationMessage += BluetoothDeviceInformationDisplay.GetResourceString("BluetoothOn");
-                DisplayMessagePanel(confirmationMessage, MessageType.InformationalMessage);
+                DisplayMessagePanelAsync(confirmationMessage, MessageType.InformationalMessage);
             }
         }
 
@@ -1120,7 +1145,7 @@ namespace IoTCoreDefaultApp
                 {
                     string formatString = BluetoothDeviceInformationDisplay.GetResourceString("BluetoothNoDeviceAvailableFormat");
                     string confirmationMessage = string.Format(formatString, e.Message);
-                    DisplayMessagePanel(confirmationMessage, MessageType.InformationalMessage);
+                    DisplayMessagePanelAsync(confirmationMessage, MessageType.InformationalMessage);
                 }
             }
         }
@@ -1201,7 +1226,7 @@ namespace IoTCoreDefaultApp
             }
         }
 
-        private void Window_Activated(object sender, WindowActivatedEventArgs e)
+        private async void Window_Activated(object sender, WindowActivatedEventArgs e)
         {
             switch (e.WindowActivationState)
             {
@@ -1222,7 +1247,7 @@ namespace IoTCoreDefaultApp
                             // so update the switch state to the current global setting)                           
                             if (cortanaConsentRequestedFromSwitch)
                             {
-                                SetVoiceActivation(true);
+                                await SetVoiceActivation(true);
                                 cortanaConsentRequestedFromSwitch = false;
                             }
 
@@ -1273,9 +1298,9 @@ namespace IoTCoreDefaultApp
             }
         }
 
-        private void CortanaAboutMeButton_Click(object sender, RoutedEventArgs e)
+        private async void CortanaAboutMeButton_Click(object sender, RoutedEventArgs e)
         {
-            CortanaHelper.LaunchCortanaToAboutMeAsync();
+            await CortanaHelper.LaunchCortanaToAboutMeAsync();
         }
         
     }
