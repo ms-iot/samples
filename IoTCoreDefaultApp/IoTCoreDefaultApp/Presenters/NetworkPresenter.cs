@@ -63,13 +63,18 @@ namespace IoTCoreDefaultApp
 
         public static string GetDirectConnectionName()
         {
-            var icp = NetworkInformation.GetInternetConnectionProfile();
-            if (icp != null)
+            try
             {
-                if(icp.NetworkAdapter.IanaInterfaceType == EthernetIanaType)
+                var icp = NetworkInformation.GetInternetConnectionProfile();
+                if (icp != null && icp.NetworkAdapter != null && icp.NetworkAdapter.IanaInterfaceType == EthernetIanaType)
                 {
                     return icp.ProfileName;
                 }
+            }
+            catch (Exception)
+            {
+                // do nothing
+                // seeing cases where NetworkInformation.GetInternetConnectionProfile() fails
             }
 
             return null;
