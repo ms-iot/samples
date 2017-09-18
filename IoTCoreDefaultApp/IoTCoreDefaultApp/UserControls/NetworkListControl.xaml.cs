@@ -27,11 +27,15 @@ namespace IoTCoreDefaultApp
             this.DataContext = LanguageManager.GetInstance();
         }
 
+        private void EnableView(bool enable)
+        {
+            RefreshButton.IsEnabled = enable;
+            WifiListView.IsEnabled = enable;
+        }
+
         private async void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
-            RefreshButton.IsEnabled = false;
             await RecreateWifiNetworkListAsync();
-            RefreshButton.IsEnabled = true;
         }
 
         public async Task SetupNetworkAsync()
@@ -60,7 +64,7 @@ namespace IoTCoreDefaultApp
         {
             if (await networkPresenter.WifiIsAvailable())
             {
-                WifiListView.IsEnabled = false;
+                EnableView(false);
 
                 ObservableCollection<WiFiAvailableNetwork> networks;
                 try
@@ -72,7 +76,7 @@ namespace IoTCoreDefaultApp
                     Debug.WriteLine(String.Format("Error scanning: 0x{0:X}: {1}", e.HResult, e.Message));
                     NoWifiFoundText.Text = e.Message;
                     NoWifiFoundText.Visibility = Visibility.Visible;
-                    WifiListView.IsEnabled = true;
+                    EnableView(true);
                     return;
                 }
 
@@ -95,7 +99,7 @@ namespace IoTCoreDefaultApp
 
                     NoWifiFoundText.Visibility = Visibility.Collapsed;
                     WifiListView.Visibility = Visibility.Visible;
-                    WifiListView.IsEnabled = true;
+                    EnableView(true);
                     return;
                 }
             }
@@ -142,7 +146,7 @@ namespace IoTCoreDefaultApp
         {
             try
             {
-                WifiListView.IsEnabled = false;
+                EnableView(false);
 
                 var button = sender as Button;
                 var network = button.DataContext as WiFiAvailableNetwork;
@@ -157,7 +161,7 @@ namespace IoTCoreDefaultApp
             }
             finally
             {
-                WifiListView.IsEnabled = true;
+                EnableView(true);
             }
         }
 
