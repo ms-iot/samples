@@ -22,10 +22,7 @@ namespace IoTCoreDefaultApp
     /// </summary>
     public sealed partial class OOBENetwork : Page
     {
-        private NetworkPresenter networkPresenter = new NetworkPresenter();
         private CoreDispatcher OOBENetworkPageDispatcher;
-        private bool Automatic = true;
-        private string CurrentPassword = string.Empty;
 
         public OOBENetwork()
         {
@@ -33,6 +30,8 @@ namespace IoTCoreDefaultApp
             OOBENetworkPageDispatcher = Window.Current.Dispatcher;
 
             NetworkInformation.NetworkStatusChanged += NetworkInformation_NetworkStatusChanged;
+            NetworkGrid.NetworkConnected += NetworkGrid_NetworkConnected;
+
 
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
 
@@ -40,198 +39,29 @@ namespace IoTCoreDefaultApp
 
             this.Loaded += async (sender, e) =>
             {
-                await OOBENetworkPageDispatcher.RunAsync(CoreDispatcherPriority.Low, () => {
-                    SetupNetwork();
+                await OOBENetworkPageDispatcher.RunAsync(CoreDispatcherPriority.Low, async () => {
+                    await NetworkGrid.SetupNetworkAsync();
                 });
             };
         }
 
-        private async void SetupNetwork()
-        {
-            SetupEthernet();
-            await RecreateWifiNetworkListAsync();
-        }
-
         private async void NetworkInformation_NetworkStatusChanged(object sender)
         {
-            await OOBENetworkPageDispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+            await OOBENetworkPageDispatcher.RunAsync(CoreDispatcherPriority.Low, async () =>
             {
-                SetupNetwork();
+                await NetworkGrid.SetupNetworkAsync();
             });
         }
 
-        private void SetupEthernet()
+        private async void NetworkGrid_NetworkConnected(object sender, EventArgs e)
         {
-            var ethernetProfile = NetworkPresenter.GetDirectConnectionName();
-
-            if (ethernetProfile == null)
+            await OOBENetworkPageDispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
-                NoneFoundText.Visibility = Visibility.Visible;
-                DirectConnectionStackPanel.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                NoneFoundText.Visibility = Visibility.Collapsed;
-                DirectConnectionStackPanel.Visibility = Visibility.Visible;
-            }
-        }
-
-        private async Task RecreateWifiNetworkListAsync()
-        {
-            if (await networkPresenter.WifiIsAvailable())
-            {
-                WifiListView.IsEnabled = false;
-
-                ObservableCollection<WiFiAvailableNetwork> networks;
-                try
-                {
-                    networks = new ObservableCollection<WiFiAvailableNetwork>(await networkPresenter.GetAvailableNetworks());
-                }
-                catch (Exception e)
-                {
-                    Debug.WriteLine(String.Format("Error scanning: 0x{0:X}: {1}", e.HResult, e.Message));
-                    NoWifiFoundText.Text = e.Message;
-                    NoWifiFoundText.Visibility = Visibility.Visible;
-                    WifiListView.IsEnabled = true;
-                    return;
-                }
-
-                if (networks.Count > 0)
-                {
-                    
-                    WifiListView.ItemsSource = networks;
-                  
-                    NoWifiFoundText.Visibility = Visibility.Collapsed;
-                    WifiListView.Visibility = Visibility.Visible;
-                    WifiListView.IsEnabled = true;
-                    return;
-                }
-            }
-
-            NoWifiFoundText.Visibility = Visibility.Visible;
-            WifiListView.Visibility = Visibility.Collapsed;
-        }
-
-        private void WifiListView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            var connectedNetwork = networkPresenter.GetCurrentWifiNetwork();
-            var item = e.ClickedItem;
-            if (connectedNetwork == item)
-            {
-                SwitchToItemState(item, WifiConnectState, true);
-            }
-        }
-
-        private void WifiListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var listView = sender as ListView;
-
-            foreach(var item in e.RemovedItems)
-            {
-                SwitchToItemState(item, WifiInitialState, true);
-            }
-
-            foreach(var item in e.AddedItems)
-            {
-                Automatic = true;
-                SwitchToItemState(item, WifiConnectState, true);
-            }
-        }
-
-        private async void ConnectButton_Clicked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                WifiListView.IsEnabled = false;
-
-                var button = sender as Button;
-                var network = button.DataContext as WiFiAvailableNetwork;
-                if (NetworkPresenter.IsNetworkOpen(network))
-                {
-                    await ConnectToWifiAsync(network, null, Window.Current.Dispatcher);
-                }
-                else
-                {
-                    SwitchToItemState(network, WifiPasswordState, false);
-                }
-            }
-            finally
-            {
-                WifiListView.IsEnabled = true;
-            }
-        }
-
-        private async Task ConnectToWifiAsync(WiFiAvailableNetwork network, PasswordCredential credential, CoreDispatcher dispatcher)
-        {
-            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-            {
-                SwitchToItemState(network, WifiConnectingState, false);
+                await CortanaHelper.LaunchCortanaToConsentPageAsyncIfNeeded();
+                NavigationUtils.NavigateToScreen(typeof(MainPage));
             });
-
-            var didConnect = credential == null ?
-                networkPresenter.ConnectToNetwork(network, Automatic) :
-                networkPresenter.ConnectToNetworkWithPassword(network, Automatic, credential);
-
-            if (await didConnect)
-            {
-                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-                {
-                    await CortanaHelper.LaunchCortanaToConsentPageAsyncIfNeeded();
-                    NavigationUtils.NavigateToScreen(typeof(MainPage));
-                });
-            }
-            else
-            {
-                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    var item = SwitchToItemState(network, WifiInitialState, false);
-                    item.IsSelected = false;
-                });
-            }
         }
        
-        private async void NextButton_Clicked(object sender, RoutedEventArgs e)
-        {
-            var button = sender as Button;
-            PasswordCredential credential;
-
-            if (string.IsNullOrEmpty(CurrentPassword))
-            {
-                credential = null;
-            }
-            else
-            {
-                credential = new PasswordCredential()
-                {
-                    Password = CurrentPassword
-                };
-            }
-
-            var network = button.DataContext as WiFiAvailableNetwork;
-            await ConnectToWifiAsync(network, credential, Window.Current.Dispatcher);
-        }
-
-        private void CancelButton_Clicked(object sender, RoutedEventArgs e)
-        {
-            var button = sender as Button;
-            var item = SwitchToItemState(button.DataContext, WifiInitialState, false);
-            item.IsSelected = false;
-        }
-
-        private ListViewItem SwitchToItemState(object dataContext, DataTemplate template, bool forceUpdate)
-        {
-            if (forceUpdate)
-            {
-                WifiListView.UpdateLayout();
-            }
-            var item = WifiListView.ContainerFromItem(dataContext) as ListViewItem;
-            if (item != null)
-            {
-                item.ContentTemplate = template;
-            }
-            return item;
-        }
-
         private void BackButton_Clicked(object sender, RoutedEventArgs e)
         {
             NavigationUtils.GoBack();
@@ -243,33 +73,5 @@ namespace IoTCoreDefaultApp
             NavigationUtils.NavigateToScreen(typeof(MainPage));
         }
 
-        private void ConnectAutomaticallyCheckBox_Changed(object sender, RoutedEventArgs e)
-        {
-            var checkbox = sender as CheckBox;
-
-            Automatic = checkbox.IsChecked ?? false;
-        }
-
-        private void WifiPasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            var passwordBox = sender as PasswordBox;
-            CurrentPassword = passwordBox.Password;
-        }
-
-        private async void RefreshButton_Click(object sender, RoutedEventArgs e)
-        {
-            RefreshButton.IsEnabled = false;
-            await RecreateWifiNetworkListAsync();
-            RefreshButton.IsEnabled = true;
-        }
-
-        private void WifiPasswordBox_Loaded(object sender, RoutedEventArgs e)
-        {
-            var passwordBox = sender as PasswordBox;
-            if (passwordBox != null)
-            {
-                passwordBox.Focus(FocusState.Programmatic);
-            }
-        }
     }
 }
