@@ -40,7 +40,10 @@ namespace IoTCoreDefaultApp
             var device = new ConnectedDevice() { Id = args.Id, Name = args.Name };
             await dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
             {
-                if (!devices.Contains(device)) devices.Add(device);
+                if (!devices.Contains(device))
+                {
+                    devices.Add(device);
+                }
             });
         }
 
@@ -57,8 +60,14 @@ namespace IoTCoreDefaultApp
             var device = new ConnectedDevice() { Id = args.Id, Name = deviceInfo.Name };
             await dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
             {
-                if (!deviceInfo.IsEnabled && devices.Contains(device)) devices.Remove(device);
-                else if (deviceInfo.IsEnabled && !devices.Contains(device)) devices.Add(device);
+                if (!deviceInfo.IsEnabled && devices.Contains(device))
+                {
+                    devices.Remove(device);
+                }
+                else if (deviceInfo.IsEnabled && !devices.Contains(device))
+                {
+                    devices.Add(device);
+                }
             });
         }
 
@@ -70,7 +79,10 @@ namespace IoTCoreDefaultApp
             var device = new ConnectedDevice() { Id = args.Id, Name = deviceInfo.Name };
             await dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
             {
-                if (devices.Contains(device)) devices.Remove(device);
+                if (devices.Contains(device))
+                {
+                    devices.Remove(device);
+                }
             });
         }
 
@@ -91,7 +103,10 @@ namespace IoTCoreDefaultApp
             public override bool Equals(object other)
             {
                 var otherConnectedDevice = other as ConnectedDevice;
-                if (otherConnectedDevice == null) return false;
+                if (otherConnectedDevice == null)
+                {
+                    return false;
+                }
 
                 return otherConnectedDevice.Id.Equals(Id);
             }
