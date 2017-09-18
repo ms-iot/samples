@@ -22,30 +22,52 @@ namespace IoTCoreDefaultApp
         {
             this.dispatcher = dispatcher;
 
+            // Always start with a clean list                 
+            devices.Clear();
+
             usbConnectedDevicesWatcher = DeviceInformation.CreateWatcher(usbDevicesSelector);
-            usbConnectedDevicesWatcher.EnumerationCompleted += DevicesEnumCompleted;
-            usbConnectedDevicesWatcher.Updated += DevicesUpdated;
+            usbConnectedDevicesWatcher.Added += DevicesAdded;
             usbConnectedDevicesWatcher.Removed += DevicesRemoved;
+            usbConnectedDevicesWatcher.Updated += DevicesUpdated;
+            usbConnectedDevicesWatcher.EnumerationCompleted += DevicesEnumCompleted;
             usbConnectedDevicesWatcher.Start();
         }
 
-        private async void DevicesEnumCompleted(DeviceWatcher sender, object args)
+        private async void DevicesAdded(DeviceWatcher sender, DeviceInformation args)
         {
-            Debug.WriteLine("USB Devices Enumeration Completed");
+            Debug.WriteLine("USB Devices Added: " + args.Id);
 
+            var device = new ConnectedDevice() { Id = args.Id, Name = args.Name };
             await dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
             {
-                UpdateDevices();
+                if (!devices.Contains(device))
+                {
+                    devices.Add(device);
+                }
             });
+        }
+
+        private void DevicesEnumCompleted(DeviceWatcher sender, object args)
+        {
+            Debug.WriteLine("USB Devices Enumeration Completed");
         }
 
         private async void DevicesUpdated(DeviceWatcher sender, DeviceInformationUpdate args)
         {
             Debug.WriteLine("Updated USB device: " + args.Id);
 
+            var deviceInfo = await DeviceInformation.CreateFromIdAsync(args.Id);
+            var device = new ConnectedDevice() { Id = args.Id, Name = deviceInfo.Name };
             await dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
             {
-                UpdateDevices();
+                if (!deviceInfo.IsEnabled && devices.Contains(device))
+                {
+                    devices.Remove(device);
+                }
+                else if (deviceInfo.IsEnabled && !devices.Contains(device))
+                {
+                    devices.Add(device);
+                }
             });
         }
 
@@ -53,41 +75,45 @@ namespace IoTCoreDefaultApp
         {
             Debug.WriteLine("Removed USB device: " + args.Id);
 
+            var deviceInfo = await DeviceInformation.CreateFromIdAsync(args.Id);
+            var device = new ConnectedDevice() { Id = args.Id, Name = deviceInfo.Name };
             await dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
             {
-                UpdateDevices();
+                if (devices.Contains(device))
+                {
+                    devices.Remove(device);
+                }
             });
         }
 
-        private async void UpdateDevices()
-        {
-            // Get a list of all enumerated usb devices              
-            var deviceInformationCollection = await DeviceInformation.FindAllAsync(usbDevicesSelector);
-
-            // Always start with a clean list                 
-            devices.Clear();  
-
-            if (deviceInformationCollection == null || deviceInformationCollection.Count == 0)  
-            {
-                return;
-            }
-
-            // If devices are found, enumerate them and add only enabled ones
-            foreach (var device in deviceInformationCollection)
-            {
-                if (device.IsEnabled)
-                {
-                    devices.Add(device.Name);
-                }
-            }
-        }
-
-        public ObservableCollection<string> GetConnectedDevices()
+        public ObservableCollection<ConnectedDevice> GetConnectedDevices()
         {
             return devices;
         }
 
-        private ObservableCollection<string> devices = new ObservableCollection<string>();
+        public class ConnectedDevice
+        {
+            public string Id { get; set; }
+            public string Name { get; set; }
+
+            public override int GetHashCode()
+            {
+                return Id.GetHashCode();
+            }
+            public override bool Equals(object other)
+            {
+                var otherConnectedDevice = other as ConnectedDevice;
+                if (otherConnectedDevice == null)
+                {
+                    return false;
+                }
+
+                return otherConnectedDevice.Id.Equals(Id);
+            }
+            public override string ToString() { return Name; }
+        }
+
+        private ObservableCollection<ConnectedDevice> devices = new ObservableCollection<ConnectedDevice>();
         private DeviceWatcher usbConnectedDevicesWatcher;
     }
 }
