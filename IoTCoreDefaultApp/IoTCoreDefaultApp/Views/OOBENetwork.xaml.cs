@@ -2,13 +2,7 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using Windows.Devices.WiFi;
 using Windows.Networking.Connectivity;
-using Windows.Security.Credentials;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;

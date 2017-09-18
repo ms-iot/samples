@@ -191,7 +191,7 @@ namespace IoTCoreDefaultApp
 
             if (isConnected)
             {
-                NetworkConnected.Invoke(this, new EventArgs());
+                NetworkConnected?.Invoke(this, new EventArgs());
             }
         }
 

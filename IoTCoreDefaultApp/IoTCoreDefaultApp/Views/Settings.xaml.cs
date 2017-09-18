@@ -172,10 +172,10 @@ namespace IoTCoreDefaultApp
             // Ignore the inbound if pairing is already in progress
             if (inProgressPairButton == null)
             {
-                await MainPage.Current.UIThreadDispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                await MainPage.Current.UIThreadDispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                 {
                     // Make sure the Bluetooth grid is showing
-                    SwitchToSelectedSettingsAsync("BluetoothListViewItem");
+                    await SwitchToSelectedSettingsAsync("BluetoothListViewItem");
 
                     // Restore the ceremonies we registered with
                     var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
@@ -943,7 +943,7 @@ namespace IoTCoreDefaultApp
             Screensaver.IsScreensaverEnabled = screensaverToggleSwitch.IsOn;
         }
 
-        private void CortanaVoiceActivationSwitch_Toggled(object sender, RoutedEventArgs e)
+        private async void CortanaVoiceActivationSwitch_Toggled(object sender, RoutedEventArgs e)
         {
             var cortanaSettings = CortanaSettings.GetDefault();
             var cortanaVoiceActivationSwitch = (ToggleSwitch)sender;
@@ -965,14 +965,14 @@ namespace IoTCoreDefaultApp
                 needsCortanaConsent = true;
                 CortanaVoiceActivationSwitch.IsOn = false;
                 cortanaConsentRequestedFromSwitch = true;
-                CortanaHelper.LaunchCortanaToConsentPageAsync();
+                await CortanaHelper.LaunchCortanaToConsentPageAsync();
             }
             // Otherwise, we already have consent, so just enable or disable the voice activation setting.
             // Do this asynchronously because the API waits for the SpeechRuntime EXE to launch
             else
             {
                 CortanaVoiceActivationSwitch.IsEnabled = false;
-                Window.Current.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                await Window.Current.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                 {
                     await SetVoiceActivation(enableVoiceActivation);
                     CortanaVoiceActivationSwitch.IsEnabled = true;
