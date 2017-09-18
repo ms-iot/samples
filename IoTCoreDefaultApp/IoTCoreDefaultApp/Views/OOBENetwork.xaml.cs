@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.Devices.WiFi;
@@ -45,10 +46,10 @@ namespace IoTCoreDefaultApp
             };
         }
 
-        private void SetupNetwork()
+        private async void SetupNetwork()
         {
             SetupEthernet();
-            SetupWifi();
+            await RecreateWifiNetworkListAsync();
         }
 
         private async void NetworkInformation_NetworkStatusChanged(object sender)
@@ -75,20 +76,23 @@ namespace IoTCoreDefaultApp
             }
         }
 
-        private async void SetupWifi()
+        private async Task RecreateWifiNetworkListAsync()
         {
             if (await networkPresenter.WifiIsAvailable())
             {
-                IList<WiFiAvailableNetwork> networks;
+                WifiListView.IsEnabled = false;
+
+                ObservableCollection<WiFiAvailableNetwork> networks;
                 try
                 {
-                    networks = await networkPresenter.GetAvailableNetworks();
+                    networks = new ObservableCollection<WiFiAvailableNetwork>(await networkPresenter.GetAvailableNetworks());
                 }
                 catch (Exception e)
                 {
                     Debug.WriteLine(String.Format("Error scanning: 0x{0:X}: {1}", e.HResult, e.Message));
                     NoWifiFoundText.Text = e.Message;
                     NoWifiFoundText.Visibility = Visibility.Visible;
+                    WifiListView.IsEnabled = true;
                     return;
                 }
 
@@ -99,12 +103,23 @@ namespace IoTCoreDefaultApp
                   
                     NoWifiFoundText.Visibility = Visibility.Collapsed;
                     WifiListView.Visibility = Visibility.Visible;
+                    WifiListView.IsEnabled = true;
                     return;
                 }
             }
 
             NoWifiFoundText.Visibility = Visibility.Visible;
             WifiListView.Visibility = Visibility.Collapsed;
+        }
+
+        private void WifiListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var connectedNetwork = networkPresenter.GetCurrentWifiNetwork();
+            var item = e.ClickedItem;
+            if (connectedNetwork == item)
+            {
+                SwitchToItemState(item, WifiConnectState, true);
+            }
         }
 
         private void WifiListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -123,33 +138,41 @@ namespace IoTCoreDefaultApp
             }
         }
 
-        private void ConnectButton_Clicked(object sender, RoutedEventArgs e)
+        private async void ConnectButton_Clicked(object sender, RoutedEventArgs e)
         {
-            var button = sender as Button;
-            var network = button.DataContext as WiFiAvailableNetwork;
-            if (NetworkPresenter.IsNetworkOpen(network))
+            try
             {
-                ConnectToWifi(network, null, Window.Current.Dispatcher);
+                WifiListView.IsEnabled = false;
+
+                var button = sender as Button;
+                var network = button.DataContext as WiFiAvailableNetwork;
+                if (NetworkPresenter.IsNetworkOpen(network))
+                {
+                    await ConnectToWifiAsync(network, null, Window.Current.Dispatcher);
+                }
+                else
+                {
+                    SwitchToItemState(network, WifiPasswordState, false);
+                }
             }
-            else
+            finally
             {
-                SwitchToItemState(network, WifiPasswordState, false);
+                WifiListView.IsEnabled = true;
             }
         }
 
-        private async void ConnectToWifi(WiFiAvailableNetwork network, PasswordCredential credential, CoreDispatcher dispatcher)
+        private async Task ConnectToWifiAsync(WiFiAvailableNetwork network, PasswordCredential credential, CoreDispatcher dispatcher)
         {
-            var didConnect = credential == null ?
-                networkPresenter.ConnectToNetwork(network, Automatic) :
-                networkPresenter.ConnectToNetworkWithPassword(network, Automatic, credential);
-
             await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 SwitchToItemState(network, WifiConnectingState, false);
             });
 
-            var didConnectErrorHandled = didConnect.ContinueWith((t) => { return false; }, TaskContinuationOptions.OnlyOnFaulted);
-            if (await didConnectErrorHandled)
+            var didConnect = credential == null ?
+                networkPresenter.ConnectToNetwork(network, Automatic) :
+                networkPresenter.ConnectToNetworkWithPassword(network, Automatic, credential);
+
+            if (await didConnect)
             {
                 await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                 {
@@ -167,7 +190,7 @@ namespace IoTCoreDefaultApp
             }
         }
        
-        private void NextButton_Clicked(object sender, RoutedEventArgs e)
+        private async void NextButton_Clicked(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
             PasswordCredential credential;
@@ -185,7 +208,7 @@ namespace IoTCoreDefaultApp
             }
 
             var network = button.DataContext as WiFiAvailableNetwork;
-            ConnectToWifi(network, credential, Window.Current.Dispatcher);
+            await ConnectToWifiAsync(network, credential, Window.Current.Dispatcher);
         }
 
         private void CancelButton_Clicked(object sender, RoutedEventArgs e)
@@ -233,10 +256,10 @@ namespace IoTCoreDefaultApp
             CurrentPassword = passwordBox.Password;
         }
 
-        private void RefreshButton_Click(object sender, RoutedEventArgs e)
+        private async void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
             RefreshButton.IsEnabled = false;
-            SetupWifi();
+            await RecreateWifiNetworkListAsync();
             RefreshButton.IsEnabled = true;
         }
 

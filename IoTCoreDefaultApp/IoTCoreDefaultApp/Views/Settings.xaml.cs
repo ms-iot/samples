@@ -95,7 +95,7 @@ namespace IoTCoreDefaultApp
         private async Task SetupNetworkAsync()
         {
             SetupEthernet();
-            await RecreateWifiNetworkList();
+            await RecreateWifiNetworkListAsync();
         }
 
         private void SetupBluetooth()
@@ -269,7 +269,7 @@ namespace IoTCoreDefaultApp
             }
         }
 
-        private async Task RecreateWifiNetworkList()
+        private async Task RecreateWifiNetworkListAsync()
         {
             if (await networkPresenter.WifiIsAvailable())
             {
@@ -555,7 +555,7 @@ namespace IoTCoreDefaultApp
         private async void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
             RefreshButton.IsEnabled = false;
-            await RecreateWifiNetworkList();
+            await RecreateWifiNetworkListAsync();
             RefreshButton.IsEnabled = true;
         }
 
