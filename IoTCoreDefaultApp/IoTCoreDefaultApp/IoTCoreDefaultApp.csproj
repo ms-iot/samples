@@ -125,6 +125,9 @@
     <Compile Include="Presenters\DeviceInfoPresenter.cs" />
     <Compile Include="Presenters\LanguageManager.cs" />
     <Compile Include="Presenters\NetworkPresenter.cs" />
+    <Compile Include="UserControls\NetworkListControl.xaml.cs">
+      <DependentUpon>NetworkListControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\TopBarUC.xaml.cs">
       <DependentUpon>TopBarUC.xaml</DependentUpon>
     </Compile>
@@ -229,6 +232,10 @@
       </SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="UserControls\NetworkListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\TopBarUC.xaml">
       <SubType>Designer</SubType>

@@ -117,10 +117,19 @@ namespace IoTCoreDefaultApp
         // Resets the timer and starts over.
         private static void ResetScreensaverTimeout()
         {
-            timeoutTimer.Stop();
-            timeoutTimer.Start();
-            Window.Current.CoreWindow.PointerCursor = new CoreCursor(CoreCursorType.Arrow, 1);
-            screensaverContainer.IsOpen = false;
+            if (timeoutTimer != null)
+            {
+                timeoutTimer.Stop();
+                timeoutTimer.Start();
+            }
+            if (Window.Current != null && Window.Current.CoreWindow != null)
+            {
+                Window.Current.CoreWindow.PointerCursor = new CoreCursor(CoreCursorType.Arrow, 1);
+            }
+            if (screensaverContainer != null)
+            {
+                screensaverContainer.IsOpen = false;
+            }
         }
 
         private DispatcherTimer moveTimer;
