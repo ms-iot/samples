@@ -2,8 +2,8 @@
 
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,7 +24,7 @@ namespace IoTCoreDefaultApp
         private DeviceWatcher WiFiAdaptersWatcher;
         ManualResetEvent EnumAdaptersCompleted = new ManualResetEvent(false);
 
-        private Dictionary<WiFiAvailableNetwork, WiFiAdapter> NetworkNameToInfo = new Dictionary<WiFiAvailableNetwork, WiFiAdapter>();
+        private ConcurrentDictionary<WiFiAvailableNetwork, WiFiAdapter> NetworkNameToInfo = new ConcurrentDictionary<WiFiAvailableNetwork, WiFiAdapter>();
         private SemaphoreSlim NetworkNameToInfoLock = new SemaphoreSlim(1, 1);
 
         private static WiFiAccessStatus? accessStatus;
@@ -87,10 +87,18 @@ namespace IoTCoreDefaultApp
 
         public static string GetCurrentNetworkName()
         {
-            var icp = NetworkInformation.GetInternetConnectionProfile();
-            if (icp != null)
+            try
             {
-                return icp.ProfileName;
+                var icp = NetworkInformation.GetInternetConnectionProfile();
+                if (icp != null)
+                {
+                    return icp.ProfileName;
+                }
+            }
+            catch (Exception)
+            {
+                // do nothing
+                // seeing cases where NetworkInformation.GetInternetConnectionProfile() fails
             }
 
             var resourceLoader = ResourceLoader.GetForCurrentView();
@@ -234,7 +242,7 @@ namespace IoTCoreDefaultApp
             }
         }
 
-        private bool HasSsid(Dictionary<WiFiAvailableNetwork, WiFiAdapter> resultCollection, string ssid)
+        private bool HasSsid(ConcurrentDictionary<WiFiAvailableNetwork, WiFiAdapter> resultCollection, string ssid)
         {
             foreach (var network in resultCollection)
             {
@@ -263,10 +271,19 @@ namespace IoTCoreDefaultApp
 
         public WiFiAvailableNetwork GetCurrentWifiNetwork()
         {
-            var connectionProfiles = NetworkInformation.GetConnectionProfiles();
-
-            if (connectionProfiles.Count < 1)
+            IReadOnlyCollection<ConnectionProfile> connectionProfiles = null;
+            try
             {
+                connectionProfiles = NetworkInformation.GetConnectionProfiles();
+
+                if (connectionProfiles == null || connectionProfiles.Count < 1)
+                {
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+                // seeing cases where NetworkInformation calls fail
                 return null;
             }
 
@@ -275,7 +292,7 @@ namespace IoTCoreDefaultApp
                 return (profile.IsWlanConnectionProfile && profile.GetNetworkConnectivityLevel() != NetworkConnectivityLevel.None);
             });
 
-            if (validProfiles.Count() < 1)
+            if (validProfiles == null || validProfiles.Count() < 1)
             {
                 return null;
             }

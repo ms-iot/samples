@@ -281,7 +281,7 @@ namespace IoTCoreDefaultApp
                     {
                         NetworkGrid.Visibility = Visibility.Visible;
                         NetworkListView.IsSelected = true;
-                        await NetworkGrid.SetupNetworkAsync();
+                        await NetworkControl.SetupNetworkAsync();
                     }
                     break;
                 case "BluetoothListViewItem":

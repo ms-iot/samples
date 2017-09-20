@@ -15,7 +15,7 @@ namespace IoTCoreDefaultApp
     public sealed partial class NetworkListControl : UserControl
     {
         private NetworkPresenter networkPresenter = new NetworkPresenter();
-        private bool Automatic = true;
+        private bool ConnectAutomatically = true;
         private string CurrentPassword = string.Empty;
 
         public event EventHandler<EventArgs> NetworkConnected;
@@ -128,7 +128,7 @@ namespace IoTCoreDefaultApp
 
             foreach (var item in e.AddedItems)
             {
-                Automatic = true;
+                ConnectAutomatically = true;
                 var connectedNetwork = networkPresenter.GetCurrentWifiNetwork();
 
                 if (connectedNetwork == item)
@@ -173,8 +173,8 @@ namespace IoTCoreDefaultApp
             });
 
             var didConnect = credential == null ?
-                networkPresenter.ConnectToNetwork(network, Automatic) :
-                networkPresenter.ConnectToNetworkWithPassword(network, Automatic, credential);
+                networkPresenter.ConnectToNetwork(network, ConnectAutomatically) :
+                networkPresenter.ConnectToNetworkWithPassword(network, ConnectAutomatically, credential);
             DataTemplate nextState = (await didConnect) ? WifiConnectedState : WifiInitialState;
             bool isConnected = (nextState == WifiConnectedState);
 
@@ -259,7 +259,7 @@ namespace IoTCoreDefaultApp
         {
             var checkbox = sender as CheckBox;
 
-            Automatic = checkbox.IsChecked ?? false;
+            ConnectAutomatically = checkbox.IsChecked ?? false;
         }
 
         private void WifiPasswordBox_PasswordChanged(object sender, RoutedEventArgs e)

@@ -140,7 +140,9 @@
             </Grid>
         </ScrollViewer>
 
-        <local:NetworkListControl x:Name="NetworkGrid" Grid.Column="2" Grid.Row="1" />
+        <ScrollViewer x:Name="NetworkGrid" Grid.Column="2" Grid.Row="1" >
+            <local:NetworkListControl x:Name="NetworkControl" Grid.Column="2" Grid.Row="1" />
+        </ScrollViewer>
 
         <ScrollViewer  x:Name="BluetoothGrid" Grid.Column="2" Grid.Row="1" >
             <StackPanel Margin="24,25,0,0" Orientation="Vertical">

@@ -138,31 +138,25 @@
         </DataTemplate>
     </UserControl.Resources>
 
-    <ScrollViewer  x:Name="NetworkGrid" Grid.Column="2" Grid.Row="1">
-        <StackPanel Margin="24,25,0,0" Orientation="Vertical">
-            <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Left">
-                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">
-                    <TextBlock Text="{Binding [DirectConnectionsText]}" Style="{StaticResource SubtitleTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,12"/>
-                    <TextBlock Text="{Binding [NoNetworksText]}" x:Name="NoneFoundText" Style="{StaticResource SubtitleTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed"/>
-                    <StackPanel x:Name="DirectConnectionStackPanel" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
-                        <Border Width="44" Height="44">
-                            <TextBlock Text="{StaticResource ResourceKey=IconEthernet}" FontSize="24" FontFamily="{StaticResource IconFontFamily}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        </Border>
-                        <TextBlock Text="{Binding [EthernetText]}" Style="{StaticResource BodyTextBlockStyle}" VerticalAlignment="Center"/>
-                    </StackPanel>
-                    <Grid Margin="0,21,0,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding [WifiText]}" Style="{StaticResource SubtitleTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,12,0,12"/>
-                        <Button Grid.Column="2" x:Name="RefreshButton" Content="{Binding [RefreshContent]}" Click="RefreshButton_Click" />
-                    </Grid>
-                    <ListView x:Name="WifiListView" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionMode="Single" Width="446" ItemTemplate="{StaticResource WifiInitialState}" SelectionChanged="WifiListView_SelectionChanged" ItemContainerStyle="{StaticResource WifiListViewItemStyle}" ItemClick="WifiListView_ItemClick" IsItemClickEnabled="True" />
-                    <TextBlock Text="{Binding [NoNetworksText]}" x:Name="NoWifiFoundText" Width="446" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed"  Margin="10,0,0,0"/>
-                </StackPanel>
-            </ScrollViewer>
+    <StackPanel x:Name="NetworkGrid" Margin="24,25,0,0" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <TextBlock Text="{Binding [DirectConnectionsText]}" Style="{StaticResource SubtitleTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,12"/>
+        <TextBlock Text="{Binding [NoNetworksText]}" x:Name="NoneFoundText" Style="{StaticResource SubtitleTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed"/>
+        <StackPanel x:Name="DirectConnectionStackPanel" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Border Width="44" Height="44">
+                <TextBlock Text="{StaticResource ResourceKey=IconEthernet}" FontSize="24" FontFamily="{StaticResource IconFontFamily}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Border>
+            <TextBlock Text="{Binding [EthernetText]}" Style="{StaticResource BodyTextBlockStyle}" VerticalAlignment="Center"/>
         </StackPanel>
-    </ScrollViewer>
+        <Grid Margin="0,21,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="{Binding [WifiText]}" Style="{StaticResource SubtitleTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,12,0,12"/>
+            <Button Grid.Column="2" x:Name="RefreshButton" Content="{Binding [RefreshContent]}" Click="RefreshButton_Click" />
+        </Grid>
+        <ListView x:Name="WifiListView" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionMode="Single" Width="446" ItemTemplate="{StaticResource WifiInitialState}" SelectionChanged="WifiListView_SelectionChanged" ItemContainerStyle="{StaticResource WifiListViewItemStyle}" ItemClick="WifiListView_ItemClick" IsItemClickEnabled="True" />
+        <TextBlock Text="{Binding [NoNetworksText]}" x:Name="NoWifiFoundText" Width="446" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed"  Margin="10,0,0,0"/>
+    </StackPanel>
 </UserControl>

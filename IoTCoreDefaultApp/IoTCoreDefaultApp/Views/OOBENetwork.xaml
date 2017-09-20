@@ -51,7 +51,9 @@
             <TextBlock Text="{Binding [OOBENetworkTitleText]}" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,14,0,0"/>
         </StackPanel>
 
-        <local:NetworkListControl x:Name="NetworkGrid" Grid.Column="1" Grid.Row="2" />
+        <ScrollViewer Grid.Column="1" Grid.Row="2">
+            <local:NetworkListControl x:Name="NetworkGrid"/>
+        </ScrollViewer>
 
         <HyperlinkButton Grid.Column="1" Grid.Row="3" x:Name="SkipButton" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="SkipButton_Clicked" HorizontalContentAlignment="Left">
             <TextBlock Text="{Binding [SkipStepText]}"/>
