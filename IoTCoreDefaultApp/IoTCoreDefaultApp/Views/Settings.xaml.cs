@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Navigation;
 using Windows.Devices.Radios;
 using Windows.Devices.Bluetooth;
 using System.Linq;
+using Windows.Foundation.Metadata;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -57,9 +58,9 @@ namespace IoTCoreDefaultApp
             this.InitializeComponent();
 
             PreferencesListView.IsSelected = true;
-            
-            this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
 
+            this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
+                       
             this.DataContext = LanguageManager.GetInstance();
 
             this.Loaded += async (sender, e) =>
@@ -83,6 +84,15 @@ namespace IoTCoreDefaultApp
 
             InputLanguageComboBox.ItemsSource = languageManager.InputLanguageDisplayNames;
             InputLanguageComboBox.SelectedItem = LanguageManager.GetCurrentInputLanguageDisplayName();
+            
+            LangApplyStack.Visibility = Common.LangApplyRebootRequired ? Visibility.Visible : Visibility.Collapsed;
+            if (Common.LangApplyRebootRequired)
+            {
+                if (!CortanaHelper.IsCortanaSupportedLanguage(languageManager.GetLanguageTagFromDisplayName(LanguageComboBox.SelectedItem as string)))
+                {
+                    LangApplyStack.Visibility = Visibility.Visible;
+                }
+            }
         }
 
         private void SetupBluetooth()
@@ -93,18 +103,8 @@ namespace IoTCoreDefaultApp
 
         private void SetupCortana()
         {
-            var isCortanaSupported = false;
-            try
-            {
-                isCortanaSupported = CortanaSettings.IsSupported();
-            }
-            catch (UnauthorizedAccessException)
-            {
-                // This is indicitive of EmbeddedMode not being enabled (i.e.
-                // running IotCoreDefaultApp on Desktop or Mobile without 
-                // enabling EmbeddedMode) 
-                //  https://developer.microsoft.com/en-us/windows/iot/docs/embeddedmode
-            }
+            var isCortanaSupported = CortanaHelper.IsCortanaSupported();
+            
             cortanaConsentRequestedFromSwitch = false;
 
             // Only allow the Cortana settings to be enabled if Cortana is available on this device
@@ -130,9 +130,9 @@ namespace IoTCoreDefaultApp
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             // Resource loading has to happen on the UI thread
-            bluetoothConfirmOnlyFormatString = BluetoothDeviceInformationDisplay.GetResourceString("BluetoothConfirmOnlyFormat");
-            bluetoothDisplayPinFormatString = BluetoothDeviceInformationDisplay.GetResourceString("BluetoothDisplayPinFormat");
-            bluetoothConfirmPinMatchFormatString = BluetoothDeviceInformationDisplay.GetResourceString("BluetoothConfirmPinMatchFormat");
+            bluetoothConfirmOnlyFormatString = Common.GetResourceText("BluetoothConfirmOnlyFormat");
+            bluetoothDisplayPinFormatString = Common.GetResourceText("BluetoothDisplayPinFormat");
+            bluetoothConfirmPinMatchFormatString = Common.GetResourceText("BluetoothConfirmPinMatchFormat");
             // Handle inbound pairing requests
             App.InboundPairingRequested += App_InboundPairingRequested;
 
@@ -195,7 +195,7 @@ namespace IoTCoreDefaultApp
                     bluetoothDeviceObservableCollection.Add(deviceInfoDisp);
 
                     // Display a message about the inbound request
-                    string formatString = BluetoothDeviceInformationDisplay.GetResourceString("BluetoothInboundPairingRequestFormat");
+                    string formatString = Common.GetResourceText("BluetoothInboundPairingRequestFormat");
                     string confirmationMessage = string.Format(formatString, deviceInfoDisp.Name, deviceInfoDisp.Id);
                     DisplayMessagePanelAsync(confirmationMessage, MessageType.InformationalMessage);
                 });
@@ -204,18 +204,35 @@ namespace IoTCoreDefaultApp
 
         private void StartWatchingAndDisplayConfirmationMessage()
         {
+            StackLoading.Visibility = Visibility.Visible;
+            DisplayMessagePanelAsync("Waiting to Refresh...", MessageType.InformationalMessage);
+
             // Clear the current collection
             bluetoothDeviceObservableCollection.Clear();
             // Start the watcher
             StartWatcher();
             // Display a message
-            string confirmationMessage = BluetoothDeviceInformationDisplay.GetResourceString("BluetoothOn");
+            string confirmationMessage = Common.GetResourceText("BluetoothOn");
             DisplayMessagePanelAsync(confirmationMessage, MessageType.InformationalMessage);
+
         }
 
         private void BackButton_Clicked(object sender, RoutedEventArgs e)
         {
             NavigationUtils.GoBack();
+        }
+
+        private void LanguageComboBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (ApiInformation.IsPropertyPresent("Windows.UI.Xaml.Controls.ComboBox", "IsTextSearchEnabled"))
+            {
+                LanguageComboBox.IsTextSearchEnabled = true;
+            }
+
+            if (ApiInformation.IsPropertyPresent("Windows.UI.Xaml.Controls.ComboBox", "LightDismissOverlayMode"))
+            {
+                LanguageComboBox.LightDismissOverlayMode = LightDismissOverlayMode.On;
+            }
         }
 
         private void LanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -226,7 +243,144 @@ namespace IoTCoreDefaultApp
                 return;
             }
 
-            languageManager.UpdateLanguage(comboBox.SelectedItem as string);
+            //Check existing lang Tuple
+            var currentLangTuple = languageManager.GetLanguageTuple(languageManager.GetLanguageTagFromDisplayName(comboBox.SelectedItem as string));
+            SpeechSupport.Text = currentLangTuple.Item2 ? languageManager["SpeechSupportText"] : languageManager["SpeechNotSupportText"];
+
+            //Check the Primary Override and Lang Selected
+            if (LanguageManager.GetCurrentLanguageDisplayName().Equals(comboBox.SelectedItem as string))
+            {
+                //Do Nothing
+                return;
+            }
+
+            //Reset
+            Common.LangApplyRebootRequired = false;
+            LangApplyStack.Visibility = Visibility.Collapsed;
+
+
+            //No action if already selected is same as device lang or proposed lang is same as current
+            if (LanguageManager.GetCurrentLanguageDisplayName().Equals(comboBox.SelectedItem as string))
+            {
+                //Do Nothing
+                return;
+            }
+
+            //Check if selected language is part of ffu
+            var newLang = languageManager.CheckUpdateLanguage(comboBox.SelectedItem as string);
+            
+            //Selected Language, but Check Proposing other language
+            if (LanguageManager.GetDisplayNameFromLanguageTag(newLang.Item4).Equals(comboBox.SelectedItem as string))
+            {
+                //Update
+                //var langReturned = languageManager.UpdateLanguage(comboBox.SelectedItem as string);
+
+                //ffu list, Show user to restart to use the System Languages
+                if (newLang.Item1)
+                {
+                    Common.LangApplyRebootRequired = true;
+                    LangApplyStack.Visibility = Visibility.Visible;
+                }
+                //else
+                //skip providing option to restart app
+            }
+            else
+            {
+
+                //Check if the backup language support speech, else dont even show the popup
+                //Speech Supports
+                if (newLang.Item2)
+                {
+                    //If different, show the popup for confirmation
+                    PopupText2.Text = LanguageManager.GetDisplayNameFromLanguageTag(newLang.Item4);
+                    PopupYes.Content = LanguageManager.GetDisplayNameFromLanguageTag(newLang.Item4);
+
+                    PopupNo.Content = comboBox.SelectedItem as string;
+
+                    var ttv = comboBox.TransformToVisual(Window.Current.Content);
+                    Point screenCoords = ttv.TransformPoint(new Point(0, 0));
+
+                    StandardPopup.VerticalOffset = screenCoords.Y;
+                    StandardPopup.HorizontalOffset = screenCoords.X;
+
+                    if (!StandardPopup.IsOpen) { StandardPopup.IsOpen = true; }
+                }
+                else
+                {
+                    //Just update silently in the background and dont ask for restart app
+                    var langReturned = languageManager.UpdateLanguage(comboBox.SelectedItem as string);
+
+                }
+            }
+
+        }
+
+        // Handles the Click event on the Button inside the Popup control
+        private void PopupYes_Clicked(object sender, RoutedEventArgs e)
+        {
+            var curLang = LanguageManager.GetCurrentLanguageDisplayName();
+            if (curLang.Equals(PopupYes.Content as string))
+            {
+                Common.LangApplyRebootRequired = false;
+                LangApplyStack.Visibility = Visibility.Collapsed;
+
+            }
+            else
+            {
+                //Update
+                var langReturned = languageManager.UpdateLanguage(PopupYes.Content as string, true);
+
+                Common.LangApplyRebootRequired = true;
+                LangApplyStack.Visibility = Visibility.Visible;
+            }
+
+            LanguageComboBox.SelectedItem = LanguageManager.GetCurrentLanguageDisplayName();
+            if (StandardPopup.IsOpen) { StandardPopup.IsOpen = false; }
+
+            //Check existing lang Tuple
+            var currentLangTuple = languageManager.GetLanguageTuple(languageManager.GetLanguageTagFromDisplayName(LanguageComboBox.SelectedItem as string));
+            SpeechSupport.Text = currentLangTuple.Item2 ? languageManager["SpeechSupportText"] : languageManager["SpeechNotSupportText"];
+
+        }
+
+        private void PopupNo_Clicked(object sender, RoutedEventArgs e)
+        {
+            var curLang = LanguageManager.GetCurrentLanguageDisplayName();
+
+            if (curLang.Equals(PopupNo.Content as string))
+            {
+                Common.LangApplyRebootRequired = false;
+                LangApplyStack.Visibility = Visibility.Collapsed;
+
+            }
+            else
+            {
+                var langReturned = languageManager.UpdateLanguage(PopupNo.Content as string, false);
+                Common.LangApplyRebootRequired = true;
+                LangApplyStack.Visibility = Visibility.Visible;
+
+            }
+
+            LanguageComboBox.SelectedItem = LanguageManager.GetCurrentLanguageDisplayName();
+            if (StandardPopup.IsOpen) { StandardPopup.IsOpen = false; }
+
+            //Check existing lang Tuple
+            var currentLangTuple = languageManager.GetLanguageTuple(languageManager.GetLanguageTagFromDisplayName(LanguageComboBox.SelectedItem as string));
+            SpeechSupport.Text = currentLangTuple.Item2 ? languageManager["SpeechSupportText"] : languageManager["SpeechNotSupportText"];
+
+            //Enable only if selected lang supports speech or image localization
+            if (currentLangTuple.Item1 || currentLangTuple.Item2)
+            {
+                Common.LangApplyRebootRequired = true;
+                LangApplyStack.Visibility = Visibility.Visible;
+            }
+
+        }
+        
+        private void LangApplyYes_Click(object sender, RoutedEventArgs e)
+        {
+            //Restart app
+            Windows.ApplicationModel.Core.CoreApplication.Exit();
         }
 
         private void InputLanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -291,7 +445,8 @@ namespace IoTCoreDefaultApp
 
                     if (BluetoothGrid.Visibility == Visibility.Collapsed)
                     {
-                        SetupBluetooth();
+                        //SetupBluetooth();
+
                         BluetoothGrid.Visibility = Visibility.Visible;
                         BluetoothListView.IsSelected = true;
                         if (await IsBluetoothEnabledAsync())
@@ -398,6 +553,13 @@ namespace IoTCoreDefaultApp
                 await MainPage.Current.UIThreadDispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
                 {
                     // Finished enumerating
+                    StackLoading.Visibility = Visibility.Collapsed;
+                    var index = confirmationText.Text.IndexOf(Common.GetResourceText("BluetoothOn"));
+                    if (index != -1)
+                    {
+                        DisplayMessagePanelAsync(confirmationText.Text.Substring(0, index), MessageType.InformationalMessage, true);
+                    } 
+                    
                 });
             });
             deviceWatcher.EnumerationCompleted += handlerEnumCompleted;
@@ -407,12 +569,14 @@ namespace IoTCoreDefaultApp
                 await MainPage.Current.UIThreadDispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
                 {
                     // Device watcher stopped
+                    StackLoading.Visibility = Visibility.Collapsed;
                 });
             });
             deviceWatcher.Stopped += handlerStopped;
 
             // Start the Device Watcher
             deviceWatcher.Start();
+            StackLoading.Visibility = Visibility.Visible;
         }
 
         /// <summary>
@@ -435,6 +599,7 @@ namespace IoTCoreDefaultApp
                     DeviceWatcherStatus.EnumerationCompleted == deviceWatcher.Status)
                 {
                     deviceWatcher.Stop();
+                    StackLoading.Visibility = Visibility.Collapsed;
                 }
             }
         }
@@ -444,11 +609,15 @@ namespace IoTCoreDefaultApp
         /// </summary>
         /// <param name="confirmationMessage"></param>
         /// <param name="messageType"></param>
-        private async void DisplayMessagePanelAsync(string confirmationMessage, MessageType messageType)
+        private async void DisplayMessagePanelAsync(string confirmationMessage, MessageType messageType, bool force = false)
         {
             // Use UI thread
             await MainPage.Current.UIThreadDispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
             {
+                if(!force && !BluetoothToggle.IsOn)
+                {
+                    ClearConfirmationPanel();
+                }
 
                 confirmationText.Text = confirmationMessage;
                 if (messageType == MessageType.OKMessage)
@@ -481,8 +650,10 @@ namespace IoTCoreDefaultApp
         {
             // Accept the pairing
             AcceptPairing();
-            // Clear the confirmation message
-            ClearConfirmationPanel();
+
+            //Display InProgress Status while in pairing
+            DisplayMessagePanelAsync( Common.GetResourceText("BluetoothPairingRequestProgress"), MessageType.InformationalMessage);
+            
         }
 
         private void CompleteDeferral()
@@ -539,7 +710,7 @@ namespace IoTCoreDefaultApp
             // Use the pair button on the bluetoothDeviceListView.SelectedItem to get the data context
             BluetoothDeviceInformationDisplay deviceInfoDisp =
                 ((Button)sender).DataContext as BluetoothDeviceInformationDisplay;
-            string formatString = BluetoothDeviceInformationDisplay.GetResourceString("BluetoothAttemptingToPairFormat");
+            string formatString = Common.GetResourceText("BluetoothAttemptingToPairFormat");
             string confirmationMessage = string.Format(formatString, deviceInfoDisp.Name, deviceInfoDisp.Id);
             DisplayMessagePanelAsync(confirmationMessage, MessageType.InformationalMessage);
 
@@ -567,12 +738,12 @@ namespace IoTCoreDefaultApp
 
             if (result.Status == DevicePairingResultStatus.Paired)
             {
-                formatString = BluetoothDeviceInformationDisplay.GetResourceString("BluetoothPairingSuccessFormat");
+                formatString = Common.GetResourceText("BluetoothPairingSuccessFormat");
                 confirmationMessage = string.Format(formatString, deviceInfoDisp.Name, deviceInfoDisp.Id);
             }
             else
             {
-                formatString = BluetoothDeviceInformationDisplay.GetResourceString("BluetoothPairingFailureFormat");
+                formatString = Common.GetResourceText("BluetoothPairingFailureFormat");
                 confirmationMessage = string.Format(formatString, result.Status.ToString(), deviceInfoDisp.Name,
                     deviceInfoDisp.Id);
             }
@@ -667,6 +838,14 @@ namespace IoTCoreDefaultApp
         /// </summary>
         private async void TurnOnRadio()
         {
+            StackLoading.Visibility = Visibility.Visible;
+            // Display a message
+            string confirmationMessage = Common.GetResourceText("BluetoothOn");
+            DisplayMessagePanelAsync(confirmationMessage, MessageType.InformationalMessage);
+
+            //Restart the Discoverability
+            //Check: App.IsBluetoothDiscoverable = false;
+
             await ToggleBluetoothAsync(true);
             SetupBluetooth();
         }
@@ -703,14 +882,28 @@ namespace IoTCoreDefaultApp
                         await btRadio.SetStateAsync(RadioState.Off);
                     }
                 }
-                
+                else
+                {
+                    if(bluetoothState)
+                        NoDeviceFound();
+                }
+
             }
             catch (Exception e)
             {
-                string formatString = BluetoothDeviceInformationDisplay.GetResourceString("BluetoothNoDeviceAvailableFormat");
-                string confirmationMessage = string.Format(formatString, e.Message);
-                DisplayMessagePanelAsync(confirmationMessage, MessageType.InformationalMessage);
+                NoDeviceFound(e.Message);
             }
+        }
+
+
+        private void NoDeviceFound(string message = "")
+        {
+            string formatString = Common.GetResourceText("BluetoothNoDeviceAvailableFormat");
+            string confirmationMessage = string.Format(formatString, message);
+            DisplayMessagePanelAsync(confirmationMessage, MessageType.InformationalMessage);
+
+            StackLoading.Visibility = Visibility.Collapsed;
+
         }
 
         /// <summary>
@@ -721,10 +914,14 @@ namespace IoTCoreDefaultApp
             // Clear any devices in the list
             bluetoothDeviceObservableCollection.Clear();
             // Stop the watcher
-            StopWatcher();
+            //Check StopWatcher();
+
             // Display a message
-            string confirmationMessage = BluetoothDeviceInformationDisplay.GetResourceString("BluetoothOff");
+            string confirmationMessage = Common.GetResourceText("BluetoothOff");
             DisplayMessagePanelAsync(confirmationMessage, MessageType.InformationalMessage);
+
+            StackLoading.Visibility = Visibility.Collapsed;
+
             await ToggleBluetoothAsync(false);
         }
 
@@ -749,12 +946,12 @@ namespace IoTCoreDefaultApp
             if (unpairingResult.Status == DeviceUnpairingResultStatus.Unpaired)
             {
                 // Device is unpaired
-                formatString = BluetoothDeviceInformationDisplay.GetResourceString("BluetoothUnpairingSuccessFormat");
+                formatString = Common.GetResourceText("BluetoothUnpairingSuccessFormat");
                 confirmationMessage = string.Format(formatString, deviceInfoDisp.Name, deviceInfoDisp.Id);
             }
             else
             {
-                formatString = BluetoothDeviceInformationDisplay.GetResourceString("BluetoothUnpairingFailureFormat");
+                formatString = Common.GetResourceText("BluetoothUnpairingFailureFormat");
                 confirmationMessage = string.Format(formatString, unpairingResult.Status.ToString(), deviceInfoDisp.Name, deviceInfoDisp.Id);
             }
             // Display the result of the pairing attempt
@@ -867,13 +1064,13 @@ namespace IoTCoreDefaultApp
 
                 if (!DeviceInformationPairing.TryRegisterForAllInboundPairingRequests(ceremoniesSelected))
                 {
-                    confirmationMessage = BluetoothDeviceInformationDisplay.GetResourceString("BluetoothInboundRegistrationFailed");
+                    confirmationMessage = Common.GetResourceText("BluetoothInboundRegistrationFailed");
                 }
                 else
                 {
                     // Save off the ceremonies we registered with
                     localSettings.Values["supportedPairingKinds"] = iCurrentSelectedCeremonies;
-                    formatString = BluetoothDeviceInformationDisplay.GetResourceString("BluetoothInboundRegistrationSucceededFormat");
+                    formatString = Common.GetResourceText("BluetoothInboundRegistrationSucceededFormat");
                     confirmationMessage = string.Format(formatString, ceremoniesSelected.ToString());
                 }
 
@@ -882,7 +1079,7 @@ namespace IoTCoreDefaultApp
                 // Start the watcher
                 StartWatcher();
                 // Display a message
-                confirmationMessage += BluetoothDeviceInformationDisplay.GetResourceString("BluetoothOn");
+                confirmationMessage += Common.GetResourceText("BluetoothOn");
                 DisplayMessagePanelAsync(confirmationMessage, MessageType.InformationalMessage);
             }
         }
@@ -906,7 +1103,7 @@ namespace IoTCoreDefaultApp
                 }
                 catch (Exception e)
                 {
-                    string formatString = BluetoothDeviceInformationDisplay.GetResourceString("BluetoothNoDeviceAvailableFormat");
+                    string formatString = Common.GetResourceText("BluetoothNoDeviceAvailableFormat");
                     string confirmationMessage = string.Format(formatString, e.Message);
                     DisplayMessagePanelAsync(confirmationMessage, MessageType.InformationalMessage);
                 }
@@ -974,8 +1171,8 @@ namespace IoTCoreDefaultApp
                 CortanaVoiceActivationSwitch.IsEnabled = false;
                 await Window.Current.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                 {
-                    await SetVoiceActivation(enableVoiceActivation);
-                    CortanaVoiceActivationSwitch.IsEnabled = true;
+                   await SetVoiceActivation(enableVoiceActivation);
+                   CortanaVoiceActivationSwitch.IsEnabled = true;
                 });
             }
         }

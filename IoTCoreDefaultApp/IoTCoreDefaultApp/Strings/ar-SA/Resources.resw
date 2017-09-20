@@ -207,10 +207,6 @@
     <value>Wi-Fi</value>
     <comment>Label for Wi-Fi list in options page</comment>
   </data>
-  <data name="StartDevelopingText" xml:space="preserve">
-    <value> للبدء بالتطوير</value>
-    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
-  </data>
   <data name="VisitText" xml:space="preserve">
     <value>زورونا على الموقع</value>
     <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
@@ -649,14 +645,6 @@
   <data name="BluetoothPairingSuccessFormat" xml:space="preserve">
     <value>تم الربط مع {0} بنجاح. ({1})</value>
     <comment>Format string for message displayed when pairing attempt succeeds</comment>
-  </data>
-  <data name="BluetoothStartedWatching" xml:space="preserve">
-    <value>يقوم الآن جهازك بالبحث عن أجهزة ، كما يمكن العثور عليه في أجهزة Bluetooth الأخرى</value>
-    <comment>Message display when "Start Watcher" button is pressed</comment>
-  </data>
-  <data name="BluetoothStoppedWatching" xml:space="preserve">
-    <value>تم التوقف عن البحث عن أجهزة Bluetooth اخرى.</value>
-    <comment>Message display when "Stop Watcher" button is pressed</comment>
   </data>
   <data name="BluetoothUnpairingFailureFormat" xml:space="preserve">
     <value>نتيجة فك الربط كانت {0}: فشل في فك الربط عن {1} ({2})</value>

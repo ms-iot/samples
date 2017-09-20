@@ -120,23 +120,60 @@
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="30"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="408"/>
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
-                <ToggleSwitch Grid.Column="1" Grid.Row="1" Style="{StaticResource IoTCoreDefaultAppToggleStyle}" Toggled="Screensaver_Toggled" x:Name="screensaverToggleSwitch" OnContent="{Binding [ToggleOnText]}" OffContent="{Binding [ToggleOffText]}">
+
+                <Grid x:Name="PopupOutput" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Popup x:Name="StandardPopup" FlowDirection="LeftToRight" UseLayoutRounding="True" IsLightDismissEnabled="True" LightDismissOverlayMode="Auto">
+                        <Popup.ChildTransitions>
+                            <TransitionCollection>
+                                <PaneThemeTransition />
+                            </TransitionCollection>
+                        </Popup.ChildTransitions>
+                        <Border BorderBrush="{StaticResource ApplicationForegroundThemeBrush}" 
+                                Background="{StaticResource ApplicationPageBackgroundThemeBrush}"
+                                BorderThickness="2" >
+                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="PopupStack"  Height="120" Width="400" Margin="5,5,10,10">
+                                <RichTextBlock FontWeight="Normal" HorizontalAlignment="Center" TextWrapping="Wrap" Margin="5,5,10,10"  IsTextSelectionEnabled="True">
+                                    <Paragraph>
+                                        <Run x:Name="PopupText1" Text="{Binding [LanguagePopupText1] }" />
+                                        <Run x:Name="PopupText2" FontWeight="Bold" FontStyle="Italic" TextDecorations="Underline"/>
+                                        <Run x:Name="PopupText3" Text="{Binding [LanguagePopupText3] }"/>
+                                    </Paragraph>
+                                </RichTextBlock>
+                                <RelativePanel HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+                                    <Button x:Name="PopupYes" Margin="0,0,20,10" Click="PopupYes_Clicked" HorizontalAlignment="Center" />
+                                    <Button x:Name="PopupNo" Margin="20,0,5,10" Click="PopupNo_Clicked" HorizontalAlignment="Center" RelativePanel.RightOf="PopupYes" RelativePanel.AlignTopWith="PopupYes"/>
+                                </RelativePanel>
+                            </StackPanel>
+                        </Border>
+                    </Popup>
+                </Grid>
+                
+                
+                <ToggleSwitch Grid.Column="1" Grid.Row="1" Style="{StaticResource IoTCoreDefaultAppToggleStyle}" Toggled="Screensaver_Toggled" x:Name="screensaverToggleSwitch" 
+                              OnContent="{Binding [ToggleOnText]}" OffContent="{Binding [ToggleOffText]}">
                     <ToggleSwitch.Header>
                         <TextBlock Text="{Binding [EnableScreensaverText]}" Style="{StaticResource SubtitleTextBlockStyle}" FontWeight="Normal" />
                     </ToggleSwitch.Header>
                 </ToggleSwitch>
                 <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding [LanguageTitleText]}" Style="{StaticResource SubtitleTextBlockStyle}" FontWeight="Normal" />
-                <ComboBox Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" x:Name="LanguageComboBox" FontSize="16" Margin="0,10,0,0" Width="446" SelectionChanged="LanguageComboBox_SelectionChanged" />
-                <TextBlock Grid.Column="1" Grid.Row="6" Text="{Binding [KeyboardTitleText]}" Style="{StaticResource SubtitleTextBlockStyle}" FontWeight="Normal" />
-                <ComboBox Grid.Column="1" Grid.Row="7" HorizontalAlignment="Left" x:Name="InputLanguageComboBox" FontSize="16" Margin="0,10,0,0" Width="446" SelectionChanged="InputLanguageComboBox_SelectionChanged"/>
+                <ComboBox Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" x:Name="LanguageComboBox" FontSize="16" Margin="0,10,0,0" Width="446" SelectionChanged="LanguageComboBox_SelectionChanged" Loaded="LanguageComboBox_Loaded" />
+                <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="5" Margin="2,0,10,10">
+                    <TextBlock x:Name="SpeechSupport" ></TextBlock>
+                    <StackPanel x:Name="LangApplyStack" Visibility="Collapsed" HorizontalAlignment="Center">
+                           <Button x:Name="LangApplyYes" Content="{Binding [LanguageApplyButtonText]}" Margin="0,0,20,10" Click="LangApplyYes_Click" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </StackPanel>
+                <TextBlock Grid.Column="1" Grid.Row="7" Text="{Binding [KeyboardTitleText]}" Style="{StaticResource SubtitleTextBlockStyle}" FontWeight="Normal" />
+                <ComboBox Grid.Column="1" Grid.Row="8" HorizontalAlignment="Left" x:Name="InputLanguageComboBox" FontSize="16" Margin="0,10,0,0" Width="446" SelectionChanged="InputLanguageComboBox_SelectionChanged"/>
+            
             </Grid>
         </ScrollViewer>
 
@@ -155,9 +192,9 @@
                             <TextBlock x:Uid="BluetoothDevices" Text="{Binding [BluetoothManageDevicesText]}"  Style="{StaticResource SubtitleTextBlockStyle}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Height="64" VerticalAlignment="Bottom" Margin="24,0,0,0">
-                            <ToggleSwitch x:Name="BluetoothToggle" Header="{Binding [BluetoothToggleLabel]}" Style="{StaticResource IoTCoreDefaultAppToggleStyle}"  Toggled="BluetoothToggle_Toggled" IsEnabled="True" OnContent="{Binding [ToggleOnText]}" OffContent="{Binding [ToggleOffText]}" />
+                            <ToggleSwitch x:Name="BluetoothToggle" Header="{Binding [BluetoothWatcherToggleLabel]}" Style="{StaticResource IoTCoreDefaultAppToggleStyle}"  Toggled="BluetoothToggle_Toggled" IsEnabled="True" OnContent="{Binding [ToggleOnText]}" OffContent="{Binding [ToggleOffText]}" />
                         </StackPanel>
-                        <StackPanel x:Name="confirmationPanel"  Orientation="Horizontal"  Height="88" HorizontalAlignment="Stretch"  Margin="24,0,0,0">
+                        <StackPanel x:Name="confirmationPanel"  Orientation="Horizontal" HorizontalAlignment="Stretch"  Margin="24,0,0,0">
                             <RelativePanel>
                                 <TextBlock x:Name="confirmationText" Width="380" TextAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,2" Text="" TextWrapping="WrapWholeWords" RelativePanel.AlignLeftWithPanel="True" />
                                 <Button x:Name="yesButton" Margin="0,0,5,10" Click="YesButton_Click" Width="44" RelativePanel.RightOf="confirmationText" >Yes</Button>
@@ -165,6 +202,8 @@
                             </RelativePanel>
                         </StackPanel>
 
+                        <ProgressBar x:Name="StackLoading" IsIndeterminate="True" Height="20" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="10,0,0,0"/>
+                       
                         <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,15,0" >
                             <Border BorderBrush="Black" BorderThickness="1">
                                 <ListView x:Name="bluetoothDeviceListView"

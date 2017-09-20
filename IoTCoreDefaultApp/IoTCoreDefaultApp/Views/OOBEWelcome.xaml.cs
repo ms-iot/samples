@@ -3,6 +3,7 @@
 
 using System;
 using System.Globalization;
+using Windows.Foundation;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -28,6 +29,7 @@ namespace IoTCoreDefaultApp
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
 
             this.DataContext = LanguageManager.GetInstance();
+            languageManager = LanguageManager.GetInstance();
 
             timer = new DispatcherTimer();
             timer.Tick += timer_Tick;
@@ -82,17 +84,156 @@ namespace IoTCoreDefaultApp
 
         private void SetupLanguages()
         {
-            languageManager = LanguageManager.GetInstance();
-
             LanguagesListView.ItemsSource = languageManager.LanguageDisplayNames;
             LanguagesListView.SelectedItem = LanguageManager.GetCurrentLanguageDisplayName();
+
+            SetPreferences();
         }
 
         private void SetPreferences()
         {
-            var selectedLanguage = LanguagesListView.SelectedItem as string;
-            languageManager.UpdateLanguage(selectedLanguage);
+            if(null == LanguagesListView.SelectedItem)
+            {
+                NavigationUtils.NavigateToScreen(typeof(MainPage));
+
+            }
+            else
+            {
+                LangApplyStack.Visibility = Visibility.Collapsed;
+                string selectedLanguage = LanguagesListView.SelectedItem as string;
+
+                //Check existing lang Tuple
+                var currentLangTuple = languageManager.GetLanguageTuple(languageManager.GetLanguageTagFromDisplayName(selectedLanguage));
+                SpeechSupport.Text = currentLangTuple.Item2 ? languageManager["SpeechSupportText"] : languageManager["SpeechNotSupportText"];
+                
+                if (LanguageManager.GetCurrentLanguageDisplayName().Equals(selectedLanguage))
+                {
+                    //Do Nothing
+                    return;
+                }
+
+                //Check if selected language is part of ffu
+                var newLang = languageManager.CheckUpdateLanguage(selectedLanguage);
+
+                if (LanguageManager.GetDisplayNameFromLanguageTag(newLang.Item4).Equals(selectedLanguage))
+                {
+                    //Update
+                    var langReturned = languageManager.UpdateLanguage(selectedLanguage);
+                           
+                    //ffu list, Show user to restart to use the System Languages
+                    if (newLang.Item1)
+                    {
+                        Common.LangApplyRebootRequired = true;
+                        LangApplyStack.Visibility = Visibility.Visible;
+                    }
+                    //else
+                    //skip providing option to restart app
+                }
+                else
+                {
+                    if (newLang.Item2)
+                    {
+
+                        //Stop Automatic counter to switch to next screen
+                        timer.Stop();
+                        countdown.Stop();
+                        ChooseDefaultLanguage.Visibility = Visibility.Collapsed;
+                        CancelButton.Visibility = Visibility.Collapsed;
+
+                        //If different, show the popup for confirmation
+                        PopupText2.Text = LanguageManager.GetDisplayNameFromLanguageTag(newLang.Item4);
+                        PopupYes.Content = LanguageManager.GetDisplayNameFromLanguageTag(newLang.Item4);
+
+                        PopupText1.Text = languageManager["LanguagePopupText1"];
+                        PopupText3.Text = languageManager["LanguagePopupText3"];
+
+                        PopupNo.Content = LanguagesListView.SelectedItem as string;
+
+                        var ttv = LanguagesListView.TransformToVisual(Window.Current.Content);
+                        Point screenCoords = ttv.TransformPoint(new Point(0, 0));
+
+                        double hOffset = (Window.Current.Bounds.Width - LanguagesListView.ActualWidth) / 2;
+                        double vOffset = (Window.Current.Bounds.Height - LanguagesListView.ActualHeight) / 2;
+
+                        StandardPopup.VerticalOffset = screenCoords.Y + vOffset;
+                        StandardPopup.HorizontalOffset = screenCoords.X + hOffset;
+                        
+                        if (!StandardPopup.IsOpen) { StandardPopup.IsOpen = true; }
+                    } 
+                    else
+                    { 
+                        //Just update silently in the background and dont ask for restart app
+                        var langReturned = languageManager.UpdateLanguage(selectedLanguage);
+
+                    }
+                    
+                }
+                
+            }
         }
+
+        // Handles the Click event on the Button inside the Popup control
+        private void PopupYes_Clicked(object sender, RoutedEventArgs e)
+        {
+            var curLang = LanguageManager.GetCurrentLanguageDisplayName();
+            if (curLang.Equals(PopupYes.Content as string))
+            {
+                Common.LangApplyRebootRequired = false;
+                LangApplyStack.Visibility = Visibility.Collapsed;
+
+            }
+            else
+            {
+                //Update
+                var langReturned = languageManager.UpdateLanguage(PopupYes.Content as string, true);
+
+                Common.LangApplyRebootRequired = true;
+                LangApplyStack.Visibility = Visibility.Visible;
+                
+            }
+            LanguagesListView.SelectedItem = LanguageManager.GetCurrentLanguageDisplayName();
+            if (StandardPopup.IsOpen) { StandardPopup.IsOpen = false; }
+
+            //Check existing lang Tuple
+            var currentLangTuple = languageManager.GetLanguageTuple(languageManager.GetLanguageTagFromDisplayName(LanguagesListView.SelectedItem as string));
+            SpeechSupport.Text = currentLangTuple.Item2 ? languageManager["SpeechSupportText"] : languageManager["SpeechNotSupportText"];
+        }
+
+        private void PopupNo_Clicked(object sender, RoutedEventArgs e)
+        {
+            var curLang = LanguageManager.GetCurrentLanguageDisplayName();
+
+            if (curLang.Equals(PopupNo.Content as string))
+            {
+                Common.LangApplyRebootRequired = false;
+                LangApplyStack.Visibility = Visibility.Collapsed;
+
+            }
+            else
+            {
+                var langReturned = languageManager.UpdateLanguage(PopupNo.Content as string, false);
+                                
+            }
+            LanguagesListView.SelectedItem = LanguageManager.GetCurrentLanguageDisplayName();
+            if (StandardPopup.IsOpen) { StandardPopup.IsOpen = false; }
+
+            //Check existing lang Tuple
+            var currentLangTuple = languageManager.GetLanguageTuple(languageManager.GetLanguageTagFromDisplayName(LanguagesListView.SelectedItem as string));
+            SpeechSupport.Text = currentLangTuple.Item2 ? languageManager["SpeechSupportText"] : languageManager["SpeechNotSupportText"];
+
+            //Enable only if selected lang supports speech or image localization
+            if(currentLangTuple.Item1 || currentLangTuple.Item2)
+            {
+                Common.LangApplyRebootRequired = true;
+                LangApplyStack.Visibility = Visibility.Visible;
+            }
+        }
+               
+        private void LangApplyYes_Click(object sender, RoutedEventArgs e)
+        {
+            Windows.ApplicationModel.Core.CoreApplication.Exit();
+        }
+
 
         private void CancelButton_Clicked(object sender, RoutedEventArgs e)
         {
@@ -130,7 +271,17 @@ namespace IoTCoreDefaultApp
 
         private void LanguagesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (LanguageManager.GetCurrentLanguageDisplayName().Equals(LanguagesListView.SelectedItem as string))
+            {
+                Common.LangApplyRebootRequired = false;
+                LangApplyStack.Visibility = Visibility.Collapsed;
+
+                //Do Nothing
+                return;
+            }
+
             SetPreferences();
+           
         }
 
         private void UpdateBoardInfo()
@@ -138,8 +289,7 @@ namespace IoTCoreDefaultApp
             ulong version = 0;
             if (!ulong.TryParse(Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamilyVersion, out version))
             {
-                var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
-                OSVersion.Text = loader.GetString("OSVersionNotAvailable");
+                OSVersion.Text = languageManager["OSVersionNotAvailable"];
             }
             else
             {
