@@ -20,52 +20,154 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <DataTemplate x:Key="ResultsListViewTemplate">
-            <Grid Margin="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*" MinWidth="100"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Border Grid.Column="0" Grid.Row="0" Height="32" Width="32" Margin="0,5" VerticalAlignment="Top" HorizontalAlignment="Left">
-                    <Image Source="{Binding Path=WiFiImage}"
-                 Stretch="UniformToFill"/>
-                </Border>
-
-                <Border Grid.Column="1" Grid.Row="0"  Margin="5">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Ssid:" Margin="0,0,5,0"/>
-                        <TextBlock Text="{Binding Path=Ssid}" FontWeight="Bold" TextWrapping="Wrap"/>
-                    </StackPanel>
-                </Border>
-                <Border Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="5">
-                    <StackPanel Orientation="Vertical">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Bssid:" Margin="0,0,5,0"/>
-                            <TextBlock Text="{Binding Path=Bssid}" TextWrapping="Wrap" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Rssi:" Margin="0,0,5,0"/>
-                            <TextBlock Text="{Binding Path=Rssi}"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Ch. Frequency:" Margin="0,0,5,0"/>
-                            <TextBlock Text="{Binding Path=ChannelCenterFrequency}" TextWrapping="Wrap"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Path=SecuritySettings}" TextWrapping="Wrap" Margin="0,0,5,0"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock FontWeight="Bold" Text="{Binding Path=ConnectivityLevel}" TextWrapping="Wrap" Margin="0,0,5,0"/>
-                        </StackPanel>
-                    </StackPanel>
-                </Border>
-            </Grid>
+        <DataTemplate x:Name="WifiInitialState">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="{Binding Path=WiFiImage}" Stretch="UniformToFill" Height="32" Width="32" Margin="5"/>
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <TextBlock Text="Ssid:" Margin="0,0,5,0" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding Path=Ssid}" FontWeight="Bold" TextWrapping="Wrap" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <TextBlock Text="{Binding Path=ConnectionKinds}" TextWrapping="Wrap" VerticalAlignment="Center" Margin="0,0,5,0" Visibility="{Binding Path=ConnectionKindsVisibility}"/>
+                </StackPanel>
+            </StackPanel>
         </DataTemplate>
 
+        <DataTemplate x:Name="WifiConnectState">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="{Binding Path=WiFiImage}" Stretch="UniformToFill" Height="32" Width="32" Margin="5"/>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <TextBlock Text="Ssid:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <TextBlock Text="{Binding Path=Ssid}" FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,5,0" VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding Path=ConnectionKinds}" TextWrapping="Wrap" Margin="0,0,5,0" VerticalAlignment="Center" Visibility="{Binding Path=ConnectionKindsVisibility}"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical" Margin="5">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Bssid:" Margin="0,0,5,0"/>
+                        <TextBlock Text="{Binding Path=Bssid}" TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Rssi:" Margin="0,0,5,0"/>
+                        <TextBlock Text="{Binding Path=Rssi}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Ch. Frequency:" Margin="0,0,5,0"/>
+                        <TextBlock Text="{Binding Path=ChannelCenterFrequency}" TextWrapping="Wrap"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Path=SecuritySettings}" TextWrapping="Wrap" Margin="0,0,5,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontWeight="Bold" Text="{Binding Path=ConnectivityLevel}" TextWrapping="Wrap" Margin="0,0,5,0"/>
+                    </StackPanel>
+                </StackPanel>
+                
+                <StackPanel Orientation="Vertical" Margin="0,5">
+                    <CheckBox IsChecked="{Binding Path=ConnectAutomatically, Mode=TwoWay}">Connect automatically</CheckBox>
+                    <CheckBox IsChecked="{Binding Path=UsePassword, Mode=TwoWay}" Visibility="{Binding Path=IsEapAvailable}">Use password</CheckBox>
+                    <Grid x:Name="EapInfo" Visibility="{Binding Path=UsePassword}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="User:" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5"/>
+                        <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5" Text="{Binding Path=UserName, Mode=TwoWay}"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Domain:" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5" Text="{Binding Path=Domain, Mode=TwoWay}"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Password:" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5"/>
+                        <PasswordBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5" Password="{Binding Path=Password, Mode=TwoWay}"/>
+                    </Grid>
+                    <StackPanel x:Name="NetworkKeyInfo" Orientation="Horizontal" Visibility="{Binding Path=NetworkKeyInfoVisibility}">
+                        <TextBlock Text="Security Key:" Margin="5" VerticalAlignment="Bottom"/>
+                        <PasswordBox Width="124" Margin="5" Password="{Binding Path=Password, Mode=TwoWay}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Click="ConnectButton_Click" Margin="5">Connect</Button>
+                        <Button Click="PushButtonConnect_Click" Margin="5" Visibility="{Binding Path=IsWpsPushButtonAvailable}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="assets/wps-button40x40.png" Width="20" Height="20"/>
+                                <TextBlock Text="WPS" Margin="5,0,0,0"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Name="WifiConnectingState">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="{Binding Path=WiFiImage}" Stretch="UniformToFill" Height="32" Width="32" Margin="5"/>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <TextBlock Text="Ssid:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <TextBlock Text="{Binding Path=Ssid}" FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,5,0" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Margin="5">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Bssid:" Margin="0,0,5,0"/>
+                        <TextBlock Text="{Binding Path=Bssid}" TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Rssi:" Margin="0,0,5,0"/>
+                        <TextBlock Text="{Binding Path=Rssi}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Ch. Frequency:" Margin="0,0,5,0"/>
+                        <TextBlock Text="{Binding Path=ChannelCenterFrequency}" TextWrapping="Wrap"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Path=SecuritySettings}" TextWrapping="Wrap" Margin="0,0,5,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontWeight="Bold" Text="{Binding Path=ConnectivityLevel}" TextWrapping="Wrap" Margin="0,0,5,0"/>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
+                    <ProgressRing x:Name="ConnectingProgressRing" IsActive="True" Foreground="White" Margin="120,20,0,40"/>
+                    <TextBlock Text="Checking network requirements" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                </StackPanel>
+                <!--<Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" x:Name="CancelButton" Content="Cancel" Width="120" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="CancelButton_Clicked" Margin="130,0,0,0"/>-->
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Name="WifiConnectedState">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="{Binding Path=WiFiImage}" Stretch="UniformToFill" Height="32" Width="32" Margin="5"/>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <TextBlock Text="Ssid:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <TextBlock Text="{Binding Path=Ssid}" FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,5,0" VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding Path=ConnectionKinds}" TextWrapping="Wrap" Margin="0,0,5,0" VerticalAlignment="Center" Visibility="{Binding Path=ConnectionKindsVisibility}"/>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Margin="5">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Bssid:" Margin="0,0,5,0"/>
+                        <TextBlock Text="{Binding Path=Bssid}" TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Rssi:" Margin="0,0,5,0"/>
+                        <TextBlock Text="{Binding Path=Rssi}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Ch. Frequency:" Margin="0,0,5,0"/>
+                        <TextBlock Text="{Binding Path=ChannelCenterFrequency}" TextWrapping="Wrap"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Path=SecuritySettings}" TextWrapping="Wrap" Margin="0,0,5,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontWeight="Bold" Text="{Binding Path=ConnectivityLevel}" TextWrapping="Wrap" Margin="0,0,5,0"/>
+                    </StackPanel>
+                </StackPanel>
+                <Button Click="Disconnect_Click" Margin="5">Disconnect</Button>
+            </StackPanel>
+        </DataTemplate>
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -74,7 +176,6 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <!-- Row 1 -->
@@ -85,53 +186,34 @@
             </StackPanel>
 
             <!-- Row 2 -->
-            <ScrollViewer Grid.Row="1" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto" Margin="0,0,0,10">
-                <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <StackPanel Orientation="Horizontal" Name="Buttons" Grid.Row="0">
-                            <Button Click="Browser_Toggle_Click"  Name="toggleBrowserButton" Margin="2">Show Browser Control</Button>
-                            <Button Click="Browser_Refresh" Name="refreshBrowserButton" Visibility="Collapsed" Margin="2">Refresh webpage</Button>
-                        </StackPanel>
-                        <StackPanel Grid.Row="1" Visibility="Collapsed" x:Name="webViewGrid" Background="White">
-                            <WebView x:Name="webView"  MinWidth="600" Width="1000" MaxWidth="1200" Height="200" Source="http://www.bing.com"/>
-                        </StackPanel>
-                    </Grid>
-                </StackPanel>
-            </ScrollViewer>
+            <StackPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" Name="Buttons" Grid.Row="0">
+                        <Button Click="Browser_Toggle_Click"  Name="toggleBrowserButton" Margin="2">Show Browser Control</Button>
+                        <Button Click="Browser_Refresh" Name="refreshBrowserButton" Visibility="Collapsed" Margin="2">Refresh webpage</Button>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Visibility="Collapsed" x:Name="webViewGrid" Background="White">
+                        <WebView x:Name="webView"  MinWidth="600" Width="1000" MaxWidth="1200" Height="200" Source="http://www.bing.com"/>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
 
             <!-- Row 3 -->
             <ScrollViewer Grid.Row="2" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto" Margin="0,0,10,0">
                 <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top">
                     <Border BorderBrush="AntiqueWhite" BorderThickness="1">
                         <ListView x:Name="ResultsListView"
-                      ItemTemplate="{StaticResource ResultsListViewTemplate}"
-                      ItemsSource="{Binding Path=ResultCollection}"
-                      SelectionChanged="ResultsListView_SelectionChanged">
+                                  ItemTemplate="{StaticResource WifiInitialState}"
+                                  ItemsSource="{Binding Path=ResultCollection}"
+                                  SelectionChanged="ResultsListView_SelectionChanged">
                         </ListView>
                     </Border>
                 </StackPanel>
             </ScrollViewer>
-
-            <!-- Row 4 -->
-
-            <ScrollViewer x:Name="ConnectionBar" Grid.Row="3" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto"
-                    Margin="0,15,10,10" Visibility="Collapsed">
-                <StackPanel Orientation="Vertical" x:Name="ConnectButtons">
-                    <StackPanel x:Name="NetworkKeyInfo" Orientation="Horizontal" >
-                        <TextBlock Text="Security Key:" Margin="5,0,5,0" VerticalAlignment="Bottom"/>
-                        <PasswordBox x:Name="NetworkKey" Width="124" Margin="5,0,10,0"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                        <CheckBox x:Name="IsAutomaticReconnection" IsChecked="False">Auto reconnect?</CheckBox>
-                        <Button Click="ConnectButton_Click" Margin="5,0,0,0">Connect</Button>
-                    </StackPanel>
-                </StackPanel>
-            </ScrollViewer>
-
         </Grid>
     </Grid>
 </Page>
