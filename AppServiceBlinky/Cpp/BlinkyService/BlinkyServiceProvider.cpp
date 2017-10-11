@@ -9,8 +9,6 @@ using namespace Windows::ApplicationModel::Background;
 using namespace Windows::Devices::Gpio;
 using namespace Windows::Foundation::Collections;
 
-// The Background Application template is documented at http://go.microsoft.com/fwlink/?LinkID=533884&clcid=0x409
-
 void BlinkyServiceProvider::Run(IBackgroundTaskInstance^ taskInstance)
 {
     serviceDeferral = taskInstance->GetDeferral();
@@ -69,7 +67,7 @@ void BlinkyService::BlinkyServiceProvider::OnRequestReceived(Windows::Applicatio
                 else if (String::operator==(command, L"SetLedStateOff"))
                 {
                     pin->Write(GpioPinValue::Low);
-                    responseMessage->Insert(L"Response", L"Succes");
+                    responseMessage->Insert(L"Response", L"Success");
                 }
                 else
                 {
