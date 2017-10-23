@@ -87,8 +87,13 @@ namespace IoTCoreDefaultApp
             {
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
+
+                //Set Default Primary Language
+                //Setting this, will be directly reflected in ApplicationLanguages.Languages 
+                Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = LanguageManager.GetCurrentLanguageTag();
+                
                 // Set the default language
-                rootFrame.Language = Windows.Globalization.ApplicationLanguages.Languages[0];
+                rootFrame.Language = LanguageManager.GetCurrentLanguageTag();
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 

@@ -818,4 +818,25 @@ Alternatively, click or tap the button below to enter your Administrator account
     <value>Windows 10 IoT Core</value>
     <comment>Dont Localize</comment>
   </data>
+  <data name="LanguagePopupText1" xml:space="preserve">
+    <value>Cortana doesn’t support your current language settings. Do you want to select</value>
+    <comment>Part for PopupText1</comment>
+  </data>
+  <data name="LanguagePopupText3" xml:space="preserve">
+    <value>language to enable Cortana?</value>
+    <comment>Text for PopupText3</comment>
+  </data>
+  <data name="SpeechNotSupportText" xml:space="preserve">
+    <value>This language does not support speech.</value>
+  </data>
+  <data name="SpeechSupportText" xml:space="preserve">
+    <value>This language does support speech.</value>
+  </data>
+  <data name="LanguageApplyButtonText" xml:space="preserve">
+    <value>Restart this app to apply new settings</value>
+  </data>
+  <data name="BluetoothPairingRequestProgress" xml:space="preserve">
+    <value>Please wait, pairing inprogress</value>
+    <comment>Pairing InProgress Text</comment>
+  </data>
 </root>

@@ -337,7 +337,7 @@ namespace IoTCoreDefaultApp
                     if (IsNetworkOpen(network))
                     {
                         //Navigate to http://www.msftconnecttest.com/redirect 
-                        NavigationUtils.NavigateToScreen(typeof(WebBrowserPage), Common.GetLocalizedText("MicrosoftWifiConnect"));
+                        NavigationUtils.NavigateToScreen(typeof(WebBrowserPage), Common.GetResourceText("MicrosoftWifiConnect"));
                     }
 
                     return (result.ConnectionStatus == WiFiConnectionStatus.Success);

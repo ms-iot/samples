@@ -30,7 +30,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{StaticResource AccentBrush}">
+    <Grid Background="{StaticResource AccentBrush}" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" MaxWidth="40"/>
             <ColumnDefinition Width="*" MinWidth="120"/>
@@ -43,6 +43,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="5*"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
@@ -50,10 +51,20 @@
         <TextBlock Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Text="{Binding [OOBEWelcomeTitleText]}" Style="{ThemeResource SubheaderTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <TextBlock Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Text="{Binding [OOBEIntroText]}" Style="{ThemeResource BodyTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,14,0,0"/>
 
-        <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding [OOBELanguageSelectText]}" Style="{ThemeResource BaseTextBlockStyle}" HorizontalAlignment="Left" FontWeight="Normal" VerticalAlignment="Top" Margin="0,54,0,0"/>
-        <ListView Grid.Column="1" Grid.Row="4" x:Name="LanguagesListView" ItemContainerStyle="{ThemeResource LanguageSelectionListViewItemStyle}" Margin="0,14,20,0" SelectionMode="Single" HorizontalContentAlignment="Stretch" SelectionChanged="LanguagesListBox_SelectionChanged" />
+        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="3" Margin="5,25,10,10">
+            <TextBlock x:Name="SpeechSupport" ></TextBlock>
+            <StackPanel x:Name="LangApplyStack" Visibility="Collapsed" >
+                <RelativePanel HorizontalAlignment="Center">
+                    <Button x:Name="LangApplyYes" Content="{Binding [LanguageApplyButtonText]}" Margin="0,0,20,10" Click="LangApplyYes_Click" HorizontalAlignment="Center"/>
+                </RelativePanel>
+            </StackPanel>
+        </StackPanel>
 
-        <Grid Grid.Column="2" Grid.Row="4">
+        <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding [OOBELanguageSelectText]}" Style="{ThemeResource BaseTextBlockStyle}" HorizontalAlignment="Left" FontWeight="Normal" VerticalAlignment="Top" Margin="0,30,0,0"/>
+        
+        <ListView Grid.Column="1" Grid.Row="5" x:Name="LanguagesListView" ItemContainerStyle="{ThemeResource LanguageSelectionListViewItemStyle}" Margin="0,14,20,0" SelectionMode="Single" HorizontalContentAlignment="Stretch" SelectionChanged="LanguagesListBox_SelectionChanged" />
+
+        <Grid Grid.Column="2" Grid.Row="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" MaxHeight="120" />
@@ -88,5 +99,35 @@
             </Grid>
         </Grid>
 
+
+        <Grid x:Name="PopupOutput">
+            <Popup x:Name="StandardPopup" HorizontalAlignment="Center" VerticalAlignment="Center" FlowDirection="LeftToRight" UseLayoutRounding="True" IsLightDismissEnabled="True" LightDismissOverlayMode="Auto">
+                <Popup.ChildTransitions>
+                    <TransitionCollection>
+                        <PaneThemeTransition />
+                    </TransitionCollection>
+                </Popup.ChildTransitions>
+                <Border BorderBrush="{StaticResource ApplicationForegroundThemeBrush}" 
+                                Background="{StaticResource AccentBrush}"
+                                BorderThickness="2" >
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="PopupStack"  Height="120" Width="400" Margin="5,5,10,10">
+                        <RichTextBlock FontWeight="Normal" HorizontalAlignment="Center" TextWrapping="Wrap" Margin="5,5,10,10"  IsTextSelectionEnabled="True">
+                            <Paragraph>
+                                <Run x:Name="PopupText1" Text="{Binding [LanguagePopupText1] }" />
+                                <Run x:Name="PopupText2" FontWeight="Bold" FontStyle="Italic" TextDecorations="Underline"/>
+                                <Run x:Name="PopupText3" Text="{Binding [LanguagePopupText3] }"/>
+                            </Paragraph>
+                        </RichTextBlock>
+                        <RelativePanel HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+                            <Button x:Name="PopupYes" Margin="0,0,20,10" Click="PopupYes_Clicked" HorizontalAlignment="Center" />
+                            <Button x:Name="PopupNo" Margin="20,0,5,10" Click="PopupNo_Clicked" HorizontalAlignment="Center" RelativePanel.RightOf="PopupYes" RelativePanel.AlignTopWith="PopupYes"/>
+                        </RelativePanel>
+
+                    </StackPanel>
+                </Border>
+            </Popup>
+        </Grid>
+        
+        
     </Grid>
 </Page>

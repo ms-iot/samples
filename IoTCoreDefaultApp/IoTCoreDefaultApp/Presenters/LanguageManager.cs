@@ -1,12 +1,16 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 
+using IoTCoreDefaultApp.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources.Core;
+using Windows.Foundation.Metadata;
 using Windows.Globalization;
-using Windows.System;
+using Windows.Media.SpeechRecognition;
 using Windows.System.UserProfile;
 
 namespace IoTCoreDefaultApp
@@ -38,37 +42,90 @@ namespace IoTCoreDefaultApp
             "wo-Latn", "yo-Latn"
             };
 
+        
+        //Chinese Langs are failing (search) with SortedDictionary
         private Dictionary<string, string> displayNameToLanguageMap;
-        private Dictionary<string, string> displayNameToInputLanguageMap;
+        private SortedDictionary<string, string> displayNameToInputLanguageMap;
+        private SortedDictionary<string, string> displayNameToImageLanguageMap;
+
+        /// <summary>
+        /// Contains ApplicationManifest Languages and Image Enabled Languages
+        /// </summary>
         public IReadOnlyList<string> LanguageDisplayNames
         {
             get;
             set;
         }
-
+        /// <summary>
+        /// Contains Input or Keyboard Languages
+        /// </summary>
         public IReadOnlyList<string> InputLanguageDisplayNames
         {
             get;
             set;
         }
-
+        /// <summary>
+        /// Contains Only Image Enabled Languages
+        /// </summary>
+        public IReadOnlyList<string> ImageLanguageDisplayNames
+        {
+            get;
+            set;
+        }                
+       
         private LanguageManager()
         {
-            displayNameToLanguageMap = ApplicationLanguages.ManifestLanguages.Select(tag =>
-            {
-                var lang = new Language(tag);
-                return new KeyValuePair<string, string>(lang.NativeName, lang.LanguageTag);
-            }).ToDictionary(keyitem => keyitem.Key, valueItem => valueItem.Value);
+            List<string> imageLanguagesList = GetImageSupportedLanguages();
+            //Only Image Enable Map
+            displayNameToImageLanguageMap = new SortedDictionary<string, string>(
+                imageLanguagesList.Select(tag =>
+                {
+                    var lang = new Language(tag);
+                    return new KeyValuePair<string, string>(lang.NativeName, GetLocaleFromLanguageTag(lang.LanguageTag));
+                }).ToDictionary(keyitem => keyitem.Key, valueItem => valueItem.Value) 
+                );
+        
+            ImageLanguageDisplayNames = displayNameToImageLanguageMap.Keys.ToList();
+
+
+            displayNameToLanguageMap = new Dictionary<string, string> (
+                ApplicationLanguages.ManifestLanguages.Union(imageLanguagesList).Select(tag =>
+                {
+                    var lang = new Language(tag);
+                    return new KeyValuePair<string, string>(lang.NativeName, GetLocaleFromLanguageTag(lang.LanguageTag));
+                }).OrderBy(a => a.Key).ToDictionary(keyitem => keyitem.Key, valueItem => valueItem.Value)
+                );
 
             LanguageDisplayNames = displayNameToLanguageMap.Keys.ToList();
 
-            displayNameToInputLanguageMap = InputLanguages.Select(tag =>
+            displayNameToInputLanguageMap = new SortedDictionary<string, string>(
+                InputLanguages.Select(tag =>
             {
                 var lang = new Language(tag);
-                return new KeyValuePair<string, string>(lang.NativeName, lang.LanguageTag);
-            }).ToDictionary(keyitem => keyitem.Key, valueItem => valueItem.Value);
+                return new KeyValuePair<string, string>(lang.NativeName, GetLocaleFromLanguageTag(lang.LanguageTag));
+            }).ToDictionary(keyitem => keyitem.Key, valueItem => valueItem.Value)
+            );
+
 
             InputLanguageDisplayNames = displayNameToInputLanguageMap.Keys.ToList();
+                                    
+            //Exception when running in Local Machine
+            try
+            {
+                //Add Image Enabled Languages as Global Preferences List
+                if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 5))
+                {
+                    GlobalizationPreferences.TrySetLanguages(displayNameToImageLanguageMap.Values);
+                }
+            }
+            catch(InvalidCastException)
+            {
+                // This is indicitive of EmbeddedMode not being enabled (i.e.
+                // running IotCoreDefaultApp on Desktop or Mobile without 
+                // enabling EmbeddedMode) 
+                //  https://developer.microsoft.com/en-us/windows/iot/docs/embeddedmode
+            }
+            
         }
 
 
@@ -82,19 +139,211 @@ namespace IoTCoreDefaultApp
             return _LanguageManager;
         }
 
-        public bool UpdateLanguage(string displayName)
+        /// <summary>
+        /// List of GlobalizationPreferences Languages
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<string, string> GetSupportedRegions()
+        {
+            Dictionary<string, string> supportedLangs = GlobalizationPreferences.Languages.Select(tag =>
+            {
+                var lang = new Language(tag);
+                return new KeyValuePair<string, string>(lang.NativeName, lang.LanguageTag);
+            }).ToDictionary(keyitem => keyitem.Key, valueItem => valueItem.Value);
+
+            return supportedLangs;
+        }
+
+        /// <summary>
+        /// Returns the full format of Locale ex: for ru, it returns ru-RU
+        /// </summary>
+        /// <param name="identifier"></param>
+        /// <returns></returns>
+        public static string GetLocaleFromLanguageTag(string identifier)
+        {
+            int result;
+
+            StringBuilder localeName = new StringBuilder(500);
+            result = LocaleFunctions.ResolveLocaleName(identifier, localeName, 500);
+
+            return localeName.ToString();
+        }
+
+        /// <summary>
+        /// Returns all the Image Enabled Languages supported
+        /// </summary>
+        /// <returns></returns>
+        public List<string> GetImageSupportedLanguages()
+        {
+            //TODO : Replace with Win Store API
+            Utils.ImageLanguages.GetMUILanguages();
+
+            return Utils.ImageLanguages.Languages.Values.ToList();
+
+        }
+
+
+        /// <summary>
+        /// Returns the Tuple with 
+        ///     Item1: Image has language resources
+        ///     Item2: Speech supported
+        ///     Item3: Supports Localization through Manifest
+        /// </summary>
+        /// <param name="languageTag"></param>
+        /// <returns></returns>
+        public Tuple<bool, bool, bool> GetLanguageTuple(string languageTag)
+        {
+            List<string> imageList = GetImageSupportedLanguages();
+            Tuple<bool, bool, bool> langVerify = new Tuple<bool, bool, bool>(false, false, false);
+
+            langVerify = Tuple.Create<bool, bool, bool>(
+                imageList.Contains(languageTag),
+                CortanaHelper.IsCortanaSupportedLanguage(languageTag),
+                displayNameToLanguageMap.Values.Contains(languageTag));
+
+            return langVerify;
+        }
+
+            /// <summary>
+            /// Check to return appropriate language depending on selection
+            /// Item1: Image Exists, Item2:Speech, Item3:App Localization(manifest), Lang Tag
+            /// </summary>
+            /// <param name="language"></param>
+            /// <returns></returns>
+        public Tuple<bool, bool, bool, string> CheckUpdateLanguage(string language)
+        {
+            string currentLang = ApplicationLanguages.PrimaryLanguageOverride;
+            string languageTag = GetLanguageTagFromDisplayName(language);
+            Tuple<bool, bool, bool, string> langVerify = new Tuple<bool, bool, bool, string>(false, false, false, languageTag);
+
+            List<string> imageLanguagesList = GetImageSupportedLanguages();
+            langVerify = Tuple.Create<bool, bool, bool, string>(
+                imageLanguagesList.Contains(languageTag), 
+                CortanaHelper.IsCortanaSupportedLanguage(languageTag), 
+                displayNameToLanguageMap.Values.Contains(languageTag),  
+                languageTag);
+
+            if (currentLang != languageTag && Language.IsWellFormed(languageTag))
+            {
+                //image does not contain or selected lang does not support Speech
+                if (!imageLanguagesList.Contains(languageTag)  ||  !(CortanaHelper.IsCortanaSupportedLanguage(languageTag)))
+                {
+                    //Look for near Lang removing all sugtags
+                    var filteredList = imageLanguagesList.Where ( x=> x.Contains(languageTag.Substring(0, languageTag.IndexOf('-'))));
+                    foreach (var item in filteredList)
+                    {
+                        if (null != item && item.Trim().Length > 0)
+                        {
+                            //Found matching Language, take preference, continue checking
+                            //Change the primary only if primary language not part of imagelist
+                            if (!imageLanguagesList.Contains(languageTag)) {
+                                languageTag = item;
+                            }
+                            //Set appropriate languageTag if Language as speech
+                            if(CortanaHelper.IsCortanaSupportedLanguage(item) ) {
+                                languageTag = item;
+                                langVerify = Tuple.Create<bool, bool, bool, string>(
+                                    imageLanguagesList.Contains(languageTag), 
+                                    CortanaHelper.IsCortanaSupportedLanguage(languageTag),
+                                    displayNameToLanguageMap.Values.Contains(languageTag),
+                                    languageTag);
+                                break;
+                            }
+                        
+                        }
+                    }
+                }
+
+                langVerify = Tuple.Create<bool, bool, bool, string>(
+                        imageLanguagesList.Contains(languageTag), 
+                        CortanaHelper.IsCortanaSupportedLanguage(languageTag),
+                        displayNameToLanguageMap.Values.Contains(languageTag), 
+                        languageTag);
+
+            }
+
+            return langVerify;
+        }
+
+
+        private string GetRegionFromBCP47LanguageTag(string languageTag)
+        {
+            // https://tools.ietf.org/html/bcp47
+            // BCP47 language tag is formed by language tag itself along with region subtag, e.g.: 
+            //   en-US -> english US region
+            //   fr-CA -> french CA region
+            //   ex: some are populated as this: az-Cyrl-AZ
+            //   without -
+            // Not an extensive implementation, but covering major Region Formats
+            string region = "";
+
+            var parts = languageTag.LastIndexOf('-');
+            if (parts != -1)
+            {
+                region = languageTag.Substring(parts + 1);
+            }
+            return region;
+        }
+
+
+        private void SetLanguageEntites(string languageTag)
+        {
+            // Use BCP47 Format
+            string bcp47Tag = GetRegionFromBCP47LanguageTag(languageTag);
+            //Apply the PrimaryLanguage
+            ApplicationLanguages.PrimaryLanguageOverride = languageTag;
+
+            if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 5))
+            {
+                // set user language
+                if (Windows.Globalization.Language.IsWellFormed(languageTag))
+                {
+                    try
+                    {
+                        //Set the Region
+                        GlobalizationPreferences.TrySetHomeGeographicRegion(bcp47Tag);
+
+                        //Set the Speech  Language
+                        Task.Run(async () =>
+                        {
+                            Language speechLanguage = new Language(languageTag);
+                            await SpeechRecognizer.TrySetSystemSpeechLanguageAsync(speechLanguage);
+                        });
+
+                    }
+                    catch (InvalidCastException)
+                    {
+                        // This is indicitive of EmbeddedMode not being enabled (i.e.
+                        // running IotCoreDefaultApp on Desktop or Mobile without 
+                        // enabling EmbeddedMode) 
+                        //  https://developer.microsoft.com/en-us/windows/iot/docs/embeddedmode
+                    }
+                }
+
+            } //Only for ApiContract > 5
+
+        }
+        
+        /// <summary>
+        /// Updates Application Language, Geographic Region and Speech Language
+        /// </summary>
+        /// <param name="languageTag"></param>
+        /// <param name="automatic">default: true, will fallback to nearest region enabled on image </param>
+        /// <returns></returns>
+        public string UpdateLanguageByTag(string languageTag)
         {
             var currentLang = ApplicationLanguages.PrimaryLanguageOverride;
-            var newLang = GetLanguageTagFromDisplayName(displayName);
-            if (currentLang != newLang)
+            
+            if (currentLang != languageTag && Language.IsWellFormed(languageTag))
             {
+
+                SetLanguageEntites(languageTag);
+
                 // Do this twice because in Release mode, once isn't enough
                 // to change the current CultureInfo (changing the WaitOne delay
                 // doesn't help).
                 for (int i = 0; i < 2; i++)
                 {
-                    ApplicationLanguages.PrimaryLanguageOverride = newLang;
-
                     // Refresh the resources in new language
                     ResourceContext.GetForCurrentView().Reset();
                     ResourceContext.GetForViewIndependentUse().Reset();
@@ -106,14 +355,41 @@ namespace IoTCoreDefaultApp
                 }
 
                 OnPropertyChanged("Item[]");
-                return true;
+                return languageTag;
             }
-            return false;
+
+            return currentLang;
         }
 
+
+        /// <summary>
+        /// Updates Application Language, Geographic Region and Speech Language
+        /// </summary>
+        /// <param name="displayName"></param>
+        /// <param name="automatic">default: true, will fallback to nearest region enabled on image </param>
+        /// <returns></returns>
+        public string UpdateLanguage(string displayName, bool automatic = false )
+        {
+            if (!automatic)
+            {
+                return UpdateLanguageByTag( GetLanguageTagFromDisplayName(displayName) );
+
+            } else
+            {
+                var getCompatibleLang = CheckUpdateLanguage(displayName);
+
+                return UpdateLanguageByTag(getCompatibleLang.Item4);
+            }            
+        }
+
+        /// <summary>
+        /// Updates the Keyboard Language
+        /// </summary>
+        /// <param name="displayName"></param>
+        /// <returns></returns>
         public bool UpdateInputLanguage(string displayName)
         {
-            var currentLang = Windows.Globalization.Language.CurrentInputMethodLanguageTag;
+            var currentLang = Language.CurrentInputMethodLanguageTag;
             var newLang = GetInputLanguageTagFromDisplayName(displayName);
             if (currentLang != newLang)
             {
@@ -121,14 +397,19 @@ namespace IoTCoreDefaultApp
                 {
                     return false;
                 }
-
+                
                 OnPropertyChanged("Item[]");
                 return true;
             }
             return false;
         }
 
-        private string GetLanguageTagFromDisplayName(string displayName)
+        /// <summary>
+        /// Returns the Language Tag given DisplayName
+        /// </summary>
+        /// <param name="displayName"></param>
+        /// <returns></returns>
+        public string GetLanguageTagFromDisplayName(string displayName)
         {
             string newLang;
             displayNameToLanguageMap.TryGetValue(displayName, out newLang);
@@ -154,25 +435,88 @@ namespace IoTCoreDefaultApp
             return newLang;
         }
 
-        public static string GetCurrentLanguageDisplayName()
+        /// <summary>
+        /// Returns the Current Language Tag ( ex: en-US )
+        /// </summary>
+        /// <returns></returns>
+        public static string GetCurrentLanguageTag()
         {
             var langTag = ApplicationLanguages.PrimaryLanguageOverride;
             if (String.IsNullOrEmpty(langTag))
             {
-                langTag = GlobalizationPreferences.Languages[0];
+                //For Single Lang Image's (non-en-US)
+                List<string> langs = GlobalizationPreferences.Languages.ToList();
+                if(langs.Count > 1 && langs.Contains("en-US") )
+                {
+                    langs.Remove("en-US");
+                    if( langs.Count == 1 )
+                    {
+                        langTag = langs[0];
+                    } else
+                    {
+                        langTag = GlobalizationPreferences.Languages[0];
+                    }
+                }
+                else
+                {
+                    langTag = GlobalizationPreferences.Languages[0];
+                }
+            }
+
+            return langTag;
+        }
+
+        /// <summary>
+        /// Returns the Current Language DisplayName
+        /// </summary>
+        /// <returns></returns>
+        public static string GetCurrentLanguageDisplayName()
+        {
+            var langTag = GetCurrentLanguageTag();
+            var lang = new Language(langTag);
+
+            return lang.NativeName;
+        }
+
+        /// <summary>
+        /// Returns LanguageDisplayName from Language Tag
+        /// </summary>
+        /// <param name="langTag"></param>
+        /// <returns></returns>
+        public static string GetDisplayNameFromLanguageTag(string langTag)
+        {
+            if (String.IsNullOrEmpty(langTag))
+            {
+                return string.Empty;
             }
             var lang = new Language(langTag);
 
             return lang.NativeName;
         }
 
+        /// <summary>
+        /// Returns Current Keyboard Language DisplayName
+        /// </summary>
+        /// <returns></returns>
         public static string GetCurrentInputLanguageDisplayName()
         {
-            var langTag = Windows.Globalization.Language.CurrentInputMethodLanguageTag;
+            var langTag = Language.CurrentInputMethodLanguageTag;
             var lang = new Language(langTag);
 
             return lang.NativeName;
         }
+
+        /// <summary>
+        /// Returns Current Region Display Name
+        /// </summary>
+        /// <returns></returns>
+        public static string GetCurrentRegionDisplayName()
+        {
+            var langTag = GlobalizationPreferences.HomeGeographicRegion;
+         
+            return langTag;
+        }
+
 
         public string this[string key]
         {
@@ -194,6 +538,6 @@ namespace IoTCoreDefaultApp
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
+        
     }
 }

@@ -207,10 +207,6 @@
     <value>Wi-Fi</value>
     <comment>Label for Wi-Fi list in options page</comment>
   </data>
-  <data name="StartDevelopingText" xml:space="preserve">
-    <value>om te beginnen met ontwikkelen</value>
-    <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
-  </data>
   <data name="VisitText" xml:space="preserve">
     <value>Bezoek</value>
     <comment>Part of "Visit www.windowsondevices.com to start developing"</comment>
@@ -649,14 +645,6 @@
   <data name="BluetoothPairingSuccessFormat" xml:space="preserve">
     <value>Succesvol verbonden met {0} ({1})</value>
     <comment>Format string for message displayed when pairing attempt succeeds</comment>
-  </data>
-  <data name="BluetoothStartedWatching" xml:space="preserve">
-    <value>Het apparaat zoekt naar andere bluetooth apparaten en kan zelf ook gevonden worden door andere bluetooth apparaten</value>
-    <comment>Message display when "Start Watcher" button is pressed</comment>
-  </data>
-  <data name="BluetoothStoppedWatching" xml:space="preserve">
-    <value>Zoeken naar andere bluetooth apparaten is gestopt</value>
-    <comment>Message display when "Stop Watcher" button is pressed</comment>
   </data>
   <data name="BluetoothUnpairingFailureFormat" xml:space="preserve">
     <value>Resultaat {0}: Verbinding verbreken is mislukt met {1} ({2})</value>
