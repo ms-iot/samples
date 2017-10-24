@@ -22,8 +22,8 @@ namespace IoTCoreDefaultApp
         {
             this.dispatcher = dispatcher;
 
-            // Always start with a clean list                 
-            devices.Clear();
+            // Always start with a clean list
+            CleanDeviceList();
 
             usbConnectedDevicesWatcher = DeviceInformation.CreateWatcher(usbDevicesSelector);
             usbConnectedDevicesWatcher.Added += DevicesAdded;
@@ -31,6 +31,25 @@ namespace IoTCoreDefaultApp
             usbConnectedDevicesWatcher.Updated += DevicesUpdated;
             usbConnectedDevicesWatcher.EnumerationCompleted += DevicesEnumCompleted;
             usbConnectedDevicesWatcher.Start();
+        }
+
+        private void CleanDeviceList()
+        {
+            try
+            {
+                if (null != devices)
+                {
+                    //Found that ObservableCollection sometimes throws cast error while using Clear
+                    devices.Clear();
+                } else
+                {
+                    devices = new ObservableCollection<ConnectedDevice>();
+                }
+            }
+            catch(Exception)
+            {
+                devices = new ObservableCollection<ConnectedDevice>();
+            }
         }
 
         private async void DevicesAdded(DeviceWatcher sender, DeviceInformation args)

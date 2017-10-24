@@ -97,7 +97,7 @@ namespace IoTCoreDefaultApp
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
-                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
+                if (null != e && e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
                     //TODO: Load state from previously suspended application
                 }
@@ -133,7 +133,7 @@ namespace IoTCoreDefaultApp
         protected override void OnActivated(IActivatedEventArgs args)
         {
             // Spot if we are being activated due to inbound pairing request
-            if (args.Kind == ActivationKind.DevicePairing)
+            if (null != args && args.Kind == ActivationKind.DevicePairing)
             {
                 // Ensure the main app loads first
                 OnLaunched(null);

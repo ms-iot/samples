@@ -106,7 +106,35 @@
                 <TextBlock x:Name="CortanaListViewItem" Text="{Binding [CortanaPreferencesText]}" />
             </ListViewItem>
         </ListView>
-
+        
+        <Grid x:Name="PopupOutput">
+            <Popup x:Name="StandardPopup" MaxHeight="400" MaxWidth="120"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" FlowDirection="LeftToRight" UseLayoutRounding="True" IsLightDismissEnabled="True" LightDismissOverlayMode="Auto">
+            <Popup.ChildTransitions>
+                <TransitionCollection>
+                    <PaneThemeTransition />
+                </TransitionCollection>
+            </Popup.ChildTransitions>
+            <Border BorderBrush="{StaticResource ApplicationForegroundThemeBrush}" 
+                                Background="{StaticResource ApplicationPageBackgroundThemeBrush}"
+                                BorderThickness="2" >
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="PopupStack"  Height="120" Width="400" Margin="5,5,10,10">
+                        <RichTextBlock FontWeight="Normal" HorizontalAlignment="Center" TextWrapping="Wrap" Margin="5,5,10,10"  IsTextSelectionEnabled="True">
+                            <Paragraph>
+                                <Run x:Name="PopupText1" Text="{Binding [LanguagePopupText1] }" />
+                                <Run x:Name="PopupText2" FontWeight="Bold" FontStyle="Italic" TextDecorations="Underline"/>
+                                <Run x:Name="PopupText3" Text="{Binding [LanguagePopupText3] }"/>
+                            </Paragraph>
+                        </RichTextBlock>
+                        <RelativePanel HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+                            <Button x:Name="PopupYes" Click="PopupYes_Clicked" HorizontalAlignment="Left" Margin="0 0 5 0"/>
+                            <Button x:Name="PopupNo"  Click="PopupNo_Clicked" HorizontalAlignment="Right" RelativePanel.RightOf="PopupYes" RelativePanel.AlignTopWith="PopupYes"/>
+                        </RelativePanel>
+                    </StackPanel>
+                </Border>
+            </Popup>
+        </Grid>
+        
         <ScrollViewer x:Name="BasicPreferencesGridView" Grid.Column="2" Grid.Row="1">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -129,33 +157,6 @@
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
 
-                <Grid x:Name="PopupOutput" HorizontalAlignment="Left" VerticalAlignment="Top">
-                    <Popup x:Name="StandardPopup" FlowDirection="LeftToRight" UseLayoutRounding="True" IsLightDismissEnabled="True" LightDismissOverlayMode="Auto">
-                        <Popup.ChildTransitions>
-                            <TransitionCollection>
-                                <PaneThemeTransition />
-                            </TransitionCollection>
-                        </Popup.ChildTransitions>
-                        <Border BorderBrush="{StaticResource ApplicationForegroundThemeBrush}" 
-                                Background="{StaticResource ApplicationPageBackgroundThemeBrush}"
-                                BorderThickness="2" >
-                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="PopupStack"  Height="120" Width="400" Margin="5,5,10,10">
-                                <RichTextBlock FontWeight="Normal" HorizontalAlignment="Center" TextWrapping="Wrap" Margin="5,5,10,10"  IsTextSelectionEnabled="True">
-                                    <Paragraph>
-                                        <Run x:Name="PopupText1" Text="{Binding [LanguagePopupText1] }" />
-                                        <Run x:Name="PopupText2" FontWeight="Bold" FontStyle="Italic" TextDecorations="Underline"/>
-                                        <Run x:Name="PopupText3" Text="{Binding [LanguagePopupText3] }"/>
-                                    </Paragraph>
-                                </RichTextBlock>
-                                <RelativePanel HorizontalAlignment="Center" VerticalAlignment="Bottom" >
-                                    <Button x:Name="PopupYes" Margin="0,0,20,10" Click="PopupYes_Clicked" HorizontalAlignment="Center" />
-                                    <Button x:Name="PopupNo" Margin="20,0,5,10" Click="PopupNo_Clicked" HorizontalAlignment="Center" RelativePanel.RightOf="PopupYes" RelativePanel.AlignTopWith="PopupYes"/>
-                                </RelativePanel>
-                            </StackPanel>
-                        </Border>
-                    </Popup>
-                </Grid>
-                
                 
                 <ToggleSwitch Grid.Column="1" Grid.Row="1" Style="{StaticResource IoTCoreDefaultAppToggleStyle}" Toggled="Screensaver_Toggled" x:Name="screensaverToggleSwitch" 
                               OnContent="{Binding [ToggleOnText]}" OffContent="{Binding [ToggleOffText]}">

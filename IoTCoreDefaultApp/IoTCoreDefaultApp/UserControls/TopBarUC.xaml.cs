@@ -80,8 +80,10 @@ namespace IoTCoreDefaultApp
 
         private void UpdateDateTime()
         {
-            var t = DateTime.Now;
-            this.CurrentTime.Text = t.ToString("t", CultureInfo.CurrentCulture) + Environment.NewLine + t.ToString("d", CultureInfo.CurrentCulture);
+            Utils.SYSTEMTIME tTime;
+
+            Utils.NativeTimeMethods.GetLocalTime(out tTime);
+            this.CurrentTime.Text   = tTime.ToDateTime().ToString("t", CultureInfo.CurrentCulture) + Environment.NewLine + tTime.ToDateTime().ToString("d", CultureInfo.CurrentCulture);
         }
 
         private void ClearBackground()

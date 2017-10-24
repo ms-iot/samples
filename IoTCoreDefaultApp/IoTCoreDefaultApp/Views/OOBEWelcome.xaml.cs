@@ -114,7 +114,7 @@ namespace IoTCoreDefaultApp
 
                 //Check if selected language is part of ffu
                 var newLang = languageManager.CheckUpdateLanguage(selectedLanguage);
-
+                               
                 if (LanguageManager.GetDisplayNameFromLanguageTag(newLang.Item4).Equals(selectedLanguage))
                 {
                     //Update
@@ -148,16 +148,13 @@ namespace IoTCoreDefaultApp
                         PopupText3.Text = languageManager["LanguagePopupText3"];
 
                         PopupNo.Content = LanguagesListView.SelectedItem as string;
-
-                        var ttv = LanguagesListView.TransformToVisual(Window.Current.Content);
-                        Point screenCoords = ttv.TransformPoint(new Point(0, 0));
-
-                        double hOffset = (Window.Current.Bounds.Width - LanguagesListView.ActualWidth) / 2;
-                        double vOffset = (Window.Current.Bounds.Height - LanguagesListView.ActualHeight) / 2;
-
-                        StandardPopup.VerticalOffset = screenCoords.Y + vOffset;
-                        StandardPopup.HorizontalOffset = screenCoords.X + hOffset;
                         
+                        double hOffset = (Window.Current.Bounds.Width) / 4;
+                        double vOffset = (Window.Current.Bounds.Height) / 2;
+
+                        StandardPopup.VerticalOffset = vOffset;
+                        StandardPopup.HorizontalOffset = hOffset;
+
                         if (!StandardPopup.IsOpen) { StandardPopup.IsOpen = true; }
                     } 
                     else
