@@ -35,7 +35,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\ARM\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NETFX_CORE;WINDOWS_UWP;CODE_ANALYSIS;FORCE_OOBE_WELCOME_SCREEN</DefineConstants>
     <NoWarn>;2008</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>ARM</PlatformTarget>
@@ -108,7 +108,7 @@
     <CompilerResponseFile>$(MSBuildProjectDirectory)\CscOptions.rsp</CompilerResponseFile>
   </PropertyGroup>
   <ItemGroup>
-    <SDKReference Include="WindowsIoT, Version=10.0.16278.0">
+    <SDKReference Include="WindowsIoT, Version=10.0.16299.0">
       <Name>Windows IoT Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>

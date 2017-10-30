@@ -268,12 +268,12 @@ namespace IoTCoreDefaultApp
 
             //Check if selected language is part of ffu
             var newLang = languageManager.CheckUpdateLanguage(comboBox.SelectedItem as string);
-            
+                      
             //Selected Language, but Check Proposing other language
             if (LanguageManager.GetDisplayNameFromLanguageTag(newLang.Item4).Equals(comboBox.SelectedItem as string))
             {
                 //Update
-                //var langReturned = languageManager.UpdateLanguage(comboBox.SelectedItem as string);
+                var langReturned = languageManager.UpdateLanguage(comboBox.SelectedItem as string);
 
                 //ffu list, Show user to restart to use the System Languages
                 if (newLang.Item1)
@@ -297,11 +297,11 @@ namespace IoTCoreDefaultApp
 
                     PopupNo.Content = comboBox.SelectedItem as string;
 
-                    var ttv = comboBox.TransformToVisual(Window.Current.Content);
-                    Point screenCoords = ttv.TransformPoint(new Point(0, 0));
+                    double hOffset = (Window.Current.Bounds.Width) / 4;
+                    double vOffset = (Window.Current.Bounds.Height) / 2;
 
-                    StandardPopup.VerticalOffset = screenCoords.Y;
-                    StandardPopup.HorizontalOffset = screenCoords.X;
+                    StandardPopup.VerticalOffset = vOffset;
+                    StandardPopup.HorizontalOffset = hOffset;
 
                     if (!StandardPopup.IsOpen) { StandardPopup.IsOpen = true; }
                 }
@@ -777,6 +777,10 @@ namespace IoTCoreDefaultApp
             DeviceInformationCustomPairing sender,
             DevicePairingRequestedEventArgs args)
         {
+            //Null Check
+            if (null == args)
+                return;
+
             // Save the args for use in ProvidePin case
             pairingRequestedHandlerArgs = args;
 
@@ -794,7 +798,9 @@ namespace IoTCoreDefaultApp
                     // Windows itself will pop the confirmation dialog as part of "consent" if this is running on Desktop or Mobile
                     // If this is an App for Athens where there is no Windows Consent UX, you may want to provide your own confirmation.
                     {
-                        confirmationMessage = string.Format(bluetoothConfirmOnlyFormatString, args.DeviceInformation.Name, args.DeviceInformation.Id);
+                        confirmationMessage = string.Format(bluetoothConfirmOnlyFormatString,
+                            null != args.DeviceInformation ? args.DeviceInformation.Name : string.Empty,
+                            null != args.DeviceInformation ? args.DeviceInformation.Id : string.Empty);
                         DisplayMessagePanelAsync(confirmationMessage, MessageType.InformationalMessage);
                         // Accept the pairing which also completes the deferral
                         AcceptPairing();
