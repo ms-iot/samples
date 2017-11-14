@@ -1,7 +1,7 @@
 #include <Windows.h>
 #include "HidInject.h"
 #include "SendInput.h"
-#include"HidDevice.h"
+#include "HidDevice.h"
 
 HIDINJECTOR_INPUT_REPORT KeyboardState = { 0 };
 HIDINJECTOR_INPUT_REPORT MouseState = { 0 };
@@ -74,7 +74,7 @@ BOOL InjectKeyboardSingle(LPINPUT Input)
 
 		if (sendDown)
 		{
-			if (SetKeybaordUsage(&KeyboardState, usage) &&
+			if (SetKeyboardUsage(&KeyboardState, usage) &&
 				SendHidReport(&KeyboardState))
 			{
 				ret = TRUE;

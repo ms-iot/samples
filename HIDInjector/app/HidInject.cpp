@@ -1,4 +1,3 @@
-
 #include <windows.h>
 #include "winuser.h"
 #include "HidInject.h"
@@ -304,7 +303,7 @@ UCHAR UnicodeToKeyboardUsage(WCHAR wch)
 }
 
 
-BOOL SetKeybaordUsage(HIDINJECTOR_INPUT_REPORT *Rep, UCHAR Usage)
+BOOL SetKeyboardUsage(HIDINJECTOR_INPUT_REPORT *Rep, UCHAR Usage)
 {
 	if (Rep->ReportId == KEYBOARD_REPORT_ID)
 	{
