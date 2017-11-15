@@ -12,6 +12,6 @@ UCHAR UnicodeToKeyboardUsage(WCHAR ch);
 // A usage may be defined, but we haven't bothered to find it yet.  
 #define USAGE_TODO 0
 
-BOOL SetKeybaordUsage(HIDINJECTOR_INPUT_REPORT *Rep, UCHAR Usage);
+BOOL SetKeyboardUsage(HIDINJECTOR_INPUT_REPORT *Rep, UCHAR Usage);
 
 BOOL ClearKeyboardUsage(HIDINJECTOR_INPUT_REPORT *Rep, UCHAR Usage);
