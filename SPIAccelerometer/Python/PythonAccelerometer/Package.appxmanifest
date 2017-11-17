@@ -64,15 +64,5 @@
         <ActivatableClass ActivatableClassId="pyuwpbackgroundservice.StartupTask" ThreadingModel="both" />
       </InProcessServer>
     </Extension>
-    <Extension Category="windows.activatableClass.inProcessServer">
-      <InProcessServer>
-        <Path>Microsoft.IoT.Lightning.Providers.dll</Path>
-        <ActivatableClass ActivatableClassId="Microsoft.IoT.Lightning.Providers.LightningProvider" ThreadingModel="both" />
-        <ActivatableClass ActivatableClassId="Microsoft.IoT.Lightning.Providers.LightningGpioProvider" ThreadingModel="both" />
-        <ActivatableClass ActivatableClassId="Microsoft.IoT.Lightning.Providers.LightningI2cProvider" ThreadingModel="both" />
-        <ActivatableClass ActivatableClassId="Microsoft.IoT.Lightning.Providers.Dummy" ThreadingModel="both" />
-        <ActivatableClass ActivatableClassId="Microsoft.IoT.Lightning.Providers.LightningSpiProvider" ThreadingModel="both" />
-      </InProcessServer>
-    </Extension>
   </Extensions>
 </Package>

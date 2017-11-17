@@ -22,7 +22,7 @@
     <PackageCertificateKeyFile>GoPiGoXboxWebService_TemporaryKey.pfx</PackageCertificateKeyFile>
     <DefaultLanguage>en-US</DefaultLanguage>
     <ProjectTypeGuids>{2b557614-1a2b-4903-b9df-ed20d7b63f3a};{888888A0-9F3D-457C-B088-3A5042F75D52}</ProjectTypeGuids>
-    <InterpreterId>{86767848-40b4-4007-8bcc-a3835edf0e69}</InterpreterId>
+    <InterpreterId>PythonUwpIoT|3.5|$(MSBuildProjectFullPath)</InterpreterId>
     <InterpreterVersion>3.5</InterpreterVersion>
     <RemoteDebugEnabled>true</RemoteDebugEnabled>
     <RootNamespace>GoPiGoXboxWebService</RootNamespace>
@@ -52,14 +52,6 @@
     <None Include="GoPiGoXboxWebService_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Lightning.dll">
-      <Name>Lightning.dll</Name>
-      <PythonExtension>Lightning.dll</PythonExtension>
-    </Reference>
-    <Reference Include="Microsoft.IoT.Lightning.Providers.dll">
-      <Name>Microsoft.IoT.Lightning.Providers.dll</Name>
-      <PythonExtension>Microsoft.IoT.Lightning.Providers.dll</PythonExtension>
-    </Reference>
     <Reference Include="_wini2c.pyd">
       <Name>_wini2c.pyd</Name>
       <PythonExtension>_wini2c.pyd</PythonExtension>
@@ -68,11 +60,12 @@
   <ItemGroup>
     <Content Include="site-packages.zip" />
   </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="PythonUwpIoT|3.5|F:\code\samples\GoPiGoXbox\GoPiGoXboxWebService\GoPiGoXboxWebService\GoPiGoXboxWebService.pyproj" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
     <PtvsVersion Condition="'$(PtvsVersion)' == ''">2.2</PtvsVersion>
-    <PtvsTargetsFile>$(LocalAppData)\Microsoft\VisualStudio\$(VisualStudioVersion)Exp\Extensions\Microsoft\Python Tools for Visual Studio - UWP\$(PtvsVersion)\Microsoft.PythonTools.Uwp.targets</PtvsTargetsFile>
-    <PtvsTargetsFile Condition="'$(PtvsTargetsFile)' == '' or !Exists('$(PtvsTargetsFile)')">$(MSBuildProgramFiles32)\Microsoft Visual Studio $(VisualStudioVersion)\Common7\IDE\Extensions\Microsoft\Python Tools for Visual Studio - UWP\$(PtvsVersion)\Microsoft.PythonTools.Uwp.targets</PtvsTargetsFile>
   </PropertyGroup>
-  <Import Project="$(PtvsTargetsFile)" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.Uwp.targets" />
 </Project>

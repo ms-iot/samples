@@ -21,7 +21,7 @@
     <PackageCertificateKeyFile>PythonBlinkyHeadless_TemporaryKey.pfx</PackageCertificateKeyFile>
     <DefaultLanguage>en-US</DefaultLanguage>
     <ProjectTypeGuids>{2b557614-1a2b-4903-b9df-ed20d7b63f3a};{888888A0-9F3D-457C-B088-3A5042F75D52}</ProjectTypeGuids>
-    <InterpreterId>{86767848-40b4-4007-8bcc-a3835edf0e69}</InterpreterId>
+    <InterpreterId>PythonUwpIoT|3.5|$(MSBuildProjectFullPath)</InterpreterId>
     <InterpreterVersion>3.5</InterpreterVersion>
     <RemoteDebugEnabled>true</RemoteDebugEnabled>
     <RootNamespace>PythonBlinkyHeadless</RootNamespace>
@@ -49,18 +49,6 @@
     <None Include="PythonBlinkyHeadless_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="windevices\ARM\Microsoft.IoT.Lightning.Providers.dll" Condition=" '$(Platform)' == 'ARM' ">
-      <Name>Microsoft.IoT.Lightning.Providers.dll</Name>
-      <PythonExtension>windevices\ARM\Microsoft.IoT.Lightning.Providers.dll</PythonExtension>
-    </Reference>
-    <Reference Include="windevices\Win32\Microsoft.IoT.Lightning.Providers.dll" Condition=" '$(Platform)' == 'x86' ">
-      <Name>Microsoft.IoT.Lightning.Providers.dll</Name>
-      <PythonExtension>windevices\Win32\Microsoft.IoT.Lightning.Providers.dll</PythonExtension>
-    </Reference>
-    <Reference Include="windevices\x64\Microsoft.IoT.Lightning.Providers.dll" Condition=" '$(Platform)' == 'x64' ">
-      <Name>Microsoft.IoT.Lightning.Providers.dll</Name>
-      <PythonExtension>windevices\x64\Microsoft.IoT.Lightning.Providers.dll</PythonExtension>
-    </Reference>
     <Reference Include="windevices\ARM\_wingpio_d.pyd" Condition=" '$(RedistConfiguration)|$(Platform)' == 'Debug|ARM' ">
       <Name>_wingpio_d.pyd</Name>
       <PythonExtension>windevices\ARM\_wingpio_d.pyd</PythonExtension>
@@ -86,11 +74,12 @@
       <PythonExtension>windevices\x64\_wingpio.pyd</PythonExtension>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="PythonUwpIoT|3.5|F:\code\samples\HelloBlinkyBackground\Python\PythonBlinkyHeadless.pyproj" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
     <PtvsVersion Condition="'$(PtvsVersion)' == ''">2.2</PtvsVersion>
-    <PtvsTargetsFile>$(LocalAppData)\Microsoft\VisualStudio\$(VisualStudioVersion)Exp\Extensions\Microsoft\Python Tools for Visual Studio - UWP\$(PtvsVersion)\Microsoft.PythonTools.Uwp.targets</PtvsTargetsFile>
-    <PtvsTargetsFile Condition="'$(PtvsTargetsFile)' == '' or !Exists('$(PtvsTargetsFile)')">$(MSBuildProgramFiles32)\Microsoft Visual Studio $(VisualStudioVersion)\Common7\IDE\Extensions\Microsoft\Python Tools for Visual Studio - UWP\$(PtvsVersion)\Microsoft.PythonTools.Uwp.targets</PtvsTargetsFile>
   </PropertyGroup>
-  <Import Project="$(PtvsTargetsFile)" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.Uwp.targets" />
 </Project>
