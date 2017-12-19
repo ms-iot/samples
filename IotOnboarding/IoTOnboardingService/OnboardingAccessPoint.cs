@@ -49,8 +49,7 @@ namespace IoTOnboardingService
         private const int MAX_WPA2_PASSWORD_LENGTH = 64;
         private const int MIN_WPA2_PASSWORD_LENGTH = 8;
         private const byte OUI_TYPE = 0;
-        private readonly byte[] MICROSOFT_OUI = new byte[]{ 0x84, 0x63, 0xd6 };
-        private readonly string DEVICE_FRIENDLY_NAME = "IoT Device";
+        private readonly byte[] MICROSOFT_OUI = new byte[]{ 0x84, 0x63, 0xd6 };        
         
         private readonly byte[] DEVICE_TYPE = new byte[] { 0xFF, 0x00 };
         private readonly string DEVICE_MANUFACTURER_NAME = "Microsoft";
@@ -103,7 +102,11 @@ namespace IoTOnboardingService
                 // | ETLV Type | Length |   Data                                                         |
                 // ---------------------------------------------------------------------------------------
                 //
-                IEnumerable< byte> ouiData =  MakeStringElement(ETLVType.FRIENDLY_NAME, DEVICE_FRIENDLY_NAME);
+
+                // Customize this for your own device
+                string DEVICE_FRIENDLY_NAME = "IoT Device: "+ssid;
+                
+                IEnumerable<byte> ouiData = MakeStringElement(ETLVType.FRIENDLY_NAME, DEVICE_FRIENDLY_NAME);
                 ouiData = ouiData.Concat(MakeTLVElement(ETLVType.DEVICE_TYPE, DEVICE_TYPE));
                 ouiData = ouiData.Concat(MakeStringElement(ETLVType.DEVICE_MANUFACTURER, DEVICE_MANUFACTURER_NAME));
                 ouiData = ouiData.Concat(MakeStringElement(ETLVType.LANGUAGE_TAG, LANGUAGE_TAG));
