@@ -126,7 +126,7 @@ namespace AudioInSample
 
             captureInitSettings.AudioDeviceId = id;
 
-            captureInitSettings.StreamingCaptureMode = Windows.Media.Capture.StreamingCaptureMode.AudioAndVideo;
+            captureInitSettings.StreamingCaptureMode = Windows.Media.Capture.StreamingCaptureMode.Audio;
         }
 
         private async Task InitMediaCapture()
