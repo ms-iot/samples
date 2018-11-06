@@ -38,6 +38,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DeployExtension>False</DeployExtension>
+	<NoWarn>2008</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -47,13 +48,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DeployExtension>False</DeployExtension>
+	<NoWarn>2008</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="..\icon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="..\License.rtf">
+    <Content Include="License.rtf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
@@ -73,6 +75,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
   <Target Name="GenerateTemplate">
+    <CallTarget Targets="CopyLicense" RunEachTargetSeparately="true" />
     <CallTarget Targets="ExportTemplate" RunEachTargetSeparately="true" />
     <CallTarget Targets="ZipTemplate" RunEachTargetSeparately="true" />
     <CallTarget Targets="CleanTemplate" RunEachTargetSeparately="true" />
@@ -123,6 +126,9 @@
     <WiringAppCpp Include="..\..\ProjectTemplates\Common\*.*" />
     <WiringAppCppPackages Include="..\..\ProjectTemplates\WiringAppCpp\NugetPackages\*.*" />
   </ItemGroup>
+  <Target Name="CopyLicense">
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\..\License.rtf" DestinationFolder="$(MSBuildProjectDirectory)" />
+  </Target>
   <Target Name="ExportTemplate">
     <Copy SourceFiles="@(BackgroundServiceCppSourceFiles)" DestinationFolder="$(OutputPath)\$(VsixTargetVisualStudioVersion)\Staged\BackgroundServiceCpp" />
     <Copy SourceFiles="@(BackgroundServiceCsSourceFiles)" DestinationFolder="$(OutputPath)\$(VsixTargetVisualStudioVersion)\Staged\BackgroundServiceCsharp" />
