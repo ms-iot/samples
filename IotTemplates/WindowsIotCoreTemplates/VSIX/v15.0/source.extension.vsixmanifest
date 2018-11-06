@@ -2,8 +2,8 @@
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
     <Identity Id="WindowsIoTCoreTemplatesDev15..d31f6474-cb78-4cbe-ae6a-15847344e1ba" Version="1.0.2" Language="en-US" Publisher="Microsoft" />
-    <DisplayName>Windows IoT Core Project Templates for VS 2017</DisplayName>
-    <Description xml:space="preserve">This package contains project templates for Windows IoT Core Applications and Visual Studio 2017</Description>
+    <DisplayName>Windows IoT Core Project Templates for VS 2017+</DisplayName>
+    <Description xml:space="preserve">This package contains project templates for Windows IoT Core Applications and Visual Studio 2017 (and beyond)</Description>
     <License>License.rtf</License>
     <Icon>icon.png</Icon>
     <PreviewImage>preview.png</PreviewImage>
