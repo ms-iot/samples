@@ -2,7 +2,7 @@
 <!-- This file is used by the build system to do a post-build code sign operation -->
 <SignConfigXML>
   <!-- AnyCPU Release sign job -->
-  <job platform="AnyCPU" configuration="Release" dest="__RELBINPATH__\signed" jobname="IOT Samples" approvers="artemz;torstens">
+  <job platform="AnyCPU" configuration="Release" dest="__RELBINPATH__\signed" jobname="IOT Samples" approvers="">
     <file src="__RELBINPATH__\WindowsIoTCoreTemplatesDev15.vsix" signType="100040160" dest="__RELBINPATH__\signed\WindowsIoTCoreTemplatesDev15.vsix" />
   </job>
 </SignConfigXML>
