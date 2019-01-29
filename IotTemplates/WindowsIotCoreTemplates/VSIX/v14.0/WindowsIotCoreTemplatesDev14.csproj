@@ -93,10 +93,6 @@
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         <IncludeInVSIX>true</IncludeInVSIX>
       </Content>
-      <Content Include="ProjectTemplates\VC\Windows\Windows IoT Core\WiringApplication.zip">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        <IncludeInVSIX>true</IncludeInVSIX>
-      </Content>
     </ItemGroup>
   </Target>
   <ItemGroup>
@@ -111,18 +107,12 @@
     <BackgroundServiceVbSourceFiles Include="..\..\ProjectTemplates\Common\*.*" />
     <BlankConsoleCppSourceFiles Include="..\..\ProjectTemplates\BlankConsoleApplicationCpp\*.*" />
     <BlankConsoleCppSourceFiles Include="..\..\ProjectTemplates\$(VsixTargetVisualStudioVersion)\BlankConsoleApplicationCpp\*.*" />
-    <WiringAppCpp Include="..\..\ProjectTemplates\WiringAppCpp\*.*" />
-    <WiringAppCpp Include="..\..\ProjectTemplates\$(VsixTargetVisualStudioVersion)\WiringAppCpp\*.*" />
-    <WiringAppCpp Include="..\..\ProjectTemplates\Common\*.*" />
-    <WiringAppCppPackages Include="..\..\ProjectTemplates\WiringAppCpp\NugetPackages\*.*" />
   </ItemGroup>
   <Target Name="ExportTemplate">
     <Copy SourceFiles="@(BackgroundServiceCppSourceFiles)" DestinationFolder="$(OutputPath)\$(VsixTargetVisualStudioVersion)\Staged\BackgroundServiceCpp" />
     <Copy SourceFiles="@(BackgroundServiceCsSourceFiles)" DestinationFolder="$(OutputPath)\$(VsixTargetVisualStudioVersion)\Staged\BackgroundServiceCsharp" />
     <Copy SourceFiles="@(BackgroundServiceVbSourceFiles)" DestinationFolder="$(OutputPath)\$(VsixTargetVisualStudioVersion)\Staged\BackgroundServiceVb" />
     <Copy SourceFiles="@(BlankConsoleCppSourceFiles)" DestinationFolder="$(OutputPath)\$(VsixTargetVisualStudioVersion)\Staged\BlankConsoleApplicationCpp" />
-    <Copy SourceFiles="@(WiringAppCpp)" DestinationFolder="$(OutputPath)\$(VsixTargetVisualStudioVersion)\Staged\WiringAppCpp" />
-    <Copy SourceFiles="@(WiringAppCppPackages)" DestinationFolder="$(OutputPath)\$(VsixTargetVisualStudioVersion)\Staged\WiringAppCpp\NugetPackages" />
   </Target>
   <Target Name="ZipTemplate">
     <ItemGroup>
@@ -130,13 +120,11 @@
       <ToZipBSCs Include="$(OutputPath)\$(VsixTargetVisualStudioVersion)\Staged\BackgroundServiceCsharp\*.*" />
       <ToZipBSVb Include="$(OutputPath)\$(VsixTargetVisualStudioVersion)\Staged\BackgroundServiceVb\*.*" />
       <ToZipConsole Include="$(OutputPath)\$(VsixTargetVisualStudioVersion)\Staged\BlankConsoleApplicationCpp\*.*" />
-      <ToZipWiring Include="$(OutputPath)\$(VsixTargetVisualStudioVersion)\Staged\WiringAppCpp\**\*.*" />
     </ItemGroup>
     <Zip Files="@(ToZipBSCpp)" WorkingDirectory="$(OutputPath)\$(VsixTargetVisualStudioVersion)\Staged\BackgroundServiceCpp" ZipFileName="ProjectTemplates\VC\Windows\Windows IoT Core\BackgroundSericeCpp.zip" />
     <Zip Files="@(ToZipBSCs)" WorkingDirectory="$(OutputPath)\$(VsixTargetVisualStudioVersion)\Staged\BackgroundServiceCsharp" ZipFileName="ProjectTemplates\CSharp\Windows\Windows IoT Core\BackgroundServiceCsharp.zip" />
     <Zip Files="@(ToZipBSVb)" WorkingDirectory="$(OutputPath)\$(VsixTargetVisualStudioVersion)\Staged\BackgroundServiceVb" ZipFileName="ProjectTemplates\VisualBasic\Windows\Windows IoT Core\BackgroundServiceVb.zip" />
     <Zip Files="@(ToZipConsole)" WorkingDirectory="$(OutputPath)\$(VsixTargetVisualStudioVersion)\Staged\BlankConsoleApplicationCpp" ZipFileName="ProjectTemplates\VC\Windows\Windows IoT Core\BlankConsoleApplicationCpp.zip" />
-    <Zip Files="@(ToZipWiring)" WorkingDirectory="$(OutputPath)\$(VsixTargetVisualStudioVersion)\Staged\WiringAppCpp" ZipFileName="ProjectTemplates\VC\Windows\Windows IoT Core\WiringApplication.zip" />
   </Target>
   <Target Name="CleanTemplate">
     <RemoveDir Directories="$(OutputPath)\$(VsixTargetVisualStudioVersion)\Staged" />
