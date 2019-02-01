@@ -25,15 +25,24 @@ namespace GpioOneWire
 
         double Humidity ( ) const
         {
+            //Humidity Bytes are bits 1 & 2 out of 5
+            //Byte 1 is integer Humidity - bit 2 is decimal humidity  
+            //Byte 2 is always 00000000 for a DHT 11 - the DHT22 does decimal points
             unsigned long long value = this->bits.to_ullong();
-            return ((value >> 24) & 0xffff) * 0.1;
+            double humidity = ((value >> 24) & 0xFF) * 0.1; //Decode the Decimal into Humidity
+            humidity = humidity + ((value >> 32) & 0xFF);// And add on the integer part of humidity
+            return humidity;
         }
 
         double Temperature ( ) const
         {
+            //Temp Bytes are bits 3 & 4 out of 5
+            //Byte 3 is inteteger temp - bit 4 is decimal temp  
+            //Byte 4 is always 00000000 for a DHT 11 - the DHT22 does decimal points
             unsigned long long value = this->bits.to_ullong();
-            double temp = ((value >> 8)  & 0x7FFF) * 0.1;
-            if ((value >> 8) & 0x8000)
+            double temp = ((value >> 8)  & 0xFF) * 0.1; //Decode the Decimal into Temp
+            temp = temp + ((value >> 16) & 0x7F);// And add on the integer part of temp
+            if ((value >> 8) & 0x8000)  // if the MSB of temp is 1 then its negative
                 temp = -temp;
             return temp;
         }
